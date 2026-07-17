@@ -1,0 +1,836 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * AURORA — cinematic luxury EV design system.
+ * All colors in oklch, all tokens semantic. No ad-hoc colors in components.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-full: 9999px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ember: var(--ember);
+  --color-ember-foreground: var(--ember-foreground);
+  --color-graphite: var(--graphite);
+  --color-silver: var(--silver);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-display: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-elevate: 0 30px 80px -30px color-mix(in oklab, var(--ember) 25%, transparent);
+  --shadow-glass: 0 1px 0 0 color-mix(in oklab, white 8%, transparent) inset,
+    0 20px 60px -20px oklch(0 0 0 / 0.6);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Scroll-driven page background (animated by GSAP) */
+  --page-bg: #030604;
+
+  /* Default = Dark Premium */
+  --background: #030604;
+  --foreground: oklch(0.98 0.01 160);
+
+  --card: oklch(0.12 0.02 160);
+  --card-foreground: oklch(0.98 0.01 160);
+  --popover: oklch(0.10 0.02 160);
+  --popover-foreground: oklch(0.98 0.01 160);
+
+  --primary: #00D084;
+  --primary-foreground: #020403;
+
+  --secondary: oklch(0.15 0.02 160);
+  --secondary-foreground: oklch(0.98 0.01 160);
+
+  --muted: oklch(0.15 0.02 160);
+  --muted-foreground: oklch(0.65 0.02 160);
+
+  --accent: oklch(0.20 0.04 160);
+  --accent-foreground: oklch(0.98 0.01 160);
+
+  --ember: #00D084;
+  --ember-foreground: #020403;
+
+  --graphite: oklch(0.18 0.02 160);
+  --silver: oklch(0.62 0.02 160);
+
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.98 0.01 160 / 10%);
+  --border-strong: oklch(0.98 0.01 160 / 20%);
+  --input: oklch(0.98 0.01 160 / 12%);
+  --ring: #00D084;
+}
+
+/* WARM LIGHT theme — unified to dark/green premium */
+.theme-warm {
+  --background: #030604;
+  --foreground: oklch(0.98 0.01 160);
+  --card: oklch(0.12 0.02 160);
+  --card-foreground: oklch(0.98 0.01 160);
+  --popover: oklch(0.10 0.02 160);
+  --popover-foreground: oklch(0.98 0.01 160);
+  --primary: #00D084;
+  --primary-foreground: #020403;
+  --secondary: oklch(0.15 0.02 160);
+  --secondary-foreground: oklch(0.98 0.01 160);
+  --muted: oklch(0.15 0.02 160);
+  --muted-foreground: oklch(0.65 0.02 160);
+  --accent: oklch(0.20 0.04 160);
+  --accent-foreground: oklch(0.98 0.01 160);
+  --ember: #00D084;
+  --ember-foreground: #020403;
+  --border: oklch(0.98 0.01 160 / 10%);
+  --border-strong: oklch(0.98 0.01 160 / 20%);
+  --input: oklch(0.98 0.01 160 / 12%);
+  --ring: #00D084;
+  color: var(--foreground);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* MID WARM theme — unified */
+.theme-mid {
+  --background: #050906;
+  --foreground: oklch(0.98 0.01 160);
+  --card: oklch(0.14 0.02 160);
+  --card-foreground: oklch(0.98 0.01 160);
+  --popover: oklch(0.12 0.02 160);
+  --popover-foreground: oklch(0.98 0.01 160);
+  --primary: #00D084;
+  --primary-foreground: #020403;
+  --secondary: oklch(0.18 0.02 160);
+  --secondary-foreground: oklch(0.98 0.01 160);
+  --muted: oklch(0.18 0.02 160);
+  --muted-foreground: oklch(0.65 0.02 160);
+  --accent: oklch(0.22 0.04 160);
+  --accent-foreground: oklch(0.98 0.01 160);
+  --ember: #00D084;
+  --ember-foreground: #020403;
+  --border: oklch(0.98 0.01 160 / 10%);
+  --border-strong: oklch(0.98 0.01 160 / 20%);
+  --input: oklch(0.98 0.01 160 / 12%);
+  --ring: #00D084;
+  color: var(--foreground);
+}
+
+:root {
+  --gradient-hero: linear-gradient(to bottom,
+      rgba(3, 6, 4, 0) 0%,
+      rgba(3, 6, 4, 0.4) 55%,
+      rgba(3, 6, 4, 0.95) 100%);
+  --gradient-hero-warm: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.4) 45%,
+      rgba(0, 0, 0, 0.8) 100%);
+  --gradient-ember: linear-gradient(135deg,
+      #00D084 0%,
+      #00A060 100%);
+  --gradient-ambient: radial-gradient(ellipse at top,
+      rgba(0, 208, 132, 0.15),
+      transparent 70%);
+}
+
+.dark {
+  --background: #030604;
+  --foreground: oklch(0.98 0.01 160);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--page-bg);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
+    transition: background-color 600ms ease;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--ember) 40%, transparent);
+    color: var(--foreground);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+}
+
+/* ---------- Utilities ---------- */
+
+@utility glass {
+  background: color-mix(in oklab, var(--background) 55%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-glass);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, var(--background) 80%, transparent);
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--color-border-strong);
+  box-shadow: var(--shadow-glass);
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility text-gradient-ember {
+  background: var(--gradient-ember);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility hairline {
+  border-top: 1px solid var(--color-border);
+}
+
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  background: var(--foreground);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 400ms ease, box-shadow 400ms ease;
+  will-change: transform;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: color-mix(in oklab, var(--ember) 100%, transparent);
+    color: var(--ember-foreground);
+    box-shadow: 0 20px 40px -20px color-mix(in oklab, var(--ember) 60%, transparent);
+  }
+}
+
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  background: color-mix(in oklab, white 8%, transparent);
+  color: var(--foreground);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--color-border-strong);
+  backdrop-filter: blur(12px);
+  transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 400ms ease, border-color 400ms ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: color-mix(in oklab, white 14%, transparent);
+    border-color: color-mix(in oklab, var(--ember) 50%, transparent);
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+@utility grain-overlay {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/></svg>");
+  }
+}
+
+@keyframes ember-pulse {
+
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-ember-pulse {
+  animation: ember-pulse 6s ease-in-out infinite;
+}
+
+@utility animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ==========================================================================
+   Premium Light Mode Theme Overrides
+   ========================================================================== */
+
+/* High-Contrast Light Variable Tokens */
+html.theme-light,
+html.theme-light .theme-warm,
+html.theme-light .theme-mid {
+  --background: #ffffff;
+  --foreground: #09090b;
+
+  --card: #f4f4f5;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+
+  --secondary: #f4f4f5;
+  --secondary-foreground: #09090b;
+
+  --muted: #e4e4e7;
+  --muted-foreground: #71717a;
+
+  --accent: #f4f4f5;
+  --accent-foreground: #09090b;
+
+  --graphite: #e4e4e7;
+  --silver: #71717a;
+
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.15);
+  --input: rgba(0, 0, 0, 0.08);
+  
+  --page-bg: #ffffff;
+}
+
+/* Base style transition for smooth morphing */
+body, header, section, footer, div, h1, h2, h3, h4, h5, h6, p, span, a, button {
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, fill 0.4s ease, stroke 0.4s ease;
+}
+
+/* Force light background for hardcoded dark sections */
+html.theme-light #ev-services,
+html.theme-light #experience,
+html.theme-light #top,
+html.theme-light footer,
+html.theme-light section,
+html.theme-light main,
+html.theme-light [class*="bg-[#050906]"],
+html.theme-light [class*="bg-[#020403]"],
+html.theme-light [class*="bg-[#030704]"],
+html.theme-light [class*="bg-[#030604]"] {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+}
+
+/* Set card and bento box background overrides in light mode */
+html.theme-light .glow-card,
+html.theme-light [class*="bg-[#0a0f0c]"],
+html.theme-light [class*="bg-[#080d0a]"],
+html.theme-light [class*="bg-[#030604]"],
+html.theme-light [class*="bg-[#030704]"],
+html.theme-light [class*="bg-[#020403]"],
+html.theme-light [class*="bg-[#050706]"],
+html.theme-light [class*="bg-[#060807]"],
+html.theme-light [class*="bg-[#0d1410]"],
+html.theme-light .bg-card {
+  background-color: #f4f4f5 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #09090b !important;
+}
+
+/* Override inline styling for ValuePackages motion.div cards when hovered or default */
+html.theme-light [style*="background-color: rgb(13, 20, 16)"],
+html.theme-light [style*="background-color: rgb(10, 15, 12)"],
+html.theme-light [style*="background-color: rgba(10, 15, 12, 0.6)"],
+html.theme-light [style*="background-color: #0d1410"],
+html.theme-light [style*="background: rgb(13, 20, 16)"],
+html.theme-light [style*="background: rgb(10, 15, 12)"],
+html.theme-light [style*="background: rgba(10, 15, 12, 0.6)"],
+html.theme-light [style*="background: #0d1410"] {
+  background-color: #f4f4f5 !important;
+  background: #f4f4f5 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+}
+
+/* When ValuePackages card is expanded (position: fixed) */
+html.theme-light [style*="position: fixed"][style*="width: 90vw"] {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12), 0 0 50px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Convert all white background opacities to dark overlays for light mode readability */
+html.theme-light .bg-white\/5,
+html.theme-light .bg-white\/10,
+html.theme-light .bg-white\/\[0\.02\],
+html.theme-light .bg-white\/\[0\.05\],
+html.theme-light .bg-white\/\[0\.015\] {
+  background-color: rgba(9, 9, 11, 0.05) !important;
+}
+
+/* Convert white border opacities to subtle dark lines */
+html.theme-light .border-white\/5,
+html.theme-light .border-white\/10,
+html.theme-light .border-white\/20,
+html.theme-light .border-white\/\[0\.08\],
+html.theme-light .border-white\/\[0\.1\] {
+  border-color: rgba(9, 9, 11, 0.08) !important;
+}
+
+/* Keep text elements crisp black/gray in light mode */
+html.theme-light h1,
+html.theme-light h2,
+html.theme-light h3,
+html.theme-light h4,
+html.theme-light h5,
+html.theme-light h6,
+html.theme-light label {
+  color: #09090b !important;
+}
+
+/* Transform white text with various opacities to black/charcoal in light mode */
+html.theme-light .text-white:not(.bg-\[\#00D084\] *, .bg-\[\#00B574\] *, .bg-emerald-500 *, .bg-emerald-600 *, .bg-emerald-700 *, .keep-white),
+html.theme-light .text-white\/90,
+html.theme-light .text-white\/85,
+html.theme-light .text-white\/80,
+html.theme-light .text-white\/70,
+html.theme-light .text-white\/60,
+html.theme-light .text-white\/50,
+html.theme-light .text-white\/40,
+html.theme-light .text-white\/30 {
+  color: #09090b !important;
+}
+
+/* Keep specific text elements white in light mode */
+html.theme-light .keep-white,
+html.theme-light h2.keep-white {
+  color: #ffffff !important;
+}
+
+/* Keep gray texts legible in light mode */
+html.theme-light .text-\[\#a1a1aa\],
+html.theme-light .text-\[\#71717a\] {
+  color: #52525b !important;
+}
+
+/* Glassmorphism navigation overrides in Light mode */
+html.theme-light header .glass {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #09090b !important;
+}
+
+/* Do NOT change green colors! Preserve all green accents */
+html.theme-light .text-\[\#00D084\]:not(.keep-white),
+html.theme-light .text-\[\#00B574\]:not(.keep-white),
+html.theme-light .text-emerald-400:not(.keep-white),
+html.theme-light .text-emerald-500:not(.keep-white),
+html.theme-light .text-emerald-600:not(.keep-white) {
+  color: #00B574 !important;
+}
+
+html.theme-light .bg-\[\#00D084\],
+html.theme-light .bg-\[\#00B574\],
+html.theme-light .bg-emerald-500 {
+  background-color: #00D084 !important;
+}
+
+/* ==========================================================================
+   Hero Responsive Mobile Styles (Preserving Desktop Layout Structure)
+   ========================================================================== */
+.hero-big-scooter {
+  width: clamp(540px, 56%, 1050px) !important;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 100svh !important;
+    min-height: 520px !important;
+  }
+
+  .hero-section > div.relative.z-10 {
+    display: block !important;
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  .hero-blob-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .hero-heading-container {
+    padding-top: 100px !important;
+    margin-bottom: 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 10 !important;
+  }
+
+  .hero-heading {
+    font-size: clamp(1.2rem, 4.5vw, 2.2rem) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.02em !important;
+    text-align: center !important;
+  }
+
+  /* SMALL CARD: positioned inside the upper shape step (shelf) */
+  .hero-card-sm {
+    position: absolute !important;
+    left: 6% !important;
+    top: 18% !important;
+    width: 44% !important;
+    max-width: 160px !important;
+    padding: 8px !important;
+    border-radius: 12px !important;
+    transform: none !important;
+    margin: 0 !important;
+    z-index: 20 !important;
+  }
+
+  .hero-card-sm img {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .hero-card-sm .font-bold {
+    font-size: 8px !important;
+  }
+
+  .hero-card-sm .text-muted-foreground {
+    font-size: 7px !important;
+    line-height: 1.15 !important;
+  }
+
+  /* MAIN SCOOTER: big and responsive */
+  .hero-big-scooter {
+    position: absolute !important;
+    right: -10px !important;
+    bottom: -15px !important;
+    width: 82% !important; /* Made scooty a little big */
+    max-width: 480px !important;
+    display: block !important;
+    transform: none !important;
+    margin: 0 !important;
+    z-index: 5 !important;
+  }
+
+  /* BOTTOM LEFT TEXT BLOCK */
+  .hero-text-block {
+    position: absolute !important;
+    left: 6% !important;
+    bottom: 8% !important;
+    width: 48% !important;
+    max-width: 180px !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+    transform: none !important;
+    margin: 0 !important;
+    z-index: 10 !important;
+  }
+
+  .hero-text-block h2 {
+    text-align: left !important;
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .hero-text-block p {
+    text-align: left !important;
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* RIDERS STATS: positioned on the right */
+  .hero-riders-stats {
+    position: absolute !important;
+    right: 5% !important;
+    top: 25% !important;
+    transform: none !important;
+    margin: 0 !important;
+    z-index: 10 !important;
+  }
+
+  .hero-riders-stats img {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .hero-riders-stats span.text-sm {
+    font-size: 10px !important;
+  }
+
+  .hero-riders-stats span.text-\[10px\] {
+    font-size: 7px !important;
+  }
+}
+
+/* Parts Warehouse Animations & Custom Hover Spotlight */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.grid-scanner-bg {
+  background-size: 30px 30px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 208, 132, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 208, 132, 0.04) 1px, transparent 1px);
+}
+
+html.theme-light .grid-scanner-bg {
+  background-image: 
+    linear-gradient(to right, rgba(0, 181, 116, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 181, 116, 0.04) 1px, transparent 1px);
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
+
+/* Timeline vertical stepper */
+.stepper-line {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+html.theme-light .stepper-line {
+  background: rgba(9, 9, 11, 0.05);
+}
+
+.stepper-progress {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  width: 2px;
+  background: #00D084;
+  transition: height 0.4s ease-in-out;
+  box-shadow: 0 0 10px #00D084;
+}
+
+html.theme-light .stepper-progress {
+  background: #00B574;
+  box-shadow: 0 0 8px #00B574;
+}
+
+/* ============================================================
+   CINEMATIC WAREHOUSE — Arc Rail, Dot Halo, Feature Transitions
+   ============================================================ */
+
+/* Arc navigation dot — outer halo pulse ring */
+@keyframes warehouseDotHalo {
+  0%   { r: 14; opacity: 0.6; }
+  50%  { r: 22; opacity: 0.15; }
+  100% { r: 14; opacity: 0.6; }
+}
+
+/* Entire arc rail pulse (every 4s) */
+@keyframes arcPulse {
+  0%, 100% { opacity: 0.25; }
+  50%       { opacity: 0.55; }
+}
+
+.warehouse-arc-pulse {
+  animation: arcPulse 4s ease-in-out infinite;
+}
+
+/* Dot halo ring — applied via SVG className */
+.warehouse-dot-halo {
+  animation: warehouseDotHalo 2s ease-in-out infinite;
+}
+
+/* Feature title base — overrides handled by GSAP */
+.warehouse-feat-title {
+  will-change: transform, opacity;
+}
+
+/* Feature description base */
+.warehouse-feat-desc {
+  will-change: transform, opacity;
+}
+
+/* Scanner sweep animation that fires across the viewport panel on transition */
+@keyframes scanSweep {
+  0%   { transform: translateY(-120%); opacity: 0.9; }
+  70%  { opacity: 0.5; }
+  100% { transform: translateY(220%);  opacity: 0; }
+}
+
+.warehouse-scan-sweep {
+  animation: scanSweep 0.75s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Thin ambient border glow on the viewport panel */
+@keyframes panelBorderPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 208, 132, 0); }
+  50%       { box-shadow: 0 0 24px 2px rgba(0, 208, 132, 0.08); }
+}
+
+.warehouse-panel {
+  animation: panelBorderPulse 5s ease-in-out infinite;
+  border-radius: 28px;
+}
+
+/* Light-mode overrides */
+html.theme-light .warehouse-panel {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 176, 116, 0.15) !important;
+}
+
+html.theme-light .warehouse-panel .warehouse-hud-label,
+html.theme-light .warehouse-panel .warehouse-coord-label {
+  color: rgba(0, 128, 80, 0.6) !important;
+}
+
+/* Arc rail light-mode: white → black */
+html.theme-light .warehouse-arc-rail .arc-main-line {
+  stroke: black !important;
+}
+
+html.theme-light .warehouse-arc-rail .arc-particle {
+  fill: black !important;
+}
+
+html.theme-light .warehouse-arc-rail .arc-dot {
+  stroke: black !important;
+  fill: black !important;
+}
+
+html.theme-light .warehouse-arc-rail .arc-label {
+  fill: black !important;
+}
+

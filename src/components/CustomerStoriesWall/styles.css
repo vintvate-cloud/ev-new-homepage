@@ -1,0 +1,70 @@
+/* CustomerStoriesWall Premium Styling overrides */
+
+.stories-wall-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Grayscale hover styling for modern editorial look */
+.stories-card-image {
+  filter: grayscale(100%);
+  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stories-card-image:hover {
+  filter: grayscale(0%);
+  transform: scale(1.02);
+}
+
+/* Default Dark Mode Card Theme styles */
+.story-card-wrapper {
+  background-color: #0e120f;
+  border-color: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+}
+
+.story-card-title,
+.story-card-quote,
+.story-card-name {
+  color: #ffffff;
+}
+
+.story-card-subtext {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.story-card-border-line {
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.story-card-quote-mark {
+  color: rgba(255, 255, 255, 0.02);
+}
+
+/* High-Contrast Light Mode Theme overrides when parent html has .theme-light */
+html.theme-light .story-card-wrapper {
+  background-color: #FAFAFA !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+  color: #09090b !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.015) !important;
+}
+
+html.theme-light .story-card-title,
+html.theme-light .story-card-quote,
+html.theme-light .story-card-name {
+  color: #09090b !important;
+}
+
+html.theme-light .story-card-subtext {
+  color: rgba(9, 9, 11, 0.6) !important;
+}
+
+html.theme-light .story-card-border-line {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+html.theme-light .story-card-quote-mark {
+  color: rgba(0, 0, 0, 0.03) !important;
+}
