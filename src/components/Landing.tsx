@@ -18,6 +18,7 @@ import {
   Disc,
   Gauge,
   Globe,
+  Home,
   Leaf,
   Mail,
   Map,
@@ -43,6 +44,20 @@ import {
   Wrench,
   X,
   Zap,
+  Check,
+  Bike,
+  Car,
+  Clock,
+  Gift,
+  IndianRupee,
+  Phone,
+  PhoneCall,
+  ShoppingCart,
+  Instagram,
+  Youtube,
+  Facebook,
+  Twitter,
+  Linkedin,
 } from "lucide-react";
 
 import hero from "@/assets/ev-scooter-hero.png";
@@ -100,11 +115,15 @@ type Theme = "warm" | "mid" | "dark";
 
 /* ---------------- Navigation ---------------- */
 const NAV = [
-  { label: "Vehicles", href: "#vehicles" },
-  { label: "Technology", href: "#tech" },
-  { label: "Interior", href: "#experience" },
-  { label: "Warehouse", href: "#warehouse" },
-  { label: "Company", href: "#company" },
+  { label: "Franchise", href: "#warehouse" },
+  { label: "Careers", href: "#careers" },
+  { label: "Find Service", href: "#ev-services" },
+  { label: "Webinars", href: "#webinars" },
+  { label: "Events", href: "#events" },
+  { label: "EV News", href: "#news" },
+  { label: "Blog", href: "#blog" },
+  { label: "Media", href: "#media" },
+  { label: "Services", href: "#ev-services" },
 ];
 
 function Nav({ theme }: { theme: Theme }) {
@@ -256,14 +275,10 @@ function Nav({ theme }: { theme: Theme }) {
             boxShadow: siteTheme === "light" ? "0 4px 24px rgba(0,0,0,0.06)" : "0 4px 24px rgba(0,0,0,0.4)",
           }}
         >
-          <a href="#top" className="flex items-center gap-2 group">
-            <div className="relative h-7 w-7">
-              <div className="absolute inset-0 rounded-full opacity-90 blur-[1px] group-hover:opacity-100 transition" style={{ background: "linear-gradient(135deg, #00D084, #00A060)" }} />
-              <div className="absolute inset-[3px] rounded-full" style={{ background: siteTheme === "light" ? "#ffffff" : "#030604" }} />
-              <div className="absolute inset-[6px] rounded-full" style={{ background: "linear-gradient(135deg, #00D084, #00A060)" }} />
-            </div>
-            <span id="nav-logo-text" className={`text-[15px] font-semibold tracking-[0.2em] uppercase transition-colors ${siteTheme === "light" ? "text-black" : "text-white"}`}>
-              MY EV SERVICES
+          <a href="#top" className="flex items-center gap-2.5 group">
+            <img src="/logo-myevservice.jpg" alt="My EV Service Logo" className="h-9 w-auto rounded-lg object-contain border border-white/5" />
+            <span id="nav-logo-text" className={`text-[14px] font-bold tracking-[0.15em] uppercase transition-colors ${siteTheme === "light" ? "text-black" : "text-white"}`}>
+              MY EV SERVICE
             </span>
           </a>
 
@@ -273,34 +288,28 @@ function Nav({ theme }: { theme: Theme }) {
               className="relative flex items-center gap-1"
               onMouseLeave={handleNavLeave}
             >
-              <span
-                ref={pillRef}
-                className="pointer-events-none absolute inset-y-1 left-0 rounded-full"
-                style={{
-                  width: 0,
-                  background: "rgba(0, 208, 132, 0.1)",
-                }}
-              />
-              {NAV.map((n, i) => (
-                <a
-                  key={n.label}
-                  ref={(el) => { itemRefs.current[i] = el; }}
-                  href={n.href}
-                  onMouseEnter={() => handleNavEnter(i)}
-                  className={`relative z-10 px-4 py-2 text-[13px] font-medium tracking-wide transition-colors flex items-center gap-1 ${hoverIdx !== null && hoverIdx !== i
-                    ? "text-[#00D084]/60"
-                    : "text-[#00D084]"
-                    }`}
-                >
-                  <span style={{ position: "relative", zIndex: 1 }}>
-                    {n.label}
-                  </span>
-                  <ChevronDown
-                    className={`h-3 w-3 transition-transform duration-300 ${hoverIdx === i ? "rotate-180" : "opacity-40"}`}
-                    style={{ position: "relative", zIndex: 1 }}
-                  />
-                </a>
-              ))}
+              {NAV.map((n, i) => {
+                const hasMenu = i < 5;
+                return (
+                  <a
+                    key={n.label}
+                    ref={(el) => { itemRefs.current[i] = el; }}
+                    href={n.href}
+                    onMouseEnter={() => hasMenu ? handleNavEnter(i) : handleNavLeave()}
+                    className="relative z-10 px-4 py-2 text-[13px] font-medium tracking-wide flex items-center gap-1 text-[#00D084]"
+                  >
+                    <span style={{ position: "relative", zIndex: 1 }}>
+                      {n.label}
+                    </span>
+                    {hasMenu && (
+                      <ChevronDown
+                        className="h-3 w-3 opacity-40"
+                        style={{ position: "relative", zIndex: 1 }}
+                      />
+                    )}
+                  </a>
+                );
+              })}
 
               {/* Mega Menu Dropdown Panel — inside nav so it inherits mouse area */}
               <AnimatePresence>
@@ -444,18 +453,24 @@ function Nav({ theme }: { theme: Theme }) {
               </span>
             </button>
 
+            {/* Cart Icon */}
+            <button className="text-foreground hover:text-[#00D084] transition cursor-pointer p-1">
+              <ShoppingCart className="h-4.5 w-4.5" />
+            </button>
+
             {/* Desktop CTAs */}
             <div className="hidden items-center gap-2 md:flex">
-              <a href="#experience" className="text-[13px] font-medium text-[#00D084]/80 hover:text-[#00D084] transition px-3 py-2">
-                Sign In
+              <a href="#experience" className="text-[13px] font-medium text-foreground hover:text-[#00D084] transition px-3 py-2 flex items-center gap-1.5">
+                <User className="h-4 w-4" />
+                Login
               </a>
               <a
                 href="#experience"
                 className="rounded-full text-[13px] font-semibold flex items-center gap-1.5 px-4 py-2 transition-all hover:opacity-90"
                 style={{ background: "#00D084", color: "#020403" }}
               >
-                Contact
-                <ArrowUpRight className="h-3.5 w-3.5" />
+                <Zap className="h-3.5 w-3.5" />
+                Book Service
               </a>
             </div>
 
@@ -483,7 +498,10 @@ function Nav({ theme }: { theme: Theme }) {
         }}
       >
         <div className="flex items-center justify-between px-6 py-5">
-          <span className="text-[15px] font-semibold tracking-[0.2em] text-foreground uppercase">myevservice</span>
+          <div className="flex items-center gap-2.5">
+            <img src="/logo-myevservice.jpg" alt="My EV Service Logo" className="h-9 w-auto rounded-lg object-contain" />
+            <span className="text-[14px] font-bold tracking-[0.15em] text-foreground uppercase">MY EV SERVICE</span>
+          </div>
           <button aria-label="Close" onClick={() => setOpen(false)} className="inline-flex h-10 w-10 items-center justify-center rounded-full glass text-foreground">
             <X className="h-5 w-5" />
           </button>
@@ -760,16 +778,91 @@ function Hero() {
         {/* Card stack on the left (overlapping the left tab) */}
         <div
           ref={scooterSmRef}
-          className="absolute z-10 pointer-events-auto"
-          style={{ left: "6%", top: "28%", width: "28%" }}
+          className="absolute z-10 pointer-events-auto flex flex-col gap-2.5"
+          style={{ left: "6%", top: "28%", width: "32%", maxWidth: "380px" }}
         >
-          <div className="bg-card rounded-2xl p-3 flex items-center gap-3 shadow-lg border border-border transition-colors duration-300" style={{ color: "var(--foreground)" }}>
+          <div className="bg-card rounded-2xl p-3.5 flex items-center gap-3 shadow-lg border border-border transition-colors duration-300" style={{ color: "var(--foreground)" }}>
             <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center overflow-hidden flex-shrink-0">
               <img src={evScooterSmall} alt="VoltRide X1" className="w-10 h-10 object-contain" />
             </div>
             <div>
               <div className="font-bold text-[11px] uppercase tracking-wider text-foreground">VOLTRIDE X1</div>
-              <div className="text-[10px] text-muted-foreground leading-tight">VoltRide X1 is a stylish</div>
+              <div className="text-[10px] text-muted-foreground leading-tight">VoltRide X1 is a stylish commuter choice.</div>
+            </div>
+          </div>
+
+          {/* High-Tech Command Terminal Dock */}
+          <div className="flex flex-col gap-2 mt-2.5 w-full">
+            <div className="text-[9px] font-mono uppercase tracking-[0.25em] text-[#00D084]/60 flex items-center justify-between px-1">
+              <span>DIAGNOSTIC TELEMETRY DOCK</span>
+              <span className="animate-pulse flex items-center gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084]" />
+                LIVE
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              {/* Button 1: Book Service */}
+              <a
+                href="#ev-services"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#00D084]/30 bg-black/60 p-2.5 transition-all duration-300 hover:border-[#00D084] hover:shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:-translate-y-0.5"
+              >
+                {/* Laser scan line overlay */}
+                <div className="absolute inset-x-0 top-0 h-[1px] bg-[#00D084] opacity-0 group-hover:opacity-100 group-hover:animate-scan transition-opacity duration-300" />
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[8px] font-mono text-[#00D084]/60">CMD_01</span>
+                  <div className="h-1.5 w-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-ping" />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Zap className="h-3.5 w-3.5 text-[#00D084]" />
+                  <span className="text-[10px] font-extrabold tracking-wider uppercase text-white">BOOK SERVICE</span>
+                </div>
+              </a>
+
+              {/* Button 2: Find Centre */}
+              <a
+                href="#nearest-center"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-black/40 p-2.5 transition-all duration-300 hover:border-[#00D084]/50 hover:bg-black/60 hover:-translate-y-0.5"
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[8px] font-mono text-white/45">CMD_02</span>
+                  <span className="text-[7.5px] font-mono text-white/35">PING: 8ms</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />
+                  <span className="text-[10px] font-bold tracking-wider uppercase text-white/90 group-hover:text-white">FIND CENTRE</span>
+                </div>
+              </a>
+
+              {/* Button 3: Request RSA */}
+              <a
+                href="#request-rsa"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-red-500/20 bg-red-950/10 p-2.5 transition-all duration-300 hover:border-red-500 hover:bg-red-950/20 hover:shadow-[0_0_20px_rgba(239,68,68,0.25)] hover:-translate-y-0.5"
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[8px] font-mono text-red-500/60">CMD_03</span>
+                  <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <PhoneCall className="h-3.5 w-3.5 text-red-400 group-hover:text-red-300" />
+                  <span className="text-[10px] font-bold tracking-wider uppercase text-red-400 group-hover:text-red-300">REQUEST RSA</span>
+                </div>
+              </a>
+
+              {/* Button 4: Join Franchise */}
+              <a
+                href="#join-franchise"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-black/40 p-2.5 transition-all duration-300 hover:border-[#00D084]/50 hover:bg-black/60 hover:-translate-y-0.5"
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[8px] font-mono text-white/45">CMD_04</span>
+                  <span className="text-[7.5px] font-mono text-[#00D084]/70">SECURE</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Store className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />
+                  <span className="text-[10px] font-bold tracking-wider uppercase text-white/90 group-hover:text-white">FRANCHISE</span>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -820,6 +913,855 @@ function Hero() {
             <span className="text-sm font-bold text-foreground leading-none">125+</span>
             <span className="text-[10px] text-muted-foreground font-medium">happy riders every day</span>
           </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Select Your EV Type (Image 2) ---------------- */
+const EV_TYPES = [
+  {
+    title: "Electric Scooter",
+    desc: "Personal & smart 2-wheeler commuter vehicles.",
+    icon: <Bike className="h-5 w-5 text-[#00D084]" />,
+    highlight: "12-Point AI Thermal Scanner Included",
+    brands: ["Ola S1", "Ather 450X", "TVS iQube", "Bajaj Chetak"],
+    specs: ["Battery Pack Health Check", "Hub Motor Diagnostics", "BMS Firmware Calibration"],
+    cost: "Starts at ₹499",
+    metric: "99.4% SLA Pass Rate"
+  },
+  {
+    title: "Electric Motorcycle",
+    desc: "High-performance urban & sports electric bikes.",
+    icon: <Bike className="h-5 w-5 text-[#00D084]" />,
+    highlight: "Performance Dyno & Controller Calibration",
+    brands: ["Revolt RV400", "Ultraviolette F77", "Matter AERA", "Tork Kratos"],
+    specs: ["Controller Power Map Tuning", "High-Voltage Isolation Test", "Active Cooling Audit"],
+    cost: "Starts at ₹799",
+    metric: "4.9/5 Rider Rating"
+  },
+  {
+    title: "3-Wheeler Passenger",
+    desc: "Mass transit e-rickshaws and passenger EVs.",
+    icon: <Car className="h-5 w-5 text-[#00D084]" />,
+    highlight: "Heavy Duty Suspension & Powertrain Audit",
+    brands: ["Mahindra Treo", "Piaggio Ape E-City", "Mayuri EV", "Yatri E-Rickshaw"],
+    specs: ["Transmission Gearbox Service", "Differential Axle Alignment", "Battery Swapping Diagnostics"],
+    cost: "Starts at ₹599",
+    metric: "Over 12k Vehicles Serviced"
+  },
+  {
+    title: "3-Wheeler Cargo",
+    desc: "Last-mile heavy duty electric cargo vehicles.",
+    icon: <Truck className="h-5 w-5 text-[#00D084]" />,
+    highlight: "High Capacity Load Distribution Testing",
+    brands: ["Euler HiLoad", "Mahindra Zor Grand", "Altigreen neEV", "Cargo Plus"],
+    specs: ["Chassis Leaf Spring Tune", "BMS Current Limit Check", "Regenerative Braking Calibration"],
+    cost: "Starts at ₹699",
+    metric: "99.8% Fleet Uptime"
+  },
+  {
+    title: "Fleet Vehicles",
+    desc: "Commercial fleet cars and delivery vans.",
+    icon: <Car className="h-5 w-5 text-[#00D084]" />,
+    highlight: "Enterprise SLA & Telematics Synchronization",
+    brands: ["Tata Xpres-T", "BYD e6", "Mahindra eVerito", "Tata Tigor EV"],
+    specs: ["GPS Telematics Diagnostic", "Predictive Cell Aging Scan", "Rapid DC Charging Validation"],
+    cost: "Custom SLA Pricing",
+    metric: "Integrated API Alerts"
+  },
+  {
+    title: "Delivery EVs",
+    desc: "E-bikes and customized micro-mobility vehicles.",
+    icon: <Package className="h-5 w-5 text-[#00D084]" />,
+    highlight: "Rapid 30-Minute Express Turnaround",
+    brands: ["Zypp Cargo", "Yulu Wynn", "Hero Lectro", "Kinetic Green"],
+    specs: ["Dual-Battery Dock Cleanup", "Brake Pad Wear Diagnostic", "Heavy Cargo Carrier Security"],
+    cost: "SLA-Driven Rates",
+    metric: "Doorstep RSA Available"
+  }
+];
+
+function EVTypeSelection() {
+  const [selectedIdx, setSelectedIdx] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scannerRef = useRef<HTMLDivElement>(null);
+
+  const activeType = EV_TYPES[selectedIdx];
+
+  // Scanner animation on active item change
+  useEffect(() => {
+    if (!scannerRef.current) return;
+    gsap.fromTo(scannerRef.current,
+      { opacity: 0.3, scale: 0.98 },
+      { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }
+    );
+  }, [selectedIdx]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof window === "undefined") return;
+
+    gsap.fromTo(".ev-select-item",
+      { opacity: 0, x: -30 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        stagger: 0.08,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 75%",
+        }
+      }
+    );
+  }, []);
+
+  return (
+    <section ref={containerRef} id="ev-services" className="relative bg-[#020403] py-24 border-b border-white/5 overflow-hidden">
+      
+      {/* Background neon ambient spots */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#00D084]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/2 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-6 relative z-10">
+        
+        {/* Header Block */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-[#00D084] font-bold">
+            Interactive Diagnostics Platform
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mt-4 mb-4">
+            Select Your <span className="text-[#00D084]">EV Type</span>
+          </h2>
+          <p className="text-muted-foreground text-sm font-light">
+            Toggle through our multi-brand electric vehicle configurations to see customized diagnostic systems, popular models, and service parameters.
+          </p>
+        </div>
+
+        {/* Dashboard Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Left: 6 Selection Items */}
+          <div className="lg:col-span-5 flex flex-col gap-3 justify-center">
+            {EV_TYPES.map((type, i) => {
+              const isActive = selectedIdx === i;
+              return (
+                <button
+                  key={i}
+                  onClick={() => setSelectedIdx(i)}
+                  className={`ev-select-item text-left w-full rounded-2xl p-5 border transition-all duration-300 relative overflow-hidden flex items-center gap-4 cursor-pointer ${
+                    isActive
+                      ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_25px_rgba(0,208,132,0.08)]"
+                      : "bg-[#050806] border-white/5 hover:border-white/10 hover:bg-[#070b08]"
+                  }`}
+                >
+                  {/* Active highlight glow strip */}
+                  {isActive && (
+                    <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[#00D084]" />
+                  )}
+
+                  {/* Icon Wrapper */}
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 ${
+                    isActive ? "bg-[#00D084]/20" : "bg-white/5"
+                  }`}>
+                    {type.icon}
+                  </div>
+
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold text-sm transition-colors duration-300 group-hover:text-[#00D084]">
+                      {type.title}
+                    </h3>
+                    <p className="text-[11px] text-muted-foreground mt-1 font-light line-clamp-1">
+                      {type.desc}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-end shrink-0">
+                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      isActive ? "bg-[#00D084] scale-125 shadow-[0_0_8px_#00D084]" : "bg-white/10"
+                    }`} />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right: Spec & Diagnostic Cockpit */}
+          <div className="lg:col-span-7">
+            <div
+              ref={scannerRef}
+              className="w-full h-full bg-[#050806] border border-white/5 rounded-3xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden min-h-[420px] transition-all"
+            >
+              {/* Circuit Grid Background Design */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                  backgroundImage: "radial-gradient(#00D084 1px, transparent 0)",
+                  backgroundSize: "24px 24px"
+                }}
+              />
+
+              {/* Laser Scan Animation Line */}
+              <div className="absolute left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#00D084]/60 to-transparent pointer-events-none animate-[scan_3s_ease-in-out_infinite]"
+                style={{
+                  zIndex: 2,
+                  boxShadow: "0 0 12px #00D084"
+                }}
+              />
+
+              {/* Dynamic Header */}
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-[#00D084]/15 flex items-center justify-center text-[#00D084]">
+                      {activeType.icon}
+                    </div>
+                    <div>
+                      <h4 className="text-white font-bold text-base tracking-tight">
+                        {activeType.title} System Diagnostic
+                      </h4>
+                      <span className="text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
+                        Status: Operational
+                      </span>
+                    </div>
+                  </div>
+                  <div className="bg-[#0d1410] border border-[#00D084]/20 rounded-full px-3.5 py-1 text-[11px] font-mono text-[#00D084]">
+                    {activeType.metric}
+                  </div>
+                </div>
+
+                {/* Subtitle / Highlighting */}
+                <div className="mt-6">
+                  <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono block">
+                    Telemetry Focus
+                  </span>
+                  <p className="text-white font-semibold text-sm mt-1.5 flex items-center gap-2">
+                    <Activity className="h-4 w-4 text-[#00D084] animate-pulse" />
+                    {activeType.highlight}
+                  </p>
+                </div>
+
+                {/* Core Diagnostics List */}
+                <div className="mt-8">
+                  <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono block mb-3.5">
+                    Targeted Service Checklist
+                  </span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {activeType.specs.map((spec, index) => (
+                      <div key={index} className="flex items-center gap-2.5 bg-white/[0.01] border border-white/5 rounded-xl p-3 hover:border-white/10 transition-colors">
+                        <Check className="h-4.5 w-4.5 text-[#00D084] shrink-0" />
+                        <span className="text-xs text-white/90 font-light">{spec}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Supported Brands */}
+                <div className="mt-8">
+                  <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono block mb-3">
+                    Supported Multi-Brand Frameworks
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {activeType.brands.map((brand, index) => (
+                      <span
+                        key={index}
+                        className="text-[10px] font-semibold text-white/80 bg-white/5 border border-white/5 rounded-lg px-2.5 py-1"
+                      >
+                        {brand}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Pricing & CTA */}
+              <div className="mt-10 pt-6 border-t border-white/5 flex flex-wrap items-center justify-between gap-6 relative z-10">
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">
+                    Estimated Baseline Cost
+                  </span>
+                  <span className="text-lg font-bold text-white mt-1">
+                    {activeType.cost}
+                  </span>
+                </div>
+                <a
+                  href="#ev-services"
+                  className="rounded-full text-xs font-semibold flex items-center gap-1.5 px-5 py-3 transition-all hover:scale-[1.02] cursor-pointer"
+                  style={{ background: "#00D084", color: "#020403" }}
+                >
+                  <Zap className="h-3.5 w-3.5" />
+                  Initiate Booking
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* Add scanner scan keyframes for scan line */}
+      <style>{`
+        @keyframes scan {
+          0%, 100% { top: 0%; }
+          50% { top: 100%; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* ---------------- Genuine Spare Parts (Image 3) ---------------- */
+const SPARE_PARTS = [
+  {
+    title: "Lithium-Ion Batteries",
+    desc: "High density energy packs with built-in thermal management and battery monitoring system (BMS).",
+    price: "₹24,999",
+    icon: <Zap className="h-5 w-5 text-[#00D084]" />,
+    hud: {
+      type: "ENERGY STORAGE MODULE",
+      density: "240 Wh/kg",
+      thermal: "Max 65°C Limit",
+      config: "20S8P NMC Cells",
+      voltage: "72V Nominal"
+    }
+  },
+  {
+    title: "Smart Chargers",
+    desc: "Fast charging power adapter blocks with voltage protection and intelligent auto-shutoff.",
+    price: "₹3,499",
+    icon: <Zap className="h-5 w-5 text-[#00D084]" />,
+    hud: {
+      type: "HIGH FREQUENCY RECTIFIER",
+      density: "96.8% Efficiency",
+      thermal: "Active Fan Cooled",
+      config: "CAN-Bus Protocol v2.1",
+      voltage: "84V Peak Out"
+    }
+  },
+  {
+    title: "Motor Controllers",
+    desc: "Advanced digital motor controller units for smooth power delivery and regenerative braking.",
+    price: "₹7,999",
+    icon: <Cpu className="h-5 w-5 text-[#00D084]" />,
+    hud: {
+      type: "DIGITAL POWER INVERTER",
+      density: "Field-Oriented Control",
+      thermal: "Aluminium Heatsink",
+      config: "ARM Cortex-M4 MCU",
+      voltage: "Phase Peak 350A"
+    }
+  },
+  {
+    title: "EV Optimized Tires",
+    desc: "Low rolling resistance specialized tubeless tires designed for maximum range and grip.",
+    price: "₹1,899",
+    icon: <Bike className="h-6 w-6 text-[#00D084]" />,
+    hud: {
+      type: "COMPOSITE GRIP TYRE",
+      density: "Low Roll Compound",
+      thermal: "All-Weather Silica",
+      config: "Load Index 92 (630kg)",
+      voltage: "Speed Rating P"
+    }
+  }
+];
+
+function GenuineSpareParts() {
+  const [hoveredIdx, setHoveredIdx] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hudRef = useRef<HTMLDivElement>(null);
+
+  const activePart = SPARE_PARTS[hoveredIdx];
+
+  // Micro-animate HUD on active part change
+  useEffect(() => {
+    if (!hudRef.current) return;
+    gsap.fromTo(hudRef.current,
+      { opacity: 0.4, scale: 0.99 },
+      { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }
+    );
+  }, [hoveredIdx]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof window === "undefined") return;
+
+    gsap.fromTo(".spare-part-card",
+      { opacity: 0, y: 35 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.0,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 75%",
+        }
+      }
+    );
+  }, []);
+
+  return (
+    <section ref={containerRef} id="warehouse" className="relative bg-[#020403] py-28 border-b border-white/5 overflow-hidden">
+      
+      {/* Ambient glowing spots */}
+      <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#00D084]/2 rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-6 relative z-10">
+        
+        {/* Section Header */}
+        <div className="max-w-2xl mb-16">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-[#00D084] font-mono font-bold">
+            E-Commerce Catalogue
+          </span>
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mt-4 mb-4">
+            Genuine <span className="text-[#00D084]">Spare Parts</span>
+          </h2>
+          <p className="text-muted-foreground text-sm font-light">
+            Order 100% certified OEM-standard electric components directly from our service hubs. Guaranteed compatibility, full warranty coverage, and next-day dispatch.
+          </p>
+        </div>
+
+        {/* Dashboard layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Left panel: Live CAD Telemetry HUD */}
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#050806] to-[#010201] border border-white/5 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+            
+            {/* Grid graphic background */}
+            <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
+              style={{
+                backgroundImage: "linear-gradient(to right, #00D084 1px, transparent 1px), linear-gradient(to bottom, #00D084 1px, transparent 1px)",
+                backgroundSize: "20px 20px"
+              }}
+            />
+
+            <div ref={hudRef} className="relative z-10 flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                  <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">
+                    CAD Specification HUD
+                  </span>
+                  <span className="text-[9px] font-mono text-[#00D084] bg-[#00D084]/10 rounded px-2 py-0.5 font-bold">
+                    OEM_CERTIFIED
+                  </span>
+                </div>
+
+                <div className="mt-6">
+                  <span className="text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
+                    System Classification
+                  </span>
+                  <h4 className="text-white font-bold text-lg mt-1 font-mono tracking-tight">
+                    {activePart.hud.type}
+                  </h4>
+                </div>
+
+                {/* Specs List */}
+                <div className="mt-8 space-y-4">
+                  <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
+                    <span className="text-white/40 font-mono">VOLTAGE CLASS</span>
+                    <span className="text-white font-mono font-bold">{activePart.hud.voltage}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
+                    <span className="text-white/40 font-mono">EFFICIENCY / DENSITY</span>
+                    <span className="text-white font-mono font-bold">{activePart.hud.density}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
+                    <span className="text-white/40 font-mono">BMS CONFIGURATION</span>
+                    <span className="text-white font-mono font-bold">{activePart.hud.config}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
+                    <span className="text-white/40 font-mono">THERMAL COEFFICIENT</span>
+                    <span className="text-[#00D084] font-mono font-bold">{activePart.hud.thermal}</span>
+                  </div>
+                </div>
+
+                {/* Assurance points */}
+                <ul className="mt-8 space-y-3">
+                  <li className="flex items-center gap-2.5 text-xs text-white/70">
+                    <Check className="h-4 w-4 text-[#00D084]" />
+                    <span>100% Genuine OEM Standards</span>
+                  </li>
+                  <li className="flex items-center gap-2.5 text-xs text-white/70">
+                    <Check className="h-4 w-4 text-[#00D084]" />
+                    <span>12-Month Replacement Warranty</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Order action */}
+              <div className="mt-12 pt-6 border-t border-white/5 flex items-center justify-between gap-6">
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-white/40 font-mono uppercase">Catalogue Price</span>
+                  <span className="text-xl font-bold text-white font-mono mt-0.5">{activePart.price}</span>
+                </div>
+                <a
+                  href="#warehouse"
+                  className="rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer"
+                  style={{ background: "#00D084", color: "#020403" }}
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  Order Component
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right panel: Parts Grid */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {SPARE_PARTS.map((part, i) => {
+              const isHovered = hoveredIdx === i;
+              return (
+                <div
+                  key={i}
+                  onMouseEnter={() => setHoveredIdx(i)}
+                  className={`spare-part-card group bg-[#050806] border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                    isHovered
+                      ? "border-[#00D084]/40 bg-[#070c09] shadow-[0_15px_30px_-10px_rgba(0,208,132,0.05)]"
+                      : "border-white/5 hover:border-white/10 hover:bg-[#070b08]"
+                  }`}
+                >
+                  <div>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${
+                      isHovered ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-[#00D084]/80"
+                    }`}>
+                      {part.icon}
+                    </div>
+                    <h3 className="text-white font-bold text-sm mt-5 group-hover:text-[#00D084] transition-colors">
+                      {part.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-3 leading-relaxed font-light">
+                      {part.desc}
+                    </p>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+                    <span className="text-white/60 font-bold">{part.price}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#00D084]/80 group-hover:text-[#00D084] transition-colors flex items-center gap-1">
+                      Inspect HUD
+                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- How It Works (Image 4) ---------------- */
+function HowItWorks() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [configPack, setConfigPack] = useState<"standard" | "pro">("pro");
+  const [batteryCharge, setBatteryCharge] = useState(72);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Animate battery charge value for the calibration step
+  useEffect(() => {
+    if (activeStep === 2) {
+      const interval = setInterval(() => {
+        setBatteryCharge((prev) => (prev >= 100 ? 72 : prev + 1));
+      }, 150);
+      return () => clearInterval(interval);
+    }
+  }, [activeStep]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof window === "undefined") return;
+
+    gsap.fromTo(".how-it-works-title",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.0,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+        }
+      }
+    );
+
+    gsap.fromTo(".step-premium-card",
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        stagger: 0.15,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 70%",
+        }
+      }
+    );
+  }, []);
+
+  return (
+    <section ref={containerRef} className="relative bg-[#020403] py-32 border-b border-white/5 overflow-hidden">
+      {/* Editorial aesthetic lighting */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00D084]/2 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-emerald-500/[0.01] rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-6 relative z-10">
+        
+        {/* Editorial Section Header */}
+        <div className="how-it-works-title flex flex-col items-center text-center max-w-3xl mx-auto mb-20">
+          <div className="flex items-center gap-2 rounded-full border border-[#00D084]/30 bg-[#0d1410] px-3.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#00D084]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
+            The Service Cycle
+          </div>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mt-6 mb-6 leading-tight">
+            Engineered <span className="text-[#00D084]">Simplicity.</span>
+          </h2>
+          <p className="text-muted-foreground text-sm md:text-base font-light leading-relaxed max-w-2xl">
+            A three-phase service workflow engineered to deliver maximum performance, real-time tracking, and complete clarity for your electric vehicle.
+          </p>
+        </div>
+
+        {/* 3 Step Premium Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative items-stretch">
+          
+          {/* Connecting line */}
+          <div className="hidden lg:block absolute top-[280px] left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#00D084]/10 to-transparent pointer-events-none" />
+
+          {/* STEP 1: Select & Book */}
+          <div
+            onClick={() => setActiveStep(0)}
+            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${
+              activeStep === 0
+                ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
+                : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
+            }`}
+          >
+            {/* Top Indicator */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono text-[#00D084] font-bold">01 // DIAGNOSTIC CONFIG</span>
+              <span className={`w-2 h-2 rounded-full transition-colors duration-300 ${activeStep === 0 ? "bg-[#00D084] shadow-[0_0_8px_#00D084]" : "bg-white/10"}`} />
+            </div>
+
+            {/* Interactive Custom Console Card */}
+            <div className="my-8 bg-[#020403] border border-white/5 rounded-2xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                  <span className="text-[10px] font-mono text-white/40">VEHICLE SELECT</span>
+                  <span className="text-[10px] font-mono text-[#00D084]">ACTIVE_SESSION</span>
+                </div>
+                <div className="flex items-center gap-3 bg-white/[0.02] border border-white/5 rounded-xl p-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#00D084]/10 flex items-center justify-center">
+                    <Bike className="h-4.5 w-4.5 text-[#00D084]" />
+                  </div>
+                  <div>
+                    <h4 className="text-white text-xs font-bold font-mono">SCOOTER_S1_PRO</h4>
+                    <p className="text-[9px] text-white/40 font-mono mt-0.5">ATHER / OLA GEN 2</p>
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <span className="text-[9px] font-mono text-white/40 uppercase block mb-2">Service Intensity</span>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setConfigPack("standard"); }}
+                      className={`py-2 px-3 rounded-lg text-[10px] font-mono font-bold transition-all border ${
+                        configPack === "standard"
+                          ? "bg-[#00D084]/15 border-[#00D084]/30 text-[#00D084]"
+                          : "bg-white/[0.02] border-white/5 text-white/60 hover:border-white/10"
+                      }`}
+                    >
+                      STANDARD PACK
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setConfigPack("pro"); }}
+                      className={`py-2 px-3 rounded-lg text-[10px] font-mono font-bold transition-all border ${
+                        configPack === "pro"
+                          ? "bg-[#00D084]/15 border-[#00D084]/30 text-[#00D084]"
+                          : "bg-white/[0.02] border-white/5 text-white/60 hover:border-white/10"
+                      }`}
+                    >
+                      PRO DIAGNOSTICS
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono">
+                <span className="text-white/40">EST. TIME</span>
+                <span className="text-white font-bold">{configPack === "standard" ? "45 MINS" : "90 MINS"}</span>
+              </div>
+            </div>
+
+            {/* Core Info */}
+            <div className="mt-auto">
+              <h3 className="text-white font-bold text-xl tracking-tight group-hover:text-[#00D084] transition-colors">
+                Select & Book
+              </h3>
+              <p className="text-muted-foreground text-xs leading-relaxed mt-3 font-light">
+                Choose your specific EV type, configure diagnostic modules with clear pricing, and book your service slot.
+              </p>
+            </div>
+          </div>
+
+          {/* STEP 2: Diagnostic Pickup */}
+          <div
+            onClick={() => setActiveStep(1)}
+            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${
+              activeStep === 1
+                ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
+                : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
+            }`}
+          >
+            {/* Top Indicator */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono text-[#00D084] font-bold">02 // ACTIVE DISPATCH</span>
+              <span className={`w-2 h-2 rounded-full transition-colors duration-300 ${activeStep === 1 ? "bg-[#00D084] shadow-[0_0_8px_#00D084]" : "bg-white/10"}`} />
+            </div>
+
+            {/* Live GPS Telemetry Mock */}
+            <div className="my-8 bg-[#020403] border border-white/5 rounded-2xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                  <span className="text-[10px] font-mono text-white/40">TECH EN ROUTE</span>
+                  <span className="text-[9px] font-mono text-[#00D084] flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
+                    LIVE
+                  </span>
+                </div>
+
+                {/* Radar Grid Line Mock */}
+                <div className="h-28 bg-[#050806] border border-white/5 rounded-xl relative overflow-hidden flex items-center justify-center">
+                  <div className="absolute inset-0 opacity-10"
+                    style={{
+                      backgroundImage: "radial-gradient(#00D084 1px, transparent 0)",
+                      backgroundSize: "16px 16px"
+                    }}
+                  />
+                  {/* Location Pulse dots */}
+                  <div className="absolute top-1/3 left-1/3 w-2 h-2 rounded-full bg-white/20" />
+                  <div className="absolute bottom-1/3 right-1/3 w-3 h-3 rounded-full bg-[#00D084] flex items-center justify-center shadow-[0_0_12px_#00D084]">
+                    <div className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                  </div>
+                  {/* Dotted path */}
+                  <div className="absolute w-2/3 h-0.5 border-t border-dashed border-[#00D084]/40 rotate-12" />
+                  
+                  <span className="absolute bottom-2 left-3 text-[9px] font-mono text-white/40">TRANSIT PROTOCOL: EN-ROUTE</span>
+                </div>
+              </div>
+
+              <div className="mt-4 flex flex-col gap-2">
+                <div className="flex justify-between text-[10px] font-mono">
+                  <span className="text-white/40">DISPATCHED TECH</span>
+                  <span className="text-white font-bold">VIKRAM MEHTA</span>
+                </div>
+                <div className="flex justify-between text-[10px] font-mono">
+                  <span className="text-white/40">ETA PROTOCOL</span>
+                  <span className="text-[#00D084] font-bold">14 MINUTES</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Core Info */}
+            <div className="mt-auto">
+              <h3 className="text-white font-bold text-xl tracking-tight group-hover:text-[#00D084] transition-colors">
+                Pickup & Visit
+              </h3>
+              <p className="text-muted-foreground text-xs leading-relaxed mt-3 font-light">
+                A certified technician visits your doorstep for diagnostic checks or arranges a secure transport to our service lab.
+              </p>
+            </div>
+          </div>
+
+          {/* STEP 3: Calibration & Return */}
+          <div
+            onClick={() => setActiveStep(2)}
+            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${
+              activeStep === 2
+                ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
+                : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
+            }`}
+          >
+            {/* Top Indicator */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono text-[#00D084] font-bold">03 // RESTORATION LAB</span>
+              <span className={`w-2 h-2 rounded-full transition-colors duration-300 ${activeStep === 2 ? "bg-[#00D084] shadow-[0_0_8px_#00D084]" : "bg-white/10"}`} />
+            </div>
+
+            {/* Animated Calibration Dashboard */}
+            <div className="my-8 bg-[#020403] border border-white/5 rounded-2xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                  <span className="text-[10px] font-mono text-white/40">CALIBRATION RUN</span>
+                  <span className="text-[10px] font-mono text-[#00D084] animate-pulse">SOH_RESTORED</span>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-white/60">BATTERY CELL HEALTH</span>
+                    <span className="text-xs font-mono text-[#00D084] font-bold">{batteryCharge}%</span>
+                  </div>
+                  <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                    <div
+                      className="bg-[#00D084] h-full rounded-full transition-all duration-150"
+                      style={{ width: `${batteryCharge}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-5 space-y-2">
+                  <div className="flex justify-between text-[9px] font-mono">
+                    <span className="text-white/40">MOTOR TORQUE BALANCE</span>
+                    <span className="text-white font-bold">PASS // 100%</span>
+                  </div>
+                  <div className="flex justify-between text-[9px] font-mono">
+                    <span className="text-white/40">BMS THERMAL COEFFICIENT</span>
+                    <span className="text-white font-bold">NOMINAL // 38°C</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono">
+                <span className="text-white/40">LAB STAMP</span>
+                <span className="text-white bg-[#00D084]/15 border border-[#00D084]/20 rounded px-1.5 py-0.5 text-[8px] font-bold tracking-widest uppercase">
+                  OEM_WARRANTY
+                </span>
+              </div>
+            </div>
+
+            {/* Core Info */}
+            <div className="mt-auto">
+              <h3 className="text-white font-bold text-xl tracking-tight group-hover:text-[#00D084] transition-colors">
+                Service & Smart Return
+              </h3>
+              <p className="text-muted-foreground text-xs leading-relaxed mt-3 font-light">
+                Your vehicle undergoes diagnostic checks and calibration to OEM standards, then gets delivered in peak health.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Global CTA button */}
+        <div className="flex justify-center mt-16">
+          <a
+            href="#ev-services"
+            className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#0a0f0c] px-7 py-4 text-sm font-semibold text-[#00D084] transition-all hover:border-[#00D084]/40 hover:bg-[#00D084]/5"
+          >
+            Start Your Configuration Cycles
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </a>
         </div>
 
       </div>
@@ -3433,52 +4375,219 @@ function CTA() {
 
 /* ---------------- Footer ---------------- */
 function Footer() {
-  const cols = [
-    { h: "Vehicles", l: ["Model V", "Model L", "Model T", "Roadster N", "Fleet"] },
-    { h: "Energy", l: ["Solar Panels", "Solar Roof", "Powerwall", "Megapack", "Grid Services"] },
-    { h: "Company", l: ["About", "Careers", "Investors", "Press", "Sustainability"] },
-    { h: "Support", l: ["Charging", "Service", "Warranty", "Owners", "Contact"] },
+  const servicesLinks = [
+    { label: "Battery Health Check", href: "#ev-services" },
+    { label: "Charging System", href: "#ev-services" },
+    { label: "Motor & Drivetrain", href: "#ev-services" },
+    { label: "AC & Thermal", href: "#ev-services" },
+    { label: "Software Updates", href: "#ev-services" },
+    { label: "Spare Parts", href: "#ev-services" },
+    { label: "Find Service Centers", href: "#nearest-center" },
   ];
+
+  const companyLinks = [
+    { label: "About Us", href: "#about" },
+    { label: "Careers", href: "#careers" },
+    { label: "Franchise", href: "#join-franchise" },
+    { label: "Service Network", href: "#ev-services" },
+    { label: "Press & Media", href: "#news" },
+    { label: "Contact Us", href: "#contact" },
+    { label: "Investors", href: "#investors" },
+  ];
+
+  const supportLinks = [
+    { label: "Help Center", href: "#help" },
+    { label: "FAQs", href: "#faq" },
+    { label: "Service Warranty", href: "#warranty" },
+    { label: "Track Service", href: "#track" },
+    { label: "Feedback", href: "#feedback" },
+    { label: "Report an Issue", href: "#report" },
+  ];
+
   return (
-    <footer className="relative border-t border-border pt-20 pb-10">
-      <div className="mx-auto max-w-[1400px] px-6">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-6">
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-2">
-              <div className="relative h-6 w-6">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-ember to-foreground" />
-                <div className="absolute inset-[2px] rounded-full" style={{ background: "var(--background)" }} />
-                <div className="absolute inset-[5px] rounded-full bg-gradient-to-br from-ember to-foreground" />
-              </div>
-              <span className="text-[13px] font-semibold tracking-[0.2em] text-foreground uppercase">myevservice</span>
+    <footer className="relative border-t border-white/5 bg-[#020403] pt-24 pb-12 overflow-hidden">
+      <div className="mx-auto max-w-[1400px] px-8 md:px-16">
+        
+        {/* Main Grid */}
+        <div className="grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-start">
+          
+          {/* Col 1: Brand & Contact Info (3 columns) */}
+          <div className="lg:col-span-3 flex flex-col gap-6">
+            <div className="flex items-center gap-2.5">
+              <img src="/logo-myevservice.jpg" alt="My EV Service Logo" className="h-8.5 w-auto rounded-lg object-contain border border-white/5" />
+              <span className="text-[13px] font-bold tracking-[0.2em] text-white uppercase">MY EV SERVICE</span>
             </div>
-            <p className="mt-6 max-w-xs text-sm text-muted-foreground">
-              Building India's ultimate multi-brand EV service ecosystem.
-              Engineered for scale and efficiency.
+            
+            <p className="text-xs text-white/55 leading-relaxed">
+              India's leading EV service platform. Expert care for your electric 2-wheelers and 3-wheelers, delivered at your doorstep by certified technicians.
             </p>
-          </div>
-          {cols.map((c) => (
-            <div key={c.h}>
-              <h4 className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{c.h}</h4>
-              <ul className="mt-4 space-y-3 text-sm">
-                {c.l.map((it) => (
-                  <li key={it}>
-                    <a href="#" className="text-foreground/85 hover:text-ember transition">{it}</a>
-                  </li>
-                ))}
-              </ul>
+
+            <div className="flex flex-col gap-3 text-xs text-white/70">
+              <a href="tel:+919582390001" className="flex items-center gap-3.5 hover:text-[#00D084] transition-colors">
+                <Phone className="h-4 w-4 text-[#00D084]" />
+                <span>+91 95823 90001</span>
+              </a>
+              <a href="mailto:info@myevservice.in" className="flex items-center gap-3.5 hover:text-[#00D084] transition-colors">
+                <Mail className="h-4 w-4 text-[#00D084]" />
+                <span>info@myevservice.in</span>
+              </a>
+              <div className="flex items-start gap-3.5">
+                <MapPin className="h-4 w-4 text-[#00D084] shrink-0 mt-0.5" />
+                <span className="leading-relaxed">405, Vantage Tower C, NDA-Pashan Link Road, Bhavdhan, Pune - 411042</span>
+              </div>
             </div>
-          ))}
+
+            {/* Social Links */}
+            <div className="flex items-center gap-3">
+              {[
+                { Icon: Instagram, href: "#instagram" },
+                { Icon: Youtube, href: "#youtube" },
+                { Icon: Facebook, href: "#facebook" },
+                { Icon: Twitter, href: "#twitter" },
+                { Icon: Linkedin, href: "#linkedin" },
+              ].map(({ Icon, href }, idx) => (
+                <a
+                  key={idx}
+                  href={href}
+                  className="h-8 w-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00D084] hover:bg-white/[0.08] hover:border-[#00D084]/40 transition-all duration-300"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Col 2: Services Links (2 columns) */}
+          <div className="lg:col-span-2 flex flex-col gap-5">
+            <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">SERVICES</h4>
+            <ul className="space-y-3.5 text-xs">
+              {servicesLinks.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="text-white/60 hover:text-[#00D084] transition-colors">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 3: Company Links (2 columns) */}
+          <div className="lg:col-span-2 flex flex-col gap-5">
+            <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">COMPANY</h4>
+            <ul className="space-y-3.5 text-xs">
+              {companyLinks.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="text-white/60 hover:text-[#00D084] transition-colors">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 4: Support Links (2 columns) */}
+          <div className="lg:col-span-2 flex flex-col gap-5">
+            <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">SUPPORT</h4>
+            <ul className="space-y-3.5 text-xs">
+              {supportLinks.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="text-white/60 hover:text-[#00D084] transition-colors">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 5: Stay Updated & Download (3 columns) */}
+          <div className="lg:col-span-3 flex flex-col gap-6">
+            
+            {/* Subscription Form */}
+            <div className="flex flex-col gap-3">
+              <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">STAY UPDATED</h4>
+              <p className="text-xs text-white/50 leading-relaxed">EV tips, service offers & updates.</p>
+              <div className="flex items-center gap-2 max-w-[280px] bg-white/5 border border-white/10 rounded-full pl-4 pr-1.5 py-1.5 focus-within:border-[#00D084]/50 transition-colors duration-300">
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  className="bg-transparent border-none outline-none text-xs text-white placeholder-white/20 w-full"
+                />
+                <button className="h-8 w-8 rounded-full bg-[#00D084] text-[#020403] flex items-center justify-center hover:opacity-95 transition-opacity active:scale-95 shrink-0" aria-label="Subscribe">
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+              <span className="text-[10px] text-white/30 italic">No spam. Unsubscribe anytime.</span>
+            </div>
+
+            {/* App downloads */}
+            <div className="flex flex-col gap-3 mt-2">
+              <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">DOWNLOAD APP</h4>
+              
+              <div className="flex flex-col gap-2.5">
+                <a
+                  href="#ios"
+                  className="flex items-center gap-3.5 bg-white/5 border border-white/10 rounded-xl px-4 py-2 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 max-w-[200px]"
+                >
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current text-white">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-.96.04-2.13.64-2.82 1.45-.6.69-1.12 1.83-.98 2.94 1.08.08 2.15-.52 2.81-1.33z" />
+                  </svg>
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-mono text-white/40 tracking-wider">Available on iOS</span>
+                    <span className="text-xs font-bold text-white tracking-wide">App Store</span>
+                  </div>
+                </a>
+
+                <a
+                  href="#android"
+                  className="flex items-center gap-3.5 bg-white/5 border border-white/10 rounded-xl px-4 py-2 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 max-w-[200px]"
+                >
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current text-[#00D084]">
+                    <path d="M3 5.27v13.46c0 .88.72 1.6 1.6 1.6h14.8c.88 0 1.6-.72 1.6-1.6V5.27c0-.88-.72-1.6-1.6-1.6H4.6c-.88 0-1.6.72-1.6 1.6zm14.16 6.73L6.2 17.65c-.47.28-1.08-.07-1.08-.63V6.98c0-.56.61-.91 1.08-.63l10.96 5.65c.45.24.45.89 0 1.13v-.13z" />
+                  </svg>
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-mono text-white/40 tracking-wider">Available on Android</span>
+                    <span className="text-xs font-bold text-white tracking-wide">Play Store</span>
+                  </div>
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
-        <div className="mt-20 flex flex-col-reverse items-start justify-between gap-4 border-t border-border pt-8 sm:flex-row sm:items-center relative z-10">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} myevservice. All rights reserved.
-          </p>
-          <div className="flex gap-6 text-xs text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition">Privacy</a>
-            <a href="#" className="hover:text-foreground transition">Terms</a>
-            <a href="#" className="hover:text-foreground transition">Cookies</a>
-            <a href="#" className="hover:text-foreground transition">Accessibility</a>
+
+        {/* Security & Ratings Badges Row */}
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 py-6 border-t border-b border-white/5 mt-16 text-white/45 text-[10px] font-mono tracking-wider uppercase">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-4.5 w-4.5 text-[#00D084]" />
+            <span>256 bit SSL Secured</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-4.5 w-4.5 text-[#00D084]" />
+            <span>ISO 9001 Certified</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Star className="h-4 w-4 text-[#00D084] fill-[#00D084]" />
+            <span>Google Rated 4.9</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Zap className="h-4 w-4 text-[#00D084] fill-[#00D084]" />
+            <span>Powered by GreenTech</span>
+          </div>
+        </div>
+
+        {/* Bottom copyright segment */}
+        <div className="mt-8 flex flex-col-reverse items-start justify-between gap-6 relative z-10 lg:flex-row lg:items-center text-[11px] text-white/40">
+          <div className="flex flex-col gap-2">
+            <span>© 2025-2026, Autobot Emobility Solutions Private Limited. All Rights Reserved.</span>
+            <span className="flex items-center gap-1">
+              Made with <span className="text-[#00D084] text-xs">♥</span> in India
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[9.5px] uppercase tracking-wider">
+            <a href="#terms" className="hover:text-[#00D084] transition-colors">Terms of Service</a>
+            <a href="#privacy" className="hover:text-[#00D084] transition-colors">Privacy Policy</a>
+            <a href="#refund" className="hover:text-[#00D084] transition-colors">Refund Policy</a>
+            <a href="#cookie" className="hover:text-[#00D084] transition-colors">Cookie Policy</a>
+            <a href="#franchise-terms" className="hover:text-[#00D084] transition-colors">Franchise Terms</a>
+            <a href="#disclaimer" className="hover:text-[#00D084] transition-colors">Disclaimer</a>
+            <a href="#safety" className="hover:text-[#00D084] transition-colors">HV Safety</a>
           </div>
         </div>
 
@@ -3488,8 +4597,515 @@ function Footer() {
             myevservice
           </h1>
         </div>
+
       </div>
     </footer>
+  );
+}
+
+/* ---------------- Latest News & Updates ---------------- */
+function LatestNews() {
+  const newsItems = [
+    {
+      id: "news-01",
+      category: "FLEET ENGINEERING",
+      date: "19 JUL 2026",
+      readTime: "5 MIN",
+      title: "Revolutionizing Fleet Logistics: The Autonomous Battery Swapping Protocol V3.",
+      desc: "An in-depth look at our low-latency firmware calibrations that reduce commercial battery swap cycles down to 90 seconds.",
+      img: tech,
+      tag: "FEATURED JOURNAL"
+    },
+    {
+      id: "news-02",
+      category: "DECENTRALIZED POWER",
+      date: "14 JUL 2026",
+      readTime: "4 MIN",
+      title: "Decentralized Micro-Grid Network Launches in Western Transport Corridors.",
+      desc: "Deploying high-throughput solar-storage nodes to ensure uninterrupted 3W cargo fleet uptime.",
+      img: energy,
+      tag: "SYSTEM UPDATE"
+    },
+    {
+      id: "news-03",
+      category: "SAFETY LABS",
+      date: "08 JUL 2026",
+      readTime: "3 MIN",
+      title: "Solid-State Battery Service Certifications: Standardizing High-Voltage Calibrations.",
+      desc: "Our engineering team sets safety guidelines for the next-generation solid-state cell packaging diagnostics.",
+      img: interior,
+      tag: "RESEARCH"
+    },
+    {
+      id: "news-04",
+      category: "PARTNER NETWORK",
+      date: "01 JUL 2026",
+      readTime: "6 MIN",
+      title: "Autobot India Expansion: 40 New High-Throughput Service Nodes Online.",
+      desc: "Scaling specialized diagnostic hubs to match rapid EV adoption across major industrial cities.",
+      img: factory,
+      tag: "GROWTH"
+    }
+  ];
+
+  return (
+    <section id="news" className="relative w-full bg-[#020403] py-32 md:py-48 overflow-hidden border-t border-white/5">
+      {/* Editorial Decorative Grid Lines */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
+        <div className="absolute left-[8%] inset-y-0 w-[1px] bg-white/5" />
+        <div className="absolute right-[8%] inset-y-0 w-[1px] bg-white/5" />
+        <div className="absolute top-[20%] inset-x-0 h-[1px] bg-white/5" />
+        <div className="absolute bottom-[20%] inset-x-0 h-[1px] bg-white/5" />
+      </div>
+
+      <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
+        
+        {/* Massive Editorial Header Block */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+          <div className="max-w-xl">
+            <span className="text-[10px] font-mono tracking-[0.3em] text-[#00D084] uppercase block mb-3">
+              [ THE JOURNAL / VOL. 08 ]
+            </span>
+            <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-white leading-[0.85] m-0">
+              ECOSYSTEM<br />
+              <span className="text-[#00D084] italic font-serif normal-case font-light">dispatch</span>
+            </h2>
+          </div>
+          <div className="max-w-xs md:text-right font-mono text-white/40 text-[11px] leading-relaxed">
+            <span>UPDATED DAILY // COORDINATING MULTI-BRAND REAL-TIME TELEMETRY DIAGNOSTICS & HARDWARE STANDARDS.</span>
+          </div>
+        </div>
+
+        {/* Asymmetrical Editorial Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* FEATURED STORY (Left Column - Spans 7 cols) */}
+          <div className="lg:col-span-7 group">
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-card transition-colors duration-500 hover:border-[#00D084]/40">
+              
+              {/* Image wrap with slow scale */}
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img 
+                  src={newsItems[0].img} 
+                  alt={newsItems[0].title}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100"
+                />
+                
+                {/* Visual indicator corner tags */}
+                <div className="absolute top-5 left-5 bg-[#00D084] text-[#020403] text-[9px] font-mono font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                  {newsItems[0].tag}
+                </div>
+                <div className="absolute top-5 right-5 bg-black/60 text-white text-[9px] font-mono px-2 py-0.5 rounded tracking-widest backdrop-blur-sm">
+                  {newsItems[0].id}
+                </div>
+              </div>
+
+              {/* Text content block */}
+              <div className="p-8">
+                {/* Meta details */}
+                <div className="flex flex-wrap items-center gap-4 text-[9.5px] font-mono text-[#00D084] mb-4">
+                  <span>{newsItems[0].category}</span>
+                  <span className="text-white/20">•</span>
+                  <span className="text-white/55">{newsItems[0].date}</span>
+                  <span className="text-white/20">•</span>
+                  <span className="text-white/55">READ TIME: {newsItems[0].readTime}</span>
+                </div>
+
+                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight mb-4 group-hover:text-[#00D084] transition-colors duration-300">
+                  {newsItems[0].title}
+                </h3>
+                
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                  {newsItems[0].desc}
+                </p>
+
+                {/* Read CTA with drawing line hover */}
+                <div className="inline-flex items-center gap-2 text-white font-mono text-[11px] font-bold tracking-wider group/cta">
+                  <span>ACCESS DECRYPTED REPORT</span>
+                  <ArrowRight className="h-3.5 w-3.5 text-[#00D084] transition-transform duration-300 group-hover/cta:translate-x-1.5" />
+                </div>
+              </div>
+
+              {/* Progress reading bar indicator */}
+              <div className="h-[2px] w-0 bg-[#00D084] group-hover:w-full transition-all duration-700 ease-out" />
+            </div>
+          </div>
+
+          {/* EDITORIAL FEED LIST (Right Column - Spans 5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            
+            {newsItems.slice(1).map((item) => (
+              <a
+                href={`#news-${item.id}`}
+                key={item.id}
+                className="group flex flex-col sm:flex-row gap-5 p-5 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-[#00D084]/20 transition-all duration-300"
+              >
+                {/* Mini Image thumbnail */}
+                <div className="w-full sm:w-[130px] aspect-[4/3] rounded-xl overflow-hidden shrink-0 border border-white/5 bg-muted">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100"
+                  />
+                </div>
+
+                {/* Info */}
+                <div className="flex flex-col justify-between py-1">
+                  <div>
+                    {/* Meta */}
+                    <div className="flex items-center gap-3 text-[9px] font-mono text-[#00D084] mb-2">
+                      <span>{item.category}</span>
+                      <span className="text-white/30">•</span>
+                      <span className="text-white/50">{item.date}</span>
+                    </div>
+
+                    {/* Headline */}
+                    <h4 className="text-sm md:text-base font-bold text-white leading-snug group-hover:text-[#00D084] transition-colors duration-300 mb-2">
+                      {item.title}
+                    </h4>
+                  </div>
+
+                  {/* Read arrow */}
+                  <div className="flex items-center gap-1.5 text-white/40 group-hover:text-white font-mono text-[9px] tracking-widest mt-2 transition-colors">
+                    <span>READ REPORT</span>
+                    <ArrowRight className="h-3 w-3 text-[#00D084] -translate-x-1 group-hover:translate-x-0 transition-transform duration-300" />
+                  </div>
+                </div>
+              </a>
+            ))}
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Ecosystem Offerings ---------------- */
+function EcosystemOfferings() {
+  const cards = [
+    {
+      id: "doorstep",
+      badge: "Professional service at your home or office",
+      title: "EV Service at Your Doorstep",
+      desc: "Get your electric vehicle serviced without leaving your home. Our certified technicians come to you with all the necessary tools and genuine parts.",
+      cta: "Book Doorstep Service",
+      href: "#ev-services",
+      Icon: Home,
+      accent: "#00D084",
+      bgGradient: "from-[#00D084]/10 to-[#020403]",
+      borderAccent: "border-[#00D084]/20 hover:border-[#00D084]/50",
+      layout: "left"
+    },
+    {
+      id: "rsa",
+      badge: "Emergency support anywhere, anytime",
+      title: "24/7 Roadside Assistance",
+      desc: "Breakdown? Battery drained? Tire puncture? Our RSA team is available 24/7 with average response time of just 30 minutes.",
+      cta: "Request Emergency RSA",
+      href: "#request-rsa",
+      Icon: PhoneCall,
+      accent: "#FF8A00",
+      bgGradient: "from-[#FF8A00]/10 to-[#020403]",
+      borderAccent: "border-[#FF8A00]/20 hover:border-[#FF8A00]/50",
+      layout: "right"
+    },
+    {
+      id: "fleet",
+      badge: "Predictable operations for EV fleets",
+      title: "Fleet AMC for EV Businesses",
+      desc: "Comprehensive annual maintenance contracts for EV fleets. Priority service, dedicated account manager, and predictable maintenance costs.",
+      cta: "Explore Fleet Plans",
+      href: "#join-franchise",
+      Icon: Truck,
+      accent: "#0066FF",
+      bgGradient: "from-[#0066FF]/10 to-[#020403]",
+      borderAccent: "border-[#0066FF]/20 hover:border-[#0066FF]/50",
+      layout: "left"
+    },
+    {
+      id: "franchise",
+      badge: "Join India's fastest growing EV service network",
+      title: "Start Your EV Service Business",
+      desc: "Get operations, inventory allocation, technician management, live tracking, and analytics — all in one platform. Low investment, high returns.",
+      cta: "Apply for Franchise",
+      href: "#join-franchise",
+      Icon: Store,
+      accent: "#9E00FF",
+      bgGradient: "from-[#9E00FF]/10 to-[#020403]",
+      borderAccent: "border-[#9E00FF]/20 hover:border-[#9E00FF]/50",
+      layout: "right"
+    }
+  ];
+
+  return (
+    <section id="offerings" className="relative w-full bg-[#020403] py-24 md:py-32 overflow-hidden border-t border-white/5">
+      {/* Background Decorative Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+
+      <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
+        
+        {/* Section Header */}
+        <div className="mb-16">
+          <span className="text-[10px] font-mono tracking-[0.3em] text-[#00D084] uppercase block mb-3">
+            [ ECOSYSTEM DISPATCH / KEY CAPABILITIES ]
+          </span>
+          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white leading-none m-0">
+            Tailored solutions.<br />
+            <span className="text-[#00D084] italic font-serif normal-case font-light">engineered for action.</span>
+          </h2>
+        </div>
+
+        {/* Grid Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {cards.map((card) => {
+            const isLeft = card.layout === "left";
+            return (
+              <div
+                key={card.id}
+                className={`group relative rounded-[32px] border ${card.borderAccent} bg-gradient-to-br ${card.bgGradient} p-8 md:p-10 flex flex-col justify-between overflow-hidden min-h-[380px] transition-all duration-500 hover:-translate-y-1`}
+              >
+                {/* Background Translucent Floating Icon */}
+                <div
+                  className={`absolute bottom-[-20px] ${
+                    isLeft ? "right-[-20px]" : "left-[-20px]"
+                  } pointer-events-none opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-105 transition-all duration-500`}
+                >
+                  <card.Icon className="w-64 h-64 stroke-[1.2]" style={{ color: card.accent }} />
+                </div>
+
+                {/* Top Row: Badge & Accent Glow Dot */}
+                <div className="mb-8 flex items-center justify-between">
+                  <div
+                    style={{
+                      background: `${card.accent}0a`,
+                      border: `1px solid ${card.accent}20`
+                    }}
+                    className="flex items-center gap-2 rounded-full px-4.5 py-1.5 text-[10px] font-mono tracking-wider uppercase"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ backgroundColor: card.accent }} />
+                    <span className="text-white/80">{card.badge}</span>
+                  </div>
+                </div>
+
+                {/* Main Content Area */}
+                <div className={`flex flex-col gap-4 relative z-10 ${isLeft ? "max-w-[80%] text-left items-start" : "max-w-[80%] ml-auto text-right items-end"}`}>
+                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white leading-none">
+                    {card.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-white/55 leading-relaxed">
+                    {card.desc}
+                  </p>
+                </div>
+
+                {/* Bottom CTA Button */}
+                <div className={`mt-8 flex relative z-10 ${isLeft ? "justify-start" : "justify-end"}`}>
+                  <a
+                    href={card.href}
+                    style={{
+                      boxShadow: `0 4px 20px ${card.accent}20`
+                    }}
+                    className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-white text-black font-extrabold text-[10.5px] tracking-wider uppercase px-5 py-3.5 hover:scale-[1.03] active:scale-95 transition-all duration-300 group-hover:bg-[#00D084] group-hover:text-black"
+                  >
+                    <span>{card.cta}</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Download Our App ---------------- */
+function DownloadApp() {
+  return (
+    <section id="app" className="relative w-full bg-[#030604] py-32 md:py-40 overflow-hidden border-t border-white/5">
+      {/* Decorative Glow */}
+      <div className="absolute top-1/2 left-3/4 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#00D084]/5 blur-[120px] pointer-events-none" />
+
+      <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          
+          {/* LEFT: TEXT, RATINGS, REVIEWS, QR CODE */}
+          <div className="lg:col-span-7 flex flex-col gap-8">
+            
+            {/* Header */}
+            <div>
+              <span className="text-[10px] font-mono tracking-[0.3em] text-[#00D084] uppercase block mb-3">
+                [ APP CONNECTIVITY / IOS & ANDROID ]
+              </span>
+              <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-none m-0">
+                Your cockpit,<br />
+                <span className="text-[#00D084] italic font-serif normal-case font-light">digitized.</span>
+              </h2>
+              <p className="text-muted-foreground text-base max-w-lg mt-6 leading-relaxed">
+                Unlock real-time telemetry diagnostics, predictive health alerts, and instant 30-second service booking straight from your mobile device.
+              </p>
+            </div>
+
+            {/* Ratings & Stores */}
+            <div className="flex flex-wrap gap-8 items-center border-t border-b border-white/5 py-6">
+              
+              {/* App Store Rating */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm font-bold text-white">4.9</span>
+                  <div className="flex gap-0.5 text-[#00D084]">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                    ))}
+                  </div>
+                </div>
+                <span className="text-[9.5px] font-mono text-white/40 uppercase tracking-wider">APP STORE // 12K RATINGS</span>
+              </div>
+
+              {/* Google Play Rating */}
+              <div className="flex flex-col gap-2 border-l border-white/10 pl-8">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm font-bold text-white">4.8</span>
+                  <div className="flex gap-0.5 text-[#00D084]">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                    ))}
+                  </div>
+                </div>
+                <span className="text-[9.5px] font-mono text-white/40 uppercase tracking-wider">PLAY STORE // 24K RATINGS</span>
+              </div>
+
+            </div>
+
+            {/* Reviews */}
+            <div className="flex flex-col gap-4 max-w-lg">
+              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4.5">
+                <p className="text-xs text-white/60 italic leading-relaxed mb-3">
+                  "The live telemetry is absolutely flawless. I can track the health of my battery and request a diagnostic technician to my house in under 30 seconds."
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-bold text-white uppercase tracking-wider">— AMIT K. (OLA S1 OWNER)</span>
+                  <div className="flex gap-0.5 text-[#00D084]/80">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-2 w-2 fill-current" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4.5">
+                <p className="text-xs text-white/60 italic leading-relaxed mb-3">
+                  "Having instant access to detailed diagnostic parameters makes EV ownership worry-free. Exceptional service app!"
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-bold text-white uppercase tracking-wider">— ROHIT S. (ATHER 450X OWNER)</span>
+                  <div className="flex gap-0.5 text-[#00D084]/80">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-2 w-2 fill-current" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* QR Code and Scan Info */}
+            <div className="flex flex-col sm:flex-row items-center gap-6 mt-2">
+              <div className="relative p-3.5 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center w-28 h-28 group overflow-hidden shrink-0">
+                {/* Laser scan line in QR */}
+                <div className="absolute inset-x-0 top-0 h-[1.5px] bg-[#00D084] animate-scan" />
+                
+                {/* QR Code SVG */}
+                <svg viewBox="0 0 100 100" className="w-20 h-20 text-[#00D084] fill-current">
+                  <path d="M0 0h30v10H10v20H0V0zm40 0h20v10H40V0zm30 0h30v30H90V10H80v10H70V0zM0 40h10v20H0V40zm30 10h10v10H30V50zm50-10h20v10H80V40zM0 70h30v30H20V90H10v10H0V70zm40 20h20v10H40V90zm30-20h30v10H80v10h10v10H70V70zm10 10h10v10H80V80z" />
+                  <rect x="20" y="20" width="10" height="10" />
+                  <rect x="70" y="20" width="10" height="10" />
+                  <rect x="20" y="70" width="10" height="10" />
+                  <rect x="45" y="45" width="10" height="10" />
+                </svg>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-[10px] font-mono text-[#00D084] tracking-[0.2em] uppercase mb-1.5">[ SCAN TO PAIR / DOWNLOAD ]</span>
+                <span className="text-[11px] text-white/50 leading-relaxed max-w-[280px]">Point your smartphone camera at the code to pair and launch the dashboard application instantly.</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* RIGHT: SMARTPHONE MOCKUP FRAME */}
+          <div className="lg:col-span-5 flex justify-center items-center">
+            
+            {/* Phone Mockup Frame */}
+            <div className="relative mx-auto w-[290px] h-[580px] rounded-[42px] border-[8px] border-white/10 bg-black shadow-[0_0_50px_rgba(0,208,132,0.15)] overflow-hidden flex flex-col p-3 transition-transform duration-500 hover:scale-[1.02]">
+              
+              {/* Ear Speaker / Camera Notch */}
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-32 h-5 rounded-full bg-black z-20 flex items-center justify-center">
+                <div className="w-12 h-1 bg-white/20 rounded-full mb-1" />
+                <div className="w-2.5 h-2.5 bg-white/10 rounded-full ml-2 mb-1" />
+              </div>
+
+              {/* Internal Screen Content */}
+              <div className="flex-1 rounded-[32px] bg-[#030604] border border-white/5 overflow-hidden flex flex-col pt-8 px-4 text-white relative">
+                
+                {/* App Header */}
+                <div className="flex items-center justify-between mt-2 mb-6">
+                  <div className="flex items-center gap-1.5">
+                    <div className="h-5 w-5 rounded bg-[#00D084] flex items-center justify-center">
+                      <Zap className="h-3 w-3 text-black fill-current" />
+                    </div>
+                    <span className="text-[10px] font-bold tracking-wider uppercase text-white/90">MY EV SERVICE</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-[9px] text-white/50">
+                    <Battery className="h-3.5 w-3.5 text-[#00D084]" />
+                    <span>84%</span>
+                  </div>
+                </div>
+
+                {/* Battery Dial Screen */}
+                <div className="flex-1 flex flex-col items-center justify-center gap-6">
+                  
+                  {/* Battery Dial */}
+                  <div className="relative w-36 h-36 rounded-full border-4 border-dashed border-[#00D084]/20 flex items-center justify-center">
+                    <div className="absolute inset-2 rounded-full border-2 border-[#00D084] border-t-transparent animate-spin" style={{ animationDuration: '6s' }} />
+                    <div className="flex flex-col items-center">
+                      <span className="text-[9px] font-mono text-white/40 tracking-wider">BATTERY STATE</span>
+                      <span className="text-3xl font-black text-white mt-0.5">84%</span>
+                      <span className="text-[9px] text-[#00D084] font-semibold mt-1 tracking-wider uppercase">[ HEALTHY ]</span>
+                    </div>
+                  </div>
+
+                  {/* Tech specs inside phone */}
+                  <div className="w-full bg-white/[0.03] border border-white/5 rounded-2xl p-3.5 flex flex-col gap-2.5">
+                    <div className="flex justify-between items-center text-[10px]">
+                      <span className="text-white/45">TEMPERATURE</span>
+                      <span className="font-mono text-white">32°C</span>
+                    </div>
+                    <div className="h-[1px] bg-white/5" />
+                    <div className="flex justify-between items-center text-[10px]">
+                      <span className="text-white/45">RANGE CAPACITY</span>
+                      <span className="font-mono text-white">142 km</span>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Bottom App Actions */}
+                <div className="pb-4 mt-auto">
+                  <button className="w-full py-2.5 rounded-xl bg-[#00D084] text-black font-extrabold text-[10px] tracking-wider uppercase shadow-[0_0_15px_rgba(0,208,132,0.3)] hover:opacity-90 transition-opacity">
+                    INITIATE CHARGE
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -3514,6 +5130,8 @@ function Landing() {
       {/* WARM LIGHT theme */}
       <div className="theme-warm">
         <Hero />
+        <EVTypeSelection />
+        <HowItWorks />
         <CinematicEcosystem />
         <EVServices />
         <ValuePackages />
@@ -3527,9 +5145,13 @@ function Landing() {
       <div className="theme-mid" style={{ backgroundColor: "var(--background)" }}>
         <Stats />
         <PartsWarehouse />
+        <GenuineSpareParts />
         <ResourcesJourney />
         <Factory />
         <CustomerStoriesWall />
+        <LatestNews />
+        <EcosystemOfferings />
+        <DownloadApp />
         <FAQ />
         <TechnicianCareers />
         <Footer />
