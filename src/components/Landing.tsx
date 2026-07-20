@@ -1104,14 +1104,6 @@ function EVTypeSelection() {
                 }}
               />
 
-              {/* Laser Scan Animation Line */}
-              <div className="absolute left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#00D084]/60 to-transparent pointer-events-none animate-[scan_3s_ease-in-out_infinite]"
-                style={{
-                  zIndex: 2,
-                  boxShadow: "0 0 12px #00D084"
-                }}
-              />
-
               {/* Dynamic Header */}
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-5">
@@ -1458,6 +1450,155 @@ function GenuineSpareParts() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ---------------- How It Works Horizontal (Cinematic 4-Step) ---------------- */
+function HowItWorksHorizontal() {
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const ctx = gsap.context(() => {
+      let mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
+        const getScrollWidth = () => {
+          const scrollWidth = sectionRef.current?.scrollWidth || 0;
+          return scrollWidth;
+        };
+
+        // Distance required to slide in and center the cards container
+        const getTranslateX = () => {
+          const scrollWidth = getScrollWidth();
+          return -((scrollWidth + window.innerWidth) / 2);
+        };
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            pin: true,
+            scrub: 1,
+            start: "top top",
+            end: () => `+=${Math.abs(getTranslateX())}`,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // Translate the cards container to the center of the viewport
+        tl.to(sectionRef.current, {
+          x: () => getTranslateX(),
+          ease: "none",
+        }, 0);
+
+        // Fade out the stationary title block in the center as cards slide in
+        tl.to(".how-it-works-title-layer", {
+          opacity: 0,
+          scale: 0.95,
+          ease: "power1.inOut",
+        }, 0);
+
+        // Animate the progress of the circuit pipeline
+        tl.fromTo(
+          ".circuit-progress-line",
+          { width: "0%" },
+          {
+            width: "100%",
+            ease: "none",
+          },
+          0
+        );
+      });
+    }, triggerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const steps = [
+    {
+      num: "01",
+      title: "Select Service",
+      desc: "Choose from doorstep service or visit our service centers"
+    },
+    {
+      num: "02",
+      title: "Choose Location",
+      desc: "Enter your address or select nearest service center"
+    },
+    {
+      num: "03",
+      title: "Technician Diagnosis",
+      desc: "Our certified technician diagnoses your EV with AI tools"
+    },
+    {
+      num: "04",
+      title: "Service Completion",
+      desc: "Get your EV serviced with genuine parts and warranty"
+    }
+  ];
+
+  return (
+    <section ref={triggerRef} className="relative w-full bg-black overflow-hidden lg:h-screen flex items-center select-none border-b border-white/5">
+      {/* 1. Stationary Title (Centered on desktop, z-index 10) */}
+      <div className="how-it-works-title-layer w-full lg:absolute lg:inset-0 flex flex-col items-center justify-center px-6 lg:z-10 text-center lg:pointer-events-none mb-12 lg:mb-0">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/30 bg-[#0d1410] px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#00D084] w-fit mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
+          Simple 4-Step Process
+        </div>
+        <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+          How It <span className="text-[#00D084]">Works</span>
+        </h2>
+        <p className="text-muted-foreground text-sm md:text-base font-light leading-relaxed max-w-md mx-auto">
+          Simple 4-step process to get your EV serviced
+        </p>
+        <div className="hidden lg:flex items-center gap-2 text-xs font-mono text-[#00D084]/60 mt-12 animate-pulse justify-center">
+          <span>SCROLL DOWN TO REVEAL PROCESS</span>
+          <ArrowRight className="h-4 w-4" />
+        </div>
+      </div>
+
+      {/* 2. Sliding Cards Track (z-index 20) */}
+      <div 
+        ref={sectionRef} 
+        className="w-full flex flex-col lg:absolute lg:top-0 lg:left-full lg:h-full lg:w-max lg:flex-row lg:items-center py-20 px-6 lg:py-0 lg:px-0 z-20"
+      >
+        <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:px-24 w-full">
+          
+          {/* Animated Connecting Circuit Pipeline */}
+          <div className="hidden lg:block absolute left-[246px] right-[246px] top-[68px] h-[2px] bg-white/5 z-0">
+            <div className="circuit-progress-line h-full bg-gradient-to-r from-[#00D084] to-emerald-400 w-0 shadow-[0_0_10px_#00D084]" />
+          </div>
+
+          {/* Cards */}
+          {steps.map((step, idx) => (
+            <div
+              key={idx}
+              className="w-full lg:w-[300px] bg-[#050806] border border-white/5 hover:border-[#00D084]/30 rounded-[32px] p-8 pt-10 pb-10 flex flex-col items-center min-h-[280px] relative transition-all duration-300 hover:shadow-[0_20px_40px_-20px_rgba(0,208,132,0.06)] shrink-0 z-10 group"
+            >
+              {/* Circle number */}
+              <div className="w-14 h-14 rounded-full bg-[#00D084]/10 border border-[#00D084]/20 flex items-center justify-center text-[#00D084] text-base font-bold font-mono shadow-[0_0_15px_rgba(0,208,132,0.1)] group-hover:scale-110 transition-transform duration-300">
+                {step.num}
+              </div>
+
+              {/* Title */}
+              <h3 className="text-white font-extrabold text-xl tracking-tight mt-6 group-hover:text-[#00D084] transition-colors duration-300 text-center">
+                {step.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-muted-foreground text-xs leading-relaxed mt-4 font-light text-center max-w-[240px]">
+                {step.desc}
+              </p>
+            </div>
+          ))}
+
+        </div>
+      </div>
+    </section>
+
+
   );
 }
 
@@ -5146,6 +5287,7 @@ function Landing() {
         <Stats />
         <PartsWarehouse />
         <GenuineSpareParts />
+        <HowItWorksHorizontal />
         <ResourcesJourney />
         <Factory />
         <CustomerStoriesWall />
