@@ -71,6 +71,8 @@ import factory from "@/assets/factory.jpg";
 import botanicalBg from "@/assets/botanical-bg.png";
 import evScooterHero from "@/assets/ev-scooter-hero.png";
 import evScooterSmall from "@/assets/ev-scooter-small.png";
+import evMotorcycleHero from "@/assets/ev-motorcycle-hero.png";
+import evThreewheelerHero from "@/assets/ev-threewheeler-hero.png";
 import { Ecosystem } from "./Ecosystem";
 
 if (typeof window !== "undefined") {
@@ -529,137 +531,153 @@ function Nav({ theme }: { theme: Theme }) {
 }
 
 /* ---------------- Hero ---------------- */
+const HERO_SLIDES = [
+  {
+    id: "scooter",
+    heading: "THE PREMIER EV SERVICE ECOSYSTEM",
+    cardTitle: "VOLTRIDE X1",
+    cardDesc: "VoltRide X1 is a stylish commuter choice.",
+    cardImg: evScooterSmall,
+    bottomTitle: "SMART MOBILITY FOR EVERYONE",
+    bottomDesc: "Enjoy smooth rides, easy charging, and modern design made to simplify short trips across the city.",
+    bigImg: evScooterSmall,
+    bigImgStyle: {
+      width: "clamp(480px, 50%, 980px)",
+      bottom: "-90px",
+      right: "5%",
+    },
+    ghostText: "EASY BOOKING IN SECONDS",
+    statsValue: "125+",
+    statsLabel: "happy riders every day",
+    gradStart: "#00D084",
+    gradEnd: "#00B574",
+    riders: [
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80"
+    ],
+    commands: [
+      { cmd: "CMD_01", label: "BOOK SERVICE", icon: "zap", href: "#ev-services" },
+      { cmd: "CMD_02", label: "FIND CENTRE", icon: "map-pin", href: "#nearest-center" },
+      { cmd: "CMD_03", label: "REQUEST RSA", icon: "phone-call", href: "#request-rsa", isRsa: true },
+      { cmd: "CMD_04", label: "FRANCHISE", icon: "store", href: "#join-franchise" },
+    ]
+  },
+  {
+    id: "motorcycle",
+    heading: "PERFORMANCE MOTORCYCLE TUNING CYCLE",
+    cardTitle: "APEX RAPTOR",
+    cardDesc: "Raptor series for high-velocity sports dynamics.",
+    cardImg: evMotorcycleHero,
+    bottomTitle: "UNLEASH HYPER SPORT PERFORMANCE",
+    bottomDesc: "Calibrate throttle response, monitor high-speed dyno telemetry, and diagnostics to OEM standards.",
+    bigImg: evMotorcycleHero,
+    bigImgStyle: {
+      width: "clamp(420px, 46%, 860px)",
+      bottom: "20px",
+      right: "7%",
+    },
+    ghostText: "DYNO TUNED FOR TRACKS",
+    statsValue: "340+",
+    statsLabel: "track tests this week",
+    gradStart: "#059669",
+    gradEnd: "#047857",
+    riders: [
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80",
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&h=100&q=80",
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100&q=80"
+    ],
+    commands: [
+      { cmd: "TUNE_01", label: "DYNO RUN", icon: "activity", href: "#ev-services" },
+      { cmd: "TUNE_02", label: "ECU FLASH", icon: "cpu", href: "#ev-services" },
+      { cmd: "TUNE_03", label: "SUSPENSION", icon: "wrench", href: "#ev-services" },
+      { cmd: "TUNE_04", label: "DIAGNOSTICS", icon: "crosshair", href: "#ev-services" },
+    ]
+  },
+  {
+    id: "cargo",
+    heading: "COMMERCIAL 3-WHEELER FLIGHT SYSTEMS",
+    cardTitle: "CARGOPRO 3",
+    cardDesc: "Commercial heavy-load cargo chassis.",
+    cardImg: evThreewheelerHero,
+    bottomTitle: "MAXIMIZE COMMERCIAL FLEET UPTIME",
+    bottomDesc: "Engineered for robust urban cargo delivery logistics with 12-point battery swapping thermal diagnostics.",
+    bigImg: evThreewheelerHero,
+    bigImgStyle: {
+      width: "clamp(440px, 48%, 920px)",
+      bottom: "-10px",
+      right: "6%",
+    },
+    ghostText: "99.8% UPTIME GUARANTEE",
+    statsValue: "1,200+",
+    statsLabel: "fleets managed daily",
+    gradStart: "#10b981",
+    gradEnd: "#059669",
+    riders: [
+      "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=100&h=100&q=80",
+      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=100&h=100&q=80",
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&h=100&q=80"
+    ],
+    commands: [
+      { cmd: "FLT_01", label: "BATTERY SWAP", icon: "zap", href: "#ev-services" },
+      { cmd: "FLT_02", label: "LOAD SCAN", icon: "gauge", href: "#ev-services" },
+      { cmd: "FLT_03", label: "HUB ROUTER", icon: "map", href: "#ev-services" },
+      { cmd: "FLT_04", label: "FLEET CONNECT", icon: "globe", href: "#ev-services" },
+    ]
+  }
+];
+
 function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const blobRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
-  const leftPanelRef = useRef<HTMLDivElement>(null);
-  const scooterBigRef = useRef<HTMLImageElement>(null);
-  const scooterSmRef = useRef<HTMLDivElement>(null);
-  const scrollCueRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const GREEN = "#00D084";
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const scrollLeft = scrollContainerRef.current.scrollLeft;
+    const width = scrollContainerRef.current.clientWidth;
+    if (width > 0) {
+      const index = Math.round(scrollLeft / width);
+      if (index !== activeSlide) {
+        setActiveSlide(index);
+      }
+    }
+  };
 
+  const scrollToSlide = (index: number) => {
+    if (!scrollContainerRef.current) return;
+    const width = scrollContainerRef.current.clientWidth;
+    scrollContainerRef.current.scrollTo({
+      left: index * width,
+      behavior: "smooth"
+    });
+    setActiveSlide(index);
+  };
+
+  // Auto-play interval
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+    const interval = setInterval(() => {
+      scrollToSlide((activeSlide + 1) % HERO_SLIDES.length);
+    }, 7000);
+    return () => clearInterval(interval);
+  }, [activeSlide]);
 
-      /* 1 ─ blob expands from right */
-      tl.fromTo(blobRef.current,
-        { scaleX: 0, scaleY: 0.5, opacity: 0, transformOrigin: "right center" },
-        { scaleX: 1, scaleY: 1, opacity: 1, duration: 1.1, ease: "expo.inOut" },
-        0
-      );
-
-      /* 2 ─ heading chars rise */
-      const chars = gsap.utils.toArray<HTMLElement>(".hchar", headingRef.current!);
-      tl.fromTo(chars,
-        { y: 90, opacity: 0, rotateX: -50, transformOrigin: "bottom" },
-        { y: 0, opacity: 1, rotateX: 0, duration: 0.9, stagger: 0.032 },
-        0.12
-      );
-
-      /* 3 ─ left panel slides from left */
-      tl.fromTo(leftPanelRef.current,
-        { x: -70, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.9 },
-        0.55
-      );
-
-      /* 4 ─ big scooter sweeps in from bottom-right */
-      tl.fromTo(scooterBigRef.current,
-        { x: 100, y: 200, opacity: 0, scale: 0.78 },
-        { x: 0, y: 0, opacity: 1, scale: 1, duration: 1.4 },
-        0.25
-      );
-
-
-      /* 6 ─ small scooter slides up from corner */
-      tl.fromTo(scooterSmRef.current,
-        { y: 70, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9 },
-        1.0
-      );
-
-      /* 7 ─ scroll cue fades in */
-      tl.fromTo(scrollCueRef.current,
-        { opacity: 0, y: 6 },
-        { opacity: 1, y: 0, duration: 0.7 },
-        1.5
-      );
-
-      /* 8 ─ continuous float loop on big scooter */
-      gsap.to(scooterBigRef.current, {
-        y: -22,
-        duration: 3.6,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-        delay: 1.8,
-      });
-
-      /* 9 ─ Scroll animation: Morph heading into navbar (DISABLED FOR NOW)
-      const updateMorph = () => {
-        const navLogo = document.getElementById("nav-logo-text");
-        if (!headingRef.current || !navLogo) return;
-
-        // Reset transforms temporarily to get accurate unscaled bounds
-        const currentTransform = headingRef.current.style.transform;
-        headingRef.current.style.transform = "none";
-        
-        const headingRect = headingRef.current.getBoundingClientRect();
-        const logoRect = navLogo.getBoundingClientRect();
-        
-        headingRef.current.style.transform = currentTransform;
-
-        const scale = logoRect.width / headingRect.width;
-        // Calculate raw distance
-        const xDist = logoRect.left - headingRect.left;
-        
-        // Since the element scrolls up naturally by the height of the container over the duration of the ScrollTrigger,
-        // we must compensate for that upward movement to make it land exactly on the logo.
-        const scrollDistance = containerRef.current!.offsetHeight;
-        const yDist = logoRect.top - headingRect.top + scrollDistance;
-
-        gsap.to(headingRef.current, {
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-            invalidateOnRefresh: true, // Recalculate on resize
-          },
-          x: () => {
-            const nav = document.getElementById("nav-logo-text");
-            if (!nav) return xDist;
-            return nav.getBoundingClientRect().left - headingRef.current!.getBoundingClientRect().left;
-          },
-          y: () => {
-            const nav = document.getElementById("nav-logo-text");
-            if (!nav) return yDist;
-            const currentScrollDist = containerRef.current!.offsetHeight;
-            return nav.getBoundingClientRect().top - headingRect.top + currentScrollDist;
-          },
-          scale: () => {
-             const nav = document.getElementById("nav-logo-text");
-             if (!nav) return scale;
-             return nav.getBoundingClientRect().width / headingRect.width;
-          },
-          transformOrigin: "left top",
-          ease: "none",
-        });
-      };
-      
-      // Delay to ensure DOM is ready
-      setTimeout(updateMorph, 500);
-      */
-
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const HEADING = "THE PREMIER EV SERVICE ECOSYSTEM";
+  const renderIcon = (iconName: string) => {
+    switch (iconName) {
+      case "zap": return <Zap className="h-3.5 w-3.5 text-[#00D084]" />;
+      case "map-pin": return <MapPin className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
+      case "phone-call": return <PhoneCall className="h-3.5 w-3.5 text-red-400 group-hover:text-red-300" />;
+      case "store": return <Store className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
+      case "activity": return <Activity className="h-3.5 w-3.5 text-[#00D084]" />;
+      case "cpu": return <Cpu className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
+      case "wrench": return <Wrench className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
+      case "crosshair": return <Crosshair className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
+      case "gauge": return <Gauge className="h-3.5 w-3.5 text-[#00D084]" />;
+      case "map": return <Map className="h-3.5 w-3.5 text-[#00D084]" />;
+      case "globe": return <Globe className="h-3.5 w-3.5 text-[#00D084]" />;
+      default: return <Zap className="h-3.5 w-3.5" />;
+    }
+  };
 
   return (
     <section
@@ -668,254 +686,307 @@ function Hero() {
       className="relative w-full overflow-hidden transition-colors duration-300"
       style={{ height: "100svh", minHeight: 700, background: "var(--background)" }}
     >
+      {/* Scrollable Slides Container */}
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {HERO_SLIDES.map((slide, index) => {
+          const isCurrent = index === activeSlide;
 
-      {/* Custom shaped container (Green instead of orange) */}
-      <div ref={blobRef} className="absolute inset-0 z-[1] pointer-events-none">
-        <svg viewBox="0 0 1000 600" preserveAspectRatio="none" className="w-full h-full">
-          <defs>
-            <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#00D084" />
-              <stop offset="100%" stopColor="#00B574" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M 85,138 
-               L 315,138 
-               Q 375,138 375,198 
-               Q 375,222 399,222 
-               L 915,222 
-               Q 975,222 975,282 
-               L 975,504 
-               Q 975,564 915,564 
-               L 85,564 
-               Q 25,564 25,504 
-               L 25,198 
-               Q 25,138 85,138 Z"
-            fill="url(#greenGrad)"
-          />
-        </svg>
-
-        {/* Ghost text inside the green shape */}
-        <div
-          className="absolute pointer-events-none font-black uppercase leading-[0.9] select-none"
-          style={{
-            fontSize: "clamp(2rem, 5.5vw, 6.2rem)",
-            color: "rgba(255, 255, 255, 0.12)",
-            top: "65%",
-            left: "58%",
-            transform: "translate(-50%, -50%)",
-            letterSpacing: "-0.02em",
-            fontFamily: "var(--font-sans)",
-            width: "60%",
-            whiteSpace: "normal",
-          }}
-        >
-          EASY BOOKING IN<br />SECONDS
-        </div>
-      </div>
-
-      {/* MAIN LAYOUT */}
-      <div className="relative z-10 flex flex-col h-full">
-
-        {/* HEADING */}
-        <div
-          ref={headingRef}
-          className="w-full text-center"
-          style={{
-            paddingTop: "clamp(100px, 12vh, 130px)",
-            zIndex: 5,
-            position: "relative",
-          }}
-        >
-          <h1
-            className="m-0 p-0 leading-none transition-colors duration-300 flex justify-center flex-wrap"
-            style={{
-              color: "var(--foreground)",
-              fontSize: "clamp(1.5rem, 4.2vw, 4.8rem)",
-              fontWeight: 900,
-              letterSpacing: "-0.02em",
-              fontFamily: "var(--font-sans)",
-            }}
-          >
-            {/* "THE" */}
-            <span className="uppercase mr-[0.25em] inline-block">
-              {"THE".split("").map((ch, i) => (
-                <span key={i} className="hchar inline-block">
-                  {ch}
-                </span>
-              ))}
-            </span>
-
-            {/* "Premier" */}
-            <span 
-              className="italic text-[#00D084] mr-[0.25em] inline-block"
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontWeight: 400,
-                textTransform: "none",
-              }}
+          return (
+            <div
+              key={slide.id}
+              className="w-screen h-full flex-shrink-0 snap-start relative overflow-hidden flex flex-col justify-between md:block"
             >
-              {"Premier".split("").map((ch, i) => (
-                <span key={i} className="hchar inline-block">
-                  {ch}
-                </span>
-              ))}
-            </span>
+              {/* Background Blob Shape */}
+              <div className="absolute inset-0 z-[1] pointer-events-none">
+                <svg viewBox="0 0 1000 600" preserveAspectRatio="none" className="w-full h-full opacity-80 md:opacity-100">
+                  <defs>
+                    <linearGradient id={`grad-${slide.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor={slide.gradStart} />
+                      <stop offset="100%" stopColor={slide.gradEnd} />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M 85,138 
+                       L 315,138 
+                       Q 375,138 375,198 
+                       Q 375,222 399,222 
+                       L 915,222 
+                       Q 975,222 975,282 
+                       L 975,504 
+                       Q 975,564 915,564 
+                       L 85,564 
+                       Q 25,564 25,504 
+                       L 25,198 
+                       Q 25,138 85,138 Z"
+                    fill={`url(#grad-${slide.id})`}
+                  />
+                </svg>
 
-            {/* "EV SERVICE ECOSYSTEM" */}
-            <span className="uppercase inline-block">
-              {"EV SERVICE ECOSYSTEM".split("").map((ch, i) => (
-                <span key={i} className="hchar inline-block"
-                  style={{ whiteSpace: ch === " " ? "pre" : "normal" }}
+                {/* Ghost text inside the shape */}
+                <div
+                  className="absolute pointer-events-none font-black uppercase leading-[0.9] select-none hidden md:block"
+                  style={{
+                    fontSize: "clamp(2rem, 5.5vw, 6.2rem)",
+                    color: "rgba(255, 255, 255, 0.12)",
+                    top: "65%",
+                    left: "58%",
+                    transform: "translate(-50%, -50%)",
+                    letterSpacing: "-0.02em",
+                    fontFamily: "var(--font-sans)",
+                    width: "60%",
+                    whiteSpace: "normal",
+                  }}
                 >
-                  {ch === " " ? "\u00A0" : ch}
-                </span>
-              ))}
-            </span>
-          </h1>
-        </div>
+                  {slide.ghostText}
+                </div>
+              </div>
 
-        {/* Card stack on the left (overlapping the left tab) */}
-        <div
-          ref={scooterSmRef}
-          className="absolute z-10 pointer-events-auto flex flex-col gap-2.5"
-          style={{ left: "6%", top: "28%", width: "32%", maxWidth: "380px" }}
-        >
-          <div className="bg-card rounded-2xl p-3.5 flex items-center gap-3 shadow-lg border border-border transition-colors duration-300" style={{ color: "var(--foreground)" }}>
-            <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center overflow-hidden flex-shrink-0">
-              <img src={evScooterSmall} alt="VoltRide X1" className="w-10 h-10 object-contain" />
-            </div>
-            <div>
-              <div className="font-bold text-[11px] uppercase tracking-wider text-foreground">VOLTRIDE X1</div>
-              <div className="text-[10px] text-muted-foreground leading-tight">VoltRide X1 is a stylish commuter choice.</div>
-            </div>
-          </div>
-
-          {/* High-Tech Command Terminal Dock */}
-          <div className="flex flex-col gap-2 mt-2.5 w-full">
-            <div className="text-[9px] font-mono uppercase tracking-[0.25em] text-[#00D084]/60 flex items-center justify-between px-1">
-              <span>DIAGNOSTIC TELEMETRY DOCK</span>
-              <span className="animate-pulse flex items-center gap-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084]" />
-                LIVE
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              {/* Button 1: Book Service */}
-              <a
-                href="#ev-services"
-                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#00D084]/30 bg-black/60 p-2.5 transition-all duration-300 hover:border-[#00D084] hover:shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:-translate-y-0.5"
+              {/* HEADING */}
+              <div
+                className="w-full text-center px-4 relative z-10"
+                style={{
+                  paddingTop: "clamp(120px, 14vh, 160px)",
+                }}
               >
-                {/* Laser scan line overlay */}
-                <div className="absolute inset-x-0 top-0 h-[1px] bg-[#00D084] opacity-0 group-hover:opacity-100 group-hover:animate-scan transition-opacity duration-300" />
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[8px] font-mono text-[#00D084]/60">CMD_01</span>
-                  <div className="h-1.5 w-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-ping" />
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Zap className="h-3.5 w-3.5 text-[#00D084]" />
-                  <span className="text-[10px] font-extrabold tracking-wider uppercase text-white">BOOK SERVICE</span>
-                </div>
-              </a>
+                <h1
+                  className="m-0 p-0 leading-none transition-colors duration-300 flex justify-center flex-wrap"
+                  style={{
+                    color: "var(--foreground)",
+                    fontSize: "clamp(1.2rem, 3.8vw, 4.4rem)",
+                    fontWeight: 900,
+                    letterSpacing: "-0.02em",
+                    fontFamily: "var(--font-sans)",
+                  }}
+                >
+                  {slide.heading.split(" ").map((word, i) => {
+                    const isItalic = i === 1; // standard format
+                    return (
+                      <span
+                        key={i}
+                        className={`mr-[0.25em] inline-block uppercase ${
+                          isItalic ? "italic text-[#00D084] font-serif normal-case font-light" : "font-extrabold"
+                        }`}
+                        style={isItalic ? { fontFamily: "var(--font-serif)", textTransform: "none" } : undefined}
+                      >
+                        {word}
+                      </span>
+                    );
+                  })}
+                </h1>
+              </div>
 
-              {/* Button 2: Find Centre */}
-              <a
-                href="#nearest-center"
-                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-black/40 p-2.5 transition-all duration-300 hover:border-[#00D084]/50 hover:bg-black/60 hover:-translate-y-0.5"
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[8px] font-mono text-white/45">CMD_02</span>
-                  <span className="text-[7.5px] font-mono text-white/35">PING: 8ms</span>
+              {/* MOBILE LAYOUT CONTENT (Visible only on mobile) */}
+              <div className="flex-grow flex flex-col justify-end pb-24 md:hidden relative z-10 px-6 gap-3">
+                {/* Big Vehicle Image Mobile */}
+                <div className="flex-grow flex items-center justify-center min-h-[160px]">
+                  <AnimatePresence mode="wait">
+                    {isCurrent && (
+                      <motion.img
+                        key={`img-mob-${slide.id}`}
+                        initial={{ x: 80, opacity: 0, scale: 0.8 }}
+                        animate={{ x: 0, opacity: 1, scale: 1 }}
+                        exit={{ x: -80, opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        src={slide.bigImg}
+                        alt={slide.cardTitle}
+                        className="max-h-[180px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)] animate-float"
+                      />
+                    )}
+                  </AnimatePresence>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <MapPin className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />
-                  <span className="text-[10px] font-bold tracking-wider uppercase text-white/90 group-hover:text-white">FIND CENTRE</span>
-                </div>
-              </a>
 
-              {/* Button 3: Request RSA */}
-              <a
-                href="#request-rsa"
-                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-red-500/20 bg-red-950/10 p-2.5 transition-all duration-300 hover:border-red-500 hover:bg-red-950/20 hover:shadow-[0_0_20px_rgba(239,68,68,0.25)] hover:-translate-y-0.5"
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[8px] font-mono text-red-500/60">CMD_03</span>
-                  <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+                {/* Left Card Deck Mobile */}
+                <div className="bg-card rounded-2xl p-3 flex items-center gap-3 border border-border text-left">
+                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <img src={slide.cardImg} alt={slide.cardTitle} className="w-8 h-8 object-contain" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-[10px] uppercase tracking-wider text-foreground">{slide.cardTitle}</div>
+                    <div className="text-[9px] text-muted-foreground leading-tight mt-0.5">{slide.cardDesc}</div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <PhoneCall className="h-3.5 w-3.5 text-red-400 group-hover:text-red-300" />
-                  <span className="text-[10px] font-bold tracking-wider uppercase text-red-400 group-hover:text-red-300">REQUEST RSA</span>
-                </div>
-              </a>
 
-              {/* Button 4: Join Franchise */}
-              <a
-                href="#join-franchise"
-                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-black/40 p-2.5 transition-all duration-300 hover:border-[#00D084]/50 hover:bg-black/60 hover:-translate-y-0.5"
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[8px] font-mono text-white/45">CMD_04</span>
-                  <span className="text-[7.5px] font-mono text-[#00D084]/70">SECURE</span>
+                {/* Commands grid mobile */}
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  {slide.commands.map((cmd) => (
+                    <a
+                      key={cmd.cmd}
+                      href={cmd.href}
+                      className={`group relative flex items-center gap-2 rounded-xl border p-2 bg-black/60 transition-all ${
+                        cmd.isRsa
+                          ? "border-red-500/20 bg-red-950/10 hover:border-red-500"
+                          : "border-white/10 hover:border-[#00D084]"
+                      }`}
+                    >
+                      {renderIcon(cmd.icon)}
+                      <span className={`text-[9px] font-extrabold tracking-wider uppercase ${cmd.isRsa ? "text-red-400" : "text-white"}`}>
+                        {cmd.label}
+                      </span>
+                    </a>
+                  ))}
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <Store className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />
-                  <span className="text-[10px] font-bold tracking-wider uppercase text-white/90 group-hover:text-white">FRANCHISE</span>
+
+                {/* Text Block Mobile */}
+                <div className="text-left mt-2">
+                  <h2 className="font-black uppercase text-foreground leading-tight m-0 text-xs">
+                    {slide.bottomTitle}
+                  </h2>
+                  <p className="text-muted-foreground text-[10.5px] leading-relaxed mt-1 mb-0">
+                    {slide.bottomDesc}
+                  </p>
                 </div>
-              </a>
+              </div>
+
+              {/* DESKTOP LAYOUT CONTENT (Visible only on desktop) */}
+              <div className="hidden md:block">
+                {/* Card stack on the left */}
+                <div
+                  className="absolute z-10 pointer-events-auto flex flex-col gap-2.5"
+                  style={{ left: "6%", top: "28%", width: "32%", maxWidth: "380px" }}
+                >
+                  <div className="bg-card rounded-2xl p-3.5 flex items-center gap-3 shadow-lg border border-border" style={{ color: "var(--foreground)" }}>
+                    <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center overflow-hidden flex-shrink-0">
+                      <img src={slide.cardImg} alt={slide.cardTitle} className="w-10 h-10 object-contain" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-[11px] uppercase tracking-wider text-foreground">{slide.cardTitle}</div>
+                      <div className="text-[10px] text-muted-foreground leading-tight">{slide.cardDesc}</div>
+                    </div>
+                  </div>
+
+                  {/* Diagnostic Telemetry Dock */}
+                  <div className="flex flex-col gap-2 mt-2.5 w-full">
+                    <div className="text-[9px] font-mono uppercase tracking-[0.25em] text-[#00D084]/60 flex items-center justify-between px-1">
+                      <span>DIAGNOSTIC TELEMETRY DOCK</span>
+                      <span className="animate-pulse flex items-center gap-1">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084]" />
+                        LIVE
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      {slide.commands.map((cmd) => (
+                        <a
+                          key={cmd.cmd}
+                          href={cmd.href}
+                          className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border p-2.5 transition-all duration-300 hover:-translate-y-0.5 ${
+                            cmd.isRsa
+                              ? "border-red-500/20 bg-red-950/10 hover:border-red-500 hover:bg-red-950/20 hover:shadow-[0_0_20px_rgba(239,68,68,0.25)]"
+                              : "border-white/10 bg-black/40 hover:border-[#00D084] hover:shadow-[0_0_20px_rgba(0,208,132,0.25)]"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1.5">
+                            <span className={`text-[8px] font-mono ${cmd.isRsa ? "text-red-500/60" : "text-white/45"}`}>{cmd.cmd}</span>
+                            {cmd.isRsa ? (
+                              <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+                            ) : (
+                              <div className="h-1.5 w-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-ping" />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            {renderIcon(cmd.icon)}
+                            <span className={`text-[10px] font-extrabold tracking-wider uppercase ${cmd.isRsa ? "text-red-400 group-hover:text-red-300" : "text-white group-hover:text-[#00D084]"}`}>
+                              {cmd.label}
+                            </span>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* BOTTOM LEFT TEXT BLOCK */}
+                <div
+                  className="absolute z-10 flex flex-col justify-end"
+                  style={{ left: "4.5%", bottom: "10%", width: "clamp(260px, 30%, 350px)" }}
+                >
+                  <h2 className="font-black uppercase text-foreground leading-tight m-0"
+                    style={{ fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", letterSpacing: "-0.025em", marginBottom: 12, fontFamily: "var(--font-sans)" }}
+                  >
+                    {slide.bottomTitle.split(" ").slice(0, 2).join(" ")}<br />
+                    {slide.bottomTitle.split(" ").slice(2).join(" ")}
+                  </h2>
+                  <p className="text-muted-foreground" style={{ fontSize: 13, lineHeight: 1.6, maxWidth: 285 }}>
+                    {slide.bottomDesc}
+                  </p>
+                </div>
+
+                {/* BIG EV VEHICLE IMAGE */}
+                <AnimatePresence mode="wait">
+                  {isCurrent && (
+                    <motion.img
+                      key={`img-desk-${slide.id}`}
+                      initial={{ x: 120, opacity: 0, scale: 0.8 }}
+                      animate={{ x: 0, opacity: 1, scale: 1 }}
+                      exit={{ x: -120, opacity: 0, scale: 0.8 }}
+                      transition={{ duration: 0.7, ease: "easeOut" }}
+                      src={slide.bigImg}
+                      alt={slide.cardTitle}
+                      className="pointer-events-none select-none block absolute z-[2] animate-float"
+                      style={{
+                        ...slide.bigImgStyle,
+                        objectFit: "contain",
+                        filter: "drop-shadow(0 40px 80px rgba(0,0,0,0.25))",
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
+
+                {/* HAPPY RIDERS STATS PILL */}
+                <div
+                  className="absolute z-10 flex items-center gap-3"
+                  style={{ right: "5%", top: "26%" }}
+                >
+                  <div className="flex -space-x-3">
+                    {slide.riders.map((imgUrl, i) => (
+                      <img key={i} className="inline-block h-9 w-9 rounded-full ring-2 ring-card object-cover" src={imgUrl} alt={`Rider ${i + 1}`} />
+                    ))}
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <span className="text-sm font-bold text-foreground leading-none">{slide.statsValue}</span>
+                    <span className="text-[10px] text-muted-foreground font-medium">{slide.statsLabel}</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
-          </div>
-        </div>
-
-        {/* BOTTOM LEFT TEXT BLOCK */}
-        <div
-          ref={leftPanelRef}
-          className="absolute z-10 flex flex-col justify-end"
-          style={{ left: "4.5%", bottom: "10%", width: "clamp(260px, 30%, 350px)" }}
-        >
-          <h2 className="font-black uppercase text-foreground leading-tight m-0 transition-colors duration-300"
-            style={{ fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", letterSpacing: "-0.025em", marginBottom: 12, fontFamily: "var(--font-sans)" }}
-          >
-            SMART MOBILITY<br />FOR EVERYONE
-          </h2>
-          <p className="text-muted-foreground transition-colors duration-300" style={{ fontSize: 13, lineHeight: 1.6, maxWidth: 285 }}>
-            Enjoy smooth rides, easy charging, and modern design made to simplify short trips across the city.
-          </p>
-        </div>
-
-        {/* BIG SCOOTER */}
-        <img
-          ref={scooterBigRef}
-          src={evScooterSmall}
-          alt="Electric Scooter"
-          className="pointer-events-none select-none block absolute z-[2]"
-          style={{
-            width: "clamp(480px, 50%, 980px)",
-            bottom: "-90px",
-            right: "5%",
-            objectFit: "contain",
-            filter: "drop-shadow(0 40px 80px rgba(0,0,0,0.18))",
-          }}
-        />
-
-        {/* HAPPY RIDERS STATS PILL */}
-        <div
-          ref={scrollCueRef}
-          className="absolute z-10 flex items-center gap-3"
-          style={{ right: "5%", top: "26%" }}
-        >
-          <div className="flex -space-x-3">
-            <img className="inline-block h-9 w-9 rounded-full ring-2 ring-card object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80" alt="Rider 1" />
-            <img className="inline-block h-9 w-9 rounded-full ring-2 ring-card object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80" alt="Rider 2" />
-            <img className="inline-block h-9 w-9 rounded-full ring-2 ring-card object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80" alt="Rider 3" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-bold text-foreground leading-none">125+</span>
-            <span className="text-[10px] text-muted-foreground font-medium">happy riders every day</span>
-          </div>
-        </div>
-
+          );
+        })}
       </div>
+
+      {/* Navigation Dot Indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 bg-black/40 border border-white/5 backdrop-blur-md px-4 py-2 rounded-full">
+        {HERO_SLIDES.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollToSlide(index)}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+              activeSlide === index
+                ? "bg-[#00D084] w-6 shadow-[0_0_8px_#00D084]"
+                : "bg-white/20 hover:bg-white/40"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Left/Right Chevrons (Desktop Only) */}
+      <button
+        onClick={() => scrollToSlide((activeSlide - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
+        className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-black/40 border border-white/5 items-center justify-center text-white/60 hover:text-[#00D084] hover:border-[#00D084]/40 hover:bg-[#00D084]/5 hover:scale-105 transition-all cursor-pointer"
+      >
+        <ChevronDown className="h-5 w-5 rotate-90" />
+      </button>
+      <button
+        onClick={() => scrollToSlide((activeSlide + 1) % HERO_SLIDES.length)}
+        className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-black/40 border border-white/5 items-center justify-center text-white/60 hover:text-[#00D084] hover:border-[#00D084]/40 hover:bg-[#00D084]/5 hover:scale-105 transition-all cursor-pointer"
+      >
+        <ChevronDown className="h-5 w-5 -rotate-90" />
+      </button>
     </section>
   );
 }
