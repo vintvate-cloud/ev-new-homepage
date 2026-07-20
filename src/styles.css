@@ -436,14 +436,75 @@ html.theme-light [class*="bg-[#030604]"],
 html.theme-light [class*="bg-[#030704]"],
 html.theme-light [class*="bg-[#020403]"],
 html.theme-light [class*="bg-[#050706]"],
+html.theme-light [class*="bg-[#050806]"],
+html.theme-light [class*="bg-[#050906]"],
 html.theme-light [class*="bg-[#060807]"],
-html.theme-light [class*="bg-[#0d1410]"],
+html.theme-light [class*="bg-[#070b08]"],
+html.theme-light [class*="bg-[#070c09]"],
+html.theme-light [class*="bg-[#070b09]"],
+html.theme-light [class*="bg-black/40"],
+html.theme-light [class*="bg-black/50"],
+html.theme-light [class*="bg-black/60"],
 html.theme-light .bg-card {
   background-color: #f4f4f5 !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
   color: #09090b !important;
 }
 
+/* Set specific light green background for active selection states in light mode */
+html.theme-light [class*="bg-[#0d1410]"] {
+  background-color: rgba(0, 208, 132, 0.08) !important;
+  border-color: rgba(0, 208, 132, 0.3) !important;
+  color: #09090b !important;
+}
+
+/* Specific light green background override for technician profile in map app mockup */
+html.theme-light [class*="bg-emerald-950"] {
+  background-color: rgba(0, 208, 132, 0.08) !important;
+  color: #008050 !important;
+}
+
+/* Set card background overrides for hex gradient styles in light mode */
+html.theme-light [class*="from-[#050806]"],
+html.theme-light [class*="to-[#010201]"],
+html.theme-light [class*="from-[#060907]"],
+html.theme-light [class*="to-[#030504]"] {
+  background-color: #f4f4f5 !important;
+  background-image: none !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #09090b !important;
+}
+
+/* Set specific light green background for active step cards in light mode */
+html.theme-light [class*="from-[#0a120e]"],
+html.theme-light [class*="to-[#040806]"] {
+  background-color: rgba(0, 208, 132, 0.04) !important;
+  background-image: none !important;
+  border-color: rgba(0, 208, 132, 0.3) !important;
+  color: #09090b !important;
+}
+
+/* Light mode override for Quick Access Sidebar panel */
+html.theme-light .quick-sidebar {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #09090b !important;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1) !important;
+}
+
+html.theme-light .quick-sidebar button,
+html.theme-light .quick-sidebar span {
+  color: #09090b !important;
+}
+
+/* Hide scrollbar for Quick Access Sidebar */
+.quick-sidebar {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+.quick-sidebar::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}
 /* Override inline styling for ValuePackages motion.div cards when hovered or default */
 html.theme-light [style*="background-color: rgb(13, 20, 16)"],
 html.theme-light [style*="background-color: rgb(10, 15, 12)"],

@@ -1695,53 +1695,66 @@ function HowItWorks() {
               <span className={`w-2 h-2 rounded-full transition-colors duration-300 ${activeStep === 0 ? "bg-[#00D084] shadow-[0_0_8px_#00D084]" : "bg-white/10"}`} />
             </div>
 
-            {/* Interactive Custom Console Card */}
-            <div className="my-8 bg-[#020403] border border-white/5 rounded-2xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
+            {/* Sleek App UI Container */}
+            <div className="my-8 bg-[#070b09]/60 border border-white/5 rounded-3xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-                  <span className="text-[10px] font-mono text-white/40">VEHICLE SELECT</span>
-                  <span className="text-[10px] font-mono text-[#00D084]">ACTIVE_SESSION</span>
+                <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+                  <span className="text-[10px] tracking-widest text-[#00D084] font-bold">SELECT METHOD</span>
+                  <span className="text-[10px] text-white/40">STEP 1/3</span>
                 </div>
-                <div className="flex items-center gap-3 bg-white/[0.02] border border-white/5 rounded-xl p-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#00D084]/10 flex items-center justify-center">
-                    <Bike className="h-4.5 w-4.5 text-[#00D084]" />
+                
+                <div className="space-y-3">
+                  {/* Option 1 */}
+                  <div
+                    onClick={(e) => { e.stopPropagation(); setConfigPack("standard"); }}
+                    className={`p-3.5 rounded-2xl border transition-all duration-300 relative flex items-center justify-between cursor-pointer ${
+                      configPack === "standard"
+                        ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_15px_rgba(0,208,132,0.05)]"
+                        : "bg-black/40 border-white/5 hover:border-white/10"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${configPack === "standard" ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-white/60"}`}>
+                        <Home className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-white text-xs font-bold">Doorstep Service</h4>
+                        <p className="text-[9.5px] text-white/40 mt-0.5 font-light">Technician visits you</p>
+                      </div>
+                    </div>
+                    {configPack === "standard" && (
+                      <span className="bg-[#00D084]/15 text-[#00D084] text-[8px] font-bold px-1.5 py-0.5 rounded-full">POPULAR</span>
+                    )}
                   </div>
-                  <div>
-                    <h4 className="text-white text-xs font-bold font-mono">SCOOTER_S1_PRO</h4>
-                    <p className="text-[9px] text-white/40 font-mono mt-0.5">ATHER / OLA GEN 2</p>
-                  </div>
-                </div>
 
-                <div className="mt-5">
-                  <span className="text-[9px] font-mono text-white/40 uppercase block mb-2">Service Intensity</span>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setConfigPack("standard"); }}
-                      className={`py-2 px-3 rounded-lg text-[10px] font-mono font-bold transition-all border ${
-                        configPack === "standard"
-                          ? "bg-[#00D084]/15 border-[#00D084]/30 text-[#00D084]"
-                          : "bg-white/[0.02] border-white/5 text-white/60 hover:border-white/10"
-                      }`}
-                    >
-                      STANDARD PACK
-                    </button>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setConfigPack("pro"); }}
-                      className={`py-2 px-3 rounded-lg text-[10px] font-mono font-bold transition-all border ${
-                        configPack === "pro"
-                          ? "bg-[#00D084]/15 border-[#00D084]/30 text-[#00D084]"
-                          : "bg-white/[0.02] border-white/5 text-white/60 hover:border-white/10"
-                      }`}
-                    >
-                      PRO DIAGNOSTICS
-                    </button>
+                  {/* Option 2 */}
+                  <div
+                    onClick={(e) => { e.stopPropagation(); setConfigPack("pro"); }}
+                    className={`p-3.5 rounded-2xl border transition-all duration-300 relative flex items-center justify-between cursor-pointer ${
+                      configPack === "pro"
+                        ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_15px_rgba(0,208,132,0.05)]"
+                        : "bg-black/40 border-white/5 hover:border-white/10"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${configPack === "pro" ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-white/60"}`}>
+                        <Store className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-white text-xs font-bold">Service Center</h4>
+                        <p className="text-[9.5px] text-white/40 mt-0.5 font-light">Visit our diagnostics hub</p>
+                      </div>
+                    </div>
+                    {configPack === "pro" && (
+                      <span className="bg-[#00D084]/15 text-[#00D084] text-[8px] font-bold px-1.5 py-0.5 rounded-full">EXPRESS</span>
+                    )}
                   </div>
                 </div>
               </div>
 
-              <div className="mt-6 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono">
-                <span className="text-white/40">EST. TIME</span>
-                <span className="text-white font-bold">{configPack === "standard" ? "45 MINS" : "90 MINS"}</span>
+              <div className="mt-5 pt-3 border-t border-white/5 flex items-center justify-between text-xs">
+                <span className="text-white/40 font-light">Estimated Booking</span>
+                <span className="text-white font-bold">{configPack === "standard" ? "Doorstep (45 min)" : "Center (90 min)"}</span>
               </div>
             </div>
 
@@ -1767,49 +1780,67 @@ function HowItWorks() {
           >
             {/* Top Indicator */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono text-[#00D084] font-bold">02 // ACTIVE DISPATCH</span>
+              <span className="text-xs tracking-wider text-[#00D084] font-bold uppercase">02 // ACTIVE DISPATCH</span>
               <span className={`w-2 h-2 rounded-full transition-colors duration-300 ${activeStep === 1 ? "bg-[#00D084] shadow-[0_0_8px_#00D084]" : "bg-white/10"}`} />
             </div>
 
             {/* Live GPS Telemetry Mock */}
-            <div className="my-8 bg-[#020403] border border-white/5 rounded-2xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
+            <div className="my-8 bg-[#070b09]/60 border border-white/5 rounded-3xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-                  <span className="text-[10px] font-mono text-white/40">TECH EN ROUTE</span>
-                  <span className="text-[9px] font-mono text-[#00D084] flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
-                    LIVE
-                  </span>
+                <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+                  <span className="text-[10px] tracking-widest text-[#00D084] font-bold">LIVE DISPATCH</span>
+                  <span className="text-[10px] text-white/40">STEP 2/3</span>
                 </div>
 
-                {/* Radar Grid Line Mock */}
-                <div className="h-28 bg-[#050806] border border-white/5 rounded-xl relative overflow-hidden flex items-center justify-center">
-                  <div className="absolute inset-0 opacity-10"
+                {/* Styled Isometric Map Graphic */}
+                <div className="h-28 bg-black/40 border border-white/5 rounded-2xl relative overflow-hidden flex items-center justify-center">
+                  <div className="absolute inset-0 opacity-[0.03]"
                     style={{
                       backgroundImage: "radial-gradient(#00D084 1px, transparent 0)",
-                      backgroundSize: "16px 16px"
+                      backgroundSize: "12px 12px"
                     }}
                   />
-                  {/* Location Pulse dots */}
-                  <div className="absolute top-1/3 left-1/3 w-2 h-2 rounded-full bg-white/20" />
-                  <div className="absolute bottom-1/3 right-1/3 w-3 h-3 rounded-full bg-[#00D084] flex items-center justify-center shadow-[0_0_12px_#00D084]">
-                    <div className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                  </div>
-                  {/* Dotted path */}
-                  <div className="absolute w-2/3 h-0.5 border-t border-dashed border-[#00D084]/40 rotate-12" />
                   
-                  <span className="absolute bottom-2 left-3 text-[9px] font-mono text-white/40">TRANSIT PROTOCOL: EN-ROUTE</span>
+                  {/* Curvy Route Path SVG */}
+                  <svg className="absolute w-full h-full stroke-white/10 stroke-2 fill-none">
+                    <path d="M 30,80 Q 90,20 150,70 T 250,30" />
+                  </svg>
+                  
+                  {/* Animated Path fill */}
+                  <svg className="absolute w-full h-full stroke-[#00D084]/40 stroke-2 fill-none">
+                    <path d="M 30,80 Q 90,20 150,70 T 250,30" className="animate-[dash_8s_linear_infinite]"
+                      style={{
+                        strokeDasharray: "8, 8"
+                      }}
+                    />
+                  </svg>
+
+                  {/* Start Point Dot */}
+                  <div className="absolute left-[24px] bottom-[24px] w-3 h-3 rounded-full bg-white/20 flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                  </div>
+
+                  {/* End Point (Technician Green Marker) */}
+                  <div className="absolute right-[44px] top-[24px] w-6 h-6 rounded-full bg-[#00D084]/20 flex items-center justify-center animate-pulse">
+                    <div className="w-3 h-3 rounded-full bg-[#00D084] shadow-[0_0_12px_#00D084] flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-col gap-2">
-                <div className="flex justify-between text-[10px] font-mono">
-                  <span className="text-white/40">DISPATCHED TECH</span>
-                  <span className="text-white font-bold">VIKRAM MEHTA</span>
+              {/* Technician Profile overlay inside the app card */}
+              <div className="mt-4 bg-black/50 border border-white/5 rounded-xl p-2.5 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-emerald-950 flex items-center justify-center text-[#00D084] shrink-0 font-bold text-xs">
+                  VM
                 </div>
-                <div className="flex justify-between text-[10px] font-mono">
-                  <span className="text-white/40">ETA PROTOCOL</span>
-                  <span className="text-[#00D084] font-bold">14 MINUTES</span>
+                <div className="flex-1 min-w-0 text-left">
+                  <div className="text-[8px] text-white/40">TECH EN ROUTE</div>
+                  <div className="text-xs text-white font-bold truncate">Vikram Mehta</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-[10.5px] text-[#00D084] font-bold">14 MINS</div>
+                  <div className="text-[8.5px] text-white/30">ETA</div>
                 </div>
               </div>
             </div>
@@ -1836,47 +1867,67 @@ function HowItWorks() {
           >
             {/* Top Indicator */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono text-[#00D084] font-bold">03 // RESTORATION LAB</span>
+              <span className="text-xs tracking-wider text-[#00D084] font-bold uppercase">03 // RESTORATION LAB</span>
               <span className={`w-2 h-2 rounded-full transition-colors duration-300 ${activeStep === 2 ? "bg-[#00D084] shadow-[0_0_8px_#00D084]" : "bg-white/10"}`} />
             </div>
 
             {/* Animated Calibration Dashboard */}
-            <div className="my-8 bg-[#020403] border border-white/5 rounded-2xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
+            <div className="my-8 bg-[#070b09]/60 border border-white/5 rounded-3xl p-5 relative overflow-hidden flex-1 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-                  <span className="text-[10px] font-mono text-white/40">CALIBRATION RUN</span>
-                  <span className="text-[10px] font-mono text-[#00D084] animate-pulse">SOH_RESTORED</span>
+                <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/5">
+                  <span className="text-[10px] tracking-widest text-[#00D084] font-bold">CALIBRATION LAB</span>
+                  <span className="text-[10px] text-white/40">STEP 3/3</span>
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-white/60">BATTERY CELL HEALTH</span>
-                    <span className="text-xs font-mono text-[#00D084] font-bold">{batteryCharge}%</span>
+                <div className="flex items-center justify-center py-2 gap-4">
+                  {/* Circular SVG Ring Progress bar */}
+                  <div className="relative w-16 h-16 flex-shrink-0">
+                    <svg className="w-full h-full transform -rotate-90">
+                      <circle
+                        cx="32"
+                        cy="32"
+                        r="26"
+                        className="stroke-white/5"
+                        strokeWidth="4"
+                        fill="transparent"
+                      />
+                      <circle
+                        cx="32"
+                        cy="32"
+                        r="26"
+                        className="stroke-[#00D084] transition-all duration-300"
+                        strokeWidth="4"
+                        fill="transparent"
+                        strokeDasharray={2 * Math.PI * 26}
+                        strokeDashoffset={2 * Math.PI * 26 * (1 - batteryCharge / 100)}
+                        strokeLinecap="round"
+                        style={{ filter: "drop-shadow(0 0 6px rgba(0, 208, 132, 0.4))" }}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-white font-bold text-xs tracking-tight">{batteryCharge}%</span>
+                      <span className="text-[6.5px] text-[#00D084] font-mono uppercase">SOH</span>
+                    </div>
                   </div>
-                  <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
-                    <div
-                      className="bg-[#00D084] h-full rounded-full transition-all duration-150"
-                      style={{ width: `${batteryCharge}%` }}
-                    />
-                  </div>
-                </div>
 
-                <div className="mt-5 space-y-2">
-                  <div className="flex justify-between text-[9px] font-mono">
-                    <span className="text-white/40">MOTOR TORQUE BALANCE</span>
-                    <span className="text-white font-bold">PASS // 100%</span>
-                  </div>
-                  <div className="flex justify-between text-[9px] font-mono">
-                    <span className="text-white/40">BMS THERMAL COEFFICIENT</span>
-                    <span className="text-white font-bold">NOMINAL // 38°C</span>
+                  <div className="flex-1 space-y-1.5 text-left">
+                    <div className="flex flex-col">
+                      <span className="text-[7.5px] text-white/40 uppercase font-mono">BMS Status</span>
+                      <span className="text-[10.5px] text-white font-bold mt-0.5">Optimum Balance</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[7.5px] text-white/40 uppercase font-mono">Temp Calibration</span>
+                      <span className="text-[10.5px] text-white font-bold mt-0.5">38°C (Nominal)</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-6 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono">
-                <span className="text-white/40">LAB STAMP</span>
-                <span className="text-white bg-[#00D084]/15 border border-[#00D084]/20 rounded px-1.5 py-0.5 text-[8px] font-bold tracking-widest uppercase">
-                  OEM_WARRANTY
+              <div className="mt-4 flex items-center justify-between bg-black/40 border border-white/5 rounded-xl px-3 py-2 text-[10px]">
+                <span className="text-white/40 font-light">Calibration Status</span>
+                <span className="text-[#00D084] font-mono font-bold flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse" />
+                  SUCCESS // OK
                 </span>
               </div>
             </div>
@@ -1906,6 +1957,13 @@ function HowItWorks() {
         </div>
 
       </div>
+      <style>{`
+        @keyframes dash {
+          to {
+            stroke-dashoffset: -40;
+          }
+        }
+      `}</style>
     </section>
   );
 }
@@ -5250,6 +5308,143 @@ function DownloadApp() {
   );
 }
 
+/* ---------------- Quick Access Floating Sidebar ---------------- */
+function QuickAccessSidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      {/* Floating Trigger Button on the right edge */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#050806]/95 border border-[#00D084]/40 hover:border-[#00D084] text-white w-10 h-28 rounded-l-2xl flex flex-col items-center justify-center gap-2.5 cursor-pointer shadow-[0_0_20px_rgba(0,208,132,0.15)] transition-all duration-300 hover:pr-2 select-none group"
+      >
+        <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+        <span className="text-[10px] font-bold font-mono tracking-widest uppercase text-white/80 group-hover:text-white transition-colors flex items-center justify-center"
+          style={{ writingMode: "vertical-lr" }}
+        >
+          QUICK ACCESS
+        </span>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black z-45"
+            />
+
+            {/* Floating Sidebar (Untouched borders on right) */}
+            <motion.div
+              initial={{ x: "100%", opacity: 0.8 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0.8 }}
+              transition={{ type: "spring", damping: 25, stiffness: 220 }}
+              data-lenis-prevent
+              className="quick-sidebar fixed right-4 top-4 bottom-4 w-[360px] sm:w-[380px] bg-[#020403]/95 border border-white/10 backdrop-blur-md rounded-[32px] p-6 z-50 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] flex flex-col overflow-y-auto"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-5">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+                  <span className="text-xs font-bold font-mono tracking-wider text-white">SYSTEM CONTROLS</span>
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-8 h-8 rounded-full border border-white/5 bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              {/* Sidebar Content Widgets */}
+              <div className="space-y-4 flex-1">
+                
+                {/* 1. Download Our App */}
+                <div className="bg-[#050806] border border-white/5 rounded-2xl p-5 flex flex-col items-center justify-center relative overflow-hidden group">
+                  <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-4 text-xs font-bold text-white/90">
+                    <Phone className="h-4 w-4 text-[#00D084]" />
+                    <span>Download Our App</span>
+                  </div>
+
+                  {/* Phone Preview graphic */}
+                  <div className="relative w-28 h-44 bg-black/85 border-2 border-white/10 rounded-2xl flex flex-col items-center justify-center shadow-lg transition-transform group-hover:scale-[1.03] duration-300">
+                    <div className="absolute top-2 w-8 h-1 bg-white/10 rounded-full" />
+                    <div className="w-8 h-8 rounded-full bg-[#00D084]/10 flex items-center justify-center text-[#00D084]">
+                      <Phone className="h-4.5 w-4.5 animate-pulse" />
+                    </div>
+                    <div className="absolute bottom-2 w-2 h-2 rounded-full bg-white/15" />
+                  </div>
+                  <span className="text-[10px] text-white/40 mt-3 font-mono">App Preview</span>
+                </div>
+
+                {/* 2. Special Offers */}
+                <div className="bg-[#050806] border border-white/5 rounded-2xl p-5 flex flex-col relative overflow-hidden">
+                  <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-3 text-xs font-bold text-white/90">
+                    <Gift className="h-4 w-4 text-[#00D084]" />
+                    <span>Special Offers</span>
+                  </div>
+
+                  <div className="bg-emerald-950/40 border border-emerald-500/20 rounded-xl p-3.5 flex flex-col text-left">
+                    <span className="text-[#00D084] font-extrabold text-xs tracking-wider">Summer Special</span>
+                    <span className="text-[11px] text-white/60 mt-1 font-light">25% off on all services</span>
+                  </div>
+                </div>
+
+                {/* 3. 24/7 Assistance */}
+                <a
+                  href="tel:+919582390001"
+                  className="bg-[#050806] border border-white/5 hover:border-[#00D084]/30 rounded-2xl p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group block transition-all cursor-pointer"
+                >
+                  <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-4 text-xs font-bold text-white/90 text-left">
+                    <PhoneCall className="h-4 w-4 text-[#00D084]" />
+                    <span>24/7 Assistance</span>
+                  </div>
+
+                  <div className="w-12 h-12 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.1)] mb-3 group-hover:scale-110 transition-transform">
+                    <PhoneCall className="h-5 w-5 animate-pulse" />
+                  </div>
+                  <span className="text-white font-extrabold text-sm tracking-wider group-hover:text-[#00D084] transition-colors">+91 95823 90001</span>
+                  <span className="text-[10px] text-white/40 mt-1 font-mono">24/7 Emergency Support</span>
+                </a>
+
+                {/* 4. Find Nearest Centre */}
+                <a
+                  href="#nearest-center"
+                  onClick={() => setIsOpen(false)}
+                  className="bg-[#050806] border border-white/5 hover:border-[#00D084]/30 rounded-2xl p-5 flex flex-col relative overflow-hidden block transition-all cursor-pointer"
+                >
+                  <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-4 text-xs font-bold text-white/90">
+                    <MapPin className="h-4 w-4 text-[#00D084]" />
+                    <span>Find Nearest Centre</span>
+                  </div>
+
+                  <div className="h-20 bg-black/85 border border-white/5 rounded-xl relative overflow-hidden flex items-center justify-center">
+                    <div className="absolute inset-0 opacity-[0.03]"
+                      style={{
+                        backgroundImage: "radial-gradient(#00D084 1px, transparent 0)",
+                        backgroundSize: "12px 12px"
+                      }}
+                    />
+                    <MapPin className="h-6 w-6 text-[#00D084] animate-bounce" />
+                  </div>
+                  <span className="text-[10.5px] text-white/50 mt-3 text-center w-full font-light">Find centers near you</span>
+                </a>
+
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 /* ---------------- Page ---------------- */
 function Landing() {
   useLenis();
@@ -5267,6 +5462,7 @@ function Landing() {
   return (
     <main className="relative">
       <Nav theme="warm" />
+      <QuickAccessSidebar />
 
       {/* WARM LIGHT theme */}
       <div className="theme-warm">
