@@ -86,12 +86,16 @@ function useLenis() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
     const lenis = new Lenis({
-      duration: 1.35,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      syncTouch: true,
     });
 
     lenis.on("scroll", ScrollTrigger.update);
+
+    // Prevent ScrollTrigger from recalculating/refreshing on mobile address bar resizing
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     const updateLenis = (time: number) => {
       lenis.raf(time * 1000);
@@ -2514,11 +2518,11 @@ function EVServices() {
             </div>
           </GlowCard>
 
-          {/* L-Shape Compound Container (Software + Advanced Diagnostics) */}
+          {/* L-Shape Compound Container (Software + Advanced Diagnostics) - Desktop Only */}
           <div
             ref={lShapeRef}
             onMouseMove={handleLShapeMouseMove}
-            className="md:col-span-8 relative h-[660px] group glow-card-stagger"
+            className="hidden md:block md:col-span-8 relative h-[660px] group glow-card-stagger"
           >
             {/* Joined L-shape body backdrop with glow */}
             <div className="absolute inset-0 z-0 pointer-events-none">
@@ -2595,6 +2599,47 @@ function EVServices() {
               </GlowCard>
             </div>
           </div>
+
+          {/* Mobile Fallback Cards (Visible only on mobile/tablet) */}
+          <GlowCard className="md:hidden flex flex-col justify-between min-h-[320px] glow-card-stagger">
+            <div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
+                <Cpu className="h-5 w-5 text-[#00D084]" />
+              </div>
+              <h3 className="text-2xl font-serif text-white mb-2">Software Updates</h3>
+              <p className="text-[#a1a1aa] text-sm leading-relaxed">
+                Latest firmware updates, BMS calibration, and live system speed profiling.
+              </p>
+              
+              <div className="flex flex-col gap-2 mt-4">
+                <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
+                  <span className="text-xs text-white">BMS Firmware</span>
+                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
+                </div>
+                <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
+                  <span className="text-xs text-white">Telemetry OS</span>
+                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-[#00D084]">
+              <span className="text-gray-400">Calibration Status</span>
+              <span>All Systems Optimized</span>
+            </div>
+          </GlowCard>
+
+          <GlowCard className="md:hidden flex flex-col justify-between min-h-[220px] glow-card-stagger">
+            <div className="flex justify-between items-start">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
+                <Activity className="h-5 w-5 text-[#00D084]" />
+              </div>
+              <span className="text-xs font-bold text-[#00D084]">₹999</span>
+            </div>
+            <div className="mt-4">
+              <h4 className="text-lg font-serif text-white mb-1">Advanced Diagnostics</h4>
+              <p className="text-[#a1a1aa] text-xs leading-relaxed">Cell voltage analysis and safety telemetry mapping.</p>
+            </div>
+          </GlowCard>
 
           {/* Card 6: Battery Cell Balancing (Full Width Horizontal) */}
           <GlowCard className="md:col-span-12 flex flex-col md:flex-row gap-8 justify-between items-center min-h-[300px] glow-card-stagger">
@@ -2857,6 +2902,7 @@ function ValuePackages() {
                   layout
                   onMouseEnter={() => setMouseOverActive(true)}
                   onMouseLeave={() => setMouseOverActive(false)}
+                  onClick={() => setHoveredIdx(isHovered ? null : i)}
                   className="rounded-[28px] border p-6 md:p-8 flex flex-col justify-between overflow-hidden cursor-pointer"
                   style={isHovered ? {
                     position: "fixed",
@@ -3448,9 +3494,9 @@ function TechnicianCareers() {
   };
 
   return (
-    <section ref={containerRef} className="relative min-h-screen bg-[var(--background)] text-white flex items-center justify-center overflow-hidden selection:bg-[#00D084] selection:text-[#020403]">
+    <section ref={containerRef} className="relative min-h-screen lg:h-screen bg-[var(--background)] text-white flex items-center justify-center overflow-visible lg:overflow-hidden py-16 lg:py-0 selection:bg-[#00D084] selection:text-[#020403]">
       {/* 16:9 Container */}
-      <div ref={contentRef} className="w-full max-w-[1280px] aspect-video flex flex-col gap-5 relative px-4 md:px-0">
+      <div ref={contentRef} className="w-full max-w-[1280px] md:aspect-video flex flex-col gap-5 relative px-4 md:px-0 h-auto md:h-full">
         
         {/* Top Row: Left & Right Cards */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-5 min-h-0">
@@ -3458,11 +3504,11 @@ function TechnicianCareers() {
           {/* Top Left Card */}
           <div className="md:col-span-7 bg-[#0a0f0c] border border-white/10 rounded-2xl overflow-hidden flex flex-col relative group">
             <div className="absolute inset-0 bg-gradient-to-br from-[#00D084]/5 to-transparent pointer-events-none" />
-            <div className="h-[20%] relative shrink-0 overflow-hidden">
+            <div className="h-[120px] md:h-[20%] relative shrink-0 overflow-hidden">
               <img src={factory} alt="EV Service Centre" className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-700" />
             </div>
             
-            <div className="flex-1 p-5 md:p-6 flex flex-col z-10 overflow-hidden">
+            <div className="flex-grow md:flex-1 p-5 md:p-6 flex flex-col z-10 overflow-hidden">
               <div className="mb-3">
                 <div className="inline-flex items-center gap-1.5 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 px-2.5 py-0.5 mb-2">
                   <span className="text-[10px] uppercase tracking-wider text-[#00D084] font-medium flex items-center gap-1.5 font-mono">
@@ -3473,7 +3519,7 @@ function TechnicianCareers() {
                 <p className="text-[#a1a1aa] text-[13px] leading-relaxed max-w-sm">Get jobs, route guidance, QR-based inventory, and a professional workflow built for field technicians.</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mb-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                 <div className="bg-white/5 border border-white/10 rounded-xl p-3">
                   <h4 className="text-white text-[13px] font-medium mb-0.5">Smart dispatch</h4>
                   <p className="text-xs text-[#71717a] leading-tight">Accept/assigned jobs, on-time completion tracking.</p>
@@ -3492,7 +3538,7 @@ function TechnicianCareers() {
                 </div>
               </div>
 
-              <div className="flex gap-3 mt-auto pt-2">
+              <div className="flex flex-wrap gap-3 mt-6 md:mt-auto pt-2">
                 <button onClick={() => setIsOpen(true)} className="bg-[#00D084] hover:bg-[#00b574] text-[#020403] px-5 py-2 text-[13px] rounded-full font-bold transition-all shadow-[0_4px_20px_rgba(0,208,132,0.25)] flex items-center gap-2 cursor-pointer">
                   Start Onboarding <ArrowRight className="w-4 h-4" />
                 </button>
@@ -3534,7 +3580,7 @@ function TechnicianCareers() {
         </div>
 
         {/* Bottom Card */}
-        <div className="h-[25%] shrink-0 rounded-2xl overflow-hidden relative flex items-center p-6 md:p-8 bg-[#0a0f0c] border border-white/10 group">
+        <div className="h-auto md:h-[25%] shrink-0 rounded-2xl overflow-hidden relative flex items-center p-6 md:p-8 bg-[#0a0f0c] border border-white/10 group">
           <img src={tech} alt="Inside My EV Services" className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity transition-transform group-hover:scale-105 duration-700" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#030604] via-[#030604]/80 to-transparent" />
           
@@ -3842,48 +3888,64 @@ function PartsWarehouse() {
     if (!el || typeof window === "undefined") return;
 
     const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        id: "warehouse-cinematic",
-        trigger: el,
-        start: "top top",
-        end: "+=350%",
-        pin: true,
-        scrub: 1.8,
-        anticipatePin: 1,
-        snap: {
-          snapTo: [0, 0.333, 0.666, 1],
-          duration: { min: 0.35, max: 0.75 },
-          delay: 0.04,
-          ease: "power2.inOut",
-        },
-        onUpdate: (self) => {
-          const p = self.progress;
-          const idx = p < 0.25 ? 0 : p < 0.5 ? 1 : p < 0.75 ? 2 : 3;
-          setActiveIndex(idx);
-          
-          // Continuous vertical list scroll
-          if (listRef.current) {
-            const yOffset = -p * 3 * 160; 
-            gsap.set(listRef.current, { y: yOffset });
-          }
+      const mm = gsap.matchMedia();
 
-          // Dynamic scale/blur for each item
-          itemsRef.current.forEach((el, i) => {
-            if (!el) return;
-            const activePos = p * 3; 
-            const dist = Math.abs(activePos - i);
-            const scale = Math.max(0.7, 1 - dist * 0.3);
-            const opacity = Math.max(0, 1 - dist * 0.85);
-            const blurAmt = Math.min(10, dist * 10);
+      // Desktop Only: Pin and animate
+      mm.add("(min-width: 1024px)", () => {
+        ScrollTrigger.create({
+          id: "warehouse-cinematic",
+          trigger: el,
+          start: "top top",
+          end: "+=350%",
+          pin: true,
+          scrub: 1.8,
+          anticipatePin: 1,
+          snap: {
+            snapTo: [0, 0.333, 0.666, 1],
+            duration: { min: 0.35, max: 0.75 },
+            delay: 0.04,
+            ease: "power2.inOut",
+          },
+          onUpdate: (self) => {
+            const p = self.progress;
+            const idx = p < 0.25 ? 0 : p < 0.5 ? 1 : p < 0.75 ? 2 : 3;
+            setActiveIndex(idx);
+            
+            // Continuous vertical list scroll
+            if (listRef.current) {
+              const yOffset = -p * 3 * 160; 
+              gsap.set(listRef.current, { y: yOffset });
+            }
 
-            gsap.set(el, { 
-              scale,
-              opacity,
-              filter: `blur(${blurAmt}px)`,
-              transformOrigin: "left center"
+            // Dynamic scale/blur for each item
+            itemsRef.current.forEach((el, i) => {
+              if (!el) return;
+              const activePos = p * 3; 
+              const dist = Math.abs(activePos - i);
+              const scale = Math.max(0.7, 1 - dist * 0.3);
+              const opacity = Math.max(0, 1 - dist * 0.85);
+              const blurAmt = Math.min(10, dist * 10);
+
+              gsap.set(el, { 
+                scale,
+                opacity,
+                filter: `blur(${blurAmt}px)`,
+                transformOrigin: "left center"
+              });
             });
-          });
-        },
+          },
+        });
+      });
+
+      // Mobile/Tablet Only: Reset animations & offsets
+      mm.add("(max-width: 1023px)", () => {
+        if (listRef.current) {
+          gsap.set(listRef.current, { clearProps: "all" });
+        }
+        itemsRef.current.forEach((el) => {
+          if (!el) return;
+          gsap.set(el, { clearProps: "all" });
+        });
       });
     }, el);
 
@@ -3915,7 +3977,7 @@ function PartsWarehouse() {
     <section
       ref={containerRef}
       id="warehouse"
-      className="relative h-screen bg-black overflow-hidden flex items-center"
+      className="relative min-h-screen lg:h-screen bg-black overflow-visible lg:overflow-hidden flex items-center py-16 lg:py-0"
     >
       {/* ── Ambient radial glows ── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -3927,7 +3989,7 @@ function PartsWarehouse() {
       </div>
 
       {/* ── Full-height Arc Rail SVG (centered between columns, shifted left) ── */}
-      <div className="warehouse-arc-rail absolute left-1/2 -translate-x-1/2 ml-[-250px] top-0 bottom-0 w-[600px] pointer-events-none z-20">
+      <div className="warehouse-arc-rail absolute left-1/2 -translate-x-1/2 ml-[-250px] top-0 bottom-0 w-[600px] pointer-events-none z-20 hidden lg:block">
         <svg
           viewBox="0 0 600 900"
           fill="none"
@@ -3993,10 +4055,10 @@ function PartsWarehouse() {
       </div>
 
       {/* ── Main content grid (no more left-padding hack) ── */}
-      <div className="mx-auto w-full max-w-[1440px] px-6 lg:px-16 grid lg:grid-cols-12 gap-10 lg:gap-16 items-center h-full relative z-10">
+      <div className="mx-auto w-full max-w-[1440px] px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center lg:h-full relative z-10">
 
         {/* Left: Typography column */}
-        <div className="lg:col-span-5 flex flex-col justify-center h-full py-12">
+        <div className="lg:col-span-5 flex flex-col justify-center lg:h-full py-6 lg:py-12">
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 px-4 py-1.5 mb-8 w-max">
@@ -4023,17 +4085,17 @@ function PartsWarehouse() {
         </div>
 
         {/* Right: Dynamic Feature Text & Premium Diagnostic Viewport Panel */}
-        <div className="lg:col-span-7 flex items-center justify-between gap-8 pl-10">
+        <div className="lg:col-span-7 flex flex-col lg:flex-row items-center justify-between gap-12 lg:pl-10 w-full">
           
           {/* Active feature animated block & CTA (Moved to the right of curve) */}
-          <div className="flex flex-col justify-center max-w-[340px] z-30">
-            <div className="relative h-[160px] w-full overflow-visible">
-              <div ref={listRef} className="absolute inset-x-0 top-0 flex flex-col items-start w-full">
+          <div className="flex flex-col justify-center w-full lg:max-w-[340px] z-30">
+            <div className="relative lg:h-[160px] w-full overflow-visible">
+              <div ref={listRef} className="relative lg:absolute inset-x-0 top-0 flex flex-col gap-8 lg:gap-0 items-start w-full">
                 {steps.map((step, i) => (
                   <div 
                     key={i} 
                     ref={(el) => { itemsRef.current[i] = el; }}
-                    className="warehouse-step-item w-full h-[160px] flex flex-col justify-center shrink-0"
+                    className="warehouse-step-item w-full lg:h-[160px] flex flex-col justify-center shrink-0"
                   >
                     <span className="text-[13px] md:text-[14px] font-mono text-[#00D084]/65 tracking-[0.3em] uppercase block mb-2">
                       {step.num} / 04
@@ -4050,7 +4112,7 @@ function PartsWarehouse() {
             </div>
             
             {/* CTA */}
-            <div className="flex flex-wrap gap-3 mt-16">
+            <div className="flex flex-wrap gap-3 mt-12 lg:mt-16">
               <button className="bg-[#00D084] hover:bg-[#00b574] text-black px-6 py-3 text-sm rounded-full font-bold transition-all duration-200 shadow-[0_4px_24px_rgba(0,208,132,0.28)] hover:shadow-[0_4px_32px_rgba(0,208,132,0.45)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
                 Shop Parts <ArrowRight className="w-4 h-4" />
               </button>
@@ -4062,7 +4124,7 @@ function PartsWarehouse() {
           </div>
 
           {/* Diagnostic Viewport Panel */}
-          <div className="warehouse-panel relative w-full aspect-[3/3.6] max-w-[340px] shrink-0 border border-white/8 bg-black/85 backdrop-blur-2xl overflow-hidden flex items-center justify-center">
+          <div className="warehouse-panel relative w-full aspect-[3/3.6] max-w-[340px] shrink-0 border border-white/8 bg-black/85 backdrop-blur-2xl overflow-hidden hidden lg:flex items-center justify-center">
 
             {/* Grid texture */}
             <div className="absolute inset-0 grid-scanner-bg opacity-55 pointer-events-none" />
