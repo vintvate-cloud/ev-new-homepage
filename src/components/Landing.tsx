@@ -1749,8 +1749,8 @@ function HowItWorks() {
           </p>
         </div>
 
-        {/* 3 Step Premium Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative items-stretch">
+        {/* 3 Step Premium Cards - Desktop Only */}
+        <div className="hidden lg:grid lg:grid-cols-3 gap-8 relative items-stretch">
           
           {/* Connecting line */}
           <div className="hidden lg:block absolute top-[280px] left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#00D084]/10 to-transparent pointer-events-none" />
@@ -2018,6 +2018,246 @@ function HowItWorks() {
             </div>
           </div>
 
+        </div>
+
+        {/* Mobile Responsive Layout (Visible on mobile/tablet only) */}
+        <div className="lg:hidden flex flex-col gap-6">
+          {/* Step Selector Tabs */}
+          <div className="flex bg-[#070b09]/80 border border-white/5 p-1 rounded-2xl gap-1">
+            {[
+              { num: "01", label: "Config" },
+              { num: "02", label: "Dispatch" },
+              { num: "03", label: "Return" }
+            ].map((tab, i) => {
+              const isSelected = activeStep === i;
+              return (
+                <button
+                  key={i}
+                  onClick={() => setActiveStep(i)}
+                  className={`flex-1 py-3 px-2 rounded-xl flex flex-col items-center justify-center gap-1 transition-all duration-300 ${
+                    isSelected
+                      ? "bg-[#0d1410] border border-[#00D084]/20 text-[#00D084]"
+                      : "text-white/40 border border-transparent"
+                  }`}
+                >
+                  <span className="text-[10px] font-mono font-bold leading-none">{tab.num}</span>
+                  <span className="text-[11px] font-semibold leading-none">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Card Body */}
+          <div className="min-h-[460px] bg-gradient-to-b from-[#0a120e] to-[#040806] border border-[#00D084]/30 rounded-[32px] p-6 flex flex-col justify-between shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]">
+            
+            {/* Top Indicator */}
+            {activeStep === 0 && (
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono text-[#00D084] font-bold">01 // DIAGNOSTIC CONFIG</span>
+                <span className="w-2 h-2 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084]" />
+              </div>
+            )}
+            {activeStep === 1 && (
+              <div className="flex items-center justify-between">
+                <span className="text-xs tracking-wider text-[#00D084] font-bold uppercase">02 // ACTIVE DISPATCH</span>
+                <span className="w-2 h-2 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084]" />
+              </div>
+            )}
+            {activeStep === 2 && (
+              <div className="flex items-center justify-between">
+                <span className="text-xs tracking-wider text-[#00D084] font-bold uppercase">03 // RESTORATION LAB</span>
+                <span className="w-2 h-2 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084]" />
+              </div>
+            )}
+
+            {/* Interactive Visual Element */}
+            <div className="my-6 bg-[#070b09]/60 border border-white/5 rounded-3xl p-4 flex-1 flex flex-col justify-between">
+              {activeStep === 0 && (
+                <>
+                  <div>
+                    <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/5">
+                      <span className="text-[10px] tracking-widest text-[#00D084] font-bold">SELECT METHOD</span>
+                      <span className="text-[10px] text-white/40">STEP 1/3</span>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div
+                        onClick={() => setConfigPack("standard")}
+                        className={`p-3 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${
+                          configPack === "standard"
+                            ? "bg-[#0d1410] border-[#00D084]/40"
+                            : "bg-black/40 border-white/5"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${configPack === "standard" ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-white/60"}`}>
+                            <Home className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <h4 className="text-white text-xs font-bold">Doorstep Service</h4>
+                            <p className="text-[9.5px] text-white/40 mt-0.5 font-light">Technician visits you</p>
+                          </div>
+                        </div>
+                        {configPack === "standard" && (
+                          <span className="bg-[#00D084]/15 text-[#00D084] text-[8px] font-bold px-1.5 py-0.5 rounded-full">POPULAR</span>
+                        )}
+                      </div>
+
+                      <div
+                        onClick={() => setConfigPack("pro")}
+                        className={`p-3 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${
+                          configPack === "pro"
+                            ? "bg-[#0d1410] border-[#00D084]/40"
+                            : "bg-black/40 border-white/5"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${configPack === "pro" ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-white/60"}`}>
+                            <Store className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <h4 className="text-white text-xs font-bold">Service Center</h4>
+                            <p className="text-[9.5px] text-white/40 mt-0.5 font-light">Visit our diagnostics hub</p>
+                          </div>
+                        </div>
+                        {configPack === "pro" && (
+                          <span className="bg-[#00D084]/15 text-[#00D084] text-[8px] font-bold px-1.5 py-0.5 rounded-full">EXPRESS</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-2.5 border-t border-white/5 flex items-center justify-between text-xs">
+                    <span className="text-white/40 font-light">Estimated Booking</span>
+                    <span className="text-white font-bold">{configPack === "standard" ? "Doorstep (45 min)" : "Center (90 min)"}</span>
+                  </div>
+                </>
+              )}
+
+              {activeStep === 1 && (
+                <>
+                  <div>
+                    <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/5">
+                      <span className="text-[10px] tracking-widest text-[#00D084] font-bold">LIVE DISPATCH</span>
+                      <span className="text-[10px] text-white/40">STEP 2/3</span>
+                    </div>
+
+                    <div className="h-24 bg-black/40 border border-white/5 rounded-2xl relative overflow-hidden flex items-center justify-center">
+                      <div className="absolute inset-0 opacity-[0.03]"
+                        style={{
+                          backgroundImage: "radial-gradient(#00D084 1px, transparent 0)",
+                          backgroundSize: "12px 12px"
+                        }}
+                      />
+                      <svg className="absolute w-full h-full stroke-white/10 stroke-2 fill-none">
+                        <path d="M 30,60 Q 90,20 150,50 T 250,30" />
+                      </svg>
+                      <svg className="absolute w-full h-full stroke-[#00D084]/40 stroke-2 fill-none">
+                        <path d="M 30,60 Q 90,20 150,50 T 250,30" className="animate-[dash_8s_linear_infinite]"
+                          style={{ strokeDasharray: "8, 8" }}
+                        />
+                      </svg>
+                      <div className="absolute left-[24px] bottom-[14px] w-3 h-3 rounded-full bg-white/20 flex items-center justify-center">
+                        <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                      </div>
+                      <div className="absolute right-[44px] top-[14px] w-6 h-6 rounded-full bg-[#00D084]/20 flex items-center justify-center animate-pulse">
+                        <div className="w-3 h-3 rounded-full bg-[#00D084] shadow-[0_0_12px_#00D084] flex items-center justify-center">
+                          <div className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 bg-black/50 border border-white/5 rounded-xl p-2 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-950 flex items-center justify-center text-[#00D084] shrink-0 font-bold text-xs">
+                      VM
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <div className="text-[8px] text-white/40">TECH EN ROUTE</div>
+                      <div className="text-xs text-white font-bold truncate">Vikram Mehta</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[10.5px] text-[#00D084] font-bold">14 MINS</div>
+                      <div className="text-[8.5px] text-white/30">ETA</div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {activeStep === 2 && (
+                <>
+                  <div>
+                    <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/5">
+                      <span className="text-[10px] tracking-widest text-[#00D084] font-bold">CALIBRATION LAB</span>
+                      <span className="text-[10px] text-white/40">STEP 3/3</span>
+                    </div>
+
+                    <div className="flex items-center justify-center py-1 gap-4">
+                      <div className="relative w-14 h-14 flex-shrink-0">
+                        <svg className="w-full h-full transform -rotate-90">
+                          <circle cx="28" cy="28" r="22" className="stroke-white/5" strokeWidth="3" fill="transparent" />
+                          <circle cx="28" cy="28" r="22" className="stroke-[#00D084] transition-all duration-300" strokeWidth="3" fill="transparent"
+                            strokeDasharray={2 * Math.PI * 22}
+                            strokeDashoffset={2 * Math.PI * 22 * (1 - batteryCharge / 100)}
+                            strokeLinecap="round"
+                            style={{ filter: "drop-shadow(0 0 6px rgba(0, 208, 132, 0.4))" }}
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                          <span className="text-white font-bold text-[11px] tracking-tight">{batteryCharge}%</span>
+                          <span className="text-[6px] text-[#00D084] font-mono uppercase">SOH</span>
+                        </div>
+                      </div>
+                      <div className="flex-1 space-y-1 text-left">
+                        <div className="flex flex-col">
+                          <span className="text-[7px] text-white/40 uppercase font-mono">BMS Status</span>
+                          <span className="text-[10px] text-white font-bold">Optimum Balance</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[7px] text-white/40 uppercase font-mono">Temp Calibration</span>
+                          <span className="text-[10px] text-white font-bold">38°C (Nominal)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex items-center justify-between bg-black/40 border border-[#00D084]/20 rounded-xl px-3 py-1.5 text-[9px]">
+                    <span className="text-white/40 font-light">Calibration Status</span>
+                    <span className="text-[#00D084] font-mono font-bold flex items-center gap-1">
+                      <span className="w-1 h-1 rounded-full bg-[#00D084] animate-pulse" />
+                      SUCCESS // OK
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Core Info */}
+            <div className="text-left">
+              {activeStep === 0 && (
+                <>
+                  <h3 className="text-white font-bold text-lg tracking-tight">Select & Book</h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed mt-2 font-light">
+                    Choose your specific EV type, configure diagnostic modules with clear pricing, and book your service slot.
+                  </p>
+                </>
+              )}
+              {activeStep === 1 && (
+                <>
+                  <h3 className="text-white font-bold text-lg tracking-tight">Pickup & Visit</h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed mt-2 font-light">
+                    A certified technician visits your doorstep for diagnostic checks or arranges a secure transport to our service lab.
+                  </p>
+                </>
+              )}
+              {activeStep === 2 && (
+                <>
+                  <h3 className="text-white font-bold text-lg tracking-tight">Service & Smart Return</h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed mt-2 font-light">
+                    Your vehicle undergoes diagnostic checks and calibration to OEM standards, then gets delivered in peak health.
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Global CTA button */}
