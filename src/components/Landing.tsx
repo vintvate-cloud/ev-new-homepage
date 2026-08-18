@@ -1863,115 +1863,336 @@ const VEHICLES: Vehicle[] = [
   },
 ];
 
-/* ---------------- Cinematic Ecosystem Overview ---------------- */
+/* ---------------- Cinematic Ecosystem Overview (Framer Motion) ---------------- */
 function CinematicEcosystem() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>('.cinematic-card');
+  const [activeTab, setActiveTab] = useState(0);
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "+=300%", // Longer scroll for sequence
-          pin: true,
-          scrub: 1,
-        }
-      });
-
-      // Initially, position them at their final horizontal spots, but hidden below screen
-      gsap.set(cards[0], { y: "100vh", left: "20%", xPercent: -50, opacity: 0 });
-      gsap.set(cards[1], { y: "100vh", left: "50%", xPercent: -50, opacity: 0 });
-      gsap.set(cards[2], { y: "100vh", left: "80%", xPercent: -50, opacity: 0 });
-
-      // Card 1: comes straight up from the left
-      tl.to(cards[0], { y: "0vh", opacity: 1, duration: 1, ease: "power2.out" });
-
-      // Card 2: comes straight up from the center
-      tl.to(cards[1], { y: "0vh", opacity: 1, duration: 1, ease: "power2.out" }, "-=0.5");
-
-      // Card 3: comes straight up from the right
-      tl.to(cards[2], { y: "0vh", opacity: 1, duration: 1, ease: "power2.out" }, "-=0.5");
-
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
-
-  const pillars = [
+  const capabilities = [
     {
-      title: "For EV Owners",
-      desc: "Certified Doorstep Service: Technicians come to you. Diagnosed, repaired, and signed off — without visiting a service centre.",
-      desc2: "Genuine Parts, Guaranteed: Compatibility-verified parts for your exact 2W or 3W model. Warranty tracked in your account.",
-      desc3: "Real-Time Job Updates: Know exactly where your technician is and when your vehicle is ready. No more waiting in the dark.",
+      id: "diagnostics",
+      badge: "AI DIAGNOSTICS",
+      title: "Real-Time BMS & Battery Telemetry",
+      desc: "Instant health profiling, cell-level voltage balance checks, and thermal runaway prevention using proprietary OBD-II EV scan protocols.",
+      metrics: [
+        { label: "BMS Scan Time", value: "< 45 sec" },
+        { label: "Predictive Accuracy", value: "99.8%" },
+        { label: "Supported Protocols", value: "50+" },
+      ],
+      features: [
+        "Cell-level degradation analysis & state-of-health (SoH) rating",
+        "Thermal management anomaly detection & alerting",
+        "Instant digital report generated for EV owners & insurers"
+      ],
+      icon: Battery,
+      graphicType: "battery",
     },
     {
-      title: "For Franchise Partners",
-      desc: "Launch-Ready Business: Walk into a fully-built operation. Bookings, billing, technicians, parts — all managed for you from Day 1.",
-      desc2: "Transparent Earnings: Commission calculated automatically. Payout dashboard always live. No disputes, no manual reconciliation.",
-      desc3: "You Own Your Territory: Geo-protected zones, your customers, your brand — backed by national infrastructure and support.",
+      id: "spares",
+      badge: "LOGISTICS GRID",
+      title: "Instant OEM Spare Parts Dispatch",
+      desc: "Direct integration with top EV component manufacturers ensuring zero counterfeit parts, automated inventory reordering, and sub-2-hour doorstep delivery.",
+      metrics: [
+        { label: "Dispatch Speed", value: "< 120 mins" },
+        { label: "Genuine Guarantee", value: "100%" },
+        { label: "Warehouse Hubs", value: "45+" },
+      ],
+      features: [
+        "Cryptographically signed QR codes for anti-counterfeit verification",
+        "Automated reordering when franchise inventory hits threshold",
+        "Direct warranty claim processing with 24-hour turnaround"
+      ],
+      icon: Package,
+      graphicType: "spares",
     },
     {
-      title: "The Ecosystem Edge",
-      desc: "15+ Modules, One Login: Bookings, inventory, CRM, fleet, billing, and analytics — no switching tools, no fragmented data.",
-      desc2: "Scales from 1 to 100 Centres: Same platform from your first franchise outlet to a citywide multi-centre network. No migration needed.",
-      desc3: "AI-Assisted, Human-Controlled: Automation handles routine operations. Owners and franchisers stay in charge of every key decision.",
-    }
+      id: "franchise-os",
+      badge: "INTELLIGENT OS",
+      title: "Automated Workshop Operations Grid",
+      desc: "An all-in-one operating system that handles customer bookings, technician route optimization, job sign-offs, and live commission splits.",
+      metrics: [
+        { label: "Operational Uptime", value: "99.99%" },
+        { label: "Daily Transactions", value: "15,000+" },
+        { label: "Settlement Speed", value: "Instant" },
+      ],
+      features: [
+        "Geo-fenced job distribution for minimum technician travel time",
+        "Automated invoice & GST compliance generation",
+        "Real-time owner dashboard with zero manual reconciliation"
+      ],
+      icon: Cpu,
+      graphicType: "os",
+    },
+    {
+      id: "fleet",
+      badge: "FLEET INFRASTRUCTURE",
+      title: "Enterprise Fleet Telematics & Uptime",
+      desc: "Turnkey maintenance platform for commercial 2W/3W delivery fleets, guaranteeing maximum vehicle uptime and minimized total cost of ownership.",
+      metrics: [
+        { label: "Fleet Uptime SLA", value: "98.5%" },
+        { label: "Cost Reduction", value: "32%" },
+        { label: "Active Vehicles", value: "25,000+" },
+      ],
+      features: [
+        "Scheduled night-shift preventive maintenance programs",
+        "Swappable battery pack health monitoring",
+        "Dedicated account manager & 24/7 road assistance SLA"
+      ],
+      icon: ShieldCheck,
+      graphicType: "fleet",
+    },
   ];
 
   return (
-    <section ref={containerRef} className="relative h-screen bg-[#020403] overflow-hidden flex flex-col items-center justify-center selection:bg-[#00D084] selection:text-[#020403]">
-      {/* Background ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00D084]/5 blur-[150px] rounded-full pointer-events-none" />
+    <section ref={containerRef} className="relative py-28 px-6 lg:px-12 bg-[#020403] overflow-hidden selection:bg-[#00D084] selection:text-[#020403]">
+      {/* Background glow effects */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-[#00D084]/10 via-[#00D084]/5 to-transparent blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#00D084]/5 blur-[140px] rounded-full pointer-events-none" />
 
-      {/* Intro Text - Top aligned, static size */}
-      <div ref={textRef} className="absolute top-[8%] inset-x-0 flex flex-col items-center justify-start text-center px-6 z-10 pointer-events-none">
-        <h2 className="text-4xl md:text-[5vw] font-serif text-white font-bold leading-[1.05] tracking-tight max-w-7xl">
-          India Has No One<br />Doing What We Do
-        </h2>
-        <p className="text-white/60 text-lg md:text-2xl mt-6 max-w-4xl leading-relaxed">
-          No OEM franchise. No multi-brand EV service platform. No unified ecosystem for 2W & 3W repairs, parts, and payouts — <span className="text-white">until now.</span>
-        </p>
-      </div>
-
-      {/* Cards Container */}
-      <div className="absolute inset-x-0 bottom-[15%] top-[40%] z-20 pointer-events-none">
-        {pillars.map((pillar, i) => (
-          <div key={i} className="cinematic-card absolute top-0 w-[90vw] md:w-[28vw] max-w-[400px] rounded-[24px] bg-[#0a0f0c]/90 backdrop-blur-3xl border border-white/10 p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col pointer-events-auto">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#00D084]/15 via-transparent to-transparent rounded-[24px] opacity-40 pointer-events-none" />
-
-            <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-4 mb-4">
-              <h3 className="text-xl md:text-2xl font-serif text-white">{pillar.title}</h3>
-              <span className="text-[#00D084] text-2xl font-light opacity-30">0{i + 1}</span>
-            </div>
-
-            <div className="relative z-10 flex flex-col gap-4">
-              {[pillar.desc, pillar.desc2, pillar.desc3].map((text, j) => {
-                const [boldPart, rest] = text.split(':');
-                return (
-                  <div key={j} className="flex gap-3 items-start">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#00D084] shrink-0 mt-2 shadow-[0_0_8px_#00D084]" />
-                    <p className="text-[#a1a1aa] text-sm md:text-[15px] leading-relaxed tracking-wide">
-                      <span className="text-white font-medium">{boldPart}:</span>{rest}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-4xl mx-auto mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 mb-6">
+            <Sparkles className="w-4 h-4 text-[#00D084]" />
+            <span className="text-xs font-mono font-bold tracking-widest text-[#00D084] uppercase">
+              NEXT-GEN EV ARCHITECTURE
+            </span>
           </div>
-        ))}
-      </div>
+          <h2 className="text-4xl md:text-6xl font-bold font-serif text-white tracking-tight leading-[1.1]">
+            Connected Intelligence Platform for <span className="text-[#00D084]">Modern EV Mobility</span>
+          </h2>
+          <p className="text-lg md:text-xl text-white/60 mt-6 font-light leading-relaxed max-w-3xl mx-auto">
+            Beyond standard repairs: Our proprietary technology stack unifies real-time battery diagnostics, direct OEM logistics, and automated workshop operations into a single intelligent grid.
+          </p>
+        </motion.div>
 
-      {/* CTAs - Centered together */}
-      <div className="absolute bottom-10 z-30 flex flex-wrap justify-center gap-4 w-full px-6 pointer-events-none">
-        <button className="pointer-events-auto group inline-flex items-center gap-2 rounded-full bg-[#00D084] px-8 py-4 text-[15px] font-bold text-[#020403] transition-all hover:scale-105 hover:bg-white">
-          Book a Service <ArrowRight className="h-4 w-4" />
-        </button>
-        <button className="pointer-events-auto group inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#0a0f0c] px-8 py-4 text-[15px] font-bold text-white transition-all hover:border-[#00D084]/50 hover:bg-[#00D084]/10 mt-4 md:mt-0">
-          Apply for Franchise
-        </button>
+        {/* Tab Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
+          {capabilities.map((item, idx) => {
+            const Icon = item.icon;
+            const isActive = activeTab === idx;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(idx)}
+                className={`relative px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2.5 cursor-pointer ${
+                  isActive
+                    ? "text-[#020403] font-bold shadow-[0_0_25px_rgba(0,208,132,0.4)]"
+                    : "text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTabGlow"
+                    className="absolute inset-0 bg-[#00D084] rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-2">
+                  <Icon className={`w-4 h-4 ${isActive ? "text-[#020403]" : "text-[#00D084]"}`} />
+                  {item.badge}
+                </span>
+              </button>
+            );
+          })}
+        </motion.div>
+
+        {/* Active Content Feature Card Display */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 25, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -25, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-[32px] bg-[#070c09]/80 border border-white/10 p-8 lg:p-12 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.7)] relative overflow-hidden"
+          >
+            {/* Ambient Background glow */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D084]/10 blur-[100px] rounded-full pointer-events-none" />
+
+            {/* Left Content Area */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-8 relative z-10">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 mb-4">
+                  <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
+                  <span className="text-[11px] font-mono font-bold tracking-wider text-[#00D084] uppercase">
+                    {capabilities[activeTab].badge}
+                  </span>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-serif text-white font-bold tracking-tight mb-4">
+                  {capabilities[activeTab].title}
+                </h3>
+                <p className="text-white/70 text-base md:text-lg leading-relaxed font-light mb-8">
+                  {capabilities[activeTab].desc}
+                </p>
+
+                {/* Key Features Bullet List */}
+                <div className="space-y-3.5">
+                  {capabilities[activeTab].features.map((feat, fIdx) => (
+                    <motion.div
+                      key={fIdx}
+                      initial={{ opacity: 0, x: -15 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * fIdx + 0.2 }}
+                      className="flex items-start gap-3"
+                    >
+                      <div className="w-5 h-5 rounded-full bg-[#00D084]/20 border border-[#00D084]/50 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="w-3 h-3 text-[#00D084]" />
+                      </div>
+                      <span className="text-sm md:text-base text-white/90 font-medium">{feat}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Metrics Grid */}
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+                {capabilities[activeTab].metrics.map((m, mIdx) => (
+                  <div key={mIdx} className="bg-white/[0.03] border border-white/5 rounded-2xl p-4 flex flex-col">
+                    <span className="text-2xl md:text-3xl font-bold font-mono text-[#00D084]">{m.value}</span>
+                    <span className="text-xs text-white/50 font-sans mt-1">{m.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Interactive Animated Display Panel */}
+            <div className="lg:col-span-5 relative z-10 min-h-[320px] rounded-2xl bg-black/60 border border-white/10 p-6 flex flex-col justify-between overflow-hidden">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                </div>
+                <span className="text-[10px] font-mono text-white/40 tracking-wider">LIVE TELEMETRY STREAM</span>
+              </div>
+
+              {/* Dynamic Interactive Illustration based on active tab */}
+              <div className="flex-1 flex flex-col items-center justify-center py-6 text-center">
+                {capabilities[activeTab].graphicType === "battery" && (
+                  <div className="w-full space-y-6">
+                    <div className="relative w-48 h-24 mx-auto border-2 border-[#00D084]/60 rounded-2xl p-2 flex items-center justify-between overflow-hidden bg-emerald-950/20">
+                      <div className="absolute right-0 top-0 bottom-0 w-3 bg-[#00D084]/60 rounded-r-md" />
+                      {/* Cell Bars */}
+                      {[1, 2, 3, 4, 5].map((bar) => (
+                        <motion.div
+                          key={bar}
+                          initial={{ opacity: 0.3, height: "40%" }}
+                          animate={{ opacity: [0.4, 1, 0.4], height: ["60%", "90%", "60%"] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: bar * 0.2 }}
+                          className="w-6 bg-[#00D084] rounded-md shadow-[0_0_12px_#00D084]"
+                        />
+                      ))}
+                    </div>
+                    <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/30 px-3 py-1.5 rounded-full">
+                      <Bolt className="w-3.5 h-3.5 animate-pulse" />
+                      VOLTAGE STABLE: 74.2V | TEMP: 31°C
+                    </div>
+                  </div>
+                )}
+
+                {capabilities[activeTab].graphicType === "spares" && (
+                  <div className="w-full space-y-6">
+                    <div className="relative w-40 h-40 mx-auto border border-dashed border-[#00D084]/50 rounded-2xl flex flex-col items-center justify-center p-4 bg-emerald-950/10">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-2 border border-[#00D084]/20 rounded-xl pointer-events-none"
+                      />
+                      <Package className="w-12 h-12 text-[#00D084] mb-2 animate-bounce" />
+                      <span className="text-[11px] font-mono text-white/80">QR VERIFIED #EV-9942</span>
+                    </div>
+                    <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/30 px-3 py-1.5 rounded-full">
+                      <Truck className="w-3.5 h-3.5" />
+                      DISPATCHED FROM HUB #04 (MUMBAI)
+                    </div>
+                  </div>
+                )}
+
+                {capabilities[activeTab].graphicType === "os" && (
+                  <div className="w-full space-y-4">
+                    <div className="bg-black/80 border border-white/10 rounded-xl p-4 space-y-3 text-left">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-white/60">Workshop Node #108</span>
+                        <span className="text-[#00D084] font-mono">ONLINE</span>
+                      </div>
+                      <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                        <motion.div
+                          initial={{ width: "0%" }}
+                          animate={{ width: "85%" }}
+                          transition={{ duration: 1.5 }}
+                          className="bg-[#00D084] h-full rounded-full shadow-[0_0_8px_#00D084]"
+                        />
+                      </div>
+                      <div className="flex justify-between items-center text-[11px] font-mono text-white/50">
+                        <span>Jobs Completed: 48</span>
+                        <span>Payout: ₹24,500</span>
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/30 px-3 py-1.5 rounded-full">
+                      <Activity className="w-3.5 h-3.5 animate-pulse" />
+                      AUTOMATED COMMISSION DISPATCH
+                    </div>
+                  </div>
+                )}
+
+                {capabilities[activeTab].graphicType === "fleet" && (
+                  <div className="w-full space-y-4">
+                    <div className="grid grid-cols-2 gap-3 text-left">
+                      <div className="bg-emerald-950/30 border border-[#00D084]/30 p-3 rounded-xl">
+                        <span className="text-[10px] text-white/50 block font-mono">ACTIVE FLEETS</span>
+                        <span className="text-xl font-bold font-mono text-[#00D084]">1,420</span>
+                      </div>
+                      <div className="bg-emerald-950/30 border border-[#00D084]/30 p-3 rounded-xl">
+                        <span className="text-[10px] text-white/50 block font-mono">UPTIME RATE</span>
+                        <span className="text-xl font-bold font-mono text-[#00D084]">99.4%</span>
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/30 px-3 py-1.5 rounded-full">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      ENTERPRISE SLA ACTIVE
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-white/40 font-mono">
+                <span>SYSTEM STATUS: OPTIMAL</span>
+                <span className="flex items-center gap-1.5 text-[#00D084]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
+                  REALTIME
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Bottom CTA bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-16 text-center flex flex-wrap justify-center items-center gap-4"
+        >
+          <button className="group inline-flex items-center gap-2 rounded-full bg-[#00D084] px-8 py-4 text-[15px] font-bold text-[#020403] transition-all hover:scale-105 hover:bg-white shadow-[0_0_30px_rgba(0,208,132,0.3)] cursor-pointer">
+            Explore Technology Grid <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <button className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-[15px] font-bold text-white transition-all hover:border-[#00D084]/50 hover:bg-[#00D084]/10 cursor-pointer">
+            Partner With Us
+          </button>
+        </motion.div>
       </div>
     </section>
   );
@@ -5005,15 +5226,15 @@ function EcosystemOfferings() {
 /* ---------------- Download Our App ---------------- */
 function DownloadApp() {
   return (
-    <section id="app" className="relative w-full bg-[#030604] py-32 md:py-40 overflow-hidden border-t border-white/5">
+    <section id="app" className="relative w-full bg-[#020403] py-32 md:py-40 overflow-hidden border-t border-white/5">
       {/* Decorative Glow */}
       <div className="absolute top-1/2 left-3/4 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#00D084]/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* LEFT: TEXT, RATINGS, REVIEWS, QR CODE */}
-          <Reveal className="lg:col-span-7 flex flex-col gap-8" yOffset={40}>
+          {/* LEFT: TEXT, RATINGS, REVIEWS */}
+          <Reveal className="lg:col-span-6 flex flex-col gap-8" yOffset={40}>
             
             {/* Header */}
             <GSAPText stagger={0.1}>
@@ -5091,35 +5312,13 @@ function DownloadApp() {
               </div>
             </div>
 
-            {/* QR Code and Scan Info */}
-            <div className="flex flex-col sm:flex-row items-center gap-6 mt-2">
-              <div className="relative p-3.5 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center w-28 h-28 group overflow-hidden shrink-0">
-                {/* Laser scan line in QR */}
-                <div className="absolute inset-x-0 top-0 h-[1.5px] bg-[#00D084] animate-scan" />
-                
-                {/* QR Code SVG */}
-                <svg viewBox="0 0 100 100" className="w-20 h-20 text-[#00D084] fill-current">
-                  <path d="M0 0h30v10H10v20H0V0zm40 0h20v10H40V0zm30 0h30v30H90V10H80v10H70V0zM0 40h10v20H0V40zm30 10h10v10H30V50zm50-10h20v10H80V40zM0 70h30v30H20V90H10v10H0V70zm40 20h20v10H40V90zm30-20h30v10H80v10h10v10H70V70zm10 10h10v10H80V80z" />
-                  <rect x="20" y="20" width="10" height="10" />
-                  <rect x="70" y="20" width="10" height="10" />
-                  <rect x="20" y="70" width="10" height="10" />
-                  <rect x="45" y="45" width="10" height="10" />
-                </svg>
-              </div>
-
-              <div className="flex flex-col">
-                <span className="text-[10px] font-mono text-[#00D084] tracking-[0.2em] uppercase mb-1.5">[ SCAN TO PAIR / DOWNLOAD ]</span>
-                <span className="text-[11px] text-white/50 leading-relaxed max-w-[280px]">Point your smartphone camera at the code to pair and launch the dashboard application instantly.</span>
-              </div>
-            </div>
-
           </Reveal>
 
-          {/* RIGHT: SMARTPHONE MOCKUP FRAME */}
-          <Reveal className="lg:col-span-5 flex justify-center items-center" yOffset={40} delay={0.2}>
+          {/* RIGHT: SMARTPHONE MOCKUP & PREMIUM QR PAIRING CARD */}
+          <Reveal className="lg:col-span-6 flex flex-col md:flex-row items-center justify-center gap-8 relative" yOffset={40} delay={0.2}>
             
             {/* Phone Mockup Frame */}
-            <div className="relative mx-auto w-[290px] h-[580px] rounded-[42px] border-[8px] border-white/10 bg-black shadow-[0_0_50px_rgba(0,208,132,0.15)] overflow-hidden flex flex-col p-3 transition-transform duration-500 hover:scale-[1.02]">
+            <div className="relative w-[270px] h-[550px] rounded-[42px] border-[8px] border-white/10 bg-black shadow-[0_0_60px_rgba(0,208,132,0.18)] overflow-hidden flex flex-col p-3 transition-transform duration-500 hover:scale-[1.02] shrink-0">
               
               {/* Ear Speaker / Camera Notch */}
               <div className="absolute top-4 left-1/2 -translate-x-1/2 w-32 h-5 rounded-full bg-black z-20 flex items-center justify-center">
@@ -5180,6 +5379,61 @@ function DownloadApp() {
                 </div>
 
               </div>
+            </div>
+
+            {/* PREMIUM QR PAIRING CARD (POSITIONED NEAR DEVICE MOCKUP) */}
+            <div className="w-full max-w-[270px] bg-[#070c09]/95 border border-[#00D084]/30 rounded-[32px] p-6 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl flex flex-col items-center text-center relative overflow-hidden group hover:border-[#00D084]/60 transition-all duration-500">
+              
+              {/* Background ambient glow */}
+              <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#00D084]/20 blur-3xl rounded-full pointer-events-none" />
+              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-[#00D084]/10 blur-3xl rounded-full pointer-events-none" />
+
+              {/* Status Header Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 mb-5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse shadow-[0_0_8px_#00D084]" />
+                <span className="text-[10px] font-mono font-bold tracking-widest text-[#00D084] uppercase">
+                  [ SCAN TO PAIR / DOWNLOAD ]
+                </span>
+              </div>
+
+              {/* Ultra Premium QR Code Container */}
+              <div className="relative p-4 bg-black/90 border border-white/15 rounded-2xl flex items-center justify-center w-40 h-40 group-hover:border-[#00D084]/60 transition-all duration-300 shadow-[0_0_30px_rgba(0,0,0,0.9)] mb-5 overflow-hidden">
+                {/* Laser scan animation beam */}
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#00D084] to-transparent animate-scan shadow-[0_0_12px_#00D084]" />
+                
+                {/* Glowing Corner Brackets for HUD feel */}
+                <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#00D084]" />
+                <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-[#00D084]" />
+                <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-[#00D084]" />
+                <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-[#00D084]" />
+
+                {/* Center EV Logo Badge inside QR */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-7 h-7 rounded-lg bg-[#00D084] border-2 border-black flex items-center justify-center shadow-[0_0_10px_rgba(0,208,132,0.8)] z-10">
+                    <Zap className="w-4 h-4 text-black fill-current" />
+                  </div>
+                </div>
+
+                {/* Precision SVG QR Code */}
+                <svg viewBox="0 0 100 100" className="w-28 h-28 text-[#00D084] fill-current">
+                  <path d="M0 0h30v10H10v20H0V0zm40 0h20v10H40V0zm30 0h30v30H90V10H80v10H70V0zM0 40h10v20H0V40zm30 10h10v10H30V50zm50-10h20v10H80V40zM0 70h30v30H20V90H10v10H0V70zm40 20h20v10H40V90zm30-20h30v10H80v10h10v10H70V70zm10 10h10v10H80V80z" />
+                  <rect x="20" y="20" width="10" height="10" />
+                  <rect x="70" y="20" width="10" height="10" />
+                  <rect x="20" y="70" width="10" height="10" />
+                  <rect x="45" y="45" width="10" height="10" />
+                </svg>
+              </div>
+
+              {/* Explanatory text */}
+              <p className="text-[12px] text-white/70 leading-relaxed font-light mb-3">
+                Point your smartphone camera at the code to pair and launch the dashboard application instantly.
+              </p>
+
+              {/* Footer Subtext */}
+              <span className="text-[9px] font-mono text-white/40 uppercase tracking-widest border-t border-white/10 pt-3 w-full">
+                IOS & ANDROID // INSTANT PAIRING
+              </span>
+
             </div>
 
           </Reveal>
@@ -5351,12 +5605,12 @@ function Landing() {
         <Hero />
         <EVTypeSelection />
         <HowItWorks />
-        <CinematicEcosystem />
+        <Ecosystem />
         <EVServices />
         <ValuePackages />
       </div>
 
-      <Ecosystem />
+      <CinematicEcosystem />
 
       <LabConfiguration />
 
