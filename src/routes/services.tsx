@@ -25,7 +25,18 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+type ServicesSearch = {
+  service?: string;
+  id?: string;
+};
+
 export const Route = createFileRoute("/services")({
+  validateSearch: (search: Record<string, unknown>): ServicesSearch => {
+    return {
+      service: (search.service as string) || undefined,
+      id: (search.id as string) || undefined,
+    };
+  },
   component: ServicesPage,
 });
 
@@ -124,6 +135,30 @@ function ServicesPage() {
       setIsClosingDetails(false);
     }, 320);
   };
+
+  const { service: serviceParam, id: idParam } = Route.useSearch();
+
+  // Auto-open service detail card if URL has service query parameter (e.g. ?service=BAT-001)
+  useEffect(() => {
+    const serviceId =
+      serviceParam ||
+      idParam ||
+      (typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("service") ||
+          new URLSearchParams(window.location.search).get("id")
+        : null);
+
+    if (serviceId) {
+      const match = SERVICES.find(
+        (s) =>
+          s.id.toLowerCase() === serviceId.toLowerCase() ||
+          s.title.toLowerCase().includes(serviceId.toLowerCase())
+      );
+      if (match) {
+        handleOpenDetails(match);
+      }
+    }
+  }, [serviceParam, idParam]);
 
   // Lenis Smooth Scroll & scrollbar removal inside ONLY the right section of the details modal card
   const rightSectionRef = useRef<HTMLDivElement>(null);
@@ -284,7 +319,7 @@ function ServicesPage() {
           2. HERO SECTION (Full-Width, Edge-to-Edge Display attached to display)
          ========================================================================= */}
       <section
-        className={`relative w-full rounded-none overflow-hidden text-white pt-44 pb-44 md:pt-52 md:pb-52 px-6 min-h-[560px] flex items-center justify-center -mt-20 border-b ${
+        className={`relative w-full h-screen min-h-screen rounded-none overflow-hidden text-white px-6 flex items-center justify-center -mt-20 border-b ${
           isLight ? "bg-[#0c1410] border-[#2d3a34]" : "bg-[#060b08] border-white/10"
         }`}
       >
@@ -297,27 +332,26 @@ function ServicesPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#020403]/85 via-[#030604]/55 to-[#020403]/95 pointer-events-none" />
 
-        <div className="max-w-4xl mx-auto text-center relative z-10 my-auto pt-4 md:pt-8">
+        <div className="max-w-4xl mx-auto text-center relative z-10 my-auto pt-36 md:pt-56 lg:pt-72 translate-y-8 sm:translate-y-16 md:translate-y-24">
           {/* Headline text with background image support */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-5 leading-[1.08] drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
-            More than an EV workshop.
+            Expert EV Services
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto mb-10 drop-shadow-md">
-            It's your mobility infrastructure. We power your journey.
+          <p className="text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto drop-shadow-md">
+            Professional diagnostics and repairs for Electric Scooters, Bikes & Autos
           </p>
-
-          <a
-            href="#products-grid"
-            className="inline-flex items-center gap-2 rounded-full bg-[#00D084] text-[#020403] px-9 py-4 text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_30px_rgba(0,208,132,0.4)] hover:scale-105 cursor-pointer"
-          >
-            GET STARTED
-          </a>
         </div>
       </section>
 
-      {/* 3. HERO OVERLAPPING CARDS ROW (Exact Match to Screenshot - Tall 420px Poster Cards for Value Packages) */}
-      <div className="-mt-28 relative z-20 max-w-7xl mx-auto px-6 mb-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* 3. VALUE PACKAGES CARDS SECTION (Positioned cleanly below full-screen hero with Section Header) */}
+      <div className="mt-16 md:mt-24 relative z-20 max-w-[1380px] mx-auto px-6 mb-20">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#00D084] tracking-tight uppercase drop-shadow-md">
+            More services. Better savings.
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
           {PACKAGES.slice(0, 4).map((pkg, index) => {
             const bgImg =
               pkg.img ||
@@ -328,8 +362,19 @@ function ServicesPage() {
             return (
               <div
                 key={pkg.id}
-                onClick={() => handleBookPackage(pkg)}
-                className={`relative h-[420px] rounded-[28px] overflow-hidden p-5 shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col justify-between border-none ${
+                onClick={() =>
+                  handleOpenDetails({
+                    id: pkg.id,
+                    title: pkg.title,
+                    category: "Value Package",
+                    desc: pkg.desc,
+                    price2W: pkg.price,
+                    price3W: pkg.price,
+                    duration: "1 Year Validity",
+                    specs: pkg.features,
+                  })
+                }
+                className={`relative h-[470px] rounded-[30px] overflow-hidden p-6 sm:p-7 shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col justify-between border-none ${
                   isLight
                     ? "shadow-lg hover:shadow-2xl hover:scale-[1.02]"
                     : "shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:scale-[1.02]"
@@ -345,47 +390,22 @@ function ServicesPage() {
                 {/* Dark Vignette Gradient Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/30 pointer-events-none" />
 
-                {/* Top Badges Header */}
-                <div className="relative z-10 flex items-center justify-between w-full">
-                  <div className="bg-black/75 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono font-black uppercase text-[#00D084] border border-[#00D084]/40 shadow-sm">
-                    {tagCode}
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <span className="bg-[#00D084] text-[#020403] text-[9px] font-mono font-black uppercase px-2.5 py-0.5 rounded-full shadow-xs">
-                      {pkg.save}
-                    </span>
-                    {["CE", "RoHS"].map((c) => (
-                      <span
-                        key={c}
-                        className="bg-black/75 backdrop-blur-md text-[8px] font-mono font-bold text-white border border-white/20 rounded-full w-5 h-5 flex items-center justify-center shadow-xs"
-                      >
-                        {c}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
                 {/* Bottom Overlay Content */}
-                <div className="relative z-10 pt-16">
-                  {/* Eyebrow */}
-                  <div className="text-[10px] font-mono font-bold uppercase text-[#00D084] tracking-wider mb-1">
-                    MORE SERVICES • BETTER SAVINGS
-                  </div>
+                <div className="mt-auto relative z-10">
 
                   {/* Title & Tag */}
-                  <h3 className="text-xl font-black text-white leading-snug mb-1 drop-shadow-md group-hover:text-[#00D084] transition-colors">
+                  <h3 className="text-2xl font-black text-white leading-snug mb-1.5 drop-shadow-md group-hover:text-[#00D084] transition-colors">
                     {pkg.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs text-white/80 font-normal leading-relaxed line-clamp-2 mb-3">
+                  <p className="text-xs sm:text-sm text-white/80 font-normal leading-relaxed line-clamp-2 mb-3">
                     {pkg.desc}
                   </p>
 
                   {/* Price Row */}
                   <div className="flex items-baseline gap-2 mb-4 font-mono">
-                    <span className="text-2xl font-black text-white">{pkg.price}</span>
+                    <span className="text-3xl font-black text-white">{pkg.price}</span>
                     <span className="text-xs text-white/50 line-through">{pkg.oldPrice}</span>
                   </div>
 
@@ -394,7 +414,16 @@ function ServicesPage() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleBookPackage(pkg);
+                        handleOpenDetails({
+                          id: pkg.id,
+                          title: pkg.title,
+                          category: "Value Package",
+                          desc: pkg.desc,
+                          price2W: pkg.price,
+                          price3W: pkg.price,
+                          duration: "1 Year Validity",
+                          specs: pkg.features,
+                        });
                       }}
                       className="py-3 rounded-full border border-white/40 text-white hover:bg-white/15 backdrop-blur-md text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer text-center"
                     >
@@ -420,7 +449,7 @@ function ServicesPage() {
       {/* =========================================================================
           4. ENGINEERED INTRO SECTION
          ========================================================================= */}
-      <section id="engineered-section" className="py-12 px-6 max-w-7xl mx-auto">
+      <section id="engineered-section" className="pt-20 md:pt-28 pb-12 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
           
           {/* Left Column Heading */}
@@ -1163,18 +1192,16 @@ function ServicesPage() {
                   >
                     Book this service
                   </button>
-                  <button
-                    onClick={() => {
-                      toast.info("Connecting to MY EV SERVICE support...");
-                    }}
-                    className={`px-4 py-2.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
+                  <Link
+                    to="/contact"
+                    className={`px-4 py-2.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap inline-flex items-center justify-center ${
                       isLight
                         ? "border-[#c5d6ca] text-[#1a2320] hover:bg-black/5"
                         : "border-white/20 text-white hover:bg-white/10"
                     }`}
                   >
                     Talk to support
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -1258,16 +1285,11 @@ function ServicesPage() {
                             isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
                           }`}
                         >
-                          <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 rounded-xl bg-[#00D084]/15 flex items-center justify-center shrink-0">
-                              <Check className="w-4 h-4 text-[#00D084]" />
-                            </div>
-                            <div className="min-w-0">
-                              <p className="text-xs font-bold leading-snug">{spec}</p>
-                              <span className="text-[10px] text-[#00D084] font-medium block mt-0.5">
-                                Included
-                              </span>
-                            </div>
+                          <div className="min-w-0">
+                            <p className="text-xs font-bold leading-snug">{spec}</p>
+                            <span className="text-[10px] text-[#00D084] font-medium block mt-0.5">
+                              Included
+                            </span>
                           </div>
                         </div>
                       ))}

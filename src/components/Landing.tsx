@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useInView, animate, AnimatePresence } 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@tanstack/react-router";
+import { Footer } from "./Footer";
 import { CustomerStoriesWall } from "./CustomerStoriesWall";
 import { Reveal, StaggerContainer, StaggerItem, SequentialHeader } from "./ui/scroll-reveal";
 import { GSAPHeader, GSAPText, useGSAPTextReveal } from "./ui/gsap-text-reveal";
@@ -4083,13 +4084,19 @@ function PartsWarehouse() {
             
             {/* CTA */}
             <div className="flex flex-wrap gap-3 mt-12 lg:mt-16">
-              <button className="bg-[#00D084] hover:bg-[#00b574] text-black px-6 py-3 text-sm rounded-full font-bold transition-all duration-200 shadow-[0_4px_24px_rgba(0,208,132,0.28)] hover:shadow-[0_4px_32px_rgba(0,208,132,0.45)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
+              <Link
+                to="/store"
+                className="bg-[#00D084] hover:bg-[#00b574] text-black px-6 py-3 text-sm rounded-full font-bold transition-all duration-200 shadow-[0_4px_24px_rgba(0,208,132,0.28)] hover:shadow-[0_4px_32px_rgba(0,208,132,0.45)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap"
+              >
                 Shop Parts <ArrowRight className="w-4 h-4" />
-              </button>
-              <button className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-6 py-3 text-sm rounded-full font-medium transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
+              </Link>
+              <Link
+                to="/store"
+                className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-6 py-3 text-sm rounded-full font-medium transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap"
+              >
                 <Package className="w-4 h-4 text-white/55" />
                 Browse Categories
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -4667,242 +4674,11 @@ function CTA() {
             A fully refundable $500 reservation secures your delivery slot and configuration window.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <a href="#" className="btn-primary">Reserve Now <ArrowRight className="h-4 w-4" /></a>
-            <a href="#" className="btn-ghost">Book a Test Drive</a>
+            <Link to="/services" className="btn-primary flex items-center gap-2">Reserve Now <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </Reveal>
       </div>
     </section>
-  );
-}
-
-/* ---------------- Footer ---------------- */
-function Footer() {
-  const servicesLinks = [
-    { label: "Battery Health Check", href: "#ev-services" },
-    { label: "Charging System", href: "#ev-services" },
-    { label: "Motor & Drivetrain", href: "#ev-services" },
-    { label: "AC & Thermal", href: "#ev-services" },
-    { label: "Software Updates", href: "#ev-services" },
-    { label: "Spare Parts", href: "#ev-services" },
-    { label: "Find Service Centers", href: "#nearest-center" },
-  ];
-
-  const companyLinks = [
-    { label: "About Us", href: "#about" },
-    { label: "Careers", href: "#careers" },
-    { label: "Franchise", href: "#join-franchise" },
-    { label: "Service Network", href: "#ev-services" },
-    { label: "Press & Media", href: "#news" },
-    { label: "Contact Us", href: "#contact" },
-    { label: "Investors", href: "#investors" },
-  ];
-
-  const supportLinks = [
-    { label: "Help Center", href: "#help" },
-    { label: "FAQs", href: "#faq" },
-    { label: "Service Warranty", href: "#warranty" },
-    { label: "Track Service", href: "#track" },
-    { label: "Feedback", href: "#feedback" },
-    { label: "Report an Issue", href: "#report" },
-  ];
-
-  return (
-    <footer className="relative border-t border-white/5 bg-[#020403] pt-24 pb-12 overflow-hidden">
-      <div className="mx-auto max-w-[1400px] px-8 md:px-16">
-        
-        {/* Main Grid */}
-        <div className="grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-start">
-          
-          {/* Col 1: Brand & Contact Info (3 columns) */}
-          <div className="lg:col-span-3 flex flex-col gap-6">
-            <div className="flex items-center gap-2.5">
-              <img src="/logo-myevservice.jpg" alt="My EV Service Logo" className="h-8.5 w-auto rounded-lg object-contain border border-white/5" />
-              <span className="text-[13px] font-bold tracking-[0.2em] text-white uppercase">MY EV SERVICE</span>
-            </div>
-            
-            <p className="text-xs text-white/55 leading-relaxed">
-              India's leading EV service platform. Expert care for your electric 2-wheelers and 3-wheelers, delivered at your doorstep by certified technicians.
-            </p>
-
-            <div className="flex flex-col gap-3 text-xs text-white/70">
-              <a href="tel:+919582390001" className="flex items-center gap-3.5 hover:text-[#00D084] transition-colors">
-                <Phone className="h-4 w-4 text-[#00D084]" />
-                <span>+91 95823 90001</span>
-              </a>
-              <a href="mailto:info@myevservice.in" className="flex items-center gap-3.5 hover:text-[#00D084] transition-colors">
-                <Mail className="h-4 w-4 text-[#00D084]" />
-                <span>info@myevservice.in</span>
-              </a>
-              <div className="flex items-start gap-3.5">
-                <MapPin className="h-4 w-4 text-[#00D084] shrink-0 mt-0.5" />
-                <span className="leading-relaxed">405, Vantage Tower C, NDA-Pashan Link Road, Bhavdhan, Pune - 411042</span>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-3">
-              {[
-                { Icon: Instagram, href: "#instagram" },
-                { Icon: Youtube, href: "#youtube" },
-                { Icon: Facebook, href: "#facebook" },
-                { Icon: Twitter, href: "#twitter" },
-                { Icon: Linkedin, href: "#linkedin" },
-              ].map(({ Icon, href }, idx) => (
-                <a
-                  key={idx}
-                  href={href}
-                  className="h-8 w-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00D084] hover:bg-white/[0.08] hover:border-[#00D084]/40 transition-all duration-300"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Col 2: Services Links (2 columns) */}
-          <div className="lg:col-span-2 flex flex-col gap-5">
-            <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">SERVICES</h4>
-            <ul className="space-y-3.5 text-xs">
-              {servicesLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="text-white/60 hover:text-[#00D084] transition-colors">{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 3: Company Links (2 columns) */}
-          <div className="lg:col-span-2 flex flex-col gap-5">
-            <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">COMPANY</h4>
-            <ul className="space-y-3.5 text-xs">
-              {companyLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="text-white/60 hover:text-[#00D084] transition-colors">{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 4: Support Links (2 columns) */}
-          <div className="lg:col-span-2 flex flex-col gap-5">
-            <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">SUPPORT</h4>
-            <ul className="space-y-3.5 text-xs">
-              {supportLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="text-white/60 hover:text-[#00D084] transition-colors">{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 5: Stay Updated & Download (3 columns) */}
-          <div className="lg:col-span-3 flex flex-col gap-6">
-            
-            {/* Subscription Form */}
-            <div className="flex flex-col gap-3">
-              <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">STAY UPDATED</h4>
-              <p className="text-xs text-white/50 leading-relaxed">EV tips, service offers & updates.</p>
-              <div className="flex items-center gap-2 max-w-[280px] bg-white/5 border border-white/10 rounded-full pl-4 pr-1.5 py-1.5 focus-within:border-[#00D084]/50 transition-colors duration-300">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="bg-transparent border-none outline-none text-xs text-white placeholder-white/20 w-full"
-                />
-                <button className="h-8 w-8 rounded-full bg-[#00D084] text-[#020403] flex items-center justify-center hover:opacity-95 transition-opacity active:scale-95 shrink-0" aria-label="Subscribe">
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-              <span className="text-[10px] text-white/30 italic">No spam. Unsubscribe anytime.</span>
-            </div>
-
-            {/* App downloads */}
-            <div className="flex flex-col gap-3 mt-2">
-              <h4 className="text-xs uppercase tracking-[0.25em] text-white font-bold">DOWNLOAD APP</h4>
-              
-              <div className="flex flex-col gap-2.5">
-                <a
-                  href="#ios"
-                  className="flex items-center gap-3.5 bg-white/5 border border-white/10 rounded-xl px-4 py-2 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 max-w-[200px]"
-                >
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current text-white">
-                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-.96.04-2.13.64-2.82 1.45-.6.69-1.12 1.83-.98 2.94 1.08.08 2.15-.52 2.81-1.33z" />
-                  </svg>
-                  <div className="flex flex-col">
-                    <span className="text-[8px] font-mono text-white/40 tracking-wider">Available on iOS</span>
-                    <span className="text-xs font-bold text-white tracking-wide">App Store</span>
-                  </div>
-                </a>
-
-                <a
-                  href="#android"
-                  className="flex items-center gap-3.5 bg-white/5 border border-white/10 rounded-xl px-4 py-2 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 max-w-[200px]"
-                >
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current text-[#00D084]">
-                    <path d="M3 5.27v13.46c0 .88.72 1.6 1.6 1.6h14.8c.88 0 1.6-.72 1.6-1.6V5.27c0-.88-.72-1.6-1.6-1.6H4.6c-.88 0-1.6.72-1.6 1.6zm14.16 6.73L6.2 17.65c-.47.28-1.08-.07-1.08-.63V6.98c0-.56.61-.91 1.08-.63l10.96 5.65c.45.24.45.89 0 1.13v-.13z" />
-                  </svg>
-                  <div className="flex flex-col">
-                    <span className="text-[8px] font-mono text-white/40 tracking-wider">Available on Android</span>
-                    <span className="text-xs font-bold text-white tracking-wide">Play Store</span>
-                  </div>
-                </a>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* Security & Ratings Badges Row */}
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 py-6 border-t border-b border-white/5 mt-16 text-white/45 text-[10px] font-mono tracking-wider uppercase">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4.5 w-4.5 text-[#00D084]" />
-            <span>256 bit SSL Secured</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4.5 w-4.5 text-[#00D084]" />
-            <span>ISO 9001 Certified</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Star className="h-4 w-4 text-[#00D084] fill-[#00D084]" />
-            <span>Google Rated 4.9</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Zap className="h-4 w-4 text-[#00D084] fill-[#00D084]" />
-            <span>Powered by GreenTech</span>
-          </div>
-        </div>
-
-        {/* Bottom copyright segment */}
-        <div className="mt-8 flex flex-col-reverse items-start justify-between gap-6 relative z-10 lg:flex-row lg:items-center text-[11px] text-white/40">
-          <div className="flex flex-col gap-2">
-            <span>© 2025-2026, Autobot Emobility Solutions Private Limited. All Rights Reserved.</span>
-            <span className="flex items-center gap-1">
-              Made with <span className="text-[#00D084] text-xs">♥</span> in India
-            </span>
-          </div>
-
-          <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[9.5px] uppercase tracking-wider">
-            <a href="#terms" className="hover:text-[#00D084] transition-colors">Terms of Service</a>
-            <a href="#privacy" className="hover:text-[#00D084] transition-colors">Privacy Policy</a>
-            <a href="#refund" className="hover:text-[#00D084] transition-colors">Refund Policy</a>
-            <a href="#cookie" className="hover:text-[#00D084] transition-colors">Cookie Policy</a>
-            <a href="#franchise-terms" className="hover:text-[#00D084] transition-colors">Franchise Terms</a>
-            <a href="#disclaimer" className="hover:text-[#00D084] transition-colors">Disclaimer</a>
-            <a href="#safety" className="hover:text-[#00D084] transition-colors">HV Safety</a>
-          </div>
-        </div>
-
-        {/* Massive Footer Typography */}
-        <div className="mt-16 w-full flex justify-center items-end pointer-events-none select-none">
-          <h1 className="text-[14vw] md:text-[15vw] font-bold leading-none tracking-tighter text-[#00D084] pb-4">
-            myevservice
-          </h1>
-        </div>
-
-      </div>
-    </footer>
   );
 }
 

@@ -136,71 +136,89 @@ function StorePage() {
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((prd) => (
-            <div
-              key={prd.id}
-              className="bg-[#050907] border border-white/10 hover:border-[#00D084]/40 rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_10px_30px_-10px_rgba(0,208,132,0.15)] group relative"
+        {/* Products Grid / Empty State */}
+        {filteredProducts.length === 0 ? (
+          <div className="bg-[#050907] border border-white/10 rounded-3xl p-12 md:p-16 text-center max-w-xl mx-auto my-8 shadow-2xl">
+            <div className="w-16 h-16 rounded-2xl bg-[#00D084]/10 border border-[#00D084]/20 flex items-center justify-center text-[#00D084] mx-auto mb-5">
+              <Package className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Store Under Stock Update</h3>
+            <p className="text-xs sm:text-sm text-white/60 font-light leading-relaxed mb-6">
+              Our OEM spare parts inventory is currently being updated. Check back soon or contact support to enquire about specific components.
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.3)]"
             >
-              {prd.popular && (
-                <div className="absolute top-4 right-4 bg-[#00D084]/20 border border-[#00D084]/40 text-[#00D084] text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md">
-                  OEM BESTSELLER
-                </div>
-              )}
+              Contact Parts Support
+            </Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map((prd) => (
+              <div
+                key={prd.id}
+                className="bg-[#050907] border border-white/10 hover:border-[#00D084]/40 rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_10px_30px_-10px_rgba(0,208,132,0.15)] group relative"
+              >
+                {prd.popular && (
+                  <div className="absolute top-4 right-4 bg-[#00D084]/20 border border-[#00D084]/40 text-[#00D084] text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md">
+                    OEM BESTSELLER
+                  </div>
+                )}
 
-              <div>
-                <div className="text-[10px] uppercase font-mono font-bold tracking-widest text-[#00D084] mb-2">
-                  {prd.category}
-                </div>
-                <h3 className="text-xl font-bold text-white group-hover:text-[#00D084] transition-colors mb-2">
-                  {prd.name}
-                </h3>
-                <p className="text-xs text-white/60 leading-relaxed font-light mb-4">
-                  {prd.desc}
-                </p>
-
-                {/* Compatibility Badge */}
-                <div className="mb-4 bg-white/5 border border-white/5 rounded-xl p-3 text-xs text-white/70">
-                  <span className="text-[10px] font-mono uppercase text-white/40 block mb-1">
-                    Compatible Models
-                  </span>
-                  <span className="font-medium text-white/90">{prd.compatibility}</span>
-                </div>
-
-                {/* Specs list */}
-                <div className="space-y-2 mb-6 pt-3 border-t border-white/5">
-                  {prd.specs.map((sp, i) => (
-                    <div key={i} className="flex justify-between text-[11px]">
-                      <span className="text-white/40 font-mono">{sp.label}</span>
-                      <span className="text-white font-mono font-semibold">{sp.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-4">
                 <div>
-                  <span className="text-[10px] text-white/40 font-mono block">OEM PRICE</span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-white font-mono">{prd.price}</span>
-                    <span className="text-xs text-white/40 line-through font-mono">{prd.oldPrice}</span>
+                  <div className="text-[10px] uppercase font-mono font-bold tracking-widest text-[#00D084] mb-2">
+                    {prd.category}
+                  </div>
+                  <h3 className="text-xl font-bold text-white group-hover:text-[#00D084] transition-colors mb-2">
+                    {prd.name}
+                  </h3>
+                  <p className="text-xs text-white/60 leading-relaxed font-light mb-4">
+                    {prd.desc}
+                  </p>
+
+                  {/* Compatibility Badge */}
+                  <div className="mb-4 bg-white/5 border border-white/5 rounded-xl p-3 text-xs text-white/70">
+                    <span className="text-[10px] font-mono uppercase text-white/40 block mb-1">
+                      Compatible Models
+                    </span>
+                    <span className="font-medium text-white/90">{prd.compatibility}</span>
+                  </div>
+
+                  {/* Specs list */}
+                  <div className="space-y-2 mb-6 pt-3 border-t border-white/5">
+                    {prd.specs.map((sp, i) => (
+                      <div key={i} className="flex justify-between text-[11px]">
+                        <span className="text-white/40 font-mono">{sp.label}</span>
+                        <span className="text-white font-mono font-semibold">{sp.value}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <button
-                  onClick={() => {
-                    setSelectedProduct(prd);
-                    setOrderModalOpen(true);
-                  }}
-                  className="px-5 py-3 rounded-xl bg-[#00D084] text-[#020403] text-xs font-bold transition-all hover:bg-[#00e08f] hover:shadow-[0_0_15px_rgba(0,208,132,0.4)] cursor-pointer flex items-center gap-1.5"
-                >
-                  <ShoppingCart className="w-4 h-4" /> Order Part
-                </button>
+                <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-4">
+                  <div>
+                    <span className="text-[10px] text-white/40 font-mono block">OEM PRICE</span>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-white font-mono">{prd.price}</span>
+                      <span className="text-xs text-white/40 line-through font-mono">{prd.oldPrice}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setSelectedProduct(prd);
+                      setOrderModalOpen(true);
+                    }}
+                    className="px-5 py-3 rounded-xl bg-[#00D084] text-[#020403] text-xs font-bold transition-all hover:bg-[#00e08f] hover:shadow-[0_0_15px_rgba(0,208,132,0.4)] cursor-pointer flex items-center gap-1.5"
+                  >
+                    <ShoppingCart className="w-4 h-4" /> Order Part
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Order Inquiry Modal */}

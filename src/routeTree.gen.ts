@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WebinarsRouteImport } from './routes/webinars'
+import { Route as WarrantyRouteImport } from './routes/warranty'
 import { Route as TrackRouteImport } from './routes/track'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StoreRouteImport } from './routes/store'
@@ -32,6 +33,11 @@ import { Route as PackagesPackageIdRouteImport } from './routes/packages.$packag
 const WebinarsRoute = WebinarsRouteImport.update({
   id: '/webinars',
   path: '/webinars',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WarrantyRoute = WarrantyRouteImport.update({
+  id: '/warranty',
+  path: '/warranty',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrackRoute = TrackRouteImport.update({
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/store': typeof StoreRoute
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
+  '/warranty': typeof WarrantyRoute
   '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
   '/store': typeof StoreRoute
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
+  '/warranty': typeof WarrantyRoute
   '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/store': typeof StoreRoute
   '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
+  '/warranty': typeof WarrantyRoute
   '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/store'
     | '/terms'
     | '/track'
+    | '/warranty'
     | '/webinars'
     | '/packages/$packageId'
   fileRoutesByTo: FileRoutesByTo
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/store'
     | '/terms'
     | '/track'
+    | '/warranty'
     | '/webinars'
     | '/packages/$packageId'
   id:
@@ -251,6 +262,7 @@ export interface FileRouteTypes {
     | '/store'
     | '/terms'
     | '/track'
+    | '/warranty'
     | '/webinars'
     | '/packages/$packageId'
   fileRoutesById: FileRoutesById
@@ -273,6 +285,7 @@ export interface RootRouteChildren {
   StoreRoute: typeof StoreRoute
   TermsRoute: typeof TermsRoute
   TrackRoute: typeof TrackRoute
+  WarrantyRoute: typeof WarrantyRoute
   WebinarsRoute: typeof WebinarsRoute
   PackagesPackageIdRoute: typeof PackagesPackageIdRoute
 }
@@ -284,6 +297,13 @@ declare module '@tanstack/react-router' {
       path: '/webinars'
       fullPath: '/webinars'
       preLoaderRoute: typeof WebinarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/warranty': {
+      id: '/warranty'
+      path: '/warranty'
+      fullPath: '/warranty'
+      preLoaderRoute: typeof WarrantyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/track': {
@@ -433,6 +453,7 @@ const rootRouteChildren: RootRouteChildren = {
   StoreRoute: StoreRoute,
   TermsRoute: TermsRoute,
   TrackRoute: TrackRoute,
+  WarrantyRoute: WarrantyRoute,
   WebinarsRoute: WebinarsRoute,
   PackagesPackageIdRoute: PackagesPackageIdRoute,
 }
