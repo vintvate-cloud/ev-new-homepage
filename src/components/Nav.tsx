@@ -7,7 +7,6 @@ import {
   ChevronDown,
   Menu,
   ShoppingCart,
-  User,
   X,
   Zap,
 } from "lucide-react";
@@ -20,28 +19,29 @@ import factory from "@/assets/factory.jpg";
 export type Theme = "warm" | "mid" | "dark";
 
 const NAV = [
-  { label: "Franchise", href: "/#warehouse", menuIdx: 0 },
+  { label: "Franchise", href: "/franchise", menuIdx: 0 },
   { label: "Careers", href: "/careers", menuIdx: null },
-  { label: "Find Service", href: "/services#products-grid", menuIdx: 1 },
+  { label: "Find Service", href: "/find-services", menuIdx: 1 },
   { label: "Webinars", href: "/webinars", menuIdx: null },
   { label: "Events", href: "/events", menuIdx: null },
   { label: "EV News", href: "/news", menuIdx: null },
-  { label: "Blog", href: "/#blog", menuIdx: null },
+  { label: "Blog", href: "/blog", menuIdx: null },
   { label: "Media", href: "/#media", menuIdx: null },
   { label: "Services", href: "/services", menuIdx: null },
+  { label: "AI", href: "/track", menuIdx: null },
 ];
 
 export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBooking?: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const [pill, setPill] = useState<{ x: number; w: number } | null>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
   const leaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollY = useRef(0);
-  const [isDarkBg, setIsDarkBg] = useState(false);
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
       typeof document !== "undefined" &&
@@ -65,12 +65,6 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
     const onScroll = () => {
       const currentScrollY = window.scrollY;
       setScrolled(currentScrollY > 40);
-
-      const evSection = document.getElementById("ev-services");
-      if (evSection) {
-        const rect = evSection.getBoundingClientRect();
-        setIsDarkBg(rect.top <= 50);
-      }
 
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
         setHidden(true);
@@ -114,58 +108,32 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
 
   const themeClass = theme === "warm" ? "theme-warm" : "";
 
-  const MEGA_MENUS = [
-    {
-      label: "Vehicles",
-      featured: { img: hero, title: "Model V — Flagship", desc: "The apex of AURORA engineering. Tri-motor architecture and active aero.", tag: "Hypercar" },
+  const MEGA_MENUS: Record<number, {
+    label: string;
+    featured: { img: string; title: string; desc: string; tag: string };
+    links: { title: string; sub: string; href: string }[];
+  }> = {
+    0: {
+      label: "Franchise Program",
+      featured: { img: factory, title: "Master EV Network", desc: "Join 40+ Indian cities operating Autobot OS powered workshops.", tag: "Opportunity" },
       links: [
-        { title: "Model V", sub: "Flagship Hypercar" },
-        { title: "Model L", sub: "Executive Sedan" },
-        { title: "Model T", sub: "Adaptive SUV" },
-        { title: "Roadster N", sub: "Open-Sky GT" },
+        { title: "Express Garage Tier", sub: "₹5-8 Lakhs • 2 Bays", href: "/franchise" },
+        { title: "Standard Centre Tier", sub: "₹12-18 Lakhs • 4 Bays", href: "/franchise" },
+        { title: "Master Regional Hub", sub: "₹25-35 Lakhs • 8 Bays", href: "/franchise" },
+        { title: "Apply Online", sub: "Partner Application Form", href: "/franchise" },
       ],
     },
-    {
-      label: "Technology",
-      featured: { img: tech, title: "Neural Compute Core", desc: "Custom silicon delivering 342 TOPS of real-time perception with 8ms latency.", tag: "Engineering" },
+    1: {
+      label: "EV Services Directory",
+      featured: { img: tech, title: "Engineered Diagnostics", desc: "68 certified diagnostic & repair services for 2W & 3W Electric Vehicles.", tag: "Diagnostics" },
       links: [
-        { title: "Drive System", sub: "Aurora Halo Motor" },
-        { title: "Battery", sub: "4680 Cell Architecture" },
-        { title: "Autopilot", sub: "Neural AI Compute" },
-        { title: "Safety", sub: "Machined Monocoque" },
+        { title: "Battery & Energy Systems", sub: "Cell Balancing & SOH", href: "/services" },
+        { title: "Motor & Powertrain", sub: "FOC Controller Repair", href: "/services" },
+        { title: "Emergency RSA 24/7", sub: "Mobile Service Van Dispatch", href: "/services" },
+        { title: "Periodic Maintenance", sub: "32-Point Diagnostic Inspection", href: "/services" },
       ],
     },
-    {
-      label: "Interior",
-      featured: { img: interior, title: "Handcrafted Cabin", desc: "Every surface, every material, every stitch engineered for silence and luxury.", tag: "Experience" },
-      links: [
-        { title: "Materials", sub: "Alcantara & Carbon" },
-        { title: "Infotainment", sub: "32\" Horizon Display" },
-        { title: "Sound", sub: "22-Speaker Aurora Sound" },
-        { title: "Comfort", sub: "4-Zone Climate AI" },
-      ],
-    },
-    {
-      label: "Energy",
-      featured: { img: energy, title: "Aurora Energy Grid", desc: "Solar, storage, and home power — engineered to the same standard as our vehicles.", tag: "Sustainability" },
-      links: [
-        { title: "Solar Panels", sub: "Residential & Commercial" },
-        { title: "Powerwall", sub: "Home Battery Storage" },
-        { title: "Megapack", sub: "Grid-Scale Storage" },
-        { title: "Charging", sub: "4,200 Station Network" },
-      ],
-    },
-    {
-      label: "Company",
-      featured: { img: factory, title: "Built Where It's Driven", desc: "Six vertically-integrated gigafactories on three continents. 342 people, 1,140 machines.", tag: "About" },
-      links: [
-        { title: "About Us", sub: "Our Mission & Story" },
-        { title: "Careers", sub: "Join the Revolution" },
-        { title: "Franchise", sub: "Partner Programme" },
-        { title: "Press", sub: "Media & Newsroom" },
-      ],
-    },
-  ];
+  };
 
   return (
     <>
@@ -205,10 +173,10 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
           </a>
 
           {/* Desktop Nav with Mega Menu */}
-          <div className="relative hidden items-center gap-1 md:flex">
+          <div className="relative hidden items-center gap-1 xl:flex">
             <nav className="relative flex items-center gap-1" onMouseLeave={handleNavLeave}>
               {NAV.map((n, i) => {
-                const hasMenu = n.menuIdx !== null;
+                const hasMenu = n.menuIdx !== null && MEGA_MENUS[n.menuIdx!];
                 return (
                   <a
                     key={n.label}
@@ -217,12 +185,12 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                     }}
                     href={n.href}
                     onMouseEnter={() => (hasMenu ? handleNavEnter(n.menuIdx!) : handleNavLeave())}
-                    className="relative z-10 px-4 py-2 text-[13px] font-medium tracking-wide flex items-center gap-1 text-[#00D084]"
+                    className="relative z-10 px-2.5 py-1.5 text-[11.5px] font-bold tracking-wide flex items-center gap-1 text-[#00D084] hover:text-[#00e08f] transition-colors"
                   >
                     <span style={{ position: "relative", zIndex: 1 }}>{n.label}</span>
                     {hasMenu && (
                       <ChevronDown
-                        className="h-3 w-3 opacity-40"
+                        className="h-3 w-3 opacity-60"
                         style={{ position: "relative", zIndex: 1 }}
                       />
                     )}
@@ -232,7 +200,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
 
               {/* Mega Menu Dropdown Panel */}
               <AnimatePresence>
-                {hoverIdx !== null && (
+                {hoverIdx !== null && MEGA_MENUS[hoverIdx] && (
                   <motion.div
                     key={hoverIdx}
                     initial={{ opacity: 0, y: 12, scale: 0.975 }}
@@ -243,7 +211,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                       if (leaveTimeout.current) clearTimeout(leaveTimeout.current);
                     }}
                     onMouseLeave={handleNavLeave}
-                    className="absolute top-[calc(100%+14px)] left-1/2 -translate-x-1/2 w-[700px] origin-top z-50"
+                    className="absolute top-[calc(100%+14px)] left-1/2 -translate-x-1/2 w-[680px] origin-top z-50"
                   >
                     {/* Arrow pointer */}
                     <div
@@ -266,16 +234,16 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                         background:
                           siteTheme === "light"
                             ? "rgba(255, 255, 255, 0.98)"
-                            : "rgba(8, 12, 10, 0.92)",
+                            : "rgba(8, 12, 10, 0.95)",
                         backdropFilter: "blur(40px)",
                       }}
                     >
                       {/* Top neon line */}
                       <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#00D084]/70 to-transparent" />
 
-                      <div className="flex h-[288px]">
+                      <div className="flex h-[270px]">
                         {/* Left: Featured Image */}
-                        <div className="relative w-[240px] shrink-0 overflow-hidden">
+                        <div className="relative w-[230px] shrink-0 overflow-hidden">
                           <motion.img
                             key={`img-${hoverIdx}`}
                             initial={{ opacity: 0, scale: 1.1 }}
@@ -313,8 +281,8 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                         </div>
 
                         {/* Right: Links */}
-                        <div className="flex flex-col flex-1 p-7">
-                          <p className="text-[9.5px] uppercase tracking-[0.32em] text-[#00D084] font-bold mb-5">
+                        <div className="flex flex-col flex-1 p-6">
+                          <p className="text-[9.5px] uppercase tracking-[0.32em] text-[#00D084] font-bold mb-4">
                             {MEGA_MENUS[hoverIdx].label}
                           </p>
 
@@ -322,7 +290,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                             {MEGA_MENUS[hoverIdx].links.map((link, li) => (
                               <motion.a
                                 key={link.title}
-                                href="/services"
+                                href={link.href}
                                 initial={{ opacity: 0, x: 8 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{
@@ -330,7 +298,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                                   delay: 0.06 + li * 0.045,
                                   ease: "easeOut",
                                 }}
-                                className={`group flex items-center gap-3 rounded-xl px-3 py-3 transition-all duration-200 border border-transparent ${
+                                className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200 border border-transparent ${
                                   siteTheme === "light"
                                     ? "hover:bg-black/[0.03] hover:border-black/5"
                                     : "hover:bg-white/[0.055] hover:border-white/8"
@@ -343,7 +311,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                                 />
                                 <div>
                                   <span
-                                    className={`block text-[13px] font-semibold transition-colors leading-tight ${
+                                    className={`block text-[12.5px] font-semibold transition-colors leading-tight ${
                                       siteTheme === "light"
                                         ? "text-black/80 group-hover:text-black"
                                         : "text-white/90 group-hover:text-white"
@@ -352,7 +320,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                                     {link.title}
                                   </span>
                                   <span
-                                    className={`block text-[10.5px] transition-colors mt-0.5 ${
+                                    className={`block text-[10px] transition-colors mt-0.5 ${
                                       siteTheme === "light"
                                         ? "text-black/40 group-hover:text-black/60"
                                         : "text-white/35 group-hover:text-white/50"
@@ -365,30 +333,6 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                               </motion.a>
                             ))}
                           </div>
-
-                          <div
-                            className={`mt-5 pt-4 border-t flex items-center justify-between ${
-                              siteTheme === "light"
-                                ? "border-black/[0.07]"
-                                : "border-white/[0.07]"
-                            }`}
-                          >
-                            <span
-                              className={`text-[11px] ${
-                                siteTheme === "light" ? "text-black/40" : "text-white/25"
-                              }`}
-                            >
-                              Browse all {MEGA_MENUS[hoverIdx].label}
-                            </span>
-                            <a
-                              href="/services"
-                              className={`inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-[#00D084] transition-colors duration-200 ${
-                                siteTheme === "light" ? "hover:text-black" : "hover:text-white"
-                              }`}
-                            >
-                              View all <ArrowRight className="h-3 w-3" />
-                            </a>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -398,18 +342,18 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
             </nav>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2.5">
             {/* Theme Toggle Button */}
             <button
               onClick={() => setSiteTheme(siteTheme === "light" ? "dark" : "light")}
               className="group flex items-center gap-2 rounded-full border border-border bg-muted/30 px-2.5 py-1 transition-all hover:bg-muted active:scale-95 cursor-pointer text-foreground"
               title={siteTheme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
             >
-              <div className="relative flex h-4 w-7 items-center rounded-full bg-foreground/20 p-0.5 transition-colors duration-300 group-hover:bg-foreground/30">
+              <div className="relative flex h-3.5 w-6 items-center rounded-full bg-foreground/20 p-0.5 transition-colors duration-300">
                 <motion.div
                   layout
-                  className="h-3 w-3 rounded-full bg-background shadow-sm"
-                  animate={{ x: siteTheme === "light" ? 12 : 0 }}
+                  className="h-2.5 w-2.5 rounded-full bg-background shadow-sm"
+                  animate={{ x: siteTheme === "light" ? 10 : 0 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />
               </div>
@@ -418,40 +362,27 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
               </span>
             </button>
 
-            {/* Cart Icon */}
-            <button className="text-foreground hover:text-[#00D084] transition cursor-pointer p-1">
+            {/* Cart Link */}
+            <a href="/store" className="text-foreground hover:text-[#00D084] transition cursor-pointer p-1">
               <ShoppingCart className="h-4.5 w-4.5" />
-            </button>
+            </a>
 
             {/* Desktop CTAs */}
             <div className="hidden items-center gap-2 md:flex">
               <a
-                href="#experience"
-                className="text-[13px] font-medium text-foreground hover:text-[#00D084] transition px-3 py-2 flex items-center gap-1.5"
-              >
-                <User className="h-4 w-4" />
-                Login
-              </a>
-              <button
-                onClick={() => {
-                  if (onOpenBooking) {
-                    onOpenBooking();
-                  } else {
-                    window.location.href = "/services#products-grid";
-                  }
-                }}
-                className="rounded-full text-[13px] font-semibold flex items-center gap-1.5 px-4 py-2 transition-all hover:opacity-90 cursor-pointer"
+                href="/services"
+                className="rounded-full text-[12px] font-extrabold flex items-center gap-1.5 px-3.5 py-1.5 transition-all hover:opacity-90 cursor-pointer shadow-[0_0_15px_rgba(0,208,132,0.3)]"
                 style={{ background: "#00D084", color: "#020403" }}
               >
                 <Zap className="h-3.5 w-3.5 fill-[#020403]" />
                 Book Service
-              </button>
+              </a>
             </div>
 
             {/* Mobile Hamburger */}
             <button
               aria-label="Menu"
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full glass text-[#00D084]"
+              className="xl:hidden inline-flex h-10 w-10 items-center justify-center rounded-full glass text-[#00D084]"
               onClick={() => setOpen(true)}
             >
               <Menu className="h-5 w-5" />
@@ -465,7 +396,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
         initial={false}
         animate={open ? { opacity: 1, pointerEvents: "auto" } : { opacity: 0, pointerEvents: "none" }}
         transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-        className={`fixed inset-0 z-[60] md:hidden ${themeClass}`}
+        className={`fixed inset-0 z-[60] xl:hidden ${themeClass}`}
         style={{
           background: "color-mix(in oklab, var(--background) 96%, transparent)",
           backdropFilter: "blur(28px)",
@@ -490,7 +421,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
             <X className="h-5 w-5" />
           </button>
         </div>
-        <div className="flex flex-col gap-2 px-8 pt-16">
+        <div className="flex flex-col gap-1 px-6 pt-6 overflow-y-auto max-h-[82vh]">
           {open &&
             NAV.map((n, i) => (
               <motion.a
@@ -498,12 +429,12 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                 href={n.href}
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.09 * i + 0.15, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+                transition={{ delay: 0.03 * i + 0.08, duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between border-b border-border py-6 text-3xl font-semibold tracking-tight text-foreground"
+                className="flex items-center justify-between border-b border-border/40 py-3.5 text-xl font-semibold tracking-tight text-foreground"
               >
                 {n.label}
-                <ArrowUpRight className="h-6 w-6 text-muted-foreground" />
+                <ArrowUpRight className="h-4 w-4 text-[#00D084]" />
               </motion.a>
             ))}
         </div>

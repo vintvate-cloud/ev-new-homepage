@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ShieldCheck, PhoneCall, Mail, MapPin, ArrowUpRight, Heart, Zap } from "lucide-react";
+import { ShieldCheck, PhoneCall, Mail, MapPin, ArrowUpRight, Zap } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,15 +12,15 @@ export function Footer() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D084]/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 max-w-2xl">
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] mb-3 bg-[#00D084]/10 px-3.5 py-1 rounded-full border border-[#00D084]/20">
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] mb-3">
               <ShieldCheck className="w-4 h-4" />
               Trusted across 40+ Indian Cities
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-3">
-              India's #1 EV Service Platform
+              India's #1 EV Service Network
             </h2>
             <p className="text-sm md:text-base text-[#c2d1c7] font-light">
-              100% engineered diagnostics, certified technicians, and rapid doorstep execution for 2W, 3W, & 4W Electric Vehicles.
+              100% engineered diagnostics, certified technicians, and rapid doorstep execution for 2W & 3W Electric Vehicles.
             </p>
           </div>
 
@@ -32,11 +32,11 @@ export function Footer() {
               BOOK A SERVICE
             </Link>
             <a
-              href="tel:+919582390001"
+              href="tel:+919876543210"
               className="px-8 py-4 rounded-full border border-white/20 text-white text-xs font-bold hover:bg-white/10 transition-all flex items-center gap-2"
             >
               <PhoneCall className="w-3.5 h-3.5 text-[#00D084]" />
-              +91 95823 90001
+              +91 98765 43210
             </a>
           </div>
         </div>
@@ -57,12 +57,12 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-xs text-white/60 font-normal leading-relaxed max-w-sm mb-6">
-              The premier electric vehicle diagnostic & maintenance platform. Delivering high-yield cell balancing, motor controller repair, and 24/7 roadside emergency assistance.
+              The premier electric vehicle diagnostic & maintenance network. Delivering cell balancing, motor controller repair, genuine spare parts, and 24/7 roadside emergency assistance.
             </p>
             <div className="flex items-center gap-3 text-xs text-white/50 font-mono">
               <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-[#00D084]" /> 40+ Cities</span>
               <span>•</span>
-              <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-[#00D084]" /> 4,000+ Hubs</span>
+              <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-[#00D084]" /> Autobot OS</span>
             </div>
           </div>
 
@@ -73,43 +73,49 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <Link to="/" className="hover:text-white transition-colors">Home Landing</Link>
+                <Link to="/about" className="hover:text-white transition-colors">About Us</Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-white transition-colors">EV Services & Packages</Link>
+                <Link to="/services" className="hover:text-white transition-colors">EV Services Directory</Link>
               </li>
               <li>
-                <Link to="/careers" className="hover:text-white transition-colors">Careers & Engineering</Link>
+                <Link to="/franchise" className="hover:text-white transition-colors">Franchise Program</Link>
               </li>
               <li>
-                <a href="/#warehouse" className="hover:text-white transition-colors">Franchise Program</a>
+                <Link to="/store" className="hover:text-white transition-colors">Genuine Parts Store</Link>
               </li>
               <li>
-                <a href="/#webinars" className="hover:text-white transition-colors">Webinars & Events</a>
+                <Link to="/track" className="hover:text-white transition-colors">Track Service Status</Link>
+              </li>
+              <li>
+                <Link to="/careers" className="hover:text-white transition-colors">Careers & Onboarding</Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Service Categories */}
+          {/* Col 3: Support & Info */}
           <div>
             <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] mb-4">
-              Core Categories
+              Help & Knowledge
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <Link to="/services" className="hover:text-white transition-colors">Battery & Cell Systems</Link>
+                <Link to="/faqs" className="hover:text-white transition-colors">FAQs Knowledgebase</Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-white transition-colors">Motor & Powertrain</Link>
+                <Link to="/contact" className="hover:text-white transition-colors">Contact & Support</Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-white transition-colors">Controller & Telematics</Link>
+                <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-white transition-colors">Brake & Suspension</Link>
+                <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-white transition-colors">24/7 Mobile RSA</Link>
+                <Link to="/refund" className="hover:text-white transition-colors">Refund Policy</Link>
+              </li>
+              <li>
+                <Link to="/disclaimer" className="hover:text-white transition-colors">Legal Disclaimer</Link>
               </li>
             </ul>
           </div>
@@ -117,24 +123,24 @@ export function Footer() {
           {/* Col 4: Emergency & Support */}
           <div>
             <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] mb-4">
-              24/7 Support
+              24/7 Helpline
             </h4>
             <ul className="space-y-3 text-xs text-white/70">
               <li className="flex items-center gap-2">
                 <PhoneCall className="w-4 h-4 text-[#00D084] shrink-0" />
-                <span>+91 95823 90001</span>
+                <span>1800 123 4567 (Toll Free)</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#00D084] shrink-0" />
-                <span>care@myevservice.in</span>
+                <span>support@myevservice.in</span>
               </li>
               <li className="pt-2">
-                <a
-                  href="tel:+919582390001"
+                <Link
+                  to="/track"
                   className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#00D084] hover:underline"
                 >
-                  Roadside Dispatch <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
+                  Track Live Job <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
               </li>
             </ul>
           </div>
@@ -144,12 +150,13 @@ export function Footer() {
         {/* Bottom Credits & Copyright */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/40 font-mono">
           <div>
-            © {currentYear} MY EV SERVICE Inc. All rights reserved.
+            © {currentYear} MY EV SERVICE India. All rights reserved.
           </div>
           <div className="flex items-center gap-6 text-[11px]">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">SLA Warranty</a>
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="/refund" className="hover:text-white transition-colors">Refund & Cancellation</Link>
+            <Link to="/disclaimer" className="hover:text-white transition-colors">Disclaimer</Link>
           </div>
         </div>
       </div>

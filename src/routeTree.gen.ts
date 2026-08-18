@@ -10,10 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WebinarsRouteImport } from './routes/webinars'
+import { Route as TrackRouteImport } from './routes/track'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as StoreRouteImport } from './routes/store'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as RefundRouteImport } from './routes/refund'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as FranchiseRouteImport } from './routes/franchise'
+import { Route as FindServicesRouteImport } from './routes/find-services'
+import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PackagesPackageIdRouteImport } from './routes/packages.$packageId'
 
@@ -22,9 +34,34 @@ const WebinarsRoute = WebinarsRouteImport.update({
   path: '/webinars',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoreRoute = StoreRouteImport.update({
+  id: '/store',
+  path: '/store',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundRoute = RefundRouteImport.update({
+  id: '/refund',
+  path: '/refund',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsRoute = NewsRouteImport.update({
@@ -32,14 +69,49 @@ const NewsRoute = NewsRouteImport.update({
   path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FranchiseRoute = FranchiseRouteImport.update({
+  id: '/franchise',
+  path: '/franchise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FindServicesRoute = FindServicesRouteImport.update({
+  id: '/find-services',
+  path: '/find-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqsRoute = FaqsRouteImport.update({
+  id: '/faqs',
+  path: '/faqs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DisclaimerRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareersRoute = CareersRouteImport.update({
   id: '/careers',
   path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,29 +127,65 @@ const PackagesPackageIdRoute = PackagesPackageIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
   '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
+  '/faqs': typeof FaqsRoute
+  '/find-services': typeof FindServicesRoute
+  '/franchise': typeof FranchiseRoute
   '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/services': typeof ServicesRoute
+  '/store': typeof StoreRoute
+  '/terms': typeof TermsRoute
+  '/track': typeof TrackRoute
   '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
   '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
+  '/faqs': typeof FaqsRoute
+  '/find-services': typeof FindServicesRoute
+  '/franchise': typeof FranchiseRoute
   '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/services': typeof ServicesRoute
+  '/store': typeof StoreRoute
+  '/terms': typeof TermsRoute
+  '/track': typeof TrackRoute
   '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
   '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
+  '/faqs': typeof FaqsRoute
+  '/find-services': typeof FindServicesRoute
+  '/franchise': typeof FranchiseRoute
   '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/services': typeof ServicesRoute
+  '/store': typeof StoreRoute
+  '/terms': typeof TermsRoute
+  '/track': typeof TrackRoute
   '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
@@ -85,38 +193,86 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/blog'
     | '/careers'
+    | '/contact'
+    | '/disclaimer'
     | '/events'
+    | '/faqs'
+    | '/find-services'
+    | '/franchise'
     | '/news'
+    | '/privacy'
+    | '/refund'
     | '/services'
+    | '/store'
+    | '/terms'
+    | '/track'
     | '/webinars'
     | '/packages/$packageId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/blog'
     | '/careers'
+    | '/contact'
+    | '/disclaimer'
     | '/events'
+    | '/faqs'
+    | '/find-services'
+    | '/franchise'
     | '/news'
+    | '/privacy'
+    | '/refund'
     | '/services'
+    | '/store'
+    | '/terms'
+    | '/track'
     | '/webinars'
     | '/packages/$packageId'
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/blog'
     | '/careers'
+    | '/contact'
+    | '/disclaimer'
     | '/events'
+    | '/faqs'
+    | '/find-services'
+    | '/franchise'
     | '/news'
+    | '/privacy'
+    | '/refund'
     | '/services'
+    | '/store'
+    | '/terms'
+    | '/track'
     | '/webinars'
     | '/packages/$packageId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BlogRoute: typeof BlogRoute
   CareersRoute: typeof CareersRoute
+  ContactRoute: typeof ContactRoute
+  DisclaimerRoute: typeof DisclaimerRoute
   EventsRoute: typeof EventsRoute
+  FaqsRoute: typeof FaqsRoute
+  FindServicesRoute: typeof FindServicesRoute
+  FranchiseRoute: typeof FranchiseRoute
   NewsRoute: typeof NewsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  RefundRoute: typeof RefundRoute
   ServicesRoute: typeof ServicesRoute
+  StoreRoute: typeof StoreRoute
+  TermsRoute: typeof TermsRoute
+  TrackRoute: typeof TrackRoute
   WebinarsRoute: typeof WebinarsRoute
   PackagesPackageIdRoute: typeof PackagesPackageIdRoute
 }
@@ -130,11 +286,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WebinarsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/store': {
+      id: '/store'
+      path: '/store'
+      fullPath: '/store'
+      preLoaderRoute: typeof StoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund': {
+      id: '/refund'
+      path: '/refund'
+      fullPath: '/refund'
+      preLoaderRoute: typeof RefundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/news': {
@@ -144,6 +335,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/franchise': {
+      id: '/franchise'
+      path: '/franchise'
+      fullPath: '/franchise'
+      preLoaderRoute: typeof FranchiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/find-services': {
+      id: '/find-services'
+      path: '/find-services'
+      fullPath: '/find-services'
+      preLoaderRoute: typeof FindServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faqs': {
+      id: '/faqs'
+      path: '/faqs'
+      fullPath: '/faqs'
+      preLoaderRoute: typeof FaqsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -151,11 +363,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/careers': {
       id: '/careers'
       path: '/careers'
       fullPath: '/careers'
       preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -177,10 +417,22 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BlogRoute: BlogRoute,
   CareersRoute: CareersRoute,
+  ContactRoute: ContactRoute,
+  DisclaimerRoute: DisclaimerRoute,
   EventsRoute: EventsRoute,
+  FaqsRoute: FaqsRoute,
+  FindServicesRoute: FindServicesRoute,
+  FranchiseRoute: FranchiseRoute,
   NewsRoute: NewsRoute,
+  PrivacyRoute: PrivacyRoute,
+  RefundRoute: RefundRoute,
   ServicesRoute: ServicesRoute,
+  StoreRoute: StoreRoute,
+  TermsRoute: TermsRoute,
+  TrackRoute: TrackRoute,
   WebinarsRoute: WebinarsRoute,
   PackagesPackageIdRoute: PackagesPackageIdRoute,
 }
