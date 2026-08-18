@@ -438,7 +438,9 @@ html.theme-light [class*="bg-[#020403]"],
 html.theme-light [class*="bg-[#050706]"],
 html.theme-light [class*="bg-[#050806]"],
 html.theme-light [class*="bg-[#050906]"],
+html.theme-light [class*="bg-[#050907]"],
 html.theme-light [class*="bg-[#060807]"],
+html.theme-light [class*="bg-[#060c09]"],
 html.theme-light [class*="bg-[#070b08]"],
 html.theme-light [class*="bg-[#070c09]"],
 html.theme-light [class*="bg-[#070b09]"],
@@ -446,9 +448,36 @@ html.theme-light [class*="bg-black/40"],
 html.theme-light [class*="bg-black/50"],
 html.theme-light [class*="bg-black/60"],
 html.theme-light .bg-card {
-  background-color: #f4f4f5 !important;
+  background-color: #ffffff !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
   color: #09090b !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* Light mode overrides for form controls and inputs */
+html.theme-light input,
+html.theme-light textarea,
+html.theme-light select {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+html.theme-light input::placeholder,
+html.theme-light textarea::placeholder {
+  color: #71717a !important;
+}
+
+/* Light mode overrides for gradients */
+html.theme-light [class*="from-[#060c09]"],
+html.theme-light [class*="to-[#020403]"] {
+  background: #f8faf9 !important;
+}
+
+html.theme-light [class*="from-[#00D084]/15"],
+html.theme-light [class*="via-[#050907]"],
+html.theme-light [class*="to-[#00D084]/10"] {
+  background: linear-gradient(135deg, rgba(0,208,132,0.1) 0%, #ffffff 50%, rgba(0,208,132,0.08) 100%) !important;
 }
 
 /* Set specific light green background for active selection states in light mode */

@@ -9,9 +9,39 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WebinarsRouteImport } from './routes/webinars'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as NewsRouteImport } from './routes/news'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as CareersRouteImport } from './routes/careers'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PackagesPackageIdRouteImport } from './routes/packages.$packageId'
 
+const WebinarsRoute = WebinarsRouteImport.update({
+  id: '/webinars',
+  path: '/webinars',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,32 +55,109 @@ const PackagesPackageIdRoute = PackagesPackageIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/events': typeof EventsRoute
+  '/news': typeof NewsRoute
+  '/services': typeof ServicesRoute
+  '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/events': typeof EventsRoute
+  '/news': typeof NewsRoute
+  '/services': typeof ServicesRoute
+  '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/events': typeof EventsRoute
+  '/news': typeof NewsRoute
+  '/services': typeof ServicesRoute
+  '/webinars': typeof WebinarsRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/packages/$packageId'
+  fullPaths:
+    | '/'
+    | '/careers'
+    | '/events'
+    | '/news'
+    | '/services'
+    | '/webinars'
+    | '/packages/$packageId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/packages/$packageId'
-  id: '__root__' | '/' | '/packages/$packageId'
+  to:
+    | '/'
+    | '/careers'
+    | '/events'
+    | '/news'
+    | '/services'
+    | '/webinars'
+    | '/packages/$packageId'
+  id:
+    | '__root__'
+    | '/'
+    | '/careers'
+    | '/events'
+    | '/news'
+    | '/services'
+    | '/webinars'
+    | '/packages/$packageId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CareersRoute: typeof CareersRoute
+  EventsRoute: typeof EventsRoute
+  NewsRoute: typeof NewsRoute
+  ServicesRoute: typeof ServicesRoute
+  WebinarsRoute: typeof WebinarsRoute
   PackagesPackageIdRoute: typeof PackagesPackageIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/webinars': {
+      id: '/webinars'
+      path: '/webinars'
+      fullPath: '/webinars'
+      preLoaderRoute: typeof WebinarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -70,6 +177,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CareersRoute: CareersRoute,
+  EventsRoute: EventsRoute,
+  NewsRoute: NewsRoute,
+  ServicesRoute: ServicesRoute,
+  WebinarsRoute: WebinarsRoute,
   PackagesPackageIdRoute: PackagesPackageIdRoute,
 }
 export const routeTree = rootRouteImport
