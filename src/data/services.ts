@@ -39,7 +39,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹399",
     price3W: "₹1,499",
     duration: "45 min",
-    specs: ["Internal Resistance Audit", "State-of-Health (SOH) Score", "Thermal Stress Test"],
+    specs: ["Cell-level analysis", "SOH report", "Thermal imaging", "Predictive alerts"],
     popular: true,
   },
   {
@@ -50,7 +50,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,999",
     price3W: "₹2,999",
     duration: "1h 30m",
-    specs: ["BLDC Motor Efficiency Check", "Phase Current Balancing", "Regen Braking Tune"],
+    specs: ["Motor analysis", "Controller check", "Regen tune", "Bearing inspection"],
     popular: true,
   },
   {
@@ -61,7 +61,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹899",
     price3W: "₹1,299",
     duration: "45 min",
-    specs: ["AC/DC Charging Curve Scan", "Pin Temperature Audit", "Grounding Continuity Test"],
+    specs: ["Port inspection", "Charger test", "Cable check", "Speed optimization"],
     popular: true,
   },
   {
@@ -72,7 +72,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹699",
     price3W: "₹999",
     duration: "30 min",
-    specs: ["OTA ECU Firmware Flash", "Bug Fix Patching", "Performance Profile Tuning"],
+    specs: ["OTA updates", "BMS calibration", "Bug fixes", "Feature unlock"],
     popular: true,
   },
   {
@@ -83,7 +83,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,499",
     duration: "1h",
-    specs: ["Individual Cell Voltage Telemetry", "Thermal Imaging Inspection", "BMS Log Extraction"],
+    specs: ["Cell voltage monitoring", "Temperature analysis", "BMS health check", "Performance report"],
     popular: true,
   },
   {
@@ -94,7 +94,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,399",
     price3W: "₹1,799",
     duration: "1h",
-    specs: ["Passive & Active Cell Balancing", "Capacity Restoration", "Voltage Delta Calibration"],
+    specs: ["Cell equalization", "Capacity optimization", "Balance report", "Health improvement"],
     popular: true,
   },
   {
@@ -105,7 +105,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹3,499",
     price3W: "₹4,500",
     duration: "3h",
-    specs: ["Nickel Strip Re-spot Welding", "Connector Replacement", "IP67 Enclosure Resealing"],
+    specs: ["Connector repair", "Internal wiring fix", "Pack inspection", "Performance restore"],
   },
   {
     id: "BAT-005",
@@ -115,7 +115,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,500",
     duration: "1h 30m",
-    specs: ["OEM Compatible Pack Swap", "BMS Pairing & Activation", "Disposal & Recycling Certification"],
+    specs: ["Battery removal", "New pack installation", "BMS config", "Test & verify"],
   },
 
   // ==========================================
@@ -129,7 +129,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹699",
     price3W: "₹899",
     duration: "30 min",
-    specs: ["Coolant Level & Flow Check", "Heat Sink Fin Cleanup", "Fan Motor Relay Audit"],
+    specs: ["Coolant level check", "Thermal sensor test", "Fan inspection", "Safety report"],
   },
   {
     id: "BAT-007",
@@ -139,7 +139,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,299",
     price3W: "₹1,799",
     duration: "45 min",
-    specs: ["Internal Capacity Audit", "Degradation Curve Mapping", "SOH Verification Report"],
+    specs: ["Capacity measurement", "Cycle count analysis", "Degradation curve", "Replacement guidance"],
   },
   {
     id: "BAT-008",
@@ -149,7 +149,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹2,999",
     price3W: "₹3,499",
     duration: "4h",
-    specs: ["Degraded Cell Extraction", "New Cell Spot Welding", "BMS Re-balancing"],
+    specs: ["Dead cell replacement", "Pack reassembly", "Capacity test", "12-month warranty"],
   },
   {
     id: "BAT-009",
@@ -159,7 +159,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,299",
     duration: "1h",
-    specs: ["Low Voltage Recovery Pulse", "Capacity Equalization", "Dormant Cell Activation"],
+    specs: ["Discharge recovery", "Cycle conditioning", "Health check", "Performance report"],
   },
   {
     id: "BAT-010",
@@ -169,7 +169,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "45 min",
-    specs: ["IP67 Seal Testing", "RTV Gasket Re-application", "Enclosure Pressure Test"],
+    specs: ["Seal inspection", "IP rating test", "Re-sealing if needed", "Moisture report"],
   },
   {
     id: "BAT-011",
@@ -179,7 +179,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,999",
     price3W: "₹2,499",
     duration: "1h 30m",
-    specs: ["High Voltage Insulation Audit", "Contactor Fuse Check", "Emergency Cut-off Test"],
+    specs: ["HV insulation test", "Ground fault check", "Safety circuit verify", "Compliance report"],
   },
   {
     id: "MOT-002",
@@ -189,7 +189,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "45 min",
-    specs: ["Efficiency Curve Audit", "Rotor Thermal Scan", "Phase Resistance Check"],
+    specs: ["RPM test", "Efficiency analysis", "Thermal check", "Performance report"],
   },
   {
     id: "MOT-003",
@@ -199,7 +199,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹2,999",
     price3W: "₹3,999",
     duration: "2h",
-    specs: ["Stator Rewinding", "Hall Board Replacement", "Waterproof Shell Re-seal"],
+    specs: ["Motor disassembly", "Component repair", "Rewinding if needed", "Performance test"],
   },
 
   // ==========================================
@@ -213,7 +213,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,299",
     price3W: "₹1,799",
     duration: "1h 30m",
-    specs: ["OEM Compatible Motor Swap", "Phase Alignment", "Controller Calibration"],
+    specs: ["Old motor removal", "New motor fit", "Controller sync", "Test & calibrate"],
   },
   {
     id: "MOT-005",
@@ -223,7 +223,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,999",
     price3W: "₹2,499",
     duration: "1h 30m",
-    specs: ["High-Precision Ceramic Bearings", "Synthetic Grease Seal", "Vibration Reduction Test"],
+    specs: ["Bearing inspection", "Old bearing removal", "New bearing fit", "Noise test"],
   },
   {
     id: "MOT-006",
@@ -233,7 +233,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹499",
     price3W: "₹699",
     duration: "30 min",
-    specs: ["Belt Tension Calibration", "Sprocket Wear Audit", "Laser Alignment Check"],
+    specs: ["Chain/belt check", "Drive module inspect", "Alignment verify", "Lubrication"],
   },
   {
     id: "CTR-001",
@@ -243,7 +243,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,299",
     duration: "1h",
-    specs: ["Current Limit Tuning", "Regen Braking Sync", "Throttle Ramp Adjustment"],
+    specs: ["Parameter analysis", "Efficiency tuning", "Regen optimization", "Range improvement"],
   },
   {
     id: "MOT-007",
@@ -253,7 +253,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,199",
     price3W: "₹1,499",
     duration: "1h",
-    specs: ["Synthetic Gear Oil Flush", "Gasket Resealing", "Gear Backlash Check"],
+    specs: ["Gear inspection", "Lubrication", "Wear assessment", "Replacement if needed"],
   },
   {
     id: "CTR-002",
@@ -263,7 +263,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹899",
     price3W: "₹1,299",
     duration: "45 min",
-    specs: ["MOSFET Gate Test", "Fault Code Extraction", "Phase Output Scan"],
+    specs: ["Fault code scan", "Current analysis", "Thermal check", "Diagnostic report"],
   },
   {
     id: "CTR-003",
@@ -273,7 +273,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹3,499",
     price3W: "₹4,499",
     duration: "2h",
-    specs: ["MOSFET Transistor Replacement", "Capacitor Board Repair", "Thermal Paste Re-application"],
+    specs: ["Component diagnosis", "MOSFET check", "Solder repair", "Function test"],
   },
   {
     id: "CTR-004",
@@ -283,7 +283,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹699",
     price3W: "₹999",
     duration: "45 min",
-    specs: ["Hall Throttle Sensor Replacement", "Voltage Response Test", "Harness Connector Clean"],
+    specs: ["Sensor test", "Calibration", "Replacement if needed", "Response test"],
   },
 
   // ==========================================
@@ -297,7 +297,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹799",
     price3W: "₹1,099",
     duration: "1h",
-    specs: ["Short Circuit Isolation", "Wire Loom Sleeving", "Waterproof Crimp Joints"],
+    specs: ["Circuit tracing", "Short detection", "Wire replacement", "Insulation check"],
   },
   {
     id: "WIRE-002",
@@ -307,7 +307,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹299",
     price3W: "₹599",
     duration: "20 min",
-    specs: ["DC Fuse Upgrade", "High-Current Relay Swap", "Panel Circuit Testing"],
+    specs: ["Fuse inspection", "Relay test", "Replacement", "Circuit verify"],
   },
   {
     id: "BAT-012",
@@ -317,7 +317,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,999",
     price3W: "₹2,499",
     duration: "1h 30m",
-    specs: ["BMS Board Replacement", "Cell Balance Lead Soldering", "Firmware Pairing"],
+    specs: ["BMS diagnosis", "Firmware check", "Component repair", "Full BMS replacement"],
   },
   {
     id: "WIRE-003",
@@ -327,7 +327,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹699",
     price3W: "₹899",
     duration: "1h",
-    specs: ["Pin Extraction & Re-crimping", "Anti-Corrosion Gel Coating", "Braided Loom Protection"],
+    specs: ["Harness inspection", "Connector replacement", "Terminal cleaning", "Continuity test"],
   },
   {
     id: "WIRE-004",
@@ -337,7 +337,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹399",
     price3W: "₹499",
     duration: "30 min",
-    specs: ["Heavy-Duty Horn Relay", "LED Flasher Relay Swap", "Handlebar Switch Clean"],
+    specs: ["Component test", "Wiring check", "Replacement", "Function verify"],
   },
   {
     id: "DIAG-002",
@@ -347,7 +347,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,299",
     price3W: "₹1,799",
     duration: "1h",
-    specs: ["Comprehensive ECU Scan", "Sensor Live Data Stream", "Digital Health Passport"],
+    specs: ["OBD-II scan", "All system check", "Fault code report", "Performance summary"],
   },
   {
     id: "DIAG-003",
@@ -357,7 +357,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹799",
     price3W: "₹1,199",
     duration: "30 min",
-    specs: ["OTA ECU Firmware Flash", "BMS Calibration Patch", "Feature Unlock Activation"],
+    specs: ["Version check", "Safe update procedure", "Feature activation", "Verification"],
   },
   {
     id: "DIAG-004",
@@ -367,7 +367,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,999",
     price3W: "₹2,499",
     duration: "45 min",
-    specs: ["Packet Loss Analysis", "Termination Resistor Test", "Bus Line Noise Scan"],
+    specs: ["Bus scan", "Node test", "Fault isolation", "Communication report"],
   },
 
   // ==========================================
@@ -381,7 +381,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹899",
     duration: "30 min",
-    specs: ["Speedometer Pulse Sync", "Odometer Constant Match", "TFT Backlight Calibration"],
+    specs: ["Speedometer calibration", "Display check", "Cluster reset", "Accuracy verify"],
   },
   {
     id: "DISP-002",
@@ -391,7 +391,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹899",
     price3W: "₹1,199",
     duration: "45 min",
-    specs: ["SIM Connectivity Test", "GPS Antenna Signal Scan", "OTA Telematics Sync"],
+    specs: ["GPS accuracy test", "IoT connectivity", "Module health", "Configuration check"],
   },
   {
     id: "DIAG-005",
@@ -401,7 +401,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "30 min",
-    specs: ["DTC Fault Memory Clear", "System Status Re-initialization", "Drive Cycle Audit"],
+    specs: ["Full code scan", "Root cause analysis", "Code clear", "Recurrence prevention"],
   },
   {
     id: "DIAG-006",
@@ -411,7 +411,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹449",
     price3W: "₹599",
     duration: "30 min",
-    specs: ["Cloud OBD Telemetry Scan", "Live Parameter Log", "Remote Tech Advisor Call"],
+    specs: ["Remote connection", "Live data stream", "Fault analysis", "Digital report"],
   },
   {
     id: "PM-001",
@@ -421,7 +421,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹499",
     price3W: "₹699",
     duration: "45 min",
-    specs: ["18-Point Visual Check", "Brake Freeplay Adjust", "Tire Pressure & Tread Audit"],
+    specs: ["Tyre pressure check", "Battery visual", "Brake check", "Lights & signals test"],
   },
   {
     id: "PM-002",
@@ -431,7 +431,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,499",
     duration: "1h 30m",
-    specs: ["32-Point Full Inspection", "Electrical Contact Cleaning", "Drive Belt/Chain Lube"],
+    specs: ["Battery health scan", "Motor check", "Brake service", "Firmware check", "Full report"],
   },
   {
     id: "PM-003",
@@ -441,7 +441,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹899",
     price3W: "₹1,199",
     duration: "1h",
-    specs: ["Thermal Insulation Scan", "Connector Tightness Check", "BMS Diagnostic Audit"],
+    specs: ["Wear assessment", "Critical checks", "Lubrication", "Documentation"],
   },
   {
     id: "PM-004",
@@ -451,7 +451,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,299",
     price3W: "₹1,799",
     duration: "1h 30m",
-    specs: ["Rapid 24-Point Audit", "Brake & Tire Fast-Track", "Battery SOC Balancing"],
+    specs: ["Priority scheduling", "Quick battery check", "Brake & tyre", "Express report"],
   },
 
   // ==========================================
@@ -465,7 +465,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,999",
     price3W: "₹2,499",
     duration: "2h",
-    specs: ["Full Year Care Coverage", "Priority Roadside Rescue", "Deep Diagnostic Telemetry"],
+    specs: ["Full system scan", "Battery degradation test", "All-system service", "Annual report"],
   },
   {
     id: "BRK-001",
@@ -475,7 +475,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "45 min",
-    specs: ["Ceramic Pad Installation", "Caliper Cleaning", "Rotary Noise Elimination"],
+    specs: ["Worn pad removal", "New pad fit", "Caliper clean", "Brake test"],
   },
   {
     id: "BRK-002",
@@ -485,7 +485,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹449",
     price3W: "₹599",
     duration: "30 min",
-    specs: ["High-Temp DOT4 Fluid Flush", "Air Bubble Bleeding", "Pressure Test"],
+    specs: ["Old fluid drain", "Fresh fluid fill", "Bleeding", "Brake test"],
   },
   {
     id: "BRK-003",
@@ -495,7 +495,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹699",
     price3W: "₹899",
     duration: "45 min",
-    specs: ["Piston Seal Replacement", "High-Temp Pin Grease", "Drag Elimination"],
+    specs: ["Caliper removal", "Clean & lubricate", "Seal check", "Function test"],
   },
   {
     id: "BRK-004",
@@ -505,7 +505,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,199",
     price3W: "₹1,499",
     duration: "1h",
-    specs: ["Precision Ground Disc Rotor", "Wheel Hub Torque Sync", "Runout Measurement"],
+    specs: ["Rotor measurement", "Wear assessment", "New rotor fit", "Brake bedding"],
   },
   {
     id: "BRK-005",
@@ -515,7 +515,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹349",
     price3W: "₹499",
     duration: "20 min",
-    specs: ["Brake Pad Thickness Test", "Rotor Wear Scan", "Lever Resistance Audit"],
+    specs: ["Pad thickness check", "Rotor inspection", "Cable/hydraulic check", "Safety report"],
   },
   {
     id: "BRK-006",
@@ -525,7 +525,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,299",
     duration: "1h",
-    specs: ["ABS ECU Scan", "Wheel Speed Impulse Sensor Clean", "Hydraulic Modulator Test"],
+    specs: ["ABS sensor test", "Module scan", "Fault code clear", "Function verify"],
   },
   {
     id: "TYR-001",
@@ -535,7 +535,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "30 min",
-    specs: ["EV Rubber Compound Tyre", "Tubeless Valve Stem Swap", "Dynamic Wheel Balance"],
+    specs: ["Old tyre removal", "New tyre fit", "Balancing", "Pressure set"],
   },
 
   // ==========================================
@@ -549,7 +549,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹199",
     price3W: "₹299",
     duration: "20 min",
-    specs: ["Vulcanized Mushroom Plug", "High-Pressure Inflation", "Soap Leak Inspection"],
+    specs: ["Puncture locate", "Plug/patch repair", "Pressure restore", "Safety check"],
   },
   {
     id: "TYR-003",
@@ -559,7 +559,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹499",
     price3W: "₹699",
     duration: "30 min",
-    specs: ["Laser Rim Alignment", "Axle Nut Torque Sync", "Straight Track Benchmark"],
+    specs: ["Alignment check", "Adjustment", "Straight-line test", "Report"],
   },
   {
     id: "TYR-004",
@@ -569,7 +569,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "45 min",
-    specs: ["Fork Seal Oil Leak Audit", "Rear Shock Bushing Check", "Damping Return Test"],
+    specs: ["Shock absorber test", "Spring check", "Joint inspect", "Ride quality report"],
   },
   {
     id: "TYR-005",
@@ -579,7 +579,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,199",
     price3W: "₹1,499",
     duration: "1h",
-    specs: ["Preload Adjustable Shocks", "Heavy Duty Bushing Swap", "Load Compression Test"],
+    specs: ["Worn shock removal", "New shock fit", "Alignment check", "Road test"],
   },
   {
     id: "DISP-003",
@@ -589,7 +589,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,199",
     price3W: "₹1,499",
     duration: "1h",
-    specs: ["LCD Glass Panel Replacement", "Backlight Relay Fix", "Waterproof Seal Renewal"],
+    specs: ["Display diagnosis", "Crack/damage assess", "Replacement", "Calibration"],
   },
   {
     id: "DISP-004",
@@ -599,7 +599,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "30 min",
-    specs: ["Wheel Speed Magnetic Sensor", "Harness Continuity Fix", "Speedo Calibration"],
+    specs: ["Sensor test", "Signal check", "Clean or replace", "Calibrate speedometer"],
   },
   {
     id: "DISP-005",
@@ -609,7 +609,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹499",
     price3W: "₹699",
     duration: "30 min",
-    specs: ["NTC Thermistor Sensor Swap", "Thermal Bonding Compound", "BMS Sensor Calibration"],
+    specs: ["Sensor identify", "Old sensor remove", "New sensor fit", "Verify readings"],
   },
   {
     id: "CHG-002",
@@ -619,7 +619,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹699",
     price3W: "₹899",
     duration: "30 min",
-    specs: ["Onboard Charger Test", "Power Factor Scan", "Thermal Cut-off Test"],
+    specs: ["Output voltage test", "Charging speed check", "Thermal inspection", "Fault scan"],
   },
 
   // ==========================================
@@ -633,7 +633,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "30 min",
-    specs: ["Pin Replacement", "Waterproof Rubber Seal", "Locking Solenoid Test"],
+    specs: ["Port damage assess", "Pin cleaning", "Connector repair", "Charge test"],
   },
   {
     id: "CHG-004",
@@ -643,7 +643,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,299",
     duration: "45 min",
-    specs: ["Fast Charge Profile Tune", "Pin Thermal Monitoring", "Protocol Sync Check"],
+    specs: ["Current limit check", "BMS parameter tune", "Speed test", "Optimization report"],
   },
   {
     id: "CHG-005",
@@ -653,7 +653,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹399",
     price3W: "₹499",
     duration: "30 min",
-    specs: ["Earthing Voltage Check (<2V)", "MCB Circuit Rating Audit", "16A Socket Inspection"],
+    specs: ["Load assessment", "Safety check", "Charger compatibility", "Installation guide"],
   },
   {
     id: "CLN-001",
@@ -663,7 +663,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹449",
     price3W: "₹599",
     duration: "45 min",
-    specs: ["Zero-Water Dielectric Foam", "Microfiber Wipe", "UV Protectant Trim Polish"],
+    specs: ["Pre-wash", "Foam wash", "Decontamination", "Streak-free finish"],
   },
   {
     id: "CLN-002",
@@ -673,7 +673,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹2,999",
     price3W: "₹3,999",
     duration: "4h",
-    specs: ["9H Hardness Shield", "Hydrophobic Coating", "UV Protection Seal"],
+    specs: ["Surface prep", "Ceramic application", "Curing", "1-year protection"],
   },
   {
     id: "CLN-003",
@@ -683,7 +683,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹499",
     price3W: "₹699",
     duration: "30 min",
-    specs: ["Dielectric Cavity Clean", "Terminal De-oxidation", "Moisture Protective Wax"],
+    specs: ["Bay inspection", "Corrosion removal", "Terminal clean", "Protection spray"],
   },
   {
     id: "EMG-001",
@@ -693,7 +693,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,499",
     duration: "1h",
-    specs: ["24/7 Mobile Dispatch", "Flatbed Hydraulic Towing", "GPS Location Dispatch"],
+    specs: ["On-site diagnosis", "Quick fix attempt", "Safe tow arrangement", "24/7 support"],
     popular: true,
   },
   {
@@ -704,7 +704,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹599",
     price3W: "₹799",
     duration: "30 min",
-    specs: ["High-Output Rescue Power Pack", "12V Auxiliary Jumpstart", "Instant 5km Range Boost"],
+    specs: ["On-site arrival", "Emergency charge", "Battery assess", "Safe range guidance"],
   },
   {
     id: "CERT-001",
@@ -714,7 +714,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,499",
     price3W: "₹1,999",
     duration: "1h 30m",
-    specs: ["True SOH Estimation", "Chassis Accident Scan", "Full Telemetry Report"],
+    specs: ["Battery health check", "Motor test", "Frame inspect", "Full condition report"],
   },
   {
     id: "CERT-002",
@@ -724,7 +724,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹1,199",
     price3W: "₹1,499",
     duration: "1h",
-    specs: ["Official Compliance Audit", "Safety Interlock Check", "QR-Coded Digital Certificate"],
+    specs: ["Full safety check", "Mechanical verify", "Document check", "Certificate issue"],
   },
   {
     id: "CERT-003",
@@ -734,7 +734,7 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹799",
     price3W: "₹999",
     duration: "45 min",
-    specs: ["Damage Assessment Valuation", "Surveyor-Ready Documentation", "Parts Replacement Costing"],
+    specs: ["Damage assessment", "Photo documentation", "Inspection report", "Insurance letter"],
   },
   {
     id: "CERT-004",
@@ -744,6 +744,6 @@ export const SERVICES: EVServiceItem[] = [
     price2W: "₹999",
     price3W: "₹1,299",
     duration: "1h",
-    specs: ["Algorithmic Market Valuation", "Battery Health Weighting", "Resale Value Certificate"],
+    specs: ["Condition grading", "Market price compare", "Battery health factor", "Valuation report"],
   },
 ];

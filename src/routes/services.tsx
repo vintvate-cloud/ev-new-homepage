@@ -21,6 +21,7 @@ import {
   Info,
   Check,
   Award,
+  MapPin,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -109,11 +110,9 @@ function ServicesPage() {
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [isClosingDetails, setIsClosingDetails] = useState(false);
   const [detailsService, setDetailsService] = useState<EVServiceItem | null>(null);
-  const [activeDetailTab, setActiveDetailTab] = useState<"overview" | "specs" | "applications" | "roi">("overview");
 
   const handleOpenDetails = (service: EVServiceItem) => {
     setDetailsService(service);
-    setActiveDetailTab("overview");
     setIsClosingDetails(false);
     setDetailsModalOpen(true);
   };
@@ -157,7 +156,7 @@ function ServicesPage() {
       modalLenis.destroy();
       document.body.style.overflow = originalOverflow;
     };
-  }, [detailsModalOpen, activeDetailTab]);
+  }, [detailsModalOpen]);
 
   // Dynamic Theme state listening to document.documentElement
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
@@ -1108,21 +1107,83 @@ function ServicesPage() {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Top Category Tag & Title */}
-            <div className="mb-6 pr-12 shrink-0">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#00D084] block mb-1">
-                {detailsService.category} · MODULE DIAGNOSTIC
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                {detailsService.title}
-              </h2>
+            {/* Top Hero Section Header (Matching ServiceDetail.tsx) */}
+            <div className="mb-5 pb-5 border-b border-black/10 dark:border-white/10 shrink-0 pr-12">
+              {/* Badges */}
+              <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#00D084]/20 text-[#00D084] border border-[#00D084]/40 text-[11px] font-bold">
+                  Service
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/20 text-[11px] font-medium">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#00D084]" />
+                  Certified
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/20 text-[11px] font-medium">
+                  <MapPin className="w-3.5 h-3.5 text-[#00D084]" />
+                  Doorstep
+                </span>
+              </div>
+
+              {/* Title & Description */}
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+                    {detailsService.title}
+                  </h2>
+                  <p className="text-xs sm:text-sm opacity-70 mt-1 max-w-2xl leading-relaxed">
+                    {detailsService.desc}
+                  </p>
+
+                  {/* Chips & Pricing */}
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-xs font-semibold">
+                      2W
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-xs font-semibold">
+                      3W
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-xs font-medium opacity-80">
+                      <Clock className="w-3.5 h-3.5 text-[#00D084]" />
+                      {detailsService.duration}
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-xs font-bold text-[#00D084]">
+                      {detailsService.price3W || detailsService.price2W}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Primary Action Buttons */}
+                <div className="flex items-center gap-2 shrink-0 pt-1">
+                  <button
+                    onClick={() => {
+                      setDetailsModalOpen(false);
+                      handleBookService(detailsService);
+                    }}
+                    className="px-5 py-2.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-md cursor-pointer whitespace-nowrap"
+                  >
+                    Book this service
+                  </button>
+                  <button
+                    onClick={() => {
+                      toast.info("Connecting to MY EV SERVICE support...");
+                    }}
+                    className={`px-4 py-2.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
+                      isLight
+                        ? "border-[#c5d6ca] text-[#1a2320] hover:bg-black/5"
+                        : "border-white/20 text-white hover:bg-white/10"
+                    }`}
+                  >
+                    Talk to support
+                  </button>
+                </div>
+              </div>
             </div>
 
             {/* 2-Column Grid Body */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start flex-1 overflow-hidden min-h-0">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start flex-1 overflow-y-auto lg:overflow-hidden min-h-0">
               {/* Left Column: Image Card & Key Quick Metrics (Fixed / Stationary Side) */}
-              <div className="lg:col-span-5 space-y-4 shrink-0">
-                <div className="relative h-56 sm:h-64 lg:h-72 w-full rounded-[24px] overflow-hidden shadow-lg border border-black/10">
+              <div className="lg:col-span-5 space-y-3.5 shrink-0 w-full">
+                <div className="relative h-44 sm:h-48 lg:h-52 w-full rounded-[22px] overflow-hidden shadow-lg border border-black/10">
                   <img
                     src={
                       CATEGORY_IMAGES[detailsService.category] ||
@@ -1133,275 +1194,132 @@ function ServicesPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
 
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <div className="absolute bottom-3.5 left-4 right-4 text-white">
                     <span className="text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-widest block mb-0.5">
                       AUTOBOT OS PLATFORM
                     </span>
-                    <div className="text-base font-bold drop-shadow-md">
+                    <div className="text-sm sm:text-base font-bold drop-shadow-md">
                       {detailsService.title}
                     </div>
                   </div>
                 </div>
 
-                {/* Quick Info Specs Box */}
+                {/* Quick Info Specs Box (Matching User Screenshot Exactly) */}
                 <div
-                  className={`p-4 rounded-2xl border space-y-2 text-xs font-mono ${
-                    isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                  className={`p-4 sm:p-5 rounded-[20px] border space-y-3 text-xs sm:text-sm font-mono tracking-tight shadow-md transition-colors ${
+                    isLight
+                      ? "bg-[#eaf1ec] border-[#cbdcd0] text-[#1a2820]"
+                      : "bg-[#0d1310] border-[#1d2721] text-white"
                   }`}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="opacity-60">Compatibility:</span>
-                    <span className="font-bold text-[#00D084]">2W & 3W EV</span>
+                    <span className="text-[#76887b] dark:text-[#88998c] font-medium">Compatibility:</span>
+                    <span className="font-bold text-[#00D084] tracking-wide">2W & 3W EV</span>
                   </div>
-                  <div className="flex justify-between items-center border-t border-black/5 dark:border-white/5 pt-2">
-                    <span className="opacity-60">Est. Duration:</span>
-                    <span className="font-bold">{detailsService.duration}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#76887b] dark:text-[#88998c] font-medium">Est. Duration:</span>
+                    <span className="font-bold text-foreground">{detailsService.duration}</span>
                   </div>
-                  <div className="flex justify-between items-center border-t border-black/5 dark:border-white/5 pt-2">
-                    <span className="opacity-60">Rates (2W / 3W):</span>
-                    <span className="font-bold text-[#00D084]">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#76887b] dark:text-[#88998c] font-medium">Rates (2W / 3W):</span>
+                    <span className="font-bold text-[#00D084] tracking-wide">
                       {detailsService.price2W} / {detailsService.price3W}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Right Column: Tab Switcher & Rich Detailed Content (Moving / Lenis Scrollable Side) */}
+              {/* Right Column: Clean Detailed Content (What's Included + How It Works — Matching ServiceDetail.tsx) */}
               <div
                 ref={rightSectionRef}
                 data-lenis-prevent
                 className="lg:col-span-7 h-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
-                <div ref={innerContentRef} className="space-y-6 pb-6">
-                  {/* Tabs Switcher Header Bar */}
-                  <div className="flex items-center gap-6 border-b border-black/10 dark:border-white/10 overflow-x-auto pb-3 text-xs font-bold tracking-wider uppercase">
-                    <button
-                      onClick={() => setActiveDetailTab("overview")}
-                      className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
-                        activeDetailTab === "overview"
-                          ? "text-[#00D084] border-b-2 border-[#00D084]"
-                          : "opacity-60 hover:opacity-100"
-                      }`}
-                    >
-                      <Info className="w-3.5 h-3.5" /> OVERVIEW
-                    </button>
-
-                    <button
-                      onClick={() => setActiveDetailTab("specs")}
-                      className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
-                        activeDetailTab === "specs"
-                          ? "text-[#00D084] border-b-2 border-[#00D084]"
-                          : "opacity-60 hover:opacity-100"
-                      }`}
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5" /> SPECIFICATIONS
-                    </button>
-
-                    <button
-                      onClick={() => setActiveDetailTab("applications")}
-                      className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
-                        activeDetailTab === "applications"
-                          ? "text-[#00D084] border-b-2 border-[#00D084]"
-                          : "opacity-60 hover:opacity-100"
-                      }`}
-                    >
-                      <Zap className="w-3.5 h-3.5" /> APPLICATIONS
-                    </button>
-
-                    <button
-                      onClick={() => setActiveDetailTab("roi")}
-                      className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
-                        activeDetailTab === "roi"
-                          ? "text-[#00D084] border-b-2 border-[#00D084]"
-                          : "opacity-60 hover:opacity-100"
-                      }`}
-                    >
-                      <Award className="w-3.5 h-3.5" /> CLIENT BENEFITS (ROI)
-                    </button>
-                  </div>
-
-                  {/* Tab Pane 1: OVERVIEW */}
-                  {activeDetailTab === "overview" && (
-                    <div className="space-y-6 text-xs sm:text-sm font-normal leading-relaxed">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
-                        PRODUCT OVERVIEW
+                <div ref={innerContentRef} className="space-y-6 pb-6 text-xs sm:text-sm font-normal leading-relaxed">
+                  {/* What's Included (Pro Checklist) — Exact Match to ServiceDetail.tsx */}
+                  <div>
+                    <div className="flex items-center justify-between gap-4 mb-3">
+                      <div>
+                        <p className="text-sm sm:text-base font-bold text-foreground">What’s included</p>
+                        <p className="text-xs opacity-60 mt-0.5">A quick breakdown of what you get</p>
+                      </div>
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00D084]/10 border border-[#00D084]/20 text-xs font-medium text-[#00D084]">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Pro checklist
                       </span>
-                      <p className="opacity-80">
-                        The MY EV SERVICE <strong className="text-[#00D084]">{detailsService.title}</strong> platform represents a milestone in professional autonomous EV diagnostic and maintenance infrastructure. Specifically engineered to deliver elite-grade performance under extreme operating stress, this service integrates state-of-the-art Autobot OS telemetry scanners, cell-level voltage analysis, and thermal diagnostic imaging.
-                      </p>
-                      <p className="opacity-80">
-                        Designed to align with the rigid compliance demands of commercial EV aggregators, logistics fleets, and individual electric scooter & 3-wheeler owners, {detailsService.title} combines robust technical execution with low maintenance overheads, offering an authentic utility-grade asset with long-term return on investment.
-                      </p>
+                    </div>
 
-                      {/* Key Features Cards Grid (Exact match to screenshot) */}
-                      <div className="pt-2">
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block mb-3">
-                          KEY FEATURES
-                        </span>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div
-                            className={`p-4 rounded-2xl border space-y-1.5 ${
-                              isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                            }`}
-                          >
-                            <div className="flex items-center gap-2 font-bold text-xs">
-                              <div className="w-6 h-6 rounded-full bg-[#00D084]/20 flex items-center justify-center text-[#00D084]">
-                                <Sparkles className="w-3.5 h-3.5" />
-                              </div>
-                              <span>Cell-Level Diagnostics</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {detailsService.specs.map((spec, i) => (
+                        <div
+                          key={i}
+                          className={`p-3.5 rounded-2xl border transition-colors ${
+                            isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 rounded-xl bg-[#00D084]/15 flex items-center justify-center shrink-0">
+                              <Check className="w-4 h-4 text-[#00D084]" />
                             </div>
-                            <p className="text-[11px] opacity-70 leading-relaxed">
-                              High-yield telemetry modules offering multi-cell voltage analysis and efficiency scoring up to 98% for rapid service execution.
-                            </p>
-                          </div>
-
-                          <div
-                            className={`p-4 rounded-2xl border space-y-1.5 ${
-                              isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                            }`}
-                          >
-                            <div className="flex items-center gap-2 font-bold text-xs">
-                              <div className="w-6 h-6 rounded-full bg-[#00D084]/20 flex items-center justify-center text-[#00D084]">
-                                <Zap className="w-3.5 h-3.5" />
-                              </div>
-                              <span>Autobot OS Telemetry</span>
+                            <div className="min-w-0">
+                              <p className="text-xs font-bold leading-snug">{spec}</p>
+                              <span className="text-[10px] text-[#00D084] font-medium block mt-0.5">
+                                Included
+                              </span>
                             </div>
-                            <p className="text-[11px] opacity-70 leading-relaxed">
-                              Automated digital health passport, failure prediction logs, and real-time BMS parameter recalibration.
-                            </p>
                           </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                  )}
+                  </div>
 
-                  {/* Tab Pane 2: SPECIFICATIONS */}
-                  {activeDetailTab === "specs" && (
-                    <div className="space-y-4 text-xs font-mono">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
-                        TECHNICAL SPECIFICATIONS
-                      </span>
+                  {/* How It Works — Exact Match to ServiceDetail.tsx */}
+                  <div className="pt-2 border-t border-black/10 dark:border-white/10">
+                    <p className="text-sm sm:text-base font-bold text-foreground mb-3">How it works</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       <div
-                        className={`p-5 rounded-2xl border space-y-3 ${
+                        className={`p-3.5 rounded-2xl border ${
                           isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
                         }`}
                       >
-                        <div className="grid grid-cols-2 gap-4 pb-3 border-b border-black/10 dark:border-white/10">
-                          <div>
-                            <span className="opacity-50 block text-[10px]">CATEGORY</span>
-                            <span className="font-bold text-xs">{detailsService.category}</span>
-                          </div>
-                          <div>
-                            <span className="opacity-50 block text-[10px]">ESTIMATED DURATION</span>
-                            <span className="font-bold text-xs">{detailsService.duration}</span>
-                          </div>
+                        <div className="w-8 h-8 rounded-xl bg-[#00D084]/15 flex items-center justify-center shrink-0 mb-2">
+                          <MapPin className="w-4 h-4 text-[#00D084]" />
                         </div>
+                        <p className="text-xs font-bold">Choose your location</p>
+                        <p className="text-[11px] opacity-70 mt-1 leading-relaxed">
+                          We verify serviceability and assign your nearest hub.
+                        </p>
+                      </div>
 
-                        <div className="space-y-2 pt-1">
-                          <span className="opacity-50 block text-[10px]">EXECUTION CHECKSPECIFICATIONS</span>
-                          <ul className="space-y-1 text-xs">
-                            {detailsService.specs.map((sp, i) => (
-                              <li key={i} className="flex items-center gap-2">
-                                <Check className="w-3.5 h-3.5 text-[#00D084]" />
-                                <span>{sp}</span>
-                              </li>
-                            ))}
-                            <li className="flex items-center gap-2">
-                              <Check className="w-3.5 h-3.5 text-[#00D084]" />
-                              <span>ISO 9001:2015 Verified Diagnostic Standard</span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <Check className="w-3.5 h-3.5 text-[#00D084]" />
-                              <span>IP67 Seal & Insulation Compliance Audit</span>
-                            </li>
-                          </ul>
+                      <div
+                        className={`p-3.5 rounded-2xl border ${
+                          isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-xl bg-[#00D084]/15 flex items-center justify-center shrink-0 mb-2">
+                          <Clock className="w-4 h-4 text-[#00D084]" />
                         </div>
+                        <p className="text-xs font-bold">Pick a time slot</p>
+                        <p className="text-[11px] opacity-70 mt-1 leading-relaxed">
+                          ASAP or scheduled slots based on availability.
+                        </p>
+                      </div>
+
+                      <div
+                        className={`p-3.5 rounded-2xl border ${
+                          isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-xl bg-[#00D084]/15 flex items-center justify-center shrink-0 mb-2">
+                          <ShieldCheck className="w-4 h-4 text-[#00D084]" />
+                        </div>
+                        <p className="text-xs font-bold">Certified technician arrives</p>
+                        <p className="text-[11px] opacity-70 mt-1 leading-relaxed">
+                          Checklist-driven service with transparent reporting.
+                        </p>
                       </div>
                     </div>
-                  )}
-
-                  {/* Tab Pane 3: APPLICATIONS */}
-                  {activeDetailTab === "applications" && (
-                    <div className="space-y-4 text-xs">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
-                        SUPPORTED VEHICLE PLATFORMS
-                      </span>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div
-                          className={`p-4 rounded-2xl border space-y-2 ${
-                            isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                          }`}
-                        >
-                          <span className="font-bold text-[#00D084] block text-xs">ELECTRIC 2W SCOOTERS & BIKES</span>
-                          <p className="opacity-70 leading-relaxed text-[11px]">
-                            Ather 450X / Apex, Ola S1 Pro / Air / X, TVS iQube, Bajaj Chetak, Hero Vida V1, Revolt RV400, Okinawa, Ampere, Pure EV.
-                          </p>
-                        </div>
-
-                        <div
-                          className={`p-4 rounded-2xl border space-y-2 ${
-                            isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                          }`}
-                        >
-                          <span className="font-bold text-[#00D084] block text-xs">COMMERCIAL 3W AUTO & CARGO</span>
-                          <p className="opacity-70 leading-relaxed text-[11px]">
-                            Mahindra Treo / Zor Grand, Piaggio Ape E-City / E-Xtra, Euler HiLoad EV, Altigreen NeEV, Kinetic Green.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Tab Pane 4: CLIENT BENEFITS (ROI) */}
-                  {activeDetailTab === "roi" && (
-                    <div className="space-y-4 text-xs font-sans">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
-                        LONG-TERM VALUE & RETURN ON INVESTMENT
-                      </span>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div
-                          className={`p-4 rounded-2xl border space-y-1 ${
-                            isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                          }`}
-                        >
-                          <span className="font-bold text-xs block">30%+ Battery Life Extension</span>
-                          <p className="opacity-70 text-[11px]">Cell voltage balancing and BMS thermal optimization prevent premature pack degradation.</p>
-                        </div>
-
-                        <div
-                          className={`p-4 rounded-2xl border space-y-1 ${
-                            isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                          }`}
-                        >
-                          <span className="font-bold text-xs block">0% Breakdown Risk Guarantee</span>
-                          <p className="opacity-70 text-[11px]">Early warning telemetry scan catches throttle sags and CAN-bus packet errors before breakdown.</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Bottom Action Footer */}
-                  <div className="pt-4 border-t border-black/10 dark:border-white/10 flex items-center gap-4">
-                    <button
-                      onClick={() => {
-                        setDetailsModalOpen(false);
-                        handleBookService(detailsService);
-                      }}
-                      className="flex-1 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-md cursor-pointer text-center"
-                    >
-                      BOOK THIS SERVICE NOW
-                    </button>
-                    <button
-                      onClick={handleCloseDetails}
-                      className={`px-6 py-3.5 rounded-full border text-xs font-bold uppercase tracking-widest transition-all cursor-pointer ${
-                        isLight
-                          ? "border-[#c5d6ca] text-[#1a2320] hover:bg-black/5"
-                          : "border-white/20 text-white hover:bg-white/10"
-                      }`}
-                    >
-                      CLOSE
-                    </button>
                   </div>
                 </div>
               </div>
