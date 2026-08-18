@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import Lenis from "lenis";
 import { SERVICES, SERVICE_CATEGORIES, EVServiceItem } from "../data/services";
 import { PACKAGES } from "../data/packages";
 import { Nav } from "../components/Nav";
@@ -124,6 +125,39 @@ function ServicesPage() {
       setIsClosingDetails(false);
     }, 320);
   };
+
+  // Lenis Smooth Scroll & scrollbar removal inside ONLY the right section of the details modal card
+  const rightSectionRef = useRef<HTMLDivElement>(null);
+  const innerContentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!detailsModalOpen || !rightSectionRef.current || !innerContentRef.current) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const modalLenis = new Lenis({
+      wrapper: rightSectionRef.current,
+      content: innerContentRef.current,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: true,
+    });
+
+    let rafId: number;
+    function update(time: number) {
+      modalLenis.raf(time);
+      rafId = requestAnimationFrame(update);
+    }
+    rafId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      modalLenis.destroy();
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [detailsModalOpen, activeDetailTab]);
 
   // Dynamic Theme state listening to document.documentElement
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
@@ -1054,18 +1088,18 @@ function ServicesPage() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={`w-full max-w-5xl rounded-t-[32px] sm:rounded-[32px] p-6 sm:p-10 shadow-2xl relative border transition-all max-h-[90vh] overflow-y-auto ${
+            className={`w-full max-w-7xl rounded-t-[32px] sm:rounded-[32px] p-6 sm:p-10 shadow-2xl relative border transition-all h-[85vh] max-h-[780px] flex flex-col overflow-hidden ${
               isClosingDetails ? "animate-drop-down" : "animate-drop-up"
             } ${
               isLight
-                ? "bg-white text-[#1a2b22] border-[#d8e5dc]"
+                ? "bg-[#ffffff] text-[#1a2b22] border-[#d8e5dc]"
                 : "bg-[#060b08] text-white border-white/15"
             }`}
           >
             {/* Top Close Circle Button */}
             <button
               onClick={handleCloseDetails}
-              className={`absolute top-6 right-6 w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+              className={`absolute top-6 right-6 w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer z-10 ${
                 isLight
                   ? "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
@@ -1075,7 +1109,7 @@ function ServicesPage() {
             </button>
 
             {/* Top Category Tag & Title */}
-            <div className="mb-6 pr-12">
+            <div className="mb-6 pr-12 shrink-0">
               <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#00D084] block mb-1">
                 {detailsService.category} · MODULE DIAGNOSTIC
               </span>
@@ -1085,10 +1119,10 @@ function ServicesPage() {
             </div>
 
             {/* 2-Column Grid Body */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              {/* Left Column: Image Card & Key Quick Metrics */}
-              <div className="lg:col-span-5 space-y-4">
-                <div className="relative h-64 sm:h-72 w-full rounded-[24px] overflow-hidden shadow-lg border border-black/10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start flex-1 overflow-hidden min-h-0">
+              {/* Left Column: Image Card & Key Quick Metrics (Fixed / Stationary Side) */}
+              <div className="lg:col-span-5 space-y-4 shrink-0">
+                <div className="relative h-56 sm:h-64 lg:h-72 w-full rounded-[24px] overflow-hidden shadow-lg border border-black/10">
                   <img
                     src={
                       CATEGORY_IMAGES[detailsService.category] ||
@@ -1132,236 +1166,243 @@ function ServicesPage() {
                 </div>
               </div>
 
-              {/* Right Column: Tab Switcher & Rich Detailed Content */}
-              <div className="lg:col-span-7 space-y-6">
-                {/* Tabs Switcher Header Bar */}
-                <div className="flex items-center gap-6 border-b border-black/10 dark:border-white/10 overflow-x-auto pb-3 text-xs font-bold tracking-wider uppercase">
-                  <button
-                    onClick={() => setActiveDetailTab("overview")}
-                    className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
-                      activeDetailTab === "overview"
-                        ? "text-[#00D084] border-b-2 border-[#00D084]"
-                        : "opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <Info className="w-3.5 h-3.5" /> OVERVIEW
-                  </button>
+              {/* Right Column: Tab Switcher & Rich Detailed Content (Moving / Lenis Scrollable Side) */}
+              <div
+                ref={rightSectionRef}
+                data-lenis-prevent
+                className="lg:col-span-7 h-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
+                <div ref={innerContentRef} className="space-y-6 pb-6">
+                  {/* Tabs Switcher Header Bar */}
+                  <div className="flex items-center gap-6 border-b border-black/10 dark:border-white/10 overflow-x-auto pb-3 text-xs font-bold tracking-wider uppercase">
+                    <button
+                      onClick={() => setActiveDetailTab("overview")}
+                      className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
+                        activeDetailTab === "overview"
+                          ? "text-[#00D084] border-b-2 border-[#00D084]"
+                          : "opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <Info className="w-3.5 h-3.5" /> OVERVIEW
+                    </button>
 
-                  <button
-                    onClick={() => setActiveDetailTab("specs")}
-                    className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
-                      activeDetailTab === "specs"
-                        ? "text-[#00D084] border-b-2 border-[#00D084]"
-                        : "opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <CheckCircle2 className="w-3.5 h-3.5" /> SPECIFICATIONS
-                  </button>
+                    <button
+                      onClick={() => setActiveDetailTab("specs")}
+                      className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
+                        activeDetailTab === "specs"
+                          ? "text-[#00D084] border-b-2 border-[#00D084]"
+                          : "opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5" /> SPECIFICATIONS
+                    </button>
 
-                  <button
-                    onClick={() => setActiveDetailTab("applications")}
-                    className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
-                      activeDetailTab === "applications"
-                        ? "text-[#00D084] border-b-2 border-[#00D084]"
-                        : "opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <Zap className="w-3.5 h-3.5" /> APPLICATIONS
-                  </button>
+                    <button
+                      onClick={() => setActiveDetailTab("applications")}
+                      className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
+                        activeDetailTab === "applications"
+                          ? "text-[#00D084] border-b-2 border-[#00D084]"
+                          : "opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <Zap className="w-3.5 h-3.5" /> APPLICATIONS
+                    </button>
 
-                  <button
-                    onClick={() => setActiveDetailTab("roi")}
-                    className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
-                      activeDetailTab === "roi"
-                        ? "text-[#00D084] border-b-2 border-[#00D084]"
-                        : "opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <Award className="w-3.5 h-3.5" /> CLIENT BENEFITS (ROI)
-                  </button>
-                </div>
+                    <button
+                      onClick={() => setActiveDetailTab("roi")}
+                      className={`flex items-center gap-1.5 pb-2 transition-all cursor-pointer whitespace-nowrap ${
+                        activeDetailTab === "roi"
+                          ? "text-[#00D084] border-b-2 border-[#00D084]"
+                          : "opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <Award className="w-3.5 h-3.5" /> CLIENT BENEFITS (ROI)
+                    </button>
+                  </div>
 
-                {/* Tab Pane 1: OVERVIEW */}
-                {activeDetailTab === "overview" && (
-                  <div className="space-y-6 text-xs sm:text-sm font-normal leading-relaxed">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
-                      PRODUCT OVERVIEW
-                    </span>
-                    <p className="opacity-80">
-                      The MY EV SERVICE <strong className="text-[#00D084]">{detailsService.title}</strong> platform represents a milestone in professional autonomous EV diagnostic and maintenance infrastructure. Specifically engineered to deliver elite-grade performance under extreme operating stress, this service integrates state-of-the-art Autobot OS telemetry scanners, cell-level voltage analysis, and thermal diagnostic imaging.
-                    </p>
-                    <p className="opacity-80">
-                      Designed to align with the rigid compliance demands of commercial EV aggregators, logistics fleets, and individual electric scooter & 3-wheeler owners, {detailsService.title} combines robust technical execution with low maintenance overheads, offering an authentic utility-grade asset with long-term return on investment.
-                    </p>
+                  {/* Tab Pane 1: OVERVIEW */}
+                  {activeDetailTab === "overview" && (
+                    <div className="space-y-6 text-xs sm:text-sm font-normal leading-relaxed">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
+                        PRODUCT OVERVIEW
+                      </span>
+                      <p className="opacity-80">
+                        The MY EV SERVICE <strong className="text-[#00D084]">{detailsService.title}</strong> platform represents a milestone in professional autonomous EV diagnostic and maintenance infrastructure. Specifically engineered to deliver elite-grade performance under extreme operating stress, this service integrates state-of-the-art Autobot OS telemetry scanners, cell-level voltage analysis, and thermal diagnostic imaging.
+                      </p>
+                      <p className="opacity-80">
+                        Designed to align with the rigid compliance demands of commercial EV aggregators, logistics fleets, and individual electric scooter & 3-wheeler owners, {detailsService.title} combines robust technical execution with low maintenance overheads, offering an authentic utility-grade asset with long-term return on investment.
+                      </p>
 
-                    {/* Key Features Cards Grid (Exact match to screenshot) */}
-                    <div className="pt-2">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block mb-3">
-                        KEY FEATURES
+                      {/* Key Features Cards Grid (Exact match to screenshot) */}
+                      <div className="pt-2">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block mb-3">
+                          KEY FEATURES
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div
+                            className={`p-4 rounded-2xl border space-y-1.5 ${
+                              isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 font-bold text-xs">
+                              <div className="w-6 h-6 rounded-full bg-[#00D084]/20 flex items-center justify-center text-[#00D084]">
+                                <Sparkles className="w-3.5 h-3.5" />
+                              </div>
+                              <span>Cell-Level Diagnostics</span>
+                            </div>
+                            <p className="text-[11px] opacity-70 leading-relaxed">
+                              High-yield telemetry modules offering multi-cell voltage analysis and efficiency scoring up to 98% for rapid service execution.
+                            </p>
+                          </div>
+
+                          <div
+                            className={`p-4 rounded-2xl border space-y-1.5 ${
+                              isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 font-bold text-xs">
+                              <div className="w-6 h-6 rounded-full bg-[#00D084]/20 flex items-center justify-center text-[#00D084]">
+                                <Zap className="w-3.5 h-3.5" />
+                              </div>
+                              <span>Autobot OS Telemetry</span>
+                            </div>
+                            <p className="text-[11px] opacity-70 leading-relaxed">
+                              Automated digital health passport, failure prediction logs, and real-time BMS parameter recalibration.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Tab Pane 2: SPECIFICATIONS */}
+                  {activeDetailTab === "specs" && (
+                    <div className="space-y-4 text-xs font-mono">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
+                        TECHNICAL SPECIFICATIONS
+                      </span>
+                      <div
+                        className={`p-5 rounded-2xl border space-y-3 ${
+                          isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                        }`}
+                      >
+                        <div className="grid grid-cols-2 gap-4 pb-3 border-b border-black/10 dark:border-white/10">
+                          <div>
+                            <span className="opacity-50 block text-[10px]">CATEGORY</span>
+                            <span className="font-bold text-xs">{detailsService.category}</span>
+                          </div>
+                          <div>
+                            <span className="opacity-50 block text-[10px]">ESTIMATED DURATION</span>
+                            <span className="font-bold text-xs">{detailsService.duration}</span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2 pt-1">
+                          <span className="opacity-50 block text-[10px]">EXECUTION CHECKSPECIFICATIONS</span>
+                          <ul className="space-y-1 text-xs">
+                            {detailsService.specs.map((sp, i) => (
+                              <li key={i} className="flex items-center gap-2">
+                                <Check className="w-3.5 h-3.5 text-[#00D084]" />
+                                <span>{sp}</span>
+                              </li>
+                            ))}
+                            <li className="flex items-center gap-2">
+                              <Check className="w-3.5 h-3.5 text-[#00D084]" />
+                              <span>ISO 9001:2015 Verified Diagnostic Standard</span>
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <Check className="w-3.5 h-3.5 text-[#00D084]" />
+                              <span>IP67 Seal & Insulation Compliance Audit</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Tab Pane 3: APPLICATIONS */}
+                  {activeDetailTab === "applications" && (
+                    <div className="space-y-4 text-xs">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
+                        SUPPORTED VEHICLE PLATFORMS
                       </span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div
-                          className={`p-4 rounded-2xl border space-y-1.5 ${
+                          className={`p-4 rounded-2xl border space-y-2 ${
                             isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
                           }`}
                         >
-                          <div className="flex items-center gap-2 font-bold text-xs">
-                            <div className="w-6 h-6 rounded-full bg-[#00D084]/20 flex items-center justify-center text-[#00D084]">
-                              <Sparkles className="w-3.5 h-3.5" />
-                            </div>
-                            <span>Cell-Level Diagnostics</span>
-                          </div>
-                          <p className="text-[11px] opacity-70 leading-relaxed">
-                            High-yield telemetry modules offering multi-cell voltage analysis and efficiency scoring up to 98% for rapid service execution.
+                          <span className="font-bold text-[#00D084] block text-xs">ELECTRIC 2W SCOOTERS & BIKES</span>
+                          <p className="opacity-70 leading-relaxed text-[11px]">
+                            Ather 450X / Apex, Ola S1 Pro / Air / X, TVS iQube, Bajaj Chetak, Hero Vida V1, Revolt RV400, Okinawa, Ampere, Pure EV.
                           </p>
                         </div>
 
                         <div
-                          className={`p-4 rounded-2xl border space-y-1.5 ${
+                          className={`p-4 rounded-2xl border space-y-2 ${
                             isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
                           }`}
                         >
-                          <div className="flex items-center gap-2 font-bold text-xs">
-                            <div className="w-6 h-6 rounded-full bg-[#00D084]/20 flex items-center justify-center text-[#00D084]">
-                              <Zap className="w-3.5 h-3.5" />
-                            </div>
-                            <span>Autobot OS Telemetry</span>
-                          </div>
-                          <p className="text-[11px] opacity-70 leading-relaxed">
-                            Automated digital health passport, failure prediction logs, and real-time BMS parameter recalibration.
+                          <span className="font-bold text-[#00D084] block text-xs">COMMERCIAL 3W AUTO & CARGO</span>
+                          <p className="opacity-70 leading-relaxed text-[11px]">
+                            Mahindra Treo / Zor Grand, Piaggio Ape E-City / E-Xtra, Euler HiLoad EV, Altigreen NeEV, Kinetic Green.
                           </p>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Tab Pane 2: SPECIFICATIONS */}
-                {activeDetailTab === "specs" && (
-                  <div className="space-y-4 text-xs font-mono">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
-                      TECHNICAL SPECIFICATIONS
-                    </span>
-                    <div
-                      className={`p-5 rounded-2xl border space-y-3 ${
-                        isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                  {/* Tab Pane 4: CLIENT BENEFITS (ROI) */}
+                  {activeDetailTab === "roi" && (
+                    <div className="space-y-4 text-xs font-sans">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
+                        LONG-TERM VALUE & RETURN ON INVESTMENT
+                      </span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div
+                          className={`p-4 rounded-2xl border space-y-1 ${
+                            isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                          }`}
+                        >
+                          <span className="font-bold text-xs block">30%+ Battery Life Extension</span>
+                          <p className="opacity-70 text-[11px]">Cell voltage balancing and BMS thermal optimization prevent premature pack degradation.</p>
+                        </div>
+
+                        <div
+                          className={`p-4 rounded-2xl border space-y-1 ${
+                            isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
+                          }`}
+                        >
+                          <span className="font-bold text-xs block">0% Breakdown Risk Guarantee</span>
+                          <p className="opacity-70 text-[11px]">Early warning telemetry scan catches throttle sags and CAN-bus packet errors before breakdown.</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Bottom Action Footer */}
+                  <div className="pt-4 border-t border-black/10 dark:border-white/10 flex items-center gap-4">
+                    <button
+                      onClick={() => {
+                        setDetailsModalOpen(false);
+                        handleBookService(detailsService);
+                      }}
+                      className="flex-1 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-md cursor-pointer text-center"
+                    >
+                      BOOK THIS SERVICE NOW
+                    </button>
+                    <button
+                      onClick={handleCloseDetails}
+                      className={`px-6 py-3.5 rounded-full border text-xs font-bold uppercase tracking-widest transition-all cursor-pointer ${
+                        isLight
+                          ? "border-[#c5d6ca] text-[#1a2320] hover:bg-black/5"
+                          : "border-white/20 text-white hover:bg-white/10"
                       }`}
                     >
-                      <div className="grid grid-cols-2 gap-4 pb-3 border-b border-black/10 dark:border-white/10">
-                        <div>
-                          <span className="opacity-50 block text-[10px]">CATEGORY</span>
-                          <span className="font-bold text-xs">{detailsService.category}</span>
-                        </div>
-                        <div>
-                          <span className="opacity-50 block text-[10px]">ESTIMATED DURATION</span>
-                          <span className="font-bold text-xs">{detailsService.duration}</span>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2 pt-1">
-                        <span className="opacity-50 block text-[10px]">EXECUTION CHECKSPECIFICATIONS</span>
-                        <ul className="space-y-1 text-xs">
-                          {detailsService.specs.map((sp, i) => (
-                            <li key={i} className="flex items-center gap-2">
-                              <Check className="w-3.5 h-3.5 text-[#00D084]" />
-                              <span>{sp}</span>
-                            </li>
-                          ))}
-                          <li className="flex items-center gap-2">
-                            <Check className="w-3.5 h-3.5 text-[#00D084]" />
-                            <span>ISO 9001:2015 Verified Diagnostic Standard</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <Check className="w-3.5 h-3.5 text-[#00D084]" />
-                            <span>IP67 Seal & Insulation Compliance Audit</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
+                      CLOSE
+                    </button>
                   </div>
-                )}
-
-                {/* Tab Pane 3: APPLICATIONS */}
-                {activeDetailTab === "applications" && (
-                  <div className="space-y-4 text-xs">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
-                      SUPPORTED VEHICLE PLATFORMS
-                    </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div
-                        className={`p-4 rounded-2xl border space-y-2 ${
-                          isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                        }`}
-                      >
-                        <span className="font-bold text-[#00D084] block text-xs">ELECTRIC 2W SCOOTERS & BIKES</span>
-                        <p className="opacity-70 leading-relaxed text-[11px]">
-                          Ather 450X / Apex, Ola S1 Pro / Air / X, TVS iQube, Bajaj Chetak, Hero Vida V1, Revolt RV400, Okinawa, Ampere, Pure EV.
-                        </p>
-                      </div>
-
-                      <div
-                        className={`p-4 rounded-2xl border space-y-2 ${
-                          isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                        }`}
-                      >
-                        <span className="font-bold text-[#00D084] block text-xs">COMMERCIAL 3W AUTO & CARGO</span>
-                        <p className="opacity-70 leading-relaxed text-[11px]">
-                          Mahindra Treo / Zor Grand, Piaggio Ape E-City / E-Xtra, Euler HiLoad EV, Altigreen NeEV, Kinetic Green.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Tab Pane 4: CLIENT BENEFITS (ROI) */}
-                {activeDetailTab === "roi" && (
-                  <div className="space-y-4 text-xs font-sans">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-50 block">
-                      LONG-TERM VALUE & RETURN ON INVESTMENT
-                    </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div
-                        className={`p-4 rounded-2xl border space-y-1 ${
-                          isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                        }`}
-                      >
-                        <span className="font-bold text-xs block">30%+ Battery Life Extension</span>
-                        <p className="opacity-70 text-[11px]">Cell voltage balancing and BMS thermal optimization prevent premature pack degradation.</p>
-                      </div>
-
-                      <div
-                        className={`p-4 rounded-2xl border space-y-1 ${
-                          isLight ? "bg-[#f4f8f5] border-[#d4e3d7]" : "bg-white/5 border-white/10"
-                        }`}
-                      >
-                        <span className="font-bold text-xs block">0% Breakdown Risk Guarantee</span>
-                        <p className="opacity-70 text-[11px]">Early warning telemetry scan catches throttle sags and CAN-bus packet errors before breakdown.</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Bottom Action Footer */}
-                <div className="pt-4 border-t border-black/10 dark:border-white/10 flex items-center gap-4">
-                  <button
-                    onClick={() => {
-                      setDetailsModalOpen(false);
-                      handleBookService(detailsService);
-                    }}
-                    className="flex-1 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-md cursor-pointer text-center"
-                  >
-                    BOOK THIS SERVICE NOW
-                  </button>
-                  <button
-                    onClick={handleCloseDetails}
-                    className={`px-6 py-3.5 rounded-full border text-xs font-bold uppercase tracking-widest transition-all cursor-pointer ${
-                      isLight
-                        ? "border-[#c5d6ca] text-[#1a2320] hover:bg-black/5"
-                        : "border-white/20 text-white hover:bg-white/10"
-                    }`}
-                  >
-                    CLOSE
-                  </button>
                 </div>
               </div>
             </div>
