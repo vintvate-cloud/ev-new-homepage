@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useScroll, useTransform, useInView, animate, AnimatePresence } from "framer-motion";
-import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@tanstack/react-router";
 import { CustomerStoriesWall } from "./CustomerStoriesWall";
+import { Reveal, StaggerContainer, StaggerItem, SequentialHeader } from "./ui/scroll-reveal";
+import { GSAPHeader, GSAPText, useGSAPTextReveal } from "./ui/gsap-text-reveal";
 import {
   Activity,
   ArrowRight,
@@ -79,37 +80,6 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-/* ---------------- Smooth scroll + GSAP bridge ---------------- */
-function useLenis() {
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      syncTouch: true,
-    });
-
-    lenis.on("scroll", ScrollTrigger.update);
-
-    // Prevent ScrollTrigger from recalculating/refreshing on mobile address bar resizing
-    ScrollTrigger.config({ ignoreMobileResize: true });
-
-    const updateLenis = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(updateLenis);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      gsap.ticker.remove(updateLenis);
-      lenis.destroy();
-    };
-  }, []);
-}
 
 /* ---------------- Global theme controller ---------------- */
 /**
@@ -692,28 +662,24 @@ function EVTypeSelection() {
       <div className="mx-auto max-w-7xl px-6 relative z-10">
         
         {/* Header Block */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-[10px] uppercase tracking-[0.25em] text-[#00D084] font-bold">
-            Interactive Diagnostics Platform
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mt-4 mb-4">
-            Select Your <span className="text-[#00D084]">EV Type</span>
-          </h2>
-          <p className="text-muted-foreground text-sm font-light">
-            Toggle through our multi-brand electric vehicle configurations to see customized diagnostic systems, popular models, and service parameters.
-          </p>
-        </div>
+        <GSAPHeader
+          badge="Interactive Diagnostics Platform"
+          title="Select Your"
+          highlight="EV Type"
+          subtitle="Toggle through our multi-brand electric vehicle configurations to see customized diagnostic systems, popular models, and service parameters."
+        />
 
         {/* Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left: 6 Selection Items */}
-          <div className="lg:col-span-5 flex flex-col gap-3 justify-center">
+          <StaggerContainer staggerDelay={0.08} className="lg:col-span-5 flex flex-col gap-3 justify-center">
             {EV_TYPES.map((type, i) => {
               const isActive = selectedIdx === i;
               return (
-                <button
+                <StaggerItem
                   key={i}
+                  yOffset={20}
                   onClick={() => setSelectedIdx(i)}
                   className={`ev-select-item text-left w-full rounded-2xl p-5 border transition-all duration-300 relative overflow-hidden flex items-center gap-4 cursor-pointer ${
                     isActive
@@ -747,13 +713,13 @@ function EVTypeSelection() {
                       isActive ? "bg-[#00D084] scale-125 shadow-[0_0_8px_#00D084]" : "bg-white/10"
                     }`} />
                   </div>
-                </button>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerContainer>
 
           {/* Right: Spec & Diagnostic Cockpit */}
-          <div className="lg:col-span-7">
+          <Reveal className="lg:col-span-7" yOffset={30} delay={0.2}>
             <div
               ref={scannerRef}
               className="w-full h-full bg-[#050806] border border-white/5 rounded-3xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden min-h-[420px] transition-all"
@@ -853,7 +819,7 @@ function EVTypeSelection() {
               </div>
 
             </div>
-          </div>
+          </Reveal>
 
         </div>
 
@@ -971,23 +937,20 @@ function GenuineSpareParts() {
       <div className="mx-auto max-w-7xl px-6 relative z-10">
         
         {/* Section Header */}
-        <div className="max-w-2xl mb-16">
-          <span className="text-[10px] uppercase tracking-[0.25em] text-[#00D084] font-mono font-bold">
-            E-Commerce Catalogue
-          </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mt-4 mb-4">
-            Genuine <span className="text-[#00D084]">Spare Parts</span>
-          </h2>
-          <p className="text-muted-foreground text-sm font-light">
-            Order 100% certified OEM-standard electric components directly from our service hubs. Guaranteed compatibility, full warranty coverage, and next-day dispatch.
-          </p>
-        </div>
+        <GSAPHeader
+          badge="E-Commerce Catalogue"
+          title="Genuine"
+          highlight="Spare Parts"
+          subtitle="Order 100% certified OEM-standard electric components directly from our service hubs. Guaranteed compatibility, full warranty coverage, and next-day dispatch."
+          className="max-w-2xl mb-16 text-left"
+        />
 
         {/* Dashboard layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left panel: Live CAD Telemetry HUD */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-[#050806] to-[#010201] border border-white/5 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+          <Reveal className="lg:col-span-5 flex flex-col" yOffset={30}>
+            <div className="bg-gradient-to-br from-[#050806] to-[#010201] border border-white/5 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-full">
             
             {/* Grid graphic background */}
             <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
@@ -1066,15 +1029,15 @@ function GenuineSpareParts() {
                 </a>
               </div>
             </div>
-
-          </div>
+            </div>
+          </Reveal>
 
           {/* Right panel: Parts Grid */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <StaggerContainer staggerDelay={0.1} className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {SPARE_PARTS.map((part, i) => {
               const isHovered = hoveredIdx === i;
               return (
-                <div
+                <StaggerItem
                   key={i}
                   onMouseEnter={() => setHoveredIdx(i)}
                   className={`spare-part-card group bg-[#050806] border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
@@ -1097,17 +1060,16 @@ function GenuineSpareParts() {
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-                    <span className="text-white/60 font-bold">{part.price}</span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#00D084]/80 group-hover:text-[#00D084] transition-colors flex items-center gap-1">
-                      Inspect HUD
-                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                  <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-white">{part.price}</span>
+                    <span className="text-[10px] text-[#00D084] font-mono group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                      SPEC &gt;
                     </span>
                   </div>
-                </div>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerContainer>
 
         </div>
       </div>
@@ -1323,21 +1285,16 @@ function HowItWorks() {
       <div className="mx-auto max-w-7xl px-6 relative z-10">
         
         {/* Editorial Section Header */}
-        <div className="how-it-works-title flex flex-col items-center text-center max-w-3xl mx-auto mb-20">
-          <div className="flex items-center gap-2 rounded-full border border-[#00D084]/30 bg-[#0d1410] px-3.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#00D084]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
-            The Service Cycle
-          </div>
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mt-6 mb-6 leading-tight">
-            Engineered <span className="text-[#00D084]">Simplicity.</span>
-          </h2>
-          <p className="text-muted-foreground text-sm md:text-base font-light leading-relaxed max-w-2xl">
-            A three-phase service workflow engineered to deliver maximum performance, real-time tracking, and complete clarity for your electric vehicle.
-          </p>
-        </div>
+        <GSAPHeader
+          badge="The Service Cycle"
+          title="Engineered"
+          highlight="Simplicity."
+          subtitle="A three-phase service workflow engineered to deliver maximum performance, real-time tracking, and complete clarity for your electric vehicle."
+          className="flex flex-col items-center text-center max-w-3xl mx-auto mb-20"
+        />
 
         {/* 3 Step Premium Cards - Desktop Only */}
-        <div className="hidden lg:grid lg:grid-cols-3 gap-8 relative items-stretch">
+        <StaggerContainer staggerDelay={0.12} className="hidden lg:grid lg:grid-cols-3 gap-8 relative items-stretch">
           
           {/* Connecting line */}
           <div className="hidden lg:block absolute top-[280px] left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#00D084]/10 to-transparent pointer-events-none" />
@@ -1605,7 +1562,7 @@ function HowItWorks() {
             </div>
           </div>
 
-        </div>
+        </StaggerContainer>
 
         {/* Mobile Responsive Layout (Visible on mobile/tablet only) */}
         <div className="lg:hidden flex flex-col gap-6">
@@ -1871,42 +1828,7 @@ function HowItWorks() {
 }
 
 
-/* ---------------- Reveal helper ---------------- */
-function Reveal({ children, delay = 0, y = 40 }: { children: ReactNode; delay?: number; y?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const ctx = gsap.context(() => {
-      // Set initial state without triggering immediateRender bugs in ScrollTrigger
-      gsap.set(el, { opacity: 0, y });
-
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 90%",
-        onEnter: () => {
-          gsap.to(el, {
-            opacity: 1,
-            y: 0,
-            duration: 1.1,
-            delay,
-            ease: "expo.out"
-          });
-        },
-        once: true
-      });
-    });
-    return () => ctx.revert();
-  }, [delay, y]);
-
-  return (
-    <div ref={ref} style={{ opacity: 0, transform: `translateY(${y}px)` }}>
-      {children}
-    </div>
-  );
-}
 
 /* ---------------- Vehicle data ---------------- */
 type Vehicle = {
@@ -2229,7 +2151,7 @@ function EVServices() {
       <div className="mx-auto max-w-7xl w-full px-6 relative z-10 flex flex-col gap-16">
 
         {/* Section Header with Big Typography */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 irregular-grid-item">
+        <GSAPText className="flex flex-col md:flex-row md:items-end justify-between gap-8 irregular-grid-item" stagger={0.12}>
           <div>
             <h2 className="text-5xl md:text-8xl font-black text-white leading-none tracking-tight">
               EXPERT<br />
@@ -2245,10 +2167,10 @@ function EVServices() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 text-[#00D084]" />
             </button>
           </div>
-        </div>
+        </GSAPText>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
+        <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
 
           {/* Card 1: Battery Health Check (Wide Rectangle) */}
           <GlowCard className="md:col-span-8 flex flex-col md:flex-row justify-between gap-6 min-h-[320px] glow-card-stagger">
@@ -2519,7 +2441,7 @@ function EVServices() {
             </div>
           </GlowCard>
 
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
@@ -4465,22 +4387,23 @@ function FAQ() {
   return (
     <section className="relative py-32">
       <div className="mx-auto max-w-3xl px-6">
-        <Reveal>
-          <p className="eyebrow mb-4">Questions</p>
-          <h2 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-balance text-foreground">
-            Answers, engineered.
-          </h2>
-        </Reveal>
-        <div className="mt-16 divide-y divide-border">
+        <GSAPHeader
+          badge="Frequently Asked Questions"
+          title="Answers,"
+          highlight="engineered."
+          subtitle="Everything you need to know about our multi-brand electric vehicle diagnostics, doorstep service, and warranty coverage."
+          className="text-center max-w-2xl mx-auto mb-16"
+        />
+        <StaggerContainer staggerDelay={0.08} className="mt-16 divide-y divide-border">
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
-              <Reveal key={f.q} delay={i * 0.04}>
+              <StaggerItem key={f.q} yOffset={20}>
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-6 py-6 text-left group"
+                  className="flex w-full items-center justify-between gap-6 py-6 text-left group cursor-pointer"
                 >
-                  <span className="text-lg md:text-xl font-medium text-foreground transition-colors group-hover:text-ember">{f.q}</span>
+                  <span className="text-lg md:text-xl font-medium text-foreground transition-colors group-hover:text-[#00D084]">{f.q}</span>
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-border-strong text-foreground transition-transform duration-500 group-hover:rotate-90">
                     {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                   </span>
@@ -4493,10 +4416,10 @@ function FAQ() {
                 >
                   <p className="pb-6 max-w-2xl text-muted-foreground">{f.a}</p>
                 </motion.div>
-              </Reveal>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
@@ -4820,7 +4743,7 @@ function LatestNews() {
       <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
         
         {/* Massive Editorial Header Block */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        <GSAPText className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8" stagger={0.12}>
           <div className="max-w-xl">
             <span className="text-[10px] font-mono tracking-[0.3em] text-[#00D084] uppercase block mb-3">
               [ THE JOURNAL / VOL. 08 ]
@@ -4833,13 +4756,13 @@ function LatestNews() {
           <div className="max-w-xs md:text-right font-mono text-white/40 text-[11px] leading-relaxed">
             <span>UPDATED DAILY // COORDINATING MULTI-BRAND REAL-TIME TELEMETRY DIAGNOSTICS & HARDWARE STANDARDS.</span>
           </div>
-        </div>
+        </GSAPText>
 
         {/* Asymmetrical Editorial Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* FEATURED STORY (Left Column - Spans 7 cols) */}
-          <div className="lg:col-span-7 group">
+          <Reveal className="lg:col-span-7 group" yOffset={35}>
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-card transition-colors duration-500 hover:border-[#00D084]/40">
               
               {/* Image wrap with slow scale */}
@@ -4888,13 +4811,13 @@ function LatestNews() {
               {/* Progress reading bar indicator */}
               <div className="h-[2px] w-0 bg-[#00D084] group-hover:w-full transition-all duration-700 ease-out" />
             </div>
-          </div>
+          </Reveal>
 
           {/* EDITORIAL FEED LIST (Right Column - Spans 5 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
+          <StaggerContainer staggerDelay={0.1} className="lg:col-span-5 flex flex-col gap-6">
             
             {newsItems.slice(1).map((item) => (
-              <a
+              <StaggerItem
                 href={`#news-${item.id}`}
                 key={item.id}
                 className="group flex flex-col sm:flex-row gap-5 p-5 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-[#00D084]/20 transition-all duration-300"
@@ -4930,10 +4853,10 @@ function LatestNews() {
                     <ArrowRight className="h-3 w-3 text-[#00D084] -translate-x-1 group-hover:translate-x-0 transition-transform duration-300" />
                   </div>
                 </div>
-              </a>
+              </StaggerItem>
             ))}
 
-          </div>
+          </StaggerContainer>
         </div>
 
       </div>
@@ -5006,22 +4929,20 @@ function EcosystemOfferings() {
       <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="mb-16">
-          <span className="text-[10px] font-mono tracking-[0.3em] text-[#00D084] uppercase block mb-3">
-            [ ECOSYSTEM DISPATCH / KEY CAPABILITIES ]
-          </span>
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white leading-none m-0">
-            Tailored solutions.<br />
-            <span className="text-[#00D084] italic font-serif normal-case font-light">engineered for action.</span>
-          </h2>
-        </div>
+        <GSAPHeader
+          badge="[ ECOSYSTEM DISPATCH / KEY CAPABILITIES ]"
+          title="Tailored solutions."
+          highlight="engineered for action."
+          className="mb-16 text-left"
+          highlightColor="text-[#00D084] italic font-serif normal-case font-light"
+        />
 
         {/* Grid Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {cards.map((card) => {
             const isLeft = card.layout === "left";
             return (
-              <div
+              <StaggerItem
                 key={card.id}
                 className={`group relative rounded-[32px] border ${card.borderAccent} bg-gradient-to-br ${card.bgGradient} p-8 md:p-10 flex flex-col justify-between overflow-hidden min-h-[380px] transition-all duration-500 hover:-translate-y-1`}
               >
@@ -5071,10 +4992,10 @@ function EcosystemOfferings() {
                     <ArrowRight className="h-3.5 w-3.5" />
                   </a>
                 </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
 
       </div>
     </section>
@@ -5092,10 +5013,10 @@ function DownloadApp() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           
           {/* LEFT: TEXT, RATINGS, REVIEWS, QR CODE */}
-          <div className="lg:col-span-7 flex flex-col gap-8">
+          <Reveal className="lg:col-span-7 flex flex-col gap-8" yOffset={40}>
             
             {/* Header */}
-            <div>
+            <GSAPText stagger={0.1}>
               <span className="text-[10px] font-mono tracking-[0.3em] text-[#00D084] uppercase block mb-3">
                 [ APP CONNECTIVITY / IOS & ANDROID ]
               </span>
@@ -5106,7 +5027,7 @@ function DownloadApp() {
               <p className="text-muted-foreground text-base max-w-lg mt-6 leading-relaxed">
                 Unlock real-time telemetry diagnostics, predictive health alerts, and instant 30-second service booking straight from your mobile device.
               </p>
-            </div>
+            </GSAPText>
 
             {/* Ratings & Stores */}
             <div className="flex flex-wrap gap-8 items-center border-t border-b border-white/5 py-6">
@@ -5192,10 +5113,10 @@ function DownloadApp() {
               </div>
             </div>
 
-          </div>
+          </Reveal>
 
           {/* RIGHT: SMARTPHONE MOCKUP FRAME */}
-          <div className="lg:col-span-5 flex justify-center items-center">
+          <Reveal className="lg:col-span-5 flex justify-center items-center" yOffset={40} delay={0.2}>
             
             {/* Phone Mockup Frame */}
             <div className="relative mx-auto w-[290px] h-[580px] rounded-[42px] border-[8px] border-white/10 bg-black shadow-[0_0_50px_rgba(0,208,132,0.15)] overflow-hidden flex flex-col p-3 transition-transform duration-500 hover:scale-[1.02]">
@@ -5261,7 +5182,7 @@ function DownloadApp() {
               </div>
             </div>
 
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -5407,7 +5328,8 @@ function QuickAccessSidebar() {
 
 /* ---------------- Page ---------------- */
 function Landing() {
-  useLenis();
+  const mainRef = useRef<HTMLElement>(null);
+  useGSAPTextReveal(mainRef);
 
   // Force GSAP to recalculate pin positions after all lazy components/images load
   useEffect(() => {
@@ -5420,12 +5342,12 @@ function Landing() {
   }, []);
 
   return (
-    <main className="relative">
+    <main ref={mainRef} className="relative bg-[#020403]">
       <Nav theme="warm" />
       <QuickAccessSidebar />
 
       {/* WARM LIGHT theme */}
-      <div className="theme-warm">
+      <div className="theme-warm bg-[#020403]">
         <Hero />
         <EVTypeSelection />
         <HowItWorks />
@@ -5439,7 +5361,7 @@ function Landing() {
       <LabConfiguration />
 
       {/* PREMIUM GREEN theme */}
-      <div className="theme-mid" style={{ backgroundColor: "var(--background)" }}>
+      <div className="theme-mid bg-[#020403]" style={{ backgroundColor: "#020403" }}>
         <Stats />
         <PartsWarehouse />
         <GenuineSpareParts />

@@ -4,6 +4,7 @@ import {
   Wrench, ShieldCheck, Radio, Store, Activity, MapPin, 
   LayoutGrid, TrendingUp, Cpu, ArrowRight 
 } from "lucide-react";
+import { StaggerContainer, StaggerItem } from "./ui/scroll-reveal";
 
 const DATA = [
   {
@@ -76,9 +77,9 @@ const Card = ({ data, i, progress, range, targetScale }: any) => {
           </div>
 
           {/* Right Column: Bento Features */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
+          <StaggerContainer staggerDelay={0.1} className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
             {data.items.map((item: any, idx: number) => (
-              <div 
+              <StaggerItem 
                 key={idx} 
                 className={`group flex flex-col justify-between p-6 md:p-8 rounded-[24px] bg-muted/20 hover:bg-[#00D084]/[0.02] border border-border hover:border-[#00D084]/30 transition-all duration-500 ease-out ${idx === 0 ? 'sm:col-span-2' : ''}`}
               >
@@ -93,9 +94,9 @@ const Card = ({ data, i, progress, range, targetScale }: any) => {
                   <h3 className="text-[22px] font-medium text-foreground/90 mb-3 tracking-tight group-hover:text-foreground transition-colors">{item.title}</h3>
                   <p className="text-[14px] text-muted-foreground leading-[1.6] font-light group-hover:text-foreground/60 transition-colors">{item.desc}</p>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </motion.div>
     </div>

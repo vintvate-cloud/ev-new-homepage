@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "lenis/dist/lenis.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -54,10 +55,10 @@
   --radius: 0.75rem;
 
   /* Scroll-driven page background (animated by GSAP) */
-  --page-bg: #030604;
+  --page-bg: #020403;
 
   /* Default = Dark Premium */
-  --background: #030604;
+  --background: #020403;
   --foreground: oklch(0.98 0.01 160);
 
   --card: oklch(0.12 0.02 160);
@@ -92,9 +93,13 @@
   --ring: #00D084;
 }
 
+html, body, #root {
+  background-color: #020403 !important;
+}
+
 /* WARM LIGHT theme — unified to dark/green premium */
 .theme-warm {
-  --background: #030604;
+  --background: #020403;
   --foreground: oklch(0.98 0.01 160);
   --card: oklch(0.12 0.02 160);
   --card-foreground: oklch(0.98 0.01 160);
@@ -181,7 +186,7 @@
 
 /* MID WARM theme — unified */
 .theme-mid {
-  --background: #050906;
+  --background: #020403;
   --foreground: oklch(0.98 0.01 160);
   --card: oklch(0.14 0.02 160);
   --card-foreground: oklch(0.98 0.01 160);
