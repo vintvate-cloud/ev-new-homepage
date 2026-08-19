@@ -29,6 +29,10 @@ import {
   ShieldCheck,
   Wrench,
   BatteryCharging,
+  Star,
+  Quote,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -47,6 +51,7 @@ function FranchisePage() {
 
   const [applyModalOpen, setApplyModalOpen] = useState(false);
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
+  const [activePartnerIdx, setActivePartnerIdx] = useState<number>(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -179,6 +184,63 @@ function FranchisePage() {
     },
   ];
 
+  const PARTNER_TESTIMONIALS = [
+    {
+      quote:
+        "Starting my MY EV SERVICE workshop in Pune was the best business decision I made. The Autobot OS automation software handles customer lead routing and diagnostic logging seamlessly, allowing us to maintain 28%+ profit margins.",
+      author: "Rajesh Varma",
+      role: "Centre Partner",
+      city: "Pune",
+      rating: 5,
+      stats: "28% Net Margins",
+    },
+    {
+      quote:
+        "The 45-day onboarding roadmap was executed flawlessly. Autobot Academy trained our technicians on high-voltage battery cell balancing, and we broke even within 12 months!",
+      author: "Aniket Kulkarni",
+      role: "Master Hub Partner",
+      city: "Bangalore",
+      rating: 5,
+      stats: "12 Month Breakeven",
+    },
+    {
+      quote:
+        "The constant spare parts supply chain support and 24/7 technical hotline give our workshop a massive competitive edge over traditional local garages.",
+      author: "Priya Sharma",
+      role: "Express Garage Partner",
+      city: "Delhi NCR",
+      rating: 5,
+      stats: "140+ Monthly EVs",
+    },
+    {
+      quote:
+        "The brand trust and doorstep mobile app dispatch brought us 120+ active customer bookings in our very first month of operation.",
+      author: "Siddharth Mehta",
+      role: "Centre Partner",
+      city: "Hyderabad",
+      rating: 5,
+      stats: "120+ Month-1 Leads",
+    },
+    {
+      quote:
+        "Autobot OS diagnostic scanners saved us months of trial-and-error. We can accurately diagnose battery health and motor controller issues in minutes.",
+      author: "Venkatesh Rao",
+      role: "Hub Partner",
+      city: "Chennai",
+      rating: 5,
+      stats: "99.2% Customer CSAT",
+    },
+    {
+      quote:
+        "The zero-franchise-fee founding partner model gave us maximum capital allocation towards lifts, battery balancing benches, and inventory.",
+      author: "Vikram Malhotra",
+      role: "Centre Partner",
+      city: "Mumbai",
+      rating: 5,
+      stats: "5km Exclusive Radius",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-[#020403] text-white selection:bg-[#00D084] selection:text-black font-serif overflow-x-hidden">
       
@@ -188,134 +250,135 @@ function FranchisePage() {
       {/* =========================================================================
           1. FULL-SCREEN HERO SECTION WITH BG IMAGE & BORDERLESS FORM (NO SHADOWS)
          ========================================================================= */}
-      <section className="relative w-full min-h-screen pt-28 pb-16 px-6 md:px-12 flex items-center overflow-hidden">
-        {/* Full-bleed background image overlay (Replace URL here) */}
-        <img
-          src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=1600&auto=format&fit=crop&q=80"
-          alt="EV Service Workshop Hero"
-          className="absolute inset-0 w-full h-full object-cover scale-105 pointer-events-none"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020403]/95 via-[#020403]/85 to-[#020403]/70 pointer-events-none" />
+      <section className="relative w-full min-h-screen pt-32 pb-16 px-6 md:px-12 flex items-center overflow-hidden">
+        {/* Full-bleed background image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/ev-franchise-hero.jpg"
+            alt="EV Service Workshop Hero"
+            className="w-full h-full object-cover object-center pointer-events-none"
+          />
+        </div>
 
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 pt-12 sm:pt-16">
           
           {/* Left Column: Title & Text */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight text-white leading-[1.10]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-[1.10] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
               Launch Your Own <br />
-              <span className="text-[#00D084]">EV Service Franchise</span>
+              <span className="text-[#00D084] font-black drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">EV Service Franchise</span>
             </h1>
 
-            <p className="text-sm sm:text-base text-white/80 font-serif font-normal leading-relaxed max-w-xl">
+            <p className="text-sm sm:text-base text-white font-serif font-bold leading-relaxed max-w-xl drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] bg-black/50 backdrop-blur-md p-5 rounded-2xl border border-white/15">
               Launch your own EV service business powered by Autobot OS, India's first AI-powered EV service automation platform. Become part of the fastest-growing EV ecosystem and build a future-ready, high-profit business.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={scrollToForm}
-                className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-2"
+                className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-2 shadow-2xl"
               >
                 Become a Partner <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => toast.info("Franchise Brochure download link sent to your mobile/email!")}
-                className="px-7 py-3.5 rounded-full border border-white/30 text-white text-xs font-serif font-bold uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer backdrop-blur-md"
+                className="px-7 py-3.5 rounded-full border border-white/30 bg-black/40 text-white text-xs font-serif font-extrabold uppercase tracking-widest hover:bg-black/60 transition-all flex items-center gap-2 cursor-pointer backdrop-blur-md shadow-2xl"
               >
                 <Download className="w-4 h-4 text-[#00D084]" /> Download Franchise Brochure
               </button>
             </div>
           </div>
 
-          {/* Right Column: Premium Borderless Glass Form Card (NO SHADOWS) */}
-          <div id="hero-partner-form" className="lg:col-span-5 bg-[#040906]/85 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 relative font-serif overflow-hidden">
+          {/* Right Column: Premium Glass Form Card */}
+          <div id="hero-partner-form" className="lg:col-span-5 bg-[#030604]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 relative font-serif border border-white/20 shadow-2xl overflow-hidden">
             {/* Ambient Radial Lighting Glow */}
             <div className="absolute top-0 right-0 w-48 h-48 bg-[#00D084]/20 rounded-full blur-[70px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#00D084]/15 rounded-full blur-[60px] pointer-events-none" />
 
             <div className="mb-6 text-left relative z-10">
-              <h3 className="text-2xl sm:text-3xl font-serif font-black text-white tracking-tight">Become a Partner</h3>
-              <p className="text-xs text-white/70 font-serif font-light mt-1">
+              <h3 className="text-2xl sm:text-3xl font-serif font-black text-white tracking-tight drop-shadow-md">Become a Partner</h3>
+              <p className="text-xs text-white/80 font-serif font-semibold mt-1">
                 Takes less than a minute. No commitment needed.
               </p>
             </div>
 
             <form onSubmit={handleFormSubmit} className="space-y-4 text-left relative z-10">
               <div>
-                <label className="text-[11px] font-serif text-white/60 block mb-1">Full Name *</label>
+                <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">Full Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Rahul Sharma"
                   value={form.fullName}
                   onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                  className="w-full bg-white/[0.07] hover:bg-white/[0.10] focus:bg-white/[0.14] rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/30 border-none"
+                  className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] font-serif text-white/60 block mb-1">Email (optional)</label>
+                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">Email (optional)</label>
                   <input
                     type="email"
                     placeholder="you@example.com"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-white/[0.07] hover:bg-white/[0.10] focus:bg-white/[0.14] rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/30 border-none"
+                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-serif text-white/60 block mb-1">Mobile Number *</label>
+                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">Mobile Number *</label>
                   <input
                     type="tel"
                     required
                     placeholder="10-digit number"
                     value={form.mobile}
                     onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                    className="w-full bg-white/[0.07] hover:bg-white/[0.10] focus:bg-white/[0.14] rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/30 border-none"
+                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="text-[11px] font-serif text-white/60 block mb-1">PIN Code</label>
+                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">PIN Code</label>
                   <input
                     type="text"
                     placeholder="6-digit PIN"
                     value={form.pincode}
                     onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-                    className="w-full bg-white/[0.07] hover:bg-white/[0.10] focus:bg-white/[0.14] rounded-xl px-3 py-3 text-xs text-white font-serif focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/30 border-none"
+                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-serif text-white/60 block mb-1">City *</label>
+                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">City *</label>
                   <input
                     type="text"
                     required
                     placeholder="Your city"
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    className="w-full bg-white/[0.07] hover:bg-white/[0.10] focus:bg-white/[0.14] rounded-xl px-3 py-3 text-xs text-white font-serif focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/30 border-none"
+                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-serif text-white/60 block mb-1">State</label>
+                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">State</label>
                   <input
                     type="text"
                     placeholder="e.g. Maharashtra"
                     value={form.state}
                     onChange={(e) => setForm({ ...form, state: e.target.value })}
-                    className="w-full bg-white/[0.07] hover:bg-white/[0.10] focus:bg-white/[0.14] rounded-xl px-3 py-3 text-xs text-white font-serif focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/30 border-none"
+                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-[11px] font-serif text-white/60 block mb-1">Investment Range *</label>
+                <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">Investment Range *</label>
                 <select
                   value={form.investmentRange}
                   onChange={(e) => setForm({ ...form, investmentRange: e.target.value })}
-                  className="w-full bg-white/[0.07] hover:bg-white/[0.10] focus:bg-white/[0.14] rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border-none cursor-pointer"
+                  className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border border-white/20 cursor-pointer"
                 >
                   <option value="< ₹10 Lakh" className="bg-[#040906] text-white">&lt; ₹10 Lakh (Garage Tier)</option>
                   <option value="₹10L - ₹20L" className="bg-[#040906] text-white">₹10L – ₹20L (Centre Tier)</option>
@@ -325,12 +388,12 @@ function FranchisePage() {
 
               <button
                 type="submit"
-                className="w-full py-4 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-3"
+                className="w-full py-4 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-3 shadow-2xl"
               >
                 Become a Partner <Send className="w-4 h-4" />
               </button>
 
-              <p className="text-[10px] font-serif text-white/40 leading-tight text-center pt-2">
+              <p className="text-[10px] font-serif font-semibold text-white/60 leading-tight text-center pt-2">
                 By submitting you agree to be contacted by our franchise team and accept our Franchise Partner Terms & Conditions.
               </p>
             </form>
@@ -342,7 +405,7 @@ function FranchisePage() {
       {/* =========================================================================
           2. KEY BADGES SECTION BELOW HERO
          ========================================================================= */}
-      <section className="bg-[#050907] border-b border-white/10 py-8 px-6 font-serif">
+      <section className="bg-[#020403] py-8 px-6 font-serif">
         <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           {[
             "10+ Years EV R&D",
@@ -361,7 +424,7 @@ function FranchisePage() {
       {/* =========================================================================
           3. OUR VISION & MISSION SECTION (2ND MAIN SECTION)
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-[#020403] font-serif">
+      <section className="py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
             Our Vision
@@ -394,7 +457,7 @@ function FranchisePage() {
       {/* =========================================================================
           4. PAN-INDIA TERRITORY RADAR & CITY NODES
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-gradient-to-b from-[#020403] via-[#040a07] to-[#020403] font-serif">
+      <section className="py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
@@ -480,7 +543,7 @@ function FranchisePage() {
       {/* =========================================================================
           5. 45-DAY ONBOARDING JOURNEY TIMELINE
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-[#020403] font-serif">
+      <section className="py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
@@ -545,7 +608,7 @@ function FranchisePage() {
       {/* =========================================================================
           6. TRADITIONAL GARAGE VS MY EV SERVICE HUB COMPARISON
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-[#030604] font-serif">
+      <section className="py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
@@ -728,117 +791,7 @@ function FranchisePage() {
         </div>
       </section>
 
-      {/* =========================================================================
-          8. DEDICATED PARTNER APPLICATION FORM SECTION
-         ========================================================================= */}
-      <section id="franchise-apply-form" className="py-24 px-6 border-y border-white/10 bg-[#050907] font-serif">
-        <div className="max-w-3xl mx-auto bg-[#020403] border-2 border-[#00D084]/40 rounded-3xl p-8 md:p-12 relative">
-          <div className="mb-8 text-center">
-            <h3 className="text-3xl sm:text-4xl font-serif font-extrabold text-white">
-              Apply for Franchise Opportunity
-            </h3>
-            <p className="text-sm text-white/60 font-serif font-normal mt-2">
-              Takes less than a minute. Our franchise onboarding team will reach out within 24 hours.
-            </p>
-          </div>
 
-          <form onSubmit={handleFormSubmit} className="space-y-4">
-            <div>
-              <label className="text-xs font-serif text-white/60 block mb-1">Full Name *</label>
-              <input
-                type="text"
-                required
-                placeholder="e.g. Rahul Sharma"
-                value={form.fullName}
-                onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                className="w-full bg-[#050907] border border-white/15 rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="text-xs font-serif text-white/60 block mb-1">Email (optional)</label>
-                <input
-                  type="email"
-                  placeholder="you@example.com"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full bg-[#050907] border border-white/15 rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-              <div>
-                <label className="text-xs font-serif text-white/60 block mb-1">Mobile Number *</label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="10-digit number"
-                  value={form.mobile}
-                  onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                  className="w-full bg-[#050907] border border-white/15 rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div>
-                <label className="text-xs font-serif text-white/60 block mb-1">PIN Code</label>
-                <input
-                  type="text"
-                  placeholder="6-digit PIN"
-                  value={form.pincode}
-                  onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-                  className="w-full bg-[#050907] border border-white/15 rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-              <div>
-                <label className="text-xs font-serif text-white/60 block mb-1">City *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Your city"
-                  value={form.city}
-                  onChange={(e) => setForm({ ...form, city: e.target.value })}
-                  className="w-full bg-[#050907] border border-white/15 rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-              <div>
-                <label className="text-xs font-serif text-white/60 block mb-1">State</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Maharashtra"
-                  value={form.state}
-                  onChange={(e) => setForm({ ...form, state: e.target.value })}
-                  className="w-full bg-[#050907] border border-white/15 rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-xs font-serif text-white/60 block mb-1">Investment Range *</label>
-              <select
-                value={form.investmentRange}
-                onChange={(e) => setForm({ ...form, investmentRange: e.target.value })}
-                className="w-full bg-[#050907] border border-white/15 rounded-xl px-4 py-3 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-              >
-                <option value="< ₹10 Lakh">&lt; ₹10 Lakh (Garage Tier)</option>
-                <option value="₹10L - ₹20L">₹10L – ₹20L (Centre Tier)</option>
-                <option value="> ₹20L">&gt; ₹20L (Hub Tier)</option>
-              </select>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-4 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
-            >
-              Submit Partner Application <Send className="w-4 h-4" />
-            </button>
-
-            <p className="text-[11px] font-serif text-white/40 leading-tight text-center pt-2">
-              By submitting you agree to be contacted by our franchise team and accept our Franchise Partner Terms & Conditions.
-            </p>
-          </form>
-        </div>
-      </section>
 
       {/* =========================================================================
           9. PARTNER TESTIMONIAL & 18 EXPANDABLE FAQS
@@ -894,9 +847,126 @@ function FranchisePage() {
       </section>
 
       {/* =========================================================================
-          10. FINAL CLOSING CTA SECTION
+          10. WHAT OUR PARTNERS SAY SECTION (1 PARTNER DISPLAYED AT A TIME)
          ========================================================================= */}
-      <section className="py-24 px-6 border-t border-white/10 bg-gradient-to-b from-[#080d0a] to-[#020403] font-serif">
+      <section className="py-24 px-6 bg-[#020403] font-serif">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
+              <Quote className="w-4 h-4" /> Partner Success Stories
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white tracking-tight">
+              What Our Partners Say
+            </h2>
+            <p className="text-white/70 text-base font-serif font-light">
+              Real stories from entrepreneurs building successful EV service hubs across India.
+            </p>
+          </div>
+
+          {/* Single Partner Card Carousel Container */}
+          <div className="relative">
+            <AnimatePresence mode="wait">
+              {(() => {
+                const partner = PARTNER_TESTIMONIALS[activePartnerIdx];
+                return (
+                  <motion.div
+                    key={activePartnerIdx}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="bg-[#050907] border-2 border-[#00D084]/30 hover:border-[#00D084]/60 rounded-3xl p-8 md:p-12 shadow-2xl relative font-serif space-y-8 overflow-hidden"
+                  >
+                    {/* Ambient glow */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#00D084]/10 rounded-full blur-3xl pointer-events-none" />
+
+                    <div className="flex items-center justify-between relative z-10">
+                      <div className="flex items-center gap-1 text-[#00D084]">
+                        {[...Array(partner.rating)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 fill-[#00D084]" />
+                        ))}
+                      </div>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-[#00D084] text-xs font-serif font-bold uppercase tracking-wider">
+                        {partner.stats}
+                      </span>
+                    </div>
+
+                    <p className="text-base sm:text-xl md:text-2xl text-white font-serif font-medium leading-relaxed italic relative z-10">
+                      "{partner.quote}"
+                    </p>
+
+                    <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 relative z-10">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-full bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084] font-serif font-black text-lg">
+                          {partner.author.charAt(0)}
+                        </div>
+                        <div>
+                          <h4 className="text-lg md:text-xl font-serif font-bold text-white">
+                            {partner.author}
+                          </h4>
+                          <p className="text-xs md:text-sm text-white/60 font-serif">
+                            {partner.role} • <span className="text-[#00D084] font-semibold">{partner.city}</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Navigation Arrow Controls */}
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() =>
+                            setActivePartnerIdx((prev) =>
+                              prev === 0 ? PARTNER_TESTIMONIALS.length - 1 : prev - 1
+                            )
+                          }
+                          className="w-11 h-11 rounded-full bg-white/5 hover:bg-[#00D084] text-white hover:text-[#020403] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                          title="Previous Partner"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <span className="text-xs font-serif font-bold text-white/50">
+                          {activePartnerIdx + 1} / {PARTNER_TESTIMONIALS.length}
+                        </span>
+                        <button
+                          onClick={() =>
+                            setActivePartnerIdx((prev) =>
+                              prev === PARTNER_TESTIMONIALS.length - 1 ? 0 : prev + 1
+                            )
+                          }
+                          className="w-11 h-11 rounded-full bg-white/5 hover:bg-[#00D084] text-white hover:text-[#020403] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                          title="Next Partner"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })()}
+            </AnimatePresence>
+
+            {/* Pagination Indicators */}
+            <div className="flex items-center justify-center gap-2.5 mt-8">
+              {PARTNER_TESTIMONIALS.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActivePartnerIdx(idx)}
+                  className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                    activePartnerIdx === idx
+                      ? "w-8 bg-[#00D084]"
+                      : "w-2.5 bg-white/20 hover:bg-white/40"
+                  }`}
+                  title={`View partner ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          11. FINAL CLOSING CTA SECTION
+         ========================================================================= */}
+      <section className="py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <span className="text-xs font-serif font-bold uppercase tracking-widest text-[#00D084]">
             India's #1 EV Service Network

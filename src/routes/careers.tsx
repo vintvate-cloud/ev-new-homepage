@@ -8,7 +8,6 @@ import {
   Clock,
   CheckCircle2,
   ArrowRight,
-  Sparkles,
   ShieldCheck,
   Wrench,
   TrendingUp,
@@ -164,37 +163,39 @@ function CareersPage() {
       {/* =========================================================================
           1. HERO HEADER SECTION
          ========================================================================= */}
-      <section className="relative pt-36 pb-20 px-6 border-b border-white/10 bg-gradient-to-b from-[#080e0b] to-[#020403] overflow-hidden text-center">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#00D084]/10 rounded-full blur-[180px] pointer-events-none" />
+      <section className="relative min-h-screen w-full flex flex-col justify-center items-center pt-28 pb-16 px-6 overflow-hidden text-center">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/ev-workshop-careers.png"
+            alt="EV Workshop Careers"
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
 
-        <div className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/40 bg-[#00D084]/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#00D084]">
-            <Sparkles className="w-3.5 h-3.5" />
-            We're Hiring
-          </div>
-
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight text-white leading-[1.08]">
+        <div className="max-w-4xl mx-auto space-y-6 relative z-10 my-auto pt-24 sm:pt-36">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
             Build the Future of <br />
-            <span className="text-[#00D084]">EV Mobility in India</span>
+            <span className="text-[#00D084] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">EV Mobility in India</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-white/70 font-serif font-normal leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white font-serif font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] bg-black/40 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-white/15">
             Join India's fastest-growing EV service platform. Work on cutting-edge technology, serve a green mission, and grow your career with us.
           </p>
 
           {/* Stat Cards Grid */}
-          <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto pt-8 border-t border-white/10 mt-8">
-            <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-center">
-              <div className="text-2xl sm:text-3xl font-black text-white font-mono">150+</div>
-              <div className="text-[11px] font-serif text-white/50 uppercase mt-0.5">Team Members</div>
+          <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto pt-8 border-t border-white/20 mt-8">
+            <div className="bg-[#030604]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
+              <div className="text-2xl sm:text-3xl font-black text-white font-mono drop-shadow-md">150+</div>
+              <div className="text-[11px] font-serif text-white/80 font-semibold uppercase tracking-wider mt-0.5">Team Members</div>
             </div>
-            <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-center">
-              <div className="text-2xl sm:text-3xl font-black text-[#00D084] font-mono">40+</div>
-              <div className="text-[11px] font-serif text-white/50 uppercase mt-0.5">Cities</div>
+            <div className="bg-[#030604]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
+              <div className="text-2xl sm:text-3xl font-black text-[#00D084] font-mono drop-shadow-md">40+</div>
+              <div className="text-[11px] font-serif text-white/80 font-semibold uppercase tracking-wider mt-0.5">Cities</div>
             </div>
-            <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-center">
-              <div className="text-2xl sm:text-3xl font-black text-white font-mono">0</div>
-              <div className="text-[11px] font-serif text-white/50 uppercase mt-0.5">Open Positions</div>
+            <div className="bg-[#030604]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
+              <div className="text-2xl sm:text-3xl font-black text-white font-mono drop-shadow-md">0</div>
+              <div className="text-[11px] font-serif text-white/80 font-semibold uppercase tracking-wider mt-0.5">Open Positions</div>
             </div>
           </div>
         </div>
@@ -203,7 +204,7 @@ function CareersPage() {
       {/* =========================================================================
           2. WHY WORK WITH US SECTION
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-[#020403] font-serif">
+      <section className="py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto text-center">
           <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
             Perks & Culture
@@ -239,7 +240,7 @@ function CareersPage() {
       {/* =========================================================================
           3. HOW WE HIRE SECTION (Kept as requested)
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-[#040806] font-serif">
+      <section className="py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
@@ -287,7 +288,7 @@ function CareersPage() {
       {/* =========================================================================
           4. OPEN POSITIONS SECTION WITH TABS
          ========================================================================= */}
-      <section id="open-positions" className="py-24 px-6 max-w-7xl mx-auto font-serif border-b border-white/10">
+      <section id="open-positions" className="py-24 px-6 max-w-7xl mx-auto font-serif">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
             Join The Team
@@ -409,7 +410,7 @@ function CareersPage() {
       {/* =========================================================================
           6. FOOTER CALLOUT BANNER
          ========================================================================= */}
-      <section className="py-24 px-6 border-t border-white/10 bg-gradient-to-b from-[#080d0a] to-[#020403] font-serif text-center">
+      <section className="py-24 px-6 bg-[#020403] font-serif text-center">
         <div className="max-w-4xl mx-auto space-y-6">
           <span className="text-xs font-serif font-bold uppercase tracking-widest text-[#00D084]">
             India's #1 EV Service Network
