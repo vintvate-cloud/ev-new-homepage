@@ -673,7 +673,7 @@ function TermsPage() {
             </div>
 
             {/* 15. Modification of Terms */}
-            <div id="sec-[#sec-15]" className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-5 scroll-mt-28" id="sec-15">
+            <div id="sec-15" className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-5 scroll-mt-28">
               <h2 className="text-2xl font-bold text-white flex items-center gap-3">
                 <span className="w-8 h-8 rounded-xl bg-[#00D084]/15 text-[#00D084] text-xs font-mono font-bold flex items-center justify-center border border-[#00D084]/30">15</span>
                 Modification of Terms

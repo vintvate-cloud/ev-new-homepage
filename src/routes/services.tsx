@@ -5,6 +5,7 @@ import { SERVICES, SERVICE_CATEGORIES, EVServiceItem } from "../data/services";
 import { PACKAGES } from "../data/packages";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
+import { BookingModal } from "../components/BookingModal";
 import {
   Search,
   Zap,
@@ -40,9 +41,8 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
 });
 
-// HERO BACKGROUND IMAGE — Update this image URL to put any custom image behind "More than an EV workshop."
-export const HERO_BG_IMAGE =
-  "https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=1600&auto=format&fit=crop&q=80";
+// HERO BACKGROUND IMAGE — Custom EV Workshop Hero Image
+export const HERO_BG_IMAGE = "/ev-services-hero.jpg";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -319,23 +319,23 @@ function ServicesPage() {
           2. HERO SECTION (Full-Width, Edge-to-Edge Display attached to display)
          ========================================================================= */}
       <section
-        className={`relative w-full h-screen min-h-screen rounded-none overflow-hidden text-white px-6 flex items-center justify-center -mt-20 border-b ${
+        className={`relative w-full h-screen h-[100vh] min-h-[600px] overflow-hidden text-white px-6 flex items-center justify-center border-b ${
           isLight ? "bg-[#0c1410] border-[#2d3a34]" : "bg-[#060b08] border-white/10"
         }`}
       >
-        {/* Background image overlay directly behind "More than an EV workshop." */}
+        {/* Background image overlay */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-50 mix-blend-luminosity pointer-events-none scale-105 transition-all duration-700"
+          className="absolute inset-0 bg-cover bg-center pointer-events-none scale-105 transition-all duration-700"
           style={{
             backgroundImage: `url('${HERO_BG_IMAGE}')`,
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020403]/85 via-[#030604]/55 to-[#020403]/95 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/25 to-[#030604] pointer-events-none" />
 
-        <div className="max-w-4xl mx-auto text-center relative z-10 my-auto pt-36 md:pt-56 lg:pt-72 translate-y-8 sm:translate-y-16 md:translate-y-24">
+        <div className="max-w-4xl mx-auto text-center relative z-10 my-auto pt-16">
           {/* Headline text with background image support */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-5 leading-[1.08] drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
-            Expert EV Services
+            Expert <span className="text-[#00D084]">EV Services</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto drop-shadow-md">
             Professional diagnostics and repairs for Electric Scooters, Bikes & Autos
@@ -938,171 +938,29 @@ function ServicesPage() {
       <Footer />
 
       {/* =========================================================================
-          8. INTERACTIVE BOOKING & DETAILS MODAL
+          8. INTERACTIVE MULTI-STEP BOOKING MODAL
          ========================================================================= */}
-      {bookingModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div
-            className={`border rounded-[32px] max-w-lg w-full p-6 md:p-8 relative overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200 ${
-              isLight
-                ? "bg-white border-[#d6e3da] text-[#1a2320]"
-                : "bg-[#090f0c] border-white/15 text-white"
-            }`}
-          >
-            <button
-              onClick={() => setBookingModalOpen(false)}
-              className={`absolute top-5 right-5 p-2 rounded-full transition-colors cursor-pointer ${
-                isLight ? "text-slate-400 hover:text-slate-900 bg-slate-100" : "text-white/40 hover:text-white bg-white/10"
-              }`}
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="mb-6">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#00D084]">
-                Direct EV Service Booking
-              </span>
-              <h3 className="text-2xl font-black mt-1">
-                {selectedService ? selectedService.title : selectedPackage?.title}
-              </h3>
-              <p className="text-xs opacity-75 mt-1">
-                {selectedService ? selectedService.desc : selectedPackage?.desc}
-              </p>
-            </div>
-
-            <form onSubmit={handleFormSubmit} className="space-y-4">
-              <div>
-                <label className="text-[11px] font-mono uppercase opacity-70 block mb-2">
-                  Vehicle Type
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setVehicleType("2W")}
-                    className={`py-2.5 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
-                      vehicleType === "2W"
-                        ? "bg-[#00D084] border-[#00D084] text-[#020403]"
-                        : isLight
-                        ? "border-[#c5d6ca] bg-[#f2f7f4] text-[#1a2320]"
-                        : "border-white/15 bg-[#030604] text-white"
-                    }`}
-                  >
-                    2W (Scooter / Bike)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setVehicleType("3W")}
-                    className={`py-2.5 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
-                      vehicleType === "3W"
-                        ? "bg-[#00D084] border-[#00D084] text-[#020403]"
-                        : isLight
-                        ? "border-[#c5d6ca] bg-[#f2f7f4] text-[#1a2320]"
-                        : "border-white/15 bg-[#030604] text-white"
-                    }`}
-                  >
-                    3W (Auto / Cargo)
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase opacity-70 block mb-1">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Enter your name"
-                  value={bookingForm.name}
-                  onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
-                  className={`w-full border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#00D084] ${
-                    isLight
-                      ? "bg-[#f2f7f4] border-[#c5d6ca] text-[#1a2320]"
-                      : "bg-[#030604] border-white/15 text-white"
-                  }`}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[11px] font-mono uppercase opacity-70 block mb-1">
-                    Mobile Number *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="+91 98765 43210"
-                    value={bookingForm.phone}
-                    onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
-                    className={`w-full border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#00D084] ${
-                      isLight
-                        ? "bg-[#f2f7f4] border-[#c5d6ca] text-[#1a2320]"
-                        : "bg-[#030604] border-white/15 text-white"
-                    }`}
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-mono uppercase opacity-70 block mb-1">
-                    Preferred Date
-                  </label>
-                  <input
-                    type="date"
-                    value={bookingForm.date}
-                    onChange={(e) => setBookingForm({ ...bookingForm, date: e.target.value })}
-                    className={`w-full border rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#00D084] ${
-                      isLight
-                        ? "bg-[#f2f7f4] border-[#c5d6ca] text-[#1a2320]"
-                        : "bg-[#030604] border-white/15 text-white"
-                    }`}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase opacity-70 block mb-1">
-                  Pickup / Doorstep Address
-                </label>
-                <textarea
-                  rows={2}
-                  placeholder="Enter full address for doorstep service dispatch..."
-                  value={bookingForm.address}
-                  onChange={(e) => setBookingForm({ ...bookingForm, address: e.target.value })}
-                  className={`w-full border rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-[#00D084] ${
-                    isLight
-                      ? "bg-[#f2f7f4] border-[#c5d6ca] text-[#1a2320]"
-                      : "bg-[#030604] border-white/15 text-white"
-                  }`}
-                />
-              </div>
-
-              {/* Price summary */}
-              <div
-                className={`p-3.5 rounded-xl border flex items-center justify-between ${
-                  isLight
-                    ? "bg-[#e5eee7] border-[#d2e0d5]"
-                    : "bg-[#030604] border-white/15"
-                }`}
-              >
-                <span className="text-xs opacity-75">Estimated Service Cost:</span>
-                <span className="text-lg font-black text-[#00D084] font-mono">
-                  {selectedService
-                    ? vehicleType === "2W"
-                      ? selectedService.price2W
-                      : selectedService.price3W
-                    : selectedPackage?.price}
-                </span>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-md cursor-pointer mt-2"
-              >
-                CONFIRM APPOINTMENT
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      <BookingModal
+        isOpen={bookingModalOpen}
+        onClose={() => setBookingModalOpen(false)}
+        service={
+          selectedService
+            ? {
+                id: selectedService.id,
+                title: selectedService.title,
+                price: vehicleType === "2W" ? selectedService.price2W : selectedService.price3W,
+                desc: selectedService.desc,
+              }
+            : selectedPackage
+            ? {
+                id: selectedPackage.id,
+                title: selectedPackage.title,
+                price: selectedPackage.price,
+                desc: selectedPackage.desc,
+              }
+            : null
+        }
+      />
 
       {/* =========================================================================
           DROP-UP DETAILS MODAL DRAWER (Exact Match to Hindled Screenshot)

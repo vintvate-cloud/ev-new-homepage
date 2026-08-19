@@ -1,8 +1,4 @@
 import { Shield, Activity, Zap, Terminal } from "lucide-react";
-import modelS from "@/assets/model-s.jpg";
-import tech from "@/assets/tech.jpg";
-import interior from "@/assets/interior.jpg";
-import factory from "@/assets/factory.jpg";
 
 export const PACKAGES = [
   {
@@ -15,7 +11,7 @@ export const PACKAGES = [
     tag: "Launch Offer",
     validity: "Valid for 365 days from activation",
     icon: Shield,
-    img: modelS,
+    img: "/packages/basic-care.png",
     longDesc: "The Basic Care Pack provides essential diagnostic and maintenance services for your EV. Ideal for annual checkups and ensuring your vehicle is running efficiently.",
     features: [
       "Comprehensive Diagnostic Scan",
@@ -35,7 +31,7 @@ export const PACKAGES = [
     tag: "Most Popular",
     validity: "Valid for 365 days from activation",
     icon: Activity,
-    img: tech,
+    img: "/packages/smart-protect.png",
     longDesc: "Our Smart Protect Pack is the most comprehensive protection package for daily drivers. It includes deep diagnostic scans and software updates to keep your EV at peak performance.",
     features: [
       "Everything in Basic Care",
@@ -55,7 +51,7 @@ export const PACKAGES = [
     tag: "Premium Offer",
     validity: "Valid for 365 days from activation",
     icon: Zap,
-    img: interior,
+    img: "/packages/complete-health.png",
     longDesc: "The Complete EV Health Pack offers total peace of mind. Every single component of your electric vehicle is thoroughly inspected, cleaned, and optimized.",
     features: [
       "Everything in Smart Protect",
@@ -75,7 +71,7 @@ export const PACKAGES = [
     tag: "Enterprise",
     validity: "Valid for 365 days from activation",
     icon: Terminal,
-    img: factory,
+    img: "/packages/fleet-maintenance.png",
     longDesc: "Designed for commercial fleets, this package ensures maximum uptime for your vehicles. Fast turnarounds, priority servicing, and detailed fleet health reports.",
     features: [
       "Dedicated Account Manager",

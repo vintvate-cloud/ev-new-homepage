@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
+import { BookingModal } from "../components/BookingModal";
 import {
   Search,
   MapPin,
@@ -34,6 +35,8 @@ function FindServicesPage() {
   const [selectedBrand, setSelectedBrand] = useState("Ather");
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
   const [selectedCity, setSelectedCity] = useState("Pune");
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [bookingService, setBookingService] = useState<{ title: string; price: string } | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -192,32 +195,42 @@ function FindServicesPage() {
   return (
     <div className="min-h-screen bg-[#020403] text-white selection:bg-[#00D084] selection:text-black font-serif overflow-x-hidden">
       
-      {/* Navbar */}
-      <Nav />
+      {/* Header Nav */}
+      <Nav
+        onOpenBooking={() => {
+          setBookingModalOpen(true);
+        }}
+      />
 
-      {/* =========================================================================
-          1. HERO SEARCH SECTION (NO SHADOWS)
+       {/* =========================================================================
+          1. HERO SEARCH SECTION (Full Screen 100vh & Clear Image Display)
          ========================================================================= */}
-      <section className="relative pt-36 pb-20 px-6 border-b border-white/10 bg-gradient-to-b from-[#080e0b] to-[#020403] overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#00D084]/10 rounded-full blur-[180px] pointer-events-none" />
+      <section className="relative w-full h-screen h-[100vh] min-h-[650px] overflow-hidden text-white px-6 flex items-center justify-center bg-[#020403]">
+        {/* Background Image Layer */}
+        <div
+          className="absolute inset-0 bg-cover bg-center pointer-events-none transition-all duration-700"
+          style={{
+            backgroundImage: "url('/find-services-hero.jpg')",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-[#020403] pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto text-center relative z-10 space-y-6">
+        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-4 pt-10">
           
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/40 bg-[#00D084]/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#00D084]">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center rounded-full bg-[#020403]/80 border border-[#00D084]/40 backdrop-blur-md px-3.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#00D084] shadow-md">
             Find Trusted Certified Technicians Near You
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight text-white leading-[1.08]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1] drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
             Find Service Centers <br />
             <span className="text-[#00D084]">Near You</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-white/70 font-serif font-normal leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm md:text-base text-white/90 font-medium leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
             Your one-stop solution for all EV repair, maintenance and services — quick, reliable and hassle-free.
           </p>
 
-          {/* Search Form Card (NO SHADOWS) */}
+          {/* Search Form Card */}
           <div className="bg-[#050c08] border-2 border-[#00D084]/40 rounded-3xl p-6 md:p-8 text-left mt-8 backdrop-blur-xl">
             <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4">
               
@@ -303,7 +316,7 @@ function FindServicesPage() {
       {/* =========================================================================
           2. MARQUEE TICKER OF CERTIFIED FEATURES
          ========================================================================= */}
-      <section className="bg-[#050907] border-b border-white/10 py-3.5 overflow-hidden font-serif">
+      <section className="bg-[#020403] py-3.5 overflow-hidden font-serif">
         <div className="flex items-center gap-8 whitespace-nowrap animate-marquee">
           {MARQUEE_TAGS.concat(MARQUEE_TAGS).map((tag, i) => (
             <div key={i} className="flex items-center gap-2 text-xs font-serif font-medium text-white/80">
@@ -315,83 +328,61 @@ function FindServicesPage() {
       </section>
 
       {/* =========================================================================
-          3. POPULAR SERVICES GRID
+          3. POPULAR SERVICES GRID (Unified Seamless Layout)
          ========================================================================= */}
-      <section className="py-24 px-6 max-w-7xl mx-auto font-serif border-b border-white/10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-              Services Directory
-            </span>
-            <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">
-              Popular Services
-            </h2>
-            <p className="text-white/60 text-sm mt-1 font-serif">
-              Professional care for your electric vehicle
-            </p>
+      <section className="py-20 px-6 bg-[#020403] font-serif">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div>
+              <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
+                Services Directory
+              </span>
+              <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">
+                Popular Services
+              </h2>
+              <p className="text-white/60 text-sm mt-1 font-serif">
+                Professional care for your electric vehicle
+              </p>
+            </div>
+
+            <button
+              onClick={() => toast.info("Showing all 68+ specialized EV services.")}
+              className="px-6 py-3 rounded-full border border-white/20 text-white text-xs font-serif font-bold hover:bg-white/10 transition-all cursor-pointer w-fit"
+            >
+              View All Services
+            </button>
           </div>
 
-          <button
-            onClick={() => toast.info("Showing all 68+ specialized EV services.")}
-            className="px-6 py-3 rounded-full border border-white/20 text-white text-xs font-serif font-bold hover:bg-white/10 transition-all cursor-pointer w-fit"
-          >
-            View All Services
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {POPULAR_SERVICES.map((srv, idx) => {
-            const IconComp = srv.icon;
-            return (
-              <div
-                key={idx}
-                className="bg-[#050907] border border-white/10 hover:border-[#00D084]/40 rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 rounded-2xl bg-[#00D084]/15 text-[#00D084] border border-[#00D084]/30">
-                      <IconComp className="w-6 h-6" />
-                    </div>
-                    <span className="text-xs font-bold text-[#00D084] bg-[#00D084]/10 px-3 py-1 rounded-full border border-[#00D084]/20">
-                      {srv.centers}
-                    </span>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {POPULAR_SERVICES.map((srv, idx) => {
+              const IconComp = srv.icon;
+              return (
+                <div
+                  key={idx}
+                  onClick={() => {
+                    setBookingService({ title: srv.title, price: srv.price });
+                    setBookingModalOpen(true);
+                  }}
+                  className="backdrop-blur-xl bg-white/[0.03] border border-white/15 hover:border-[#00D084] rounded-2xl p-5 text-center transition-all duration-300 cursor-pointer hover:bg-[#00D084]/15 hover:scale-[1.03] hover:shadow-[0_12px_30px_rgba(0,208,132,0.2)] group"
+                >
+                  <div className="p-3.5 rounded-2xl bg-[#00D084]/15 text-[#00D084] border border-[#00D084]/30 mb-3 mx-auto w-fit group-hover:scale-110 transition-transform">
+                    <IconComp className="w-6 h-6" />
                   </div>
-
-                  <h3 className="text-xl font-serif font-bold text-white mb-2 group-hover:text-[#00D084] transition-colors">
+                  <h4 className="text-sm font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
                     {srv.title}
-                  </h3>
-
-                  <p className="text-xs text-white/60 font-serif leading-relaxed mb-4">
-                    {srv.desc}
-                  </p>
+                  </h4>
+                  <p className="text-[10px] text-white/50 font-serif mt-1">{srv.centers}</p>
                 </div>
-
-                <div className="flex items-center justify-between pt-4 border-t border-white/10 text-xs">
-                  <div>
-                    <span className="text-white/40 block text-[10px]">STARTING FROM</span>
-                    <span className="font-bold text-white text-sm">{srv.price}</span>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      setSelectedService(srv.title);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className="px-4 py-2 rounded-xl bg-white/10 hover:bg-[#00D084] hover:text-[#020403] text-white font-bold transition-all cursor-pointer flex items-center gap-1.5"
-                  >
-                    Book Now <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* =========================================================================
-          4. TOP EV BRANDS WE SERVICE
+          4. TOP EV BRANDS WE SERVICE (Glassmorphism Styled)
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-[#040806] font-serif">
+      <section className="py-20 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
@@ -422,7 +413,7 @@ function FindServicesPage() {
                   setSelectedBrand(brand.name);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="bg-[#020503] border border-white/10 hover:border-[#00D084] rounded-2xl p-5 text-center transition-all cursor-pointer hover:bg-[#00D084]/10 group"
+                className="backdrop-blur-xl bg-white/[0.03] border border-white/15 hover:border-[#00D084] rounded-2xl p-5 text-center transition-all duration-300 cursor-pointer hover:bg-[#00D084]/15 hover:scale-[1.03] hover:shadow-[0_12px_30px_rgba(0,208,132,0.2)] group"
               >
                 <div className="text-3xl mb-2">{brand.logo}</div>
                 <h4 className="text-sm font-serif font-bold text-white group-hover:text-[#00D084]">
@@ -436,9 +427,9 @@ function FindServicesPage() {
       </section>
 
       {/* =========================================================================
-          5. WHY CHOOSE MY EV SERVICE?
+          5. WHY CHOOSE MY EV SERVICE? (Glassmorphism Styled)
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-[#020403] font-serif">
+      <section className="py-20 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
@@ -455,7 +446,7 @@ function FindServicesPage() {
               return (
                 <div
                   key={idx}
-                  className="bg-[#050907] border border-white/10 rounded-3xl p-6 text-left flex flex-col justify-between"
+                  className="backdrop-blur-xl bg-white/[0.03] border border-white/15 hover:border-[#00D084]/50 rounded-3xl p-6 text-left flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_30px_rgba(0,208,132,0.15)]"
                 >
                   <div>
                     <div className="w-12 h-12 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] mb-4">
@@ -479,7 +470,7 @@ function FindServicesPage() {
       {/* =========================================================================
           6. ALL CITIES NETWORK MAP
          ========================================================================= */}
-      <section className="py-24 px-6 border-b border-white/10 bg-gradient-to-b from-[#020403] via-[#040a07] to-[#020403] font-serif">
+      <section className="py-20 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
@@ -525,80 +516,144 @@ function FindServicesPage() {
       </section>
 
       {/* =========================================================================
-          7. START YOUR OWN EV SERVICE CENTER BANNER
+          7. START YOUR OWN EV SERVICE CENTER BANNER (Matching Screenshot)
          ========================================================================= */}
-      <section className="py-20 px-6 max-w-7xl mx-auto font-serif">
-        <div className="bg-[#00D084]/15 border-2 border-[#00D084] rounded-3xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 max-w-2xl">
-            <span className="text-xs font-serif font-bold uppercase tracking-widest text-[#00D084] block">
-              FRANCHISE OPPORTUNITY
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-white">
-              Start Your Own EV Service Center
-            </h2>
-            <p className="text-sm sm:text-base text-white/80 font-serif font-light">
-              Join India's fastest growing EV service network.
-            </p>
-            <div className="flex flex-wrap items-center gap-4 text-xs font-serif font-bold text-[#00D084] pt-2">
-              <span>Low Investment</span> • <span>High Returns</span> • <span>Complete Training & Support</span>
-            </div>
+      <section className="py-12 px-6 max-w-7xl mx-auto font-sans">
+        <div className="relative rounded-[32px] overflow-hidden border border-white/20 bg-[#071915] min-h-[300px] flex flex-col lg:flex-row items-center justify-between p-8 sm:p-10 lg:p-12 shadow-2xl">
+          {/* Right Background Image with Gradient Fade */}
+          <div
+            className="absolute inset-y-0 right-0 w-full lg:w-[55%] bg-cover bg-right bg-no-repeat pointer-events-none opacity-90"
+            style={{
+              backgroundImage: "url('/franchise-bg.png')",
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#071915] via-[#071915]/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#071915]/60 via-transparent to-transparent lg:hidden" />
           </div>
 
-          <Link
-            to="/franchise"
-            className="px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shrink-0 cursor-pointer"
-          >
-            Become a Franchise Partner
-          </Link>
+          {/* Left Text Content */}
+          <div className="relative z-10 max-w-2xl space-y-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+              Start Your Own EV Service Center
+            </h2>
+
+            <p className="text-sm sm:text-base text-[#80a196] font-normal leading-relaxed">
+              Join India's fastest growing EV service network.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-5 text-xs text-[#a0c5ba] font-medium pt-2 pb-2">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[#00D084]">💵</span>
+                <span>Low Investment</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[#00D084]">📈</span>
+                <span>High Returns</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[#00D084]">🎓</span>
+                <span>Complete Training & Support</span>
+              </div>
+            </div>
+
+            <Link
+              to="/franchise"
+              className="mt-4 px-7 py-3.5 rounded-full bg-[#05110d] text-[#00D084] text-sm font-bold border border-[#00D084]/20 hover:bg-[#00D084] hover:text-[#020403] transition-all flex items-center gap-2 w-fit cursor-pointer group shadow-lg"
+            >
+              <span>Become a Franchise Partner</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* =========================================================================
-          8. FREQUENTLY ASKED QUESTIONS
+          8. FREQUENTLY ASKED QUESTIONS (Matching Screenshot Style)
          ========================================================================= */}
-      <section className="py-24 px-6 max-w-4xl mx-auto font-serif">
-        <div className="text-center mb-12">
-          <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">FAQ</span>
-          <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">
+      <section className="py-16 px-6 max-w-7xl mx-auto font-sans">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Frequently Asked Questions
           </h2>
+          <button
+            onClick={() => toast.info("Viewing all FAQs")}
+            className="text-[#00D084] font-bold text-sm hover:underline flex items-center gap-1.5 cursor-pointer group"
+          >
+            <span>View All FAQs</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
         </div>
 
-        <div className="space-y-4">
-          {FAQS.map((faq, idx) => {
-            const isOpen = openFaqIdx === idx;
-            return (
-              <div
-                key={idx}
-                className="bg-[#050907] border border-white/10 hover:border-[#00D084]/40 rounded-2xl p-6 transition-all cursor-pointer font-serif"
-                onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="text-base font-serif font-bold text-white leading-snug">
-                    {faq.q}
-                  </span>
-                  {isOpen ? (
-                    <ChevronUp className="w-5 h-5 text-[#00D084] shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-white/40 shrink-0" />
+        {/* 2-Column Accordion Cards matching screenshot */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Left Column Box */}
+          <div className="bg-[#070b09] border border-white/10 rounded-2xl overflow-hidden divide-y divide-white/10">
+            {FAQS.slice(0, 3).map((faq, idx) => {
+              const actualIdx = idx;
+              const isOpen = openFaqIdx === actualIdx;
+              return (
+                <div
+                  key={actualIdx}
+                  className="p-5 sm:p-6 transition-colors cursor-pointer hover:bg-white/[0.02]"
+                  onClick={() => setOpenFaqIdx(isOpen ? null : actualIdx)}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
+                      {faq.q}
+                    </h3>
+                    <ChevronDown
+                      className={`w-4 h-4 text-white/60 shrink-0 transition-transform duration-300 ${
+                        isOpen ? "rotate-180 text-[#00D084]" : ""
+                      }`}
+                    />
+                  </div>
+                  {isOpen && (
+                    <p className="mt-3 text-xs sm:text-sm text-white/70 font-light leading-relaxed">
+                      {faq.a}
+                    </p>
                   )}
                 </div>
+              );
+            })}
+          </div>
 
-                {isOpen && (
-                  <p className="mt-4 pt-4 border-t border-white/10 text-xs md:text-sm text-white/70 font-serif font-light leading-relaxed">
-                    {faq.a}
-                  </p>
-                )}
-              </div>
-            );
-          })}
+          {/* Right Column Box */}
+          <div className="bg-[#070b09] border border-white/10 rounded-2xl overflow-hidden divide-y divide-white/10">
+            {FAQS.slice(3, 6).map((faq, idx) => {
+              const actualIdx = idx + 3;
+              const isOpen = openFaqIdx === actualIdx;
+              return (
+                <div
+                  key={actualIdx}
+                  className="p-5 sm:p-6 transition-colors cursor-pointer hover:bg-white/[0.02]"
+                  onClick={() => setOpenFaqIdx(isOpen ? null : actualIdx)}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
+                      {faq.q}
+                    </h3>
+                    <ChevronDown
+                      className={`w-4 h-4 text-white/60 shrink-0 transition-transform duration-300 ${
+                        isOpen ? "rotate-180 text-[#00D084]" : ""
+                      }`}
+                    />
+                  </div>
+                  {isOpen && (
+                    <p className="mt-3 text-xs sm:text-sm text-white/70 font-light leading-relaxed">
+                      {faq.a}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* =========================================================================
           9. FOOTER CALLOUT BANNER
          ========================================================================= */}
-      <section className="py-24 px-6 border-t border-white/10 bg-gradient-to-b from-[#080d0a] to-[#020403] font-serif text-center">
+      <section className="py-24 px-6 bg-[#020403] font-serif text-center">
         <div className="max-w-4xl mx-auto space-y-6">
           <span className="text-xs font-serif font-bold uppercase tracking-widest text-[#00D084]">
             India's #1 EV Service Network
@@ -643,6 +698,13 @@ function FindServicesPage() {
           </div>
         </div>
       </section>
+
+      {/* Booking Modal */}
+      <BookingModal
+        isOpen={bookingModalOpen}
+        onClose={() => setBookingModalOpen(false)}
+        service={bookingService}
+      />
 
       {/* Footer */}
       <Footer />
