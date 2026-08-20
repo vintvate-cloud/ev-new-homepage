@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import {
@@ -155,6 +157,10 @@ function EventsPage() {
   const [regModalOpen, setRegModalOpen] = useState(false);
   const [aiSearchInput, setAiSearchInput] = useState("");
 
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const cardsOverlayRef = useRef<HTMLDivElement>(null);
+  const cardsUpRef = useRef<HTMLDivElement>(null);
+
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
       typeof document !== "undefined" &&
@@ -188,6 +194,50 @@ function EventsPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  // GSAP ScrollTrigger Animations (Matching media.tsx)
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Hero text slow fade-out as cards move up over the hero
+      if (heroTextRef.current && cardsOverlayRef.current) {
+        gsap.to(heroTextRef.current, {
+          opacity: 0,
+          scale: 0.92,
+          y: -40,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: cardsOverlayRef.current,
+            start: "top 90%",
+            end: "top 30%",
+            scrub: 0.6,
+          },
+        });
+      }
+
+      // 2. Cards container rises up onto the fixed hero section
+      if (cardsUpRef.current) {
+        gsap.fromTo(
+          cardsUpRef.current,
+          { y: 100, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: cardsUpRef.current,
+              start: "top 90%",
+              end: "top 50%",
+              scrub: 0.6,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const filteredEvents = useMemo(() => {
     return EVENTS_DATA.filter((evt) => {
       const matchesType = selectedType === "All Types" || evt.type === selectedType;
@@ -214,7 +264,7 @@ function EventsPage() {
 
   return (
     <div
-      className={`min-h-screen font-sans transition-colors duration-500 relative overflow-hidden ${
+      className={`min-h-screen font-sans transition-colors duration-500 relative overflow-x-hidden ${
         isLight
           ? "bg-[#f4f8f5] text-[#1a2320] selection:bg-[#00D084] selection:text-black"
           : "bg-[#020503] text-white selection:bg-[#00D084] selection:text-black"
@@ -223,57 +273,62 @@ function EventsPage() {
       {/* Shared Navigation Header */}
       <Nav />
 
-      {/* =========================================================================
-          1. FULL SCREEN FIT HERO SECTION (Matching 100vh height requirement)
-         ========================================================================= */}
-      <section className="relative w-full h-[calc(100vh-80px)] min-h-[580px] mt-20 overflow-hidden flex flex-col justify-between p-6 sm:p-10 md:p-14 text-white group border-b border-white/10">
-        {/* Background Image with Dark Vignette Gradient */}
-        <img
-          src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80"
-          alt="EV Events Hero"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-50 scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/50 to-[#020503]/70 pointer-events-none" />
+      {/* Main Container */}
+      <div className="relative min-h-screen">
+        
+        {/* =========================================================================
+            1. FIXED STUCK HERO SECTION (EXTENDS BEHIND NAVBAR: TOP-0 H-SCREEN)
+           ========================================================================= */}
+        <div className="fixed top-0 inset-x-0 h-screen w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background Hero Poster Image - 100% Crystal Clear Behind Navbar */}
+          <img
+            src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80"
+            alt="EV Events Hero"
+            className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
+          />
 
-        {/* Top Badges */}
-        <div className="relative z-10 flex items-center justify-between w-full max-w-7xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-[0_0_20px_rgba(0,208,132,0.4)]">
-            <Sparkles className="w-3.5 h-3.5 fill-black" />
-            LEARN, NETWORK, GROW
-          </div>
+          {/* Hero Content Container (Text ALWAYS crisp white regardless of theme mode) */}
+          <div
+            ref={heroTextRef}
+            className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-3xl space-y-4 z-10 pointer-events-none text-white pt-16"
+          >
+            {/* Title - EXACT Font from Ecosystem landing headline: font-sans font-semibold tracking-[-0.04em] */}
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-sans font-semibold tracking-[-0.04em] !text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+              EV Events &amp; <span className="text-[#00D084]">Workshops</span> <br />
+              Across India
+            </h1>
 
-          <div className="flex items-center gap-3">
-            <span className="bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-mono font-bold text-white/90 border border-white/20">
-              5 National Summits & Workshops
-            </span>
-          </div>
-        </div>
+            {/* Subtitle - ALWAYS White/90 */}
+            <p className="text-xs sm:text-sm md:text-base !text-white/90 font-light leading-relaxed max-w-xl drop-shadow-md">
+              Join industry leaders, learn diagnostic skills, and connect with the EV community through our national summits, workshops, and certified training programs.
+            </p>
 
-        {/* Hero Content Container (With Landing Page Font Style) */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.04em] text-white leading-tight uppercase mb-4 drop-shadow-xl max-w-4xl">
-            EV Events & Workshops Across India
-          </h1>
-
-          <p className="text-sm sm:text-base md:text-lg text-white/80 font-light leading-relaxed mb-8 max-w-2xl">
-            Join industry experts, learn new skills, and connect with the EV community through our workshops, summits, and training programs.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <a
-              href="#catalog-section"
-              className="px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest flex items-center gap-2 hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] hover:scale-105 cursor-pointer"
-            >
-              EXPLORE EVENTS <ArrowRight className="w-4 h-4" />
-            </a>
+            <div className="pt-2 pointer-events-auto">
+              <a
+                href="#catalog-section"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#00D084] !text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
+              >
+                <span>EXPLORE ALL EVENTS</span>
+                <ArrowRight className="w-3.5 h-3.5 stroke-[3]" />
+              </a>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* =========================================================================
-          2. SEARCH & DYNAMIC FILTER BAR
-         ========================================================================= */}
-      <section id="catalog-section" className="pt-16 pb-6 px-6 max-w-7xl mx-auto relative z-10">
+        {/* Transparent Spacer for Fixed Full Screen Hero */}
+        <div className="h-screen w-full pointer-events-none" />
+
+        {/* =========================================================================
+            2. CARDS OVERLAY CONTAINER (RISES UP OVER FIXED HERO WITH CURVED TOP BORDER)
+           ========================================================================= */}
+        <div
+          ref={cardsOverlayRef}
+          className={`relative z-10 min-h-screen pt-12 pb-24 rounded-t-[40px] border-t border-white/15 ${
+            isLight ? "bg-[#f4f8f5]" : "bg-[#020503]"
+          }`}
+        >
+          {/* SEARCH & DYNAMIC FILTER BAR */}
+          <section id="catalog-section" className="pb-8 px-6 max-w-7xl mx-auto">
         <div
           className={`p-6 rounded-[32px] shadow-xl backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-4 ${
             isLight ? "bg-white" : "bg-[#070d09]/90"
@@ -596,9 +651,6 @@ function EventsPage() {
          ========================================================================= */}
       <section className="py-20 px-6 max-w-7xl mx-auto relative z-10 border-t border-slate-200/10">
         <div className="mb-10 text-center">
-          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084]">
-            Internal ecosystem only
-          </span>
           <h2
             className={`text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] uppercase leading-tight mt-2 ${
               isLight ? "text-[#1a2320]" : "text-white"
@@ -827,6 +879,8 @@ function EventsPage() {
           </a>
         </div>
       </section>
+        </div>
+      </div>
 
       {/* Shared Footer */}
       <Footer />

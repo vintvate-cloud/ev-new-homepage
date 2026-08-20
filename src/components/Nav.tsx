@@ -7,6 +7,8 @@ import {
   ChevronDown,
   Menu,
   ShoppingCart,
+  Sun,
+  User,
   X,
   Zap,
 } from "lucide-react";
@@ -342,42 +344,54 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
             </nav>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            {/* Theme Toggle Button */}
+          <div className="flex items-center gap-2">
+            {/* Theme Toggle Button (Circular Sun Icon matching screenshot) */}
             <button
               onClick={() => setSiteTheme(siteTheme === "light" ? "dark" : "light")}
-              className="group flex items-center gap-2 rounded-full border border-border bg-muted/30 px-2.5 py-1 transition-all hover:bg-muted active:scale-95 cursor-pointer text-foreground"
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+                siteTheme === "light"
+                  ? "border-black/20 text-black hover:bg-black/5"
+                  : "border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/10"
+              }`}
               title={siteTheme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
             >
-              <div className="relative flex h-3.5 w-6 items-center rounded-full bg-foreground/20 p-0.5 transition-colors duration-300">
-                <motion.div
-                  layout
-                  className="h-2.5 w-2.5 rounded-full bg-background shadow-sm"
-                  animate={{ x: siteTheme === "light" ? 10 : 0 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                />
-              </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-foreground/80 group-hover:text-foreground">
-                {siteTheme === "light" ? "Light" : "Dark"}
-              </span>
+              <Sun className="w-4 h-4" />
             </button>
 
-            {/* Cart Link */}
-            <a href="/store" className="text-foreground hover:text-[#00D084] transition cursor-pointer p-1">
-              <ShoppingCart className="h-4.5 w-4.5" />
+            {/* Shopping Cart Button (Circular Icon matching screenshot) */}
+            <a
+              href="/store"
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+                siteTheme === "light"
+                  ? "border-black/20 text-black hover:bg-black/5"
+                  : "border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/10"
+              }`}
+              title="EV Spare Parts Store"
+            >
+              <ShoppingCart className="w-4 h-4" />
             </a>
 
-            {/* Desktop CTAs */}
-            <div className="hidden items-center gap-2 md:flex">
-              <a
-                href="/services"
-                className="rounded-full text-[12px] font-extrabold flex items-center gap-1.5 px-3.5 py-1.5 transition-all hover:opacity-90 cursor-pointer shadow-[0_0_15px_rgba(0,208,132,0.3)]"
-                style={{ background: "#00D084", color: "#020403" }}
-              >
-                <Zap className="h-3.5 w-3.5 fill-[#020403]" />
-                Book Service
-              </a>
-            </div>
+            {/* Login Button (Pill button with User Icon matching screenshot) */}
+            <a
+              href="/login"
+              className={`hidden sm:flex px-4 py-2 rounded-full border text-xs font-medium items-center gap-2 transition-all cursor-pointer ${
+                siteTheme === "light"
+                  ? "border-black/20 text-black hover:bg-black/5"
+                  : "border-white/20 text-white/90 hover:text-white hover:border-white/40 hover:bg-white/10"
+              }`}
+            >
+              <User className="w-4 h-4" />
+              <span>Login</span>
+            </a>
+
+            {/* Book Service CTA Button (Mint Green Pill matching screenshot) */}
+            <button
+              onClick={() => (onOpenBooking ? onOpenBooking() : (window.location.href = "/services"))}
+              className="rounded-full text-xs font-bold flex items-center gap-2 px-5 py-2 transition-all hover:opacity-95 cursor-pointer bg-[#00D084] text-[#020403] shadow-[0_0_15px_rgba(0,208,132,0.3)]"
+            >
+              <Zap className="h-4 w-4 fill-[#020403]" />
+              <span>Book Service</span>
+            </button>
 
             {/* Mobile Hamburger */}
             <button
