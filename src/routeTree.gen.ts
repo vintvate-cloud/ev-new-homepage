@@ -15,14 +15,21 @@ import { Route as TrackRouteImport } from './routes/track'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StoreRouteImport } from './routes/store'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ReportIssueRouteImport } from './routes/report-issue'
 import { Route as RefundRouteImport } from './routes/refund'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as MediaRouteImport } from './routes/media'
+import { Route as HvSafetyRouteImport } from './routes/hv-safety'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as FranchiseTermsRouteImport } from './routes/franchise-terms'
 import { Route as FranchiseRouteImport } from './routes/franchise'
 import { Route as FindServicesRouteImport } from './routes/find-services'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -60,6 +67,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportIssueRoute = ReportIssueRouteImport.update({
+  id: '/report-issue',
+  path: '/report-issue',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RefundRoute = RefundRouteImport.update({
   id: '/refund',
   path: '/refund',
@@ -75,6 +87,26 @@ const NewsRoute = NewsRouteImport.update({
   path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MediaRoute = MediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HvSafetyRoute = HvSafetyRouteImport.update({
+  id: '/hv-safety',
+  path: '/hv-safety',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FranchiseTermsRoute = FranchiseTermsRouteImport.update({
+  id: '/franchise-terms',
+  path: '/franchise-terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FranchiseRoute = FranchiseRouteImport.update({
   id: '/franchise',
   path: '/franchise',
@@ -83,6 +115,11 @@ const FranchiseRoute = FranchiseRouteImport.update({
 const FindServicesRoute = FindServicesRouteImport.update({
   id: '/find-services',
   path: '/find-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqsRoute = FaqsRouteImport.update({
@@ -98,6 +135,11 @@ const EventsRoute = EventsRouteImport.update({
 const DisclaimerRoute = DisclaimerRouteImport.update({
   id: '/disclaimer',
   path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -137,14 +179,21 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/faqs': typeof FaqsRoute
+  '/feedback': typeof FeedbackRoute
   '/find-services': typeof FindServicesRoute
   '/franchise': typeof FranchiseRoute
+  '/franchise-terms': typeof FranchiseTermsRoute
+  '/help': typeof HelpRoute
+  '/hv-safety': typeof HvSafetyRoute
+  '/media': typeof MediaRoute
   '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
+  '/report-issue': typeof ReportIssueRoute
   '/services': typeof ServicesRoute
   '/store': typeof StoreRoute
   '/terms': typeof TermsRoute
@@ -159,14 +208,21 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/faqs': typeof FaqsRoute
+  '/feedback': typeof FeedbackRoute
   '/find-services': typeof FindServicesRoute
   '/franchise': typeof FranchiseRoute
+  '/franchise-terms': typeof FranchiseTermsRoute
+  '/help': typeof HelpRoute
+  '/hv-safety': typeof HvSafetyRoute
+  '/media': typeof MediaRoute
   '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
+  '/report-issue': typeof ReportIssueRoute
   '/services': typeof ServicesRoute
   '/store': typeof StoreRoute
   '/terms': typeof TermsRoute
@@ -182,14 +238,21 @@ export interface FileRoutesById {
   '/blog': typeof BlogRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/faqs': typeof FaqsRoute
+  '/feedback': typeof FeedbackRoute
   '/find-services': typeof FindServicesRoute
   '/franchise': typeof FranchiseRoute
+  '/franchise-terms': typeof FranchiseTermsRoute
+  '/help': typeof HelpRoute
+  '/hv-safety': typeof HvSafetyRoute
+  '/media': typeof MediaRoute
   '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
+  '/report-issue': typeof ReportIssueRoute
   '/services': typeof ServicesRoute
   '/store': typeof StoreRoute
   '/terms': typeof TermsRoute
@@ -206,14 +269,21 @@ export interface FileRouteTypes {
     | '/blog'
     | '/careers'
     | '/contact'
+    | '/cookies'
     | '/disclaimer'
     | '/events'
     | '/faqs'
+    | '/feedback'
     | '/find-services'
     | '/franchise'
+    | '/franchise-terms'
+    | '/help'
+    | '/hv-safety'
+    | '/media'
     | '/news'
     | '/privacy'
     | '/refund'
+    | '/report-issue'
     | '/services'
     | '/store'
     | '/terms'
@@ -228,14 +298,21 @@ export interface FileRouteTypes {
     | '/blog'
     | '/careers'
     | '/contact'
+    | '/cookies'
     | '/disclaimer'
     | '/events'
     | '/faqs'
+    | '/feedback'
     | '/find-services'
     | '/franchise'
+    | '/franchise-terms'
+    | '/help'
+    | '/hv-safety'
+    | '/media'
     | '/news'
     | '/privacy'
     | '/refund'
+    | '/report-issue'
     | '/services'
     | '/store'
     | '/terms'
@@ -250,14 +327,21 @@ export interface FileRouteTypes {
     | '/blog'
     | '/careers'
     | '/contact'
+    | '/cookies'
     | '/disclaimer'
     | '/events'
     | '/faqs'
+    | '/feedback'
     | '/find-services'
     | '/franchise'
+    | '/franchise-terms'
+    | '/help'
+    | '/hv-safety'
+    | '/media'
     | '/news'
     | '/privacy'
     | '/refund'
+    | '/report-issue'
     | '/services'
     | '/store'
     | '/terms'
@@ -273,14 +357,21 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   DisclaimerRoute: typeof DisclaimerRoute
   EventsRoute: typeof EventsRoute
   FaqsRoute: typeof FaqsRoute
+  FeedbackRoute: typeof FeedbackRoute
   FindServicesRoute: typeof FindServicesRoute
   FranchiseRoute: typeof FranchiseRoute
+  FranchiseTermsRoute: typeof FranchiseTermsRoute
+  HelpRoute: typeof HelpRoute
+  HvSafetyRoute: typeof HvSafetyRoute
+  MediaRoute: typeof MediaRoute
   NewsRoute: typeof NewsRoute
   PrivacyRoute: typeof PrivacyRoute
   RefundRoute: typeof RefundRoute
+  ReportIssueRoute: typeof ReportIssueRoute
   ServicesRoute: typeof ServicesRoute
   StoreRoute: typeof StoreRoute
   TermsRoute: typeof TermsRoute
@@ -334,6 +425,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/report-issue': {
+      id: '/report-issue'
+      path: '/report-issue'
+      fullPath: '/report-issue'
+      preLoaderRoute: typeof ReportIssueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/refund': {
       id: '/refund'
       path: '/refund'
@@ -355,6 +453,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/media': {
+      id: '/media'
+      path: '/media'
+      fullPath: '/media'
+      preLoaderRoute: typeof MediaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hv-safety': {
+      id: '/hv-safety'
+      path: '/hv-safety'
+      fullPath: '/hv-safety'
+      preLoaderRoute: typeof HvSafetyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/franchise-terms': {
+      id: '/franchise-terms'
+      path: '/franchise-terms'
+      fullPath: '/franchise-terms'
+      preLoaderRoute: typeof FranchiseTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/franchise': {
       id: '/franchise'
       path: '/franchise'
@@ -367,6 +493,13 @@ declare module '@tanstack/react-router' {
       path: '/find-services'
       fullPath: '/find-services'
       preLoaderRoute: typeof FindServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faqs': {
@@ -388,6 +521,13 @@ declare module '@tanstack/react-router' {
       path: '/disclaimer'
       fullPath: '/disclaimer'
       preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -441,14 +581,21 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   DisclaimerRoute: DisclaimerRoute,
   EventsRoute: EventsRoute,
   FaqsRoute: FaqsRoute,
+  FeedbackRoute: FeedbackRoute,
   FindServicesRoute: FindServicesRoute,
   FranchiseRoute: FranchiseRoute,
+  FranchiseTermsRoute: FranchiseTermsRoute,
+  HelpRoute: HelpRoute,
+  HvSafetyRoute: HvSafetyRoute,
+  MediaRoute: MediaRoute,
   NewsRoute: NewsRoute,
   PrivacyRoute: PrivacyRoute,
   RefundRoute: RefundRoute,
+  ReportIssueRoute: ReportIssueRoute,
   ServicesRoute: ServicesRoute,
   StoreRoute: StoreRoute,
   TermsRoute: TermsRoute,

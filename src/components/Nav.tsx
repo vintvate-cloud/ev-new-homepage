@@ -22,12 +22,11 @@ const NAV = [
   { label: "Franchise", href: "/franchise", menuIdx: 0 },
   { label: "Careers", href: "/careers", menuIdx: null },
   { label: "Find Service", href: "/find-services", menuIdx: 1 },
-  { label: "Contact", href: "/contact", menuIdx: null },
+  { label: "Media", href: "/media", menuIdx: null },
   { label: "Webinars", href: "/webinars", menuIdx: null },
   { label: "Events", href: "/events", menuIdx: null },
   { label: "EV News", href: "/news", menuIdx: null },
   { label: "Blog", href: "/blog", menuIdx: null },
-  { label: "Media", href: "/#media", menuIdx: null },
   { label: "Services", href: "/services", menuIdx: null },
   { label: "AI", href: "/track", menuIdx: null },
 ];

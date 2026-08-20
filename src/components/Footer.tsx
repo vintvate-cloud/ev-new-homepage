@@ -245,7 +245,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <Link to="/faqs" className="hover:text-[#00D084] transition-colors">Help Center</Link>
+                <Link to="/help" className="hover:text-[#00D084] transition-colors">Help Center</Link>
               </li>
               <li>
                 <Link to="/faqs" className="hover:text-[#00D084] transition-colors">FAQs</Link>
@@ -257,10 +257,10 @@ export function Footer() {
                 <Link to="/track" className="hover:text-[#00D084] transition-colors">Track Service</Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-[#00D084] transition-colors">Feedback</Link>
+                <Link to="/feedback" className="hover:text-[#00D084] transition-colors">Feedback</Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-[#00D084] transition-colors">Report an Issue</Link>
+                <Link to="/feedback" className="hover:text-[#00D084] transition-colors">Report an Issue</Link>
               </li>
             </ul>
           </StaggerItem>
@@ -362,10 +362,10 @@ export function Footer() {
               <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
               <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
               <Link to="/refund" className="hover:text-white transition-colors">Refund Policy</Link>
-              <Link to="/privacy" className="hover:text-white transition-colors">Cookie Policy</Link>
-              <Link to="/franchise" className="hover:text-white transition-colors">Franchise Terms</Link>
+              <Link to="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link>
+              <Link to="/franchise-terms" className="hover:text-white transition-colors">Franchise Terms</Link>
               <Link to="/disclaimer" className="hover:text-white transition-colors">Disclaimer</Link>
-              <Link to="/terms" className="hover:text-white transition-colors">HV Safety</Link>
+              <Link to="/hv-safety" className="hover:text-white transition-colors">HV Safety</Link>
             </div>
           </div>
         </Reveal>

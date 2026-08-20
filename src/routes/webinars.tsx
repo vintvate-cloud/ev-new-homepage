@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 import {
   Video,
   Calendar,
@@ -38,12 +44,166 @@ export const Route = createFileRoute("/webinars")({
   component: WebinarsPage,
 });
 
+// Authentic Datasets for Webinar Tabs
+const UPCOMING_WEBINARS = [
+  {
+    id: "up-1",
+    title: "Multi-Brand EV Service Centre Opportunity in Pune | City Launch",
+    description: "Discover high-demand PIN code areas in Pune, EV market potential, unit economics, and how to become a certified My EV Service franchise partner.",
+    datetime: "March 1, 2026 • 4:30 PM IST",
+    duration: "120 min",
+    speaker: "Ashwini Tiwari (Founder, Autobot Engineers)",
+    tags: ["pune-launch", "franchise-opportunity", "business-modelling"],
+    category: "Franchises",
+  },
+  {
+    id: "up-2",
+    title: "EV Battery Pack Diagnostics & BMS Firmware Flashing",
+    description: "Deep dive into cell voltage balancing, state-of-health diagnostics, active balancing tools, and high-voltage safety isolation.",
+    datetime: "March 15, 2026 • 6:00 PM IST",
+    duration: "90 min",
+    speaker: "Ashwini Tiwari (Founder, Autobot Engineers)",
+    tags: ["bms-diagnostics", "battery-tech", "high-voltage-safety"],
+    category: "Technicians",
+  },
+  {
+    id: "up-3",
+    title: "EV Maintenance & Real-World Range Optimization for EV Owners",
+    description: "Essential care practices for 2W & 3W EV owners to prolong lithium battery health, prevent thermal runaway, and maximize daily range.",
+    datetime: "March 28, 2026 • 5:00 PM IST",
+    duration: "60 min",
+    speaker: "My EV Services Technical Team",
+    tags: ["ev-owner-care", "battery-health", "range-optimization"],
+    category: "EV Owners",
+  },
+];
+
+const ARCHIVE_REPLAYS = [
+  {
+    id: "ar-1",
+    title: "Thermal Runaway Prevention & Early Anomaly Detection in 2W/3W Fleets",
+    description: "Field-tested SOPs for diagnosing thermal spikes, BMS safety cutoffs, and preventing cell degradation in high-usage commercial fleets.",
+    date: "Feb 12, 2026",
+    duration: "75 min",
+    speaker: "Ashwini Tiwari (Founder, Autobot Engineers)",
+    views: "1,420 views",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-factory-42867-large.mp4",
+    tags: ["thermal-safety", "bms", "fleet-care"],
+  },
+  {
+    id: "ar-2",
+    title: "Upskilling Traditional Automotive Mechanics into Certified EV Specialists",
+    description: "How to transition legacy workshop staff into certified high-voltage EV repair technicians with zero safety incidents.",
+    date: "Jan 28, 2026",
+    duration: "90 min",
+    speaker: "My EV Services Academy Team",
+    views: "2,150 views",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-robotic-arm-in-a-high-tech-factory-42868-large.mp4",
+    tags: ["upskilling", "certification", "technicians"],
+  },
+  {
+    id: "ar-3",
+    title: "Multi-Brand EV Workshop Setup & Pan-India Franchise Unit Economics",
+    description: "Detailed roadmap covering shop space planning, diagnostic tool procurement, spare part supply chain, and local marketing.",
+    date: "Dec 20, 2025",
+    duration: "85 min",
+    speaker: "Ashwini Tiwari (Founder, Autobot Engineers)",
+    views: "1,950 views",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-robotic-arm-in-a-high-tech-factory-42868-large.mp4",
+    tags: ["franchise-setup", "unit-economics", "operations"],
+  },
+];
+
+const RECOMMENDED_PATHS = [
+  {
+    id: "rec-1",
+    targetAudience: "EV Owners",
+    title: "EV Owner Essential Maintenance & Battery Health Path",
+    description: "Learn how to prolong battery life, optimize real-world range, decode dashboard telemetry, and handle emergencies safely.",
+    modulesCount: "4 Modules • 3.5 Hours Total",
+    recommendedSessions: [
+      "Thermal & Range Optimization Basics",
+      "EV Fleet & Battery Lifetime Management",
+      "Understanding Home vs Fast Charging Impact",
+    ],
+  },
+  {
+    id: "rec-2",
+    targetAudience: "Technicians & Engineers",
+    title: "Certified High-Voltage EV Diagnostic Specialist Track",
+    description: "From basic multimeter safety to advanced BMS flashing, motor controller diagnostics, and battery module rebuilding.",
+    modulesCount: "6 Modules • 8 Hours Total",
+    recommendedSessions: [
+      "High-Voltage Safety & SOP Isolation",
+      "BMS Firmware Flashing & CAN Bus Logging",
+      "Motor Controller Troubleshooting",
+    ],
+  },
+  {
+    id: "rec-3",
+    targetAudience: "Franchises & Entrepreneurs",
+    title: "Turnkey Workshop Operations & Business Scaling Track",
+    description: "Complete blueprint for opening an EV service hub: licensing, equipment procurement, SOP deployment, and marketing.",
+    modulesCount: "5 Modules • 6 Hours Total",
+    recommendedSessions: [
+      "Franchise Partner Onboarding",
+      "Multi-Brand Spare Sourcing & Inventory",
+      "Customer SLA Management & Marketing",
+    ],
+  },
+];
+
 function WebinarsPage() {
   const [activeTab, setActiveTab] = useState<"upcoming" | "archive" | "recommended">("upcoming");
   const [regModalOpen, setRegModalOpen] = useState(false);
-  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [requestTopicModalOpen, setRequestTopicModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [selectedWebinarForReg, setSelectedWebinarForReg] = useState<any>(null);
+  const [selectedReplay, setSelectedReplay] = useState<any>(null);
+
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const cardsContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Pin section until the last right card is scrolled through
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    if (!isDesktop) return;
+
+    const timer = setTimeout(() => {
+      if (!sectionRef.current || !cardsContainerRef.current) return;
+
+      const cardsContainer = cardsContainerRef.current;
+      const scrollAmount = cardsContainer.scrollHeight - cardsContainer.clientHeight;
+
+      if (scrollAmount <= 10) return;
+
+      const trigger = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top+=80",
+        end: () => `+=${scrollAmount + 250}`,
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.6,
+        onUpdate: (self) => {
+          if (cardsContainer) {
+            cardsContainer.scrollTop = self.progress * scrollAmount;
+          }
+        },
+      });
+
+      return () => {
+        trigger.kill();
+      };
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.vars.trigger === sectionRef.current) t.kill();
+      });
+    };
+  }, [activeTab]);
 
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
@@ -100,10 +260,12 @@ function WebinarsPage() {
       toast.error("Please fill in your Full Name, Email, and Mobile number.");
       return;
     }
+    const webinarTitle = selectedWebinarForReg?.title || "Franchise Partner Onboarding";
     toast.success(
-      `Pass Confirmed! Registration link sent to ${regForm.email}`
+      `Pass Confirmed for "${webinarTitle}"! Registration link sent to ${regForm.email}`
     );
     setRegModalOpen(false);
+    setSelectedWebinarForReg(null);
     setRegForm({ fullName: "", email: "", mobile: "", city: "", notes: "" });
   };
 
@@ -132,7 +294,7 @@ function WebinarsPage() {
       <Nav />
 
       {/* =========================================================================
-          1ST SECTION: WHOLE SCREEN VIDEO HERO (Redesigned like Careers Hero)
+          1ST SECTION: WHOLE SCREEN VIDEO HERO
          ========================================================================= */}
       <section className="relative w-full h-screen min-h-[680px] overflow-hidden text-white flex items-end justify-center pb-12 sm:pb-16 -mt-20">
         {/* Background Video Stream */}
@@ -156,7 +318,7 @@ function WebinarsPage() {
         {/* Hero Content (Positioned at bottom of hero) */}
         <div className="max-w-5xl mx-auto text-center relative z-10 px-6 pt-28 pb-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-5 leading-[1.10]">
-            Master EV Technology & Scale Your Business.
+            Webinars built for <span className="text-[#00D084]">EV owner</span>, technicians, and franchises.
           </h1>
 
           <p className="text-sm sm:text-base md:text-lg text-[#d0e0d6] font-normal max-w-2xl mx-auto mb-8 leading-relaxed">
@@ -224,7 +386,10 @@ function WebinarsPage() {
                 Based in <span className="text-[#00D084]">Pune, India</span> & Pan-India Hubs
               </h3>
               <button
-                onClick={() => setRegModalOpen(true)}
+                onClick={() => {
+                  setSelectedWebinarForReg(UPCOMING_WEBINARS[0]);
+                  setRegModalOpen(true);
+                }}
                 className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider border border-white/15 mb-8 cursor-pointer"
               >
                 Start a Franchise
@@ -269,16 +434,16 @@ function WebinarsPage() {
             {/* Bottom Testimonial / Speaker Card */}
             <div className="bg-[#101015]/90 border border-white/10 rounded-[36px] p-8 backdrop-blur-2xl flex items-center gap-6">
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80"
-                alt="Arun Patel"
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80"
+                alt="Ashwini Tiwari"
                 className="w-20 h-20 rounded-2xl object-cover border-2 border-[#00D084] shrink-0"
               />
               <div>
                 <p className="text-xs text-white/80 italic font-normal leading-relaxed mb-3">
                   "Good EV training feels obvious—because the hard diagnostic work is hidden."
                 </p>
-                <div className="text-xs font-bold text-white">Arun Patel</div>
-                <div className="text-[10px] font-mono opacity-50">Franchise Operations Lead</div>
+                <div className="text-xs font-bold text-white">Ashwini Tiwari</div>
+                <div className="text-[10px] font-mono opacity-50">Founder & EV Consultant • Autobot Engineers</div>
               </div>
             </div>
           </div>
@@ -306,12 +471,12 @@ function WebinarsPage() {
       </section>
 
       {/* =========================================================================
-          5. END-TO-END WEBINAR SERVICES ARCHIVE GRID
+          5. INTERACTIVE WEBINAR TABS & SESSIONS GRID
          ========================================================================= */}
-      <section className="py-20 px-6 max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Left Header */}
-          <div className="lg:col-span-5">
+      <section ref={sectionRef} className="py-20 px-6 max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Left Navigation Tabs (Sticky) */}
+          <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-bold text-[#00D084] mb-4">
               • Services & Masterclasses
             </span>
@@ -322,117 +487,305 @@ function WebinarsPage() {
               We turn ambiguous EV battery & diagnostic ideas into field-ready SOPs combining strategy, engineering, and hands-on evaluation.
             </p>
 
-            {/* Tabs */}
+            {/* Interactive Tabs List */}
             <div className="flex flex-col gap-3">
               <button
                 onClick={() => setActiveTab("upcoming")}
-                className={`w-full py-3.5 px-6 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider text-left transition-all cursor-pointer border ${
+                className={`w-full py-4 px-6 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider text-left transition-all cursor-pointer border flex items-center justify-between ${
                   activeTab === "upcoming"
-                    ? "bg-[#00D084] text-[#020403] border-[#00D084]"
-                    : "bg-[#101015]/80 text-white/60 border-white/10 hover:bg-white/10"
+                    ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-lg shadow-[#00D084]/20 scale-[1.02]"
+                    : "bg-[#101015]/80 text-white/70 border-white/10 hover:bg-white/10 hover:border-white/20"
                 }`}
               >
-                Upcoming Live Sessions
+                <div className="flex items-center gap-2.5">
+                  <Radio className={`w-4 h-4 ${activeTab === "upcoming" ? "animate-pulse" : "text-[#00D084]"}`} />
+                  <span>Upcoming Live Sessions</span>
+                </div>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] ${activeTab === "upcoming" ? "bg-black/20 text-black" : "bg-white/10 text-white/60"}`}>
+                  {UPCOMING_WEBINARS.length}
+                </span>
               </button>
+
               <button
                 onClick={() => setActiveTab("archive")}
-                className={`w-full py-3.5 px-6 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider text-left transition-all cursor-pointer border ${
+                className={`w-full py-4 px-6 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider text-left transition-all cursor-pointer border flex items-center justify-between ${
                   activeTab === "archive"
-                    ? "bg-[#00D084] text-[#020403] border-[#00D084]"
-                    : "bg-[#101015]/80 text-white/60 border-white/10 hover:bg-white/10"
+                    ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-lg shadow-[#00D084]/20 scale-[1.02]"
+                    : "bg-[#101015]/80 text-white/70 border-white/10 hover:bg-white/10 hover:border-white/20"
                 }`}
               >
-                Archive Replays
+                <div className="flex items-center gap-2.5">
+                  <Play className={`w-4 h-4 ${activeTab === "archive" ? "fill-black" : "fill-[#00D084] text-[#00D084]"}`} />
+                  <span>Archive Replays</span>
+                </div>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] ${activeTab === "archive" ? "bg-black/20 text-black" : "bg-white/10 text-white/60"}`}>
+                  {ARCHIVE_REPLAYS.length}
+                </span>
               </button>
+
               <button
                 onClick={() => setActiveTab("recommended")}
-                className={`w-full py-3.5 px-6 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider text-left transition-all cursor-pointer border ${
+                className={`w-full py-4 px-6 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider text-left transition-all cursor-pointer border flex items-center justify-between ${
                   activeTab === "recommended"
-                    ? "bg-[#00D084] text-[#020403] border-[#00D084]"
-                    : "bg-[#101015]/80 text-white/60 border-white/10 hover:bg-white/10"
+                    ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-lg shadow-[#00D084]/20 scale-[1.02]"
+                    : "bg-[#101015]/80 text-white/70 border-white/10 hover:bg-white/10 hover:border-white/20"
                 }`}
               >
-                Recommended Path
+                <div className="flex items-center gap-2.5">
+                  <Sparkles className={`w-4 h-4 ${activeTab === "recommended" ? "text-black" : "text-[#00D084]"}`} />
+                  <span>Recommended Path</span>
+                </div>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] ${activeTab === "recommended" ? "bg-black/20 text-black" : "bg-white/10 text-white/60"}`}>
+                  {RECOMMENDED_PATHS.length}
+                </span>
               </button>
             </div>
           </div>
 
-          {/* Right Interactive Topic Cards List */}
-          <div className="lg:col-span-7 space-y-6">
-            {/* Card 1: Featured Webinar */}
-            <div className="bg-[#101015]/90 border border-white/10 rounded-[32px] p-8 backdrop-blur-2xl relative overflow-hidden group hover:border-[#00D084]/40 transition-all duration-300">
-              <div className="flex items-center justify-between text-xs font-mono opacity-50 mb-3">
-                <span>01</span>
-                <span className="text-[#00D084] font-bold">LIVE</span>
-              </div>
-              <h3 className="text-2xl font-black text-white mb-2">Franchise Partner Onboarding</h3>
-              <p className="text-xs text-white/70 leading-relaxed mb-6">
-                Everything you need to launch your EV service franchise (3/1/2026, 4:30:00 PM • 120 min)
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {["onboarding", "operations", "business", "franchise"].map((t) => (
-                  <span key={t} className="text-[10px] font-mono px-3 py-1 rounded-full bg-white/5 text-white/60 border border-white/10">
-                    #{t}
-                  </span>
+          {/* Right Interactive Cards Area (Pinned Scrollable Container) */}
+          <div ref={cardsContainerRef} className="lg:col-span-7 max-h-[580px] overflow-y-auto pr-3 space-y-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-[#00D084]/60 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-white/5">
+            {/* UPCOMING LIVE SESSIONS */}
+            {activeTab === "upcoming" && (
+              <div className="space-y-4 animate-fadeIn">
+                {UPCOMING_WEBINARS.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className="bg-[#101015]/90 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-2xl relative overflow-hidden group hover:border-[#00D084]/40 transition-all duration-300"
+                  >
+                    <div className="flex items-center justify-between text-[11px] font-mono opacity-50 mb-2">
+                      <span>0{index + 1}</span>
+                      <span className="text-[#00D084] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
+                        LIVE SESSION
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5">{item.title}</h3>
+                    <p className="text-[11px] sm:text-xs text-white/70 leading-relaxed mb-3">{item.description}</p>
+
+                    <div className="flex flex-wrap items-center gap-4 text-[11px] font-mono text-white/60 mb-3">
+                      <span className="flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5 text-[#00D084]" /> {item.datetime}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-[#00D084]" /> {item.duration}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {item.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="text-[9px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-white/60 border border-white/10"
+                        >
+                          #{t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                      <span className="text-[11px] font-mono text-white/80">Speaker: {item.speaker}</span>
+                      <button
+                        onClick={() => {
+                          setSelectedWebinarForReg(item);
+                          setRegModalOpen(true);
+                        }}
+                        className="px-4 py-1.5 rounded-full bg-[#00D084] text-[#020403] text-[10px] font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer shadow-md shadow-[#00D084]/20"
+                      >
+                        REGISTER NOW
+                      </button>
+                    </div>
+                  </div>
                 ))}
               </div>
-              <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                <span className="text-xs font-mono text-white/80">Speaker: Arun Patel</span>
-                <button
-                  onClick={() => setRegModalOpen(true)}
-                  className="px-6 py-2 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] cursor-pointer"
-                >
-                  REGISTER NOW
-                </button>
-              </div>
-            </div>
+            )}
 
-            {/* Card 2: Expert Spotlight (Ashwini Tiwari) */}
-            <div className="bg-[#101015]/90 border border-white/10 rounded-[32px] p-8 backdrop-blur-2xl relative overflow-hidden group hover:border-[#00D084]/40 transition-all duration-300">
-              <div className="flex items-center justify-between text-xs font-mono opacity-50 mb-3">
-                <span>02</span>
-                <span className="text-[#00D084] font-bold">EXPERT SPOTLIGHT</span>
+            {/* ARCHIVE REPLAYS */}
+            {activeTab === "archive" && (
+              <div className="space-y-4 animate-fadeIn">
+                {ARCHIVE_REPLAYS.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className="bg-[#101015]/90 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-2xl relative overflow-hidden group hover:border-[#00D084]/40 transition-all duration-300"
+                  >
+                    <div className="flex items-center justify-between text-[11px] font-mono opacity-50 mb-2">
+                      <span>0{index + 1}</span>
+                      <span className="text-white/70 font-bold uppercase tracking-wider">
+                        REPLAY • {item.views}
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5">{item.title}</h3>
+                    <p className="text-[11px] sm:text-xs text-white/70 leading-relaxed mb-3">{item.description}</p>
+
+                    <div className="flex flex-wrap items-center gap-4 text-[11px] font-mono text-white/60 mb-3">
+                      <span className="flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5 text-[#00D084]" /> Recorded {item.date}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-[#00D084]" /> {item.duration}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {item.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="text-[9px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-white/60 border border-white/10"
+                        >
+                          #{t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                      <span className="text-[11px] font-mono text-white/80">Speaker: {item.speaker}</span>
+                      <button
+                        onClick={() => setSelectedReplay(item)}
+                        className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-[10px] font-black uppercase tracking-wider hover:bg-white/20 hover:border-[#00D084] transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <Play className="w-3 h-3 text-[#00D084] fill-[#00D084]" /> WATCH REPLAY
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-center gap-4 mb-4">
+            )}
+
+            {/* RECOMMENDED PATH */}
+            {activeTab === "recommended" && (
+              <div className="space-y-4 animate-fadeIn">
+                {RECOMMENDED_PATHS.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className="bg-[#101015]/90 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-2xl relative overflow-hidden group hover:border-[#00D084]/40 transition-all duration-300"
+                  >
+                    <div className="flex items-center justify-between text-[11px] font-mono opacity-50 mb-2">
+                      <span>0{index + 1}</span>
+                      <span className="text-[#00D084] font-bold uppercase tracking-wider">
+                        CURATED PATH
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5">{item.title}</h3>
+                    <p className="text-[11px] sm:text-xs text-white/70 leading-relaxed mb-3">{item.description}</p>
+
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 mb-3 space-y-1.5">
+                      <div className="text-[11px] font-mono font-bold text-[#00D084]">
+                        {item.modulesCount}
+                      </div>
+                      {item.recommendedSessions.map((session, sIdx) => (
+                        <div key={sIdx} className="text-[11px] text-white/80 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0" />
+                          <span>{session}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                      <span className="text-[11px] font-mono text-white/60">Tailored Curriculum</span>
+                      <button
+                        onClick={() => {
+                          setActiveTab("upcoming");
+                          toast.info(`Switched to Live Sessions for ${item.targetAudience}!`);
+                        }}
+                        className="px-4 py-1.5 rounded-full bg-[#00D084] text-[#020403] text-[10px] font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        EXPLORE PATH SESSIONS <ArrowRight className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6. DEDICATED EXPERT NETWORK & LATEST NEWS SECTION (MOVED DOWN)
+         ========================================================================= */}
+      <section className="py-20 px-6 max-w-7xl mx-auto relative z-10 border-t border-white/10">
+        <div className="mb-12 text-center max-w-3xl mx-auto">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-bold text-[#00D084] mb-4">
+            • Leadership & Industry Updates
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
+            Expert Network & Latest News
+          </h2>
+          <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
+            Connect with industry-leading EV consultants and stay updated on expansion milestones across India.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Card 1: Expert Spotlight */}
+          <div className="bg-[#101015]/90 border border-white/10 rounded-[32px] p-8 backdrop-blur-2xl relative overflow-hidden group hover:border-[#00D084]/40 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between text-xs font-mono opacity-50 mb-4">
+                <span>EXPERT SPOTLIGHT</span>
+                <span className="text-[#00D084] font-bold">KEYNOTE SPEAKER</span>
+              </div>
+
+              <div className="flex items-center gap-4 mb-6">
                 <img
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80"
                   alt="Ashwini Tiwari"
-                  className="w-14 h-14 rounded-full object-cover border-2 border-[#00D084]"
+                  className="w-16 h-16 rounded-full object-cover border-2 border-[#00D084] shrink-0"
                 />
                 <div>
-                  <h4 className="text-lg font-bold text-white">Ashwini Tiwari</h4>
+                  <h4 className="text-xl font-bold text-white">Ashwini Tiwari</h4>
                   <p className="text-xs text-[#00D084] font-mono">Founder & EV Consultant • Autobot Engineers</p>
                 </div>
               </div>
+
+              <p className="text-xs text-white/70 leading-relaxed mb-6">
+                Specialist in EV powertrain diagnostics, battery architecture, and setting up high-efficiency repair workflows for pan-India service hubs.
+              </p>
+
               <div className="flex flex-wrap gap-2 mb-6">
                 <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-[#00D084]/15 text-[#00D084]">EV Technology</span>
                 <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-[#00D084]/15 text-[#00D084]">Battery Technology</span>
                 <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-[#00D084]/15 text-[#00D084]">EV Business Modelling</span>
               </div>
-              <button
-                onClick={() => setProfileModalOpen(true)}
-                className="w-full py-2.5 rounded-full bg-white/10 text-white text-xs font-mono font-bold uppercase tracking-wider hover:bg-white/20 border border-white/15 cursor-pointer"
-              >
-                VIEW PROFILE
-              </button>
             </div>
 
-            {/* Card 3: Latest News Item (Pune City Launch) */}
-            <div className="bg-[#101015]/90 border border-white/10 rounded-[32px] p-8 backdrop-blur-2xl relative overflow-hidden group hover:border-white/30 transition-all duration-300">
-              <div className="flex items-center justify-between text-xs font-mono opacity-50 mb-3">
-                <span>03</span>
-                <span className="text-white/80 font-bold">LATEST NEWS</span>
+            <button
+              onClick={() => setProfileModalOpen(true)}
+              className="w-full py-3 rounded-full bg-white/10 text-white text-xs font-mono font-bold uppercase tracking-wider hover:bg-white/20 border border-white/15 cursor-pointer transition-all"
+            >
+              VIEW PROFILE
+            </button>
+          </div>
+
+          {/* Card 2: Latest News Item */}
+          <div className="bg-[#101015]/90 border border-white/10 rounded-[32px] p-8 backdrop-blur-2xl relative overflow-hidden group hover:border-white/30 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between text-xs font-mono opacity-50 mb-4">
+                <span>LATEST NEWS RELEASE</span>
+                <span className="text-white/80 font-bold">ANNOUNCEMENT</span>
               </div>
-              <h4 className="text-lg font-black text-white mb-2">
+
+              <h4 className="text-xl font-black text-white mb-3 leading-snug">
                 Multi-Brand EV Service Centre Opportunity in Pune | City Launch by MY EV SERVICE
               </h4>
-              <p className="text-xs text-white/60 leading-relaxed mb-4">
-                Discover the Pune city launch of MY EV SERVICE’s multi-brand EV service centre opportunity. Explore high-demand PIN code areas, EV market potential, and how to...
+
+              <p className="text-xs text-white/60 leading-relaxed mb-6">
+                Discover the Pune city launch of MY EV SERVICE’s multi-brand EV service centre opportunity. Explore high-demand PIN code areas, EV market potential, and how to become a certified hub.
               </p>
-              <a href="/news" className="text-xs font-mono font-bold text-[#00D084] hover:underline flex items-center gap-1">
-                Read News Release <ChevronRight className="w-3.5 h-3.5" />
-              </a>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-white/5 text-white/60 border border-white/10">#pune-launch</span>
+                <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-white/5 text-white/60 border border-white/10">#franchise-hub</span>
+              </div>
             </div>
+
+            <a
+              href="/news"
+              className="w-full py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-mono font-bold uppercase tracking-wider text-center hover:bg-[#00e08f] cursor-pointer transition-all flex items-center justify-center gap-1.5"
+            >
+              READ FULL NEWS RELEASE <ChevronRight className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
       </section>
@@ -441,7 +794,7 @@ function WebinarsPage() {
       <Footer />
 
       {/* =========================================================================
-          6. INTERACTIVE MODALS
+          7. INTERACTIVE MODALS
          ========================================================================= */}
 
       {/* Registration Modal */}
@@ -449,7 +802,10 @@ function WebinarsPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
           <div className="border border-white/20 rounded-[32px] max-w-lg w-full p-6 md:p-8 relative bg-[#0a0a0f] text-white">
             <button
-              onClick={() => setRegModalOpen(false)}
+              onClick={() => {
+                setRegModalOpen(false);
+                setSelectedWebinarForReg(null);
+              }}
               className="absolute top-5 right-5 p-2 rounded-full text-white/50 hover:text-white bg-white/10"
             >
               <X className="w-5 h-5" />
@@ -459,9 +815,13 @@ function WebinarsPage() {
               <span className="text-[10px] font-mono font-bold uppercase text-[#00D084]">
                 Webinar Pass Registration
               </span>
-              <h3 className="text-2xl font-black mt-1">Franchise Partner Onboarding</h3>
+              <h3 className="text-2xl font-black mt-1">
+                {selectedWebinarForReg ? selectedWebinarForReg.title : "Franchise Partner Onboarding"}
+              </h3>
               <p className="text-xs font-mono opacity-70 mt-1">
-                3/1/2026, 4:30:00 PM • Speaker: Arun Patel
+                {selectedWebinarForReg
+                  ? `${selectedWebinarForReg.datetime} • Speaker: ${selectedWebinarForReg.speaker}`
+                  : "3/1/2026, 4:30:00 PM • Speaker: Arun Patel"}
               </p>
             </div>
 
@@ -529,6 +889,51 @@ function WebinarsPage() {
                 CONFIRM FREE REGISTRATION
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Archive Video Replay Modal */}
+      {selectedReplay && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md overflow-y-auto">
+          <div className="border border-white/20 rounded-[32px] max-w-2xl w-full p-6 md:p-8 relative bg-[#0a0a0f] text-white">
+            <button
+              onClick={() => setSelectedReplay(null)}
+              className="absolute top-5 right-5 p-2 rounded-full text-white/50 hover:text-white bg-white/10"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="mb-4">
+              <span className="text-[10px] font-mono font-bold uppercase text-[#00D084]">
+                Archive Webinar Replay
+              </span>
+              <h3 className="text-2xl font-black mt-1">{selectedReplay.title}</h3>
+              <p className="text-xs font-mono opacity-70 mt-1">
+                Recorded {selectedReplay.date} • {selectedReplay.duration} • Speaker: {selectedReplay.speaker}
+              </p>
+            </div>
+
+            {/* Video Player Container */}
+            <div className="relative aspect-video rounded-2xl overflow-hidden bg-black border border-white/15 mb-4">
+              <video controls autoPlay className="w-full h-full object-cover">
+                <source src={selectedReplay.videoUrl} type="video/mp4" />
+              </video>
+            </div>
+
+            <p className="text-xs text-white/70 leading-relaxed mb-6">
+              {selectedReplay.description}
+            </p>
+
+            <div className="flex items-center justify-between pt-4 border-t border-white/10">
+              <span className="text-xs font-mono text-[#00D084]">{selectedReplay.views}</span>
+              <button
+                onClick={() => setSelectedReplay(null)}
+                className="px-6 py-2 rounded-full bg-white/10 text-white text-xs font-mono font-bold uppercase tracking-wider hover:bg-white/20 cursor-pointer"
+              >
+                CLOSE REPLAY
+              </button>
+            </div>
           </div>
         </div>
       )}
