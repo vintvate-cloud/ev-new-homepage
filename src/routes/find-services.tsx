@@ -238,7 +238,7 @@ function Service3DCard({ srv, onBook }: { srv: any; onBook: () => void }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onBook}
-      className="popular-service-card relative rounded-[30px] border border-white/15 hover:border-[#00D084]/80 bg-[#050b07] p-6 flex flex-col justify-between transition-all duration-300 ease-out cursor-pointer group overflow-hidden shadow-2xl min-h-[230px]"
+      className="popular-service-card relative rounded-[30px] border border-white/15 hover:border-[#00D084]/80 bg-[#050b07] p-6 flex flex-col justify-between transition-all duration-300 ease-out cursor-pointer group overflow-hidden min-h-[230px]"
     >
       {/* Background Image with Ambient Zoom */}
       <img
@@ -320,26 +320,63 @@ function FindServicesPage() {
   const SERVICE_CATEGORIES = ["All Services", "Battery & BMS", "Motor & Drive", "Diagnostics & Software"];
   const [activeServiceCategory, setActiveServiceCategory] = useState("All Services");
 
-  // Auto-scroll logic for Popular Services Carousel (2.5s interval)
+  // Touch / Mouse Drag / Wheel Gesture Handlers for 3D Wave Popular Services
   const [isServicesPaused, setIsServicesPaused] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const isDraggingWave = useRef(false);
+  const lastWheelTime = useRef(0);
+
+  const handleWaveDragStart = (clientX: number) => {
+    touchStartX.current = clientX;
+    touchEndX.current = clientX;
+    isDraggingWave.current = true;
+    setIsServicesPaused(true);
+  };
+
+  const handleWaveDragMove = (clientX: number) => {
+    if (!isDraggingWave.current) return;
+    touchEndX.current = clientX;
+  };
+
+  const handleWaveDragEnd = () => {
+    if (!isDraggingWave.current) return;
+    isDraggingWave.current = false;
+    const diffX = touchStartX.current - touchEndX.current;
+
+    // Swipe left (next card)
+    if (diffX > 35) {
+      setExpActiveIdx((prev) => (prev + 1) % EXPERIENCES_DATA.length);
+    }
+    // Swipe right (prev card)
+    else if (diffX < -35) {
+      setExpActiveIdx((prev) => (prev - 1 + EXPERIENCES_DATA.length) % EXPERIENCES_DATA.length);
+    }
+  };
+
+  const handleWaveWheelScroll = (e: React.WheelEvent<HTMLDivElement>) => {
+    const now = Date.now();
+    if (now - lastWheelTime.current < 300) return;
+
+    if (Math.abs(e.deltaX) > 15 || Math.abs(e.deltaY) > 25) {
+      lastWheelTime.current = now;
+      if (e.deltaX > 15 || e.deltaY > 25) {
+        setExpActiveIdx((prev) => (prev + 1) % EXPERIENCES_DATA.length);
+      } else {
+        setExpActiveIdx((prev) => (prev - 1 + EXPERIENCES_DATA.length) % EXPERIENCES_DATA.length);
+      }
+    }
+  };
 
   useEffect(() => {
     if (isServicesPaused) return;
 
     const interval = setInterval(() => {
-      const container = document.getElementById("services-carousel-track");
-      if (container) {
-        const { scrollLeft, scrollWidth, clientWidth } = container;
-        if (scrollLeft + clientWidth >= scrollWidth - 20) {
-          container.scrollTo({ left: 0, behavior: "smooth" });
-        } else {
-          container.scrollBy({ left: 350, behavior: "smooth" });
-        }
-      }
-    }, 2500);
+      setExpActiveIdx((prev) => (prev + 1) % EXPERIENCES_DATA.length);
+    }, 4000);
 
     return () => clearInterval(interval);
-  }, [isServicesPaused, activeServiceCategory]);
+  }, [isServicesPaused]);
 
   // Dynamic City Offer Campaign State
   const activeOffer = getCityOfferCampaign(searchCity || selectedCity || "Pune");
@@ -611,12 +648,12 @@ function FindServicesPage() {
     : POPULAR_SERVICES.filter(s => s.category === activeServiceCategory);
 
   const BRANDS = [
-    { name: "Ola Electric", logo: "⚡", models: "S1 Pro, S1 Air, S1 X" },
-    { name: "Ather", logo: "🔋", models: "450X, 450S, Rizta" },
-    { name: "TVS", logo: "🛵", models: "iQube, X" },
-    { name: "Hero Electric", logo: "🌱", models: "Optima, Nyx, Atria" },
-    { name: "Vida by Hero", logo: "✨", models: "Vida V1 Plus, V1 Pro" },
-    { name: "Bajaj Chetak", logo: "⚡", models: "Chetak Premium, Urbane" },
+    { name: "Ola Electric", logo: "/brands/ola.jpeg", models: "S1 Pro, S1 Air, S1 X" },
+    { name: "Ather", logo: "/brands/ather.jpeg", models: "450X, 450S, Rizta" },
+    { name: "TVS", logo: "/brands/tvs.webp", models: "iQube, X" },
+    { name: "Hero Electric", logo: "/brands/hero-electric.jpeg", models: "Optima, Nyx, Atria" },
+    { name: "Vida by Hero", logo: "/brands/hero-electric.jpeg", models: "Vida V1 Plus, V1 Pro" },
+    { name: "Bajaj Chetak", logo: "/brands/bajaj.png", models: "Chetak Premium, Urbane" },
   ];
 
   const WHY_CHOOSE = [
@@ -939,80 +976,226 @@ function FindServicesPage() {
             </motion.section>
 
             {/* =========================================================================
-          4. POPULAR SERVICES (Direction 2: Category Tabs + Horizontal Drag Carousel Slider)
+          4. POPULAR SERVICES (3D Wave Floating Perspective Showcase - Matching Screenshot)
          ========================================================================= */}
             <motion.section
               initial={{ opacity: 0, y: 45 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="popular-services-section py-20 px-6 bg-[#020403] font-serif relative overflow-hidden"
+              className="popular-services-section py-20 px-4 sm:px-6 bg-[#020403] font-serif relative overflow-hidden"
             >
-              {/* Ambient Glowing Spotlights */}
-              <div className="absolute top-1/2 left-0 w-80 h-80 bg-[#00D084]/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#00D084]/15 rounded-full blur-3xl pointer-events-none" />
+              {/* Ambient Spotlights */}
+              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#00D084]/10 rounded-full blur-[140px] pointer-events-none" />
 
-              <div className="max-w-7xl mx-auto space-y-8 relative z-10">
+              <div className="max-w-7xl mx-auto space-y-6 relative z-10 text-center">
                 
-                {/* Header Row: Title & Subtitle */}
+                {/* Top Section Header */}
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#00D084] animate-pulse" />
-                    <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                      Certified EV Packages
-                    </span>
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 text-xs font-mono font-bold text-[#00D084]">
+                    <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
+                    CERTIFIED EV SERVICE PACKAGES
                   </div>
-                  <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white tracking-tight">
+                  <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-extrabold text-white tracking-tight">
                     Popular Services
                   </h2>
-                  <p className="text-white/60 text-sm font-serif">
-                    Automated carousel featuring certified diagnostic scans & express repairs.
-                  </p>
                 </div>
 
-                {/* Horizontal Drag Carousel Track */}
+                {/* Screenshot Matching Top Floating Action Pills + Nav Arrows */}
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                  <button
+                    onClick={() => setExpActiveIdx((prev) => (prev - 1 + POPULAR_SERVICES.length) % POPULAR_SERVICES.length)}
+                    className="w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:border-[#00D084] hover:text-[#00D084] transition-all cursor-pointer backdrop-blur-md active:scale-95"
+                    title="Previous Service"
+                  >
+                    <ArrowRight className="w-4 h-4 rotate-180" />
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      const currentSrv = POPULAR_SERVICES[expActiveIdx % POPULAR_SERVICES.length];
+                      setBookingService({ title: currentSrv.title, price: currentSrv.price });
+                      setBookingModalOpen(true);
+                    }}
+                    className="px-6 py-2.5 rounded-full bg-white text-black font-extrabold text-xs sm:text-sm tracking-wide hover:bg-[#00D084] transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.25)] hover:shadow-[0_0_25px_rgba(0,208,132,0.5)] cursor-pointer"
+                  >
+                    Book Service Now
+                  </button>
+                  <button
+                    onClick={() => (window.location.href = "/services")}
+                    className="px-6 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-bold text-xs sm:text-sm tracking-wide hover:bg-white/20 transition-all duration-300 backdrop-blur-md cursor-pointer"
+                  >
+                    Explore Packages
+                  </button>
+
+                  <button
+                    onClick={() => setExpActiveIdx((prev) => (prev + 1) % POPULAR_SERVICES.length)}
+                    className="w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:border-[#00D084] hover:text-[#00D084] transition-all cursor-pointer backdrop-blur-md active:scale-95"
+                    title="Next Service"
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* 3D Wave Perspective Cards Showcase (Scrollable Left <-> Right) */}
                 <div
-                  id="services-carousel-track"
+                  className="relative w-full min-h-[440px] md:min-h-[480px] flex items-center justify-center perspective-[1200px] overflow-hidden py-8 mt-4 cursor-grab active:cursor-grabbing touch-pan-x"
                   onMouseEnter={() => setIsServicesPaused(true)}
-                  onMouseLeave={() => setIsServicesPaused(false)}
-                  onTouchStart={() => setIsServicesPaused(true)}
-                  onTouchEnd={() => setIsServicesPaused(false)}
-                  className="flex items-center gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-2 -mx-6 px-6 snap-x snap-mandatory"
-                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                  onMouseLeave={() => {
+                    setIsServicesPaused(false);
+                    isDraggingWave.current = false;
+                  }}
+                  onMouseDown={(e) => handleWaveDragStart(e.clientX)}
+                  onMouseMove={(e) => handleWaveDragMove(e.clientX)}
+                  onMouseUp={handleWaveDragEnd}
+                  onTouchStart={(e) => handleWaveDragStart(e.touches[0].clientX)}
+                  onTouchMove={(e) => handleWaveDragMove(e.touches[0].clientX)}
+                  onTouchEnd={handleWaveDragEnd}
+                  onWheel={handleWaveWheelScroll}
                 >
-                  <AnimatePresence mode="popLayout">
-                    {POPULAR_SERVICES.map((srv) => (
-                      <motion.div
-                        key={srv.id}
-                        layout
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.4 }}
-                        className="snap-start shrink-0 min-w-[290px] sm:min-w-[340px] max-w-[340px]"
-                      >
-                        <Service3DCard
-                          srv={srv}
-                          onBook={() => {
-                            setBookingService({ title: srv.title, price: srv.price });
-                            setBookingModalOpen(true);
+                  {/* Left & Right Vignette Soft Blur Shadows */}
+                  <div className="absolute left-0 top-0 bottom-0 w-20 md:w-44 bg-gradient-to-r from-[#020403] via-[#020403]/85 to-transparent z-20 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-20 md:w-44 bg-gradient-to-l from-[#020403] via-[#020403]/85 to-transparent z-20 pointer-events-none" />
+
+                  <div className="flex items-center justify-center gap-3 sm:gap-6 md:gap-8 w-full max-w-[1400px]">
+                    {[-2, -1, 0, 1, 2].map((offset) => {
+                      const index = (expActiveIdx + offset + POPULAR_SERVICES.length) % POPULAR_SERVICES.length;
+                      const srv = POPULAR_SERVICES[index];
+
+                      // Calculate 3D Wave curve transformation & blur matching user request
+                      let translateY = 0;
+                      let rotateY = 0;
+                      let scale = 1;
+                      let opacity = 1;
+                      let filter = "blur(0px)";
+                      let zIndex = 10;
+
+                      if (offset === 0) {
+                        // Center Card: Decreased size (scale 0.98), crystal clear (blur 0px), focused
+                        translateY = 30;
+                        rotateY = 0;
+                        scale = 0.98;
+                        opacity = 1;
+                        filter = "blur(0px)";
+                        zIndex = 30;
+                      } else if (offset === -1) {
+                        // Left Inner Card: Slightly blurry, elevated
+                        translateY = -30;
+                        rotateY = 12;
+                        scale = 0.88;
+                        opacity = 0.75;
+                        filter = "blur(3.5px)";
+                        zIndex = 20;
+                      } else if (offset === 1) {
+                        // Right Inner Card: Slightly blurry, elevated
+                        translateY = -30;
+                        rotateY = -12;
+                        scale = 0.88;
+                        opacity = 0.75;
+                        filter = "blur(3.5px)";
+                        zIndex = 20;
+                      } else if (offset === -2) {
+                        // Far Left Card: More blurry, lower dip
+                        translateY = 15;
+                        rotateY = 22;
+                        scale = 0.76;
+                        opacity = 0.45;
+                        filter = "blur(7px)";
+                        zIndex = 10;
+                      } else if (offset === 2) {
+                        // Far Right Card: More blurry, lower dip
+                        translateY = 15;
+                        rotateY = -22;
+                        scale = 0.76;
+                        opacity = 0.45;
+                        filter = "blur(7px)";
+                        zIndex = 10;
+                      }
+
+                      return (
+                        <motion.div
+                          key={`${srv.id}-${offset}`}
+                          layout
+                          animate={{
+                            y: translateY,
+                            rotateY: rotateY,
+                            scale: scale,
+                            opacity: opacity,
+                            filter: filter,
                           }}
-                        />
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
-                </div>
+                          transition={{
+                            duration: 0.65,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          onClick={() => {
+                            if (offset !== 0) {
+                              setExpActiveIdx(index);
+                            } else {
+                              setBookingService({ title: srv.title, price: srv.price });
+                              setBookingModalOpen(true);
+                            }
+                          }}
+                          style={{ zIndex }}
+                          className={`shrink-0 w-[240px] sm:w-[280px] md:w-[300px] h-[350px] sm:h-[390px] rounded-[32px] border bg-[#060c08] p-6 flex flex-col justify-between transition-all duration-500 cursor-pointer group overflow-hidden relative select-none ${
+                            offset === 0
+                              ? "border-[#00D084]"
+                              : "border-white/15 hover:border-white/30"
+                          }`}
+                        >
+                          {/* Background Image with Overlay */}
+                          <img
+                            src={srv.image}
+                            alt={srv.title}
+                            className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 pointer-events-none ${
+                              offset === 0 ? "opacity-65 group-hover:opacity-85 group-hover:scale-110" : "opacity-40"
+                            }`}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/75 to-transparent pointer-events-none" />
 
-                {/* Carousel Scroll Indicator Footer */}
-                <div className="flex items-center justify-between pt-2 border-t border-white/10 text-xs font-mono text-white/50">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00D084]" />
-                    <span>Showing {POPULAR_SERVICES.length} Certified EV Packages</span>
+                          {/* Light Sweep Glow on Hover */}
+                          {offset === 0 && (
+                            <div className="absolute -inset-full top-0 block h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-[#00D084]/20 to-transparent group-hover:left-full transition-all duration-1000 pointer-events-none" />
+                          )}
+
+                          {/* Top Bar: Duration & Hubs Badges */}
+                          <div className="relative z-10 flex items-center justify-between">
+                            <span className="text-[10px] font-mono font-bold text-[#00D084] bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-[#00D084]/40 shadow-sm">
+                              <Clock className="w-3 h-3 inline-block mr-1" />
+                              {srv.duration}
+                            </span>
+                            <span className="text-[10px] font-mono font-bold text-white/80 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
+                              {srv.centers}
+                            </span>
+                          </div>
+
+                          {/* Bottom Content Area */}
+                          <div className="relative z-10 space-y-3 mt-auto pt-4 text-left">
+                            <h4 className="text-lg sm:text-xl font-serif font-black text-white group-hover:text-[#00D084] transition-colors leading-snug">
+                              {srv.title}
+                            </h4>
+
+                            <div className="pt-3 border-t border-white/15 flex items-center justify-between">
+                              <span className="text-xl sm:text-2xl font-black font-mono text-white group-hover:text-[#00D084] transition-colors">
+                                {srv.price}
+                              </span>
+
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setBookingService({ title: srv.title, price: srv.price });
+                                  setBookingModalOpen(true);
+                                }}
+                                className="px-4 py-2 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider group-hover:bg-[#00e08f] transition-all flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,208,132,0.4)] cursor-pointer"
+                              >
+                                <span>Book Now</span>
+                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
                   </div>
-
-                  <span className="text-[11px] text-white/40">
-                    💡 TIP: Drag or scroll horizontally to explore all services
-                  </span>
                 </div>
 
               </div>
@@ -1058,13 +1241,21 @@ function FindServicesPage() {
                         setSelectedBrand(brand.name);
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className="backdrop-blur-xl bg-white/[0.03] border border-white/15 hover:border-[#00D084] rounded-2xl p-5 text-center transition-all duration-300 cursor-pointer hover:bg-[#00D084]/15 hover:scale-[1.03] hover:shadow-[0_12px_30px_rgba(0,208,132,0.2)] group"
+                      className="backdrop-blur-xl bg-[#050907] border border-white/15 hover:border-[#00D084] rounded-2xl p-5 text-center transition-all duration-300 cursor-pointer hover:bg-[#00D084]/15 hover:scale-[1.03] hover:shadow-[0_12px_30px_rgba(0,208,132,0.2)] group flex flex-col items-center justify-between min-h-[160px]"
                     >
-                      <div className="text-3xl mb-2">{brand.logo}</div>
-                      <h4 className="text-sm font-serif font-bold text-white group-hover:text-[#00D084]">
-                        {brand.name}
-                      </h4>
-                      <p className="text-[10px] text-white/50 font-serif mt-1">{brand.models}</p>
+                      <div className="w-14 h-14 rounded-2xl border border-white/15 bg-black/60 p-2.5 flex items-center justify-center mb-2 group-hover:border-[#00D084]/50 group-hover:scale-110 transition-all shadow-md overflow-hidden shrink-0">
+                        <img
+                          src={brand.logo}
+                          alt={brand.name}
+                          className="w-full h-full object-contain rounded-lg"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
+                          {brand.name}
+                        </h4>
+                        <p className="text-[10px] text-white/50 font-serif mt-1">{brand.models}</p>
+                      </div>
                     </div>
                   ))}
                 </div>

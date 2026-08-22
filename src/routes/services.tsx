@@ -845,159 +845,213 @@ function ServicesPage() {
       </section>
 
       {/* =========================================================================
-          6. VALUE PACKAGES SECTION
+          7. BRAND COLLABORATIONS & ENTERPRISE FLEET SERVICES
          ========================================================================= */}
       <section
-        id="packages"
-        className={`py-24 border-t px-6 ${
+        id="collaborations"
+        className={`py-24 border-t px-6 relative overflow-hidden ${
           isLight
-            ? "border-[#d2e0d5] bg-[#e7f1e9]"
-            : "border-white/10 bg-[#060b08]"
+            ? "border-[#d2e0d5] bg-[#f0f6f2]"
+            : "border-white/10 bg-[#030704]"
         }`}
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
-            <div className="max-w-2xl">
-              <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                Value Packages
-              </span>
+        {/* Subtle Ambient Glow Spotlights */}
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#00D084]/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#00D084]/10 rounded-full blur-[160px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10 space-y-16">
+          {/* Header Row */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+            <div className="max-w-3xl space-y-3">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-xs font-mono font-bold text-[#00D084]">
+                <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
+                ENTERPRISE & OEM COLLABORATIONS
+              </div>
               <h2
-                className={`text-4xl md:text-5xl font-black tracking-tight mt-3 mb-4 ${
+                className={`text-3xl sm:text-5xl font-black tracking-tight ${
                   isLight ? "text-[#1a2320]" : "text-white"
                 }`}
               >
-                More services. <span className="text-[#00D084]">Better savings.</span>
+                Empowering Top EV Brands & <span className="text-[#00D084]">Delivery Fleets</span>
               </h2>
               <p
-                className={`text-base font-light leading-relaxed ${
+                className={`text-base font-normal leading-relaxed ${
                   isLight ? "text-[#4a5851]" : "text-white/70"
                 }`}
               >
-                Pre-bundled EV care packs engineered to keep your vehicle operating at peak efficiency.
+                We partner with leading EV OEMs, last-mile delivery providers, and corporate fleets to provide 99.8% fleet uptime, certified battery diagnostics, and doorstep emergency support across 150+ cities.
               </p>
             </div>
 
-            <div>
-              <button
-                onClick={() => {
-                  setSelectedCategory("All Services");
-                  window.scrollTo({ top: 800, behavior: "smooth" });
-                }}
-                className="px-6 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer shadow-sm"
+            <div className="shrink-0">
+              <Link
+                to="/franchise"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.3)] cursor-pointer hover:scale-105"
               >
-                EXPLORE ALL SERVICES
-              </button>
+                <span>BECOME A BRAND PARTNER</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
 
+          {/* Marquee Brand Logos Strip */}
+          <div
+            className={`p-6 rounded-[28px] border overflow-hidden ${
+              isLight
+                ? "bg-white/80 border-[#d2e0d5] shadow-sm"
+                : "bg-[#070d0a]/90 border-white/15"
+            }`}
+          >
+            <div className="text-center mb-4">
+              <span className={`text-xs font-mono font-bold uppercase tracking-widest ${isLight ? "text-slate-500" : "text-white/50"}`}>
+                TRUSTED BY LEADING EV MANUFACTURERS & LOGISTICS NETWORKS
+              </span>
+            </div>
+
+            <div className="flex items-center justify-around flex-wrap gap-8 py-2">
+              {[
+                { name: "Ola Electric", logo: "/brands/ola.jpeg" },
+                { name: "Ather Energy", logo: "/brands/ather.jpeg" },
+                { name: "TVS EV", logo: "/brands/tvs.webp" },
+                { name: "Bajaj Chetak", logo: "/brands/bajaj.png" },
+                { name: "Hero Electric", logo: "/brands/hero-electric.jpeg" },
+                { name: "Mahindra EV", logo: "/brands/mahindra.jpeg" },
+                { name: "Revolt", logo: "/brands/revolt.webp" },
+                { name: "BluSmart", logo: "/brands/blu_smart_mobility_logo.jpeg" },
+              ].map((b, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 bg-black/40 hover:bg-[#00D084]/15 border border-white/10 hover:border-[#00D084]/50 px-4 py-2.5 rounded-2xl transition-all duration-300 group cursor-pointer"
+                >
+                  <div className="w-9 h-9 rounded-xl overflow-hidden bg-black/60 p-1 flex items-center justify-center shrink-0 border border-white/15">
+                    <img src={b.logo} alt={b.name} className="w-full h-full object-contain" />
+                  </div>
+                  <span className="text-xs font-bold text-white group-hover:text-[#00D084] transition-colors">
+                    {b.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 4 Feature Columns Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {PACKAGES.map((pkg) => {
-              const Icon = pkg.icon;
+            {[
+              {
+                title: "OEM Authorized Service Centers",
+                badge: "OEM WARRANTY",
+                desc: "Certified factory-grade diagnostic scanners, OEM spare parts stock, and official warranty claim processing for top brands.",
+                features: ["Official OEM Parts", "Warranty Claim Handling", "ECU Calibration"],
+                icon: ShieldCheck,
+              },
+              {
+                title: "Delivery Fleet Maintenance",
+                badge: "EXPRESS SLA",
+                desc: "Dedicated fast-track repair lanes for Swiggy, Zomato, Zepto & Blinkit rider fleets to guarantee maximum daily orders.",
+                features: ["15-Min Breakdown Dispatch", "Priority Service Lanes", "Monthly Fleet Audits"],
+                icon: Zap,
+              },
+              {
+                title: "Corporate EV Fleet Operations",
+                badge: "ENTERPRISE",
+                desc: "Turnkey fleet maintenance for IT parks, cabs & corporate employee mobility EVs with automated SOH battery reporting.",
+                features: ["Predictive AI Maintenance", "Custom SLA Agreements", "Telematics OBD-II"],
+                icon: Award,
+              },
+              {
+                title: "Franchise & Academy Network",
+                badge: "COLLABORATION",
+                desc: "Collaborate with our EV engineering academy to train technicians & deploy automated Autobot diagnostic modules.",
+                features: ["Technician Certification", "Autobot OS Software", "Turnkey Workshop Hubs"],
+                icon: Sparkles,
+              },
+            ].map((col, idx) => {
+              const Icon = col.icon;
               return (
                 <div
-                  key={pkg.id}
-                  className={`rounded-[28px] p-6 flex flex-col justify-between transition-all duration-300 border-none relative group ${
+                  key={idx}
+                  className={`rounded-[28px] p-6 flex flex-col justify-between transition-all duration-300 border relative group ${
                     isLight
-                      ? "bg-white shadow-md hover:shadow-2xl"
-                      : "bg-[#090f0c] shadow-xl hover:shadow-[0_15px_40px_rgba(0,208,132,0.15)]"
+                      ? "bg-white border-[#d8e5dc] hover:border-[#009b4e] shadow-sm hover:shadow-xl"
+                      : "bg-[#080e0a] border-white/15 hover:border-[#00D084] shadow-md hover:shadow-[0_10px_30px_rgba(0,208,132,0.15)]"
                   }`}
                 >
-                  <div className="absolute top-4 right-4 bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full">
-                    {pkg.tag}
-                  </div>
-
                   <div>
-                    <div className="w-12 h-12 rounded-2xl bg-[#00D084]/10 border border-[#00D084]/20 flex items-center justify-center text-[#00D084] mb-6">
-                      <Icon className="w-6 h-6" />
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-12 h-12 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] group-hover:scale-110 transition-transform">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="text-[10px] font-mono font-bold text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/30 px-3 py-1 rounded-full">
+                        {col.badge}
+                      </span>
                     </div>
 
                     <h3
-                      className={`text-xl font-bold mb-2 ${
+                      className={`text-lg font-extrabold mb-2 leading-snug ${
                         isLight ? "text-[#1a2320]" : "text-white"
                       }`}
                     >
-                      {pkg.title}
+                      {col.title}
                     </h3>
                     <p
-                      className={`text-xs mb-6 font-normal leading-relaxed ${
+                      className={`text-xs font-normal leading-relaxed mb-6 ${
                         isLight ? "text-[#52645a]" : "text-white/60"
                       }`}
                     >
-                      {pkg.desc}
+                      {col.desc}
                     </p>
 
-                    <div className="space-y-2.5 mb-8">
-                      {pkg.features.map((feature, i) => (
-                        <div
-                          key={i}
-                          className={`flex items-start gap-2.5 text-xs ${
-                            isLight ? "text-[#334139]" : "text-white/80"
-                          }`}
-                        >
-                          <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
-                          <span>{feature}</span>
+                    <div className="space-y-2 mb-6">
+                      {col.features.map((feat, fIdx) => (
+                        <div key={fIdx} className="flex items-center gap-2 text-xs">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0" />
+                          <span className={isLight ? "text-[#334139]" : "text-white/80"}>
+                            {feat}
+                          </span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div
-                    className={`pt-6 border-t ${
-                      isLight ? "border-slate-100" : "border-white/10"
-                    }`}
+                  <Link
+                    to="/contact"
+                    className="w-full py-3 rounded-full border border-[#00D084]/40 text-[#00D084] hover:bg-[#00D084] hover:text-[#020403] text-[11px] font-black uppercase tracking-wider transition-all text-center block cursor-pointer font-sans"
                   >
-                    <div className="flex items-baseline gap-3 mb-2">
-                      <span
-                        className={`text-3xl font-extrabold font-mono ${
-                          isLight ? "text-[#1a2320]" : "text-white"
-                        }`}
-                      >
-                        {pkg.price}
-                      </span>
-                      <span className="text-sm text-slate-400 line-through font-mono">
-                        {pkg.oldPrice}
-                      </span>
-                      <span className="text-xs font-bold text-[#00D084] bg-[#00D084]/10 px-2 py-0.5 rounded">
-                        {pkg.save}
-                      </span>
-                    </div>
-
-                    <div
-                      className={`text-[11px] font-mono mb-6 ${
-                        isLight ? "text-[#607267]" : "text-white/50"
-                      }`}
-                    >
-                      {pkg.validity}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleBookPackage(pkg);
-                        }}
-                        className={`py-3 rounded-full border text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer text-center ${
-                          isLight
-                            ? "border-[#009b4e] text-[#009b4e] hover:bg-[#009b4e]/10"
-                            : "border-[#00D084] text-[#00D084] hover:bg-[#00D084]/10"
-                        }`}
-                      >
-                        DETAILS
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleBookPackage(pkg);
-                        }}
-                        className="py-3 rounded-full bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-[11px] font-black uppercase tracking-wider transition-all shadow-md cursor-pointer text-center"
-                      >
-                        BOOK NOW
-                      </button>
-                    </div>
-                  </div>
+                    INQUIRE PARTNERSHIP
+                  </Link>
                 </div>
               );
             })}
+          </div>
+
+          {/* B2B Callout Box */}
+          <div
+            className={`p-8 sm:p-10 rounded-[32px] border flex flex-col md:flex-row items-center justify-between gap-6 ${
+              isLight
+                ? "bg-gradient-to-r from-[#e3efe6] to-[#d8e8dc] border-[#c2d7c8]"
+                : "bg-gradient-to-r from-[#07120a] to-[#040906] border-[#00D084]/30"
+            }`}
+          >
+            <div className="space-y-2 text-left">
+              <span className="text-xs font-mono font-bold text-[#00D084] uppercase tracking-wider">
+                • NEED CUSTOM FLEET PACKAGES?
+              </span>
+              <h4 className={`text-xl sm:text-2xl font-black ${isLight ? "text-[#1a2320]" : "text-white"}`}>
+                Managing a fleet of 10+ EVs? Get custom SLA & priority service.
+              </h4>
+              <p className={`text-xs sm:text-sm ${isLight ? "text-[#4a5851]" : "text-white/70"}`}>
+                Our enterprise engineers will tailor custom maintenance contracts and dedicated mobile technician units for your team.
+              </p>
+            </div>
+
+            <div className="shrink-0 flex items-center gap-3">
+              <Link
+                to="/contact"
+                className="px-6 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer whitespace-nowrap shadow-md inline-block"
+              >
+                REQUEST FLEET DEMO
+              </Link>
+            </div>
           </div>
         </div>
       </section>

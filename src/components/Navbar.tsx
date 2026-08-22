@@ -52,14 +52,14 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
   // Navigation Items matching exact screenshot layout
   const navItems = [
     { label: "Franchise", href: "/#warehouse", hasDropdown: true },
-    { label: "Careers", href: "/careers", hasDropdown: true },
-    { label: "Find Service", href: "/services#products-grid", hasDropdown: true },
-    { label: "Webinars", href: "/#webinars", hasDropdown: true },
-    { label: "Events", href: "/#events", hasDropdown: true },
+    { label: "Careers", href: "/careers", hasDropdown: false },
+    { label: "Find Service", href: "/find-services", hasDropdown: false },
+    { label: "Webinars", href: "/#webinars", hasDropdown: false },
+    { label: "Events", href: "/#events", hasDropdown: false },
     { label: "EV News", href: "/#news", hasDropdown: false },
     { label: "Blog", href: "/#blog", hasDropdown: false },
     { label: "Media", href: "/#media", hasDropdown: false },
-    { label: "Services", href: "/services", hasDropdown: false },
+    { label: "Services", href: "/services", hasDropdown: true },
   ];
 
   return (
