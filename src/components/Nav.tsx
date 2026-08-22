@@ -146,33 +146,49 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "py-1" : "py-2"}`}
       >
         <div
-          className={`mx-auto flex max-w-[1400px] items-center justify-between transition-all duration-500 ${
-            scrolled
-              ? "mx-4 md:mx-8 px-6 py-1.5 rounded-full mt-1.5"
-              : "mx-4 md:mx-8 px-6 py-2.5 rounded-full mt-2"
+          className={`mx-auto flex max-w-[1400px] items-center gap-2.5 md:gap-3 transition-all duration-500 ${
+            scrolled ? "mx-4 md:mx-8 mt-1.5" : "mx-4 md:mx-8 mt-2"
           }`}
-          style={{
-            background: siteTheme === "light" ? "rgba(255, 255, 255, 0.95)" : "rgba(10, 10, 10, 0.85)",
-            backdropFilter: "blur(20px)",
-            border: siteTheme === "light" ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.08)",
-            boxShadow: siteTheme === "light" ? "0 4px 24px rgba(0,0,0,0.06)" : "0 4px 24px rgba(0,0,0,0.4)",
-          }}
         >
-          <a href="/" className="flex items-center gap-2.5 group">
+          {/* Logo OUTSIDE the bordered navbar pill container */}
+          <a href="/" className="flex items-center shrink-0 group">
             <img
               src="/logo-myevservice.jpg"
               alt="My EV Service Logo"
-              className="h-9 w-auto rounded-lg object-contain border border-white/5"
-            />
-            <span
-              id="nav-logo-text"
-              className={`text-[14px] font-bold tracking-[0.15em] uppercase transition-colors ${
-                siteTheme === "light" ? "text-black" : "text-white"
+              className={`w-auto rounded-xl object-contain transition-all duration-300 group-hover:scale-105 ${
+                scrolled ? "h-9" : "h-10 sm:h-11"
+              } ${
+                siteTheme === "light"
+                  ? "border border-black/10 shadow-md bg-white"
+                  : "border border-white/20 shadow-[0_0_15px_rgba(0,0,0,0.6)] bg-black"
               }`}
-            >
-              MY EV SERVICE
-            </span>
+            />
           </a>
+
+          {/* Bordered Navbar Pill Container starting from MY EV SERVICE text */}
+          <div
+            className={`flex-1 flex items-center justify-between transition-all duration-500 ${
+              scrolled
+                ? "pl-3.5 sm:pl-4 pr-5 py-1.5 rounded-full"
+                : "pl-4 sm:pl-5 pr-6 py-2.5 rounded-full"
+            }`}
+            style={{
+              background: siteTheme === "light" ? "rgba(255, 255, 255, 0.95)" : "rgba(10, 10, 10, 0.85)",
+              backdropFilter: "blur(20px)",
+              border: siteTheme === "light" ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.08)",
+              boxShadow: siteTheme === "light" ? "0 4px 24px rgba(0,0,0,0.06)" : "0 4px 24px rgba(0,0,0,0.4)",
+            }}
+          >
+            <a href="/" className="flex items-center gap-2 group">
+              <span
+                id="nav-logo-text"
+                className={`text-[14px] font-bold tracking-[0.15em] uppercase transition-colors ${
+                  siteTheme === "light" ? "text-black" : "text-white"
+                }`}
+              >
+                MY EV SERVICE
+              </span>
+            </a>
 
           {/* Desktop Nav with Mega Menu */}
           <div className="relative hidden items-center gap-1 xl:flex">
@@ -403,7 +419,8 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
             </button>
           </div>
         </div>
-      </motion.header>
+      </div>
+    </motion.header>
 
       {/* Mobile full-screen overlay */}
       <motion.div
