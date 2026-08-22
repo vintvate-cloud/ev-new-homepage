@@ -1,33 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import {
   Newspaper,
-  Search,
-  Zap,
   Clock,
-  TrendingUp,
   Bookmark,
   Share2,
   X,
   Sparkles,
   ArrowRight,
   ChevronRight,
-  ShieldCheck,
-  Battery,
-  Globe,
-  Radio,
   Calendar,
   User,
-  Eye,
-  CheckCircle2,
-  Send,
-  Flame,
-  ChevronLeft,
-  ThumbsUp,
 } from "lucide-react";
 import { toast } from "sonner";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const Route = createFileRoute("/news")({
   component: EVNewsPage,
@@ -104,7 +93,7 @@ const ARTICLES: NewsArticle[] = [
       role: "Senior Electrochemical Scientist",
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
     },
-    img: "https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=1200&auto=format&fit=crop&q=80",
+    img: "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=1600&auto=format&fit=crop&q=85",
     featured: true,
     views: "18.9k",
     likes: 1250,
@@ -126,7 +115,7 @@ const ARTICLES: NewsArticle[] = [
       role: "Clean Energy Policy Correspondent",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
     },
-    img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80",
+    img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=1600&auto=format&fit=crop&q=85",
     featured: true,
     views: "9.8k",
     likes: 610,
@@ -205,6 +194,9 @@ function EVNewsPage() {
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const [featuredIdx, setFeaturedIdx] = useState(0);
 
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const cardsOverlayRef = useRef<HTMLDivElement>(null);
+
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
       typeof document !== "undefined" &&
@@ -236,6 +228,28 @@ function EVNewsPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  // GSAP ScrollTrigger Stuck Hero Animation (Matching Media & Events Page)
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.to(heroTextRef.current, {
+        opacity: 0,
+        scale: 0.92,
+        y: -40,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: cardsOverlayRef.current,
+          start: "top 90%",
+          end: "top 30%",
+          scrub: 0.6,
+        },
+      });
+    });
+
+    return () => ctx.revert();
   }, []);
 
   // Auto-rotate featured hero stories every 6 seconds
@@ -295,357 +309,365 @@ function EVNewsPage() {
 
   return (
     <div
-      className={`min-h-screen font-sans transition-colors duration-500 relative overflow-hidden ${
+      className={`min-h-screen font-sans transition-colors duration-500 relative overflow-x-hidden ${
         isLight
           ? "bg-[#f4f8f5] text-[#1a2320] selection:bg-[#00D084] selection:text-black"
           : "bg-[#020503] text-white selection:bg-[#00D084] selection:text-black"
       }`}
     >
-      {/* Ambient Neon Glow Background Canvas */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-radial from-[#00D084]/15 via-transparent to-transparent blur-3xl pointer-events-none z-0" />
-
-      {/* Shared Header Navigation */}
+      {/* Shared Navigation (Positioned over fixed hero) */}
       <Nav />
 
-      {/* =========================================================================
-          2. CINEMATIC FULL-SCREEN HERO BREAKING NEWS SLIDER
-         ========================================================================= */}
-      <section className="relative w-full h-[calc(100vh-80px)] min-h-[580px] mt-20 overflow-hidden flex flex-col justify-between p-6 sm:p-10 md:p-14 text-white group border-b border-white/10">
-        {/* Background Image with Dynamic Zoom */}
-        <img
-          src={currentHero.img}
-          alt={currentHero.title}
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 pointer-events-none opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/50 to-[#020503]/70 pointer-events-none" />
+      {/* Main Stuck Hero Container Wrapper */}
+      <div className="relative min-h-screen">
+        
+        {/* =========================================================================
+            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0 BEHIND NAVBAR)
+           ========================================================================= */}
+        <div className="fixed top-0 left-0 right-0 h-screen w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background Hero Image - 100% Raw Clarity (No shadow layer, no line) */}
+          <img
+            key={currentHero.id}
+            src={currentHero.img}
+            alt={currentHero.title}
+            className="w-full h-full object-cover object-center opacity-100 pointer-events-none transition-all duration-700 animate-in fade-in duration-500"
+          />
 
-        {/* Top Header Badges */}
-        <div className="relative z-10 flex items-center justify-between w-full max-w-7xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-[0_0_20px_rgba(0,208,132,0.4)]">
-            <Flame className="w-3.5 h-3.5 fill-black" />
-            TOP COVERAGE • 0{featuredIdx + 1} OF 03
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-mono font-bold text-white/90 border border-white/20 flex items-center gap-1.5">
-              <Eye className="w-3.5 h-3.5 text-[#00D084]" /> {currentHero.views} Views
+          {/* Hero Content Container (Fades out & scales down as cards overlay rises) */}
+          <div
+            ref={heroTextRef}
+            className="absolute inset-0 flex flex-col justify-end pb-24 px-6 sm:px-12 lg:px-16 max-w-4xl mx-auto space-y-3 z-10 text-left pointer-events-none"
+          >
+            <span className="text-xs font-sans font-semibold uppercase text-[#00D084] tracking-widest block drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+              {currentHero.category} • {currentHero.date}
             </span>
-          </div>
-        </div>
 
-        {/* Hero Story Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full">
-          <div className="text-xs font-mono font-bold uppercase text-[#00D084] tracking-[0.2em] mb-2 flex items-center gap-2">
-            <span>{currentHero.category}</span>
-            <span>•</span>
-            <span>{currentHero.date}</span>
-          </div>
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-[-0.04em] !text-white leading-[1.08] drop-shadow-[0_4px_25px_rgba(0,0,0,0.98)] max-w-3xl">
+              {currentHero.title}
+            </h1>
 
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white leading-tight tracking-tight mb-4 drop-shadow-xl max-w-4xl">
-            {currentHero.title}
-          </h1>
+            <p className="text-xs sm:text-sm font-sans font-medium text-white/90 leading-relaxed max-w-xl line-clamp-2 drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
+              {currentHero.excerpt}
+            </p>
 
-          <p className="text-xs sm:text-sm md:text-base text-white/80 font-normal leading-relaxed mb-6 max-w-2xl line-clamp-2">
-            {currentHero.excerpt}
-          </p>
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 pointer-events-auto">
+              <div className="flex items-center gap-3">
+                <img
+                  src={currentHero.author.avatar}
+                  alt={currentHero.author.name}
+                  className="w-11 h-11 rounded-full object-cover border-2 border-[#00D084] shadow-md"
+                />
+                <div>
+                  <span className="block text-sm font-sans font-bold text-white leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                    {currentHero.author.name}
+                  </span>
+                  <span className="block text-xs font-sans text-white/80 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                    {currentHero.author.role}
+                  </span>
+                </div>
+              </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-6 border-t border-white/20">
-            <div className="flex items-center gap-3">
-              <img
-                src={currentHero.author.avatar}
-                alt={currentHero.author.name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-[#00D084]"
-              />
-              <div>
-                <span className="block text-sm font-bold text-white leading-tight">
-                  {currentHero.author.name}
-                </span>
-                <span className="block text-xs text-white/60 font-mono">
-                  {currentHero.author.role}
-                </span>
+              {/* Slider Controls & Read CTA Button */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  {featuredStories.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setFeaturedIdx(idx)}
+                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                        featuredIdx === idx
+                          ? "w-8 bg-[#00D084]"
+                          : "w-2.5 bg-white/50 hover:bg-white"
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => handleOpenArticle(currentHero)}
+                  className="px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest flex items-center gap-2 hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] hover:scale-105 cursor-pointer"
+                >
+                  <span>READ FULL STORY</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
-
-            {/* Slider Dots Indicator & CTA */}
-            <div className="flex items-center gap-3">
-              {featuredStories.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setFeaturedIdx(idx);
-                  }}
-                  className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                    featuredIdx === idx
-                      ? "w-8 bg-[#00D084]"
-                      : "w-2.5 bg-white/30 hover:bg-white/60"
-                  }`}
-                />
-              ))}
-
-              <button
-                onClick={() => handleOpenArticle(currentHero)}
-                className="ml-4 px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest flex items-center gap-2 hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] hover:scale-105"
-              >
-                READ FULL STORY <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
           </div>
         </div>
-      </section>
 
-      {/* =========================================================================
-          3. CATEGORY FILTER & HEADER
-         ========================================================================= */}
-      <section className="pt-12 pb-6 px-6 max-w-7xl mx-auto relative z-10">
-        <div className="mb-6">
-          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084]">
-            EV Newsroom & Insights
-          </span>
-          <h2
-            className={`text-3xl sm:text-5xl font-black tracking-tight mt-1 ${
-              isLight ? "text-[#1a2320]" : "text-white"
-            }`}
-          >
-            Explore Latest Articles & Reports
-          </h2>
-        </div>
+        {/* 100vh Spacer for Smooth Fixed Hero Scroll */}
+        <div className="h-screen w-full pointer-events-none" />
 
-        {/* Glass Category Filter Pills */}
-        <div className="flex items-center gap-3 overflow-x-auto pt-4 pb-8 mb-12 md:mb-20 scrollbar-none">
-          {NEWS_CATEGORIES.map((cat) => {
-            const isActive = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`shrink-0 px-6 py-3 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer border ${
-                  isActive
-                    ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-[0_0_20px_rgba(0,208,132,0.3)] scale-105"
-                    : isLight
-                    ? "bg-white text-[#334139] border-[#c5d6ca] hover:bg-[#e2ebe4] hover:text-[#1a2320]"
-                    : "bg-[#070d09]/80 text-white/70 border-white/10 hover:bg-white/15 hover:text-white backdrop-blur-md"
+        {/* =========================================================================
+            2. CARDS OVERLAY CONTAINER (RISES UP DIRECTLY OVER THE FIXED HERO)
+           ========================================================================= */}
+        <div
+          ref={cardsOverlayRef}
+          className={`relative z-10 min-h-screen rounded-t-[40px] border-t shadow-2xl transition-colors duration-500 ${
+            isLight
+              ? "bg-[#f4f8f5] text-[#1a2320] border-black/10"
+              : "bg-[#020503] text-white border-white/15"
+          }`}
+        >
+          
+          {/* =========================================================================
+              3. CATEGORY FILTER & HEADER
+             ========================================================================= */}
+          <section className="pt-16 pb-6 px-6 lg:px-12 max-w-7xl mx-auto">
+            <div className="mb-6 text-left">
+              <span className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-[#00D084] block mb-1">
+                EV Newsroom &amp; Insights
+              </span>
+              <h2
+                className={`text-3xl sm:text-5xl font-sans font-bold tracking-[-0.04em] ${
+                  isLight ? "text-[#1a2320]" : "text-white"
                 }`}
               >
-                {cat.toUpperCase()}
-              </button>
-            );
-          })}
-        </div>
-      </section>
+                Explore Latest Articles &amp; Reports
+              </h2>
+            </div>
 
-      {/* =========================================================================
-          4. ALTERNATING TESLA-STYLE SPLIT ARTICLES LIST (1 BOX LEFT, 1 BOX RIGHT)
-         ========================================================================= */}
-      <section className="pt-6 pb-24 px-6 max-w-7xl mx-auto relative z-10">
-        {filteredArticles.length > 0 ? (
-          <div className="space-y-20">
-            {filteredArticles.map((article, idx) => {
-              const isEven = idx % 2 === 0;
-              const isBookmarked = bookmarkedIds.includes(article.id);
-
-              const imageBox = (
-                <div className="lg:col-span-7">
-                  <div
-                    onClick={() => handleOpenArticle(article)}
-                    className="relative h-[360px] sm:h-[420px] w-full rounded-[32px] overflow-hidden shadow-2xl bg-slate-900 border border-white/10 group cursor-pointer"
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-3 overflow-x-auto pt-4 pb-6 mb-8 scrollbar-none">
+              {NEWS_CATEGORIES.map((cat) => {
+                const isActive = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`shrink-0 px-6 py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider transition-all cursor-pointer border ${
+                      isActive
+                        ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-[0_0_20px_rgba(0,208,132,0.3)] scale-105"
+                        : isLight
+                        ? "bg-white text-[#1a2320] border-[#c5d6ca] hover:border-[#00D084]"
+                        : "bg-[#070d09] text-white/70 border-white/10 hover:border-white/20 hover:text-white"
+                    }`}
                   >
-                    <img
-                      src={article.img}
-                      alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
 
-                    {/* Category Pill Badge */}
-                    <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase text-[#00D084] border border-[#00D084]/30 shadow-md">
-                      {article.category}
+          {/* =========================================================================
+              4. ALTERNATING SPLIT ARTICLES LIST
+             ========================================================================= */}
+          <section className="pt-6 pb-24 px-6 lg:px-12 max-w-7xl mx-auto">
+            {filteredArticles.length > 0 ? (
+              <div className="space-y-16">
+                {filteredArticles.map((article, idx) => {
+                  const isEven = idx % 2 === 0;
+                  const isBookmarked = bookmarkedIds.includes(article.id);
+
+                  const imageBox = (
+                    <div className="lg:col-span-7">
+                      <div
+                        onClick={() => handleOpenArticle(article)}
+                        className="relative h-[340px] sm:h-[400px] w-full rounded-[32px] overflow-hidden shadow-xl bg-slate-900 border border-white/10 group cursor-pointer"
+                      >
+                        <img
+                          src={article.img}
+                          alt={article.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+                        {/* Category Pill Badge */}
+                        <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-sans font-semibold uppercase text-[#00D084] border border-[#00D084]/30 shadow-md">
+                          {article.category}
+                        </div>
+
+                        {/* Bookmark Button */}
+                        <button
+                          onClick={(e) => handleBookmarkToggle(e, article.id)}
+                          className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                            isBookmarked
+                              ? "bg-[#00D084] text-black shadow-[0_0_15px_#00D084]"
+                              : "bg-black/75 text-white/80 hover:text-white border border-white/20"
+                          }`}
+                        >
+                          <Bookmark className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
+                  );
 
-                    {/* Bookmark Button */}
-                    <button
-                      onClick={(e) => handleBookmarkToggle(e, article.id)}
-                      className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all ${
-                        isBookmarked
-                          ? "bg-[#00D084] text-black shadow-[0_0_15px_#00D084]"
-                          : "bg-black/75 text-white/80 hover:text-white border border-white/20"
-                      }`}
-                    >
-                      <Bookmark className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              );
+                  const textBox = (
+                    <div className="lg:col-span-5 flex flex-col justify-center text-left">
+                      <div className={`flex items-center gap-3 text-xs font-sans font-semibold mb-3 ${isLight ? "text-[#607267]" : "text-white/60"}`}>
+                        <span className="flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5 text-[#00D084]" /> {article.date}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 text-[#00D084]" /> {article.readTime}
+                        </span>
+                      </div>
 
-              const textBox = (
-                <div className="lg:col-span-5 flex flex-col justify-center">
-                  <div className="flex items-center gap-3 text-xs font-mono opacity-60 mb-3">
-                    <span className="flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-[#00D084]" /> {article.date}
-                    </span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-[#00D084]" /> {article.readTime}
-                    </span>
-                  </div>
-
-                  <h3
-                    onClick={() => handleOpenArticle(article)}
-                    className={`text-2xl sm:text-4xl font-black tracking-tight mb-4 leading-tight cursor-pointer transition-colors ${
-                      isLight ? "text-[#1a2320] hover:text-[#00D084]" : "text-white hover:text-[#00D084]"
-                    }`}
-                  >
-                    {article.title}
-                  </h3>
-
-                  <p
-                    className={`text-sm sm:text-base font-normal leading-relaxed mb-6 ${
-                      isLight ? "text-[#4a5851]" : "text-white/70"
-                    }`}
-                  >
-                    {article.excerpt}
-                  </p>
-
-                  <div className="flex items-center gap-3 mb-8">
-                    <img
-                      src={article.author.avatar}
-                      alt={article.author.name}
-                      className="w-10 h-10 rounded-full object-cover border border-[#00D084]/40"
-                    />
-                    <div>
-                      <span
-                        className={`block text-xs font-bold ${
-                          isLight ? "text-[#1a2320]" : "text-white/90"
+                      <h3
+                        onClick={() => handleOpenArticle(article)}
+                        className={`text-2xl sm:text-4xl font-sans font-bold tracking-[-0.04em] mb-4 leading-snug cursor-pointer transition-colors ${
+                          isLight ? "text-[#1a2320] hover:text-[#00D084]" : "text-white hover:text-[#00D084]"
                         }`}
                       >
-                        {article.author.name}
-                      </span>
-                      <span className="block text-[10px] font-mono opacity-50">
-                        {article.author.role}
-                      </span>
+                        {article.title}
+                      </h3>
+
+                      <p
+                        className={`text-sm sm:text-base font-sans font-light leading-relaxed mb-6 ${
+                          isLight ? "text-[#4a5851]" : "text-white/70"
+                        }`}
+                      >
+                        {article.excerpt}
+                      </p>
+
+                      <div className="flex items-center gap-3 mb-8">
+                        <img
+                          src={article.author.avatar}
+                          alt={article.author.name}
+                          className="w-10 h-10 rounded-full object-cover border border-[#00D084]/40"
+                        />
+                        <div>
+                          <span
+                            className={`block text-xs font-sans font-bold ${
+                              isLight ? "text-[#1a2320]" : "text-white/90"
+                            }`}
+                          >
+                            {article.author.name}
+                          </span>
+                          <span className={`block text-[11px] font-sans ${isLight ? "text-[#607267]" : "text-white/50"}`}>
+                            {article.author.role}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div>
+                        <button
+                          onClick={() => handleOpenArticle(article)}
+                          className={`px-8 py-3.5 rounded-full text-xs font-sans font-black uppercase tracking-widest transition-all cursor-pointer shadow-md border ${
+                            isLight
+                              ? "bg-[#101412] text-white hover:bg-black border-white/10"
+                              : "bg-white/10 text-white hover:bg-[#00D084] hover:text-black border-white/15"
+                          }`}
+                        >
+                          READ ARTICLE
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  );
 
-                  <div>
-                    <button
-                      onClick={() => handleOpenArticle(article)}
-                      className={`px-8 py-3.5 rounded-full text-xs font-black uppercase tracking-widest transition-all cursor-pointer shadow-md border ${
-                        isLight
-                          ? "bg-[#101412] text-white hover:bg-black border-white/10"
-                          : "bg-white/10 text-white hover:bg-[#00D084] hover:text-black border-white/15"
-                      }`}
+                  return (
+                    <div
+                      key={article.id}
+                      className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center border-b border-slate-200/10 pb-16 last:border-b-0"
                     >
-                      READ ARTICLE
-                    </button>
-                  </div>
-                </div>
-              );
-
-              return (
-                <div
-                  key={article.id}
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center border-b border-slate-200/10 pb-16 last:border-b-0"
+                      {isEven ? (
+                        <>
+                          {textBox}
+                          {imageBox}
+                        </>
+                      ) : (
+                        <>
+                          {imageBox}
+                          {textBox}
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div
+                className={`py-24 text-center rounded-[32px] border ${
+                  isLight ? "bg-white border-[#d6e3da]" : "bg-[#070d0a] border-white/10 text-white"
+                }`}
+              >
+                <Newspaper className="w-14 h-14 text-[#00D084] mx-auto mb-4 animate-bounce" />
+                <h3 className="text-2xl font-sans font-bold tracking-[-0.04em] mb-2">
+                  No Matching Articles Found
+                </h3>
+                <p className="text-xs font-sans opacity-70 mb-6 max-w-md mx-auto">
+                  We couldn't find any articles matching your query. Try resetting your search terms.
+                </p>
+                <button
+                  onClick={() => {
+                    setSelectedCategory("All News");
+                    setSearchQuery("");
+                  }}
+                  className="px-8 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest shadow-md hover:bg-[#00e08f]"
                 >
-                  {isEven ? (
-                    <>
-                      {textBox}
-                      {imageBox}
-                    </>
-                  ) : (
-                    <>
-                      {imageBox}
-                      {textBox}
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div
-            className={`py-24 text-center rounded-[32px] border backdrop-blur-md ${
-              isLight ? "bg-white border-[#d6e3da]" : "bg-[#070d0a] border-white/10 text-white"
+                  RESET ALL FILTERS
+                </button>
+              </div>
+            )}
+          </section>
+
+          {/* =========================================================================
+              5. NEWSLETTER SUBSCRIPTION SECTION
+             ========================================================================= */}
+          <section
+            className={`py-20 px-6 border-t ${
+              isLight ? "bg-[#e2ebe4] border-[#d2e0d5]" : "bg-[#050a07] border-white/10"
             }`}
           >
-            <Newspaper className="w-14 h-14 text-[#00D084] mx-auto mb-4 animate-bounce" />
-            <h3 className="text-2xl font-bold mb-2">No Matching Articles Found</h3>
-            <p className="text-sm opacity-70 mb-6 max-w-md mx-auto">
-              We couldn't find any articles matching your query. Try resetting your search terms.
-            </p>
-            <button
-              onClick={() => {
-                setSelectedCategory("All News");
-                setSearchQuery("");
-              }}
-              className="px-8 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest shadow-md hover:bg-[#00e08f]"
-            >
-              RESET ALL FILTERS
-            </button>
-          </div>
-        )}
-      </section>
+            <div className="max-w-4xl mx-auto text-center relative">
+              <div className="inline-flex items-center gap-2 bg-[#00D084]/15 border border-[#00D084]/30 px-4 py-1.5 rounded-full text-xs font-sans font-bold uppercase tracking-widest text-[#00D084] mb-4">
+                <Sparkles className="w-3.5 h-3.5" />
+                WEEKLY EV MOBILITY INTELLIGENCE
+              </div>
 
-      {/* =========================================================================
-          5. FUTURISTIC NEWSLETTER SUBSCRIPTION POD
-         ========================================================================= */}
-      <section
-        className={`py-24 px-6 border-y relative z-10 ${
-          isLight ? "bg-[#e2ebe4] border-[#d2e0d5]" : "bg-[#050a07] border-white/10"
-        }`}
-      >
-        <div className="max-w-4xl mx-auto text-center relative">
-          <div className="inline-flex items-center gap-2 bg-[#00D084]/15 border border-[#00D084]/30 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] mb-4 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5" />
-            WEEKLY EV MOBILITY INTELLIGENCE
-          </div>
+              <h2
+                className={`text-4xl sm:text-6xl font-sans font-bold tracking-[-0.04em] mb-4 ${
+                  isLight ? "text-[#1a2320]" : "text-white"
+                }`}
+              >
+                Stay Ahead of the Clean Tech Curve
+              </h2>
 
-          <h2
-            className={`text-4xl sm:text-6xl font-black tracking-tight mb-4 ${
-              isLight ? "text-[#1a2320]" : "text-white"
-            }`}
-          >
-            Stay Ahead of the Clean Tech Curve
-          </h2>
+              <p
+                className={`text-base font-sans font-light max-w-xl mx-auto mb-10 leading-relaxed ${
+                  isLight ? "text-[#4a5851]" : "text-white/70"
+                }`}
+              >
+                Join 45,000+ EV engineers, fleet managers, and automotive executives receiving our weekly technical deep-dives every Monday morning.
+              </p>
 
-          <p
-            className={`text-base font-normal max-w-xl mx-auto mb-10 leading-relaxed ${
-              isLight ? "text-[#4a5851]" : "text-white/70"
-            }`}
-          >
-            Join 45,000+ EV engineers, fleet managers, and automotive executives receiving our weekly technical deep-dives every Monday morning.
-          </p>
+              <form
+                onSubmit={handleSubscribe}
+                className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-lg mx-auto"
+              >
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter your professional email..."
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  className={`w-full rounded-full px-6 py-4 text-xs font-sans focus:outline-none focus:border-[#00D084] border font-medium ${
+                    isLight
+                      ? "bg-white border-[#c5d6ca] text-[#1a2320]"
+                      : "bg-[#020503] border-white/20 text-white"
+                  }`}
+                />
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto px-9 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] shrink-0 cursor-pointer hover:scale-105"
+                >
+                  SUBSCRIBE NOW
+                </button>
+              </form>
+            </div>
+          </section>
 
-          <form
-            onSubmit={handleSubscribe}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-lg mx-auto"
-          >
-            <input
-              type="email"
-              required
-              placeholder="Enter your professional email..."
-              value={emailInput}
-              onChange={(e) => setEmailInput(e.target.value)}
-              className={`w-full rounded-full px-6 py-4 text-xs focus:outline-none focus:border-[#00D084] border font-medium ${
-                isLight
-                  ? "bg-white border-[#c5d6ca] text-[#1a2320]"
-                  : "bg-[#020503] border-white/20 text-white"
-              }`}
-            />
-            <button
-              type="submit"
-              className="w-full sm:w-auto px-9 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] shrink-0 cursor-pointer hover:scale-105"
-            >
-              SUBSCRIBE NOW
-            </button>
-          </form>
+          {/* Footer */}
+          <Footer />
+
         </div>
-      </section>
 
-      {/* Shared Reusable Footer */}
-      <Footer />
+      </div>
 
       {/* =========================================================================
-          6. FULL-SCREEN IMMERSIVE READER OVERLAY
+          6. FULL-SCREEN IMMERSIVE READER OVERLAY MODAL
          ========================================================================= */}
       {readerOpen && selectedArticle && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl overflow-y-auto">
@@ -656,7 +678,7 @@ function EVNewsPage() {
                 : "bg-[#060b08] border-white/20 text-white"
             }`}
           >
-            {/* Top Reading Progress Bar */}
+            {/* Reading Progress Line */}
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#00D084] shadow-[0_0_10px_#00D084]" />
 
             <button
@@ -670,16 +692,16 @@ function EVNewsPage() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="mb-8">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 px-3.5 py-1 rounded-full">
+            <div className="mb-8 text-left">
+              <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 px-3.5 py-1 rounded-full">
                 {selectedArticle.category}
               </span>
 
-              <h2 className="text-3xl sm:text-5xl font-black mt-4 mb-4 leading-tight tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-sans font-black tracking-[-0.04em] mt-4 mb-4 leading-tight">
                 {selectedArticle.title}
               </h2>
 
-              <div className="flex flex-wrap items-center gap-4 text-xs font-mono opacity-70 border-b border-slate-200/10 pb-5">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-sans opacity-70 border-b border-slate-200/10 pb-5">
                 <span className="flex items-center gap-1.5">
                   <User className="w-3.5 h-3.5 text-[#00D084]" /> {selectedArticle.author.name} ({selectedArticle.author.role})
                 </span>
@@ -697,11 +719,10 @@ function EVNewsPage() {
                 alt={selectedArticle.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
 
             {/* Article Body Paragraphs */}
-            <div className="space-y-6 text-base sm:text-lg font-normal leading-relaxed opacity-90 mb-10">
+            <div className="space-y-6 text-base sm:text-lg font-sans font-light leading-relaxed opacity-90 mb-10 text-left">
               {selectedArticle.content.map((paragraph, pi) => (
                 <p key={pi} className="first-letter:text-4xl first-letter:font-black first-letter:text-[#00D084] first-letter:mr-2">
                   {paragraph}
@@ -716,7 +737,7 @@ function EVNewsPage() {
                   onClick={() => {
                     toast.success("Article link copied to clipboard!");
                   }}
-                  className="px-6 py-3 rounded-full border border-white/20 text-xs font-bold flex items-center gap-2 hover:bg-white/10 transition-all cursor-pointer"
+                  className="px-6 py-3 rounded-full border border-white/20 text-xs font-sans font-bold flex items-center gap-2 hover:bg-white/10 transition-all cursor-pointer"
                 >
                   <Share2 className="w-3.5 h-3.5 text-[#00D084]" />
                   Share Story
@@ -725,7 +746,7 @@ function EVNewsPage() {
 
               <button
                 onClick={() => setReaderOpen(false)}
-                className="px-9 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-lg"
+                className="px-9 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-lg"
               >
                 CLOSE READER
               </button>
