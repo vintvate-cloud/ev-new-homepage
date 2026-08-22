@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { IndiaFranchiseMap } from "../components/IndiaFranchiseMap";
@@ -13,7 +11,6 @@ import {
   CATEGORIZED_FAQS,
   PARTNER_TESTIMONIALS_ROW1,
   PARTNER_TESTIMONIALS_ROW2,
-  ONBOARDING_STEPS_90_DAYS,
   DetailedFranchiseModel,
 } from "../data/franchiseData";
 import {
@@ -35,40 +32,31 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/franchise")({
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (
+    search: Record<string, unknown>
+  ): { city?: string; area?: string; pincode?: string } => {
     return {
-      city: typeof search.city === "string" ? search.city : undefined,
-      area: typeof search.area === "string" ? search.area : undefined,
-      pincode: typeof search.pincode === "string" ? search.pincode : undefined,
+      city: typeof search?.city === "string" ? search.city : undefined,
+      area: typeof search?.area === "string" ? search.area : undefined,
+      pincode: typeof search?.pincode === "string" ? search.pincode : undefined,
     };
   },
   component: FranchisePage,
 });
 
-<<<<<<< HEAD
 export function FranchisePage() {
-=======
-function FranchisePage() {
   const searchParams = Route.useSearch();
->>>>>>> 46dc2f09c9551ab4b40536a230d41a061f524098
   const [selectedModel, setSelectedModel] = useState<DetailedFranchiseModel>(
     DETAILED_FRANCHISE_MODELS[1]
   );
 
-  // Active step in 90-day roadmap
-  const [activeStepIdx, setActiveStepIdx] = useState<number>(0);
-
-<<<<<<< HEAD
   // Application Modal state
-  const [applyModalOpen, setApplyModalOpen] = useState(false);
-
-  // FAQ Categorized state
-  const [activeFaqCategory, setActiveFaqCategory] = useState<string>("all");
-=======
   const [applyModalOpen, setApplyModalOpen] = useState(
     !!(searchParams.city || searchParams.area || searchParams.pincode)
   );
->>>>>>> 46dc2f09c9551ab4b40536a230d41a061f524098
+
+  // FAQ Categorized state
+  const [activeFaqCategory, setActiveFaqCategory] = useState<string>("all");
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
 
   // Partner Reviews Horizontal Scroll reference
@@ -84,11 +72,6 @@ function FranchisePage() {
     setExpandedModels((prev) => ({ ...prev, [type]: !prev[type] }));
   };
 
-  const heroTextRef = useRef<HTMLDivElement>(null);
-  const contentOverlayRef = useRef<HTMLDivElement>(null);
-  const contentUpRef = useRef<HTMLDivElement>(null);
-  const cardsRightRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     window.scrollTo(0, 0);
     if (searchParams.city || searchParams.area || searchParams.pincode) {
@@ -96,76 +79,13 @@ function FranchisePage() {
     }
   }, [searchParams]);
 
-  // GSAP ScrollTrigger Animations (Matching Media Page Hero)
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
-      // 1. Hero text slow fade-out as content overlay rises up over the hero
-      if (heroTextRef.current && contentOverlayRef.current) {
-        gsap.to(heroTextRef.current, {
-          opacity: 0,
-          scale: 0.9,
-          y: -50,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: contentOverlayRef.current,
-            start: "top 90%",
-            end: "top 30%",
-            scrub: 0.6,
-          },
-        });
-      }
-
-      // 2. Content overlay layer rises up onto the fixed hero section
-      if (contentUpRef.current) {
-        gsap.fromTo(
-          contentUpRef.current,
-          { y: 120, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: contentUpRef.current,
-              start: "top 90%",
-              end: "top 45%",
-              scrub: 0.6,
-            },
-          }
-        );
-      }
-
-      // 3. Section cards slide in from the right on further scroll
-      if (cardsRightRef.current) {
-        gsap.fromTo(
-          cardsRightRef.current,
-          { x: 200, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: cardsRightRef.current,
-              start: "top 85%",
-              end: "top 40%",
-              scrub: 0.6,
-            },
-          }
-        );
-      }
-    });
-
-    return () => ctx.revert();
-  }, []);
-
   // Application Form State
   const [form, setForm] = useState({
     fullName: "",
     email: "",
     mobile: "",
-    pincode: "",
-    city: "",
+    pincode: searchParams.pincode || "",
+    city: searchParams.city || "",
     state: "",
     investmentRange: "₹10L - ₹20L",
   });
@@ -197,13 +117,6 @@ function FranchisePage() {
       el.scrollIntoView({ behavior: "smooth" });
     } else {
       setApplyModalOpen(true);
-    }
-  };
-
-  const scrollReviews = (direction: "left" | "right") => {
-    if (reviewScrollRef.current) {
-      const scrollAmount = direction === "left" ? -420 : 420;
-      reviewScrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
 
@@ -258,7 +171,6 @@ function FranchisePage() {
       : CATEGORIZED_FAQS.filter((faq) => faq.category === activeFaqCategory);
 
   return (
-<<<<<<< HEAD
     <div className="min-h-screen bg-[#020403] text-white selection:bg-[#00D084] selection:text-black font-serif overflow-x-hidden">
       {/* Unified Landing Navbar */}
       <Nav />
@@ -269,28 +181,14 @@ function FranchisePage() {
       <section className="relative w-full min-h-screen pt-32 pb-16 px-6 md:px-12 flex items-center overflow-hidden">
         {/* Full-bleed background image */}
         <div className="absolute inset-0 z-0">
-=======
-    <div className="min-h-screen bg-[#070908] text-white selection:bg-[#00D084] selection:text-black font-sans relative overflow-x-hidden">
-      
-      {/* Unified Landing Navbar */}
-      <Nav />
-
-      {/* Main Container */}
-      <div className="relative min-h-screen">
-
-        {/* =========================================================================
-            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
-           ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
-          {/* Background Hero Poster Image */}
->>>>>>> 46dc2f09c9551ab4b40536a230d41a061f524098
           <img
             src="/ev-franchise-hero.jpg"
             alt="EV Service Workshop Hero"
             className="w-full h-full object-cover object-center opacity-85 pointer-events-none"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020403] via-[#020403]/60 to-black/40" />
+        </div>
 
-<<<<<<< HEAD
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 pt-12 sm:pt-16">
           {/* Left Column: Title & Text */}
           <div className="lg:col-span-7 space-y-6 text-left">
@@ -532,309 +430,6 @@ function FranchisePage() {
           />
         </div>
       </section>
-=======
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-black/50 to-black/70 pointer-events-none" />
-
-          {/* Hero Content Container (Fades out & scales via GSAP on scroll) */}
-          <div
-            ref={heroTextRef}
-            className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto w-full z-10 transition-all pointer-events-auto overflow-y-auto py-6"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full my-auto">
-              
-              {/* Left Column: Title & Text */}
-              <div className="lg:col-span-7 space-y-6 text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-xs font-mono font-bold text-[#00D084] backdrop-blur-md">
-                  <Sparkles className="w-3.5 h-3.5 text-[#00D084]" />
-                  <span>PAN-INDIA FRANCHISE NETWORK</span>
-                </div>
-
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-                  Launch Your Own <br />
-                  <span className="text-[#00D084] font-black drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-                    EV Service Franchise
-                  </span>
-                </h1>
-
-                <p className="text-sm sm:text-base text-white/90 font-medium leading-relaxed max-w-xl drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] bg-black/60 backdrop-blur-md p-5 rounded-2xl border border-white/15">
-                  Launch your own EV service business powered by Autobot OS, India's first AI-powered EV service automation platform. Become part of the fastest-growing EV ecosystem and build a future-ready, high-profit business.
-                </p>
-
-                <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <button
-                    onClick={scrollToForm}
-                    className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-bold uppercase tracking-widest hover:bg-[#00e08f] hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-2 shadow-[0_0_25px_rgba(0,208,132,0.4)]"
-                  >
-                    Become a Partner <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => toast.info("Franchise Brochure download link sent to your mobile/email!")}
-                    className="px-7 py-3.5 rounded-full border border-white/30 bg-black/40 text-white text-xs font-extrabold uppercase tracking-widest hover:bg-black/60 transition-all flex items-center gap-2 cursor-pointer backdrop-blur-md shadow-2xl"
-                  >
-                    <Download className="w-4 h-4 text-[#00D084]" /> Download Franchise Brochure
-                  </button>
-                </div>
-              </div>
-
-              {/* Right Column: Premium Glass Form Card */}
-              <div id="hero-partner-form" className="lg:col-span-5 bg-[#030604]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 relative border border-white/20 shadow-2xl overflow-hidden">
-                {/* Ambient Radial Lighting Glow */}
-                <div className="absolute top-0 right-0 w-48 h-48 bg-[#00D084]/20 rounded-full blur-[70px] pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#00D084]/15 rounded-full blur-[60px] pointer-events-none" />
-
-                <div className="mb-5 text-left relative z-10">
-                  <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-md">Become a Partner</h3>
-                  <p className="text-xs text-white/80 font-semibold mt-1">
-                    Takes less than a minute. No commitment needed.
-                  </p>
-                </div>
-
-                <form onSubmit={handleFormSubmit} className="space-y-3.5 text-left relative z-10">
-                  <div>
-                    <label className="text-[11px] font-bold text-white/90 block mb-1">Full Name *</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Rahul Sharma"
-                      value={form.fullName}
-                      onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                      className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-2.5 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="text-[11px] font-bold text-white/90 block mb-1">Email (optional)</label>
-                      <input
-                        type="email"
-                        placeholder="you@example.com"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-2.5 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] font-bold text-white/90 block mb-1">Mobile Number *</label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="10-digit number"
-                        value={form.mobile}
-                        onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                        className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-2.5 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    <div>
-                      <label className="text-[11px] font-bold text-white/90 block mb-1">PIN Code</label>
-                      <input
-                        type="text"
-                        placeholder="6-digit PIN"
-                        value={form.pincode}
-                        onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-                        className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-2.5 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] font-bold text-white/90 block mb-1">City *</label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Your city"
-                        value={form.city}
-                        onChange={(e) => setForm({ ...form, city: e.target.value })}
-                        className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-2.5 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] font-bold text-white/90 block mb-1">State</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Maharashtra"
-                        value={form.state}
-                        onChange={(e) => setForm({ ...form, state: e.target.value })}
-                        className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-2.5 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] font-bold text-white/90 block mb-1">Investment Range *</label>
-                    <select
-                      value={form.investmentRange}
-                      onChange={(e) => setForm({ ...form, investmentRange: e.target.value })}
-                      className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-2.5 text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border border-white/20 cursor-pointer"
-                    >
-                      <option value="< ₹10 Lakh" className="bg-[#040906] text-white">&lt; ₹10 Lakh (Garage Tier)</option>
-                      <option value="₹10L - ₹20L" className="bg-[#040906] text-white">₹10L – ₹20L (Centre Tier)</option>
-                      <option value="> ₹20L" className="bg-[#040906] text-white">&gt; ₹20L (Hub Tier)</option>
-                    </select>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-2 shadow-2xl"
-                  >
-                    Become a Partner <Send className="w-4 h-4" />
-                  </button>
-
-                  <p className="text-[10px] font-semibold text-white/60 leading-tight text-center pt-1">
-                    By submitting you agree to be contacted by our franchise team and accept our Franchise Partner Terms & Conditions.
-                  </p>
-                </form>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            2. CARDS OVERLAY LAYER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO)
-           ========================================================================= */}
-        <div
-          ref={contentOverlayRef}
-          className="relative z-10 bg-[#070908] min-h-screen mt-[calc(100vh-80px)] pt-12 rounded-t-[40px] border-t border-white/10 shadow-2xl"
-        >
-          {/* CARDS RISING UP ANIMATEDLY (GSAP SCRUBBED FROM BOTTOM OVER HERO) */}
-          <div ref={contentUpRef}>
-            {/* Key Badges Section */}
-            <section className="py-6 px-6">
-              <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                {[
-                  "10+ Years EV R&D",
-                  "AI Powered Autobot OS",
-                  "Certified Training",
-                  "Pan-India Expansion",
-                ].map((badge, i) => (
-                  <div key={i} className="flex items-center justify-center gap-2.5 text-xs sm:text-sm text-white/90 font-semibold bg-[#111613] border border-white/10 px-4 py-3.5 rounded-2xl hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0" />
-                    <span>{badge}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Our Vision & Mission Section */}
-            <section className="py-16 px-6">
-              <div className="max-w-4xl mx-auto text-center">
-                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
-                  Our Vision
-                </span>
-                <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
-                  We Are Building India's Largest EV Service Network
-                </h2>
-                <p className="text-white/70 text-base md:text-lg leading-relaxed font-light mb-6">
-                  The EV revolution is accelerating rapidly, but the service ecosystem is still fragmented. At MY EV SERVICE, we are building a pan-India multi-brand EV service network powered by our proprietary Autobot OS, an AI-powered digital operating system for EV service businesses.
-                </p>
-                <div className="bg-[#111613] border border-[#00D084]/30 rounded-2xl p-6 text-left my-8 space-y-2 shadow-xl">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#00D084]">Our Mission is Simple:</span>
-                  <p className="text-lg font-bold text-white leading-snug">
-                    Empower the next generation of entrepreneurs to build successful EV businesses while creating India's most trusted EV service infrastructure.
-                  </p>
-                </div>
-                <p className="text-white/60 text-sm md:text-base leading-relaxed font-light mb-8">
-                  We are inviting young entrepreneurs, garage owners, investors, and automotive professionals to join our network and launch their own EV service business with a field-tested, technology-driven model.
-                </p>
-
-                <button
-                  onClick={scrollToForm}
-                  className="px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-lg"
-                >
-                  Apply for Franchise Opportunity
-                </button>
-              </div>
-            </section>
-          </div>
-
-          {/* CARDS SLIDING IN FROM THE RIGHT (GSAP SCRUBBED FROM RIGHT) */}
-          <div ref={cardsRightRef}>
-            <section className="py-20 px-6 border-t border-white/10">
-              <div className="max-w-7xl mx-auto">
-                <div className="text-center max-w-3xl mx-auto mb-14">
-                  <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
-                    <Compass className="w-4 h-4" /> Territory Radar
-                  </span>
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-4 tracking-tight">
-                    Pan-India City Expansion Map
-                  </h2>
-                  <p className="text-white/70 text-base font-light">
-                    Select a city node on our network radar to inspect active service centres, territory pre-booking slots, and local EV market demand.
-                  </p>
-                </div>
-
-                {/* City Selector Radar Pills */}
-                <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-                  {CITIES_RADAR.map((city, idx) => (
-                    <button
-                      key={city.name}
-                      onClick={() => setSelectedCityIdx(idx)}
-                      className={`px-5 py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-2 ${
-                        selectedCityIdx === idx
-                          ? "bg-[#00D084] text-[#020403] border-[#00D084] scale-105 shadow-[0_0_20px_rgba(0,208,132,0.4)]"
-                          : "bg-[#111613] text-white/70 border-white/10 hover:border-white/20 hover:text-white"
-                      }`}
-                    >
-                      <MapPin className="w-3.5 h-3.5 shrink-0" />
-                      <span>{city.name}</span>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-white/10">{city.state}</span>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Selected City Detail Radar Card */}
-                <div className="bg-[#0b0f0c] border-2 border-[#00D084]/40 rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-2xl">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                    
-                    <div className="lg:col-span-7 space-y-4">
-                      <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-xs font-bold text-[#00D084]">
-                        {CITIES_RADAR[selectedCityIdx].tag}
-                      </div>
-                      
-                      <h3 className="text-3xl sm:text-4xl font-extrabold text-white">
-                        {CITIES_RADAR[selectedCityIdx].name}, {CITIES_RADAR[selectedCityIdx].state}
-                      </h3>
-                      
-                      <p className="text-base text-white/80 font-light">
-                        Status: <span className="font-bold text-[#00D084]">{CITIES_RADAR[selectedCityIdx].status}</span>
-                      </p>
-
-                      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10 text-xs">
-                        <div className="bg-[#040605] border border-white/10 rounded-2xl p-4">
-                          <span className="text-white/50 block mb-1">LOCAL EV DEMAND</span>
-                          <span className="font-bold text-white text-sm">{CITIES_RADAR[selectedCityIdx].demand}</span>
-                        </div>
-                        <div className="bg-[#040605] border border-white/10 rounded-2xl p-4">
-                          <span className="text-white/50 block mb-1">TERRITORY AVAILABILITY</span>
-                          <span className="font-bold text-[#00D084] text-sm">{CITIES_RADAR[selectedCityIdx].slots}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="lg:col-span-5 bg-[#040605] border border-white/15 rounded-2xl p-6 text-center space-y-4">
-                      <h4 className="text-lg font-bold text-white">Reserve {CITIES_RADAR[selectedCityIdx].name} Territory</h4>
-                      <p className="text-xs text-white/60 font-light">
-                        Lock an exclusive 5km territory radius before slots are fully allocated in {CITIES_RADAR[selectedCityIdx].name}.
-                      </p>
-                      <button
-                        onClick={() => {
-                          setForm({ ...form, city: CITIES_RADAR[selectedCityIdx].name, state: CITIES_RADAR[selectedCityIdx].state });
-                          scrollToForm();
-                        }}
-                        className="w-full py-3.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-lg"
-                      >
-                        Reserve Territory Now
-                      </button>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
->>>>>>> 46dc2f09c9551ab4b40536a230d41a061f524098
 
       {/* =========================================================================
           5. STICKY PINNED 90-DAY ANIMATED ONBOARDING HIGHWAY JOURNEY
@@ -922,10 +517,10 @@ function FranchisePage() {
             </div>
 
             {/* Right: MY EV SERVICE Hub Breakdown */}
-            <div className="lg:col-span-6 bg-[#00D084]/10 border-2 border-[#00D084] hover:border-[#00e08f] rounded-3xl p-8 space-y-6 transition-all duration-300 font-serif shadow-[0_0_30px_rgba(0,208,132,0.15)]">
+            <div className="lg:col-span-6 bg-[#00D084]/10 border-2 border-[#00D084] rounded-3xl p-8 space-y-6 transition-all duration-300 font-serif shadow-[0_0_30px_rgba(0,208,132,0.15)]">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-serif font-bold text-[#00D084] uppercase tracking-widest bg-[#00D084]/20 px-3 py-1 rounded-full border border-[#00D084]/40">
-                  NEXT ERA MY EV SERVICE NETWORK
+                  AI AUTOBOT OS POWERED HUB
                 </span>
                 <span className="text-xs font-serif font-bold text-[#00D084]">
                   Score: {COMPARISON_FEATURES[selectedCompFeature].myevScore}/100
@@ -933,10 +528,10 @@ function FranchisePage() {
               </div>
 
               <h3 className="text-2xl font-serif font-bold text-white">
-                Automated AI Powered Hub
+                Automated & High-Yield EV Ecosystem
               </h3>
 
-              <div className="bg-[#020503] border border-white/10 rounded-2xl p-4 space-y-2">
+              <div className="bg-[#020503] border border-[#00D084]/30 rounded-2xl p-4 space-y-2">
                 <span className="text-[11px] text-[#00D084] block font-serif font-bold">
                   AUTOBOT OS ADVANTAGE:
                 </span>
@@ -948,15 +543,15 @@ function FranchisePage() {
 
               {/* Visual Metric Score Bar */}
               <div className="space-y-1.5 pt-2">
-                <div className="flex justify-between text-xs text-white/80 font-bold">
+                <div className="flex justify-between text-xs text-white/60">
                   <span>Efficiency & Tech Rating</span>
-                  <span className="text-[#00D084]">
+                  <span className="text-[#00D084] font-bold">
                     {COMPARISON_FEATURES[selectedCompFeature].myevScore}%
                   </span>
                 </div>
                 <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-[#00D084] rounded-full shadow-[0_0_10px_#00D084]"
+                    className="h-full bg-[#00D084] rounded-full shadow-[0_0_12px_#00D084]"
                     initial={{ width: 0 }}
                     animate={{ width: `${COMPARISON_FEATURES[selectedCompFeature].myevScore}%` }}
                     transition={{ duration: 0.6 }}
@@ -1290,264 +885,85 @@ function FranchisePage() {
       {/* =========================================================================
           9. CATEGORIZED FAQS ACCORDION
          ========================================================================= */}
-      <section className="py-24 px-6 max-w-5xl mx-auto font-serif">
-        <div className="text-center mb-12">
-          <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-            FAQ
-          </span>
-          <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-white/60 text-sm font-serif font-light mt-2">
-            Select a category to find instant answers about our franchise options, investments, and operations.
-          </p>
-        </div>
+      <section className="py-24 px-6 bg-[#020403] font-serif border-t border-white/10">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
+              FAQ & Guidance
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 mb-4 tracking-tight">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-white/60 text-sm font-serif font-light">
+              Select a topic category below to filter questions
+            </p>
 
-        {/* Category Selector Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
-          {FAQ_CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                setActiveFaqCategory(cat.id);
-                setOpenFaqIdx(0);
-              }}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-serif font-bold transition-all cursor-pointer border ${
-                activeFaqCategory === cat.id
-                  ? "bg-[#00D084] text-[#020403] border-[#00D084] scale-105 shadow-[0_0_12px_rgba(0,208,132,0.4)]"
-                  : "bg-[#050907] text-white/70 border-white/10 hover:border-white/20 hover:text-white"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
+            {/* Categorized Filter Tabs */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
+              {FAQ_CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    setActiveFaqCategory(cat.id);
+                    setOpenFaqIdx(0);
+                  }}
+                  className={`px-4 py-2 rounded-2xl text-xs font-serif font-bold transition-all cursor-pointer border ${
+                    activeFaqCategory === cat.id
+                      ? "bg-[#00D084] text-[#020403] border-[#00D084] scale-105 shadow-[0_0_15px_rgba(0,208,132,0.3)]"
+                      : "bg-[#050907] text-white/70 border-white/10 hover:border-white/20 hover:text-white"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
-        {/* FAQ Accordion Items */}
-        <div className="space-y-4">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeFaqCategory}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="space-y-4"
-            >
-              {filteredFaqs.map((faq, idx) => {
-                const isOpen = openFaqIdx === idx;
-                return (
-                  <div
-                    key={idx}
-                    className={`bg-[#050907] border rounded-2xl p-6 transition-all duration-300 cursor-pointer font-serif ${
-                      isOpen
-                        ? "border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.15)]"
-                        : "border-white/10 hover:border-white/25"
-                    }`}
+          <div className="space-y-4">
+            {filteredFaqs.map((faq, idx) => {
+              const isOpen = openFaqIdx === idx;
+              return (
+                <div
+                  key={idx}
+                  className="bg-[#050907] border border-white/10 rounded-2xl overflow-hidden font-serif transition-all"
+                >
+                  <button
                     onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
+                    className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-white/5 transition-colors"
                   >
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="text-base font-serif font-bold text-white leading-snug">
-                        {faq.q}
-                      </span>
-                      {isOpen ? (
-                        <ChevronUp className="w-5 h-5 text-[#00D084] shrink-0" />
-                      ) : (
-                        <ChevronDown className="w-5 h-5 text-white/40 shrink-0" />
-                      )}
-                    </div>
+                    <span className="text-base font-serif font-bold text-white leading-snug">
+                      {faq.q}
+                    </span>
+                    {isOpen ? (
+                      <ChevronUp className="w-5 h-5 text-[#00D084] shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-white/50 shrink-0" />
+                    )}
+                  </button>
 
+                  <AnimatePresence>
                     {isOpen && (
-                      <motion.p
+                      <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
-                        transition={{ duration: 0.2 }}
-                        className="mt-4 pt-4 border-t border-white/10 text-xs md:text-sm text-white/70 font-serif font-light leading-relaxed"
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="overflow-hidden"
                       >
-                        {faq.a}
-                      </motion.p>
+                        <div className="px-6 pb-6 text-xs sm:text-sm text-white/70 font-serif font-light leading-relaxed border-t border-white/5 pt-4">
+                          {faq.a}
+                        </div>
+                      </motion.div>
                     )}
-                  </div>
-                );
-              })}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          10. FINAL CLOSING CTA SECTION
-         ========================================================================= */}
-      <section className="py-24 px-6 bg-[#020403] font-serif">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <span className="text-xs font-serif font-bold uppercase tracking-widest text-[#00D084]">
-            India's #1 EV Service Network
-          </span>
-
-          <h2 className="text-4xl sm:text-6xl font-serif font-black text-white tracking-tight leading-tight">
-            EVs Are Here. <span className="text-[#00D084]">Let's Service Them Right.</span>
-          </h2>
-
-          <p className="text-base sm:text-lg text-white/70 font-serif font-light leading-relaxed max-w-2xl mx-auto">
-            Join India's fastest growing EV service network. Build a future-ready business in the EV industry. Our team will reach out within 24 hours of your application.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <button
-              onClick={scrollToForm}
-              className="px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer"
-            >
-              Become a Partner Now
-            </button>
-            <a
-              href="/store"
-              className="px-8 py-4 rounded-full border border-white/20 text-white text-xs font-serif font-bold uppercase tracking-widest hover:bg-white/10 transition-all cursor-pointer"
-            >
-              Explore Parts
-            </a>
-            <a
-              href="/find-services"
-              className="px-8 py-4 rounded-full bg-white/10 border border-white/20 text-white text-xs font-serif font-bold uppercase tracking-widest hover:bg-white/20 transition-all cursor-pointer"
-            >
-              Find Centers Near You
-            </a>
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-        </div>
-      </div>
-
-      {/* Application Modal */}
-      {applyModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md font-serif">
-          <div className="bg-[#060c09] border border-white/10 rounded-3xl max-w-lg w-full p-6 md:p-8 relative overflow-hidden font-serif">
-            <button
-              onClick={() => setApplyModalOpen(false)}
-              className="absolute top-5 right-5 text-white/40 hover:text-white bg-white/5 p-2 rounded-full transition-colors cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="mb-6">
-              <h3 className="text-2xl font-serif font-bold text-white mt-1">
-                {selectedModel.name}
-              </h3>
-              <p className="text-xs text-white/60 font-serif mt-1">
-                Investment: {selectedModel.investment} • Area: {selectedModel.area}
-              </p>
-            </div>
-
-            <form onSubmit={handleFormSubmit} className="space-y-3.5">
-              <div>
-                <label className="text-[11px] font-serif text-white/50 block mb-1">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Rahul Sharma"
-                  value={form.fullName}
-                  onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                  className="w-full bg-[#020403] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[11px] font-serif text-white/50 block mb-1">
-                    Email (optional)
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="you@example.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-[#020403] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-serif text-white/50 block mb-1">
-                    Mobile Number *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="10-digit number"
-                    value={form.mobile}
-                    onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                    className="w-full bg-[#020403] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2">
-                <div>
-                  <label className="text-[11px] font-serif text-white/50 block mb-1">
-                    PIN Code
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="6-digit PIN"
-                    value={form.pincode}
-                    onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-                    className="w-full bg-[#020403] border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-serif text-white/50 block mb-1">
-                    City *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Your city"
-                    value={form.city}
-                    onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    className="w-full bg-[#020403] border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-serif text-white/50 block mb-1">
-                    State
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Maharashtra"
-                    value={form.state}
-                    onChange={(e) => setForm({ ...form, state: e.target.value })}
-                    className="w-full bg-[#020403] border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-serif text-white/50 block mb-1">
-                  Investment Range *
-                </label>
-                <select
-                  value={form.investmentRange}
-                  onChange={(e) => setForm({ ...form, investmentRange: e.target.value })}
-                  className="w-full bg-[#020403] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                >
-                  <option value="< ₹10 Lakh">&lt; ₹10 Lakh (Garage Tier)</option>
-                  <option value="₹10L - ₹20L">₹10L – ₹20L (Centre Tier)</option>
-                  <option value="> ₹20L">&gt; ₹20L (Hub Tier)</option>
-                </select>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center justify-center gap-2 mt-2"
-              >
-                Submit Partner Application <Send className="w-4 h-4" />
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Unified Landing Footer */}
+      {/* Footer */}
       <Footer />
     </div>
   );
