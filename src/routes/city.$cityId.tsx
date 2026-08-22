@@ -15,20 +15,30 @@ import {
   ExternalLink,
   Cpu,
   BatteryCharging,
+  Navigation,
 } from "lucide-react";
+import { toast } from "sonner";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { getOnboardedCities, onboardNewCity, EVCity } from "../data/cities";
+import { getOnboardedCities, onboardNewCity, EVCity, getCityServiceCenters, ServiceCenter } from "../data/cities";
 import { CityPreBookingModal, DEFAULT_CITY_SLOTS, PreBookingSlot } from "../components/CityPreBookingModal";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 
 export const Route = createFileRoute("/city/$cityId")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      service: typeof search?.service === "string" ? search.service : undefined,
+      brand: typeof search?.brand === "string" ? search.brand : undefined,
+      searchArea: typeof search?.searchArea === "string" ? search.searchArea : undefined,
+    };
+  },
   component: CityPageComponent,
 });
 
 function CityPageComponent() {
   const { cityId } = Route.useParams();
+  const { service, brand, searchArea } = Route.useSearch();
   const [citiesList, setCitiesList] = useState<EVCity[]>(getOnboardedCities());
   const [preBookingModalOpen, setPreBookingModalOpen] = useState(false);
 
@@ -48,35 +58,53 @@ function CityPageComponent() {
     };
   }, []);
 
-  // Find city or auto-generate dynamic city page for backend-onboarded city
-  let currentCity = citiesList.find(
+  // Find city in onboarded cities database
+  const currentCity = citiesList.find(
     (c) => c.id.toLowerCase() === cityId.toLowerCase()
   );
 
   if (!currentCity) {
-    // Format raw city slug to title case e.g. "nagpur" -> "Nagpur"
     const formattedName = cityId
       .replace(/-/g, " ")
       .replace(/\b\w/g, (l) => l.toUpperCase());
 
-    // Auto-create & register new city so city page automatically exists
-    currentCity = onboardNewCity({
-      id: cityId,
-      name: formattedName,
-      state: "India",
-      centersCount: 5,
-      areas: [
-        `Central ${formattedName}`,
-        `North ${formattedName}`,
-        `West ${formattedName}`,
-        `East ${formattedName}`,
-        `South ${formattedName}`,
-      ],
-      heroImage:
-        "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&auto=format&fit=crop&q=80",
-      status: "active",
-      description: `Official MY EV SERVICE certified multi-brand EV diagnostic and battery repair hub in ${formattedName}.`,
-    });
+    return (
+      <div className="min-h-screen bg-[#070908] text-white flex flex-col justify-between font-sans selection:bg-[#00D084] selection:text-black">
+        <Nav />
+        
+        <div className="max-w-3xl mx-auto px-6 py-32 text-center space-y-6">
+          <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto text-2xl shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+            📍
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            Service Unavailable in <span className="text-[#00D084]">{formattedName}</span>
+          </h1>
+
+          <p className="text-white/70 text-sm sm:text-base leading-relaxed max-w-xl mx-auto font-medium">
+            MY EV SERVICE hubs are currently active in 6 major metro networks (Pune, Mumbai, Bangalore, Delhi NCR, Hyderabad & Ahmedabad). We have not opened a certified diagnostic center in <strong className="text-white">{formattedName}</strong> yet.
+          </p>
+
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              to="/find-services"
+              className="px-6 py-3.5 rounded-xl bg-[#00D084] text-[#020403] font-black uppercase text-xs tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.4)]"
+            >
+              Browse Active Cities →
+            </Link>
+            
+            <button
+              onClick={() => toast.success(`Registered your vote to open a MY EV SERVICE hub in ${formattedName}!`)}
+              className="px-6 py-3.5 rounded-xl border border-white/20 hover:border-[#00D084] text-white hover:text-[#00D084] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+            >
+              Request Hub in {formattedName}
+            </button>
+          </div>
+        </div>
+
+        <Footer />
+      </div>
+    );
   }
 
   // GSAP ScrollTrigger Animations (Identical to Media Page)
@@ -150,6 +178,9 @@ function CityPageComponent() {
       status: i % 3 === 2 ? "booked" : "available",
     }));
 
+  // Get real-time service centers for this city
+  const serviceCenters = getCityServiceCenters(currentCity.name, searchArea);
+
   return (
     <div className="min-h-screen bg-[#070908] text-white font-sans selection:bg-[#00D084] selection:text-black relative overflow-x-hidden">
       <Nav />
@@ -183,7 +214,7 @@ function CityPageComponent() {
               {currentCity.description}
             </p>
 
-            <div className="pointer-events-auto pt-2">
+            <div className="pointer-events-auto pt-2 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => setPreBookingModalOpen(true)}
                 className="px-8 py-4 rounded-2xl bg-[#00D084] hover:bg-[#00e08f] text-black font-black uppercase text-xs tracking-widest transition-all cursor-pointer shadow-[0_10px_30px_rgba(0,208,132,0.4)] hover:scale-[1.03] flex items-center gap-2"
@@ -202,86 +233,222 @@ function CityPageComponent() {
           ref={contentOverlayRef}
           className="relative z-10 bg-[#070908] min-h-screen mt-[calc(100vh-80px)] pt-12 rounded-t-[40px] border-t border-white/10 shadow-2xl"
         >
-          {/* VERIFIED AREA HUBS RISING UP ANIMATEDLY (GSAP SCRUBBED OVER HERO) */}
-          <section ref={cardsUpRef} className="px-6 lg:px-12 py-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-              <div>
-                <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                  HUB DIRECTORY
-                </span>
-                <h2 className="text-3xl md:text-5xl font-black text-white mt-2 tracking-tight">
-                  {currentCity.name} Area Service Clusters
-                </h2>
-                <p className="text-white/60 text-sm mt-1">
-                  Select your nearby cluster to check doorstep service & diagnostic center status.
-                </p>
+          {/* VERIFIED NEAREST SERVICE CENTERS RISING UP ANIMATEDLY (GSAP SCRUBBED OVER HERO) */}
+          <section ref={cardsUpRef} className="px-6 lg:px-12 py-12 max-w-7xl mx-auto space-y-16">
+            
+            {/* =========================================================================
+                NEAREST SERVICE CENTERS LISTED AT THE VERY TOP
+               ========================================================================= */}
+            <div>
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-white/10 pb-6">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-[#00D084] text-[10px] font-black uppercase tracking-widest mb-2">
+                    <Sparkles className="w-3.5 h-3.5 fill-[#00D084]" /> Real-Time Location Connected
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+                    Nearest Service Centers in <span className="text-[#00D084]">{currentCity.name}</span>
+                  </h2>
+                  <p className="text-white/70 text-sm mt-1 max-w-xl font-medium">
+                    Detected certified EV workshops sorted by real-time proximity. 100% genuine OEM spares & battery diagnostic bays on duty.
+                  </p>
+                </div>
+
+                {searchArea && (
+                  <div className="px-4 py-2 rounded-2xl bg-[#00D084]/10 border border-[#00D084]/30 text-xs font-mono font-bold text-white/90">
+                    Searching near: <span className="text-[#00D084] font-black">{searchArea}</span>
+                    {brand && <span className="text-white/60 ml-2">• Brand: {brand}</span>}
+                    {service && <span className="text-white/60 ml-2">• Service: {service}</span>}
+                  </div>
+                )}
               </div>
 
-              <button
-                onClick={() => setPreBookingModalOpen(true)}
-                className="px-6 py-3 rounded-full border border-[#00D084]/40 bg-[#00D084]/10 text-[#00D084] text-xs font-mono font-bold hover:bg-[#00D084] hover:text-black transition-all cursor-pointer w-fit flex items-center gap-2"
-              >
-                <CalendarCheck className="w-4 h-4" />
-                Pre-Booking Directory
-              </button>
-            </div>
-
-            {/* Areas Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {currentCity.areas.map((area, idx) => {
-                const slot = citySlots[idx] || {
-                  area,
-                  pincode: `${411000 + (idx + 1) * 7}`,
-                  status: idx % 2 === 0 ? "available" : "booked",
-                };
-
-                return (
+              {/* Nearest Centers Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {serviceCenters.map((center) => (
                   <div
-                    key={idx}
-                    className="bg-[#050907] border border-white/10 hover:border-[#00D084]/60 rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] group"
+                    key={center.id}
+                    className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 ${
+                      center.isNearest
+                        ? "border-[#00D084] bg-gradient-to-br from-[#03190e] via-[#052418] to-[#020503] shadow-[0_0_50px_rgba(0,208,132,0.3)] scale-[1.01]"
+                        : "border-white/15 bg-[#050907] hover:border-[#00D084]/60"
+                    }`}
                   >
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="w-10 h-10 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084]">
-                          <MapPin className="w-5 h-5" />
-                        </div>
-
-                        <span className="text-[11px] font-mono font-bold text-white/50 bg-white/5 px-3 py-1 rounded-full border border-white/10">
-                          PIN: {slot.pincode}
-                        </span>
+                    {center.isNearest && (
+                      <div className="absolute top-0 right-0 px-4 py-1.5 rounded-bl-2xl bg-[#00D084] text-[#020403] text-[10px] font-black uppercase tracking-widest shadow-md flex items-center gap-1.5">
+                        <Zap className="w-3.5 h-3.5 fill-[#020403]" /> 🏆 NEAREST CERTIFIED HUB • {center.distanceKm} KM AWAY
                       </div>
+                    )}
 
-                      <h3 className="text-xl font-bold text-white group-hover:text-[#00D084] transition-colors">
-                        {area}
-                      </h3>
-
-                      <div className="mt-3 flex items-center gap-2">
-                        {slot.status === "available" ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-[#00D084]/15 text-[#00D084] border border-[#00D084]/30">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse" />
-                            AVAILABLE
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-white/10 text-white/40 border border-white/10">
-                            BOOKED
+                    <div className="space-y-4">
+                      <div className="flex items-start justify-between gap-4 pt-2">
+                        <div>
+                          <h3 className="text-xl md:text-2xl font-black text-white leading-tight">
+                            {center.name}
+                          </h3>
+                          <p className="text-xs text-white/70 font-medium flex items-center gap-1.5 mt-1.5">
+                            <MapPin className="w-4 h-4 text-[#00D084] shrink-0" />
+                            {center.address}
+                          </p>
+                        </div>
+                        
+                        {!center.isNearest && (
+                          <span className="shrink-0 text-xs font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-3 py-1 rounded-full border border-[#00D084]/30">
+                            📍 {center.distanceKm} km
                           </span>
                         )}
                       </div>
+
+                      {/* Quick Metrics Bar */}
+                      <div className="flex flex-wrap items-center gap-2.5 pt-1 text-xs">
+                        <span className="flex items-center gap-1 text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded-lg border border-amber-400/20">
+                          ★ {center.rating} ({center.reviewsCount} reviews)
+                        </span>
+                        <span className="flex items-center gap-1 text-[#00D084] font-bold bg-[#00D084]/10 px-2.5 py-1 rounded-lg border border-[#00D084]/20">
+                          ⚡ {center.baysAvailable} Bays Available
+                        </span>
+                        <span className="flex items-center gap-1 text-white/80 font-bold bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+                          👨‍🔧 {center.techniciansOnDuty} Certified Techs
+                        </span>
+                      </div>
+
+                      {/* Brands Serviced */}
+                      <div className="space-y-1.5 pt-1">
+                        <span className="text-[11px] text-white/50 font-bold block uppercase tracking-wider">
+                          Supported Brands:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {center.brandsServiced.map((b, i) => (
+                            <span
+                              key={i}
+                              className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                                brand && b.toLowerCase().includes(brand.toLowerCase())
+                                  ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black"
+                                  : "bg-white/10 text-white/90 border-white/15"
+                              }`}
+                            >
+                              {b}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-                      <span className="text-xs text-white/50 font-mono">Hub Cluster #0{idx + 1}</span>
-                      <button
-                        onClick={() => setPreBookingModalOpen(true)}
-                        className="text-xs font-bold text-[#00D084] hover:underline flex items-center gap-1 cursor-pointer"
+                    {/* Action Buttons */}
+                    <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                      <a
+                        href={center.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all flex items-center gap-1.5 cursor-pointer"
                       >
-                        <span>Check Slot</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        <Navigation className="w-3.5 h-3.5 text-[#00D084]" /> Get Directions
+                      </a>
+
+                      <a
+                        href={`tel:${center.phone.replace(/\s+/g, "")}`}
+                        className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <Phone className="w-3.5 h-3.5 text-[#00D084]" /> Call Hub
+                      </a>
+
+                      <button
+                        onClick={() => {
+                          toast.success(`Booking slot selected for ${center.name}`);
+                          setPreBookingModalOpen(true);
+                        }}
+                        className="px-5 py-2.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_20px_rgba(0,208,132,0.4)]"
+                      >
+                        <CalendarCheck className="w-3.5 h-3.5 fill-[#020403]" /> Book Appointment
                       </button>
                     </div>
                   </div>
-                );
-              })}
+                ))}
+              </div>
+            </div>
+
+            {/* =========================================================================
+                AREA CLUSTERS DIRECTORY
+               ========================================================================= */}
+            <div>
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                  <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084]">
+                    HUB DIRECTORY
+                  </span>
+                  <h2 className="text-3xl md:text-5xl font-black text-white mt-2 tracking-tight">
+                    {currentCity.name} Area Service Clusters
+                  </h2>
+                  <p className="text-white/60 text-sm mt-1">
+                    Select your nearby cluster to check doorstep service & diagnostic center status.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setPreBookingModalOpen(true)}
+                  className="px-6 py-3 rounded-full border border-[#00D084]/40 bg-[#00D084]/10 text-[#00D084] text-xs font-mono font-bold hover:bg-[#00D084] hover:text-black transition-all cursor-pointer w-fit flex items-center gap-2"
+                >
+                  <CalendarCheck className="w-4 h-4" />
+                  Pre-Booking Directory
+                </button>
+              </div>
+
+              {/* Areas Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {currentCity.areas.map((area, idx) => {
+                  const slot = citySlots[idx] || {
+                    area,
+                    pincode: `${411000 + (idx + 1) * 7}`,
+                    status: idx % 2 === 0 ? "available" : "booked",
+                  };
+
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-[#050907] border border-white/10 hover:border-[#00D084]/60 rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] group"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="w-10 h-10 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084]">
+                            <MapPin className="w-5 h-5" />
+                          </div>
+
+                          <span className="text-[11px] font-mono font-bold text-white/50 bg-white/5 px-3 py-1 rounded-full border border-white/10">
+                            PIN: {slot.pincode}
+                          </span>
+                        </div>
+
+                        <h3 className="text-xl font-bold text-white group-hover:text-[#00D084] transition-colors">
+                          {area}
+                        </h3>
+
+                        <div className="mt-3 flex items-center gap-2">
+                          {slot.status === "available" ? (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-[#00D084]/15 text-[#00D084] border border-[#00D084]/30">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse" />
+                              AVAILABLE
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-white/10 text-white/40 border border-white/10">
+                              BOOKED
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
+                        <span className="text-xs text-white/50 font-mono">Hub Cluster #0{idx + 1}</span>
+                        <button
+                          onClick={() => setPreBookingModalOpen(true)}
+                          className="text-xs font-bold text-[#00D084] hover:underline flex items-center gap-1 cursor-pointer"
+                        >
+                          <span>Check Slot</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </section>
 

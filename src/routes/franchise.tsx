@@ -46,7 +46,7 @@ export const Route = createFileRoute("/franchise")({
   component: FranchisePage,
 });
 
-export function FranchisePage() {
+function FranchisePage() {
   const searchParams = Route.useSearch();
   const [selectedModel, setSelectedModel] = useState<DetailedFranchiseModel>(
     DETAILED_FRANCHISE_MODELS[1]

@@ -101,6 +101,45 @@ export function getOnboardedCities(): EVCity[] {
   return INITIAL_CITIES;
 }
 
+export function findMatchingAvailableCity(inputQuery: string): EVCity | null {
+  if (!inputQuery || !inputQuery.trim()) return null;
+  const query = inputQuery.trim().toLowerCase();
+  const cities = getOnboardedCities();
+
+  // 1. Direct slug or name match
+  for (const city of cities) {
+    if (city.id.toLowerCase() === query || city.name.toLowerCase() === query) {
+      return city;
+    }
+  }
+
+  // 2. Partial city name or common alias match
+  for (const city of cities) {
+    if (
+      city.name.toLowerCase().includes(query) ||
+      query.includes(city.name.toLowerCase()) ||
+      (query.includes("bengaluru") && city.id === "bangalore") ||
+      (query.includes("bangalore") && city.id === "bangalore") ||
+      (query.includes("delhi") && city.id === "delhi-ncr") ||
+      (query.includes("gurgaon") && city.id === "delhi-ncr") ||
+      (query.includes("noida") && city.id === "delhi-ncr")
+    ) {
+      return city;
+    }
+  }
+
+  // 3. Area name match (e.g. Baner -> Pune, Bandra -> Mumbai, HSR -> Bangalore)
+  for (const city of cities) {
+    for (const area of city.areas) {
+      if (area.toLowerCase().includes(query) || query.includes(area.toLowerCase())) {
+        return city;
+      }
+    }
+  }
+
+  return null;
+}
+
 export function onboardNewCity(cityData: Partial<EVCity> & { name: string }): EVCity {
   const slug = (cityData.id || cityData.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")).trim();
   const newCity: EVCity = {
@@ -136,4 +175,98 @@ export function onboardNewCity(cityData: Partial<EVCity> & { name: string }): EV
   }
 
   return newCity;
+}
+
+export interface ServiceCenter {
+  id: string;
+  name: string;
+  address: string;
+  area: string;
+  distanceKm: number;
+  rating: number;
+  reviewsCount: number;
+  status: "open" | "busy" | "closed";
+  phone: string;
+  mapUrl: string;
+  brandsServiced: string[];
+  servicesOffered: string[];
+  baysAvailable: number;
+  techniciansOnDuty: number;
+  isNearest?: boolean;
+}
+
+export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: string): ServiceCenter[] {
+  const clean = cityNameOrSlug.toLowerCase().trim();
+  const formatted = cityNameOrSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+  const activeArea = searchArea ? searchArea.trim() : `Central ${formatted}`;
+
+  const centers: ServiceCenter[] = [
+    {
+      id: `${clean}-1`,
+      name: `MY EV SERVICE - ${formatted} ${activeArea} Flagship Hub`,
+      address: `Plot 42, High-Tech EV Zone, Main Road, ${activeArea}, ${formatted}`,
+      area: activeArea,
+      distanceKm: 0.8,
+      rating: 4.9,
+      reviewsCount: 384,
+      status: "open",
+      phone: "+91 98765 43210",
+      mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`MY EV SERVICE ${activeArea} ${formatted}`)}`,
+      brandsServiced: ["Ather", "Ola Electric", "TVS", "Hero Electric", "Vida", "Bajaj Chetak"],
+      servicesOffered: ["Battery Diagnostics", "Cell Equalization", "Motor & FOC Tuning", "BMS Software Flashing"],
+      baysAvailable: 4,
+      techniciansOnDuty: 8,
+      isNearest: true,
+    },
+    {
+      id: `${clean}-2`,
+      name: `MY EV SERVICE - ${formatted} North Express Center`,
+      address: `Shop 18-B, Auto Market Complex, North Avenue, ${formatted}`,
+      area: `North ${formatted}`,
+      distanceKm: 2.4,
+      rating: 4.8,
+      reviewsCount: 219,
+      status: "open",
+      phone: "+91 98765 43211",
+      mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`EV Service Center North ${formatted}`)}`,
+      brandsServiced: ["Ather", "Ola Electric", "TVS"],
+      servicesOffered: ["Periodic General Service", "Battery Diagnostics", "Doorstep Pickup"],
+      baysAvailable: 2,
+      techniciansOnDuty: 5,
+    },
+    {
+      id: `${clean}-3`,
+      name: `MY EV SERVICE - ${formatted} West Fleet & Diagnostic Care`,
+      address: `Building 7, Green Technology Park, West Bypass, ${formatted}`,
+      area: `West ${formatted}`,
+      distanceKm: 4.5,
+      rating: 4.7,
+      reviewsCount: 156,
+      status: "open",
+      phone: "+91 98765 43212",
+      mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`EV Battery Repair ${formatted}`)}`,
+      brandsServiced: ["Hero Electric", "Vida", "Bajaj Chetak", "Ola Electric"],
+      servicesOffered: ["BMS Firmware Flashing", "Battery Pack Repair", "Motor Tuning"],
+      baysAvailable: 3,
+      techniciansOnDuty: 6,
+    },
+    {
+      id: `${clean}-4`,
+      name: `MY EV SERVICE - ${formatted} South Diagnostic Hub`,
+      address: `Gate 2, Ring Road Industrial Area, South ${formatted}`,
+      area: `South ${formatted}`,
+      distanceKm: 6.8,
+      rating: 4.9,
+      reviewsCount: 290,
+      status: "busy",
+      phone: "+91 98765 43213",
+      mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`EV Hub South ${formatted}`)}`,
+      brandsServiced: ["Ather", "TVS", "Ola Electric", "Bajaj Chetak"],
+      servicesOffered: ["Battery Health Scan", "General Maintenance", "Emergency RSA"],
+      baysAvailable: 1,
+      techniciansOnDuty: 4,
+    },
+  ];
+
+  return centers;
 }
