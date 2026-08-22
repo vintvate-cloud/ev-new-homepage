@@ -277,33 +277,36 @@ function EventsPage() {
       <div className="relative min-h-screen">
         
         {/* =========================================================================
-            1. FIXED STUCK HERO SECTION (EXTENDS BEHIND NAVBAR: TOP-0 H-SCREEN)
+            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
-        <div className="fixed top-0 inset-x-0 h-screen w-full overflow-hidden bg-black z-0 flex items-center justify-center">
-          {/* Background Hero Poster Image - 100% Crystal Clear Behind Navbar */}
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background Hero Poster Image */}
           <img
             src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80"
             alt="EV Events Hero"
-            className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
+            className="w-full h-full object-cover object-center opacity-90 pointer-events-none"
           />
 
-          {/* Hero Content Container (Text ALWAYS crisp white regardless of theme mode) */}
+          {/* Dark Overlay Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-black/40 to-black/60 pointer-events-none" />
+
+          {/* Hero Content Container */}
           <div
             ref={heroTextRef}
-            className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-3xl space-y-4 z-10 pointer-events-none text-white pt-16"
+            className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-3xl space-y-4 z-10 pointer-events-auto text-white"
           >
-            {/* Title - EXACT Font from Ecosystem landing headline: font-sans font-semibold tracking-[-0.04em] */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-sans font-semibold tracking-[-0.04em] !text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+            {/* Title */}
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] !text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
               EV Events &amp; <span className="text-[#00D084]">Workshops</span> <br />
               Across India
             </h1>
 
-            {/* Subtitle - ALWAYS White/90 */}
+            {/* Subtitle */}
             <p className="text-xs sm:text-sm md:text-base !text-white/90 font-light leading-relaxed max-w-xl drop-shadow-md">
               Join industry leaders, learn diagnostic skills, and connect with the EV community through our national summits, workshops, and certified training programs.
             </p>
 
-            <div className="pt-2 pointer-events-auto">
+            <div className="pt-2">
               <a
                 href="#catalog-section"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#00D084] !text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
@@ -315,15 +318,12 @@ function EventsPage() {
           </div>
         </div>
 
-        {/* Transparent Spacer for Fixed Full Screen Hero */}
-        <div className="h-screen w-full pointer-events-none" />
-
         {/* =========================================================================
             2. CARDS OVERLAY CONTAINER (RISES UP OVER FIXED HERO WITH CURVED TOP BORDER)
            ========================================================================= */}
         <div
           ref={cardsOverlayRef}
-          className={`relative z-10 min-h-screen pt-12 pb-24 rounded-t-[40px] border-t border-white/15 ${
+          className={`relative z-10 min-h-screen mt-[calc(100vh-80px)] pt-12 pb-24 rounded-t-[40px] border-t border-white/15 shadow-2xl ${
             isLight ? "bg-[#f4f8f5]" : "bg-[#020503]"
           }`}
         >

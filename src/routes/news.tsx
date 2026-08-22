@@ -324,19 +324,22 @@ function EVNewsPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0 BEHIND NAVBAR)
            ========================================================================= */}
-        <div className="fixed top-0 left-0 right-0 h-screen w-full overflow-hidden bg-black z-0 flex items-center justify-center">
-          {/* Background Hero Image - 100% Raw Clarity (No shadow layer, no line) */}
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background Hero Image */}
           <img
             key={currentHero.id}
             src={currentHero.img}
             alt={currentHero.title}
-            className="w-full h-full object-cover object-center opacity-100 pointer-events-none transition-all duration-700 animate-in fade-in duration-500"
+            className="w-full h-full object-cover object-center opacity-85 pointer-events-none transition-all duration-700 animate-in fade-in duration-500"
           />
 
-          {/* Hero Content Container (Fades out & scales down as cards overlay rises) */}
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-black/40 to-black/60 pointer-events-none" />
+
+          {/* Hero Content Container */}
           <div
             ref={heroTextRef}
-            className="absolute inset-0 flex flex-col justify-end pb-24 px-6 sm:px-12 lg:px-16 max-w-4xl mx-auto space-y-3 z-10 text-left pointer-events-none"
+            className="absolute inset-0 flex flex-col justify-end pb-16 px-6 sm:px-12 lg:px-16 max-w-4xl mx-auto space-y-3 z-10 text-left pointer-events-auto"
           >
             <span className="text-xs font-sans font-semibold uppercase text-[#00D084] tracking-widest block drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
               {currentHero.category} • {currentHero.date}
@@ -350,7 +353,7 @@ function EVNewsPage() {
               {currentHero.excerpt}
             </p>
 
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 pointer-events-auto">
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
               <div className="flex items-center gap-3">
                 <img
                   src={currentHero.author.avatar}
@@ -395,15 +398,12 @@ function EVNewsPage() {
           </div>
         </div>
 
-        {/* 100vh Spacer for Smooth Fixed Hero Scroll */}
-        <div className="h-screen w-full pointer-events-none" />
-
         {/* =========================================================================
             2. CARDS OVERLAY CONTAINER (RISES UP DIRECTLY OVER THE FIXED HERO)
            ========================================================================= */}
         <div
           ref={cardsOverlayRef}
-          className={`relative z-10 min-h-screen rounded-t-[40px] border-t shadow-2xl transition-colors duration-500 ${
+          className={`relative z-10 min-h-screen mt-[calc(100vh-80px)] rounded-t-[40px] border-t shadow-2xl transition-colors duration-500 ${
             isLight
               ? "bg-[#f4f8f5] text-[#1a2320] border-black/10"
               : "bg-[#020503] text-white border-white/15"

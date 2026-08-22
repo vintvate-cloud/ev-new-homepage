@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useEffect, useRef } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SERVICES, SERVICE_CATEGORIES, EVServiceItem } from "../data/services";
 import { PACKAGES } from "../data/packages";
 import { Nav } from "../components/Nav";
@@ -121,6 +123,51 @@ function ServicesPage() {
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [isClosingDetails, setIsClosingDetails] = useState(false);
   const [detailsService, setDetailsService] = useState<EVServiceItem | null>(null);
+
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const contentOverlayRef = useRef<HTMLDivElement>(null);
+  const contentUpRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      if (heroTextRef.current && contentOverlayRef.current) {
+        gsap.to(heroTextRef.current, {
+          opacity: 0,
+          scale: 0.9,
+          y: -50,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: contentOverlayRef.current,
+            start: "top 90%",
+            end: "top 30%",
+            scrub: 0.6,
+          },
+        });
+      }
+
+      if (contentUpRef.current) {
+        gsap.fromTo(
+          contentUpRef.current,
+          { y: 120, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: contentUpRef.current,
+              start: "top 90%",
+              end: "top 45%",
+              scrub: 0.6,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   const handleOpenDetails = (service: EVServiceItem) => {
     setDetailsService(service);
@@ -301,7 +348,7 @@ function ServicesPage() {
 
   return (
     <div
-      className={`min-h-screen font-sans transition-colors duration-500 ${
+      className={`min-h-screen font-sans transition-colors duration-500 overflow-x-hidden ${
         isLight
           ? "bg-[#f8faf9] text-[#1a2320] selection:bg-[#00D084] selection:text-black"
           : "bg-[#030604] text-white selection:bg-[#00D084] selection:text-black"
@@ -315,33 +362,57 @@ function ServicesPage() {
         }}
       />
 
-      {/* =========================================================================
-          2. HERO SECTION (Full-Width, Edge-to-Edge Display attached to display)
-         ========================================================================= */}
-      <section
-        className={`relative w-full h-screen h-[100vh] min-h-[600px] overflow-hidden text-white px-6 flex items-center justify-center border-b ${
-          isLight ? "bg-[#0c1410] border-[#2d3a34]" : "bg-[#060b08] border-white/10"
-        }`}
-      >
-        {/* Background image overlay */}
-        <div
-          className="absolute inset-0 bg-cover bg-center pointer-events-none scale-105 transition-all duration-700"
-          style={{
-            backgroundImage: `url('${HERO_BG_IMAGE}')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/25 to-[#030604] pointer-events-none" />
+      {/* Main Container */}
+      <div className="relative min-h-screen">
 
-        <div className="max-w-4xl mx-auto text-center relative z-10 my-auto pt-16">
-          {/* Headline text with background image support */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-5 leading-[1.08] drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
-            Expert <span className="text-[#00D084]">EV Services</span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto drop-shadow-md">
-            Professional diagnostics and repairs for Electric Scooters, Bikes & Autos
-          </p>
+        {/* =========================================================================
+            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+           ========================================================================= */}
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background image overlay */}
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-85 pointer-events-none scale-105 transition-all duration-700"
+            style={{
+              backgroundImage: `url('${HERO_BG_IMAGE}')`,
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[#030604] pointer-events-none" />
+
+          <div
+            ref={heroTextRef}
+            className="max-w-4xl mx-auto text-center relative z-10 px-6 space-y-4 pointer-events-auto"
+          >
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
+              • Certified Diagnostic Hubs Across India
+            </span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
+              Expert <span className="text-[#00D084]">EV Services</span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto drop-shadow-md">
+              Professional diagnostics and repairs for Electric Scooters, Bikes & Autos
+            </p>
+            <div className="pt-2">
+              <a
+                href="#engineered-section"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
+              >
+                <span>EXPLORE SERVICES</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
         </div>
-      </section>
+
+        {/* =========================================================================
+            2. CARDS OVERLAY CONTAINER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO)
+           ========================================================================= */}
+        <div
+          ref={contentOverlayRef}
+          className={`relative z-10 min-h-screen mt-[calc(100vh-80px)] pt-12 rounded-t-[40px] border-t border-white/10 shadow-2xl ${
+            isLight ? "bg-[#f8faf9]" : "bg-[#030604]"
+          }`}
+        >
+          <div ref={contentUpRef}>
 
       {/* 3. VALUE PACKAGES CARDS SECTION (Positioned cleanly below full-screen hero with Section Header) */}
       <div className="mt-16 md:mt-24 relative z-20 max-w-[1380px] mx-auto px-6 mb-20">
@@ -931,9 +1002,10 @@ function ServicesPage() {
         </div>
       </section>
 
-      {/* =========================================================================
-          7. FOOTER SECTION
-         ========================================================================= */}
+          </div>
+        </div>
+      </div>
+
       {/* Global Shared Footer */}
       <Footer />
 

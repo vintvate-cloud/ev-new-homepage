@@ -25,6 +25,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as HvSafetyRouteImport } from './routes/hv-safety'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as FranchiseTermsRouteImport } from './routes/franchise-terms'
+import { Route as FranchiseApplyRouteImport } from './routes/franchise-apply'
 import { Route as FranchiseRouteImport } from './routes/franchise'
 import { Route as FindServicesRouteImport } from './routes/find-services'
 import { Route as FeedbackRouteImport } from './routes/feedback'
@@ -38,6 +39,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PackagesPackageIdRouteImport } from './routes/packages.$packageId'
+import { Route as CityCityIdRouteImport } from './routes/city.$cityId'
 
 const WebinarsRoute = WebinarsRouteImport.update({
   id: '/webinars',
@@ -119,6 +121,11 @@ const FranchiseTermsRoute = FranchiseTermsRouteImport.update({
   path: '/franchise-terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FranchiseApplyRoute = FranchiseApplyRouteImport.update({
+  id: '/franchise-apply',
+  path: '/franchise-apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FranchiseRoute = FranchiseRouteImport.update({
   id: '/franchise',
   path: '/franchise',
@@ -184,6 +191,11 @@ const PackagesPackageIdRoute = PackagesPackageIdRouteImport.update({
   path: '/packages/$packageId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CityCityIdRoute = CityCityIdRouteImport.update({
+  id: '/city/$cityId',
+  path: '/city/$cityId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -198,6 +210,7 @@ export interface FileRoutesByFullPath {
   '/feedback': typeof FeedbackRoute
   '/find-services': typeof FindServicesRoute
   '/franchise': typeof FranchiseRoute
+  '/franchise-apply': typeof FranchiseApplyRoute
   '/franchise-terms': typeof FranchiseTermsRoute
   '/help': typeof HelpRoute
   '/hv-safety': typeof HvSafetyRoute
@@ -214,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/track': typeof TrackRoute
   '/warranty': typeof WarrantyRoute
   '/webinars': typeof WebinarsRoute
+  '/city/$cityId': typeof CityCityIdRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
 export interface FileRoutesByTo {
@@ -229,6 +243,7 @@ export interface FileRoutesByTo {
   '/feedback': typeof FeedbackRoute
   '/find-services': typeof FindServicesRoute
   '/franchise': typeof FranchiseRoute
+  '/franchise-apply': typeof FranchiseApplyRoute
   '/franchise-terms': typeof FranchiseTermsRoute
   '/help': typeof HelpRoute
   '/hv-safety': typeof HvSafetyRoute
@@ -245,6 +260,7 @@ export interface FileRoutesByTo {
   '/track': typeof TrackRoute
   '/warranty': typeof WarrantyRoute
   '/webinars': typeof WebinarsRoute
+  '/city/$cityId': typeof CityCityIdRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
 export interface FileRoutesById {
@@ -261,6 +277,7 @@ export interface FileRoutesById {
   '/feedback': typeof FeedbackRoute
   '/find-services': typeof FindServicesRoute
   '/franchise': typeof FranchiseRoute
+  '/franchise-apply': typeof FranchiseApplyRoute
   '/franchise-terms': typeof FranchiseTermsRoute
   '/help': typeof HelpRoute
   '/hv-safety': typeof HvSafetyRoute
@@ -277,6 +294,7 @@ export interface FileRoutesById {
   '/track': typeof TrackRoute
   '/warranty': typeof WarrantyRoute
   '/webinars': typeof WebinarsRoute
+  '/city/$cityId': typeof CityCityIdRoute
   '/packages/$packageId': typeof PackagesPackageIdRoute
 }
 export interface FileRouteTypes {
@@ -294,6 +312,7 @@ export interface FileRouteTypes {
     | '/feedback'
     | '/find-services'
     | '/franchise'
+    | '/franchise-apply'
     | '/franchise-terms'
     | '/help'
     | '/hv-safety'
@@ -310,6 +329,7 @@ export interface FileRouteTypes {
     | '/track'
     | '/warranty'
     | '/webinars'
+    | '/city/$cityId'
     | '/packages/$packageId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -325,6 +345,7 @@ export interface FileRouteTypes {
     | '/feedback'
     | '/find-services'
     | '/franchise'
+    | '/franchise-apply'
     | '/franchise-terms'
     | '/help'
     | '/hv-safety'
@@ -341,6 +362,7 @@ export interface FileRouteTypes {
     | '/track'
     | '/warranty'
     | '/webinars'
+    | '/city/$cityId'
     | '/packages/$packageId'
   id:
     | '__root__'
@@ -356,6 +378,7 @@ export interface FileRouteTypes {
     | '/feedback'
     | '/find-services'
     | '/franchise'
+    | '/franchise-apply'
     | '/franchise-terms'
     | '/help'
     | '/hv-safety'
@@ -372,6 +395,7 @@ export interface FileRouteTypes {
     | '/track'
     | '/warranty'
     | '/webinars'
+    | '/city/$cityId'
     | '/packages/$packageId'
   fileRoutesById: FileRoutesById
 }
@@ -388,6 +412,7 @@ export interface RootRouteChildren {
   FeedbackRoute: typeof FeedbackRoute
   FindServicesRoute: typeof FindServicesRoute
   FranchiseRoute: typeof FranchiseRoute
+  FranchiseApplyRoute: typeof FranchiseApplyRoute
   FranchiseTermsRoute: typeof FranchiseTermsRoute
   HelpRoute: typeof HelpRoute
   HvSafetyRoute: typeof HvSafetyRoute
@@ -404,6 +429,7 @@ export interface RootRouteChildren {
   TrackRoute: typeof TrackRoute
   WarrantyRoute: typeof WarrantyRoute
   WebinarsRoute: typeof WebinarsRoute
+  CityCityIdRoute: typeof CityCityIdRoute
   PackagesPackageIdRoute: typeof PackagesPackageIdRoute
 }
 
@@ -521,6 +547,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FranchiseTermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/franchise-apply': {
+      id: '/franchise-apply'
+      path: '/franchise-apply'
+      fullPath: '/franchise-apply'
+      preLoaderRoute: typeof FranchiseApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/franchise': {
       id: '/franchise'
       path: '/franchise'
@@ -612,6 +645,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PackagesPackageIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/city/$cityId': {
+      id: '/city/$cityId'
+      path: '/city/$cityId'
+      fullPath: '/city/$cityId'
+      preLoaderRoute: typeof CityCityIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -628,6 +668,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeedbackRoute: FeedbackRoute,
   FindServicesRoute: FindServicesRoute,
   FranchiseRoute: FranchiseRoute,
+  FranchiseApplyRoute: FranchiseApplyRoute,
   FranchiseTermsRoute: FranchiseTermsRoute,
   HelpRoute: HelpRoute,
   HvSafetyRoute: HvSafetyRoute,
@@ -644,6 +685,7 @@ const rootRouteChildren: RootRouteChildren = {
   TrackRoute: TrackRoute,
   WarrantyRoute: WarrantyRoute,
   WebinarsRoute: WebinarsRoute,
+  CityCityIdRoute: CityCityIdRoute,
   PackagesPackageIdRoute: PackagesPackageIdRoute,
 }
 export const routeTree = rootRouteImport

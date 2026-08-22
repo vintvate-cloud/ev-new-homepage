@@ -205,6 +205,51 @@ function WebinarsPage() {
     };
   }, [activeTab]);
 
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const contentOverlayRef = useRef<HTMLDivElement>(null);
+  const contentUpRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      if (heroTextRef.current && contentOverlayRef.current) {
+        gsap.to(heroTextRef.current, {
+          opacity: 0,
+          scale: 0.9,
+          y: -50,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: contentOverlayRef.current,
+            start: "top 90%",
+            end: "top 30%",
+            scrub: 0.6,
+          },
+        });
+      }
+
+      if (contentUpRef.current) {
+        gsap.fromTo(
+          contentUpRef.current,
+          { y: 120, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: contentUpRef.current,
+              start: "top 90%",
+              end: "top 45%",
+              scrub: 0.6,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
       typeof document !== "undefined" &&
@@ -284,80 +329,95 @@ function WebinarsPage() {
 
   return (
     <div
-      className={`min-h-screen font-sans transition-colors duration-500 relative overflow-hidden ${
+      className={`min-h-screen font-sans transition-colors duration-500 relative overflow-x-hidden ${
         isLight
           ? "bg-[#f4f8f5] text-[#1a2320] selection:bg-[#00D084] selection:text-black"
-          : "bg-[#030604] text-white selection:bg-[#00D084] selection:text-black"
+          : "bg-[#070908] text-white selection:bg-[#00D084] selection:text-black"
       }`}
     >
       {/* Shared Navigation Header */}
       <Nav />
 
-      {/* =========================================================================
-          1ST SECTION: WHOLE SCREEN VIDEO HERO
-         ========================================================================= */}
-      <section className="relative w-full h-screen min-h-[680px] overflow-hidden text-white flex items-end justify-center pb-12 sm:pb-16 -mt-20">
-        {/* Background Video Stream */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none scale-105"
-          poster="https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=1600&auto=format&fit=crop&q=80"
-        >
-          <source
-            src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-factory-42867-large.mp4"
-            type="video/mp4"
-          />
-        </video>
+      {/* Main Container */}
+      <div className="relative min-h-screen">
 
-        {/* Cinematic Vignette Overlay Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020403]/85 via-[#020403]/60 to-[#020403] pointer-events-none" />
+        {/* =========================================================================
+            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+           ========================================================================= */}
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background Video Stream */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-85 pointer-events-none scale-105"
+            poster="https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=1600&auto=format&fit=crop&q=80"
+          >
+            <source
+              src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-factory-42867-large.mp4"
+              type="video/mp4"
+            />
+          </video>
 
-        {/* Hero Content (Positioned at bottom of hero) */}
-        <div className="max-w-5xl mx-auto text-center relative z-10 px-6 pt-28 pb-4">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-5 leading-[1.10]">
-            Webinars built for <span className="text-[#00D084]">EV owner</span>, technicians, and franchises.
-          </h1>
+          {/* Cinematic Vignette Overlay Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#070908]/85 via-black/50 to-[#070908] pointer-events-none" />
 
-          <p className="text-sm sm:text-base md:text-lg text-[#d0e0d6] font-normal max-w-2xl mx-auto mb-8 leading-relaxed">
-            Practical, field-tested sessions designed for EV owners, technicians, and franchise partners to master battery diagnostics and shop automation.
-          </p>
+          {/* Hero Content Container */}
+          <div
+            ref={heroTextRef}
+            className="absolute inset-0 flex flex-col justify-center items-center px-6 max-w-5xl mx-auto space-y-4 z-10 transition-all pointer-events-auto text-center overflow-y-auto py-6"
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-3 leading-[1.10] drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+              Webinars built for <span className="text-[#00D084]">EV owner</span>, technicians, and franchises.
+            </h1>
 
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="#featured-section"
-              className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-[11px] font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all hover:scale-105 cursor-pointer flex items-center gap-2"
-            >
-              EXPLORE FEATURED <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-            <button
-              onClick={() => setRequestTopicModalOpen(true)}
-              className="px-7 py-3.5 rounded-full border border-white/30 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all backdrop-blur-md flex items-center gap-2 cursor-pointer"
-            >
-              <HelpCircle className="w-3.5 h-3.5 text-[#00D084]" />
-              REQUEST A TOPIC
-            </button>
-          </div>
+            <p className="text-sm sm:text-base md:text-lg text-[#d0e0d6] font-normal max-w-2xl mx-auto mb-6 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              Practical, field-tested sessions designed for EV owners, technicians, and franchise partners to master battery diagnostics and shop automation.
+            </p>
 
-          {/* Quick Metrics Bar below Hero CTAs */}
-          <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-10 pt-6 border-t border-white/15">
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-black text-white font-mono">230+</div>
-              <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">Masterclasses Held</div>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <a
+                href="#featured-section"
+                className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-[11px] font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all hover:scale-105 cursor-pointer flex items-center gap-2 shadow-lg"
+              >
+                EXPLORE FEATURED <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+              <button
+                onClick={() => setRequestTopicModalOpen(true)}
+                className="px-7 py-3.5 rounded-full border border-white/30 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all backdrop-blur-md flex items-center gap-2 cursor-pointer"
+              >
+                <HelpCircle className="w-3.5 h-3.5 text-[#00D084]" />
+                REQUEST A TOPIC
+              </button>
             </div>
-            <div className="text-center border-x border-white/15">
-              <div className="text-xl sm:text-2xl font-black text-[#00D084] font-mono">95%</div>
-              <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">SOP Quality</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-black text-white font-mono">400+</div>
-              <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">Partner Hubs</div>
+
+            {/* Quick Metrics Bar below Hero CTAs */}
+            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-6 pt-6 border-t border-white/15 w-full">
+              <div className="text-center">
+                <div className="text-xl sm:text-2xl font-black text-white font-mono">230+</div>
+                <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">Masterclasses Held</div>
+              </div>
+              <div className="text-center border-x border-white/15">
+                <div className="text-xl sm:text-2xl font-black text-[#00D084] font-mono">95%</div>
+                <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">SOP Quality</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl sm:text-2xl font-black text-white font-mono">400+</div>
+                <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">Partner Hubs</div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* =========================================================================
+            2. CONTENT OVERLAY LAYER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO)
+           ========================================================================= */}
+        <div
+          ref={contentOverlayRef}
+          className="relative z-10 bg-[#070908] min-h-screen mt-[calc(100vh-80px)] pt-12 rounded-t-[40px] border-t border-white/10 shadow-2xl"
+        >
+          <div ref={contentUpRef}>
 
       {/* =========================================================================
           2. LARGE TYPOGRAPHIC STATEMENT SECTION
@@ -789,6 +849,10 @@ function WebinarsPage() {
           </div>
         </div>
       </section>
+
+          </div>
+        </div>
+      </div>
 
       {/* Shared Footer */}
       <Footer />
