@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { IndiaFranchiseMap } from "../components/IndiaFranchiseMap";
@@ -68,6 +70,11 @@ export function FranchisePage() {
   // Franchise Models Expandable Services Dropdown state
   const [expandedModels, setExpandedModels] = useState<{ [key: string]: boolean }>({});
 
+  // Hero section & ScrollTrigger refs
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const contentOverlayRef = useRef<HTMLDivElement>(null);
+  const cardsUpRef = useRef<HTMLDivElement>(null);
+
   const toggleModelDropdown = (type: string) => {
     setExpandedModels((prev) => ({ ...prev, [type]: !prev[type] }));
   };
@@ -78,6 +85,48 @@ export function FranchisePage() {
       setApplyModalOpen(true);
     }
   }, [searchParams]);
+
+  // GSAP ScrollTrigger Animations (matching Media page pattern)
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Hero text & form container slow fade-out as content overlay moves up over fixed hero
+      gsap.to(heroTextRef.current, {
+        opacity: 0,
+        scale: 0.9,
+        y: -50,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: contentOverlayRef.current,
+          start: "top 90%",
+          end: "top 30%",
+          scrub: 0.6,
+        },
+      });
+
+      // 2. Key Badges section rises up onto the fixed hero section
+      if (cardsUpRef.current) {
+        gsap.fromTo(
+          cardsUpRef.current,
+          { y: 100, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: cardsUpRef.current,
+              start: "top 90%",
+              end: "top 50%",
+              scrub: 0.6,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   // Application Form State
   const [form, setForm] = useState({
@@ -116,7 +165,7 @@ export function FranchisePage() {
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     } else {
-      setApplyModalOpen(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -171,216 +220,226 @@ export function FranchisePage() {
       : CATEGORIZED_FAQS.filter((faq) => faq.category === activeFaqCategory);
 
   return (
-    <div className="min-h-screen bg-[#020403] text-white selection:bg-[#00D084] selection:text-black font-serif overflow-x-hidden">
+    <div className="min-h-screen bg-[#020403] text-white selection:bg-[#00D084] selection:text-black font-serif relative overflow-x-hidden">
       {/* Unified Landing Navbar */}
       <Nav />
 
-      {/* =========================================================================
-          1. FULL-SCREEN HERO SECTION WITH BG IMAGE & FORM
-         ========================================================================= */}
-      <section className="relative w-full min-h-screen pt-32 pb-16 px-6 md:px-12 flex items-center overflow-hidden">
-        {/* Full-bleed background image */}
-        <div className="absolute inset-0 z-0">
+      {/* Main Container */}
+      <div className="relative min-h-screen">
+        {/* =========================================================================
+            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+           ========================================================================= */}
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Full-bleed background image - No shadow/overlay, 100% crystal clear */}
           <img
             src="/ev-franchise-hero.jpg"
             alt="EV Service Workshop Hero"
-            className="w-full h-full object-cover object-center opacity-85 pointer-events-none"
+            className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020403] via-[#020403]/60 to-black/40" />
-        </div>
 
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 pt-12 sm:pt-16">
-          {/* Left Column: Title & Text */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-[1.10] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-              Launch Your Own <br />
-              <span className="text-[#00D084] font-black drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-                EV Service Franchise
-              </span>
-            </h1>
-
-            <p className="text-sm sm:text-base text-white font-serif font-bold leading-relaxed max-w-xl drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] bg-black/50 backdrop-blur-md p-5 rounded-2xl border border-white/15">
-              Launch your own EV service business powered by Autobot OS, India's first AI-powered EV service automation platform. Become part of the fastest-growing EV ecosystem and build a future-ready, high-profit business in 90 days.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button
-                onClick={scrollToForm}
-                className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-2 shadow-2xl"
-              >
-                Become a Partner <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() =>
-                  toast.info(
-                    "Franchise Brochure download link sent to your mobile/email!"
-                  )
-                }
-                className="px-7 py-3.5 rounded-full border border-white/30 bg-black/40 text-white text-xs font-serif font-extrabold uppercase tracking-widest hover:bg-black/60 transition-all flex items-center gap-2 cursor-pointer backdrop-blur-md shadow-2xl"
-              >
-                <Download className="w-4 h-4 text-[#00D084]" /> Download Franchise Brochure
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column: Premium Glass Form Card */}
+          {/* Hero Content Container (Text & Form - text slowly fades out on scroll) */}
           <div
-            id="hero-partner-form"
-            className="lg:col-span-5 bg-[#030604]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 relative font-serif border border-white/20 shadow-2xl overflow-hidden"
+            ref={heroTextRef}
+            className="absolute inset-0 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center px-6 md:px-12 pt-6 sm:pt-10 z-10 pointer-events-auto transition-all"
           >
-            {/* Ambient Radial Lighting Glow */}
-            <div className="absolute top-0 right-0 w-48 h-48 bg-[#00D084]/20 rounded-full blur-[70px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#00D084]/15 rounded-full blur-[60px] pointer-events-none" />
+            {/* Left Column: Title & Text */}
+            <div className="lg:col-span-7 space-y-6 text-left">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-[1.10] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+                Launch Your Own <br />
+                <span className="text-[#00D084] font-black drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+                  EV Service Franchise
+                </span>
+              </h1>
 
-            <div className="mb-6 text-left relative z-10">
-              <h3 className="text-2xl sm:text-3xl font-serif font-black text-white tracking-tight drop-shadow-md">
-                Become a Partner
-              </h3>
-              <p className="text-xs text-white/80 font-serif font-semibold mt-1">
-                Takes less than a minute. No commitment needed.
+              <p className="text-sm sm:text-base text-white font-serif font-black leading-relaxed max-w-xl drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] bg-black/60 backdrop-blur-md p-5 rounded-2xl border border-white/20">
+                Launch your own EV service business powered by Autobot OS, India's first AI-powered EV service automation platform. Become part of the fastest-growing EV ecosystem and build a future-ready, high-profit business in 90 days.
               </p>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  onClick={scrollToForm}
+                  className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-2 shadow-2xl"
+                >
+                  Become a Partner <ArrowRight className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() =>
+                    toast.info(
+                      "Franchise Brochure download link sent to your mobile/email!"
+                    )
+                  }
+                  className="px-7 py-3.5 rounded-full border border-white/30 bg-black/50 text-white text-xs font-serif font-black uppercase tracking-widest hover:bg-black/70 transition-all flex items-center gap-2 cursor-pointer backdrop-blur-md shadow-2xl"
+                >
+                  <Download className="w-4 h-4 text-[#00D084]" /> Download Franchise Brochure
+                </button>
+              </div>
             </div>
 
-            <form onSubmit={handleFormSubmit} className="space-y-4 text-left relative z-10">
-              <div>
-                <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Rahul Sharma"
-                  value={form.fullName}
-                  onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                  className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                />
+            {/* Right Column: Premium Glass Form Card */}
+            <div
+              id="hero-partner-form"
+              className="lg:col-span-5 bg-[#030604]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-7 relative font-serif border border-white/20 shadow-2xl overflow-hidden"
+            >
+              {/* Ambient Radial Lighting Glow */}
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#00D084]/20 rounded-full blur-[70px] pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#00D084]/15 rounded-full blur-[60px] pointer-events-none" />
+
+              <div className="mb-4 text-left relative z-10">
+                <h3 className="text-2xl sm:text-3xl font-serif font-black text-white tracking-tight drop-shadow-md">
+                  Become a Partner
+                </h3>
+                <p className="text-xs text-white/90 font-serif font-extrabold mt-1">
+                  Takes less than a minute. No commitment needed.
+                </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <form onSubmit={handleFormSubmit} className="space-y-3 text-left relative z-10">
                 <div>
-                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">
-                    Email (optional)
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="you@example.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">
-                    Mobile Number *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="10-digit number"
-                    value={form.mobile}
-                    onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2">
-                <div>
-                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">
-                    PIN Code
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="6-digit PIN"
-                    value={form.pincode}
-                    onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">
-                    City *
+                  <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
+                    Full Name *
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="Your city"
-                    value={form.city}
-                    onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
+                    placeholder="e.g. Rahul Sharma"
+                    value={form.fullName}
+                    onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+                    className="w-full bg-black/70 hover:bg-black/85 focus:bg-black/95 rounded-xl px-4 py-2.5 text-xs text-white font-serif font-extrabold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/60 border border-white/25"
                   />
                 </div>
-                <div>
-                  <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">
-                    State
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Maharashtra"
-                    value={form.state}
-                    onChange={(e) => setForm({ ...form, state: e.target.value })}
-                    className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/20"
-                  />
-                </div>
-              </div>
 
-              <div>
-                <label className="text-[11px] font-serif font-bold text-white/90 block mb-1">
-                  Investment Range *
-                </label>
-                <select
-                  value={form.investmentRange}
-                  onChange={(e) => setForm({ ...form, investmentRange: e.target.value })}
-                  className="w-full bg-black/60 hover:bg-black/80 focus:bg-black/90 rounded-xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border border-white/20 cursor-pointer"
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
+                      Email (optional)
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="you@example.com"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className="w-full bg-black/70 hover:bg-black/85 focus:bg-black/95 rounded-xl px-4 py-2.5 text-xs text-white font-serif font-extrabold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/60 border border-white/25"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
+                      Mobile Number *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="10-digit number"
+                      value={form.mobile}
+                      onChange={(e) => setForm({ ...form, mobile: e.target.value })}
+                      className="w-full bg-black/70 hover:bg-black/85 focus:bg-black/95 rounded-xl px-4 py-2.5 text-xs text-white font-serif font-extrabold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/60 border border-white/25"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2">
+                  <div>
+                    <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
+                      PIN Code
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="6-digit PIN"
+                      value={form.pincode}
+                      onChange={(e) => setForm({ ...form, pincode: e.target.value })}
+                      className="w-full bg-black/70 hover:bg-black/85 focus:bg-black/95 rounded-xl px-3 py-2.5 text-xs text-white font-serif font-extrabold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/60 border border-white/25"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
+                      City *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Your city"
+                      value={form.city}
+                      onChange={(e) => setForm({ ...form, city: e.target.value })}
+                      className="w-full bg-black/70 hover:bg-black/85 focus:bg-black/95 rounded-xl px-3 py-2.5 text-xs text-white font-serif font-extrabold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/60 border border-white/25"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
+                      State
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Maharashtra"
+                      value={form.state}
+                      onChange={(e) => setForm({ ...form, state: e.target.value })}
+                      className="w-full bg-black/70 hover:bg-black/85 focus:bg-black/95 rounded-xl px-3 py-2.5 text-xs text-white font-serif font-extrabold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/60 border border-white/25"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
+                    Investment Range *
+                  </label>
+                  <select
+                    value={form.investmentRange}
+                    onChange={(e) => setForm({ ...form, investmentRange: e.target.value })}
+                    className="w-full bg-black/70 hover:bg-black/85 focus:bg-black/95 rounded-xl px-4 py-2.5 text-xs text-white font-serif font-extrabold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border border-white/25 cursor-pointer"
+                  >
+                    <option value="< ₹10 Lakh" className="bg-[#040906] text-white">
+                      &lt; ₹10 Lakh (Garage Tier)
+                    </option>
+                    <option value="₹10L - ₹20L" className="bg-[#040906] text-white">
+                      ₹10L – ₹20L (Centre Tier)
+                    </option>
+                    <option value="> ₹20L" className="bg-[#040906] text-white">
+                      &gt; ₹20L (Hub Tier)
+                    </option>
+                  </select>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-2 shadow-2xl"
                 >
-                  <option value="< ₹10 Lakh" className="bg-[#040906] text-white">
-                    &lt; ₹10 Lakh (Garage Tier)
-                  </option>
-                  <option value="₹10L - ₹20L" className="bg-[#040906] text-white">
-                    ₹10L – ₹20L (Centre Tier)
-                  </option>
-                  <option value="> ₹20L" className="bg-[#040906] text-white">
-                    &gt; ₹20L (Hub Tier)
-                  </option>
-                </select>
-              </div>
+                  Become a Partner <Send className="w-4 h-4" />
+                </button>
 
-              <button
-                type="submit"
-                className="w-full py-4 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-3 shadow-2xl"
-              >
-                Become a Partner <Send className="w-4 h-4" />
-              </button>
-
-              <p className="text-[10px] font-serif font-semibold text-white/60 leading-tight text-center pt-2">
-                By submitting you agree to be contacted by our franchise team and accept our Franchise Partner Terms & Conditions.
-              </p>
-            </form>
+                <p className="text-[10px] font-serif font-bold text-white/70 leading-tight text-center pt-1">
+                  By submitting you agree to be contacted by our franchise team and accept our Franchise Partner Terms & Conditions.
+                </p>
+              </form>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* =========================================================================
-          2. KEY BADGES SECTION BELOW HERO
-         ========================================================================= */}
-      <section className="bg-[#020403] py-8 px-6 font-serif">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          {[
-            "10+ Years EV R&D",
-            "AI Powered Autobot OS",
-            "Certified Training",
-            "Pan-India Expansion",
-          ].map((badge, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-center gap-2.5 text-xs sm:text-sm text-white/90 font-serif font-semibold bg-[#020403] border border-white/10 px-4 py-3.5 rounded-2xl hover:border-[#00D084]/40 transition-all"
-            >
-              <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0" />
-              <span>{badge}</span>
+        {/* =========================================================================
+            2. CARDS OVERLAY LAYER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO)
+           ========================================================================= */}
+        <div
+          ref={contentOverlayRef}
+          className="relative z-10 bg-[#020403] min-h-screen mt-[calc(100vh-80px)] pt-8 rounded-t-[40px] border-t border-white/10 shadow-2xl"
+        >
+          {/* =========================================================================
+              KEY BADGES SECTION BELOW HERO (RISING UP ANIMATEDLY)
+             ========================================================================= */}
+          <section ref={cardsUpRef} className="bg-[#020403] py-8 px-6 font-serif rounded-t-[40px]">
+            <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+              {[
+                "10+ Years EV R&D",
+                "AI Powered Autobot OS",
+                "Certified Training",
+                "Pan-India Expansion",
+              ].map((badge, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-center gap-2.5 text-xs sm:text-sm text-white/90 font-serif font-extrabold bg-[#050907] border border-white/10 px-4 py-3.5 rounded-2xl hover:border-[#00D084]/40 transition-all shadow-md"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0" />
+                  <span>{badge}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
 
       {/* =========================================================================
           3. OUR VISION & MISSION SECTION
@@ -962,6 +1021,11 @@ export function FranchisePage() {
           </div>
         </div>
       </section>
+
+        {/* Close Content Overlay Layer */}
+        </div>
+      {/* Close Main Relative Container */}
+      </div>
 
       {/* Footer */}
       <Footer />
