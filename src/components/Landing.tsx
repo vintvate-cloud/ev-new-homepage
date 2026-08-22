@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { motion, useScroll, useTransform, useInView, animate, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, animate, AnimatePresence, useMotionValue } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@tanstack/react-router";
@@ -9,12 +9,15 @@ import { Reveal, StaggerContainer, StaggerItem, SequentialHeader } from "./ui/sc
 import { GSAPHeader, GSAPText, useGSAPTextReveal } from "./ui/gsap-text-reveal";
 import {
   Activity,
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Battery,
   Bolt,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
+  Clock,
   Cpu,
   Crosshair,
   Disc,
@@ -49,7 +52,6 @@ import {
   Check,
   Bike,
   Car,
-  Clock,
   Gift,
   IndianRupee,
   Phone,
@@ -189,6 +191,291 @@ const HERO_SLIDES = [
   }
 ];
 
+/* ---------------- Interactive Hero Multi-Step Get Started Form ---------------- */
+function HeroGetStartedForm() {
+  const [step, setStep] = useState<1 | 2>(1);
+  const [selectedOption, setSelectedOption] = useState<"service" | "products" | "buy">("service");
+  const [pincode, setPincode] = useState("");
+  const [detectingLocation, setDetectingLocation] = useState(false);
+  const [locationStatus, setLocationStatus] = useState<string | null>(null);
+
+  const OPTIONS = [
+    {
+      id: "service",
+      title: "Service",
+      desc: "Repair & diagnostics",
+      badge: "Book in 60 seconds",
+      icon: <Wrench className="h-4 w-4 text-[#00D084]" />,
+    },
+    {
+      id: "products",
+      title: "Products",
+      desc: "Parts & accessories",
+      badge: "Browse store catalog",
+      icon: <Package className="h-4 w-4 text-[#00D084]" />,
+    },
+    {
+      id: "buy",
+      title: "Buy EV",
+      desc: "Talk to sales",
+      badge: "Get expert guidance",
+      icon: <ShieldCheck className="h-4 w-4 text-[#00D084]" />,
+    },
+  ] as const;
+
+  const handleDetectLocation = () => {
+    setDetectingLocation(true);
+    setLocationStatus("Detecting location...");
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setDetectingLocation(false);
+          setPincode("Location Verified (GPS)");
+          setLocationStatus("Location detected successfully!");
+        },
+        () => {
+          setDetectingLocation(false);
+          setLocationStatus("Could not detect. Enter pincode manually.");
+        },
+        { timeout: 5000 }
+      );
+    } else {
+      setDetectingLocation(false);
+      setLocationStatus("Geolocation unavailable.");
+    }
+  };
+
+  const handleFinalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (selectedOption === "service") {
+      window.location.href = `/services?location=${encodeURIComponent(pincode || "default")}`;
+    } else if (selectedOption === "products") {
+      window.location.href = `/store`;
+    } else {
+      window.location.href = `/contact`;
+    }
+  };
+
+  return (
+    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none">
+      {/* Background ambient lighting */}
+      <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#00D084]/10 rounded-full blur-2xl pointer-events-none" />
+
+      <AnimatePresence mode="wait">
+        {step === 1 ? (
+          <motion.div
+            key="step1"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="space-y-3"
+          >
+            {/* Header Badge & Subtitle */}
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 backdrop-blur-md mb-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+                <span className="text-[9px] font-mono font-bold tracking-widest text-[#00D084] uppercase">
+                  GET STARTED
+                </span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white leading-tight">
+                What do you want to start?
+              </h3>
+            </div>
+
+            {/* Selectable Cards */}
+            <div className="space-y-2">
+              {OPTIONS.map((opt) => {
+                const isSelected = selectedOption === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setSelectedOption(opt.id)}
+                    className={`w-full text-left p-2.5 sm:p-3 rounded-xl border transition-all duration-300 flex items-center justify-between gap-2.5 cursor-pointer ${
+                      isSelected
+                        ? "bg-[#00D084]/10 border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.15)]"
+                        : "bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center border shrink-0 ${isSelected ? "bg-[#00D084]/20 border-[#00D084]/40" : "bg-white/5 border-white/10"}`}>
+                        {opt.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-extrabold text-xs uppercase tracking-wider text-white truncate">
+                            {opt.title}
+                          </span>
+                          {isSelected && (
+                            <span className="text-[8px] font-mono text-[#00D084] uppercase bg-[#00D084]/20 border border-[#00D084]/30 px-1 py-0.2 rounded shrink-0">
+                              Selected
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[10px] text-white/60 font-light mt-0.5 truncate">
+                          {opt.desc}
+                        </p>
+                      </div>
+                    </div>
+
+                    <span className="text-[9px] font-mono text-white/50 border border-white/10 bg-white/5 px-2 py-0.5 rounded-full shrink-0 hidden sm:inline">
+                      {opt.badge}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Action CTA */}
+            <div className="pt-0.5">
+              <button
+                type="button"
+                onClick={() => setStep(2)}
+                className="w-full bg-[#00D084] hover:bg-[#00e894] text-black font-extrabold uppercase tracking-wider text-xs py-3 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.3)] hover:scale-[1.01] cursor-pointer"
+              >
+                <span>Continue</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </button>
+
+              <div className="flex items-center justify-center gap-1.5 text-[9px] font-mono text-white/40 mt-2">
+                <ShieldCheck className="h-3 w-3 text-[#00D084]" />
+                <span>Doorstep arrival, prompt service</span>
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="step2"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="space-y-3 text-left font-sans"
+          >
+            {/* Top Title & Back Link */}
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white m-0">
+                Get Started
+              </h3>
+
+              <button
+                type="button"
+                onClick={() => setStep(1)}
+                className="inline-flex items-center gap-1 text-xs text-white/60 hover:text-white transition-colors cursor-pointer"
+              >
+                <ChevronLeft className="h-3.5 w-3.5" />
+                <span>Back</span>
+              </button>
+            </div>
+
+            {/* Heading & Subtitle */}
+            <div>
+              <h4 className="text-xs sm:text-sm font-semibold text-white/90 m-0">
+                First, confirm your location
+              </h4>
+              <p className="text-[10px] text-white/50 font-normal mt-0.5 m-0">
+                So we can check service availability
+              </p>
+            </div>
+
+            {/* 2 Side-by-Side Action Cards: Detect & Check */}
+            <div className="grid grid-cols-2 gap-2.5">
+              {/* Detect Card */}
+              <button
+                type="button"
+                onClick={handleDetectLocation}
+                disabled={detectingLocation}
+                className="bg-[#0e1310] hover:bg-[#141b17] border border-white/10 hover:border-[#00D084]/40 p-2.5 sm:p-3 rounded-xl flex items-center gap-2.5 text-left transition-all duration-300 group cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-full bg-[#00D084]/15 border border-[#00D084]/20 flex items-center justify-center shrink-0">
+                  <MapPin className={`h-3.5 w-3.5 text-[#00D084] ${detectingLocation ? "animate-bounce" : ""}`} />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-xs font-bold text-white block leading-tight truncate">
+                    {detectingLocation ? "Detecting..." : "Detect"}
+                  </span>
+                  <span className="text-[9px] text-white/50 block truncate mt-0.5">
+                    Use current location
+                  </span>
+                </div>
+              </button>
+
+              {/* Check Card */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (!pincode) setPincode("Huzur, Madhya Pradesh, - 462001");
+                  setLocationStatus("Outside service area");
+                }}
+                className="bg-[#0e1310] hover:bg-[#141b17] border border-white/10 hover:border-[#00D084]/40 p-2.5 sm:p-3 rounded-xl flex items-center gap-2.5 text-left transition-all duration-300 group cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-full bg-[#00D084]/15 border border-[#00D084]/20 flex items-center justify-center shrink-0">
+                  <ArrowRight className="h-3.5 w-3.5 text-[#00D084]" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-xs font-bold text-white block leading-tight truncate">
+                    Check
+                  </span>
+                  <span className="text-[9px] text-white/50 block truncate mt-0.5">
+                    Verify service area
+                  </span>
+                </div>
+              </button>
+            </div>
+
+            {/* Address / Pincode Card Block */}
+            <div className="bg-[#0e1310]/90 border border-white/10 rounded-xl p-2.5 sm:p-3 space-y-1.5">
+              <label className="block text-[11px] font-medium text-white/60">
+                Address / Pincode
+              </label>
+
+              <div className="bg-[#050706] border border-white/10 rounded-lg px-3 py-2 flex items-center gap-2">
+                <MapPin className="h-3.5 w-3.5 text-white/40 shrink-0" />
+                <input
+                  type="text"
+                  value={pincode || "Huzur, Madhya Pradesh, - 462001"}
+                  onChange={(e) => setPincode(e.target.value)}
+                  placeholder="Enter your address / pincode..."
+                  className="w-full bg-transparent text-xs font-medium text-white placeholder-white/30 outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Alert Box: Outside Service Area (Amber Tinted Card) */}
+            <div className="bg-[#1a1408] border border-amber-500/40 rounded-xl p-3 text-left space-y-0.5">
+              <div className="text-[11px] font-bold text-[#f59e0b]">
+                Outside service area
+              </div>
+              <p className="text-[10.5px] text-white/80 font-normal leading-normal m-0">
+                We'll convert your booking to a service enquiry — you can still continue.
+              </p>
+            </div>
+
+            {/* Primary Action Button: Continue - Request Quote */}
+            <form onSubmit={handleFinalSubmit} className="pt-0.5 space-y-2">
+              <button
+                type="submit"
+                className="w-full bg-[#00D084] hover:bg-[#00e894] text-black font-extrabold text-xs sm:text-sm py-3 rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.35)] hover:scale-[1.01] cursor-pointer"
+              >
+                <span>Continue - Request Quote</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </button>
+
+              {/* Reassurance Footer */}
+              <div className="flex items-center justify-center gap-1.5 text-[10px] text-white/40">
+                <Clock className="h-3 w-3 text-white/40" />
+                <span>Doorstep arrival, prompt service</span>
+              </div>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -312,7 +599,7 @@ function Hero() {
               <div
                 className="w-full text-center px-4 relative z-10"
                 style={{
-                  paddingTop: "clamp(120px, 14vh, 160px)",
+                  paddingTop: "clamp(100px, 12vh, 140px)",
                 }}
               >
                 <h1
@@ -342,142 +629,8 @@ function Hero() {
                 </h1>
               </div>
 
-              {/* MOBILE LAYOUT CONTENT (Visible only on mobile) */}
-              <div className="flex-grow flex flex-col justify-end pb-24 md:hidden relative z-10 px-6 gap-3">
-                {/* Big Vehicle Image Mobile */}
-                <div className="flex-grow flex items-center justify-center min-h-[160px]">
-                  <AnimatePresence mode="wait">
-                    {isCurrent && (
-                      <motion.img
-                        key={`img-mob-${slide.id}`}
-                        initial={{ x: 80, opacity: 0, scale: 0.8 }}
-                        animate={{ x: 0, opacity: 1, scale: 1 }}
-                        exit={{ x: -80, opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        src={slide.bigImg}
-                        alt={slide.cardTitle}
-                        className="max-h-[180px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)] animate-float"
-                      />
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Left Card Deck Mobile */}
-                <div className="bg-card rounded-2xl p-3 flex items-center gap-3 border border-border text-left">
-                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src={slide.cardImg} alt={slide.cardTitle} className="w-8 h-8 object-contain" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-[10px] uppercase tracking-wider text-foreground">{slide.cardTitle}</div>
-                    <div className="text-[9px] text-muted-foreground leading-tight mt-0.5">{slide.cardDesc}</div>
-                  </div>
-                </div>
-
-                {/* Commands grid mobile */}
-                <div className="grid grid-cols-2 gap-2 w-full">
-                  {slide.commands.map((cmd) => (
-                    <a
-                      key={cmd.cmd}
-                      href={cmd.href}
-                      className={`group relative flex items-center gap-2 rounded-xl border p-2 bg-black/60 transition-all ${
-                        cmd.isRsa
-                          ? "border-red-500/20 bg-red-950/10 hover:border-red-500"
-                          : "border-white/10 hover:border-[#00D084]"
-                      }`}
-                    >
-                      {renderIcon(cmd.icon)}
-                      <span className={`text-[9px] font-extrabold tracking-wider uppercase ${cmd.isRsa ? "text-red-400" : "text-white"}`}>
-                        {cmd.label}
-                      </span>
-                    </a>
-                  ))}
-                </div>
-
-                {/* Text Block Mobile */}
-                <div className="text-left mt-2">
-                  <h2 className="font-black uppercase text-foreground leading-tight m-0 text-xs">
-                    {slide.bottomTitle}
-                  </h2>
-                  <p className="text-muted-foreground text-[10.5px] leading-relaxed mt-1 mb-0">
-                    {slide.bottomDesc}
-                  </p>
-                </div>
-              </div>
-
               {/* DESKTOP LAYOUT CONTENT (Visible only on desktop) */}
               <div className="hidden md:block">
-                {/* Card stack on the left */}
-                <div
-                  className="absolute z-10 pointer-events-auto flex flex-col gap-2.5"
-                  style={{ left: "6%", top: "28%", width: "32%", maxWidth: "380px" }}
-                >
-                  <div className="bg-card rounded-2xl p-3.5 flex items-center gap-3 shadow-lg border border-border" style={{ color: "var(--foreground)" }}>
-                    <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center overflow-hidden flex-shrink-0">
-                      <img src={slide.cardImg} alt={slide.cardTitle} className="w-10 h-10 object-contain" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-[11px] uppercase tracking-wider text-foreground">{slide.cardTitle}</div>
-                      <div className="text-[10px] text-muted-foreground leading-tight">{slide.cardDesc}</div>
-                    </div>
-                  </div>
-
-                  {/* Diagnostic Telemetry Dock */}
-                  <div className="flex flex-col gap-2 mt-2.5 w-full">
-                    <div className="text-[9px] font-mono uppercase tracking-[0.25em] text-[#00D084]/60 flex items-center justify-between px-1">
-                      <span>DIAGNOSTIC TELEMETRY DOCK</span>
-                      <span className="animate-pulse flex items-center gap-1">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084]" />
-                        LIVE
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2">
-                      {slide.commands.map((cmd) => (
-                        <a
-                          key={cmd.cmd}
-                          href={cmd.href}
-                          className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border p-2.5 transition-all duration-300 hover:-translate-y-0.5 ${
-                            cmd.isRsa
-                              ? "border-red-500/20 bg-red-950/10 hover:border-red-500 hover:bg-red-950/20 hover:shadow-[0_0_20px_rgba(239,68,68,0.25)]"
-                              : "border-white/10 bg-black/40 hover:border-[#00D084] hover:shadow-[0_0_20px_rgba(0,208,132,0.25)]"
-                          }`}
-                        >
-                          <div className="flex items-center justify-between mb-1.5">
-                            <span className={`text-[8px] font-mono ${cmd.isRsa ? "text-red-500/60" : "text-white/45"}`}>{cmd.cmd}</span>
-                            {cmd.isRsa ? (
-                              <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
-                            ) : (
-                              <div className="h-1.5 w-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-ping" />
-                            )}
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            {renderIcon(cmd.icon)}
-                            <span className={`text-[10px] font-extrabold tracking-wider uppercase ${cmd.isRsa ? "text-red-400 group-hover:text-red-300" : "text-white group-hover:text-[#00D084]"}`}>
-                              {cmd.label}
-                            </span>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* BOTTOM LEFT TEXT BLOCK */}
-                <div
-                  className="absolute z-10 flex flex-col justify-end"
-                  style={{ left: "4.5%", bottom: "10%", width: "clamp(260px, 30%, 350px)" }}
-                >
-                  <h2 className="font-black uppercase text-foreground leading-tight m-0"
-                    style={{ fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", letterSpacing: "-0.025em", marginBottom: 12, fontFamily: "var(--font-sans)" }}
-                  >
-                    {slide.bottomTitle.split(" ").slice(0, 2).join(" ")}<br />
-                    {slide.bottomTitle.split(" ").slice(2).join(" ")}
-                  </h2>
-                  <p className="text-muted-foreground" style={{ fontSize: 13, lineHeight: 1.6, maxWidth: 285 }}>
-                    {slide.bottomDesc}
-                  </p>
-                </div>
-
                 {/* BIG EV VEHICLE IMAGE */}
                 <AnimatePresence mode="wait">
                   {isCurrent && (
@@ -521,6 +674,13 @@ function Hero() {
         })}
       </div>
 
+      {/* FIXED & STATIONARY GET STARTED MULTI-STEP FORM */}
+      <div
+        className="absolute z-30 pointer-events-auto left-5 right-5 md:left-[6.5%] top-[170px] md:top-[210px] w-auto md:w-[32%] max-w-[400px]"
+      >
+        <HeroGetStartedForm />
+      </div>
+
       {/* Navigation Dot Indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 bg-black/40 border border-white/5 backdrop-blur-md px-4 py-2 rounded-full">
         {HERO_SLIDES.map((_, index) => (
@@ -553,286 +713,490 @@ function Hero() {
   );
 }
 
-/* ---------------- Select Your EV Type (Image 2) ---------------- */
+/* ---------------- Select Your EV Type (Redesigned: Premium GSAP Scroll Showcase) ---------------- */
 const EV_TYPES = [
   {
-    title: "Electric Scooter",
-    desc: "Personal & smart 2-wheeler commuter vehicles.",
-    icon: <Bike className="h-5 w-5 text-[#00D084]" />,
-    highlight: "12-Point AI Thermal Scanner Included",
-    brands: ["Ola S1", "Ather 450X", "TVS iQube", "Bajaj Chetak"],
-    specs: ["Battery Pack Health Check", "Hub Motor Diagnostics", "BMS Firmware Calibration"],
-    cost: "Starts at ₹499",
-    metric: "99.4% SLA Pass Rate"
+    id: "01",
+    num: "01",
+    tag: "01 // TWO WHEELER",
+    category: "PERSONAL MOBILITY",
+    title: "ELECTRIC SCOOTER",
+    desc: "BMS firmware calibration, active thermal scanning, and rapid motor diagnostics for urban 2-wheelers.",
+    bgImage: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=1400&auto=format&fit=crop&q=85",
+    metrics: [
+      { label: "SLA PASS RATE", val: "99.4%" },
+      { label: "DIAGNOSTIC TIME", val: "15 MIN" },
+      { label: "STARTING COST", val: "₹499" },
+    ],
+    brands: ["Ola S1 Pro", "Ather 450X", "TVS iQube", "Bajaj Chetak", "Hero Vida"],
   },
   {
-    title: "Electric Motorcycle",
-    desc: "High-performance urban & sports electric bikes.",
-    icon: <Bike className="h-5 w-5 text-[#00D084]" />,
-    highlight: "Performance Dyno & Controller Calibration",
+    id: "02",
+    num: "02",
+    tag: "02 // HIGH PERFORMANCE",
+    category: "SUPERSPORT & URBAN BIKES",
+    title: "PERFORMANCE MOTORCYCLE",
+    desc: "High-voltage isolation testing, dyno telemetry, and active liquid-cooling loop optimization.",
+    bgImage: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=1400&auto=format&fit=crop&q=85",
+    metrics: [
+      { label: "RIDER RATING", val: "4.9 / 5" },
+      { label: "CELL BALANCING", val: "0.1mV" },
+      { label: "STARTING COST", val: "₹799" },
+    ],
     brands: ["Revolt RV400", "Ultraviolette F77", "Matter AERA", "Tork Kratos"],
-    specs: ["Controller Power Map Tuning", "High-Voltage Isolation Test", "Active Cooling Audit"],
-    cost: "Starts at ₹799",
-    metric: "4.9/5 Rider Rating"
   },
   {
-    title: "3-Wheeler Passenger",
-    desc: "Mass transit e-rickshaws and passenger EVs.",
-    icon: <Car className="h-5 w-5 text-[#00D084]" />,
-    highlight: "Heavy Duty Suspension & Powertrain Audit",
+    id: "03",
+    num: "03",
+    tag: "03 // PASSENGER TRANSIT",
+    category: "COMMERCIAL RICKSHAW & TRANSIT",
+    title: "3-WHEELER PASSENGER",
+    desc: "Differential axle alignment, battery swap dock validation, and gearbox thermal audits.",
+    bgImage: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=1400&auto=format&fit=crop&q=85",
+    metrics: [
+      { label: "SERVICED UNITS", val: "12,000+" },
+      { label: "SWAP DOCK SLA", val: "99.9%" },
+      { label: "STARTING COST", val: "₹599" },
+    ],
     brands: ["Mahindra Treo", "Piaggio Ape E-City", "Mayuri EV", "Yatri E-Rickshaw"],
-    specs: ["Transmission Gearbox Service", "Differential Axle Alignment", "Battery Swapping Diagnostics"],
-    cost: "Starts at ₹599",
-    metric: "Over 12k Vehicles Serviced"
   },
   {
-    title: "3-Wheeler Cargo",
-    desc: "Last-mile heavy duty electric cargo vehicles.",
-    icon: <Truck className="h-5 w-5 text-[#00D084]" />,
-    highlight: "High Capacity Load Distribution Testing",
+    id: "04",
+    num: "04",
+    tag: "04 // LOGISTICS & CARGO",
+    category: "LAST-MILE FREIGHT",
+    title: "3-WHEELER CARGO",
+    desc: "Chassis leaf spring tuning, high-load BMS current limit checks, and regenerative braking calibration.",
+    bgImage: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=1400&auto=format&fit=crop&q=85",
+    metrics: [
+      { label: "FLEET UPTIME", val: "99.8%" },
+      { label: "PAYLOAD AUDIT", val: "750 KG" },
+      { label: "STARTING COST", val: "₹699" },
+    ],
     brands: ["Euler HiLoad", "Mahindra Zor Grand", "Altigreen neEV", "Cargo Plus"],
-    specs: ["Chassis Leaf Spring Tune", "BMS Current Limit Check", "Regenerative Braking Calibration"],
-    cost: "Starts at ₹699",
-    metric: "99.8% Fleet Uptime"
   },
   {
-    title: "Fleet Vehicles",
-    desc: "Commercial fleet cars and delivery vans.",
-    icon: <Car className="h-5 w-5 text-[#00D084]" />,
-    highlight: "Enterprise SLA & Telematics Synchronization",
+    id: "05",
+    num: "05",
+    tag: "05 // ENTERPRISE FLEET",
+    category: "COMMERCIAL CABS & CARS",
+    title: "FLEET VEHICLES",
+    desc: "Predictive cell degradation analytics, automated API alert hooks, and fast DC charging safety audits.",
+    bgImage: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1400&auto=format&fit=crop&q=85",
+    metrics: [
+      { label: "TELEMATICS API", val: "REALTIME" },
+      { label: "DC FAST SLA", val: "100%" },
+      { label: "PRICING MODEL", val: "CUSTOM SLA" },
+    ],
     brands: ["Tata Xpres-T", "BYD e6", "Mahindra eVerito", "Tata Tigor EV"],
-    specs: ["GPS Telematics Diagnostic", "Predictive Cell Aging Scan", "Rapid DC Charging Validation"],
-    cost: "Custom SLA Pricing",
-    metric: "Integrated API Alerts"
   },
   {
-    title: "Delivery EVs",
-    desc: "E-bikes and customized micro-mobility vehicles.",
-    icon: <Package className="h-5 w-5 text-[#00D084]" />,
-    highlight: "Rapid 30-Minute Express Turnaround",
+    id: "06",
+    num: "06",
+    tag: "06 // MICRO MOBILITY",
+    category: "EXPRESS DELIVERY FLEETS",
+    title: "DELIVERY E-BIKES",
+    desc: "Dual-battery dock maintenance, brake pad diagnostics, and 30-minute express doorstep RSA.",
+    bgImage: "https://images.unsplash.com/photo-1508974239320-0a029497e820?w=1400&auto=format&fit=crop&q=85",
+    metrics: [
+      { label: "EXPRESS TURNAROUND", val: "30 MIN" },
+      { label: "RSA COVERAGE", val: "24 / 7" },
+      { label: "PRICING MODEL", val: "FLEXIBLE" },
+    ],
     brands: ["Zypp Cargo", "Yulu Wynn", "Hero Lectro", "Kinetic Green"],
-    specs: ["Dual-Battery Dock Cleanup", "Brake Pad Wear Diagnostic", "Heavy Cargo Carrier Security"],
-    cost: "SLA-Driven Rates",
-    metric: "Doorstep RSA Available"
-  }
+  },
 ];
 
 function EVTypeSelection() {
-  const [selectedIdx, setSelectedIdx] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scannerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const bentoGridRef = useRef<HTMLDivElement>(null);
 
-  const activeType = EV_TYPES[selectedIdx];
-
-  // Scanner animation on active item change
+  // GSAP ScrollTrigger Entrance for Bento Cards
   useEffect(() => {
-    if (!scannerRef.current) return;
-    gsap.fromTo(scannerRef.current,
-      { opacity: 0.3, scale: 0.98 },
-      { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }
-    );
-  }, [selectedIdx]);
+    if (typeof window === "undefined" || !sectionRef.current) return;
+    gsap.registerPlugin(ScrollTrigger);
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el || typeof window === "undefined") return;
-
-    gsap.fromTo(".ev-select-item",
-      { opacity: 0, x: -30 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        stagger: 0.08,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 75%",
+    const ctx = gsap.context(() => {
+      // Header entrance
+      gsap.fromTo(
+        ".bento-header",
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
         }
-      }
-    );
+      );
+
+      // Bento cards stagger entrance
+      gsap.fromTo(
+        ".bento-card",
+        { opacity: 0, y: 40, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: bentoGridRef.current,
+            start: "top 85%",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={containerRef} id="ev-services" className="relative bg-[#020403] py-24 border-b border-white/5 overflow-hidden">
-      
-      {/* Background neon ambient spots */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#00D084]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/2 rounded-full blur-[120px] pointer-events-none" />
+    <section
+      ref={sectionRef}
+      id="ev-services"
+      className="relative bg-[#020403] py-28 sm:py-36 border-y border-white/10 overflow-hidden text-white font-sans selection:bg-[#00D084] selection:text-black"
+    >
+      {/* Ambient background glows */}
+      <div className="absolute top-1/3 left-1/4 w-[700px] h-[700px] bg-[#00D084]/5 rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-[600px] h-[600px] bg-emerald-950/20 rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="mx-auto max-w-7xl px-6 relative z-10">
-        
-        {/* Header Block */}
-        <GSAPHeader
-          badge="Interactive Diagnostics Platform"
-          title="Select Your"
-          highlight="EV Type"
-          subtitle="Toggle through our multi-brand electric vehicle configurations to see customized diagnostic systems, popular models, and service parameters."
-        />
+      {/* Grid line background texture */}
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
 
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
-          {/* Left: 6 Selection Items */}
-          <StaggerContainer staggerDelay={0.08} className="lg:col-span-5 flex flex-col gap-3 justify-center">
-            {EV_TYPES.map((type, i) => {
-              const isActive = selectedIdx === i;
-              return (
-                <StaggerItem
-                  key={i}
-                  yOffset={20}
-                  onClick={() => setSelectedIdx(i)}
-                  className={`ev-select-item text-left w-full rounded-2xl p-5 border transition-all duration-300 relative overflow-hidden flex items-center gap-4 cursor-pointer ${
-                    isActive
-                      ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_25px_rgba(0,208,132,0.08)]"
-                      : "bg-[#050806] border-white/5 hover:border-white/10 hover:bg-[#070b08]"
-                  }`}
-                >
-                  {/* Active highlight glow strip */}
-                  {isActive && (
-                    <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[#00D084]" />
-                  )}
-
-                  {/* Icon Wrapper */}
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 ${
-                    isActive ? "bg-[#00D084]/20" : "bg-white/5"
-                  }`}>
-                    {type.icon}
-                  </div>
-
-                  <div className="flex-1">
-                    <h3 className="text-white font-semibold text-sm transition-colors duration-300 group-hover:text-[#00D084]">
-                      {type.title}
-                    </h3>
-                    <p className="text-[11px] text-muted-foreground mt-1 font-light line-clamp-1">
-                      {type.desc}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-end shrink-0">
-                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      isActive ? "bg-[#00D084] scale-125 shadow-[0_0_8px_#00D084]" : "bg-white/10"
-                    }`} />
-                  </div>
-                </StaggerItem>
-              );
-            })}
-          </StaggerContainer>
-
-          {/* Right: Spec & Diagnostic Cockpit */}
-          <Reveal className="lg:col-span-7" yOffset={30} delay={0.2}>
-            <div
-              ref={scannerRef}
-              className="w-full h-full bg-[#050806] border border-white/5 rounded-3xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden min-h-[420px] transition-all"
-            >
-              {/* Circuit Grid Background Design */}
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-                style={{
-                  backgroundImage: "radial-gradient(#00D084 1px, transparent 0)",
-                  backgroundSize: "24px 24px"
-                }}
-              />
-
-              {/* Dynamic Header */}
-              <div>
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-[#00D084]/15 flex items-center justify-center text-[#00D084]">
-                      {activeType.icon}
-                    </div>
-                    <div>
-                      <h4 className="text-white font-bold text-base tracking-tight">
-                        {activeType.title} System Diagnostic
-                      </h4>
-                      <span className="text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
-                        Status: Operational
-                      </span>
-                    </div>
-                  </div>
-                  <div className="bg-[#0d1410] border border-[#00D084]/20 rounded-full px-3.5 py-1 text-[11px] font-mono text-[#00D084]">
-                    {activeType.metric}
-                  </div>
-                </div>
-
-                {/* Subtitle / Highlighting */}
-                <div className="mt-6">
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono block">
-                    Telemetry Focus
-                  </span>
-                  <p className="text-white font-semibold text-sm mt-1.5 flex items-center gap-2">
-                    <Activity className="h-4 w-4 text-[#00D084] animate-pulse" />
-                    {activeType.highlight}
-                  </p>
-                </div>
-
-                {/* Core Diagnostics List */}
-                <div className="mt-8">
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono block mb-3.5">
-                    Targeted Service Checklist
-                  </span>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {activeType.specs.map((spec, index) => (
-                      <div key={index} className="flex items-center gap-2.5 bg-white/[0.01] border border-white/5 rounded-xl p-3 hover:border-white/10 transition-colors">
-                        <Check className="h-4.5 w-4.5 text-[#00D084] shrink-0" />
-                        <span className="text-xs text-white/90 font-light">{spec}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Supported Brands */}
-                <div className="mt-8">
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono block mb-3">
-                    Supported Multi-Brand Frameworks
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {activeType.brands.map((brand, index) => (
-                      <span
-                        key={index}
-                        className="text-[10px] font-semibold text-white/80 bg-white/5 border border-white/5 rounded-lg px-2.5 py-1"
-                      >
-                        {brand}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Pricing & CTA */}
-              <div className="mt-10 pt-6 border-t border-white/5 flex flex-wrap items-center justify-between gap-6 relative z-10">
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">
-                    Estimated Baseline Cost
-                  </span>
-                  <span className="text-lg font-bold text-white mt-1">
-                    {activeType.cost}
-                  </span>
-                </div>
-                <Link
-                  to="/services"
-                  className="rounded-full text-xs font-semibold flex items-center gap-1.5 px-5 py-3 transition-all hover:scale-[1.02] cursor-pointer"
-                  style={{ background: "#00D084", color: "#020403" }}
-                >
-                  <Zap className="h-3.5 w-3.5" />
-                  Initiate Booking
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-
+      <div className="mx-auto max-w-7xl px-6 lg:px-16 relative z-10">
+        {/* Bento Section Header */}
+        <div className="bento-header flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
+          <div>
+            {/* Code Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 backdrop-blur-md mb-4">
+              <span className="w-2 h-2 rounded-full bg-[#00D084] shadow-[0_0_10px_#00D084] animate-pulse" />
+              <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#00D084] uppercase">
+                // 02. MULTI-BRAND ARCHITECTURE MATRIX
+              </span>
             </div>
-          </Reveal>
 
+            {/* Title */}
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black uppercase tracking-[-0.04em] text-white leading-[0.92]">
+              SPECTRUM <span className="text-[#00D084] drop-shadow-[0_0_35px_rgba(0,208,132,0.3)]">OF CARE.</span>
+            </h2>
+          </div>
+
+          {/* Subtitle & Metadata */}
+          <div className="max-w-md lg:text-right space-y-3">
+            <p className="text-sm sm:text-base text-white/60 font-light leading-relaxed">
+              Precision diagnostics, BMS cell balancing, and hardware calibrations tailored across six core EV architectures.
+            </p>
+            <div className="flex items-center justify-start lg:justify-end gap-4 font-mono text-xs text-white/40 pt-2 border-t border-white/5">
+              <span>06 DOMAINS</span>
+              <span>•</span>
+              <span>100% SLA COMPLIANCE</span>
+            </div>
+          </div>
         </div>
 
-      </div>
+        {/* =========================================================================
+            BENTO GRID (Asymmetrical 12-Column Responsive Layout)
+           ========================================================================= */}
+        <div ref={bentoGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+          
+          {/* BENTO CARD 1: Hero Featured Card (Electric Scooter - 7 cols) */}
+          <motion.div
+            whileHover={{ y: -6 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="bento-card lg:col-span-7 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[36px] p-8 sm:p-10 lg:p-12 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[440px] lg:min-h-[500px] shadow-[0_25px_60px_rgba(0,0,0,0.7)] hover:shadow-[0_30px_70px_rgba(0,208,132,0.18)] transition-all duration-500"
+          >
+            {/* Background Image with Vignette */}
+            <div className="absolute inset-0 z-0 opacity-30 group-hover:opacity-45 transition-opacity duration-700 pointer-events-none">
+              <img
+                src={EV_TYPES[0].bgImage}
+                alt={EV_TYPES[0].title}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/75 to-transparent" />
+            </div>
 
-      {/* Add scanner scan keyframes for scan line */}
-      <style>{`
-        @keyframes scan {
-          0%, 100% { top: 0%; }
-          50% { top: 100%; }
-        }
-      `}</style>
+            {/* Faint Background Mono Code */}
+            <span className="text-9xl sm:text-[14rem] font-black font-mono text-white/[0.03] absolute right-6 top-0 select-none pointer-events-none leading-none">
+              01
+            </span>
+
+            {/* Top Badge & Live Status HUD */}
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 mb-6">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+                01 // TWO WHEELER
+              </span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00D084]/30 bg-[#00D084]/10 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+                <span className="text-[10px] font-mono font-bold text-[#00D084] uppercase">
+                  99.4% SLA PASS RATE
+                </span>
+              </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="relative z-10 max-w-xl my-auto">
+              <h3 className="text-3xl sm:text-5xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-3 group-hover:text-[#00D084] transition-colors">
+                {EV_TYPES[0].title}
+              </h3>
+              <p className="text-sm sm:text-base text-white/70 font-light leading-relaxed mb-6">
+                {EV_TYPES[0].desc}
+              </p>
+
+              {/* 3 Metric HUD Indicators */}
+              <div className="py-4 border-y border-white/10 grid grid-cols-3 gap-4 mb-6">
+                {EV_TYPES[0].metrics.map((m, i) => (
+                  <div key={i} className="flex flex-col">
+                    <span className="text-[9px] font-mono uppercase tracking-widest text-white/40 mb-0.5">
+                      {m.label}
+                    </span>
+                    <span className="text-lg sm:text-2xl font-black font-mono text-[#00D084] tracking-tight">
+                      {m.val}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom Row: Compatible Brands & Action CTA */}
+            <div className="relative z-10 pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[10px] font-mono text-white/30 uppercase mr-1">SUPPORTED:</span>
+                {EV_TYPES[0].brands.map((b, i) => (
+                  <span key={i} className="text-[10px] font-mono text-white/80 bg-white/5 border border-white/10 rounded-full px-3 py-1">
+                    {b}
+                  </span>
+                ))}
+              </div>
+
+              <Link
+                to="/services"
+                className="shrink-0 bg-[#00D084] hover:bg-[#00e894] text-black font-extrabold uppercase tracking-wider text-xs px-7 py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_0_25px_rgba(0,208,132,0.3)] hover:scale-105 group/btn cursor-pointer"
+              >
+                <span>INITIATE DIAGNOSTIC</span>
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* BENTO CARD 2: Tall Feature Card (Performance Motorcycle - 5 cols) */}
+          <motion.div
+            whileHover={{ y: -6 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="bento-card lg:col-span-5 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[36px] p-8 sm:p-10 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[440px] lg:min-h-[500px] shadow-[0_25px_60px_rgba(0,0,0,0.7)] hover:shadow-[0_30px_70px_rgba(0,208,132,0.18)] transition-all duration-500"
+          >
+            {/* Background Image with Dark Gradient Overlay */}
+            <div className="absolute inset-0 z-0 opacity-30 group-hover:opacity-45 transition-opacity duration-700 pointer-events-none">
+              <img
+                src={EV_TYPES[1].bgImage}
+                alt={EV_TYPES[1].title}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/80 to-transparent" />
+            </div>
+
+            {/* Faint Background Mono Code */}
+            <span className="text-9xl font-black font-mono text-white/[0.03] absolute right-6 top-0 select-none pointer-events-none leading-none">
+              02
+            </span>
+
+            {/* Top Header */}
+            <div className="relative z-10 flex items-center justify-between gap-4 mb-6">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+                02 // HIGH PERFORMANCE
+              </span>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-white/50 border border-white/10 px-3 py-1 rounded-full bg-white/5">
+                4.9/5 RIDER RATING
+              </span>
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10 my-auto">
+              <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-3 group-hover:text-[#00D084] transition-colors">
+                {EV_TYPES[1].title}
+              </h3>
+              <p className="text-sm text-white/70 font-light leading-relaxed mb-6">
+                {EV_TYPES[1].desc}
+              </p>
+
+              <div className="py-4 border-y border-white/10 grid grid-cols-2 gap-4 mb-6">
+                <div>
+                  <span className="text-[9px] font-mono uppercase text-white/40 block mb-0.5">CELL BALANCING</span>
+                  <span className="text-lg font-mono font-bold text-[#00D084]">0.1mV LIMIT</span>
+                </div>
+                <div>
+                  <span className="text-[9px] font-mono uppercase text-white/40 block mb-0.5">STARTING PRICE</span>
+                  <span className="text-lg font-mono font-bold text-white">₹799</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Brands & Arrow CTA */}
+            <div className="relative z-10 pt-4 flex items-center justify-between gap-4 border-t border-white/10">
+              <div className="flex flex-wrap gap-1.5">
+                {EV_TYPES[1].brands.slice(0, 3).map((b, i) => (
+                  <span key={i} className="text-[10px] font-mono text-white/70 bg-white/5 border border-white/10 rounded-full px-2.5 py-1">
+                    {b}
+                  </span>
+                ))}
+              </div>
+
+              <Link
+                to="/services"
+                className="w-11 h-11 rounded-full bg-[#00D084] text-black hover:bg-[#00e894] transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-[0_0_20px_rgba(0,208,132,0.3)] hover:scale-110"
+              >
+                <ArrowUpRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* BENTO CARD 3: 3-Wheeler Passenger (4 cols) */}
+          <motion.div
+            whileHover={{ y: -6 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
+          >
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-35 transition-opacity duration-700 pointer-events-none">
+              <img
+                src={EV_TYPES[2].bgImage}
+                alt={EV_TYPES[2].title}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/85 to-transparent" />
+            </div>
+
+            <div className="relative z-10 flex items-center justify-between gap-4 mb-4">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+                03 // TRANSIT
+              </span>
+              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/20 bg-[#00D084]/5 px-2.5 py-1 rounded-full">
+                12,000+ SERVICED
+              </span>
+            </div>
+
+            <div className="relative z-10 my-auto">
+              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors">
+                {EV_TYPES[2].title}
+              </h3>
+              <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-4">
+                {EV_TYPES[2].desc}
+              </p>
+            </div>
+
+            <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
+              <span className="text-xs font-mono text-white/50">STARTS AT ₹599</span>
+              <Link
+                to="/services"
+                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+              >
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* BENTO CARD 4: 3-Wheeler Cargo (4 cols) */}
+          <motion.div
+            whileHover={{ y: -6 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
+          >
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-35 transition-opacity duration-700 pointer-events-none">
+              <img
+                src={EV_TYPES[3].bgImage}
+                alt={EV_TYPES[3].title}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/85 to-transparent" />
+            </div>
+
+            <div className="relative z-10 flex items-center justify-between gap-4 mb-4">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+                04 // LOGISTICS
+              </span>
+              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/20 bg-[#00D084]/5 px-2.5 py-1 rounded-full">
+                99.8% UPTIME
+              </span>
+            </div>
+
+            <div className="relative z-10 my-auto">
+              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors">
+                {EV_TYPES[3].title}
+              </h3>
+              <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-4">
+                {EV_TYPES[3].desc}
+              </p>
+            </div>
+
+            <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
+              <span className="text-xs font-mono text-white/50">STARTS AT ₹699</span>
+              <Link
+                to="/services"
+                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+              >
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* BENTO CARD 5: Fleet & Delivery EVs (4 cols) */}
+          <motion.div
+            whileHover={{ y: -6 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
+          >
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-35 transition-opacity duration-700 pointer-events-none">
+              <img
+                src={EV_TYPES[4].bgImage}
+                alt={EV_TYPES[4].title}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/85 to-transparent" />
+            </div>
+
+            <div className="relative z-10 flex items-center justify-between gap-4 mb-4">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+                05 // FLEET & DELIVERY
+              </span>
+              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/20 bg-[#00D084]/5 px-2.5 py-1 rounded-full">
+                24/7 RSA & API
+              </span>
+            </div>
+
+            <div className="relative z-10 my-auto">
+              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors">
+                FLEET & DELIVERY EVs
+              </h3>
+              <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-4">
+                Enterprise telematics synchronization, rapid 30-minute doorstep RSA, and DC fast charging validation.
+              </p>
+            </div>
+
+            <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
+              <span className="text-xs font-mono text-white/50">CUSTOM SLA MODEL</span>
+              <Link
+                to="/services"
+                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+              >
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
     </section>
   );
 }
