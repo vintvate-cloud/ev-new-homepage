@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import {
@@ -107,6 +109,10 @@ function CareersPage() {
   const [selectedJob, setSelectedJob] = useState<JobPosition | null>(null);
   const [applyModalOpen, setApplyModalOpen] = useState(false);
 
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const contentOverlayRef = useRef<HTMLDivElement>(null);
+  const contentUpRef = useRef<HTMLDivElement>(null);
+
   const [applyForm, setApplyForm] = useState({
     fullName: "",
     mobile: "",
@@ -117,6 +123,48 @@ function CareersPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  // GSAP ScrollTrigger Animations (Matching Media Page Hero)
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      if (heroTextRef.current && contentOverlayRef.current) {
+        gsap.to(heroTextRef.current, {
+          opacity: 0,
+          scale: 0.9,
+          y: -50,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: contentOverlayRef.current,
+            start: "top 90%",
+            end: "top 30%",
+            scrub: 0.6,
+          },
+        });
+      }
+
+      if (contentUpRef.current) {
+        gsap.fromTo(
+          contentUpRef.current,
+          { y: 120, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: contentUpRef.current,
+              start: "top 90%",
+              end: "top 45%",
+              scrub: 0.6,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   const filteredJobs = useMemo(() => {
@@ -156,50 +204,67 @@ function CareersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020403] text-white selection:bg-[#00D084] selection:text-black font-serif overflow-x-hidden">
+    <div className="min-h-screen bg-[#070908] text-white selection:bg-[#00D084] selection:text-black font-sans relative overflow-x-hidden">
       {/* Navigation */}
       <Nav />
 
-      {/* =========================================================================
-          1. HERO HEADER SECTION
-         ========================================================================= */}
-      <section className="relative min-h-screen w-full flex flex-col justify-center items-center pt-28 pb-16 px-6 overflow-hidden text-center">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+      {/* Main Container */}
+      <div className="relative min-h-screen">
+
+        {/* =========================================================================
+            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+           ========================================================================= */}
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background Poster Image */}
           <img
             src="/ev-workshop-careers.png"
             alt="EV Workshop Careers"
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center opacity-85 pointer-events-none"
           />
-        </div>
 
-        <div className="max-w-4xl mx-auto space-y-6 relative z-10 my-auto pt-24 sm:pt-36">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-            Build the Future of <br />
-            <span className="text-[#00D084] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">EV Mobility in India</span>
-          </h1>
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-black/40 to-black/60 pointer-events-none" />
 
-          <p className="text-base sm:text-lg text-white font-serif font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] bg-black/40 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-white/15">
-            Join India's fastest-growing EV service platform. Work on cutting-edge technology, serve a green mission, and grow your career with us.
-          </p>
+          {/* Hero Text Content Container */}
+          <div
+            ref={heroTextRef}
+            className="absolute inset-0 flex flex-col justify-center items-center px-6 max-w-4xl mx-auto space-y-6 z-10 transition-all pointer-events-none text-center"
+          >
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+              Build the Future of <br />
+              <span className="text-[#00D084] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">EV Mobility in India</span>
+            </h1>
 
-          {/* Stat Cards Grid */}
-          <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto pt-8 border-t border-white/20 mt-8">
-            <div className="bg-[#030604]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
-              <div className="text-2xl sm:text-3xl font-black text-white font-mono drop-shadow-md">150+</div>
-              <div className="text-[11px] font-serif text-white/80 font-semibold uppercase tracking-wider mt-0.5">Team Members</div>
-            </div>
-            <div className="bg-[#030604]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
-              <div className="text-2xl sm:text-3xl font-black text-[#00D084] font-mono drop-shadow-md">40+</div>
-              <div className="text-[11px] font-serif text-white/80 font-semibold uppercase tracking-wider mt-0.5">Cities</div>
-            </div>
-            <div className="bg-[#030604]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
-              <div className="text-2xl sm:text-3xl font-black text-white font-mono drop-shadow-md">0</div>
-              <div className="text-[11px] font-serif text-white/80 font-semibold uppercase tracking-wider mt-0.5">Open Positions</div>
+            <p className="text-base sm:text-lg text-white font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] bg-black/50 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-white/15">
+              Join India's fastest-growing EV service platform. Work on cutting-edge technology, serve a green mission, and grow your career with us.
+            </p>
+
+            {/* Stat Cards Grid */}
+            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto pt-6 border-t border-white/20 mt-6 w-full pointer-events-auto">
+              <div className="bg-[#0b0f0c]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
+                <div className="text-2xl sm:text-3xl font-black text-white font-mono drop-shadow-md">150+</div>
+                <div className="text-[11px] text-white/80 font-bold uppercase tracking-wider mt-0.5">Team Members</div>
+              </div>
+              <div className="bg-[#0b0f0c]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
+                <div className="text-2xl sm:text-3xl font-black text-[#00D084] font-mono drop-shadow-md">40+</div>
+                <div className="text-[11px] text-white/80 font-bold uppercase tracking-wider mt-0.5">Cities</div>
+              </div>
+              <div className="bg-[#0b0f0c]/90 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center shadow-2xl">
+                <div className="text-2xl sm:text-3xl font-black text-white font-mono drop-shadow-md">0</div>
+                <div className="text-[11px] text-white/80 font-bold uppercase tracking-wider mt-0.5">Open Positions</div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* =========================================================================
+            2. CONTENT OVERLAY LAYER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO)
+           ========================================================================= */}
+        <div
+          ref={contentOverlayRef}
+          className="relative z-10 bg-[#070908] min-h-screen mt-[calc(100vh-80px)] pt-12 rounded-t-[40px] border-t border-white/10 shadow-2xl"
+        >
+          <div ref={contentUpRef}>
 
       {/* =========================================================================
           2. WHY WORK WITH US SECTION
@@ -446,6 +511,10 @@ function CareersPage() {
           </div>
         </div>
       </section>
+
+          </div>
+        </div>
+      </div>
 
       {/* Interactive Application Modal */}
       {applyModalOpen && (

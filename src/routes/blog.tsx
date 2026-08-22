@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import {
@@ -109,6 +111,51 @@ function BlogPage() {
   const [researchQuery, setResearchQuery] = useState("");
   const [emailInput, setEmailInput] = useState("");
 
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const cardsOverlayRef = useRef<HTMLDivElement>(null);
+  const cardsUpRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      if (heroTextRef.current && cardsOverlayRef.current) {
+        gsap.to(heroTextRef.current, {
+          opacity: 0,
+          scale: 0.9,
+          y: -50,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: cardsOverlayRef.current,
+            start: "top 90%",
+            end: "top 30%",
+            scrub: 0.6,
+          },
+        });
+      }
+
+      if (cardsUpRef.current) {
+        gsap.fromTo(
+          cardsUpRef.current,
+          { y: 120, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: cardsUpRef.current,
+              start: "top 90%",
+              end: "top 45%",
+              scrub: 0.6,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
       typeof document !== "undefined" &&
@@ -182,38 +229,67 @@ function BlogPage() {
       className={`min-h-screen font-sans transition-colors duration-500 overflow-x-hidden ${
         isLight
           ? "bg-[#f4f8f5] text-[#1a2320] selection:bg-[#00D084] selection:text-black"
-          : "bg-[#020503] text-white selection:bg-[#00D084] selection:text-black"
+          : "bg-[#070908] text-white selection:bg-[#00D084] selection:text-black"
       }`}
     >
       {/* Navigation */}
       <Nav />
 
-      {/* =========================================================================
-          1. HERO HEADER SECTION WITH CUSTOM HERO BACKGROUND IMAGE
-         ========================================================================= */}
-      <section
-        className={`relative pt-28 pb-16 px-6 lg:px-12 rounded-b-[48px] overflow-hidden border-b transition-colors duration-500 ${
-          isLight ? "bg-[#0c140e] border-black/10" : "bg-[#020503] border-white/10"
-        }`}
-      >
-        {/* Uploaded Blog Hero Background Image - 100% Raw Clarity */}
-        <img
-          src="/blog-hero-bg.png"
-          alt="EV Blog Background"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-100 pointer-events-none"
-        />
+      {/* Main Container */}
+      <div className="relative min-h-screen">
 
-        <div className="max-w-7xl mx-auto relative z-10 py-12">
-          {/* Main Hero Headline (Bold & Clean - "Hey We're" Removed as requested) */}
-          <div className="max-w-3xl space-y-6 text-left">
+        {/* =========================================================================
+            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+           ========================================================================= */}
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Uploaded Blog Hero Background Image */}
+          <img
+            src="/blog-hero-bg.png"
+            alt="EV Blog Background"
+            className="w-full h-full object-cover object-center opacity-85 pointer-events-none"
+          />
+
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-black/40 to-black/60 pointer-events-none" />
+
+          {/* Hero Content Container */}
+          <div
+            ref={heroTextRef}
+            className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-5xl mx-auto space-y-6 z-10 pointer-events-auto text-left"
+          >
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
+              • EV Care & Diagnostic Guides
+            </span>
             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-sans font-black tracking-[-0.04em] !text-white leading-[0.95] drop-shadow-[0_4px_25px_rgba(0,0,0,0.9)]">
               EV Tech &amp; <br />
               Diagnostic <br />
               Experts
             </h1>
+            <p className="text-sm sm:text-base text-white/80 font-light max-w-xl leading-relaxed drop-shadow-md">
+              Field-tested technical articles, BMS diagnostics, and preventive maintenance guides authored by certified Autobot engineers.
+            </p>
+            <div className="pt-2">
+              <a
+                href="#blog-archive"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
+              >
+                <span>EXPLORE ALL GUIDES</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
-      </section>
+
+        {/* =========================================================================
+            2. CARDS OVERLAY CONTAINER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO)
+           ========================================================================= */}
+        <div
+          ref={cardsOverlayRef}
+          className={`relative z-10 min-h-screen mt-[calc(100vh-80px)] pt-12 pb-24 rounded-t-[40px] border-t border-white/10 shadow-2xl ${
+            isLight ? "bg-[#f4f8f5]" : "bg-[#070908]"
+          }`}
+        >
+          <div ref={cardsUpRef}>
 
       {/* =========================================================================
           2. TRUSTED PARTNERS / FEATURED IN BAR (LIGHT/DARK THEME ADAPTIVE)
@@ -640,6 +716,10 @@ function BlogPage() {
           </Link>
         </div>
       </section>
+
+          </div>
+        </div>
+      </div>
 
       {/* Footer */}
       <Footer />

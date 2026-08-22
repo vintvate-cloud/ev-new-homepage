@@ -1,9 +1,12 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { BookingModal } from "../components/BookingModal";
+import { getOnboardedCities, onboardNewCity, EVCity } from "../data/cities";
 import {
   Search,
   MapPin,
@@ -22,6 +25,8 @@ import {
   PhoneCall,
   SlidersHorizontal,
   Navigation,
+  Plus,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -38,8 +43,68 @@ function FindServicesPage() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [bookingService, setBookingService] = useState<{ title: string; price: string } | null>(null);
 
+  // Dynamic Cities State
+  const [cities, setCities] = useState<EVCity[]>(() => getOnboardedCities());
+  const [onboardModalOpen, setOnboardModalOpen] = useState(false);
+  const [newCityName, setNewCityName] = useState("");
+  const [newCityState, setNewCityState] = useState("");
+
+  const navigate = useNavigate();
+
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const contentOverlayRef = useRef<HTMLDivElement>(null);
+  const contentUpRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const handleUpdate = () => setCities(getOnboardedCities());
+    window.addEventListener("ev_cities_updated", handleUpdate);
+    return () => window.removeEventListener("ev_cities_updated", handleUpdate);
+  }, []);
+
+  // GSAP ScrollTrigger Animations (Matching Media Page Hero)
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      if (heroTextRef.current && contentOverlayRef.current) {
+        gsap.to(heroTextRef.current, {
+          opacity: 0,
+          scale: 0.9,
+          y: -50,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: contentOverlayRef.current,
+            start: "top 90%",
+            end: "top 30%",
+            scrub: 0.6,
+          },
+        });
+      }
+
+      if (contentUpRef.current) {
+        gsap.fromTo(
+          contentUpRef.current,
+          { y: 120, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: contentUpRef.current,
+              start: "top 90%",
+              end: "top 45%",
+              scrub: 0.6,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -193,7 +258,7 @@ function FindServicesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#020403] text-white selection:bg-[#00D084] selection:text-black font-serif overflow-x-hidden">
+    <div className="min-h-screen bg-[#070908] text-white selection:bg-[#00D084] selection:text-black font-sans relative overflow-x-hidden">
       
       {/* Header Nav */}
       <Nav
@@ -202,116 +267,128 @@ function FindServicesPage() {
         }}
       />
 
-       {/* =========================================================================
-          1. HERO SEARCH SECTION (Full Screen 100vh & Clear Image Display)
-         ========================================================================= */}
-      <section className="relative w-full h-screen h-[100vh] min-h-[650px] overflow-hidden text-white px-6 flex items-center justify-center bg-[#020403]">
-        {/* Background Image Layer */}
-        <div
-          className="absolute inset-0 bg-cover bg-center pointer-events-none transition-all duration-700"
-          style={{
-            backgroundImage: "url('/find-services-hero.jpg')",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-[#020403] pointer-events-none" />
+      {/* Main Container */}
+      <div className="relative min-h-screen">
 
-        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-4 pt-10">
-          
-          <div className="inline-flex items-center rounded-full bg-[#020403]/80 border border-[#00D084]/40 backdrop-blur-md px-3.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#00D084] shadow-md">
-            Find Trusted Certified Technicians Near You
-          </div>
+        {/* =========================================================================
+            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+           ========================================================================= */}
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background Poster Image */}
+          <img
+            src="/find-services-hero.jpg"
+            alt="Find EV Services Hero"
+            className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
+          />
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1] drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
-            Find Service Centers <br />
-            <span className="text-[#00D084]">Near You</span>
-          </h1>
+          {/* Hero Content Container */}
+          <div
+            ref={heroTextRef}
+            className="absolute inset-0 flex flex-col justify-center items-center px-6 max-w-4xl mx-auto space-y-4 z-10 transition-all pointer-events-auto text-center overflow-y-auto py-6"
+          >
+            <div className="inline-flex items-center rounded-full bg-[#020403]/80 border border-[#00D084]/40 backdrop-blur-md px-3.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#00D084] shadow-md">
+              Find Trusted Certified Technicians Near You
+            </div>
 
-          <p className="text-xs sm:text-sm md:text-base text-white/90 font-medium leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-            Your one-stop solution for all EV repair, maintenance and services — quick, reliable and hassle-free.
-          </p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1] drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+              Find Service Centers <br />
+              <span className="text-[#00D084]">Near You</span>
+            </h1>
 
-          {/* Search Form Card */}
-          <div className="bg-[#050c08] border-2 border-[#00D084]/40 rounded-3xl p-6 md:p-8 text-left mt-8 backdrop-blur-xl">
-            <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              
-              <div>
-                <label className="text-[11px] font-serif text-white/50 block mb-1">Enter City or Area</label>
-                <div className="relative">
-                  <MapPin className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5" />
-                  <input
-                    type="text"
-                    placeholder="Eg. Pune, Baner"
-                    value={searchCity}
-                    onChange={(e) => setSearchCity(e.target.value)}
-                    className="w-full bg-[#020403] border border-white/15 rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white font-serif focus:outline-none focus:border-[#00D084]"
-                  />
+            <p className="text-xs sm:text-sm md:text-base text-white/90 font-medium leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              Your one-stop solution for all EV repair, maintenance and services — quick, reliable and hassle-free.
+            </p>
+
+            {/* Search Form Card */}
+            <div className="bg-[#050c08]/90 border-2 border-[#00D084]/40 rounded-3xl p-6 md:p-8 text-left mt-4 backdrop-blur-xl w-full shadow-2xl">
+              <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                
+                <div>
+                  <label className="text-[11px] text-white/50 block mb-1">Enter City or Area</label>
+                  <div className="relative">
+                    <MapPin className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5" />
+                    <input
+                      type="text"
+                      placeholder="Eg. Pune, Baner"
+                      value={searchCity}
+                      onChange={(e) => setSearchCity(e.target.value)}
+                      className="w-full bg-[#020403] border border-white/15 rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label className="text-[11px] font-serif text-white/50 block mb-1">Select Service</label>
-                <div className="relative">
-                  <Wrench className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5" />
-                  <select
-                    value={selectedService}
-                    onChange={(e) => setSelectedService(e.target.value)}
-                    className="w-full bg-[#020403] border border-white/15 rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white font-serif focus:outline-none focus:border-[#00D084] cursor-pointer"
+                <div>
+                  <label className="text-[11px] text-white/50 block mb-1">Select Service</label>
+                  <div className="relative">
+                    <Wrench className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5" />
+                    <select
+                      value={selectedService}
+                      onChange={(e) => setSelectedService(e.target.value)}
+                      className="w-full bg-[#020403] border border-white/15 rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084] cursor-pointer"
+                    >
+                      <option value="Battery Repair">Battery Repair</option>
+                      <option value="General Service">General Service</option>
+                      <option value="Motor & Controller">Motor & Controller</option>
+                      <option value="Software Updates">Software Updates</option>
+                      <option value="Cell Balancing">Cell Balancing</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-[11px] text-white/50 block mb-1">Select Brand</label>
+                  <div className="relative">
+                    <Zap className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5" />
+                    <select
+                      value={selectedBrand}
+                      onChange={(e) => setSelectedBrand(e.target.value)}
+                      className="w-full bg-[#020403] border border-white/15 rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084] cursor-pointer"
+                    >
+                      <option value="Ather">Ather</option>
+                      <option value="Ola Electric">Ola Electric</option>
+                      <option value="TVS">TVS iQube</option>
+                      <option value="Hero Electric">Hero Electric</option>
+                      <option value="Vida by Hero">Vida by Hero</option>
+                      <option value="Bajaj Chetak">Bajaj Chetak</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex items-end">
+                  <button
+                    type="submit"
+                    className="w-full py-3 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
-                    <option value="Battery Repair">Battery Repair</option>
-                    <option value="General Service">General Service</option>
-                    <option value="Motor & Controller">Motor & Controller</option>
-                    <option value="Software Updates">Software Updates</option>
-                    <option value="Cell Balancing">Cell Balancing</option>
-                  </select>
+                    <Search className="w-4 h-4" /> Find Nearby Centers
+                  </button>
                 </div>
-              </div>
 
-              <div>
-                <label className="text-[11px] font-serif text-white/50 block mb-1">Select Brand</label>
-                <div className="relative">
-                  <Zap className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5" />
-                  <select
-                    value={selectedBrand}
-                    onChange={(e) => setSelectedBrand(e.target.value)}
-                    className="w-full bg-[#020403] border border-white/15 rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white font-serif focus:outline-none focus:border-[#00D084] cursor-pointer"
+              </form>
+
+              <div className="flex flex-wrap items-center gap-2 pt-3 mt-3 border-t border-white/10 text-xs text-white/50">
+                <span className="font-bold text-white/80">Popular Searches:</span>
+                {["Battery Repair Near Me", "Doorstep Service Baner", "Ather Charger Repair", "Ola Battery Test"].map((tag, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSearchCity("Pune")}
+                    className="bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full text-white/70 hover:text-white transition-colors cursor-pointer text-[11px]"
                   >
-                    <option value="Ather">Ather</option>
-                    <option value="Ola Electric">Ola Electric</option>
-                    <option value="TVS">TVS iQube</option>
-                    <option value="Hero Electric">Hero Electric</option>
-                    <option value="Vida by Hero">Vida by Hero</option>
-                    <option value="Bajaj Chetak">Bajaj Chetak</option>
-                  </select>
-                </div>
+                    {tag}
+                  </button>
+                ))}
               </div>
-
-              <div className="flex items-end">
-                <button
-                  type="submit"
-                  className="w-full py-3 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center justify-center gap-2"
-                >
-                  <Search className="w-4 h-4" /> Find Nearby Centers
-                </button>
-              </div>
-
-            </form>
-
-            <div className="flex flex-wrap items-center gap-2 pt-4 mt-4 border-t border-white/10 text-xs text-white/50 font-serif">
-              <span className="font-bold text-white/80">Popular Searches:</span>
-              {["Battery Repair Near Me", "Doorstep Service Baner", "Ather Charger Repair", "Ola Battery Test"].map((tag, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSearchCity("Pune")}
-                  className="bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full text-white/70 hover:text-white transition-colors cursor-pointer text-[11px]"
-                >
-                  {tag}
-                </button>
-              ))}
             </div>
           </div>
-
         </div>
-      </section>
+
+        {/* =========================================================================
+            2. CONTENT OVERLAY LAYER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO)
+           ========================================================================= */}
+        <div
+          ref={contentOverlayRef}
+          className="relative z-10 bg-[#070908] min-h-screen mt-[calc(100vh-80px)] pt-12 rounded-t-[40px] border-t border-white/10 shadow-2xl"
+        >
+          <div ref={contentUpRef}>
 
       {/* =========================================================================
           2. MARQUEE TICKER OF CERTIFIED FEATURES
@@ -328,7 +405,71 @@ function FindServicesPage() {
       </section>
 
       {/* =========================================================================
-          3. POPULAR SERVICES GRID (Unified Seamless Layout)
+          3. ALL CITIES NETWORK MAP (Coverage / All Cities - 1st Section)
+         ========================================================================= */}
+      <section className="py-20 px-6 bg-[#020403] font-serif">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div>
+              <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
+                Coverage
+              </span>
+              <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">
+                All Cities
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-3 text-xs font-serif font-bold">
+              <span className="px-3.5 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084]">
+                {cities.length} {cities.length === 1 ? "city" : "cities"} in our network
+              </span>
+              <button
+                onClick={() => setOnboardModalOpen(true)}
+                className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#00D084] hover:text-[#020403] border border-white/20 text-white transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Onboard New City</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+            {cities.map((city) => (
+              <Link
+                key={city.id}
+                to="/city/$cityId"
+                params={{ cityId: city.id }}
+                className={`max-w-[270px] w-full h-[370px] p-7 rounded-[36px] border-2 transition-all cursor-pointer font-serif flex flex-col justify-end group hover:scale-[1.03] relative overflow-hidden ${
+                  selectedCity.toLowerCase() === city.name.toLowerCase()
+                    ? "bg-[#050c08] border-[#00D084]"
+                    : "bg-[#050907] border-white/10 hover:border-[#00D084]/60"
+                }`}
+              >
+                {/* Background Image Layer */}
+                <img
+                  src={city.heroImage}
+                  alt={city.name}
+                  className="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050c08] via-[#050c08]/65 to-transparent pointer-events-none" />
+
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 backdrop-blur-md border border-[#00D084]/40 flex items-center justify-center text-[#00D084] mb-4 group-hover:scale-110 transition-transform">
+                    <MapPin className="w-6 h-6" />
+                  </div>
+
+                  <h3 className="text-3xl font-serif font-black text-white group-hover:text-[#00D084] transition-colors">
+                    {city.name}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          4. POPULAR SERVICES GRID (Services Directory / Popular Services - 2nd Section)
          ========================================================================= */}
       <section className="py-20 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
@@ -380,7 +521,7 @@ function FindServicesPage() {
       </section>
 
       {/* =========================================================================
-          4. TOP EV BRANDS WE SERVICE (Glassmorphism Styled)
+          5. TOP EV BRANDS WE SERVICE (Glassmorphism Styled)
          ========================================================================= */}
       <section className="py-20 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
@@ -427,7 +568,7 @@ function FindServicesPage() {
       </section>
 
       {/* =========================================================================
-          5. WHY CHOOSE MY EV SERVICE? (Glassmorphism Styled)
+          6. WHY CHOOSE MY EV SERVICE? (Glassmorphism Styled)
          ========================================================================= */}
       <section className="py-20 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
@@ -463,54 +604,6 @@ function FindServicesPage() {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          6. ALL CITIES NETWORK MAP
-         ========================================================================= */}
-      <section className="py-20 px-6 bg-[#020403] font-serif">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                Coverage
-              </span>
-              <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">
-                All Cities
-              </h2>
-            </div>
-
-            <div className="flex items-center gap-3 text-xs font-serif font-bold">
-              <span className="px-3.5 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084]">
-                1 city in our network
-              </span>
-              <span className="px-3.5 py-1.5 rounded-full bg-white/10 border border-white/10 text-white/70">
-                0 active
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div
-              onClick={() => setSelectedCity("Pune")}
-              className={`p-8 rounded-3xl border-2 transition-all cursor-pointer font-serif ${
-                selectedCity === "Pune"
-                  ? "bg-[#050c08] border-[#00D084]"
-                  : "bg-[#050907] border-white/10 hover:border-white/20"
-              }`}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold text-[#00D084] uppercase tracking-widest">
-                  HUB NETWORK
-                </span>
-              </div>
-              <h3 className="text-3xl font-serif font-extrabold text-white mb-2">Pune</h3>
-              <p className="text-xs text-white/60 font-serif">
-                5+ Centers operational in Baner, Wakad, Kothrud, Viman Nagar & Hadapsar.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -699,12 +792,92 @@ function FindServicesPage() {
         </div>
       </section>
 
+          </div>
+        </div>
+      </div>
+
       {/* Booking Modal */}
       <BookingModal
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
         service={bookingService}
       />
+
+      {/* Onboard New City Modal */}
+      {onboardModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md font-sans">
+          <div className="bg-[#090f0c] border border-white/20 rounded-[32px] max-w-md w-full p-6 sm:p-8 relative shadow-2xl animate-in fade-in zoom-in duration-200">
+            <button
+              onClick={() => setOnboardModalOpen(false)}
+              className="absolute top-5 right-5 p-2 rounded-full text-white/50 hover:text-white bg-white/10"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2 mb-2 text-[#00D084] font-mono text-xs font-bold uppercase tracking-widest">
+              <Plus className="w-4 h-4" /> CITY HUB ONBOARDING
+            </div>
+
+            <h3 className="text-2xl font-black tracking-tight text-white mb-2">
+              Onboard a New City
+            </h3>
+            <p className="text-xs text-white/60 leading-relaxed mb-6">
+              Enter city details to launch an official diagnostic hub network and auto-generate the city landing page.
+            </p>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!newCityName) {
+                  toast.error("Please enter a City Name.");
+                  return;
+                }
+                const created = onboardNewCity({
+                  name: newCityName,
+                  state: newCityState || "India",
+                  centersCount: Math.floor(Math.random() * 5) + 3,
+                  areas: [`Central ${newCityName}`, "North Cluster", "South Cluster"],
+                });
+                toast.success(`City "${created.name}" onboarded! Dynamic page generated at /city/${created.id}`);
+                setOnboardModalOpen(false);
+                setNewCityName("");
+                setNewCityState("");
+              }}
+              className="space-y-4"
+            >
+              <div>
+                <label className="text-xs font-mono text-white/60 block mb-1">City Name *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Surat, Kolkata, Chennai"
+                  value={newCityName}
+                  onChange={(e) => setNewCityName(e.target.value)}
+                  className="w-full bg-[#030604] border border-white/15 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-white/60 block mb-1">State Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Gujarat, West Bengal"
+                  value={newCityState}
+                  onChange={(e) => setNewCityState(e.target.value)}
+                  className="w-full bg-[#030604] border border-white/15 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-lg"
+              >
+                ONBOARD CITY & LAUNCH PAGE
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <Footer />
