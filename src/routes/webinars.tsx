@@ -161,50 +161,6 @@ function WebinarsPage() {
   const [selectedWebinarForReg, setSelectedWebinarForReg] = useState<any>(null);
   const [selectedReplay, setSelectedReplay] = useState<any>(null);
 
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const cardsContainerRef = useRef<HTMLDivElement | null>(null);
-
-  // Pin section until the last right card is scrolled through
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-    if (!isDesktop) return;
-
-    const timer = setTimeout(() => {
-      if (!sectionRef.current || !cardsContainerRef.current) return;
-
-      const cardsContainer = cardsContainerRef.current;
-      const scrollAmount = cardsContainer.scrollHeight - cardsContainer.clientHeight;
-
-      if (scrollAmount <= 10) return;
-
-      const trigger = ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top+=80",
-        end: () => `+=${scrollAmount + 250}`,
-        pin: true,
-        pinSpacing: true,
-        scrub: 0.6,
-        onUpdate: (self) => {
-          if (cardsContainer) {
-            cardsContainer.scrollTop = self.progress * scrollAmount;
-          }
-        },
-      });
-
-      return () => {
-        trigger.kill();
-      };
-    }, 150);
-
-    return () => {
-      clearTimeout(timer);
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.vars.trigger === sectionRef.current) t.kill();
-      });
-    };
-  }, [activeTab]);
-
   const heroTextRef = useRef<HTMLDivElement>(null);
   const contentOverlayRef = useRef<HTMLDivElement>(null);
   const contentUpRef = useRef<HTMLDivElement>(null);
@@ -345,34 +301,29 @@ function WebinarsPage() {
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
         <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
-          {/* Background Video Stream */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover opacity-85 pointer-events-none scale-105"
-            poster="https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=1600&auto=format&fit=crop&q=80"
-          >
-            <source
-              src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-factory-42867-large.mp4"
-              type="video/mp4"
-            />
-          </video>
-
-          {/* Cinematic Vignette Overlay Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070908]/85 via-black/50 to-[#070908] pointer-events-none" />
+          {/* Background Hero Image */}
+          <img
+            src="/webinar-hero.png"
+            alt="Webinar Hero"
+            className="w-full h-full object-cover opacity-100 pointer-events-none scale-105"
+          />
 
           {/* Hero Content Container */}
           <div
             ref={heroTextRef}
             className="absolute inset-0 flex flex-col justify-center items-center px-6 max-w-5xl mx-auto space-y-4 z-10 transition-all pointer-events-auto text-center overflow-y-auto py-6"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-3 leading-[1.10] drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
-              Webinars built for <span className="text-[#00D084]">EV owner</span>, technicians, and franchises.
+            <h1
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4 leading-[1.10]"
+              style={{ fontWeight: 900, WebkitTextStroke: "0.6px white", textShadow: "0 3px 12px rgba(0, 0, 0, 0.85)" }}
+            >
+              Webinars built for <span className="text-[#00D084]" style={{ WebkitTextStroke: "0.6px #00D084", textShadow: "0 3px 12px rgba(0, 0, 0, 0.85)" }}>EV owner</span>, technicians, and franchises.
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-[#d0e0d6] font-normal max-w-2xl mx-auto mb-6 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+            <p
+              className="text-base sm:text-lg md:text-xl text-white font-black max-w-3xl mx-auto mb-6 leading-relaxed"
+              style={{ fontWeight: 900, WebkitTextStroke: "0.4px white", textShadow: "0 2px 8px rgba(0, 0, 0, 0.85)" }}
+            >
               Practical, field-tested sessions designed for EV owners, technicians, and franchise partners to master battery diagnostics and shop automation.
             </p>
 
@@ -385,7 +336,7 @@ function WebinarsPage() {
               </a>
               <button
                 onClick={() => setRequestTopicModalOpen(true)}
-                className="px-7 py-3.5 rounded-full border border-white/30 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all backdrop-blur-md flex items-center gap-2 cursor-pointer"
+                className="px-7 py-3.5 rounded-full border border-white/40 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer"
               >
                 <HelpCircle className="w-3.5 h-3.5 text-[#00D084]" />
                 REQUEST A TOPIC
@@ -393,18 +344,18 @@ function WebinarsPage() {
             </div>
 
             {/* Quick Metrics Bar below Hero CTAs */}
-            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-6 pt-6 border-t border-white/15 w-full">
+            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-6 pt-6 border-t border-white/20 w-full">
               <div className="text-center">
                 <div className="text-xl sm:text-2xl font-black text-white font-mono">230+</div>
-                <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">Masterclasses Held</div>
+                <div className="text-[10px] font-extrabold text-white uppercase mt-0.5">Masterclasses Held</div>
               </div>
-              <div className="text-center border-x border-white/15">
+              <div className="text-center border-x border-white/20">
                 <div className="text-xl sm:text-2xl font-black text-[#00D084] font-mono">95%</div>
-                <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">SOP Quality</div>
+                <div className="text-[10px] font-extrabold text-white uppercase mt-0.5">SOP Quality</div>
               </div>
               <div className="text-center">
                 <div className="text-xl sm:text-2xl font-black text-white font-mono">400+</div>
-                <div className="text-[10px] font-serif text-white/60 uppercase mt-0.5">Partner Hubs</div>
+                <div className="text-[10px] font-extrabold text-white uppercase mt-0.5">Partner Hubs</div>
               </div>
             </div>
           </div>
@@ -533,7 +484,7 @@ function WebinarsPage() {
       {/* =========================================================================
           5. INTERACTIVE WEBINAR TABS & SESSIONS GRID
          ========================================================================= */}
-      <section ref={sectionRef} className="py-20 px-6 max-w-7xl mx-auto relative z-10">
+      <section className="py-20 px-6 max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Navigation Tabs (Sticky) */}
           <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
@@ -602,8 +553,8 @@ function WebinarsPage() {
             </div>
           </div>
 
-          {/* Right Interactive Cards Area (Pinned Scrollable Container) */}
-          <div ref={cardsContainerRef} className="lg:col-span-7 max-h-[580px] overflow-y-auto pr-3 space-y-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-[#00D084]/60 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-white/5">
+          {/* Right Interactive Cards Area */}
+          <div className="lg:col-span-7 space-y-4">
             {/* UPCOMING LIVE SESSIONS */}
             {activeTab === "upcoming" && (
               <div className="space-y-4 animate-fadeIn">

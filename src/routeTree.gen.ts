@@ -22,6 +22,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as MediaRouteImport } from './routes/media'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as InvestorsRouteImport } from './routes/investors'
 import { Route as HvSafetyRouteImport } from './routes/hv-safety'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as FranchiseTermsRouteImport } from './routes/franchise-terms'
@@ -104,6 +105,11 @@ const MediaRoute = MediaRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvestorsRoute = InvestorsRouteImport.update({
+  id: '/investors',
+  path: '/investors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HvSafetyRoute = HvSafetyRouteImport.update({
@@ -214,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/franchise-terms': typeof FranchiseTermsRoute
   '/help': typeof HelpRoute
   '/hv-safety': typeof HvSafetyRoute
+  '/investors': typeof InvestorsRoute
   '/login': typeof LoginRoute
   '/media': typeof MediaRoute
   '/news': typeof NewsRoute
@@ -247,6 +254,7 @@ export interface FileRoutesByTo {
   '/franchise-terms': typeof FranchiseTermsRoute
   '/help': typeof HelpRoute
   '/hv-safety': typeof HvSafetyRoute
+  '/investors': typeof InvestorsRoute
   '/login': typeof LoginRoute
   '/media': typeof MediaRoute
   '/news': typeof NewsRoute
@@ -281,6 +289,7 @@ export interface FileRoutesById {
   '/franchise-terms': typeof FranchiseTermsRoute
   '/help': typeof HelpRoute
   '/hv-safety': typeof HvSafetyRoute
+  '/investors': typeof InvestorsRoute
   '/login': typeof LoginRoute
   '/media': typeof MediaRoute
   '/news': typeof NewsRoute
@@ -316,6 +325,7 @@ export interface FileRouteTypes {
     | '/franchise-terms'
     | '/help'
     | '/hv-safety'
+    | '/investors'
     | '/login'
     | '/media'
     | '/news'
@@ -349,6 +359,7 @@ export interface FileRouteTypes {
     | '/franchise-terms'
     | '/help'
     | '/hv-safety'
+    | '/investors'
     | '/login'
     | '/media'
     | '/news'
@@ -382,6 +393,7 @@ export interface FileRouteTypes {
     | '/franchise-terms'
     | '/help'
     | '/hv-safety'
+    | '/investors'
     | '/login'
     | '/media'
     | '/news'
@@ -416,6 +428,7 @@ export interface RootRouteChildren {
   FranchiseTermsRoute: typeof FranchiseTermsRoute
   HelpRoute: typeof HelpRoute
   HvSafetyRoute: typeof HvSafetyRoute
+  InvestorsRoute: typeof InvestorsRoute
   LoginRoute: typeof LoginRoute
   MediaRoute: typeof MediaRoute
   NewsRoute: typeof NewsRoute
@@ -524,6 +537,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/investors': {
+      id: '/investors'
+      path: '/investors'
+      fullPath: '/investors'
+      preLoaderRoute: typeof InvestorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hv-safety': {
@@ -672,6 +692,7 @@ const rootRouteChildren: RootRouteChildren = {
   FranchiseTermsRoute: FranchiseTermsRoute,
   HelpRoute: HelpRoute,
   HvSafetyRoute: HvSafetyRoute,
+  InvestorsRoute: InvestorsRoute,
   LoginRoute: LoginRoute,
   MediaRoute: MediaRoute,
   NewsRoute: NewsRoute,

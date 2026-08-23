@@ -1237,24 +1237,19 @@ function FindServicesPage() {
                   {BRANDS.map((brand, idx) => (
                     <div
                       key={idx}
+                      title={brand.name}
                       onClick={() => {
                         setSelectedBrand(brand.name);
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className="backdrop-blur-xl bg-[#050907] border border-white/15 hover:border-[#00D084] rounded-2xl p-5 text-center transition-all duration-300 cursor-pointer hover:bg-[#00D084]/15 hover:scale-[1.03] hover:shadow-[0_12px_30px_rgba(0,208,132,0.2)] group flex flex-col items-center justify-between min-h-[160px]"
+                      className="backdrop-blur-xl bg-[#050907] border border-white/15 hover:border-[#00D084] rounded-2xl p-4 transition-all duration-300 cursor-pointer hover:bg-[#00D084]/15 hover:scale-[1.05] hover:shadow-[0_12px_30px_rgba(0,208,132,0.2)] group flex items-center justify-center h-32 sm:h-36"
                     >
-                      <div className="w-14 h-14 rounded-2xl border border-white/15 bg-black/60 p-2.5 flex items-center justify-center mb-2 group-hover:border-[#00D084]/50 group-hover:scale-110 transition-all shadow-md overflow-hidden shrink-0">
+                      <div className="w-full h-full rounded-xl border border-white/15 bg-black/60 p-3 flex items-center justify-center group-hover:border-[#00D084]/50 group-hover:scale-105 transition-all shadow-md overflow-hidden">
                         <img
                           src={brand.logo}
                           alt={brand.name}
                           className="w-full h-full object-contain rounded-lg"
                         />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
-                          {brand.name}
-                        </h4>
-                        <p className="text-[10px] text-white/50 font-serif mt-1">{brand.models}</p>
                       </div>
                     </div>
                   ))}

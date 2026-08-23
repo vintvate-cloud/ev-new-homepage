@@ -233,7 +233,7 @@ export function Footer() {
                 <Link to="/contact" className="hover:text-[#00D084] transition-colors">Contact Us</Link>
               </li>
               <li>
-                <Link to="/franchise" className="hover:text-[#00D084] transition-colors">Investors</Link>
+                <Link to="/investors" className="hover:text-[#00D084] transition-colors">Investors</Link>
               </li>
             </ul>
           </StaggerItem>
