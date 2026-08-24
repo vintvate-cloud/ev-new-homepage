@@ -342,22 +342,6 @@ function WebinarsPage() {
                 REQUEST A TOPIC
               </button>
             </div>
-
-            {/* Quick Metrics Bar below Hero CTAs */}
-            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-6 pt-6 border-t border-white/20 w-full">
-              <div className="text-center">
-                <div className="text-xl sm:text-2xl font-black text-white font-mono">230+</div>
-                <div className="text-[10px] font-extrabold text-white uppercase mt-0.5">Masterclasses Held</div>
-              </div>
-              <div className="text-center border-x border-white/20">
-                <div className="text-xl sm:text-2xl font-black text-[#00D084] font-mono">95%</div>
-                <div className="text-[10px] font-extrabold text-white uppercase mt-0.5">SOP Quality</div>
-              </div>
-              <div className="text-center">
-                <div className="text-xl sm:text-2xl font-black text-white font-mono">400+</div>
-                <div className="text-[10px] font-extrabold text-white uppercase mt-0.5">Partner Hubs</div>
-              </div>
-            </div>
           </div>
         </div>
 
