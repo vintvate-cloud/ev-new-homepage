@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -132,6 +133,35 @@ function ServicesPage() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
+      // --- HERO MOUNT ENTRANCE ANIMATIONS ---
+      gsap.fromTo(
+        ".hero-title-reveal",
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1.1, ease: "power3.out" }
+      );
+      gsap.fromTo(
+        ".hero-sub-reveal",
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.1, delay: 0.2, ease: "power3.out" }
+      );
+      gsap.fromTo(
+        ".hero-btn-reveal",
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.9, delay: 0.4, ease: "power3.out" }
+      );
+
+      // --- HERO BACKGROUND PARALLAX ZOOM ---
+      gsap.to(".services-bg-img", {
+        scale: 1.15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: contentOverlayRef.current,
+          start: "top bottom",
+          end: "top top",
+          scrub: true,
+        },
+      });
+
       if (heroTextRef.current && contentOverlayRef.current) {
         gsap.to(heroTextRef.current, {
           opacity: 0,
@@ -140,8 +170,8 @@ function ServicesPage() {
           ease: "power1.out",
           scrollTrigger: {
             trigger: contentOverlayRef.current,
-            start: "top 90%",
-            end: "top 30%",
+            start: "top 95%",
+            end: "top 35%",
             scrub: 0.6,
           },
         });
@@ -157,16 +187,133 @@ function ServicesPage() {
             ease: "power2.out",
             scrollTrigger: {
               trigger: contentUpRef.current,
-              start: "top 90%",
+              start: "top 95%",
               end: "top 45%",
               scrub: 0.6,
             },
           }
         );
       }
+
+      // --- SECTION REVEALS (REPEATABLE toggleActions) ---
+      // 1. Value Packages
+      gsap.fromTo(
+        ".pkg-card-reveal",
+        { opacity: 0, y: 70, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.95,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".packages-grid-trigger",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 2. Engineered Intro
+      gsap.fromTo(
+        ".intro-reveal",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#engineered-section",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 3. Collaborations Header
+      gsap.fromTo(
+        ".collab-header-reveal",
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#collaborations",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 4. Brand Logos
+      gsap.fromTo(
+        ".brand-logo-reveal",
+        { opacity: 0, scale: 0.9, y: 20 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".brand-logos-container",
+            start: "top 90%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 5. Collab Cards
+      gsap.fromTo(
+        ".collab-card-reveal",
+        { opacity: 0, y: 60 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".collab-cards-grid",
+            start: "top 80%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 6. Collab Callout
+      gsap.fromTo(
+        ".collab-callout-reveal",
+        { opacity: 0, y: 40, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".collab-callout-reveal",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
     });
 
-    return () => ctx.revert();
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => {
+      clearTimeout(refreshTimer);
+      ctx.revert();
+    };
   }, []);
 
   const handleOpenDetails = (service: EVServiceItem) => {
@@ -371,7 +518,7 @@ function ServicesPage() {
         <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background image overlay */}
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-85 pointer-events-none scale-105 transition-all duration-700"
+            className="services-bg-img absolute inset-0 bg-cover bg-center opacity-85 pointer-events-none scale-105 transition-all duration-700"
             style={{
               backgroundImage: `url('${HERO_BG_IMAGE}')`,
             }}
@@ -382,16 +529,16 @@ function ServicesPage() {
             ref={heroTextRef}
             className="max-w-4xl mx-auto text-center relative z-10 px-6 space-y-4 pointer-events-auto"
           >
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
+            <span className="hero-sub-reveal text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
               • Certified Diagnostic Hubs Across India
             </span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
+            <h1 className="hero-title-reveal text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
               Expert <span className="text-[#00D084]">EV Services</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto drop-shadow-md">
+            <p className="hero-sub-reveal text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto drop-shadow-md">
               Professional diagnostics and repairs for Electric Scooters, Bikes & Autos
             </p>
-            <div className="pt-2">
+            <div className="hero-btn-reveal pt-2">
               <a
                 href="#engineered-section"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
@@ -415,7 +562,7 @@ function ServicesPage() {
           <div ref={contentUpRef}>
 
       {/* 3. VALUE PACKAGES CARDS SECTION (Positioned cleanly below full-screen hero with Section Header) */}
-      <div className="mt-16 md:mt-24 relative z-20 max-w-[1380px] mx-auto px-6 mb-20">
+      <div className="packages-grid-trigger mt-16 md:mt-24 relative z-20 max-w-[1380px] mx-auto px-6 mb-20">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#00D084] tracking-tight uppercase drop-shadow-md">
             More services. Better savings.
@@ -445,7 +592,7 @@ function ServicesPage() {
                     specs: pkg.features,
                   })
                 }
-                className={`relative h-[470px] rounded-[30px] overflow-hidden p-6 sm:p-7 shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col justify-between border-none ${
+                className={`pkg-card-reveal relative h-[470px] rounded-[30px] overflow-hidden p-6 sm:p-7 shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col justify-between border-none ${
                   isLight
                     ? "shadow-lg hover:shadow-2xl hover:scale-[1.02]"
                     : "shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:scale-[1.02]"
@@ -526,9 +673,7 @@ function ServicesPage() {
           {/* Left Column Heading */}
           <div className="lg:col-span-7">
             <h2
-              className={`text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08] ${
-                isLight ? "text-[#1a2320]" : "text-white"
-              }`}
+              className="intro-reveal text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08] text-white"
             >
               Expert EV Services
             </h2>
@@ -537,14 +682,14 @@ function ServicesPage() {
           {/* Right Column Paragraph & Green Circle Icon */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-6">
             <p
-              className={`text-base sm:text-lg font-normal leading-relaxed ${
+              className={`intro-reveal text-base sm:text-lg font-normal leading-relaxed ${
                 isLight ? "text-[#4a5851]" : "text-white/70"
               }`}
             >
               Professional diagnostics and repairs for Electric Scooters, Bikes & Autos
             </p>
 
-            <div>
+            <div className="intro-reveal">
               <div className="w-8 h-8 rounded-full border-2 border-[#00D084] text-[#00D084] flex items-center justify-center hover:bg-[#00D084] hover:text-[#020403] transition-colors cursor-pointer">
                 <Check className="w-4 h-4" />
               </div>
@@ -554,7 +699,7 @@ function ServicesPage() {
         </div>
 
         {/* Category Filter Pills Bar */}
-        <div className="flex items-center gap-3 overflow-x-auto pb-4 mb-10 scrollbar-none">
+        <div className="intro-reveal flex items-center gap-3 overflow-x-auto pb-4 mb-10 scrollbar-none">
           {SERVICE_CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat;
             return (
@@ -674,104 +819,111 @@ function ServicesPage() {
         {/* 4-Column Product Grid (Unboxed Clean Design like Hindled Screenshot) */}
         {currentServices.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
-            {currentServices.map((service, index) => {
-              const bgImg =
-                CATEGORY_IMAGES[service.category] ||
-                "https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=800&auto=format&fit=crop&q=80";
-              const tagCode = `${service.id.split("-")[0]} • 0${(index % 8) + 1}`;
-              const firstSpec = service.specs[0] ? service.specs[0].toUpperCase() : "DIAGNOSTIC MODULE";
+            <AnimatePresence mode="popLayout">
+              {currentServices.map((service, index) => {
+                const bgImg =
+                  CATEGORY_IMAGES[service.category] ||
+                  "https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=800&auto=format&fit=crop&q=80";
 
-              return (
-                <div
-                  key={service.id}
-                  onClick={() => handleBookService(service)}
-                  className="flex flex-col justify-between transition-all duration-300 group cursor-pointer hover:-translate-y-1 bg-transparent p-0 border-none shadow-none"
-                >
-                  {/* Top Standalone Image Container */}
-                  <div className="relative h-56 w-full rounded-[26px] overflow-hidden mb-4 bg-slate-900 shadow-md group-hover:shadow-xl transition-shadow duration-300">
-                    <img
-                      src={bgImg}
-                      alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
-                  </div>
+                return (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    key={service.id}
+                    onClick={() => handleBookService(service)}
+                    className="flex flex-col justify-between transition-all duration-300 group cursor-pointer bg-transparent p-0 border-none shadow-none"
+                  >
+                    {/* Top Standalone Image Container */}
+                    <div className="relative h-56 w-full rounded-[26px] overflow-hidden mb-4 bg-slate-900 shadow-md group-hover:shadow-xl transition-shadow duration-300">
+                      <img
+                        src={bgImg}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 pointer-events-none" />
+                    </div>
 
-                  {/* Card Body Content (Directly on Page Background, No Card Box) */}
-                  <div className="flex-1 flex flex-col justify-between mb-4 px-0.5">
-                    <div>
-                      {/* Card Title */}
-                      <h4
-                        className={`text-base font-black tracking-tight transition-colors mb-2 leading-snug ${
+                    {/* Card Body Content (Directly on Page Background, No Card Box) */}
+                    <div className="flex-1 flex flex-col justify-between mb-4 px-0.5">
+                      <div>
+                        {/* Card Title */}
+                        <h4
+                          className={`text-base font-black tracking-tight transition-colors mb-2 leading-snug ${
+                            isLight
+                              ? "text-[#1a2320] group-hover:text-[#009b4e]"
+                              : "text-white group-hover:text-[#00D084]"
+                          }`}
+                        >
+                          {service.title}
+                        </h4>
+
+                        {/* Paragraph Description */}
+                        <p
+                          className={`text-xs font-normal leading-relaxed line-clamp-3 mb-3 ${
+                            isLight ? "text-[#52645a]" : "text-white/60"
+                          }`}
+                        >
+                          {service.desc}
+                        </p>
+                      </div>
+
+                      {/* Pricing Summary */}
+                      <div
+                        className={`pt-2.5 border-t flex items-center justify-between text-xs font-mono mb-1 ${
+                          isLight ? "border-[#d8e5dc]" : "border-white/10"
+                        }`}
+                      >
+                        <span
+                          className={`text-[11px] ${
+                            isLight ? "text-[#607267]" : "text-white/50"
+                          }`}
+                        >
+                          Rates ({vehicleType}):
+                        </span>
+                        <span
+                          className={`font-black text-sm ${
+                            isLight ? "text-[#009b4e]" : "text-[#00D084]"
+                          }`}
+                        >
+                          {vehicleType === "2W" ? service.price2W : service.price3W}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* 2 Standalone Action Buttons: DETAILS & BOOK NOW */}
+                    <div className="grid grid-cols-2 gap-2 mt-1">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenDetails(service);
+                        }}
+                        className={`py-3 rounded-full border text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer text-center ${
                           isLight
-                            ? "text-[#1a2320] group-hover:text-[#009b4e]"
-                            : "text-white group-hover:text-[#00D084]"
+                            ? "border-[#009b4e] text-[#009b4e] hover:bg-[#009b4e]/10"
+                            : "border-[#00D084] text-[#00D084] hover:bg-[#00D084]/10"
                         }`}
                       >
-                        {service.title}
-                      </h4>
-
-                      {/* Paragraph Description */}
-                      <p
-                        className={`text-xs font-normal leading-relaxed line-clamp-3 mb-3 ${
-                          isLight ? "text-[#52645a]" : "text-white/60"
-                        }`}
+                        DETAILS
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleBookService(service);
+                        }}
+                        className="py-3 rounded-full bg-[#009b4e] hover:bg-[#008643] text-white text-[11px] font-black uppercase tracking-wider transition-all shadow-md cursor-pointer text-center"
                       >
-                        {service.desc}
-                      </p>
+                        BOOK NOW
+                      </button>
                     </div>
-
-                    {/* Pricing Summary */}
-                    <div
-                      className={`pt-2.5 border-t flex items-center justify-between text-xs font-mono mb-1 ${
-                        isLight ? "border-[#d8e5dc]" : "border-white/10"
-                      }`}
-                    >
-                      <span
-                        className={`text-[11px] ${
-                          isLight ? "text-[#607267]" : "text-white/50"
-                        }`}
-                      >
-                        Rates ({vehicleType}):
-                      </span>
-                      <span
-                        className={`font-black text-sm ${
-                          isLight ? "text-[#009b4e]" : "text-[#00D084]"
-                        }`}
-                      >
-                        {vehicleType === "2W" ? service.price2W : service.price3W}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* 2 Standalone Action Buttons: DETAILS & BOOK NOW */}
-                  <div className="grid grid-cols-2 gap-2 mt-1">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleOpenDetails(service);
-                      }}
-                      className={`py-3 rounded-full border text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer text-center ${
-                        isLight
-                          ? "border-[#009b4e] text-[#009b4e] hover:bg-[#009b4e]/10"
-                          : "border-[#00D084] text-[#00D084] hover:bg-[#00D084]/10"
-                      }`}
-                    >
-                      DETAILS
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleBookService(service);
-                      }}
-                      className="py-3 rounded-full bg-[#009b4e] hover:bg-[#008643] text-white text-[11px] font-black uppercase tracking-wider transition-all shadow-md cursor-pointer text-center"
-                    >
-                      BOOK NOW
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         ) : (
           <div
@@ -849,10 +1001,8 @@ function ServicesPage() {
          ========================================================================= */}
       <section
         id="collaborations"
-        className={`py-24 border-t px-6 relative overflow-hidden ${
-          isLight
-            ? "border-[#d2e0d5] bg-[#f0f6f2]"
-            : "border-white/10 bg-[#030704]"
+        className={`py-24 px-6 relative overflow-hidden ${
+          isLight ? "bg-[#f8faf9]" : "bg-[#030604]"
         }`}
       >
         {/* Subtle Ambient Glow Spotlights */}
@@ -861,7 +1011,7 @@ function ServicesPage() {
 
         <div className="max-w-7xl mx-auto relative z-10 space-y-16">
           {/* Header Row */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+          <div className="collab-header-reveal flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="max-w-3xl space-y-3">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-xs font-mono font-bold text-[#00D084]">
                 <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
@@ -896,7 +1046,7 @@ function ServicesPage() {
               </span>
             </div>
 
-            <div className="flex items-center justify-around flex-wrap gap-8 py-2">
+            <div className="brand-logos-container flex items-center justify-around flex-wrap gap-8 py-2">
               {[
                 { name: "Ola Electric", logo: "/brands/ola.jpeg" },
                 { name: "Ather Energy", logo: "/brands/ather.jpeg" },
@@ -910,7 +1060,7 @@ function ServicesPage() {
                 <div
                   key={idx}
                   title={b.name}
-                  className="flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 bg-black/40 hover:bg-[#00D084]/15 border border-white/10 hover:border-[#00D084]/50 p-3 sm:p-4 rounded-2xl overflow-hidden shrink-0 transition-all duration-300 group cursor-pointer"
+                  className="brand-logo-reveal flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 bg-black/40 hover:bg-[#00D084]/15 border border-white/10 hover:border-[#00D084]/50 p-3 sm:p-4 rounded-2xl overflow-hidden shrink-0 transition-all duration-300 group cursor-pointer"
                 >
                   <img src={b.logo} alt={b.name} className="w-full h-full object-contain" />
                 </div>
@@ -919,7 +1069,7 @@ function ServicesPage() {
           </div>
 
           {/* 4 Feature Columns Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="collab-cards-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 title: "OEM Authorized Service Centers",
@@ -954,7 +1104,7 @@ function ServicesPage() {
               return (
                 <div
                   key={idx}
-                  className={`rounded-[28px] p-6 flex flex-col justify-between transition-all duration-300 border relative group ${
+                  className={`collab-card-reveal rounded-[28px] p-6 flex flex-col justify-between transition-all duration-300 border relative group ${
                     isLight
                       ? "bg-white border-[#d8e5dc] hover:border-[#009b4e] shadow-sm hover:shadow-xl"
                       : "bg-[#080e0a] border-white/15 hover:border-[#00D084] shadow-md hover:shadow-[0_10px_30px_rgba(0,208,132,0.15)]"
@@ -1010,7 +1160,7 @@ function ServicesPage() {
 
           {/* B2B Callout Box */}
           <div
-            className={`p-8 sm:p-10 rounded-[32px] border flex flex-col md:flex-row items-center justify-between gap-6 ${
+            className={`collab-callout-reveal p-8 sm:p-10 rounded-[32px] border flex flex-col md:flex-row items-center justify-between gap-6 ${
               isLight
                 ? "bg-gradient-to-r from-[#e3efe6] to-[#d8e8dc] border-[#c2d7c8]"
                 : "bg-gradient-to-r from-[#07120a] to-[#040906] border-[#00D084]/30"
