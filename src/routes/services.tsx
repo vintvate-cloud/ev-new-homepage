@@ -874,13 +874,7 @@ function ServicesPage() {
               >
                 Empowering Top EV Brands & <span className="text-[#00D084]">Delivery Fleets</span>
               </h2>
-              <p
-                className={`text-base font-normal leading-relaxed ${
-                  isLight ? "text-[#4a5851]" : "text-white/70"
-                }`}
-              >
-                We partner with leading EV OEMs, last-mile delivery providers, and corporate fleets to provide 99.8% fleet uptime, certified battery diagnostics, and doorstep emergency support across 150+ cities.
-              </p>
+
             </div>
 
             <div className="shrink-0">
@@ -895,13 +889,7 @@ function ServicesPage() {
           </div>
 
           {/* Marquee Brand Logos Strip */}
-          <div
-            className={`p-6 rounded-[28px] border overflow-hidden ${
-              isLight
-                ? "bg-white/80 border-[#d2e0d5] shadow-sm"
-                : "bg-[#070d0a]/90 border-white/15"
-            }`}
-          >
+          <div className="py-6 overflow-hidden">
             <div className="text-center mb-4">
               <span className={`text-xs font-mono font-bold uppercase tracking-widest ${isLight ? "text-slate-500" : "text-white/50"}`}>
                 TRUSTED BY LEADING EV MANUFACTURERS & LOGISTICS NETWORKS
@@ -921,14 +909,10 @@ function ServicesPage() {
               ].map((b, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 bg-black/40 hover:bg-[#00D084]/15 border border-white/10 hover:border-[#00D084]/50 px-4 py-2.5 rounded-2xl transition-all duration-300 group cursor-pointer"
+                  title={b.name}
+                  className="flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 bg-black/40 hover:bg-[#00D084]/15 border border-white/10 hover:border-[#00D084]/50 p-3 sm:p-4 rounded-2xl overflow-hidden shrink-0 transition-all duration-300 group cursor-pointer"
                 >
-                  <div className="w-9 h-9 rounded-xl overflow-hidden bg-black/60 p-1 flex items-center justify-center shrink-0 border border-white/15">
-                    <img src={b.logo} alt={b.name} className="w-full h-full object-contain" />
-                  </div>
-                  <span className="text-xs font-bold text-white group-hover:text-[#00D084] transition-colors">
-                    {b.name}
-                  </span>
+                  <img src={b.logo} alt={b.name} className="w-full h-full object-contain" />
                 </div>
               ))}
             </div>
