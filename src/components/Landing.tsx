@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@tanstack/react-router";
 import { Footer } from "./Footer";
 import { CustomerStoriesWall } from "./CustomerStoriesWall";
+import { BookingModal } from "./BookingModal";
 import { Reveal, StaggerContainer, StaggerItem, SequentialHeader } from "./ui/scroll-reveal";
 import { GSAPHeader, GSAPText, useGSAPTextReveal } from "./ui/gsap-text-reveal";
 import {
@@ -475,7 +476,7 @@ function HeroGetStartedForm() {
   );
 }
 
-function Hero() {
+function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -677,6 +678,50 @@ function Hero() {
         className="absolute z-30 pointer-events-auto left-5 right-5 md:left-[6.5%] top-[170px] md:top-[210px] w-auto md:w-[32%] max-w-[400px]"
       >
         <HeroGetStartedForm />
+      </div>
+
+      {/* QUICK ACTION BUTTONS */}
+      <div className="absolute z-30 bottom-24 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 flex flex-col items-center gap-3 pointer-events-auto font-sans">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          {/* Book EV Service */}
+          <button
+            onClick={() => onOpenBooking ? onOpenBooking() : (window.location.href = "/services")}
+            className="bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:scale-105 cursor-pointer"
+          >
+            <Zap className="h-4 w-4 fill-[#020403] text-[#020403]" />
+            <span>Book EV Service</span>
+            <ArrowRight className="h-4 w-4 text-[#020403]" />
+          </button>
+
+          {/* Find Nearest Centre */}
+          <Link
+            to="/service-centres"
+            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+          >
+            <MapPin className="h-4 w-4 text-white" />
+            <span>Find Nearest Centre</span>
+          </Link>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          {/* Request RSA */}
+          <a
+            href="tel:+919582390001"
+            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-red-500/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+          >
+            <PhoneCall className="h-3.5 w-3.5 text-[#00D084]" />
+            <span>Request RSA</span>
+          </a>
+
+          {/* Join Franchise Network */}
+          <Link
+            to="/franchise"
+            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+          >
+            <Store className="h-3.5 w-3.5 text-[#00D084]" />
+            <span>Join Franchise Network</span>
+          </Link>
+        </div>
       </div>
 
       {/* Navigation Dot Indicators */}
@@ -5709,6 +5754,7 @@ function QuickAccessSidebar() {
 function Landing() {
   const mainRef = useRef<HTMLElement>(null);
   useGSAPTextReveal(mainRef);
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
 
   // Force GSAP to recalculate pin positions after all lazy components/images load
   useEffect(() => {
@@ -5722,12 +5768,12 @@ function Landing() {
 
   return (
     <main ref={mainRef} className="relative bg-[#020403]">
-      <Nav theme="warm" />
+      <Nav theme="warm" onOpenBooking={() => setBookingModalOpen(true)} />
       <QuickAccessSidebar />
 
       {/* WARM LIGHT theme */}
       <div className="theme-warm bg-[#020403]">
-        <Hero />
+        <Hero onOpenBooking={() => setBookingModalOpen(true)} />
         <EVTypeSelection />
         <HowItWorks />
         <Ecosystem />
@@ -5755,6 +5801,8 @@ function Landing() {
         <TechnicianCareers />
         <Footer />
       </div>
+
+      <BookingModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} />
     </main>
   );
 }

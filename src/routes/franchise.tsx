@@ -17,6 +17,7 @@ import {
 } from "../data/franchiseData";
 import {
   CheckCircle2,
+  Check,
   ArrowRight,
   X,
   Send,
@@ -91,41 +92,288 @@ function FranchisePage() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // 1. Hero text & form container slow fade-out as content overlay moves up over fixed hero
+      // --- HERO MOUNT ENTRANCE ANIMATIONS ---
+      gsap.fromTo(
+        ".hero-title",
+        { opacity: 0, y: 45 },
+        { opacity: 1, y: 0, duration: 1.1, ease: "power3.out" }
+      );
+      gsap.fromTo(
+        ".hero-desc",
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 1.1, delay: 0.2, ease: "power3.out" }
+      );
+      gsap.fromTo(
+        ".hero-cta",
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.9, delay: 0.4, ease: "power3.out" }
+      );
+      gsap.fromTo(
+        ".hero-form",
+        { opacity: 0, x: 45, scale: 0.97 },
+        { opacity: 1, x: 0, scale: 1, duration: 1.1, delay: 0.2, ease: "power3.out" }
+      );
+
+      // --- HERO BACKGROUND PARALLAX ZOOM ---
+      gsap.to(".hero-bg-img", {
+        scale: 1.18,
+        ease: "none",
+        scrollTrigger: {
+          trigger: contentOverlayRef.current,
+          start: "top bottom",
+          end: "top top",
+          scrub: true,
+        },
+      });
+
+      // --- HERO TEXT & FORM FADE OUT ON SCROLL ---
       gsap.to(heroTextRef.current, {
         opacity: 0,
-        scale: 0.9,
-        y: -50,
+        scale: 0.92,
+        y: -40,
         ease: "power1.out",
         scrollTrigger: {
           trigger: contentOverlayRef.current,
-          start: "top 90%",
-          end: "top 30%",
+          start: "top 95%",
+          end: "top 35%",
           scrub: 0.6,
         },
       });
 
-      // 2. Key Badges section rises up onto the fixed hero section
+      // --- KEY BADGES ENTRANCE ---
       if (cardsUpRef.current) {
         gsap.fromTo(
           cardsUpRef.current,
-          { y: 100, opacity: 0 },
+          { y: 70, opacity: 0 },
           {
             y: 0,
             opacity: 1,
             ease: "power2.out",
             scrollTrigger: {
               trigger: cardsUpRef.current,
-              start: "top 90%",
-              end: "top 50%",
+              start: "top 95%",
+              end: "top 65%",
               scrub: 0.6,
             },
           }
         );
       }
+
+      // --- SECTION REVEALS ---
+      // 1. Vision Section
+      gsap.fromTo(
+        ".vision-reveal",
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".vision-section",
+            start: "top 80%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 2. Comparison Header & Tabs
+      gsap.fromTo(
+        ".comparison-header-reveal",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".comparison-section",
+            start: "top 80%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".comparison-tabs-reveal button",
+        { opacity: 0, scale: 0.9 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".comparison-tabs-reveal",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 3. Comparison Cards sliding in from sides
+      gsap.fromTo(
+        ".comparison-card-left",
+        { opacity: 0, x: -70 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.1,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".comparison-cards-grid",
+            start: "top 75%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".comparison-card-right",
+        { opacity: 0, x: 70 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.1,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".comparison-cards-grid",
+            start: "top 75%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 4. Models Banner & Cards
+      gsap.fromTo(
+        ".models-banner-reveal",
+        { opacity: 0, y: 50, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".models-banner-reveal",
+            start: "top 80%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".models-header-reveal",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".models-header-reveal",
+            start: "top 80%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".models-bg-text",
+        { y: 55, scale: 0.9, opacity: 0 },
+        {
+          y: -25,
+          scale: 1.06,
+          opacity: 0.025,
+          scrollTrigger: {
+            trigger: "#franchise-models",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".model-card-reveal",
+        { opacity: 0, y: 110, scale: 0.95, rotateX: 12 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          duration: 1.25,
+          stagger: 0.18,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".model-cards-grid",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 5. Testimonials Header
+      gsap.fromTo(
+        ".testimonials-header-reveal",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".testimonials-section",
+            start: "top 80%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 6. FAQ Header & Items
+      gsap.fromTo(
+        ".faq-header-reveal",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".faq-section",
+            start: "top 80%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".faq-item-reveal",
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".faq-list-reveal",
+            start: "top 80%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
     });
 
-    return () => ctx.revert();
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => {
+      clearTimeout(refreshTimer);
+      ctx.revert();
+    };
   }, []);
 
   // Application Form State
@@ -234,7 +482,7 @@ function FranchisePage() {
           <img
             src="/ev-franchise-hero.jpg"
             alt="EV Service Workshop Hero"
-            className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
+            className="hero-bg-img w-full h-full object-cover object-center opacity-100 pointer-events-none"
           />
 
           {/* Hero Content Container (Text & Form - text slowly fades out on scroll) */}
@@ -244,18 +492,18 @@ function FranchisePage() {
           >
             {/* Left Column: Title & Text */}
             <div className="lg:col-span-7 space-y-6 text-left">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-[1.10] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+              <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-[1.10] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
                 Launch Your Own <br />
                 <span className="text-[#00D084] font-black drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
                   EV Service Franchise
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-base text-white font-serif font-black leading-relaxed max-w-xl drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] bg-black/60 backdrop-blur-md p-5 rounded-2xl border border-white/20">
+              <p className="hero-desc text-sm sm:text-base text-white font-serif font-black leading-relaxed max-w-xl drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] bg-black/60 backdrop-blur-md p-5 rounded-2xl border border-white/20">
                 Launch your own EV service business powered by Autobot OS, India's first AI-powered EV service automation platform. Become part of the fastest-growing EV ecosystem and build a future-ready, high-profit business in 90 days.
               </p>
 
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="hero-cta flex flex-wrap items-center gap-3 pt-2">
                 <button
                   onClick={scrollToForm}
                   className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-2 shadow-2xl"
@@ -278,7 +526,7 @@ function FranchisePage() {
             {/* Right Column: Premium Glass Form Card */}
             <div
               id="hero-partner-form"
-              className="lg:col-span-5 bg-[#030604]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-7 relative font-serif border border-white/20 shadow-2xl overflow-hidden"
+              className="hero-form lg:col-span-5 bg-[#030604]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-7 relative font-serif border border-white/20 shadow-2xl overflow-hidden"
             >
               {/* Ambient Radial Lighting Glow */}
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#00D084]/20 rounded-full blur-[70px] pointer-events-none" />
@@ -444,18 +692,18 @@ function FranchisePage() {
       {/* =========================================================================
           3. OUR VISION & MISSION SECTION
          ========================================================================= */}
-      <section className="py-24 px-6 bg-[#020403] font-serif">
+      <section className="vision-section py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
+          <span className="vision-reveal text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
             Our Vision
           </span>
-          <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mb-6 leading-tight">
+          <h2 className="vision-reveal text-3xl md:text-5xl font-serif font-extrabold text-white mb-6 leading-tight">
             We Are Building India's Largest EV Service Network
           </h2>
-          <p className="text-white/70 text-base md:text-lg leading-relaxed font-serif font-light mb-6">
+          <p className="vision-reveal text-white/70 text-base md:text-lg leading-relaxed font-serif font-light mb-6">
             The EV revolution is accelerating rapidly, but the service ecosystem is still fragmented. At MY EV SERVICE, we are building a pan-India multi-brand EV service network powered by our proprietary Autobot OS, an AI-powered digital operating system for EV service businesses.
           </p>
-          <div className="bg-[#050907] border border-[#00D084]/30 rounded-2xl p-6 text-left my-8 space-y-2">
+          <div className="vision-reveal bg-[#050907] border border-[#00D084]/30 rounded-2xl p-6 text-left my-8 space-y-2">
             <span className="text-xs font-serif font-bold uppercase tracking-wider text-[#00D084]">
               Our Mission is Simple:
             </span>
@@ -463,13 +711,13 @@ function FranchisePage() {
               Empower the next generation of entrepreneurs to build successful EV businesses while creating India's most trusted EV service infrastructure.
             </p>
           </div>
-          <p className="text-white/60 text-sm md:text-base leading-relaxed font-serif font-light mb-8">
+          <p className="vision-reveal text-white/60 text-sm md:text-base leading-relaxed font-serif font-light mb-8">
             We are inviting young entrepreneurs, garage owners, investors, and automotive professionals to join our network and launch their own EV service business with a field-tested, technology-driven 90-day model.
           </p>
 
           <button
             onClick={scrollToForm}
-            className="px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer"
+            className="vision-reveal px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer"
           >
             Apply for Franchise Opportunity
           </button>
@@ -498,9 +746,9 @@ function FranchisePage() {
       {/* =========================================================================
           6. TRADITIONAL GARAGE VS MY EV SERVICE HUB INTERACTIVE COMPARISON
          ========================================================================= */}
-      <section className="py-24 px-6 bg-[#020403] font-serif">
+      <section className="comparison-section py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="comparison-header-reveal text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
               <ArrowLeftRight className="w-4 h-4" /> Interactive Comparison Matrix
             </span>
@@ -513,7 +761,7 @@ function FranchisePage() {
           </div>
 
           {/* Feature Category Selector Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
+          <div className="comparison-tabs-reveal flex flex-wrap items-center justify-center gap-2.5 mb-10">
             {COMPARISON_FEATURES.map((item, idx) => (
               <button
                 key={idx}
@@ -530,9 +778,9 @@ function FranchisePage() {
           </div>
 
           {/* Interactive Comparison Visual Display */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="comparison-cards-grid grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left: Traditional Garage Breakdown */}
-            <div className="lg:col-span-6 bg-red-950/20 border-2 border-red-500/30 hover:border-red-500/60 rounded-3xl p-8 space-y-6 transition-all duration-300 font-serif">
+            <div className="comparison-card-left lg:col-span-6 bg-red-950/20 border-2 border-red-500/30 hover:border-red-500/60 rounded-3xl p-8 space-y-6 transition-all duration-300 font-serif">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-serif font-bold text-red-400 uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
                   OLD ERA TRADITIONAL GARAGE
@@ -576,7 +824,7 @@ function FranchisePage() {
             </div>
 
             {/* Right: MY EV SERVICE Hub Breakdown */}
-            <div className="lg:col-span-6 bg-[#00D084]/10 border-2 border-[#00D084] rounded-3xl p-8 space-y-6 transition-all duration-300 font-serif shadow-[0_0_30px_rgba(0,208,132,0.15)]">
+            <div className="comparison-card-right lg:col-span-6 bg-[#00D084]/10 border-2 border-[#00D084] rounded-3xl p-8 space-y-6 transition-all duration-300 font-serif shadow-[0_0_30px_rgba(0,208,132,0.15)]">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-serif font-bold text-[#00D084] uppercase tracking-widest bg-[#00D084]/20 px-3 py-1 rounded-full border border-[#00D084]/40">
                   AI AUTOBOT OS POWERED HUB
@@ -631,175 +879,207 @@ function FranchisePage() {
       {/* =========================================================================
           7. FOUNDING PARTNER OFFER & MODELS MATRIX
          ========================================================================= */}
-      <section id="franchise-models" className="py-24 px-6 max-w-7xl mx-auto font-serif">
-        {/* Banner: Founding Partner Offer */}
-        <div className="bg-[#00D084]/15 border-2 border-[#00D084] rounded-3xl p-8 mb-16 text-center relative overflow-hidden">
-          <div className="inline-flex items-center gap-2 bg-[#00D084] text-[#020403] text-[10px] font-serif font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full mb-3">
-            <Sparkles className="w-3.5 h-3.5" /> LIMITED OFFER
-          </div>
-          <h3 className="text-2xl sm:text-4xl font-serif font-extrabold text-white mb-2 leading-tight">
-            Founding Partner - Launch Phase Offer (Pune)
-          </h3>
-          <p className="text-sm sm:text-base text-white/80 max-w-3xl mx-auto leading-relaxed font-serif font-light">
-            Save ₹2L on CENTRE or ₹5L on HUB. Autobot OS free for 2 years. Revenue share at 10% (vs 15% standard) for 2 years. 5km exclusive territory. Limited to first 10 partners only.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-6 text-xs font-serif font-bold text-[#00D084]">
-            <span>Zero Franchise Fee</span> • <span>100% Investment in Business Setup</span> • <span>Quarterly Settlement</span>
-          </div>
+      <section id="franchise-models" className="models-section py-28 px-6 relative overflow-hidden bg-[#020403]">
+        {/* Glowing radial backdrops matching the screenshot */}
+        <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-blue-950/20 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-cyan-950/15 rounded-full blur-[180px] pointer-events-none" />
+        
+        {/* Giant background text matching the screenshot */}
+        <div className="models-bg-text absolute top-[15%] left-0 right-0 text-center select-none pointer-events-none text-white/[0.02] font-sans font-black uppercase text-[12vw] sm:text-[15vw] leading-none tracking-[0.15em] z-0">
+          MODELS
         </div>
 
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-            Franchise Models
-          </span>
-          <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 mb-4 tracking-tight">
-            Choose the Model That Fits Your Vision
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {DETAILED_FRANCHISE_MODELS.map((model) => (
-            <div
-              key={model.type}
-              className={`bg-[#050907] border rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 relative font-serif ${
-                model.popular
-                  ? "border-[#00D084]"
-                  : "border-white/10 hover:border-[#00D084]/40"
-              }`}
-            >
-              {model.badge && (
-                <div className="absolute top-4 right-4 bg-[#00D084] text-[#020403] text-[9px] font-serif font-extrabold uppercase tracking-wider px-3 py-1 rounded-full">
-                  {model.badge}
-                </div>
-              )}
-
-              <div>
-                <div className="text-xs font-serif font-bold uppercase tracking-widest text-[#00D084] mb-1">
-                  {model.name}
-                </div>
-                <div className="text-xs text-white/60 mb-4 font-serif">{model.subtitle}</div>
-
-                <div className="text-3xl font-serif font-extrabold text-white mb-1">
-                  {model.investment}
-                </div>
-                {model.originalInvestment && (
-                  <div className="text-xs text-white/40 line-through font-serif mb-1">
-                    Standard: {model.originalInvestment}
-                  </div>
-                )}
-                {model.foundingOffer && (
-                  <div className="text-xs font-serif font-bold text-[#00D084] mb-6">
-                    {model.foundingOffer}
-                  </div>
-                )}
-
-                <div className="space-y-2 py-4 border-y border-white/10 mb-6 text-xs font-serif">
-                  <div className="flex justify-between">
-                    <span className="text-white/50">REQUIRED AREA:</span>
-                    <span className="text-white font-bold">{model.area}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/50">SERVICE BAYS:</span>
-                    <span className="text-white font-bold">{model.bays}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/50">VEHICLE FOCUS:</span>
-                    <span className="text-white font-bold">{model.vehicles}</span>
-                  </div>
-                </div>
-
-                {/* Key Inclusions Preview */}
-                <div className="space-y-2 mb-4 text-xs text-white/80 font-serif">
-                  {model.includes.slice(0, 4).map((inc, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0 mt-0.5" />
-                      <span>{inc}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Dropdown Toggle Button for All Services */}
-                <button
-                  onClick={() => toggleModelDropdown(model.type)}
-                  className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-[#00D084]/15 border border-white/15 hover:border-[#00D084]/40 text-xs font-serif font-bold text-white hover:text-[#00D084] flex items-center justify-between transition-all cursor-pointer mb-6 group"
-                >
-                  <span className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-[#00D084]" />
-                    {expandedModels[model.type]
-                      ? "Hide Package Breakdown"
-                      : "View All Included Services & Setup"}
-                  </span>
-                  {expandedModels[model.type] ? (
-                    <ChevronUp className="w-4 h-4 text-[#00D084]" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4 text-[#00D084]" />
-                  )}
-                </button>
-
-                {/* Collapsible Dropdown Panel: All 9 Services & Setup */}
-                <AnimatePresence>
-                  {expandedModels[model.type] && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden mb-6"
-                    >
-                      <div className="bg-[#020503] border border-[#00D084]/40 rounded-2xl p-4 space-y-2 text-xs font-serif shadow-inner">
-                        <div className="text-[10px] font-serif font-extrabold text-[#00D084] uppercase tracking-wider border-b border-white/10 pb-2 mb-2 flex items-center justify-between">
-                          <span>COMPLETE WORKSHOP PACKAGE:</span>
-                          <span className="text-white/40">9 SERVICES INCLUDED</span>
-                        </div>
-                        {[
-                          "Multi-Bay Workshop Setup",
-                          "Diagnostic & Testing Tools",
-                          "Battery Diagnostic & Balancing Equipment",
-                          "Spare Parts Racks",
-                          "MY EV SERVICE Software",
-                          "Staff Training & Certification",
-                          "Marketing & Launch Support",
-                          "Safety & Fire Compliance",
-                          "6 Months Business Ops Support",
-                        ].map((service, idx) => (
-                          <div key={idx} className="flex items-start gap-2 text-white/90 font-medium">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0 mt-0.5" />
-                            <span>{service}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <div className="bg-[#00D084]/10 border border-[#00D084]/20 rounded-xl p-3 text-xs text-[#00D084] font-serif font-bold mb-6">
-                  {model.osSavings}
-                </div>
-
-                <p className="text-[11px] text-white/50 italic mb-6 font-serif">
-                  Best for: {model.bestFor}
-                </p>
-              </div>
-
-              <button
-                onClick={() => {
-                  setSelectedModel(model);
-                  scrollToForm();
-                }}
-                className="w-full py-3.5 rounded-2xl bg-[#00D084] text-[#020403] text-xs font-serif font-extrabold uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer"
-              >
-                Apply for {model.name}
-              </button>
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Banner: Founding Partner Offer */}
+          <div className="models-banner-reveal bg-[#00D084]/15 border-2 border-[#00D084] rounded-3xl p-8 mb-16 text-center relative overflow-hidden">
+            <div className="inline-flex items-center gap-2 bg-[#00D084] text-[#020403] text-[10px] font-serif font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full mb-3">
+              <Sparkles className="w-3.5 h-3.5" /> LIMITED OFFER
             </div>
-          ))}
+            <h3 className="text-2xl sm:text-4xl font-serif font-extrabold text-white mb-2 leading-tight">
+              Founding Partner - Launch Phase Offer (Pune)
+            </h3>
+            <p className="text-sm sm:text-base text-white/80 max-w-3xl mx-auto leading-relaxed font-serif font-light">
+              Save ₹2L on CENTRE or ₹5L on HUB. Autobot OS free for 2 years. Revenue share at 10% (vs 15% standard) for 2 years. 5km exclusive territory. Limited to first 10 partners only.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 mt-6 text-xs font-serif font-bold text-[#00D084]">
+              <span>Zero Franchise Fee</span> • <span>100% Investment in Business Setup</span> • <span>Quarterly Settlement</span>
+            </div>
+          </div>
+
+          <div className="models-header-reveal text-center max-w-2xl mx-auto mb-16">
+            <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
+              Franchise Models
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 mb-4 tracking-tight">
+              Choose the Model That Fits Your Vision
+            </h2>
+          </div>
+
+          <div className="model-cards-grid grid grid-cols-1 lg:grid-cols-3 gap-8 [perspective:1200px]">
+            {DETAILED_FRANCHISE_MODELS.map((model) => (
+              <motion.div
+                whileHover={{ y: -10, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                key={model.type}
+                className={`model-card-reveal bg-gradient-to-b from-white/[0.03] to-white/[0.002] border backdrop-blur-xl rounded-[32px] p-8 flex flex-col justify-between transition-all duration-300 relative font-serif ${
+                  model.popular
+                    ? "border-[#00D084]/50 shadow-[0_0_35px_rgba(0,208,132,0.22)]"
+                    : "border-white/10 hover:border-white/20"
+                }`}
+              >
+                {model.badge && (
+                  <div className="absolute top-4 right-4 bg-[#00D084] text-[#020403] text-[9px] font-serif font-extrabold uppercase tracking-wider px-3 py-1 rounded-full">
+                    {model.badge}
+                  </div>
+                )}
+
+                <div className="flex-grow flex flex-col justify-between">
+                  <div className="space-y-4">
+                    {/* Header */}
+                    <div className="text-left">
+                      <span className="text-xs font-bold text-[#00D084]/80 block uppercase tracking-wider mb-1">
+                        {model.name}
+                      </span>
+                      <span className="text-3xl sm:text-4xl font-extrabold text-white block tracking-tight">
+                        {model.investment}
+                      </span>
+                      {model.originalInvestment && (
+                        <span className="text-xs text-white/40 line-through block mt-0.5">
+                          Standard: {model.originalInvestment}
+                        </span>
+                      )}
+                      {model.foundingOffer && (
+                        <span className="text-xs font-bold text-[#00D084] block mt-1">
+                          {model.foundingOffer}
+                        </span>
+                      )}
+                      <p className="text-xs text-white/60 leading-relaxed mt-3 mb-0">
+                        {model.subtitle}
+                      </p>
+                    </div>
+
+                    {/* Separator line */}
+                    <div className="h-[1px] bg-white/10 my-4" />
+
+                    {/* Required Details HUD */}
+                    <div className="space-y-2.5 text-xs text-white/70">
+                      <div className="flex justify-between">
+                        <span className="text-white/40 uppercase tracking-wider">Required Area:</span>
+                        <span className="text-white font-bold">{model.area}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/40 uppercase tracking-wider">Service Bays:</span>
+                        <span className="text-white font-bold">{model.bays}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/40 uppercase tracking-wider">Vehicle Focus:</span>
+                        <span className="text-white font-bold">{model.vehicles}</span>
+                      </div>
+                    </div>
+
+                    {/* Separator line */}
+                    <div className="h-[1px] bg-white/10 my-4" />
+
+                    {/* Checklist Features */}
+                    <div className="space-y-3.5 text-xs text-white/85">
+                      {model.includes.slice(0, 4).map((inc, i) => (
+                        <div key={i} className="flex items-start gap-3 text-left">
+                          <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-3 h-3 text-white" />
+                          </div>
+                          <span className="leading-tight">{inc}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Dropdown Toggle Button for All Services */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleModelDropdown(model.type);
+                      }}
+                      className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-[#00D084]/15 border border-white/15 hover:border-[#00D084]/40 text-xs font-serif font-bold text-white hover:text-[#00D084] flex items-center justify-between transition-all cursor-pointer mt-4 group"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Sparkles className="w-3.5 h-3.5 text-[#00D084]" />
+                        {expandedModels[model.type]
+                          ? "Hide Package Breakdown"
+                          : "View Included Setup"}
+                      </span>
+                      {expandedModels[model.type] ? (
+                        <ChevronUp className="w-4 h-4 text-[#00D084]" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4 text-[#00D084]" />
+                      )}
+                    </button>
+
+                    {/* Collapsible Dropdown Panel */}
+                    <AnimatePresence>
+                      {expandedModels[model.type] && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="bg-black/40 border border-[#00D084]/30 rounded-2xl p-4 space-y-2 mt-2 text-xs shadow-inner">
+                            {[
+                              "Multi-Bay Workshop Setup",
+                              "Diagnostic & Testing Tools",
+                              "Battery Diagnostic & Balancing Equipment",
+                              "Spare Parts Racks",
+                              "MY EV SERVICE Software",
+                              "Staff Training & Certification",
+                              "Marketing & Launch Support",
+                              "Safety & Fire Compliance",
+                              "6 Months Business Ops Support",
+                            ].map((service, idx) => (
+                              <div key={idx} className="flex items-start gap-2 text-white/90">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0 mt-0.5" />
+                                <span>{service}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="mt-8 flex flex-col gap-4">
+                    <div className="bg-[#00D084]/10 border border-[#00D084]/20 rounded-xl p-3 text-xs text-[#00D084] text-center font-bold">
+                      {model.osSavings}
+                    </div>
+
+                    <p className="text-[11px] text-white/40 italic text-center mb-2">
+                      Best for: {model.bestFor}
+                    </p>
+
+                    {/* Centered button matching the screenshot */}
+                    <div className="flex justify-center w-full">
+                      <button
+                        onClick={() => {
+                          setSelectedModel(model);
+                          scrollToForm();
+                        }}
+                        className="w-full bg-white text-black font-extrabold text-xs py-3 px-8 rounded-full hover:bg-white/90 transition-all shadow-md cursor-pointer text-center"
+                      >
+                        Apply for {model.name}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* =========================================================================
           8. DUAL OPPOSITE MOVING MARQUEE REVIEWS WITH VISUALS AND ONE-LINERS
          ========================================================================= */}
-      <section className="py-24 bg-[#020403] font-serif overflow-hidden relative">
-        <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
+      <section className="testimonials-section py-24 bg-[#020403] font-serif overflow-hidden relative">
+        <div className="testimonials-header-reveal max-w-7xl mx-auto px-6 mb-12 text-center">
           <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
             <Quote className="w-4 h-4" /> Partner Success Stories
           </span>
@@ -944,9 +1224,9 @@ function FranchisePage() {
       {/* =========================================================================
           9. CATEGORIZED FAQS ACCORDION
          ========================================================================= */}
-      <section className="py-24 px-6 bg-[#020403] font-serif border-t border-white/10">
+      <section className="faq-section py-24 px-6 bg-[#020403] font-serif border-t border-white/10">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="faq-header-reveal text-center mb-12">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
               FAQ & Guidance
             </span>
@@ -978,13 +1258,13 @@ function FranchisePage() {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="faq-list-reveal space-y-4">
             {filteredFaqs.map((faq, idx) => {
               const isOpen = openFaqIdx === idx;
               return (
                 <div
                   key={idx}
-                  className="bg-[#050907] border border-white/10 rounded-2xl overflow-hidden font-serif transition-all"
+                  className="faq-item-reveal bg-[#050907] border border-white/10 rounded-2xl overflow-hidden font-serif transition-all"
                 >
                   <button
                     onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
