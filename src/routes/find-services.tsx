@@ -1041,90 +1041,116 @@ function FindServicesPage() {
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {/* Hero experience card */}
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={heroExp.id}
-                      initial={{ opacity: 0, scale: 0.97, y: 20 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.97, y: -20 }}
-                      transition={{ duration: 0.45 }}
-                      className="md:col-span-2 bg-[#060b08] border border-white/15 hover:border-[#00D084]/60 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] group shadow-2xl relative overflow-hidden min-h-[260px]"
-                    >
-                      <div className="absolute top-0 right-0 w-64 h-64 bg-[#00D084]/10 rounded-full blur-3xl pointer-events-none" />
-                      <div className="space-y-5 relative z-10">
-                        <div className="flex items-center justify-between">
-                          <div className="flex text-amber-400 gap-1">{[...Array(heroExp.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400" />)}</div>
-                          <span className="text-[10px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-3 py-1 rounded-full border border-[#00D084]/30">{heroExp.badge}</span>
+                  {/* Hero experience card (Spans 2 cols, 2 rows) */}
+                  <div className="md:col-span-2 md:row-span-2 flex flex-col">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={heroExp.id}
+                        initial={{ opacity: 0, scale: 0.97, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.97, y: -20 }}
+                        transition={{ duration: 0.45 }}
+                        className="bg-gradient-to-br from-[#060e0a] to-[#030604] border border-white/10 hover:border-[#00D084]/40 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_20px_50px_rgba(0,208,132,0.1)] group shadow-2xl relative overflow-hidden h-full min-h-[380px]"
+                      >
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#00D084]/10 rounded-full blur-3xl pointer-events-none" />
+                        <div className="space-y-6 relative z-10">
+                          <div className="flex items-center justify-between">
+                            <div className="flex text-amber-400 gap-1">{[...Array(heroExp.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400" />)}</div>
+                            <span className="text-[10px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-3 py-1 rounded-full border border-[#00D084]/30 uppercase tracking-wider">{heroExp.badge}</span>
+                          </div>
+                          <p className="text-lg sm:text-2xl text-white/95 font-medium leading-relaxed italic font-serif">"{heroExp.quote}"</p>
                         </div>
-                        <p className="text-base sm:text-lg text-white/95 font-medium leading-relaxed italic">"{heroExp.quote}"</p>
-                      </div>
-                      <div className="pt-6 mt-8 border-t border-white/10 flex items-center justify-between relative z-10">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center font-black text-[#00D084] text-lg shrink-0">{heroExp.avatar}</div>
-                          <div>
-                            <h4 className="text-base font-bold text-white group-hover:text-[#00D084] transition-colors">{heroExp.name}</h4>
-                            <p className="text-xs text-white/50 font-mono">{heroExp.evModel} • {heroExp.location}</p>
+                        <div className="pt-6 mt-8 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 relative z-10">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center font-black text-[#00D084] text-lg shrink-0">{heroExp.avatar}</div>
+                            <div>
+                              <h4 className="text-base font-bold text-white group-hover:text-[#00D084] transition-colors">{heroExp.name}</h4>
+                              <p className="text-xs text-white/50 font-mono">{heroExp.evModel} • {heroExp.location}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            {heroExp.jobCard && <span className="hidden sm:inline-block text-[11px] font-mono text-white/40 border border-white/10 px-3 py-1.5 rounded-xl">{heroExp.jobCard}</span>}
+                            {/* Integrated control pill */}
+                            <div className="flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full border border-white/5 shrink-0">
+                              {EXPERIENCES_DATA.map((_, i) => (
+                                <button key={i} onClick={() => setExpActiveIdx(i)}
+                                  className={`h-1.5 rounded-full transition-all duration-300 ${i === expActiveIdx ? "w-4 bg-[#00D084]" : "w-1.5 bg-white/30 hover:bg-white/60"}`}
+                                />
+                              ))}
+                            </div>
                           </div>
                         </div>
-                        {heroExp.jobCard && <span className="hidden sm:inline-block text-[11px] font-mono text-white/40 border border-white/10 px-3 py-1.5 rounded-xl">{heroExp.jobCard}</span>}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Side Card 1 (Row 1 Col 3) */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={sideExp1.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.4 }}
+                      className="bg-gradient-to-br from-[#060e0a] to-[#030604] border border-white/10 hover:border-[#00D084]/40 rounded-[32px] p-6 flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_20px_50px_rgba(0,208,132,0.05)] group shadow-xl relative overflow-hidden min-h-[180px]"
+                    >
+                      <div className="space-y-3 relative z-10">
+                        <div className="flex items-center justify-between">
+                          <div className="flex text-amber-400 gap-1">{[...Array(sideExp1.rating)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />)}</div>
+                          <span className="text-[9px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-2.5 py-0.5 rounded-full border border-[#00D084]/30">{sideExp1.badge}</span>
+                        </div>
+                        <p className="text-sm text-white/90 font-medium leading-relaxed italic">"{sideExp1.quote}"</p>
+                      </div>
+                      <div className="pt-4 mt-4 border-t border-white/10 flex items-center gap-3 relative z-10">
+                        <div className="w-9 h-9 rounded-xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center font-bold text-[#00D084] text-xs shrink-0">{sideExp1.avatar}</div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white group-hover:text-[#00D084] transition-colors">{sideExp1.name}</h4>
+                          <p className="text-[11px] text-white/50 font-mono">{sideExp1.evModel}</p>
+                        </div>
                       </div>
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* Side experience cards */}
-                  <div className="flex flex-col gap-5">
-                    {[sideExp1, sideExp2].map((exp, ei) => (
-                      <AnimatePresence key={ei} mode="wait">
-                        <motion.div
-                          key={exp.id + ei}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          transition={{ duration: 0.4, delay: ei * 0.1 }}
-                          className="bg-[#060b08] border border-white/15 hover:border-[#00D084]/60 rounded-[32px] p-7 flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] group shadow-xl relative overflow-hidden flex-1"
-                        >
-                          <div className="space-y-3">
-                            <div className="flex items-center justify-between">
-                              <div className="flex text-amber-400 gap-1">{[...Array(exp.rating)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />)}</div>
-                              <span className="text-[10px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-2.5 py-0.5 rounded-full border border-[#00D084]/30">{exp.badge}</span>
-                            </div>
-                            <p className="text-sm text-white/90 font-medium leading-relaxed italic">"{exp.quote}"</p>
-                          </div>
-                          <div className="pt-4 mt-4 border-t border-white/10 flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center font-bold text-[#00D084] text-xs shrink-0">{exp.avatar}</div>
-                            <div>
-                              <h4 className="text-sm font-bold text-white group-hover:text-[#00D084] transition-colors">{exp.name}</h4>
-                              <p className="text-[11px] text-white/50 font-mono">{exp.evModel} • {exp.location}</p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      </AnimatePresence>
-                    ))}
-                  </div>
+                  {/* Side Card 2 (Row 2 Col 3) */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={sideExp2.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.4, delay: 0.1 }}
+                      className="bg-gradient-to-br from-[#060e0a] to-[#030604] border border-white/10 hover:border-[#00D084]/40 rounded-[32px] p-6 flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_20px_50px_rgba(0,208,132,0.05)] group shadow-xl relative overflow-hidden min-h-[180px]"
+                    >
+                      <div className="space-y-3 relative z-10">
+                        <div className="flex items-center justify-between">
+                          <div className="flex text-amber-400 gap-1">{[...Array(sideExp2.rating)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />)}</div>
+                          <span className="text-[9px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-2.5 py-0.5 rounded-full border border-[#00D084]/30">{sideExp2.badge}</span>
+                        </div>
+                        <p className="text-sm text-white/90 font-medium leading-relaxed italic">"{sideExp2.quote}"</p>
+                      </div>
+                      <div className="pt-4 mt-4 border-t border-white/10 flex items-center gap-3 relative z-10">
+                        <div className="w-9 h-9 rounded-xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center font-bold text-[#00D084] text-xs shrink-0">{sideExp2.avatar}</div>
+                        <div>
+                          <h4 className="text-sm font-bold text-white group-hover:text-[#00D084] transition-colors">{sideExp2.name}</h4>
+                          <p className="text-[11px] text-white/50 font-mono">{sideExp2.evModel}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
 
-                  {/* Experience dot progress */}
-                  <div className="md:col-span-2 flex items-center justify-center gap-2 -mt-2">
-                    {EXPERIENCES_DATA.map((_, i) => (
-                      <motion.button key={i} onClick={() => setExpActiveIdx(i)}
-                        animate={{ width: i === expActiveIdx ? 24 : 6, opacity: i === expActiveIdx ? 1 : 0.3 }}
-                        className={`h-1.5 rounded-full cursor-pointer ${i === expActiveIdx ? "bg-[#00D084]" : "bg-white/30"}`}
-                      />
-                    ))}
-                  </div>
-
-                  {/* CTA banner */}
-                  <div className="md:col-span-2 bg-[#08120c] border border-[#00D084]/40 rounded-[32px] p-7 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_0_50px_rgba(0,208,132,0.15)] relative overflow-hidden">
-                    <div className="space-y-1.5 text-center sm:text-left relative z-10">
-                      <div className="flex items-center gap-2 mb-1 justify-center sm:justify-start">
+                  {/* CTA Banner (Spans 3 cols at bottom) */}
+                  <div className="md:col-span-3 bg-gradient-to-r from-[#08120c] to-[#040906] border border-[#00D084]/35 rounded-[32px] p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_0_50px_rgba(0,208,132,0.15)] relative overflow-hidden mt-2">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(0,208,132,0.08),transparent_60%)] pointer-events-none" />
+                    <div className="space-y-1.5 text-center md:text-left relative z-10">
+                      <div className="flex items-center gap-2 mb-1 justify-center md:justify-start">
                         <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
-                        <span className="text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-widest">AUTO ROTATING EXPERIENCES • 2S INTERVAL</span>
+                        <span className="text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-widest">RIDER VOICES</span>
                       </div>
                       <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">Share Your EV Experience & Get 15% OFF!</h3>
                       <p className="text-xs sm:text-sm text-white/70 font-medium max-w-md">Help thousands of EV owners choose certified service hubs across India.</p>
                     </div>
-                    <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                      <Link to="/feedback" className="px-6 py-3.5 rounded-2xl bg-[#00D084] text-[#020403] font-black uppercase text-xs tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer shrink-0 shadow-[0_0_20px_rgba(0,208,132,0.4)] relative z-10">
+                    <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="shrink-0 relative z-10">
+                      <Link to="/feedback" className="inline-block px-7 py-4 rounded-2xl bg-[#00D084] text-[#020403] font-black uppercase text-xs tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer shadow-[0_0_20px_rgba(0,208,132,0.4)]">
                         Submit Experience ✍️
                       </Link>
                     </motion.div>
