@@ -35,7 +35,7 @@ import {
   Activity,
   Check,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { toast } from "sonner";
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/investors")({
 });
 
 // Reusable Framer Motion Variants for High-Impact Dynamic Entrance Animations
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
@@ -54,7 +54,7 @@ const fadeInUp = {
   },
 };
 
-const fadeInLeft = {
+const fadeInLeft: Variants = {
   hidden: { opacity: 0, x: -50 },
   visible: {
     opacity: 1,
@@ -63,7 +63,7 @@ const fadeInLeft = {
   },
 };
 
-const fadeInRight = {
+const fadeInRight: Variants = {
   hidden: { opacity: 0, x: 50 },
   visible: {
     opacity: 1,
@@ -72,7 +72,7 @@ const fadeInRight = {
   },
 };
 
-const scaleIn = {
+const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.92 },
   visible: {
     opacity: 1,
@@ -81,7 +81,7 @@ const scaleIn = {
   },
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -92,7 +92,7 @@ const staggerContainer = {
   },
 };
 
-const staggerItem = {
+const staggerItem: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,

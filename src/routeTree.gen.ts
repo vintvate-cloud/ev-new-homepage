@@ -16,6 +16,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StoreRouteImport } from './routes/store'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ServiceCentresRouteImport } from './routes/service-centres'
 import { Route as ReportIssueRouteImport } from './routes/report-issue'
 import { Route as RefundRouteImport } from './routes/refund'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -75,6 +76,11 @@ const SignupRoute = SignupRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiceCentresRoute = ServiceCentresRouteImport.update({
+  id: '/service-centres',
+  path: '/service-centres',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportIssueRoute = ReportIssueRouteImport.update({
@@ -227,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/report-issue': typeof ReportIssueRoute
+  '/service-centres': typeof ServiceCentresRoute
   '/services': typeof ServicesRoute
   '/signup': typeof SignupRoute
   '/store': typeof StoreRoute
@@ -261,6 +268,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/report-issue': typeof ReportIssueRoute
+  '/service-centres': typeof ServiceCentresRoute
   '/services': typeof ServicesRoute
   '/signup': typeof SignupRoute
   '/store': typeof StoreRoute
@@ -296,6 +304,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/report-issue': typeof ReportIssueRoute
+  '/service-centres': typeof ServiceCentresRoute
   '/services': typeof ServicesRoute
   '/signup': typeof SignupRoute
   '/store': typeof StoreRoute
@@ -332,6 +341,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refund'
     | '/report-issue'
+    | '/service-centres'
     | '/services'
     | '/signup'
     | '/store'
@@ -366,6 +376,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refund'
     | '/report-issue'
+    | '/service-centres'
     | '/services'
     | '/signup'
     | '/store'
@@ -400,6 +411,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refund'
     | '/report-issue'
+    | '/service-centres'
     | '/services'
     | '/signup'
     | '/store'
@@ -435,6 +447,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   RefundRoute: typeof RefundRoute
   ReportIssueRoute: typeof ReportIssueRoute
+  ServiceCentresRoute: typeof ServiceCentresRoute
   ServicesRoute: typeof ServicesRoute
   SignupRoute: typeof SignupRoute
   StoreRoute: typeof StoreRoute
@@ -495,6 +508,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/service-centres': {
+      id: '/service-centres'
+      path: '/service-centres'
+      fullPath: '/service-centres'
+      preLoaderRoute: typeof ServiceCentresRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/report-issue': {
@@ -699,6 +719,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   RefundRoute: RefundRoute,
   ReportIssueRoute: ReportIssueRoute,
+  ServiceCentresRoute: ServiceCentresRoute,
   ServicesRoute: ServicesRoute,
   SignupRoute: SignupRoute,
   StoreRoute: StoreRoute,

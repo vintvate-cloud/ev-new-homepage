@@ -293,11 +293,10 @@ function HeroGetStartedForm() {
                     key={opt.id}
                     type="button"
                     onClick={() => setSelectedOption(opt.id)}
-                    className={`w-full text-left p-2.5 sm:p-3 rounded-xl border transition-all duration-300 flex items-center justify-between gap-2.5 cursor-pointer ${
-                      isSelected
+                    className={`w-full text-left p-2.5 sm:p-3 rounded-xl border transition-all duration-300 flex items-center justify-between gap-2.5 cursor-pointer ${isSelected
                         ? "bg-[#00D084]/10 border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.15)]"
                         : "bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center border shrink-0 ${isSelected ? "bg-[#00D084]/20 border-[#00D084]/40" : "bg-white/5 border-white/10"}`}>
@@ -617,9 +616,8 @@ function Hero() {
                     return (
                       <span
                         key={i}
-                        className={`mr-[0.25em] inline-block uppercase ${
-                          isItalic ? "italic text-[#00D084] font-serif normal-case font-light" : "font-extrabold"
-                        }`}
+                        className={`mr-[0.25em] inline-block uppercase ${isItalic ? "italic text-[#00D084] font-serif normal-case font-light" : "font-extrabold"
+                          }`}
                         style={isItalic ? { fontFamily: "var(--font-serif)", textTransform: "none" } : undefined}
                       >
                         {word}
@@ -687,11 +685,10 @@ function Hero() {
           <button
             key={index}
             onClick={() => scrollToSlide(index)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-              activeSlide === index
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSlide === index
                 ? "bg-[#00D084] w-6 shadow-[0_0_8px_#00D084]"
                 : "bg-white/20 hover:bg-white/40"
-            }`}
+              }`}
           />
         ))}
       </div>
@@ -909,7 +906,7 @@ function EVTypeSelection() {
             BENTO GRID (Asymmetrical 12-Column Responsive Layout)
            ========================================================================= */}
         <div ref={bentoGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-          
+
           {/* BENTO CARD 1: Hero Featured Card (Electric Scooter - 7 cols) */}
           <motion.div
             whileHover={{ y: -6 }}
@@ -1295,12 +1292,12 @@ function GenuineSpareParts() {
 
   return (
     <section ref={containerRef} id="warehouse" className="relative bg-[#020403] py-28 border-b border-white/5 overflow-hidden">
-      
+
       {/* Ambient glowing spots */}
       <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#00D084]/2 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-6 relative z-10">
-        
+
         {/* Section Header */}
         <GSAPHeader
           badge="E-Commerce Catalogue"
@@ -1312,88 +1309,88 @@ function GenuineSpareParts() {
 
         {/* Dashboard layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
+
           {/* Left panel: Live CAD Telemetry HUD */}
           <Reveal className="lg:col-span-5 flex flex-col" yOffset={30}>
             <div className="bg-gradient-to-br from-[#050806] to-[#010201] border border-white/5 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-full">
-            
-            {/* Grid graphic background */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
-              style={{
-                backgroundImage: "linear-gradient(to right, #00D084 1px, transparent 1px), linear-gradient(to bottom, #00D084 1px, transparent 1px)",
-                backgroundSize: "20px 20px"
-              }}
-            />
 
-            <div ref={hudRef} className="relative z-10 flex-1 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                  <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">
-                    CAD Specification HUD
-                  </span>
-                  <span className="text-[9px] font-mono text-[#00D084] bg-[#00D084]/10 rounded px-2 py-0.5 font-bold">
-                    OEM_CERTIFIED
-                  </span>
+              {/* Grid graphic background */}
+              <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
+                style={{
+                  backgroundImage: "linear-gradient(to right, #00D084 1px, transparent 1px), linear-gradient(to bottom, #00D084 1px, transparent 1px)",
+                  backgroundSize: "20px 20px"
+                }}
+              />
+
+              <div ref={hudRef} className="relative z-10 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                    <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">
+                      CAD Specification HUD
+                    </span>
+                    <span className="text-[9px] font-mono text-[#00D084] bg-[#00D084]/10 rounded px-2 py-0.5 font-bold">
+                      OEM_CERTIFIED
+                    </span>
+                  </div>
+
+                  <div className="mt-6">
+                    <span className="text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
+                      System Classification
+                    </span>
+                    <h4 className="text-white font-bold text-lg mt-1 font-mono tracking-tight">
+                      {activePart.hud.type}
+                    </h4>
+                  </div>
+
+                  {/* Specs List */}
+                  <div className="mt-8 space-y-4">
+                    <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
+                      <span className="text-white/40 font-mono">VOLTAGE CLASS</span>
+                      <span className="text-white font-mono font-bold">{activePart.hud.voltage}</span>
+                    </div>
+                    <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
+                      <span className="text-white/40 font-mono">EFFICIENCY / DENSITY</span>
+                      <span className="text-white font-mono font-bold">{activePart.hud.density}</span>
+                    </div>
+                    <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
+                      <span className="text-white/40 font-mono">BMS CONFIGURATION</span>
+                      <span className="text-white font-mono font-bold">{activePart.hud.config}</span>
+                    </div>
+                    <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
+                      <span className="text-white/40 font-mono">THERMAL COEFFICIENT</span>
+                      <span className="text-[#00D084] font-mono font-bold">{activePart.hud.thermal}</span>
+                    </div>
+                  </div>
+
+                  {/* Assurance points */}
+                  <ul className="mt-8 space-y-3">
+                    <li className="flex items-center gap-2.5 text-xs text-white/70">
+                      <Check className="h-4 w-4 text-[#00D084]" />
+                      <span>100% Genuine OEM Standards</span>
+                    </li>
+                    <li className="flex items-center gap-2.5 text-xs text-white/70">
+                      <Check className="h-4 w-4 text-[#00D084]" />
+                      <span>12-Month Replacement Warranty</span>
+                    </li>
+                  </ul>
                 </div>
 
-                <div className="mt-6">
-                  <span className="text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
-                    System Classification
-                  </span>
-                  <h4 className="text-white font-bold text-lg mt-1 font-mono tracking-tight">
-                    {activePart.hud.type}
-                  </h4>
+                {/* Order action */}
+                <div className="mt-12 pt-6 border-t border-white/5 flex items-center justify-between gap-6">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-white/40 font-mono uppercase">Catalogue Price</span>
+                    <span className="text-xl font-bold text-white font-mono mt-0.5">{activePart.price}</span>
+                  </div>
+                  <a
+                    href="#warehouse"
+                    className="rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer"
+                    style={{ background: "#00D084", color: "#020403" }}
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    Order Component
+                  </a>
                 </div>
-
-                {/* Specs List */}
-                <div className="mt-8 space-y-4">
-                  <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
-                    <span className="text-white/40 font-mono">VOLTAGE CLASS</span>
-                    <span className="text-white font-mono font-bold">{activePart.hud.voltage}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
-                    <span className="text-white/40 font-mono">EFFICIENCY / DENSITY</span>
-                    <span className="text-white font-mono font-bold">{activePart.hud.density}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
-                    <span className="text-white/40 font-mono">BMS CONFIGURATION</span>
-                    <span className="text-white font-mono font-bold">{activePart.hud.config}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
-                    <span className="text-white/40 font-mono">THERMAL COEFFICIENT</span>
-                    <span className="text-[#00D084] font-mono font-bold">{activePart.hud.thermal}</span>
-                  </div>
-                </div>
-
-                {/* Assurance points */}
-                <ul className="mt-8 space-y-3">
-                  <li className="flex items-center gap-2.5 text-xs text-white/70">
-                    <Check className="h-4 w-4 text-[#00D084]" />
-                    <span>100% Genuine OEM Standards</span>
-                  </li>
-                  <li className="flex items-center gap-2.5 text-xs text-white/70">
-                    <Check className="h-4 w-4 text-[#00D084]" />
-                    <span>12-Month Replacement Warranty</span>
-                  </li>
-                </ul>
               </div>
-
-              {/* Order action */}
-              <div className="mt-12 pt-6 border-t border-white/5 flex items-center justify-between gap-6">
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-white/40 font-mono uppercase">Catalogue Price</span>
-                  <span className="text-xl font-bold text-white font-mono mt-0.5">{activePart.price}</span>
-                </div>
-                <a
-                  href="#warehouse"
-                  className="rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer"
-                  style={{ background: "#00D084", color: "#020403" }}
-                >
-                  <ShoppingCart className="h-4 w-4" />
-                  Order Component
-                </a>
-              </div>
-            </div>
             </div>
           </Reveal>
 
@@ -1405,16 +1402,14 @@ function GenuineSpareParts() {
                 <StaggerItem
                   key={i}
                   onMouseEnter={() => setHoveredIdx(i)}
-                  className={`spare-part-card group bg-[#050806] border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
-                    isHovered
+                  className={`spare-part-card group bg-[#050806] border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer ${isHovered
                       ? "border-[#00D084]/40 bg-[#070c09] shadow-[0_15px_30px_-10px_rgba(0,208,132,0.05)]"
                       : "border-white/5 hover:border-white/10 hover:bg-[#070b08]"
-                  }`}
+                    }`}
                 >
                   <div>
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${
-                      isHovered ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-[#00D084]/80"
-                    }`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${isHovered ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-[#00D084]/80"
+                      }`}>
                       {part.icon}
                     </div>
                     <h3 className="text-white font-bold text-sm mt-5 group-hover:text-[#00D084] transition-colors">
@@ -1549,12 +1544,12 @@ function HowItWorksHorizontal() {
       </div>
 
       {/* 2. Sliding Cards Track (z-index 20) */}
-      <div 
-        ref={sectionRef} 
+      <div
+        ref={sectionRef}
         className="w-full flex flex-col lg:absolute lg:top-0 lg:left-full lg:h-full lg:w-max lg:flex-row lg:items-center py-20 px-6 lg:py-0 lg:px-0 z-20"
       >
         <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:px-24 w-full">
-          
+
           {/* Animated Connecting Circuit Pipeline */}
           <div className="hidden lg:block absolute left-[246px] right-[246px] top-[68px] h-[2px] bg-white/5 z-0">
             <div className="circuit-progress-line h-full bg-gradient-to-r from-[#00D084] to-emerald-400 w-0 shadow-[0_0_10px_#00D084]" />
@@ -1648,7 +1643,7 @@ function HowItWorks() {
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-emerald-500/[0.01] rounded-full blur-[160px] pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-6 relative z-10">
-        
+
         {/* Editorial Section Header */}
         <GSAPHeader
           badge="The Service Cycle"
@@ -1660,18 +1655,17 @@ function HowItWorks() {
 
         {/* 3 Step Premium Cards - Desktop Only */}
         <StaggerContainer staggerDelay={0.12} className="hidden lg:grid lg:grid-cols-3 gap-8 relative items-stretch">
-          
+
           {/* Connecting line */}
           <div className="hidden lg:block absolute top-[280px] left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#00D084]/10 to-transparent pointer-events-none" />
 
           {/* STEP 1: Select & Book */}
           <div
             onClick={() => setActiveStep(0)}
-            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${
-              activeStep === 0
+            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${activeStep === 0
                 ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
                 : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
-            }`}
+              }`}
           >
             {/* Top Indicator */}
             <div className="flex items-center justify-between">
@@ -1686,16 +1680,15 @@ function HowItWorks() {
                   <span className="text-[10px] tracking-widest text-[#00D084] font-bold">SELECT METHOD</span>
                   <span className="text-[10px] text-white/40">STEP 1/3</span>
                 </div>
-                
+
                 <div className="space-y-3">
                   {/* Option 1 */}
                   <div
                     onClick={(e) => { e.stopPropagation(); setConfigPack("standard"); }}
-                    className={`p-3.5 rounded-2xl border transition-all duration-300 relative flex items-center justify-between cursor-pointer ${
-                      configPack === "standard"
+                    className={`p-3.5 rounded-2xl border transition-all duration-300 relative flex items-center justify-between cursor-pointer ${configPack === "standard"
                         ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_15px_rgba(0,208,132,0.05)]"
                         : "bg-black/40 border-white/5 hover:border-white/10"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${configPack === "standard" ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-white/60"}`}>
@@ -1714,11 +1707,10 @@ function HowItWorks() {
                   {/* Option 2 */}
                   <div
                     onClick={(e) => { e.stopPropagation(); setConfigPack("pro"); }}
-                    className={`p-3.5 rounded-2xl border transition-all duration-300 relative flex items-center justify-between cursor-pointer ${
-                      configPack === "pro"
+                    className={`p-3.5 rounded-2xl border transition-all duration-300 relative flex items-center justify-between cursor-pointer ${configPack === "pro"
                         ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_15px_rgba(0,208,132,0.05)]"
                         : "bg-black/40 border-white/5 hover:border-white/10"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${configPack === "pro" ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-white/60"}`}>
@@ -1756,11 +1748,10 @@ function HowItWorks() {
           {/* STEP 2: Diagnostic Pickup */}
           <div
             onClick={() => setActiveStep(1)}
-            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${
-              activeStep === 1
+            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${activeStep === 1
                 ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
                 : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
-            }`}
+              }`}
           >
             {/* Top Indicator */}
             <div className="flex items-center justify-between">
@@ -1784,12 +1775,12 @@ function HowItWorks() {
                       backgroundSize: "12px 12px"
                     }}
                   />
-                  
+
                   {/* Curvy Route Path SVG */}
                   <svg className="absolute w-full h-full stroke-white/10 stroke-2 fill-none">
                     <path d="M 30,80 Q 90,20 150,70 T 250,30" />
                   </svg>
-                  
+
                   {/* Animated Path fill */}
                   <svg className="absolute w-full h-full stroke-[#00D084]/40 stroke-2 fill-none">
                     <path d="M 30,80 Q 90,20 150,70 T 250,30" className="animate-[dash_8s_linear_infinite]"
@@ -1843,11 +1834,10 @@ function HowItWorks() {
           {/* STEP 3: Calibration & Return */}
           <div
             onClick={() => setActiveStep(2)}
-            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${
-              activeStep === 2
+            className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${activeStep === 2
                 ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
                 : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
-            }`}
+              }`}
           >
             {/* Top Indicator */}
             <div className="flex items-center justify-between">
@@ -1943,11 +1933,10 @@ function HowItWorks() {
                 <button
                   key={i}
                   onClick={() => setActiveStep(i)}
-                  className={`flex-1 py-3 px-2 rounded-xl flex flex-col items-center justify-center gap-1 transition-all duration-300 ${
-                    isSelected
+                  className={`flex-1 py-3 px-2 rounded-xl flex flex-col items-center justify-center gap-1 transition-all duration-300 ${isSelected
                       ? "bg-[#0d1410] border border-[#00D084]/20 text-[#00D084]"
                       : "text-white/40 border border-transparent"
-                  }`}
+                    }`}
                 >
                   <span className="text-[10px] font-mono font-bold leading-none">{tab.num}</span>
                   <span className="text-[11px] font-semibold leading-none">{tab.label}</span>
@@ -1958,7 +1947,7 @@ function HowItWorks() {
 
           {/* Active Card Body */}
           <div className="min-h-[460px] bg-gradient-to-b from-[#0a120e] to-[#040806] border border-[#00D084]/30 rounded-[32px] p-6 flex flex-col justify-between shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]">
-            
+
             {/* Top Indicator */}
             {activeStep === 0 && (
               <div className="flex items-center justify-between">
@@ -1988,15 +1977,14 @@ function HowItWorks() {
                       <span className="text-[10px] tracking-widest text-[#00D084] font-bold">SELECT METHOD</span>
                       <span className="text-[10px] text-white/40">STEP 1/3</span>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <div
                         onClick={() => setConfigPack("standard")}
-                        className={`p-3 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${
-                          configPack === "standard"
+                        className={`p-3 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${configPack === "standard"
                             ? "bg-[#0d1410] border-[#00D084]/40"
                             : "bg-black/40 border-white/5"
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center gap-3">
                           <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${configPack === "standard" ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-white/60"}`}>
@@ -2014,11 +2002,10 @@ function HowItWorks() {
 
                       <div
                         onClick={() => setConfigPack("pro")}
-                        className={`p-3 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${
-                          configPack === "pro"
+                        className={`p-3 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${configPack === "pro"
                             ? "bg-[#0d1410] border-[#00D084]/40"
                             : "bg-black/40 border-white/5"
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center gap-3">
                           <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${configPack === "pro" ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-white/60"}`}>
@@ -2352,11 +2339,10 @@ function CinematicEcosystem() {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(idx)}
-                className={`relative px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2.5 cursor-pointer ${
-                  isActive
+                className={`relative px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2.5 cursor-pointer ${isActive
                     ? "text-[#020403] font-bold shadow-[0_0_25px_rgba(0,208,132,0.4)]"
                     : "text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10"
-                }`}
+                  }`}
               >
                 {isActive && (
                   <motion.div
@@ -2945,7 +2931,7 @@ function EVServices() {
               <p className="text-[#a1a1aa] text-sm leading-relaxed">
                 Latest firmware updates, BMS calibration, and live system speed profiling.
               </p>
-              
+
               <div className="flex flex-col gap-2 mt-4">
                 <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
                   <span className="text-xs text-white">BMS Firmware</span>
@@ -3832,17 +3818,17 @@ function TechnicianCareers() {
     <section ref={containerRef} className="relative min-h-screen lg:h-screen bg-[var(--background)] text-white flex items-center justify-center overflow-visible lg:overflow-hidden py-16 lg:py-0 selection:bg-[#00D084] selection:text-[#020403]">
       {/* 16:9 Container */}
       <div ref={contentRef} className="w-full max-w-[1280px] md:aspect-video flex flex-col gap-5 relative px-4 md:px-0 h-auto md:h-full">
-        
+
         {/* Top Row: Left & Right Cards */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-5 min-h-0">
-          
+
           {/* Top Left Card */}
           <div className="md:col-span-7 bg-[#0a0f0c] border border-white/10 rounded-2xl overflow-hidden flex flex-col relative group">
             <div className="absolute inset-0 bg-gradient-to-br from-[#00D084]/5 to-transparent pointer-events-none" />
             <div className="h-[120px] md:h-[20%] relative shrink-0 overflow-hidden">
               <img src={factory} alt="EV Service Centre" className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-700" />
             </div>
-            
+
             <div className="flex-grow md:flex-1 p-5 md:p-6 flex flex-col z-10 overflow-hidden">
               <div className="mb-3">
                 <div className="inline-flex items-center gap-1.5 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 px-2.5 py-0.5 mb-2">
@@ -3890,7 +3876,7 @@ function TechnicianCareers() {
             <div className="relative z-10 flex flex-col h-full overflow-hidden">
               <h3 className="text-2xl font-semibold mb-2">Why people choose My EV Services</h3>
               <p className="text-[#a1a1aa] text-sm mb-8">Built for technicians who want a smarter, steadier career.</p>
-              
+
               <ul className="space-y-5 flex-1">
                 {[
                   { icon: ShieldCheck, title: "Professional workflow", desc: "Clear steps, checklists, and customer-ready reports." },
@@ -3918,13 +3904,13 @@ function TechnicianCareers() {
         <div className="h-auto md:h-[25%] shrink-0 rounded-2xl overflow-hidden relative flex items-center p-6 md:p-8 bg-[#0a0f0c] border border-white/10 group">
           <img src={tech} alt="Inside My EV Services" className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity transition-transform group-hover:scale-105 duration-700" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#030604] via-[#030604]/80 to-transparent" />
-          
+
           <div className="relative z-10 w-full flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="max-w-md text-center md:text-left">
               <h2 className="text-3xl md:text-4xl font-serif font-semibold text-white mb-2 keep-white">Ready to accelerate your career?</h2>
               <p className="text-[#a1a1aa] text-sm">Join India's fastest growing multi-brand EV service network.</p>
             </div>
-            
+
             <div className="flex items-center gap-8">
               <div className="flex gap-8 hidden sm:flex">
                 <div className="text-left">
@@ -3936,7 +3922,7 @@ function TechnicianCareers() {
                   <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium mt-1">Job Acceptance Rate</div>
                 </div>
               </div>
-              
+
               <button onClick={() => setIsOpen(true)} className="bg-white hover:bg-gray-100 text-black px-8 py-4 text-sm rounded-full font-semibold transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
                 Apply as Technician <ArrowRight className="w-4 h-4" />
               </button>
@@ -4177,7 +4163,7 @@ function PartsWarehouse() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
   const numRef = useRef<HTMLSpanElement>(null);
-  
+
   const listRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -4245,23 +4231,23 @@ function PartsWarehouse() {
             const p = self.progress;
             const idx = p < 0.25 ? 0 : p < 0.5 ? 1 : p < 0.75 ? 2 : 3;
             setActiveIndex(idx);
-            
+
             // Continuous vertical list scroll
             if (listRef.current) {
-              const yOffset = -p * 3 * 160; 
+              const yOffset = -p * 3 * 160;
               gsap.set(listRef.current, { y: yOffset });
             }
 
             // Dynamic scale/blur for each item
             itemsRef.current.forEach((el, i) => {
               if (!el) return;
-              const activePos = p * 3; 
+              const activePos = p * 3;
               const dist = Math.abs(activePos - i);
               const scale = Math.max(0.7, 1 - dist * 0.3);
               const opacity = Math.max(0, 1 - dist * 0.85);
               const blurAmt = Math.min(10, dist * 10);
 
-              gsap.set(el, { 
+              gsap.set(el, {
                 scale,
                 opacity,
                 filter: `blur(${blurAmt}px)`,
@@ -4421,14 +4407,14 @@ function PartsWarehouse() {
 
         {/* Right: Dynamic Feature Text & Premium Diagnostic Viewport Panel */}
         <div className="lg:col-span-7 flex flex-col lg:flex-row items-center justify-between gap-12 lg:pl-10 w-full">
-          
+
           {/* Active feature animated block & CTA (Moved to the right of curve) */}
           <div className="flex flex-col justify-center w-full lg:max-w-[340px] z-30">
             <div className="relative lg:h-[160px] w-full overflow-visible">
               <div ref={listRef} className="relative lg:absolute inset-x-0 top-0 flex flex-col gap-8 lg:gap-0 items-start w-full">
                 {steps.map((step, i) => (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     ref={(el) => { itemsRef.current[i] = el; }}
                     className="warehouse-step-item w-full lg:h-[160px] flex flex-col justify-center shrink-0"
                   >
@@ -4445,7 +4431,7 @@ function PartsWarehouse() {
                 ))}
               </div>
             </div>
-            
+
             {/* CTA */}
             <div className="flex flex-wrap gap-3 mt-12 lg:mt-16">
               <Link
@@ -5102,7 +5088,7 @@ function LatestNews() {
       </div>
 
       <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
-        
+
         {/* Massive Editorial Header Block */}
         <GSAPText className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8" stagger={0.12}>
           <div className="max-w-xl">
@@ -5121,19 +5107,19 @@ function LatestNews() {
 
         {/* Asymmetrical Editorial Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* FEATURED STORY (Left Column - Spans 7 cols) */}
           <Reveal className="lg:col-span-7 group" yOffset={35}>
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-card transition-colors duration-500 hover:border-[#00D084]/40">
-              
+
               {/* Image wrap with slow scale */}
               <div className="relative aspect-[16/10] overflow-hidden">
-                <img 
-                  src={newsItems[0].img} 
+                <img
+                  src={newsItems[0].img}
                   alt={newsItems[0].title}
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100"
                 />
-                
+
                 {/* Visual indicator corner tags */}
                 <div className="absolute top-5 left-5 bg-[#00D084] text-[#020403] text-[9px] font-mono font-bold px-2 py-0.5 rounded uppercase tracking-wider">
                   {newsItems[0].tag}
@@ -5157,7 +5143,7 @@ function LatestNews() {
                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight mb-4 group-hover:text-[#00D084] transition-colors duration-300">
                   {newsItems[0].title}
                 </h3>
-                
+
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                   {newsItems[0].desc}
                 </p>
@@ -5176,7 +5162,7 @@ function LatestNews() {
 
           {/* EDITORIAL FEED LIST (Right Column - Spans 5 cols) */}
           <StaggerContainer staggerDelay={0.1} className="lg:col-span-5 flex flex-col gap-6">
-            
+
             {newsItems.slice(1).map((item) => (
               <StaggerItem
                 href={`#news-${item.id}`}
@@ -5288,7 +5274,7 @@ function EcosystemOfferings() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
       <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
-        
+
         {/* Section Header */}
         <GSAPHeader
           badge="[ ECOSYSTEM DISPATCH / KEY CAPABILITIES ]"
@@ -5309,9 +5295,8 @@ function EcosystemOfferings() {
               >
                 {/* Background Translucent Floating Icon */}
                 <div
-                  className={`absolute bottom-[-20px] ${
-                    isLeft ? "right-[-20px]" : "left-[-20px]"
-                  } pointer-events-none opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-105 transition-all duration-500`}
+                  className={`absolute bottom-[-20px] ${isLeft ? "right-[-20px]" : "left-[-20px]"
+                    } pointer-events-none opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-105 transition-all duration-500`}
                 >
                   <card.Icon className="w-64 h-64 stroke-[1.2]" style={{ color: card.accent }} />
                 </div>
@@ -5372,10 +5357,10 @@ function DownloadApp() {
 
       <div className="max-w-[1400px] w-full px-8 md:px-16 mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
+
           {/* LEFT: TEXT, RATINGS, REVIEWS */}
           <Reveal className="lg:col-span-6 flex flex-col gap-8" yOffset={40}>
-            
+
             {/* Header */}
             <GSAPText stagger={0.1}>
               <span className="text-[10px] font-mono tracking-[0.3em] text-[#00D084] uppercase block mb-3">
@@ -5392,7 +5377,7 @@ function DownloadApp() {
 
             {/* Ratings & Stores */}
             <div className="flex flex-wrap gap-8 items-center border-t border-b border-white/5 py-6">
-              
+
               {/* App Store Rating */}
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-1.5">
@@ -5456,10 +5441,10 @@ function DownloadApp() {
 
           {/* RIGHT: SMARTPHONE MOCKUP & PREMIUM QR PAIRING CARD */}
           <Reveal className="lg:col-span-6 flex flex-col md:flex-row items-center justify-center gap-8 relative" yOffset={40} delay={0.2}>
-            
+
             {/* Phone Mockup Frame */}
             <div className="relative w-[270px] h-[550px] rounded-[42px] border-[8px] border-white/10 bg-black shadow-[0_0_60px_rgba(0,208,132,0.18)] overflow-hidden flex flex-col p-3 transition-transform duration-500 hover:scale-[1.02] shrink-0">
-              
+
               {/* Ear Speaker / Camera Notch */}
               <div className="absolute top-4 left-1/2 -translate-x-1/2 w-32 h-5 rounded-full bg-black z-20 flex items-center justify-center">
                 <div className="w-12 h-1 bg-white/20 rounded-full mb-1" />
@@ -5468,7 +5453,7 @@ function DownloadApp() {
 
               {/* Internal Screen Content */}
               <div className="flex-1 rounded-[32px] bg-[#030604] border border-white/5 overflow-hidden flex flex-col pt-8 px-4 text-white relative">
-                
+
                 {/* App Header */}
                 <div className="flex items-center justify-between mt-2 mb-6">
                   <div className="flex items-center gap-1.5">
@@ -5485,7 +5470,7 @@ function DownloadApp() {
 
                 {/* Battery Dial Screen */}
                 <div className="flex-1 flex flex-col items-center justify-center gap-6">
-                  
+
                   {/* Battery Dial */}
                   <div className="relative w-36 h-36 rounded-full border-4 border-dashed border-[#00D084]/20 flex items-center justify-center">
                     <div className="absolute inset-2 rounded-full border-2 border-[#00D084] border-t-transparent animate-spin" style={{ animationDuration: '6s' }} />
@@ -5523,7 +5508,7 @@ function DownloadApp() {
 
             {/* PREMIUM QR PAIRING CARD (POSITIONED NEAR DEVICE MOCKUP) */}
             <div className="w-full max-w-[270px] bg-[#070c09]/95 border border-[#00D084]/30 rounded-[32px] p-6 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl flex flex-col items-center text-center relative overflow-hidden group hover:border-[#00D084]/60 transition-all duration-500">
-              
+
               {/* Background ambient glow */}
               <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#00D084]/20 blur-3xl rounded-full pointer-events-none" />
               <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-[#00D084]/10 blur-3xl rounded-full pointer-events-none" />
@@ -5540,7 +5525,7 @@ function DownloadApp() {
               <div className="relative p-4 bg-black/90 border border-white/15 rounded-2xl flex items-center justify-center w-40 h-40 group-hover:border-[#00D084]/60 transition-all duration-300 shadow-[0_0_30px_rgba(0,0,0,0.9)] mb-5 overflow-hidden">
                 {/* Laser scan animation beam */}
                 <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#00D084] to-transparent animate-scan shadow-[0_0_12px_#00D084]" />
-                
+
                 {/* Glowing Corner Brackets for HUD feel */}
                 <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#00D084]" />
                 <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-[#00D084]" />
@@ -5639,7 +5624,7 @@ function QuickAccessSidebar() {
 
               {/* Sidebar Content Widgets */}
               <div className="space-y-4 flex-1">
-                
+
                 {/* 1. Download Our App */}
                 <div className="bg-[#050806] border border-white/5 rounded-2xl p-5 flex flex-col items-center justify-center relative overflow-hidden group">
                   <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-4 text-xs font-bold text-white/90">

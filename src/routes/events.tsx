@@ -708,7 +708,9 @@ function EventsPage() {
                       return (
                         <div
                           key={evt.id}
-                          ref={(el) => (cardsRef.current[globalIdx] = el)}
+                          ref={(el) => {
+                            cardsRef.current[globalIdx] = el;
+                          }}
                           className="editorial-card group cursor-pointer w-full h-[96vh] flex flex-col justify-start"
                           onClick={() => handleOpenDetails(evt)}
                         >
@@ -754,7 +756,9 @@ function EventsPage() {
                       return (
                         <div
                           key={evt.id}
-                          ref={(el) => (cardsRef.current[globalIdx] = el)}
+                          ref={(el) => {
+                            cardsRef.current[globalIdx] = el;
+                          }}
                           className="editorial-card group cursor-pointer w-full h-[96vh] flex flex-col justify-start"
                           onClick={() => handleOpenDetails(evt)}
                         >

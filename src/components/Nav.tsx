@@ -21,7 +21,9 @@ import factory from "@/assets/factory.jpg";
 export type Theme = "warm" | "mid" | "dark";
 
 const NAV = [
+  { label: "Service Centres", href: "/service-centres", menuIdx: null },
   { label: "Franchise", href: "/franchise", menuIdx: 0 },
+  { label: "Services", href: "/services", menuIdx: 1 },
   { label: "Careers", href: "/careers", menuIdx: null },
   { label: "Find Service", href: "/find-services", menuIdx: null },
   { label: "Media", href: "/media", menuIdx: null },
@@ -29,7 +31,6 @@ const NAV = [
   { label: "Events", href: "/events", menuIdx: null },
   { label: "EV News", href: "/news", menuIdx: null },
   { label: "Blog", href: "/blog", menuIdx: null },
-  { label: "Services", href: "/services", menuIdx: 1 },
   { label: "AI", href: "/track", menuIdx: null },
 ];
 
