@@ -23,6 +23,11 @@ import {
   HelpCircle as FaqIcon,
   Search,
   CheckCircle2,
+  Instagram,
+  Youtube,
+  Facebook,
+  Twitter,
+  Linkedin,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -254,6 +259,35 @@ function ContactPage() {
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </a>
+              </div>
+
+              {/* Social Media Links Row */}
+              <div className="mt-8 pt-6 border-t border-white/10">
+                <div className="text-[11px] font-mono uppercase tracking-widest text-[#00D084] mb-3">Connect on Social Media</div>
+                <div className="flex items-center gap-3">
+                  {[
+                    { label: "Instagram", icon: Instagram, href: "https://instagram.com" },
+                    { label: "YouTube", icon: Youtube, href: "https://youtube.com" },
+                    { label: "Facebook", icon: Facebook, href: "https://facebook.com" },
+                    { label: "Twitter", icon: Twitter, href: "https://twitter.com" },
+                    { label: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
+                  ].map((soc, idx) => {
+                    const SocIcon = soc.icon;
+                    return (
+                      <a
+                        key={idx}
+                        href={soc.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00D084] hover:bg-[#00D084]/15 hover:border-[#00D084]/40 transition-all group"
+                        aria-label={soc.label}
+                        title={soc.label}
+                      >
+                        <SocIcon className="w-4.5 h-4.5 group-hover:scale-110 transition-transform" />
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
