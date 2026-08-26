@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useMemo, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
@@ -18,6 +20,8 @@ import {
   Bot,
   SlidersHorizontal,
   ArrowUpRight,
+  X,
+  Menu,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -35,6 +39,7 @@ interface BlogPost {
   author: string;
   img: string;
   featured?: boolean;
+  content?: string[];
 }
 
 const CATEGORIES = [
@@ -58,6 +63,11 @@ const SAMPLE_POSTS: BlogPost[] = [
     author: "Autobot Technical Team",
     img: "https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=800&auto=format&fit=crop&q=80",
     featured: true,
+    content: [
+      "Lithium-ion battery packs are the heart of any electric vehicle. Over time, individual cells within these packs can experience 'capacity drift'—small variations in internal resistance and capacity due to thermal gradients and usage cycles.",
+      "If left unaddressed, capacity drift leads to cell imbalance. Cells with lower capacity discharge faster and reach their cut-off voltage sooner, limiting the entire pack's usable capacity. This shows up as a sudden drop in range or premature power throttling.",
+      "Active cell balancing transfers energy from higher-voltage cells to weaker ones during charge cycles, ensuring all cells discharge uniformly and restoring original range."
+    ]
   },
   {
     id: "post-2",
@@ -69,6 +79,11 @@ const SAMPLE_POSTS: BlogPost[] = [
       "Essential thermal management practices to prevent BMS throttling and preserve battery health in 40°C+ ambient temperatures.",
     author: "Rajesh Kumar, Senior EV Diagnostics",
     img: "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&auto=format&fit=crop&q=80",
+    content: [
+      "Operating an electric scooter in hot climates presents unique engineering challenges. During peak summers in India, ambient temperatures regularly cross 40°C, causing significant thermal stress on lithium-ion batteries.",
+      "When cell temperatures exceed 45°C, the Battery Management System (BMS) enters thermal protection mode, throttle acceleration, and limits charging speeds. To maximize range, avoid parking under direct sunlight and allow the battery to cool down for 20 minutes before plugging it in.",
+      "Additionally, smooth throttle inputs and riding in Eco mode reduces continuous current demand, keeping battery temperatures lower and preventing range loss due to heat efficiency drops."
+    ]
   },
   {
     id: "post-3",
@@ -80,6 +95,11 @@ const SAMPLE_POSTS: BlogPost[] = [
       "Diagnosing bearing wear, hall sensor misalignment, and phase wire shorts before controller breakdown occurs.",
     author: "Autobot Technical Team",
     img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80",
+    content: [
+      "BLDC hub motors are highly reliable, but they are not maintenance-free. Unexpected grinding or whistling noises from your rear wheel can indicate mechanical or electrical issues that need immediate troubleshooting.",
+      "First, check for bearing wear by spinning the wheel manually while the vehicle is off. Any rough feedback indicates that moisture or road debris has breached the dust seals. Second, verify the hall sensors inside the motor. Misaligned sensors cause rough commutation, producing a loud humming noise.",
+      "If you notice a metallic clicking under load, inspect the phase wires connecting the controller to the motor. Melted insulation on these wires can cause intermittent micro-shorts, which will damage your motor controller if left unresolved."
+    ]
   },
   {
     id: "post-4",
@@ -91,6 +111,11 @@ const SAMPLE_POSTS: BlogPost[] = [
       "From brake fluid moisture testing to CAN-bus diagnostic error code scans: a complete guide to preventive EV care.",
     author: "Priya Sharma, Lead Quality Audit",
     img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80",
+    content: [
+      "Unlike internal combustion engine vehicles, EVs do not require engine oil changes or spark plug replacements. However, preventive maintenance is still essential to ensure the longevity of high-voltage systems, mechanical assemblies, and braking circuits.",
+      "Our 32-point checklist covers three key areas: High-Voltage Systems (isolation resistance check, battery harness audit, BMS telemetry logs), Mechanical Systems (suspension play, wheel bearings, chassis grounding), and Control Interfaces (brake fluid water content, tyre tread depth, cluster functionality).",
+      "Regular inspections every 5,000 km help catch cable wear and minor cell drifts early, ensuring maximum safety, peak range, and avoiding costly high-voltage component repairs down the line."
+    ]
   },
   {
     id: "post-5",
@@ -102,8 +127,176 @@ const SAMPLE_POSTS: BlogPost[] = [
       "Understanding delta voltage, cell internal resistance (mΩ), and state-of-health (SOH) graphs generated by AI diagnostic hubs.",
     author: "Autobot Technical Team",
     img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=80",
+    content: [
+      "When your EV is diagnosed at a My EV Service hub, our system generates a detailed Battery Health Telemetry report. To understand these reports, you need to focus on three critical metrics: SOH, Delta Voltage, and Cell Internal Resistance.",
+      "State-of-Health (SOH) represents the battery's current capacity relative to when it was new. A healthy battery should maintain an SOH of 80% or higher. Delta Voltage is the difference between the highest and lowest cell voltages. An balanced pack should have a delta voltage of less than 30mV at rest.",
+      "Lastly, cell internal resistance (measured in mΩ) indicates how easily current flows through the cells. Higher resistance values generate more heat and cause rapid voltage drops under acceleration, pointing to aging or damaged cells."
+    ]
   },
 ];
+
+// masonry height helper
+const getCardHeight = (idx: number) => {
+  const heights = [
+    "h-[260px] sm:h-[320px]",
+    "h-[340px] sm:h-[400px]",
+    "h-[210px] sm:h-[260px]",
+    "h-[390px] sm:h-[470px]"
+  ];
+  return heights[idx % heights.length];
+};
+
+// 3D Holographic Perspective Hover Card Component with cursor-tracking ambient glow and alternating layout
+function ArticleCard({ post, index, isLight, onClick }: { post: BlogPost; index: number; isLight: boolean; onClick: () => void }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [imgError, setImgError] = useState(false);
+
+  const isEven = index % 2 === 0;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setCoords({ x, y });
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = -(y - centerY) / (rect.height / 12);
+    const rotateY = (x - centerX) / (rect.width / 12);
+    setTilt({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTilt({ x: 0, y: 0 });
+  };
+
+  const getGlowColor = (cat: string) => {
+    if (isLight) {
+      switch (cat) {
+        case "Battery Care": return "rgba(0, 208, 132, 0.12)";
+        case "Troubleshooting": return "rgba(0, 180, 255, 0.12)";
+        case "Tips & Tricks": return "rgba(255, 145, 0, 0.12)";
+        default: return "rgba(0, 208, 132, 0.08)";
+      }
+    } else {
+      switch (cat) {
+        case "Battery Care": return "rgba(0, 208, 132, 0.2)";
+        case "Troubleshooting": return "rgba(0, 229, 255, 0.2)";
+        case "Tips & Tricks": return "rgba(255, 145, 0, 0.2)";
+        default: return "rgba(0, 208, 132, 0.14)";
+      }
+    }
+  };
+
+  const glowColor = getGlowColor(post.category);
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+      style={{
+        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transition: isHovered ? "transform 0.05s linear" : "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)",
+      }}
+      className={`relative overflow-hidden rounded-[32px] p-6 transition-all duration-500 group flex flex-col ${
+        isEven ? "md:flex-row" : "md:flex-row-reverse"
+      } gap-6 items-start cursor-pointer hover:shadow-2xl ${
+        isLight
+          ? "bg-white/80 backdrop-blur-md text-[#1a2320]"
+          : "bg-[#080f0b]/40 backdrop-blur-md text-white"
+      }`}
+    >
+      {/* Holographic Glowing Background Layer */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(circle 240px at ${coords.x}px ${coords.y}px, ${glowColor}, transparent)`,
+          }}
+        />
+      )}
+
+      {/* Shine Highlight effect */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 mix-blend-overlay opacity-20"
+          style={{
+            background: `radial-gradient(circle 130px at ${coords.x}px ${coords.y}px, rgba(255, 255, 255, 0.4), transparent)`,
+          }}
+        />
+      )}
+
+      {/* Image container: fallback to gradient if source fails to load */}
+      <div className="relative w-full md:w-52 h-40 shrink-0 overflow-hidden rounded-2xl shadow-sm bg-[#090f0b] flex items-center justify-center border border-white/5">
+        {!imgError ? (
+          <img
+            src={post.img}
+            alt=""
+            onError={() => setImgError(true)}
+            className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700 pointer-events-none"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-[#00D084]/15 via-[#060c09] to-black flex flex-col items-center justify-center p-4 text-center">
+            <Sparkles className="w-8 h-8 text-[#00D084] mb-2 opacity-50" />
+            <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{post.category}</span>
+          </div>
+        )}
+      </div>
+
+      <div className="space-y-3 flex-1 relative z-10 text-left">
+        <div className="flex items-center justify-between text-xs font-sans">
+          <span className="text-[#00D084] font-sans font-bold uppercase tracking-wider">
+            {post.category}
+          </span>
+          <span className={isLight ? "text-[#607267]" : "text-white/50"}>
+            {post.date} • {post.readTime}
+          </span>
+        </div>
+
+        <h3
+          className={`text-xl font-sans font-bold group-hover:text-[#00D084] transition-colors leading-snug ${
+            isLight ? "text-[#1a2320]" : "text-white"
+          }`}
+        >
+          {post.title}
+        </h3>
+
+        <p
+          className={`text-xs font-sans font-light leading-relaxed ${
+            isLight ? "text-[#4a5851]" : "text-white/60"
+          }`}
+        >
+          {post.excerpt}
+        </p>
+
+        <div className="flex items-center justify-between pt-2">
+          <span
+            className={`text-[11px] font-sans italic ${
+              isLight ? "text-[#607267]" : "text-white/40"
+            }`}
+          >
+            By {post.author}
+          </span>
+          <span
+            className="text-xs font-sans font-bold text-[#00D084] group-hover:underline flex items-center gap-1 cursor-pointer"
+          >
+            Read Article <ChevronRight className="w-3.5 h-3.5" />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -111,11 +304,44 @@ function BlogPage() {
   const [researchQuery, setResearchQuery] = useState("");
   const [emailInput, setEmailInput] = useState("");
 
+  // Drawer states
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerSide, setDrawerSide] = useState<"left" | "right">("right");
+  const drawerWrapperRef = useRef<HTMLDivElement>(null);
+  const drawerContentRef = useRef<HTMLDivElement>(null);
+
   const heroTextRef = useRef<HTMLDivElement>(null);
   const cardsOverlayRef = useRef<HTMLDivElement>(null);
   const cardsUpRef = useRef<HTMLDivElement>(null);
 
+  const filteredPosts = useMemo(() => {
+    return SAMPLE_POSTS.filter((post) => {
+      const matchesCategory =
+        selectedCategory === "All" || post.category === selectedCategory;
+      const query = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        !query ||
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query) ||
+        post.category.toLowerCase().includes(query);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategory, searchQuery]);
+
+  // Handle open article details in sidebar drawer (even indices slide from right, odd from left)
+  const handleOpenArticle = (post: BlogPost, index: number) => {
+    setSelectedPost(post);
+    setDrawerSide(index % 2 === 0 ? "right" : "left");
+    setDrawerOpen(true);
+  };
+
+  // GSAP infinite scrolling loops & ScrollTrigger Parallax
   useEffect(() => {
+    // Kill any existing ScrollTriggers to prevent global persistence conflicts in client-side navigation
+    ScrollTrigger.getAll().forEach(t => t.kill());
+
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
@@ -151,10 +377,158 @@ function BlogPage() {
           }
         );
       }
+
+      // Trusted partners bar entrance
+      gsap.fromTo(
+        ".blog-partners-bar",
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.85,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".blog-partners-bar",
+            start: "top 95%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Category filters & Search Title entrance
+      gsap.fromTo(
+        ".blog-archive-header",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: "#blog-archive",
+            start: "top 95%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Staggered sidebar cards entrance
+      gsap.fromTo(
+        ".blog-sidebar-card",
+        { x: 30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.75,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".blog-sidebar-card",
+            start: "top 95%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // National network banner entrance
+      gsap.fromTo(
+        ".blog-network-banner",
+        { scale: 0.96, opacity: 0, y: 55 },
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "back.out(1.1)",
+          scrollTrigger: {
+            trigger: ".blog-network-banner",
+            start: "top 95%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Infinite column scrolling loops
+      const colSelectors = [".blog-col-1", ".blog-col-2", ".blog-col-3", ".blog-col-4"];
+      colSelectors.forEach((selector, idx) => {
+        const col = document.querySelector(selector);
+        if (!col) return;
+
+        // Downward (col 1 & 3: startY=-50% to endY=0%), Upward (col 2 & 4: startY=0% to endY=-50%)
+        const direction = idx % 2 === 0 ? 1 : -1;
+        const startY = direction === 1 ? "-50%" : "0%";
+        const endY = direction === 1 ? "0%" : "-50%";
+
+        const tl = gsap.fromTo(
+          col,
+          { y: startY },
+          {
+            y: endY,
+            repeat: -1,
+            duration: idx % 2 === 0 ? 130 : 160,
+            ease: "none",
+          }
+        );
+
+        col.addEventListener("mouseenter", () => {
+          gsap.to(tl, { timeScale: 0.15, duration: 1.2 });
+        });
+        col.addEventListener("mouseleave", () => {
+          gsap.to(tl, { timeScale: 1, duration: 1.2 });
+        });
+      });
     });
 
-    return () => ctx.revert();
+    ScrollTrigger.refresh();
+    const t1 = setTimeout(() => ScrollTrigger.refresh(), 100);
+    const t2 = setTimeout(() => ScrollTrigger.refresh(), 400);
+    const t3 = setTimeout(() => ScrollTrigger.refresh(), 800);
+
+    return () => {
+      ctx.revert();
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, []);
+
+  // Lenis Smooth Scroll Setup for drawer (hides scrollbars & implements smooth scroll)
+  useEffect(() => {
+    if (!drawerOpen || !drawerWrapperRef.current || !drawerContentRef.current) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const drawerLenis = new Lenis({
+      wrapper: drawerWrapperRef.current,
+      content: drawerContentRef.current,
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: true,
+    });
+
+    let rafId: number;
+    function update(time: number) {
+      drawerLenis.raf(time);
+      rafId = requestAnimationFrame(update);
+    }
+    rafId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      drawerLenis.destroy();
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [drawerOpen]);
+
+  // Refresh GSAP ScrollTrigger dynamically when archive is updated
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [filteredPosts]);
 
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
@@ -188,21 +562,6 @@ function BlogPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const filteredPosts = useMemo(() => {
-    return SAMPLE_POSTS.filter((post) => {
-      const matchesCategory =
-        selectedCategory === "All" || post.category === selectedCategory;
-      const query = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !query ||
-        post.title.toLowerCase().includes(query) ||
-        post.excerpt.toLowerCase().includes(query) ||
-        post.category.toLowerCase().includes(query);
-
-      return matchesCategory && matchesSearch;
-    });
-  }, [selectedCategory, searchQuery]);
 
   const clearFilters = () => {
     setSelectedCategory("All");
@@ -239,45 +598,169 @@ function BlogPage() {
       <div className="relative min-h-screen">
 
         {/* =========================================================================
-            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+            1. INFINITE SCROLLING GALLERY HERO (MATCHING SCREENSHOT)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
-          {/* Uploaded Blog Hero Background Image */}
-          <img
-            src="/blog-hero-bg.png"
-            alt="EV Blog Background"
-            className="w-full h-full object-cover object-center opacity-85 pointer-events-none"
-          />
-
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-black/40 to-black/60 pointer-events-none" />
-
-          {/* Hero Content Container */}
-          <div
-            ref={heroTextRef}
-            className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-5xl mx-auto space-y-6 z-10 pointer-events-auto text-left"
-          >
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
-              • EV Care & Diagnostic Guides
-            </span>
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-sans font-black tracking-[-0.04em] !text-white leading-[0.95] drop-shadow-[0_4px_25px_rgba(0,0,0,0.9)]">
-              EV Tech &amp; <br />
-              Diagnostic <br />
-              Experts
-            </h1>
-            <p className="text-sm sm:text-base text-white/80 font-light max-w-xl leading-relaxed drop-shadow-md">
-              Field-tested technical articles, BMS diagnostics, and preventive maintenance guides authored by certified Autobot engineers.
-            </p>
-            <div className="pt-2">
-              <a
-                href="#blog-archive"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
-              >
-                <span>EXPLORE ALL GUIDES</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
+        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center border-b border-white/10">
+          
+          {/* Columns Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 h-[170vh] -mt-[35vh] w-full overflow-hidden pointer-events-auto px-4 md:px-8 bg-black/95">
+            
+            {/* Column 1 (Downward) */}
+            <div className="blog-col-1 flex flex-col gap-4 sm:gap-6">
+              {[...SAMPLE_POSTS, ...SAMPLE_POSTS, ...SAMPLE_POSTS].map((post, pIdx) => (
+                <div
+                  key={`col1-${post.id}-${pIdx}`}
+                  onClick={() => handleOpenArticle(post, pIdx)}
+                  className={`relative overflow-hidden rounded-[24px] sm:rounded-[32px] cursor-pointer group border border-white/5 ${getCardHeight(pIdx)}`}
+                >
+                  <img
+                    src={post.img}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-85" />
+                  
+                  {/* Card Overlay Text */}
+                  <div className="absolute bottom-5 left-5 right-5 text-left space-y-2">
+                    <span className="text-[9px] font-sans font-bold text-[#00D084] uppercase tracking-wider bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/20 inline-block">
+                      {post.category}
+                    </span>
+                    <h3 className="text-xs sm:text-sm font-sans font-extrabold text-white leading-tight group-hover:text-[#00D084] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-[9px] text-white/50 font-sans">
+                      {post.date} • {post.readTime}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            {/* Column 2 (Upward) */}
+            <div className="blog-col-2 flex flex-col gap-4 sm:gap-6">
+              {[...SAMPLE_POSTS.slice().reverse(), ...SAMPLE_POSTS.slice().reverse(), ...SAMPLE_POSTS.slice().reverse()].map((post, pIdx) => (
+                <div
+                  key={`col2-${post.id}-${pIdx}`}
+                  onClick={() => handleOpenArticle(post, pIdx + 1)}
+                  className={`relative overflow-hidden rounded-[24px] sm:rounded-[32px] cursor-pointer group border border-white/5 ${getCardHeight(pIdx + 1)}`}
+                >
+                  <img
+                    src={post.img}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-85" />
+                  
+                  {/* Card Overlay Text */}
+                  <div className="absolute bottom-5 left-5 right-5 text-left space-y-2">
+                    <span className="text-[9px] font-sans font-bold text-[#00D084] uppercase tracking-wider bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/20 inline-block">
+                      {post.category}
+                    </span>
+                    <h3 className="text-xs sm:text-sm font-sans font-extrabold text-white leading-tight group-hover:text-[#00D084] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-[9px] text-white/50 font-sans">
+                      {post.date} • {post.readTime}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Column 3 (Downward - Hidden on mobile) */}
+            <div className="blog-col-3 hidden md:flex flex-col gap-4 sm:gap-6">
+              {[...SAMPLE_POSTS, ...SAMPLE_POSTS, ...SAMPLE_POSTS].map((post, pIdx) => (
+                <div
+                  key={`col3-${post.id}-${pIdx}`}
+                  onClick={() => handleOpenArticle(post, pIdx + 2)}
+                  className={`relative overflow-hidden rounded-[24px] sm:rounded-[32px] cursor-pointer group border border-white/5 ${getCardHeight(pIdx + 2)}`}
+                >
+                  <img
+                    src={post.img}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-85" />
+                  
+                  {/* Card Overlay Text */}
+                  <div className="absolute bottom-5 left-5 right-5 text-left space-y-2">
+                    <span className="text-[9px] font-sans font-bold text-[#00D084] uppercase tracking-wider bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/20 inline-block">
+                      {post.category}
+                    </span>
+                    <h3 className="text-xs sm:text-sm font-sans font-extrabold text-white leading-tight group-hover:text-[#00D084] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-[9px] text-white/50 font-sans">
+                      {post.date} • {post.readTime}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Column 4 (Upward - Hidden on tablet/mobile) */}
+            <div className="blog-col-4 hidden lg:flex flex-col gap-4 sm:gap-6">
+              {[...SAMPLE_POSTS.slice().reverse(), ...SAMPLE_POSTS.slice().reverse(), ...SAMPLE_POSTS.slice().reverse()].map((post, pIdx) => (
+                <div
+                  key={`col4-${post.id}-${pIdx}`}
+                  onClick={() => handleOpenArticle(post, pIdx + 3)}
+                  className={`relative overflow-hidden rounded-[24px] sm:rounded-[32px] cursor-pointer group border border-white/5 ${getCardHeight(pIdx + 3)}`}
+                >
+                  <img
+                    src={post.img}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-85" />
+                  
+                  {/* Card Overlay Text */}
+                  <div className="absolute bottom-5 left-5 right-5 text-left space-y-2">
+                    <span className="text-[9px] font-sans font-bold text-[#00D084] uppercase tracking-wider bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/20 inline-block">
+                      {post.category}
+                    </span>
+                    <h3 className="text-xs sm:text-sm font-sans font-extrabold text-white leading-tight group-hover:text-[#00D084] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-[9px] text-white/50 font-sans">
+                      {post.date} • {post.readTime}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
           </div>
+          
+          {/* Floating Logo Capsule */}
+          <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 backdrop-blur-md bg-black/60 border border-white/10 px-5 py-2.5 rounded-full shadow-2xl">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#00D084] animate-pulse" />
+              <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-white uppercase">
+                MY EV LABS
+              </span>
+            </div>
+            <div className="h-4 w-[1px] bg-white/20" />
+            <button
+              onClick={() => {
+                const el = document.getElementById("blog-archive");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="w-7 h-7 rounded-full bg-[#00D084] flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"
+            >
+              <Menu className="w-3.5 h-3.5 text-black" />
+            </button>
+          </div>
+
+          {/* Floating Bottom Button */}
+          <button
+            onClick={() => {
+              const el = document.getElementById("blog-archive");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 backdrop-blur-md bg-[#00D084]/20 border border-[#00D084]/40 px-8 py-3.5 rounded-full text-[#00D084] text-[10px] font-mono tracking-widest uppercase hover:bg-[#00D084] hover:text-black transition-all cursor-pointer shadow-lg hover:shadow-[0_0_30px_rgba(0,208,132,0.3)] flex items-center gap-2"
+          >
+            EXPLORE POSTS ✦
+          </button>
         </div>
 
         {/* =========================================================================
@@ -294,7 +777,7 @@ function BlogPage() {
       {/* =========================================================================
           2. TRUSTED PARTNERS / FEATURED IN BAR (LIGHT/DARK THEME ADAPTIVE)
          ========================================================================= */}
-      <section className="py-8 px-6 max-w-7xl mx-auto">
+      <section className="py-8 px-6 max-w-7xl mx-auto blog-partners-bar">
         <div
           className={`border rounded-[32px] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 text-left transition-colors duration-300 ${
             isLight
@@ -324,70 +807,6 @@ function BlogPage() {
         </div>
       </section>
 
-      {/* =========================================================================
-          3. OUR APPROACH SECTION (LIGHT/DARK THEME ADAPTIVE)
-         ========================================================================= */}
-      <section
-        className={`py-16 px-6 lg:px-12 max-w-7xl mx-auto border-b transition-colors duration-500 ${
-          isLight ? "border-black/10" : "border-white/10"
-        }`}
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
-          
-          {/* Left Column: Heading */}
-          <div className="lg:col-span-7 space-y-4 text-left">
-            <span className="text-[#00D084] text-sm font-sans font-semibold tracking-wide block">
-              Our Approach
-            </span>
-
-            <h2
-              className={`text-4xl sm:text-6xl font-sans font-bold tracking-[-0.04em] leading-[1.05] ${
-                isLight ? "text-[#1a2320]" : "text-white"
-              }`}
-            >
-              Smart Strategies <br />
-              Real Diagnostic Results <br />
-              Meaningful Range Growth
-            </h2>
-          </div>
-
-          {/* Right Column: Paragraph + Green Pill CTA */}
-          <div className="lg:col-span-5 space-y-6 text-left">
-            <p
-              className={`text-sm sm:text-base font-sans font-light leading-relaxed ${
-                isLight ? "text-[#4a5851]" : "text-white/70"
-              }`}
-            >
-              We combine deep diagnostic telemetry, certified mechanic expertise, and preventive maintenance guides to help your electric vehicle run at peak efficiency sustainably.
-            </p>
-
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row items-center gap-3">
-              <input
-                type="email"
-                required
-                placeholder="Enter your email for insights..."
-                value={emailInput}
-                onChange={(e) => setEmailInput(e.target.value)}
-                className={`w-full sm:w-auto flex-1 border rounded-full px-5 py-3 text-xs font-sans focus:outline-none focus:border-[#00D084] ${
-                  isLight
-                    ? "bg-white border-[#c5d6ca] text-[#1a2320] placeholder-[#607267]"
-                    : "bg-[#09110c] border-white/20 text-white placeholder-white/40"
-                }`}
-              />
-              <button
-                type="submit"
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#00e08f] transition-all cursor-pointer shrink-0 shadow-[0_0_20px_rgba(0,208,132,0.3)]"
-              >
-                <span>Subscribe Now</span>
-                <div className="w-5 h-5 rounded-full bg-[#020403] flex items-center justify-center text-[#00D084]">
-                  <ArrowRight className="w-3 h-3" />
-                </div>
-              </button>
-            </form>
-          </div>
-
-        </div>
-      </section>
 
       {/* =========================================================================
           4. MAIN ARTICLES ARCHIVE (WITH LIGHT/DARK THEME ADAPTIVE CARDS)
@@ -399,7 +818,7 @@ function BlogPage() {
           <div className="lg:col-span-8 space-y-8 text-left">
             
             {/* Category Filter Pills & Search Input */}
-            <div className="space-y-4">
+            <div className="space-y-4 blog-archive-header">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap items-center gap-2">
                   {CATEGORIES.map((cat) => (
@@ -447,67 +866,30 @@ function BlogPage() {
 
             {/* Articles Grid */}
             {filteredPosts.length > 0 ? (
-              <div className="space-y-6">
-                {filteredPosts.map((post) => (
-                  <article
-                    key={post.id}
-                    className={`border rounded-[32px] p-6 transition-all duration-300 group flex flex-col md:flex-row gap-6 items-start ${
-                      isLight
-                        ? "bg-white border-[#d6e3da] text-[#1a2320] shadow-sm hover:border-[#00D084]"
-                        : "bg-[#080f0b] border-white/10 text-white shadow-xl hover:border-[#00D084]/50"
-                    }`}
-                  >
-                    <img
-                      src={post.img}
-                      alt={post.title}
-                      className="w-full md:w-52 h-40 object-cover rounded-2xl shrink-0 group-hover:scale-102 transition-transform duration-500"
-                    />
-
-                    <div className="space-y-3 flex-1">
-                      <div className="flex items-center justify-between text-xs font-sans">
-                        <span className="text-[#00D084] font-sans font-bold uppercase tracking-wider">
-                          {post.category}
-                        </span>
-                        <span className={isLight ? "text-[#607267]" : "text-white/50"}>
-                          {post.date} • {post.readTime}
-                        </span>
-                      </div>
-
-                      <h3
-                        className={`text-xl font-sans font-bold group-hover:text-[#00D084] transition-colors leading-snug ${
-                          isLight ? "text-[#1a2320]" : "text-white"
-                        }`}
-                      >
-                        {post.title}
-                      </h3>
-
-                      <p
-                        className={`text-xs font-sans font-light leading-relaxed ${
-                          isLight ? "text-[#4a5851]" : "text-white/60"
-                        }`}
-                      >
-                        {post.excerpt}
-                      </p>
-
-                      <div className="flex items-center justify-between pt-2">
-                        <span
-                          className={`text-[11px] font-sans italic ${
-                            isLight ? "text-[#607267]" : "text-white/40"
-                          }`}
-                        >
-                          By {post.author}
-                        </span>
-                        <button
-                          onClick={() => toast.info(`Opening article: "${post.title}"`)}
-                          className="text-xs font-sans font-bold text-[#00D084] hover:underline flex items-center gap-1 cursor-pointer"
-                        >
-                          Read Article <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <motion.div layout className="space-y-6">
+                <AnimatePresence mode="popLayout">
+                  {filteredPosts.map((post, index) => (
+                    <motion.div
+                      key={post.id}
+                      layout
+                      initial={{ opacity: 0, scale: 0.92, y: 15 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.92, y: -15 }}
+                      transition={{
+                        opacity: { duration: 0.2 },
+                        layout: { type: "spring", stiffness: 380, damping: 36 }
+                      }}
+                    >
+                      <ArticleCard
+                        post={post}
+                        index={index}
+                        isLight={isLight}
+                        onClick={() => handleOpenArticle(post, index)}
+                      />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
             ) : (
               /* No Articles Found State */
               <div
@@ -541,7 +923,7 @@ function BlogPage() {
             
             {/* My EV Services AI Analyzer Card */}
             <div
-              className={`border-2 border-[#00D084] rounded-[32px] p-6 space-y-4 relative overflow-hidden ${
+              className={`border-2 border-[#00D084] rounded-[32px] p-6 space-y-4 relative overflow-hidden blog-sidebar-card ${
                 isLight ? "bg-white shadow-md" : "bg-[#06110a]"
               }`}
             >
@@ -576,7 +958,7 @@ function BlogPage() {
 
             {/* Ecosystem Research Search Engine */}
             <div
-              className={`border rounded-[32px] p-6 space-y-4 ${
+              className={`border rounded-[32px] p-6 space-y-4 blog-sidebar-card ${
                 isLight
                   ? "bg-white border-[#d6e3da] text-[#1a2320] shadow-sm"
                   : "bg-[#070e0a] border-white/10 text-white"
@@ -624,7 +1006,7 @@ function BlogPage() {
 
             {/* Promoted Recommendations */}
             <div
-              className={`border rounded-[32px] p-6 space-y-4 ${
+              className={`border rounded-[32px] p-6 space-y-4 blog-sidebar-card ${
                 isLight
                   ? "bg-white border-[#d6e3da] text-[#1a2320] shadow-sm"
                   : "bg-[#070e0a] border-white/10 text-white"
@@ -692,7 +1074,7 @@ function BlogPage() {
          ========================================================================= */}
       <section className="py-12 px-6 max-w-7xl mx-auto text-left">
         <div
-          className={`border-2 border-[#00D084] rounded-[32px] p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 ${
+          className={`border-2 border-[#00D084] rounded-[32px] p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 blog-network-banner ${
             isLight ? "bg-[#00D084]/20 text-[#1a2320]" : "bg-[#00D084]/15 text-white"
           }`}
         >
@@ -720,6 +1102,109 @@ function BlogPage() {
           </div>
         </div>
       </div>
+
+      {/* Interactive Blog Article Sidebar Drawer */}
+      <AnimatePresence>
+        {drawerOpen && selectedPost && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setDrawerOpen(false)}
+              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
+            />
+            {/* Sidebar drawer */}
+            <motion.div
+              key={selectedPost.id}
+              initial={{ x: drawerSide === "right" ? "110%" : "-110%" }}
+              animate={{ x: 0 }}
+              exit={{ x: drawerSide === "right" ? "110%" : "-110%" }}
+              transition={{ type: "spring", damping: 32, stiffness: 220 }}
+              className={`fixed top-4 sm:top-6 bottom-4 sm:bottom-6 z-50 w-full max-w-3xl bg-[#060c09] border border-white/10 rounded-[32px] md:rounded-[40px] shadow-2xl flex flex-col font-sans text-white overflow-hidden ${
+                drawerSide === "right" ? "right-4 sm:right-6" : "left-4 sm:left-6"
+              }`}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setDrawerOpen(false)}
+                className="absolute top-6 right-6 text-white/40 hover:text-white bg-[#060c09]/80 backdrop-blur-md hover:bg-white/5 border border-white/10 p-2.5 rounded-full transition-colors cursor-pointer z-20 shadow-md"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Scrollable Lenis Wrapper (No Visible Scrollbar) */}
+              <div
+                ref={drawerWrapperRef}
+                data-lenis-prevent="true"
+                className="flex-1 overflow-y-auto p-6 md:p-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+              >
+                <div ref={drawerContentRef} className="space-y-8 pb-6">
+                  {/* Top Cover Image */}
+                  <div className="relative h-60 md:h-72 w-full rounded-2xl overflow-hidden mb-4 bg-slate-900 shadow-md">
+                    <img
+                      src={selectedPost.img}
+                      alt={selectedPost.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#060c09] via-transparent to-black/30" />
+                  </div>
+
+                  {/* Header / Badge */}
+                  <div>
+                    <span className="text-[10px] font-sans font-bold text-[#00D084] uppercase tracking-widest bg-[#00D084]/15 px-3 py-1 rounded-full border border-[#00D084]/30 inline-block mb-3">
+                      {selectedPost.category}
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-sans font-extrabold text-white mt-1 leading-tight">
+                      {selectedPost.title}
+                    </h3>
+                    <div className="flex items-center gap-3 mt-3 text-xs text-white/50 font-mono">
+                      <span>{selectedPost.date}</span>
+                      <span>•</span>
+                      <span>{selectedPost.readTime}</span>
+                      <span>•</span>
+                      <span>By {selectedPost.author}</span>
+                    </div>
+                  </div>
+
+                  {/* Article content paragraphs */}
+                  <div className="border-t border-white/10 pt-6 space-y-5">
+                    {selectedPost.content ? (
+                      selectedPost.content.map((p, pIdx) => (
+                        <p key={pIdx} className="text-sm md:text-base text-white/80 leading-relaxed font-light font-sans">
+                          {p}
+                        </p>
+                      ))
+                    ) : (
+                      <p className="text-sm md:text-base text-white/80 leading-relaxed font-light font-sans">
+                        {selectedPost.excerpt}
+                      </p>
+                    )}
+                  </div>
+                  
+                  {/* Footer call to action */}
+                  <div className="border-t border-white/10 pt-6 mt-8 space-y-4">
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">Need Professional EV Care?</h4>
+                    <p className="text-xs text-white/60 leading-relaxed">
+                      Our certified Autobot diagnostics team is ready to evaluate your electric scooter, bike or auto. Book an inspection at your nearest hub or request doorstep maintenance.
+                    </p>
+                    <button
+                      onClick={() => {
+                        setDrawerOpen(false);
+                        window.location.href = "/services";
+                      }}
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(0,208,132,0.3)]"
+                    >
+                      Book Diagnostic Service <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Footer */}
       <Footer />
