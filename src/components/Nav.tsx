@@ -20,30 +20,35 @@ import factory from "@/assets/factory.jpg";
 
 export type Theme = "warm" | "mid" | "dark";
 
-const NAV = [
+const PRIMARY_NAV = [
   { label: "Service Centres", href: "/service-centres", menuIdx: null },
   { label: "Franchise", href: "/franchise", menuIdx: 0 },
   { label: "Services", href: "/services", menuIdx: 1 },
   { label: "Careers", href: "/careers", menuIdx: null },
   { label: "Find Service", href: "/find-services", menuIdx: null },
-  { label: "Media", href: "/media", menuIdx: null },
-  { label: "Webinars", href: "/webinars", menuIdx: null },
-  { label: "Events", href: "/events", menuIdx: null },
-  { label: "EV News", href: "/news", menuIdx: null },
-  { label: "Blog", href: "/blog", menuIdx: null },
-  { label: "AI", href: "/track", menuIdx: null },
+];
+
+const MORE_NAV = [
+  { label: "Media & PR", href: "/media", desc: "Press releases & media coverage" },
+  { label: "Webinars & Live", href: "/webinars", desc: "Technical EV workshops & live Q&A" },
+  { label: "Events & Meets", href: "/events", desc: "EV industry summits & partner meets" },
+  { label: "EV Industry News", href: "/news", desc: "Latest aftermarket EV updates" },
+  { label: "Blog & Insights", href: "/blog", desc: "EV maintenance guides & tech tips" },
+  { label: "AI Track Assistant", href: "/track", desc: "Automated status & diagnostic tracking" },
 ];
 
 export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBooking?: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+  const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
 
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const [pill, setPill] = useState<{ x: number; w: number } | null>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
   const leaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const moreLeaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollY = useRef(0);
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
@@ -109,6 +114,15 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
     leaveTimeout.current = setTimeout(() => setHoverIdx(null), 180);
   };
 
+  const handleMoreEnter = () => {
+    if (moreLeaveTimeout.current) clearTimeout(moreLeaveTimeout.current);
+    setMoreDropdownOpen(true);
+  };
+
+  const handleMoreLeave = () => {
+    moreLeaveTimeout.current = setTimeout(() => setMoreDropdownOpen(false), 200);
+  };
+
   const themeClass = theme === "warm" ? "theme-warm" : "";
 
   const MEGA_MENUS: Record<number, {
@@ -152,12 +166,12 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
           }`}
         >
           {/* Logo OUTSIDE the bordered navbar pill container */}
-          <a href="/" className="flex items-center shrink-0 group">
+          <a href="/" className="flex items-center shrink-0 group overflow-hidden rounded-xl">
             <img
-              src="/logo-myevservice.jpg"
+              src="/logo.jpeg"
               alt="My EV Service Logo"
-              className={`w-auto rounded-xl object-contain transition-all duration-300 group-hover:scale-105 ${
-                scrolled ? "h-9" : "h-10 sm:h-11"
+              className={`w-auto rounded-xl object-cover scale-125 transition-all duration-300 group-hover:scale-135 ${
+                scrolled ? "h-11 sm:h-12" : "h-14 sm:h-16 lg:h-16"
               } ${
                 siteTheme === "light"
                   ? "border border-black/10 shadow-md bg-white"
@@ -194,7 +208,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
           {/* Desktop Nav with Mega Menu */}
           <div className="relative hidden items-center gap-1 xl:flex">
             <nav className="relative flex items-center gap-1" onMouseLeave={handleNavLeave}>
-              {NAV.map((n, i) => {
+              {PRIMARY_NAV.map((n, i) => {
                 const hasMenu = n.menuIdx !== null && MEGA_MENUS[n.menuIdx!];
                 return (
                   <a
@@ -204,7 +218,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                     }}
                     href={n.href}
                     onMouseEnter={() => (hasMenu ? handleNavEnter(n.menuIdx!) : handleNavLeave())}
-                    className="relative z-10 px-2.5 py-1.5 text-[11.5px] font-bold tracking-wide flex items-center gap-1 text-[#00D084] hover:text-[#00e08f] transition-colors"
+                    className="relative z-10 px-3 py-1.5 text-[12px] font-bold tracking-wide flex items-center gap-1 text-[#00D084] hover:text-[#00e08f] transition-colors"
                   >
                     <span style={{ position: "relative", zIndex: 1 }}>{n.label}</span>
                     {hasMenu && (
@@ -216,6 +230,84 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
                   </a>
                 );
               })}
+
+              {/* More Resources Dropdown Trigger */}
+              <div
+                className="relative"
+                onMouseEnter={handleMoreEnter}
+                onMouseLeave={handleMoreLeave}
+              >
+                <button
+                  type="button"
+                  className="px-3 py-1.5 text-[12px] font-bold tracking-wide flex items-center gap-1 text-[#00D084] hover:text-[#00e08f] transition-colors cursor-pointer"
+                >
+                  <span>More</span>
+                  <ChevronDown
+                    className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                      moreDropdownOpen ? "rotate-180 text-[#00D084]" : "opacity-70"
+                    }`}
+                  />
+                </button>
+
+                {/* More Dropdown Glass Panel */}
+                <AnimatePresence>
+                  {moreDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className="absolute top-[calc(100%+12px)] right-0 w-64 origin-top-right z-50 rounded-2xl border border-white/15 p-2.5 shadow-2xl backdrop-blur-2xl"
+                      style={{
+                        background:
+                          siteTheme === "light"
+                            ? "rgba(255, 255, 255, 0.98)"
+                            : "rgba(8, 12, 10, 0.96)",
+                      }}
+                    >
+                      {/* Arrow pointer */}
+                      <div
+                        className={`absolute -top-2 right-5 w-3.5 h-3.5 rotate-45 rounded-sm border-l border-t ${
+                          siteTheme === "light"
+                            ? "border-black/10 bg-white"
+                            : "border-white/15 bg-[#080c0a]"
+                        }`}
+                      />
+
+                      <div className="px-3 py-1.5 border-b border-white/10 mb-1 flex items-center justify-between">
+                        <span className="text-[9px] font-mono font-bold text-[#00D084] uppercase tracking-wider">
+                          Ecosystem Resources
+                        </span>
+                        <span className="text-[9px] text-white/40 font-mono">6 Modules</span>
+                      </div>
+
+                      <div className="space-y-0.5">
+                        {MORE_NAV.map((item) => (
+                          <a
+                            key={item.label}
+                            href={item.href}
+                            className={`group flex items-center justify-between rounded-xl px-3 py-2 transition-all ${
+                              siteTheme === "light"
+                                ? "hover:bg-black/5 text-black/80 hover:text-black"
+                                : "hover:bg-white/10 text-white/80 hover:text-white"
+                            }`}
+                          >
+                            <div>
+                              <span className="block text-xs font-bold leading-tight group-hover:text-[#00D084] transition-colors">
+                                {item.label}
+                              </span>
+                              <span className="block text-[9.5px] text-white/40 group-hover:text-white/60 transition-colors mt-0.5">
+                                {item.desc}
+                              </span>
+                            </div>
+                            <ArrowUpRight className="w-3.5 h-3.5 text-white/20 group-hover:text-[#00D084] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+                          </a>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* Mega Menu Dropdown Panel */}
               <AnimatePresence>
@@ -455,7 +547,7 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
         </div>
         <div className="flex flex-col gap-1 px-6 pt-6 overflow-y-auto max-h-[82vh]">
           {open &&
-            NAV.map((n, i) => (
+            [...PRIMARY_NAV, ...MORE_NAV].map((n, i) => (
               <motion.a
                 key={n.label}
                 href={n.href}

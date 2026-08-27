@@ -13,7 +13,13 @@ import {
   CATEGORIZED_FAQS,
   PARTNER_TESTIMONIALS_ROW1,
   PARTNER_TESTIMONIALS_ROW2,
+  BRAND_COLLABORATIONS,
+  PARTNER_VIDEO_INTERVIEWS,
+  DEVELOPED_CENTERS_GALLERY,
   DetailedFranchiseModel,
+  BrandCollaboration,
+  PartnerVideoInterview,
+  DevelopedCenter,
 } from "../data/franchiseData";
 import {
   CheckCircle2,
@@ -31,6 +37,12 @@ import {
   Star,
   Quote,
   Zap,
+  Play,
+  ExternalLink,
+  Building2,
+  MapPin,
+  RotateCcw,
+  Layers,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -67,6 +79,16 @@ function FranchisePage() {
 
   // Comparison Matrix Active Selected Feature for Visual Breakdown
   const [selectedCompFeature, setSelectedCompFeature] = useState<number>(0);
+
+  // Brand Collaborations Grid 3D Flip state
+  const [selectedBrandId, setSelectedBrandId] = useState<string>("ola");
+  const [flippedBrandId, setFlippedBrandId] = useState<string | null>(null);
+
+  // Partner Video Modal state
+  const [activeVideo, setActiveVideo] = useState<PartnerVideoInterview | null>(null);
+
+  // Developed Centers Gallery Filter state
+  const [selectedCenterType, setSelectedCenterType] = useState<"all" | "hub" | "centre" | "garage">("all");
 
   // Franchise Models Expandable Services Dropdown state
   const [expandedModels, setExpandedModels] = useState<{ [key: string]: boolean }>({});
@@ -778,34 +800,53 @@ function FranchisePage() {
           </div>
 
           {/* Interactive Comparison Visual Display */}
-          <div className="comparison-cards-grid grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="comparison-cards-grid grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Left: Traditional Garage Breakdown */}
-            <div className="comparison-card-left lg:col-span-6 bg-red-950/20 border-2 border-red-500/30 hover:border-red-500/60 rounded-3xl p-8 space-y-6 transition-all duration-300 font-serif">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-serif font-bold text-red-400 uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
-                  OLD ERA TRADITIONAL GARAGE
-                </span>
-                <span className="text-xs font-serif font-bold text-red-400">
-                  Score: {COMPARISON_FEATURES[selectedCompFeature].tradScore}/100
-                </span>
-              </div>
+            <div className="comparison-card-left lg:col-span-6 bg-red-950/20 border-2 border-red-500/30 hover:border-red-500/60 rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 font-serif overflow-hidden">
+              <div className="space-y-5">
+                {/* Visual Image Header */}
+                <div className="relative h-44 sm:h-52 w-full rounded-2xl overflow-hidden border border-red-500/20 group">
+                  <img
+                    src="/find-services-hero.jpg"
+                    alt="Traditional Garage Visual"
+                    className="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-950 via-red-950/60 to-transparent" />
+                  <div className="absolute top-3 left-3 bg-red-500/90 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full backdrop-blur-md">
+                    Manual Operations
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-red-200">
+                    <span>Diagnostic Tools: <strong>None</strong></span>
+                    <span className="text-red-400 font-bold">Uncertified SOPs</span>
+                  </div>
+                </div>
 
-              <h3 className="text-2xl font-serif font-bold text-white">
-                Fragmented & Manual Operations
-              </h3>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-serif font-bold text-red-400 uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
+                    OLD ERA TRADITIONAL GARAGE
+                  </span>
+                  <span className="text-xs font-serif font-bold text-red-400">
+                    Score: {COMPARISON_FEATURES[selectedCompFeature].tradScore}/100
+                  </span>
+                </div>
 
-              <div className="bg-[#020503] border border-white/10 rounded-2xl p-4 space-y-2">
-                <span className="text-[11px] text-white/50 block font-serif">
-                  CURRENT FEATURE STATUS:
-                </span>
-                <p className="text-sm font-serif font-bold text-red-300 flex items-start gap-2">
-                  <span className="text-red-400 font-black">✕</span>
-                  <span>{COMPARISON_FEATURES[selectedCompFeature].traditional}</span>
-                </p>
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-white">
+                  Fragmented & Manual Operations
+                </h3>
+
+                <div className="bg-[#020503] border border-white/10 rounded-2xl p-4 space-y-2">
+                  <span className="text-[11px] text-white/50 block font-serif">
+                    CURRENT FEATURE STATUS:
+                  </span>
+                  <p className="text-sm font-serif font-bold text-red-300 flex items-start gap-2">
+                    <span className="text-red-400 font-black">✕</span>
+                    <span>{COMPARISON_FEATURES[selectedCompFeature].traditional}</span>
+                  </p>
+                </div>
               </div>
 
               {/* Visual Metric Score Bar */}
-              <div className="space-y-1.5 pt-2">
+              <div className="space-y-1.5 pt-4">
                 <div className="flex justify-between text-xs text-white/60">
                   <span>Efficiency & Tech Rating</span>
                   <span className="text-red-400 font-bold">
@@ -824,32 +865,51 @@ function FranchisePage() {
             </div>
 
             {/* Right: MY EV SERVICE Hub Breakdown */}
-            <div className="comparison-card-right lg:col-span-6 bg-[#00D084]/10 border-2 border-[#00D084] rounded-3xl p-8 space-y-6 transition-all duration-300 font-serif shadow-[0_0_30px_rgba(0,208,132,0.15)]">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-serif font-bold text-[#00D084] uppercase tracking-widest bg-[#00D084]/20 px-3 py-1 rounded-full border border-[#00D084]/40">
-                  AI AUTOBOT OS POWERED HUB
-                </span>
-                <span className="text-xs font-serif font-bold text-[#00D084]">
-                  Score: {COMPARISON_FEATURES[selectedCompFeature].myevScore}/100
-                </span>
-              </div>
+            <div className="comparison-card-right lg:col-span-6 bg-[#00D084]/10 border-2 border-[#00D084] rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 font-serif shadow-[0_0_35px_rgba(0,208,132,0.2)] overflow-hidden">
+              <div className="space-y-5">
+                {/* Visual Image Header */}
+                <div className="relative h-44 sm:h-52 w-full rounded-2xl overflow-hidden border border-[#00D084]/40 group">
+                  <img
+                    src="/ev-services-hero.jpg"
+                    alt="MY EV SERVICE Visual"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04120a] via-[#04120a]/50 to-transparent" />
+                  <div className="absolute top-3 left-3 bg-[#00D084] text-[#020403] text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow-[0_0_12px_#00D084]">
+                    AI Diagnostic Bay
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-[#00D084]">
+                    <span>Autobot OS: <strong>Online</strong></span>
+                    <span className="text-white font-bold">100% Certified SOPs</span>
+                  </div>
+                </div>
 
-              <h3 className="text-2xl font-serif font-bold text-white">
-                Automated & High-Yield EV Ecosystem
-              </h3>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-serif font-bold text-[#00D084] uppercase tracking-widest bg-[#00D084]/20 px-3 py-1 rounded-full border border-[#00D084]/40">
+                    AI AUTOBOT OS POWERED HUB
+                  </span>
+                  <span className="text-xs font-serif font-bold text-[#00D084]">
+                    Score: {COMPARISON_FEATURES[selectedCompFeature].myevScore}/100
+                  </span>
+                </div>
 
-              <div className="bg-[#020503] border border-[#00D084]/30 rounded-2xl p-4 space-y-2">
-                <span className="text-[11px] text-[#00D084] block font-serif font-bold">
-                  AUTOBOT OS ADVANTAGE:
-                </span>
-                <p className="text-sm font-serif font-bold text-white flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
-                  <span>{COMPARISON_FEATURES[selectedCompFeature].myev}</span>
-                </p>
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-white">
+                  Automated & High-Yield EV Ecosystem
+                </h3>
+
+                <div className="bg-[#020503] border border-[#00D084]/30 rounded-2xl p-4 space-y-2">
+                  <span className="text-[11px] text-[#00D084] block font-serif font-bold">
+                    AUTOBOT OS ADVANTAGE:
+                  </span>
+                  <p className="text-sm font-serif font-bold text-white flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
+                    <span>{COMPARISON_FEATURES[selectedCompFeature].myev}</span>
+                  </p>
+                </div>
               </div>
 
               {/* Visual Metric Score Bar */}
-              <div className="space-y-1.5 pt-2">
+              <div className="space-y-1.5 pt-4">
                 <div className="flex justify-between text-xs text-white/60">
                   <span>Efficiency & Tech Rating</span>
                   <span className="text-[#00D084] font-bold">
@@ -1076,7 +1136,222 @@ function FranchisePage() {
       </section>
 
       {/* =========================================================================
-          8. DUAL OPPOSITE MOVING MARQUEE REVIEWS WITH VISUALS AND ONE-LINERS
+          BRAND COLLABORATIONS & PR MEDIA SHOWCASE (3D FLIP LOGOS)
+         ========================================================================= */}
+      <section className="brand-collaborations-section py-24 px-6 bg-[#030604] border-t border-white/10 font-serif relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
+              <Sparkles className="w-4 h-4" /> Strategic Ecosystem Partnerships
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 mb-4 tracking-tight">
+              OEM Collaborations & PR Media Coverage
+            </h2>
+            <p className="text-white/70 text-xs sm:text-sm font-serif font-light">
+              Click any brand logo to flip for quick partnership specs and explore relevant PR articles, group photos & joint initiatives on the right.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* Left: Premium 3x3 Bento Flip Card Logo Grid */}
+            <div className="lg:col-span-6 space-y-4 flex flex-col justify-between">
+              <div className="flex items-center justify-between px-1">
+                <span className="text-xs font-bold text-white/70 uppercase tracking-widest flex items-center gap-2">
+                  <Layers className="w-3.5 h-3.5 text-[#00D084]" />
+                  Partner Ecosystem (3x3 Grid)
+                </span>
+                <span className="text-[10px] text-[#00D084] font-mono bg-[#00D084]/10 border border-[#00D084]/30 px-2 py-0.5 rounded-full">
+                  Click logo card to flip 3D ↻
+                </span>
+              </div>
+
+              {/* 3x3 Grid of 9 Premium Brand Cards */}
+              <div className="grid grid-cols-3 gap-3 sm:gap-3.5">
+                {BRAND_COLLABORATIONS.map((brand) => {
+                  const isSelected = selectedBrandId === brand.id;
+                  const isFlipped = flippedBrandId === brand.id;
+                  return (
+                    <div
+                      key={brand.id}
+                      className="h-36 sm:h-40 cursor-pointer"
+                      style={{ perspective: 1000 }}
+                    >
+                      <motion.div
+                        animate={{ rotateY: isFlipped ? 180 : 0 }}
+                        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                        style={{ transformStyle: "preserve-3d" }}
+                        onClick={() => {
+                          setSelectedBrandId(brand.id);
+                          setFlippedBrandId(isFlipped ? null : brand.id);
+                        }}
+                        className={`relative w-full h-full rounded-2xl ${
+                          isSelected
+                            ? "border-2 border-[#00D084] shadow-[0_0_25px_rgba(0,208,132,0.35)] bg-gradient-to-b from-[#07160d] to-[#040906]"
+                            : "border border-white/10 hover:border-white/30 bg-[#050907] hover:bg-white/[0.04]"
+                        }`}
+                      >
+                        {/* Front Side: Logo, Name & Category */}
+                        <div
+                          style={{ backfaceVisibility: "hidden" }}
+                          className="absolute inset-0 p-2.5 sm:p-3 flex flex-col items-center justify-between rounded-2xl"
+                        >
+                          <div className="w-full flex items-center justify-between">
+                            <span className="text-[8px] sm:text-[9px] font-mono text-white/40 uppercase tracking-tight truncate">
+                              {brand.category}
+                            </span>
+                            {isSelected && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+                            )}
+                          </div>
+
+                          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black/60 border border-white/10 p-1.5 flex items-center justify-center transition-transform hover:scale-105 shadow-inner">
+                            <img
+                              src={brand.logo}
+                              alt={brand.name}
+                              className="w-full h-full object-contain rounded-lg"
+                            />
+                          </div>
+
+                          <div className="text-center w-full">
+                            <span className="text-[11px] sm:text-xs font-bold text-white block truncate hover:text-[#00D084] transition-colors leading-tight">
+                              {brand.name}
+                            </span>
+                            <span className="text-[8px] text-[#00D084] block font-mono">
+                              Inspect ↻
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Back Side: Partnership Specs */}
+                        <div
+                          style={{
+                            backfaceVisibility: "hidden",
+                            transform: "rotateY(180deg)",
+                          }}
+                          className="absolute inset-0 p-3 bg-[#08130c] border border-[#00D084]/50 rounded-2xl flex flex-col justify-between text-left"
+                        >
+                          <div>
+                            <span className="text-[9px] sm:text-[10px] font-bold text-[#00D084] uppercase tracking-wider block mb-1 border-b border-[#00D084]/20 pb-0.5 truncate">
+                              {brand.name} Specs
+                            </span>
+                            <div className="space-y-1 pt-1">
+                              {brand.flipStats.map((st, i) => (
+                                <div key={i} className="flex justify-between items-center text-[8px] sm:text-[9px]">
+                                  <span className="text-white/60 truncate">{st.label}:</span>
+                                  <span className="text-white font-bold shrink-0">{st.value}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <button
+                            type="button"
+                            className="w-full bg-[#00D084] text-black text-[9px] font-extrabold py-1 rounded transition-colors text-center shadow-md"
+                          >
+                            Selected →
+                          </button>
+                        </div>
+                      </motion.div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right: Dynamic Selected Brand Media & PR Showcase Panel */}
+            <div className="lg:col-span-6 bg-[#050a07] border border-white/15 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl flex flex-col justify-between">
+              {(() => {
+                const activeBrand =
+                  BRAND_COLLABORATIONS.find((b) => b.id === selectedBrandId) ||
+                  BRAND_COLLABORATIONS[0];
+                return (
+                  <div className="space-y-6">
+                    {/* Header Banner */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 rounded-2xl bg-black/60 border border-[#00D084]/40 p-2 shrink-0">
+                          <img
+                            src={activeBrand.logo}
+                            alt={activeBrand.name}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-xl font-serif font-bold text-white">
+                              {activeBrand.name}
+                            </h3>
+                            <span className="text-[10px] font-mono text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 px-2 py-0.5 rounded-full uppercase">
+                              {activeBrand.category}
+                            </span>
+                          </div>
+                          <p className="text-xs text-white/60 font-light mt-1">
+                            {activeBrand.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* PR Articles & Group Photos Grid */}
+                    <div className="space-y-4">
+                      <h4 className="text-xs font-bold text-white/70 uppercase tracking-widest flex items-center gap-2">
+                        <ExternalLink className="w-3.5 h-3.5 text-[#00D084]" />
+                        Collaborations, MoU Photos & PR Articles
+                      </h4>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {activeBrand.mediaShowcase.map((item) => (
+                          <div
+                            key={item.id}
+                            className="bg-[#080e0a] border border-white/10 hover:border-[#00D084]/50 rounded-2xl overflow-hidden group transition-all duration-300 flex flex-col justify-between shadow-md"
+                          >
+                            <div>
+                              <div className="relative h-36 w-full overflow-hidden">
+                                <img
+                                  src={item.img}
+                                  alt={item.title}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
+                                <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-md border border-white/10 text-[9px] font-mono text-[#00D084] px-2 py-0.5 rounded">
+                                  {item.tag}
+                                </div>
+                                <div className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-md text-[9px] font-mono text-white/60 px-2 py-0.5 rounded">
+                                  {item.date}
+                                </div>
+                              </div>
+
+                              <div className="p-4">
+                                <h5 className="text-xs font-serif font-bold text-white group-hover:text-[#00D084] transition-colors leading-snug line-clamp-2">
+                                  {item.title}
+                                </h5>
+                              </div>
+                            </div>
+
+                            <div className="p-4 pt-0">
+                              <a
+                                href={item.prUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#00D084] hover:underline"
+                              >
+                                <span>Read PR & Media Article</span>
+                                <ArrowRight className="w-3 h-3" />
+                              </a>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          8. DUAL OPPOSITE MOVING MARQUEE REVIEWS & VIDEO INTERVIEWS
          ========================================================================= */}
       <section className="testimonials-section py-24 bg-[#020403] font-serif overflow-hidden relative">
         <div className="testimonials-header-reveal max-w-7xl mx-auto px-6 mb-12 text-center">
@@ -1087,17 +1362,17 @@ function FranchisePage() {
             What Our Partners Say
           </h2>
           <p className="text-white/60 text-xs sm:text-sm font-serif font-light mt-2">
-            Real stories from EV workshop partners across India • Hover on any card to pause scrolling
+            One line real partner reviews below & video interviews featuring live operational workshops
           </p>
         </div>
 
         {/* Dual Marquee Container (Hover to Pause) */}
-        <div className="marquee-container space-y-6 relative">
+        <div className="marquee-container space-y-10 relative">
           {/* Gradient Blur Edges Overlay */}
           <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[#020403] to-transparent z-10 pointer-events-none" />
           <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-[#020403] to-transparent z-10 pointer-events-none" />
 
-          {/* Row 1: Moving LEFT */}
+          {/* Row 1: One-Liner Partner Reviews Marquee */}
           <div className="flex overflow-hidden">
             <div className="animate-marquee-left flex gap-6">
               {[...PARTNER_TESTIMONIALS_ROW1, ...PARTNER_TESTIMONIALS_ROW1].map(
@@ -1158,67 +1433,283 @@ function FranchisePage() {
             </div>
           </div>
 
-          {/* Row 2: Moving RIGHT (Opposite Direction) */}
-          <div className="flex overflow-hidden">
-            <div className="animate-marquee-right flex gap-6">
-              {[...PARTNER_TESTIMONIALS_ROW2, ...PARTNER_TESTIMONIALS_ROW2].map(
-                (partner, idx) => (
-                  <div
-                    key={`row2-${partner.id}-${idx}`}
-                    className="w-[320px] sm:w-[360px] shrink-0 bg-[#050907] border border-white/10 hover:border-[#00D084] rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-xl group hover:scale-[1.03] cursor-pointer"
-                  >
-                    <div className="space-y-3">
-                      {/* Top Header: Avatar + Author + City Badge */}
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2.5">
-                          <div
-                            className={`w-9 h-9 rounded-full bg-gradient-to-tr ${partner.avatarBg} border border-white/20 flex items-center justify-center text-white font-serif font-black text-xs shadow-sm`}
-                          >
-                            {partner.author.charAt(0)}
-                          </div>
-                          <div>
-                            <h4 className="text-xs font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
-                              {partner.author}
-                            </h4>
-                            <p className="text-[10px] text-white/50 font-serif">
-                              {partner.role} •{" "}
-                              <span className="text-[#00D084] font-semibold">{partner.city}</span>
-                            </p>
-                          </div>
-                        </div>
+          {/* Row 2: Partner Video Interviews Cards (Minimal & Premium Cinema Cards) */}
+          <div className="max-w-7xl mx-auto px-6 pt-6">
+            <div className="flex items-center justify-between mb-8">
+              <span className="text-xs font-serif font-bold text-white/80 uppercase tracking-widest flex items-center gap-2">
+                <Play className="w-4 h-4 text-[#00D084]" /> Video Interviews & Case Studies
+              </span>
+              <span className="text-[11px] text-[#00D084] font-mono bg-[#00D084]/10 border border-[#00D084]/30 px-3 py-1 rounded-full">
+                Tap card to play interview ▶
+              </span>
+            </div>
 
-                        {/* Rating Stars */}
-                        <div className="flex items-center gap-0.5 text-[#00D084]">
-                          {[...Array(partner.rating)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-[#00D084]" />
-                          ))}
-                        </div>
-                      </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+              {PARTNER_VIDEO_INTERVIEWS.map((vid) => (
+                <div
+                  key={vid.id}
+                  onClick={() => setActiveVideo(vid)}
+                  className="group relative h-64 sm:h-72 rounded-3xl border border-white/10 hover:border-[#00D084] bg-[#050907] overflow-hidden cursor-pointer transition-all duration-500 shadow-2xl hover:shadow-[0_0_35px_rgba(0,208,132,0.3)] hover:-translate-y-1.5 flex flex-col justify-between"
+                >
+                  {/* High Resolution Poster Image */}
+                  <img
+                    src={vid.thumbnail}
+                    alt={vid.videoTitle}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-75"
+                  />
 
-                      {/* One-Liner Green Headline */}
-                      <h5 className="text-xs sm:text-sm font-serif font-extrabold text-[#00D084] leading-snug">
-                        "{partner.headline}"
-                      </h5>
+                  {/* Gradient Scrim Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#040806] via-[#040806]/40 to-black/30" />
 
-                      {/* Quote Body */}
-                      <p className="text-[11px] text-white/70 font-serif font-light leading-relaxed line-clamp-3">
-                        {partner.quote}
-                      </p>
+                  {/* Top Glassmorphism Badges */}
+                  <div className="relative z-10 p-4 flex items-center justify-between">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+                      <span className="text-[10px] font-mono font-bold text-white uppercase tracking-wider">
+                        {vid.city} • {vid.model}
+                      </span>
                     </div>
 
-                    {/* Bottom Stat Pill */}
-                    <div className="pt-3 mt-3 border-t border-white/10 flex justify-between items-center text-[10px] font-serif">
-                      <span className="text-white/40 font-semibold">Verified Partner</span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] font-bold">
-                        {partner.stats}
+                    <span className="text-[10px] font-mono font-bold text-white/80 bg-black/60 border border-white/15 px-2.5 py-1 rounded-full backdrop-blur-md">
+                      {vid.duration}
+                    </span>
+                  </div>
+
+                  {/* Center Glowing Play Button */}
+                  <div className="relative z-10 flex items-center justify-center my-auto">
+                    <div className="w-14 h-14 rounded-full bg-[#00D084] text-black flex items-center justify-center shadow-[0_0_30px_#00D084] group-hover:scale-115 transition-transform duration-300 border-2 border-white/40">
+                      <Play className="w-6 h-6 fill-black ml-1" />
+                    </div>
+                  </div>
+
+                  {/* Bottom Minimal Info Overlay */}
+                  <div className="relative z-10 p-5 pt-0 space-y-2">
+                    <h4 className="text-sm sm:text-base font-serif font-bold text-white group-hover:text-[#00D084] transition-colors leading-snug line-clamp-1">
+                      {vid.videoTitle}
+                    </h4>
+
+                    <div className="flex items-center justify-between pt-1 border-t border-white/10 text-xs">
+                      <span className="text-white/70 font-medium truncate">
+                        {vid.partnerName}
+                      </span>
+                      <span className="text-[10px] font-extrabold text-[#00D084] bg-[#00D084]/20 border border-[#00D084]/40 px-2.5 py-0.5 rounded-full shrink-0">
+                        {vid.statBadge}
                       </span>
                     </div>
                   </div>
-                )
-              )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
+      </section>
+
+      {/* =========================================================================
+          DEVELOPED EV WORKSHOP CENTERS GALLERY SECTION (MOVING & PREMIUM BENTO)
+         ========================================================================= */}
+      <section className="developed-centers-section py-24 bg-[#020403] border-t border-white/10 font-serif relative overflow-hidden">
+        {/* Glow Effects */}
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#00D084]/10 rounded-full blur-[140px] pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center gap-1.5">
+                <Building2 className="w-4 h-4" /> Operational Workshop Footprint
+              </span>
+              <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">
+                Developed EV Service Centers Gallery
+              </h2>
+              <p className="text-white/60 text-xs sm:text-sm font-serif font-light mt-2 max-w-2xl">
+                Explore operational hubs and workshop centers developed under the MY EV SERVICE franchise partner network across India. Hover over any moving card to inspect live stats.
+              </p>
+            </div>
+
+            {/* Category Filter Tabs */}
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              {[
+                { id: "all", label: "All Outlets (Moving Marquee)" },
+                { id: "hub", label: "Master Hubs" },
+                { id: "centre", label: "Standard Centres" },
+                { id: "garage", label: "Express Garages" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedCenterType(tab.id as any)}
+                  className={`px-4 py-2 rounded-full text-xs font-serif font-bold transition-all cursor-pointer border ${
+                    selectedCenterType === tab.id
+                      ? "bg-[#00D084] text-[#020403] border-[#00D084] scale-105 shadow-[0_0_20px_rgba(0,208,132,0.4)]"
+                      : "bg-[#050907] text-white/70 border-white/10 hover:border-white/30 hover:text-white"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Display Mode: Moving Infinite Marquee when 'all' is selected, or Filtered Grid when tab filtered */}
+        {selectedCenterType === "all" ? (
+          <div className="marquee-container space-y-6 relative py-4">
+            {/* Gradient Blur Edges Overlay */}
+            <div className="absolute top-0 bottom-0 left-0 w-28 bg-gradient-to-r from-[#020403] to-transparent z-20 pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-28 bg-gradient-to-l from-[#020403] to-transparent z-20 pointer-events-none" />
+
+            {/* Moving Continuous Left Marquee */}
+            <div className="flex overflow-hidden group">
+              <div className="animate-marquee-left flex gap-6 sm:gap-8 group-hover:[animation-play-state:paused] py-2">
+                {[...DEVELOPED_CENTERS_GALLERY, ...DEVELOPED_CENTERS_GALLERY].map((center, idx) => (
+                  <div
+                    key={`moving-${center.id}-${idx}`}
+                    className="w-[340px] sm:w-[380px] shrink-0 bg-gradient-to-b from-[#07120a] to-[#040805] border border-white/12 hover:border-[#00D084] rounded-[28px] overflow-hidden flex flex-col justify-between transition-all duration-500 shadow-2xl hover:shadow-[0_0_35px_rgba(0,208,132,0.3)] hover:-translate-y-2 cursor-pointer group/card"
+                  >
+                    <div>
+                      {/* Image Canvas with Live Telemetry Pulse Overlay */}
+                      <div className="relative h-56 w-full overflow-hidden">
+                        <img
+                          src={center.image}
+                          alt={center.title}
+                          className="w-full h-full object-cover group-hover/card:scale-108 transition-transform duration-700 opacity-90"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#040805] via-transparent to-black/40" />
+
+                        {/* Top Badges */}
+                        <div className="absolute top-3 left-3 flex items-center gap-2">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/75 border border-[#00D084]/40 backdrop-blur-md text-[10px] font-bold text-[#00D084] uppercase tracking-wider">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+                            {center.typeLabel}
+                          </span>
+                        </div>
+
+                        <div className="absolute top-3 right-3 flex items-center gap-1.5 text-[10px] text-white font-bold bg-black/70 px-3 py-1 rounded-full border border-white/15 backdrop-blur-md">
+                          <MapPin className="w-3 h-3 text-[#00D084]" />
+                          <span>{center.city}</span>
+                        </div>
+
+                        {/* Bottom Volume Metric */}
+                        <div className="absolute bottom-3 left-3 bg-black/80 border border-[#00D084]/30 px-3 py-1 rounded-full backdrop-blur-md text-[10px] font-mono text-[#00D084] font-extrabold">
+                          ⚡ {center.monthlyVehicles}
+                        </div>
+                      </div>
+
+                      {/* Card Content Body */}
+                      <div className="p-6 space-y-4">
+                        <h3 className="text-lg font-serif font-bold text-white group-hover/card:text-[#00D084] transition-colors leading-tight">
+                          {center.title}
+                        </h3>
+
+                        {/* 2-Column HUD Metrics */}
+                        <div className="grid grid-cols-2 gap-2 text-xs bg-black/50 border border-white/10 rounded-2xl p-3">
+                          <div>
+                            <span className="text-white/40 block text-[9px] uppercase tracking-wider">Footprint</span>
+                            <span className="text-white font-bold">{center.sqft}</span>
+                          </div>
+                          <div>
+                            <span className="text-white/40 block text-[9px] uppercase tracking-wider">Service Bays</span>
+                            <span className="text-[#00D084] font-bold">{center.bays}</span>
+                          </div>
+                        </div>
+
+                        {/* Highlights List */}
+                        <div className="space-y-1.5 text-xs">
+                          <span className="text-white/40 text-[9px] uppercase tracking-wider block">
+                            Workshop Equipment & Setup:
+                          </span>
+                          {center.highlights.map((h, i) => (
+                            <div key={i} className="flex items-center gap-2 text-white/80">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0" />
+                              <span className="truncate">{h}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-6 pt-0 border-t border-white/10 mt-2 flex items-center justify-between text-xs text-white/50">
+                      <span>Operational Since {center.openedYear}</span>
+                      <span className="text-[#00D084] font-bold group-hover/card:underline">Inspect Center →</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Filtered Grid View */
+          <div className="max-w-7xl mx-auto px-6">
+            <motion.div
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {DEVELOPED_CENTERS_GALLERY.filter((c) => c.type === selectedCenterType).map((center) => (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  key={center.id}
+                  className="bg-gradient-to-b from-[#07120a] to-[#040805] border border-white/12 hover:border-[#00D084] rounded-[28px] overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-[0_0_35px_rgba(0,208,132,0.3)] hover:-translate-y-2 group cursor-pointer"
+                >
+                  <div>
+                    <div className="relative h-56 w-full overflow-hidden">
+                      <img
+                        src={center.image}
+                        alt={center.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#040805] via-transparent to-black/40" />
+
+                      <div className="absolute top-3 left-3 bg-black/75 backdrop-blur-md border border-[#00D084]/40 text-[10px] font-bold text-[#00D084] px-3 py-1 rounded-full uppercase tracking-wider">
+                        {center.typeLabel}
+                      </div>
+
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-xs text-white font-bold bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md">
+                        <MapPin className="w-3.5 h-3.5 text-[#00D084]" />
+                        <span>{center.city}, {center.state}</span>
+                      </div>
+                    </div>
+
+                    <div className="p-6 space-y-4">
+                      <h3 className="text-lg font-serif font-bold text-white group-hover:text-[#00D084] transition-colors leading-tight">
+                        {center.title}
+                      </h3>
+
+                      <div className="grid grid-cols-2 gap-2 text-xs bg-black/40 border border-white/10 rounded-xl p-3">
+                        <div>
+                          <span className="text-white/40 block text-[10px] uppercase">Footprint</span>
+                          <span className="text-white font-bold">{center.sqft}</span>
+                        </div>
+                        <div>
+                          <span className="text-white/40 block text-[10px] uppercase">Bays</span>
+                          <span className="text-[#00D084] font-bold">{center.bays}</span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5 text-xs">
+                        <span className="text-white/40 text-[10px] uppercase tracking-wider block">
+                          Workshop Highlights:
+                        </span>
+                        {center.highlights.map((h, i) => (
+                          <div key={i} className="flex items-center gap-2 text-white/80">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0" />
+                            <span>{h}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6 pt-0 border-t border-white/5 mt-4 flex items-center justify-between text-xs text-white/50">
+                    <span>Est. {center.openedYear}</span>
+                    <span className="text-[#00D084] font-bold">{center.monthlyVehicles}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        )}
       </section>
 
       {/* =========================================================================
@@ -1306,6 +1797,65 @@ function FranchisePage() {
         </div>
       {/* Close Main Relative Container */}
       </div>
+
+      {/* Partner Video Interview Playback Modal */}
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            onClick={() => setActiveVideo(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#080f0b] border border-[#00D084]/40 rounded-3xl p-6 max-w-3xl w-full space-y-4 shadow-2xl relative font-serif"
+            >
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <div>
+                  <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-widest block">
+                    Partner Case Study Video • {activeVideo.duration}
+                  </span>
+                  <h3 className="text-lg font-serif font-bold text-white leading-tight mt-1">
+                    {activeVideo.videoTitle}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setActiveVideo(null)}
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Video Player Container */}
+              <div className="relative rounded-2xl overflow-hidden bg-black border border-white/10 aspect-video flex items-center justify-center">
+                <video
+                  src={activeVideo.videoUrl}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Video Meta Info */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 text-xs">
+                <div>
+                  <span className="text-white font-bold block">{activeVideo.partnerName} ({activeVideo.role})</span>
+                  <span className="text-white/50">{activeVideo.city} • {activeVideo.model}</span>
+                </div>
+                <span className="text-[#00D084] font-extrabold bg-[#00D084]/15 border border-[#00D084]/30 px-3 py-1 rounded-full text-center">
+                  {activeVideo.statBadge}
+                </span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Footer */}
       <Footer />

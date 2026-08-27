@@ -59,7 +59,7 @@ function LoginPage() {
         {/* Top Logo */}
         <div className="relative z-10 flex items-center gap-3">
           <img
-            src="/logo-myevservice.jpg"
+            src="/logo.jpeg"
             alt="My EV Service Logo"
             className="h-10 w-auto rounded-xl object-contain border border-white/10"
           />

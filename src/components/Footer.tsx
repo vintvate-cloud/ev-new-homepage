@@ -80,13 +80,13 @@ export function Footer() {
           
           {/* Col 1: Brand Info & Address Details */}
           <StaggerItem className="md:col-span-2 lg:col-span-4 space-y-5">
-            <Link to="/" className="inline-flex items-center gap-3 group">
+            <Link to="/" className="inline-flex items-center gap-3 group overflow-hidden rounded-xl">
               <img
-                src="/logo-myevservice.jpg"
+                src="/logo.jpeg"
                 alt="My EV Service Logo"
-                className="h-10 w-auto rounded-lg object-contain border border-white/10"
+                className="h-14 sm:h-16 w-auto rounded-xl object-cover scale-125 border border-white/20 shadow-lg transition-transform duration-300 group-hover:scale-135"
               />
-              <span className="text-lg font-black tracking-[0.15em] text-white uppercase">
+              <span className="text-lg sm:text-xl font-black tracking-[0.15em] text-white uppercase">
                 MY EV SERVICE
               </span>
             </Link>

@@ -563,3 +563,441 @@ export const CATEGORIZED_FAQS: CategorizedFaq[] = [
 // Backwards compatibility alias
 export const FRANCHISE_FAQS = CATEGORIZED_FAQS.map((f) => ({ q: f.q, a: f.a }));
 
+// Brand Collaborations & PR Showcase Data
+export interface BrandCollaboration {
+  id: string;
+  name: string;
+  logo: string;
+  category: string;
+  flipStats: { label: string; value: string }[];
+  description: string;
+  mediaShowcase: {
+    id: string;
+    title: string;
+    tag: string;
+    img: string;
+    prUrl: string;
+    date: string;
+  }[];
+}
+
+export const BRAND_COLLABORATIONS: BrandCollaboration[] = [
+  {
+    id: "ola",
+    name: "Ola Electric",
+    logo: "/brands/ola.jpeg",
+    category: "OEM Partner",
+    flipStats: [
+      { label: "Authorized Service", value: "3-Star Level" },
+      { label: "Serviced Intake", value: "14,500+ EVs" },
+      { label: "Network Cities", value: "28 Cities" },
+    ],
+    description: "Official diagnostic and quick service partner for Ola S1 Pro, S1 Air, and S1 X battery & motor assemblies.",
+    mediaShowcase: [
+      {
+        id: "ola-pr-1",
+        title: "MY EV SERVICE & Ola Electric MoU Signing Ceremony in Pune Hub",
+        tag: "MoU & Partnership",
+        img: "/ev-services-hero.jpg",
+        prUrl: "/news",
+        date: "Jan 2026",
+      },
+      {
+        id: "ola-pr-2",
+        title: "National Service Fleet Alignment & Diagnostic Automation Launch",
+        tag: "Press Release",
+        img: "/ev-franchise-hero.jpg",
+        prUrl: "/media",
+        date: "Nov 2025",
+      },
+    ],
+  },
+  {
+    id: "ather",
+    name: "Ather Energy",
+    logo: "/brands/ather.jpeg",
+    category: "Powertrain Partner",
+    flipStats: [
+      { label: "Diagnostic Certification", value: "Level 4" },
+      { label: "Grid Fast Chargers", value: "40+ Points" },
+      { label: "Battery Balancers", value: "100% Online" },
+    ],
+    description: "Multi-point diagnostic support, battery health balancing, and Ather Grid charging point integration.",
+    mediaShowcase: [
+      {
+        id: "ather-pr-1",
+        title: "Ather Energy Executive Delegation Visits MY EV SERVICE Master Hub",
+        tag: "Group Photo & Review",
+        img: "/find-services-hero.jpg",
+        prUrl: "/media",
+        date: "Feb 2026",
+      },
+      {
+        id: "ather-pr-2",
+        title: "Joint Technician Certification & High-Voltage Battery Workshop",
+        tag: "Collaborative Event",
+        img: "/ev-workshop-careers.png",
+        prUrl: "/events",
+        date: "Dec 2025",
+      },
+    ],
+  },
+  {
+    id: "tvs",
+    name: "TVS EV",
+    logo: "/brands/tvs.webp",
+    category: "2W EV Fleet",
+    flipStats: [
+      { label: "iQube Units", value: "9,800+ Serviced" },
+      { label: "Parts Fulfillment", value: "24-Hour SLA" },
+      { label: "SOP Standard", value: "Autobot Verified" },
+    ],
+    description: "Engineered periodic service, braking overhaul, and controller flashing for TVS iQube series.",
+    mediaShowcase: [
+      {
+        id: "tvs-pr-1",
+        title: "TVS EV Workshop Expansion Across Maharashtra Tier-2 Clusters",
+        tag: "Network Expansion",
+        img: "/franchise-banner-building.png",
+        prUrl: "/news",
+        date: "Jan 2026",
+      },
+      {
+        id: "tvs-pr-2",
+        title: "TVS iQube Rapid Diagnostic Protocols Handover to Autobot Technicians",
+        tag: "Technical MOU",
+        img: "/webinar-hero.png",
+        prUrl: "/media",
+        date: "Oct 2025",
+      },
+    ],
+  },
+  {
+    id: "hero-electric",
+    name: "Hero Electric",
+    logo: "/brands/hero-electric.jpeg",
+    category: "Legacy 2W EV",
+    flipStats: [
+      { label: "Optima & Nyx Units", value: "22,000+" },
+      { label: "Hub Outlets", value: "35 Outlets" },
+      { label: "Battery Swaps", value: "Daily Sync" },
+    ],
+    description: "Comprehensive spare parts distribution and legacy battery restoration for Hero Electric models.",
+    mediaShowcase: [
+      {
+        id: "hero-pr-1",
+        title: "MY EV SERVICE Awarded Best Multi-Brand EV Aftermarket Partner",
+        tag: "Award & Recognition",
+        img: "/blog-hero-bg.png",
+        prUrl: "/news",
+        date: "Dec 2025",
+      },
+      {
+        id: "hero-pr-2",
+        title: "Hero Electric Joint Fleet Maintenance Program Announcement",
+        tag: "Press Release",
+        img: "/ev-franchise-hero.jpg",
+        prUrl: "/media",
+        date: "Aug 2025",
+      },
+    ],
+  },
+  {
+    id: "blusmart",
+    name: "BluSmart Mobility",
+    logo: "/brands/blu_smart_mobility_logo.jpeg",
+    category: "Commercial Fleet",
+    flipStats: [
+      { label: "Fleet AMC", value: "1,200+ EVs" },
+      { label: "Uptime SLA", value: "99.4%" },
+      { label: "Turnaround Time", value: "< 3.5 Hours" },
+    ],
+    description: "Dedicated rapid fleet servicing corridor for high-utilization commercial rideshare electric vehicles.",
+    mediaShowcase: [
+      {
+        id: "blu-pr-1",
+        title: "BluSmart Commercial EV Fleet Service Contract Exchange in Delhi NCR",
+        tag: "Fleet AMC Contract",
+        img: "/ev-services-hero.jpg",
+        prUrl: "/news",
+        date: "Feb 2026",
+      },
+      {
+        id: "blu-pr-2",
+        title: "Express 24/7 Service Bay Launch for Ride-Hailing EV Fleets",
+        tag: "Infrastructure Launch",
+        img: "/find-services-hero.jpg",
+        prUrl: "/media",
+        date: "Jan 2026",
+      },
+    ],
+  },
+  {
+    id: "mahindra",
+    name: "Mahindra EV",
+    logo: "/brands/mahindra.jpeg",
+    category: "3W Heavy Cargo",
+    flipStats: [
+      { label: "Treor & Zor Cargo", value: "3W Specialized" },
+      { label: "Hydraulic Lifts", value: "Heavy-Duty 2T" },
+      { label: "Cell Balancing", value: "60-Min Fast Track" },
+    ],
+    description: "3-Wheeler electric passenger and heavy cargo chassis diagnostics, differential repair, and battery balancing.",
+    mediaShowcase: [
+      {
+        id: "mah-pr-1",
+        title: "3W Cargo EV Servicing Initiative Expansion Announced",
+        tag: "National PR",
+        img: "/franchise-bg.png",
+        prUrl: "/news",
+        date: "Dec 2025",
+      },
+      {
+        id: "mah-pr-2",
+        title: "Mahindra Electric Cargo Fleet Engineers Joint Training Meetup",
+        tag: "Group Photo",
+        img: "/ev-workshop-careers.png",
+        prUrl: "/media",
+        date: "Nov 2025",
+      },
+    ],
+  },
+  {
+    id: "bajaj",
+    name: "Bajaj Chetak",
+    logo: "/brands/bajaj.png",
+    category: "Premium 2W EV",
+    flipStats: [
+      { label: "Chetak Premium", value: "Metal Body SOP" },
+      { label: "BMS Diagnostics", value: "CAN Bus Direct" },
+      { label: "Intake Units", value: "8,200+ Serviced" },
+    ],
+    description: "Full service diagnostic support for Bajaj Chetak EV metal-chassis, battery management system & CAN bus analysis.",
+    mediaShowcase: [
+      {
+        id: "bajaj-pr-1",
+        title: "Bajaj Chetak Metal Chassis Specialized EV Repair Bay Launch",
+        tag: "Service Launch",
+        img: "/find-services-hero.jpg",
+        prUrl: "/news",
+        date: "Jan 2026",
+      },
+      {
+        id: "bajaj-pr-2",
+        title: "MY EV SERVICE Partner Engineers Certified for Chetak Premium Series",
+        tag: "Certification Meet",
+        img: "/ev-workshop-careers.png",
+        prUrl: "/media",
+        date: "Dec 2025",
+      },
+    ],
+  },
+  {
+    id: "revolt",
+    name: "Revolt Motors",
+    logo: "/brands/revolt.webp",
+    category: "Electric Motorcycle",
+    flipStats: [
+      { label: "RV400 & RV300", value: "Motorcycle Hub" },
+      { label: "Belt Drive Tuning", value: "100% Precision" },
+      { label: "Swap Battery", value: "Quick Check" },
+    ],
+    description: "High-performance electric motorcycle drivetrain tuning, belt tension calibration, and battery pack diagnostics.",
+    mediaShowcase: [
+      {
+        id: "revolt-pr-1",
+        title: "Revolt Motors Partner Alignment for Electric Bike Servicing Hubs",
+        tag: "MoU Signing",
+        img: "/ev-services-hero.jpg",
+        prUrl: "/news",
+        date: "Feb 2026",
+      },
+      {
+        id: "revolt-pr-2",
+        title: "Performance EV Motorcycle Tuning & High-Voltage Workshop Seminar",
+        tag: "Press Release",
+        img: "/ev-franchise-hero.jpg",
+        prUrl: "/media",
+        date: "Nov 2025",
+      },
+    ],
+  },
+  {
+    id: "ampere",
+    name: "Ampere EV",
+    logo: "/brands/ampere.jpg",
+    category: "Urban Commuter",
+    flipStats: [
+      { label: "Primus & Magnus", value: "Urban Lineup" },
+      { label: "Doorstep RSA", value: "Active 24/7" },
+      { label: "Service Outlets", value: "40+ Outlets" },
+    ],
+    description: "Urban EV commuter quick maintenance, controller tuning, and doorstep roadside emergency support.",
+    mediaShowcase: [
+      {
+        id: "ampere-pr-1",
+        title: "Ampere Electric Scooter Quick Maintenance Partnership Announcement",
+        tag: "National Media",
+        img: "/franchise-banner-building.png",
+        prUrl: "/news",
+        date: "Jan 2026",
+      },
+      {
+        id: "ampere-pr-2",
+        title: "Multi-City Doorstep Service Dispatch Integration for Ampere Owners",
+        tag: "App Feature PR",
+        img: "/webinar-hero.png",
+        prUrl: "/media",
+        date: "Oct 2025",
+      },
+    ],
+  },
+];
+
+// Video Interviews Data for "What Partners Say"
+export interface PartnerVideoInterview {
+  id: string;
+  partnerName: string;
+  role: string;
+  city: string;
+  model: string;
+  videoTitle: string;
+  thumbnail: string;
+  videoUrl: string;
+  duration: string;
+  quoteOneLiner: string;
+  statBadge: string;
+}
+
+export const PARTNER_VIDEO_INTERVIEWS: PartnerVideoInterview[] = [
+  {
+    id: "video-pune",
+    partnerName: "Rajesh Kulkarni",
+    role: "Master Hub Owner",
+    city: "Pune Central",
+    model: "Master Hub (25L)",
+    videoTitle: "From Traditional Mechanic Shop to ₹18L/Month Automated EV Hub",
+    thumbnail: "/ev-services-hero.jpg",
+    videoUrl: "/lab-3d-centre.mp4",
+    duration: "3:45 mins",
+    quoteOneLiner: "Autobot OS automated our job cards completely — daily vehicle intake tripled within 60 days!",
+    statBadge: "₹18L/Mo Revenue",
+  },
+  {
+    id: "video-blore",
+    partnerName: "Anand R. Murthy",
+    role: "Franchise Partner",
+    city: "Bengaluru East",
+    model: "Centre Model (15L)",
+    videoTitle: "How I Scaled My EV Service Outlet with 100% Corporate Fleet Support",
+    thumbnail: "/ev-franchise-hero.jpg",
+    videoUrl: "/lab-3d-centre.mp4",
+    duration: "4:12 mins",
+    quoteOneLiner: "The Founding Partner support and OEM parts supply gave us an unbeatable edge in Whitefield.",
+    statBadge: "14-Month Payback",
+  },
+  {
+    id: "video-delhi",
+    partnerName: "Sanjay Sharma",
+    role: "Express Garage Owner",
+    city: "Delhi South",
+    model: "Garage Model (7.5L)",
+    videoTitle: "Setting Up 3-Bay EV Workshop in 45 Days with Autobot Academy",
+    thumbnail: "/find-services-hero.jpg",
+    videoUrl: "/lab-3d-centre.mp4",
+    duration: "2:58 mins",
+    quoteOneLiner: "Zero technical friction. Their 10-day hands-on academy trained my technicians to diagnose BMS errors effortlessly.",
+    statBadge: "35+ EVs Daily",
+  },
+];
+
+// Developed EV Service Centers Gallery Data
+export interface DevelopedCenter {
+  id: string;
+  title: string;
+  city: string;
+  state: string;
+  type: "hub" | "centre" | "garage";
+  typeLabel: string;
+  image: string;
+  sqft: string;
+  bays: string;
+  openedYear: string;
+  monthlyVehicles: string;
+  highlights: string[];
+}
+
+export const DEVELOPED_CENTERS_GALLERY: DevelopedCenter[] = [
+  {
+    id: "center-pune",
+    title: "Pune Master Regional EV Hub",
+    city: "Pune",
+    state: "Maharashtra",
+    type: "hub",
+    typeLabel: "Master Regional Hub",
+    image: "/franchise-banner-building.png",
+    sqft: "1,200 sq ft",
+    bays: "6 Heavy Bays",
+    openedYear: "2025",
+    monthlyVehicles: "480+ Vehicles",
+    highlights: ["Battery Balancing Lab", "3W Cargo Hydraulic Lift", "24/7 Mobile Van Unit"],
+  },
+  {
+    id: "center-blore",
+    title: "Bengaluru Tech Corridor Workshop",
+    city: "Bengaluru",
+    state: "Karnataka",
+    type: "centre",
+    typeLabel: "Standard Centre",
+    image: "/ev-workshop-careers.png",
+    sqft: "750 sq ft",
+    bays: "4 Active Bays",
+    openedYear: "2025",
+    monthlyVehicles: "320+ Vehicles",
+    highlights: ["Ather & Ola Fast Charge", "FOC Controller Flashing", "Customer Lounge"],
+  },
+  {
+    id: "center-delhi",
+    title: "Delhi NCR Commercial Fleet Hub",
+    city: "Delhi NCR",
+    state: "Delhi",
+    type: "hub",
+    typeLabel: "Master Regional Hub",
+    image: "/franchise-bg.png",
+    sqft: "1,400 sq ft",
+    bays: "8 Heavy Bays",
+    openedYear: "2026",
+    monthlyVehicles: "650+ Vehicles",
+    highlights: ["BluSmart AMC Dedicated Bay", "3W Heavy Cargo Overhaul", "Express Battery Swap"],
+  },
+  {
+    id: "center-hyd",
+    title: "Hyderabad Cyberabad EV Centre",
+    city: "Hyderabad",
+    state: "Telangana",
+    type: "centre",
+    typeLabel: "Standard Centre",
+    image: "/ev-services-hero.jpg",
+    sqft: "650 sq ft",
+    bays: "3 Active Bays",
+    openedYear: "2026",
+    monthlyVehicles: "280+ Vehicles",
+    highlights: ["Rapid Doorstep Service", "32-Point Battery Health Scan", "Zero-Downtime Spares"],
+  },
+  {
+    id: "center-jaipur",
+    title: "Jaipur Heritage Express Garage",
+    city: "Jaipur",
+    state: "Rajasthan",
+    type: "garage",
+    typeLabel: "Express Garage",
+    image: "/find-services-hero.jpg",
+    sqft: "400 sq ft",
+    bays: "2 Compact Bays",
+    openedYear: "2026",
+    monthlyVehicles: "190+ Vehicles",
+    highlights: ["2W EV Quick Repair", "Brake & Suspension Overhaul", "App Automated Billing"],
+  },
+];
+
+
