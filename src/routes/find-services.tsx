@@ -1,12 +1,15 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import Lenis from "lenis";
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { BookingModal } from "../components/BookingModal";
-import { getOnboardedCities, onboardNewCity, EVCity, findMatchingAvailableCity } from "../data/cities";
+import { CityPreBookingModal, DEFAULT_CITY_SLOTS, PreBookingSlot } from "../components/CityPreBookingModal";
+import { getOnboardedCities, onboardNewCity, EVCity, findMatchingAvailableCity, getCityServiceCenters, ServiceCenter } from "../data/cities";
+import { EV_BRANDS_POPULAR, EV_CATALOG, BOOKING_SERVICES_LIST, getBrandLogoUrl } from "../data/evCatalog";
 import {
   Search,
   MapPin,
@@ -15,11 +18,13 @@ import {
   ShieldCheck,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
   Star,
   Clock,
   BatteryCharging,
   ArrowRight,
   PhoneCall,
+  Phone,
   Navigation,
   Plus,
   X,
@@ -27,6 +32,9 @@ import {
   Activity,
   Layers,
   Sparkles,
+  CalendarCheck,
+  Building2,
+  ExternalLink,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -205,8 +213,136 @@ function FindServicesPage() {
   const [newCityName, setNewCityName] = useState("");
   const [newCityState, setNewCityState] = useState("");
   const [isDetectingLoc, setIsDetectingLoc] = useState(false);
+  const [searchPhone, setSearchPhone] = useState("");
+  const [activeSearchedCity, setActiveSearchedCity] = useState<EVCity | null>(null);
+  const [preBookingModalOpen, setPreBookingModalOpen] = useState(false);
+
+  // Inline selection flow states
+  const [inlineBookingOpen, setInlineBookingOpen] = useState(false);
+  const [inlineStep, setInlineStep] = useState<"brand" | "model" | "service">("brand");
+  const [inlineSelectedBrand, setInlineSelectedBrand] = useState("");
+  const [inlineSelectedModel, setInlineSelectedModel] = useState("");
+  const [inlineBrandSearch, setInlineBrandSearch] = useState("");
+  const [inlineBrandFilter, setInlineBrandFilter] = useState<"ALL" | "2W" | "3W">("ALL");
+
+  // Inline calculations
+  const filteredInlineBrands = useMemo(() => {
+    let brands = EV_BRANDS_POPULAR;
+    if (inlineBrandFilter !== "ALL") {
+      brands = brands.filter((b) => b.category === inlineBrandFilter);
+    }
+    if (inlineBrandSearch.trim()) {
+      const q = inlineBrandSearch.toLowerCase();
+      brands = brands.filter(
+        (b) => b.name.toLowerCase().includes(q) || b.displayName.toLowerCase().includes(q)
+      );
+    }
+    return brands;
+  }, [inlineBrandFilter, inlineBrandSearch]);
+
+  const inlineAvailableModels = useMemo(() => {
+    if (!inlineSelectedBrand) return [];
+    const getBrandKey = (brand: string) => {
+      const b = brand.toLowerCase();
+      if (b.includes("ola")) return "ola";
+      if (b.includes("ather")) return "ather";
+      if (b.includes("tvs")) return "tvs";
+      if (b.includes("bajaj") || b.includes("chetak")) return "bajaj";
+      if (b.includes("hero")) return "hero";
+      if (b.includes("revolt")) return "revolt";
+      if (b.includes("ampere")) return "ampere";
+      if (b.includes("simple")) return "simple";
+      if (b.includes("tork")) return "tork";
+      if (b.includes("okinawa")) return "okinawa";
+      if (b.includes("mahindra")) return "mahindra";
+      if (b.includes("piaggio") || b.includes("ape")) return "piaggio";
+      if (b.includes("kinetic")) return "kinetic";
+      return b;
+    };
+    const key = getBrandKey(inlineSelectedBrand);
+    const set = new Set(
+      EV_CATALOG.filter((m) => m.make.toLowerCase().includes(key)).map((m) => m.model)
+    );
+    const result = Array.from(set);
+    return result.length > 0
+      ? result
+      : ["Standard Edition EV", "Pro Edition EV", "Extended Range EV"];
+  }, [inlineSelectedBrand]);
+
+  const getModelDisplayInfo = (brand: string, modelName: string) => {
+    const getBrandKey = (b: string) => {
+      const val = b.toLowerCase();
+      if (val.includes("ola")) return "ola";
+      if (val.includes("ather")) return "ather";
+      if (val.includes("tvs")) return "tvs";
+      if (val.includes("bajaj") || val.includes("chetak")) return "bajaj";
+      if (val.includes("hero")) return "hero";
+      if (val.includes("revolt")) return "revolt";
+      if (val.includes("ampere")) return "ampere";
+      if (val.includes("simple")) return "simple";
+      if (val.includes("tork")) return "tork";
+      if (val.includes("okinawa")) return "okinawa";
+      if (val.includes("mahindra")) return "mahindra";
+      if (val.includes("piaggio") || val.includes("ape")) return "piaggio";
+      if (val.includes("kinetic")) return "kinetic";
+      return val;
+    };
+    const key = getBrandKey(brand);
+    const matched = EV_CATALOG.find(
+      (item) =>
+        item.make.toLowerCase().includes(key) &&
+        item.model.toLowerCase() === modelName.toLowerCase()
+    );
+    const imageUrl = matched?.modelImageUrl || matched?.logoUrl || getBrandLogoUrl(brand);
+    return {
+      modelName,
+      imageUrl,
+      battery: matched?.batteryKwh ? `${matched.batteryKwh} kWh` : undefined,
+    };
+  };
+
+  const mapBrandToSelectValue = (brandName: string) => {
+    const b = brandName.toLowerCase();
+    if (b.includes("ather")) return "Ather";
+    if (b.includes("ola")) return "Ola Electric";
+    if (b.includes("tvs")) return "TVS";
+    if (b.includes("bajaj")) return "Bajaj";
+    if (b.includes("mahindra")) return "Mahindra";
+    if (b.includes("piaggio")) return "Piaggio";
+    return "Ather";
+  };
 
   const navigate = useNavigate();
+
+  // Refs for local Lenis scroll inside inline form flow
+  const inlineScrollWrapperRef = useRef<HTMLDivElement>(null);
+  const inlineScrollContentRef = useRef<HTMLDivElement>(null);
+
+  // Initialize smooth local scroll with Lenis for the active inline form step content
+  useEffect(() => {
+    if (!inlineBookingOpen || !inlineScrollWrapperRef.current || !inlineScrollContentRef.current) return;
+
+    const localLenis = new Lenis({
+      wrapper: inlineScrollWrapperRef.current,
+      content: inlineScrollContentRef.current,
+      duration: 1.0,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: true,
+    });
+
+    let rafId: number;
+    function update(time: number) {
+      localLenis.raf(time);
+      rafId = requestAnimationFrame(update);
+    }
+    rafId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      localLenis.destroy();
+    };
+  }, [inlineBookingOpen, inlineStep]);
 
   // Refs for GSAP
   const heroTextRef = useRef<HTMLDivElement>(null);
@@ -420,11 +556,35 @@ function FindServicesPage() {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const queryCity = searchCity.trim() || "Pune";
+    
+    // 1. Validate City field
+    const queryCity = searchCity.trim();
+    if (!queryCity) {
+      toast.error("Please enter your City or Area!");
+      return;
+    }
+
+    // 2. Validate custom Brand & Model trigger field
+    if (!inlineSelectedBrand || !inlineSelectedModel) {
+      toast.error("Please select your EV Brand & Model!");
+      setInlineBookingOpen(true); // Open the selector so they can choose
+      setInlineStep("brand");
+      return;
+    }
+
+    // 3. Validate Phone Number field
+    if (!searchPhone || searchPhone.length !== 10) {
+      toast.error("Please enter a valid 10-digit mobile number!");
+      return;
+    }
+
     const matchedCity = findMatchingAvailableCity(queryCity);
     if (!matchedCity) { setUnservicedCityName(queryCity); setUnavailableModalOpen(true); return; }
     toast.success(`Locating certified EV centers in ${matchedCity.name}...`);
-    navigate({ to: "/city/$cityId", params: { cityId: matchedCity.id }, search: { service: selectedService, brand: selectedBrand, searchArea: queryCity } });
+    setActiveSearchedCity(matchedCity);
+    setTimeout(() => {
+      scrollToSection("cities");
+    }, 100);
   };
 
   const scrollToSection = (id: string) => {
@@ -526,6 +686,179 @@ function FindServicesPage() {
               >
                 <div className="bg-[#030c07]/95 border-2 border-[#00D084]/50 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] relative overflow-hidden space-y-5 text-left">
                   <div className="absolute top-0 right-0 w-40 h-40 bg-[#00D084]/20 rounded-full blur-3xl pointer-events-none" />
+                  
+                  <AnimatePresence>
+                    {inlineBookingOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 15 }}
+                        className="absolute inset-0 bg-[#030d07]/98 z-30 p-6 sm:p-7 flex flex-col justify-between"
+                      >
+                        {/* BRAND STEP */}
+                        {inlineStep === "brand" && (
+                          <div className="flex-1 flex flex-col min-h-0">
+                            {/* Minimal Top Bar with Title and Close Button */}
+                            <div className="flex items-center justify-between mb-4 shrink-0 text-left">
+                              <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-wider">Select EV Manufacturer</h4>
+                              <button
+                                type="button"
+                                onClick={() => setInlineBookingOpen(false)}
+                                className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            {/* Category Tabs Container */}
+                            <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 mb-4 shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => setInlineBrandFilter("ALL")}
+                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${
+                                  inlineBrandFilter === "ALL"
+                                    ? "bg-[#00D084] text-black shadow-md"
+                                    : "text-white/60 hover:text-white"
+                                }`}
+                              >
+                                All (2W & 3W)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setInlineBrandFilter("2W")}
+                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${
+                                  inlineBrandFilter === "2W"
+                                    ? "bg-[#00D084] text-black shadow-md"
+                                    : "text-white/60 hover:text-white"
+                                }`}
+                              >
+                                🛵 2-Wheelers
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setInlineBrandFilter("3W")}
+                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${
+                                  inlineBrandFilter === "3W"
+                                    ? "bg-[#00D084] text-black shadow-md"
+                                    : "text-white/60 hover:text-white"
+                                }`}
+                              >
+                                🛺 3-Wheelers
+                              </button>
+                            </div>
+
+                            {/* Search input */}
+                            <div className="relative mb-4 shrink-0">
+                              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#00D084]" />
+                              <input
+                                type="text"
+                                value={inlineBrandSearch}
+                                onChange={(e) => setInlineBrandSearch(e.target.value)}
+                                placeholder="Search brand (Ola, Ather, TVS, Bajaj, Mahindra...)"
+                                className="w-full bg-[#020503] border border-white/15 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00D084] transition-all"
+                              />
+                            </div>
+
+                            {/* Manufacturers 3-Column Grid */}
+                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                              <div ref={inlineScrollContentRef} className="grid grid-cols-3 gap-2.5">
+                                {filteredInlineBrands.map((b) => (
+                                  <button
+                                    key={b.name}
+                                    type="button"
+                                    onClick={() => {
+                                      setInlineSelectedBrand(b.name);
+                                      setInlineStep("model");
+                                    }}
+                                    className="p-3 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center gap-2.5 cursor-pointer group"
+                                  >
+                                    <div className="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center p-1.5 bg-black/40 overflow-hidden shrink-0 group-hover:scale-105 transition-transform">
+                                      {b.logoUrl ? (
+                                        <img src={b.logoUrl} alt={b.displayName} className="w-full h-full object-contain" />
+                                      ) : (
+                                        <span className="text-lg">{b.icon}</span>
+                                      )}
+                                    </div>
+                                    <span className="text-[10px] font-black text-white leading-tight truncate w-full">{b.displayName}</span>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* MODEL STEP */}
+                        {inlineStep === "model" && (
+                          <div className="flex-1 flex flex-col min-h-0 text-left">
+                            {/* Minimal Back & Close Row */}
+                            <div className="flex items-center justify-between mb-4 shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => setInlineStep("brand")}
+                                className="flex items-center gap-1 text-xs font-bold text-[#00D084] hover:underline cursor-pointer bg-transparent border-none p-0 focus:outline-none"
+                              >
+                                <ChevronLeft className="w-4 h-4 text-[#00D084]" />
+                                <span>Back to Brands</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setInlineBookingOpen(false)}
+                                className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            {/* Section Title */}
+                            <div className="mb-4 shrink-0 text-left">
+                              <span className="text-[9px] uppercase font-mono font-bold text-[#00D084] block mb-0.5">{inlineSelectedBrand}</span>
+                              <h4 className="text-lg sm:text-xl font-black text-white tracking-tight leading-none">Select Model</h4>
+                            </div>
+
+                            {/* Models Grid */}
+                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                              <div ref={inlineScrollContentRef} className="grid grid-cols-2 gap-2.5">
+                                {inlineAvailableModels.map((m) => {
+                                  const info = getModelDisplayInfo(inlineSelectedBrand, m);
+                                  return (
+                                    <button
+                                      key={m}
+                                      type="button"
+                                      onClick={() => {
+                                        setInlineSelectedModel(m);
+                                        setSelectedBrand(mapBrandToSelectValue(inlineSelectedBrand));
+                                        setSelectedService("General Service");
+                                        setInlineBookingOpen(false);
+                                      }}
+                                      className="p-3 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all text-left flex items-center gap-2.5 cursor-pointer group justify-between"
+                                    >
+                                      <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                        <div className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center bg-black/40 overflow-hidden shrink-0 p-1 group-hover:scale-105 transition-transform">
+                                          {info.imageUrl ? (
+                                            <img src={info.imageUrl} alt={m} className="w-full h-full object-contain rounded-full" />
+                                          ) : (
+                                            <div className="w-full h-full flex items-center justify-center font-extrabold text-[#00D084] text-[10px]">EV</div>
+                                          )}
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                          <p className="text-xs sm:text-sm font-black text-white truncate group-hover:text-[#00D084] transition-colors">{m}</p>
+                                          <p className="text-[9px] text-white/50 leading-tight mt-0.5 break-words">
+                                            {inlineSelectedBrand} Electric {info.battery ? `• ${info.battery}` : ""}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-[#00D084] transition-all shrink-0 ml-1.5" />
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
                   <div className="flex items-center justify-between border-b border-white/10 pb-4">
                     <h3 className="text-base font-black text-white uppercase tracking-wider">Search Service Center</h3>
                     <span className="text-[10px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/30">INSTANT SEARCH</span>
@@ -544,38 +877,42 @@ function FindServicesPage() {
                         <MapPin className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5" />
                         <input type="text" placeholder="e.g. Pune, Baner, Wakad, Mumbai" value={searchCity}
                           onChange={e => { setSearchCity(e.target.value); setSelectedCity(e.target.value); }}
+                          required
                           className="w-full bg-[#020503] border border-white/20 hover:border-[#00D084]/60 focus:border-[#00D084] focus:ring-2 focus:ring-[#00D084]/40 rounded-xl pl-10 pr-3.5 py-3 text-xs font-black text-white focus:outline-none transition-all placeholder:text-white/40 shadow-lg" />
                       </div>
                     </div>
                     <div>
-                      <label className="text-[11px] text-white/80 font-black block mb-1.5 uppercase tracking-wider">Select EV Service</label>
+                      <label className="text-[11px] text-white/80 font-black block mb-1.5 uppercase tracking-wider">Select EV Brand & Model</label>
                       <div className="relative">
                         <Wrench className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5 pointer-events-none z-10" />
-                        <select value={selectedService} onChange={e => setSelectedService(e.target.value)}
-                          className="w-full bg-[#020503] border border-white/20 hover:border-[#00D084]/60 focus:border-[#00D084] focus:ring-2 focus:ring-[#00D084]/40 rounded-xl pl-10 pr-10 py-3 text-xs font-black text-white focus:outline-none cursor-pointer transition-all appearance-none shadow-lg">
-                          <option value="Battery Repair" className="bg-[#040e09]">Battery & Cell Diagnostics</option>
-                          <option value="General Service" className="bg-[#040e09]">Periodic General Service</option>
-                          <option value="Motor & Controller" className="bg-[#040e09]">Motor & FOC Controller Repair</option>
-                          <option value="Software Updates" className="bg-[#040e09]">BMS Firmware Flashing</option>
-                          <option value="Cell Balancing" className="bg-[#040e09]">Battery Cell Equalization</option>
-                        </select>
-                        <ChevronDown className="w-4 h-4 text-[#00D084] absolute right-3.5 top-3.5 pointer-events-none z-10" />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setInlineBookingOpen(true);
+                            setInlineStep("brand");
+                          }}
+                          className="w-full bg-[#020503] border border-[#00D084]/20 hover:border-[#00D084]/60 focus:border-[#00D084] focus:ring-2 focus:ring-[#00D084]/40 rounded-xl pl-10 pr-4 py-3 text-xs font-black text-white text-left focus:outline-none cursor-pointer transition-all shadow-lg flex items-center"
+                        >
+                          <span className={inlineSelectedBrand && inlineSelectedModel ? "text-white font-black" : "text-white/60"}>
+                            {inlineSelectedBrand && inlineSelectedModel ? `${inlineSelectedBrand} ${inlineSelectedModel}` : "Select EV Brand & Model..."}
+                          </span>
+                        </button>
                       </div>
                     </div>
                     <div>
-                      <label className="text-[11px] text-white/80 font-black block mb-1.5 uppercase tracking-wider">Select EV Brand</label>
+                      <label className="text-[11px] text-white/80 font-black block mb-1.5 uppercase tracking-wider">Phone Number</label>
                       <div className="relative">
-                        <Zap className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5 pointer-events-none z-10" />
-                        <select value={selectedBrand} onChange={e => setSelectedBrand(e.target.value)}
-                          className="w-full bg-[#020503] border border-white/20 hover:border-[#00D084]/60 focus:border-[#00D084] focus:ring-2 focus:ring-[#00D084]/40 rounded-xl pl-10 pr-10 py-3 text-xs font-black text-white focus:outline-none cursor-pointer transition-all appearance-none shadow-lg">
-                          <option value="Ather" className="bg-[#040e09]">Ather Energy (450X / Rizta)</option>
-                          <option value="Ola Electric" className="bg-[#040e09]">Ola Electric (S1 Pro / Air)</option>
-                          <option value="TVS" className="bg-[#040e09]">TVS iQube / X</option>
-                          <option value="Hero Electric" className="bg-[#040e09]">Hero Electric (Optima / Nyx)</option>
-                          <option value="Vida by Hero" className="bg-[#040e09]">Vida V1 Plus / Pro</option>
-                          <option value="Bajaj Chetak" className="bg-[#040e09]">Bajaj Chetak Premium</option>
-                        </select>
-                        <ChevronDown className="w-4 h-4 text-[#00D084] absolute right-3.5 top-3.5 pointer-events-none z-10" />
+                        <Phone className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5 pointer-events-none z-10" />
+                        <input
+                          type="tel"
+                          required
+                          pattern="[0-9]{10}"
+                          maxLength={10}
+                          placeholder="Enter 10-digit mobile number"
+                          value={searchPhone}
+                          onChange={e => setSearchPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                          className="w-full bg-[#020503] border border-white/20 hover:border-[#00D084]/60 focus:border-[#00D084] focus:ring-2 focus:ring-[#00D084]/40 rounded-xl pl-10 pr-3.5 py-3 text-xs font-black text-white focus:outline-none transition-all placeholder:text-white/40 shadow-lg"
+                        />
                       </div>
                     </div>
                     <motion.button
@@ -662,48 +999,232 @@ function FindServicesPage() {
             </section>
 
             {/* =================================================================
-                3. ALL CITIES NETWORK
+                3. ALL CITIES NETWORK OR SEARCHED CITY DETAILS
                ================================================================= */}
             <section id="cities" ref={citiesSectionRef} className="py-20 px-6 bg-[#020403] font-serif">
               <div className="max-w-7xl mx-auto cities-section-inner">
-                <motion.div
-                  initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
-                  variants={fadeInUp}
-                  className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4"
-                >
-                  <div>
-                    <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">Coverage</span>
-                    <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">All Cities</h2>
-                  </div>
-                  <div className="flex items-center gap-3 text-xs font-serif font-bold">
-                    <span className="px-3.5 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084]">{cities.length} {cities.length === 1 ? "city" : "cities"} in our network</span>
-                    <motion.button whileHover={{ scale: 1.04 }} onClick={() => setOnboardModalOpen(true)}
-                      className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#00D084] hover:text-[#020403] border border-white/20 text-white transition-all cursor-pointer flex items-center gap-1.5">
-                      <Plus className="w-3.5 h-3.5" /><span>Onboard New City</span>
-                    </motion.button>
-                  </div>
-                </motion.div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-                  {cities.map((city) => (
-                    <Link
-                      key={city.id}
-                      to="/city/$cityId"
-                      params={{ cityId: city.id }}
-                      search={{ service: "all", brand: "all", searchArea: city.name }}
-                      className={`city-card-item max-w-[270px] w-full h-[370px] p-7 rounded-[36px] border-2 transition-all cursor-pointer font-serif flex flex-col justify-end group hover:scale-[1.03] relative overflow-hidden ${selectedCity.toLowerCase() === city.name.toLowerCase() ? "bg-[#050c08] border-[#00D084]" : "bg-[#050907] border-white/10 hover:border-[#00D084]/60"}`}
+                {!activeSearchedCity ? (
+                  <>
+                    <motion.div
+                      initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
+                      variants={fadeInUp}
+                      className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4"
                     >
-                      <img src={city.heroImage} alt={city.name} className="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500 pointer-events-none" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#050c08] via-[#050c08]/65 to-transparent pointer-events-none" />
-                      <div className="relative z-10">
-                        <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 backdrop-blur-md border border-[#00D084]/40 flex items-center justify-center text-[#00D084] mb-4 group-hover:scale-110 transition-transform">
-                          <MapPin className="w-6 h-6" />
-                        </div>
-                        <h3 className="text-3xl font-serif font-black text-white group-hover:text-[#00D084] transition-colors">{city.name}</h3>
+                      <div>
+                        <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">Coverage</span>
+                        <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight font-sans">All Cities</h2>
                       </div>
-                    </Link>
-                  ))}
-                </div>
+                      <div className="flex items-center gap-3 text-xs font-serif font-bold">
+                        <span className="px-3.5 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] font-sans">{cities.length} {cities.length === 1 ? "city" : "cities"} in our network</span>
+                        <motion.button whileHover={{ scale: 1.04 }} onClick={() => setOnboardModalOpen(true)}
+                          className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#00D084] hover:text-[#020403] border border-white/20 text-white transition-all cursor-pointer flex items-center gap-1.5 font-sans">
+                          <Plus className="w-3.5 h-3.5" /><span>Onboard New City</span>
+                        </motion.button>
+                      </div>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+                      {cities.map((city) => (
+                        <button
+                          key={city.id}
+                          type="button"
+                          onClick={() => {
+                            setActiveSearchedCity(city);
+                            setSearchCity(city.name);
+                            setSelectedCity(city.name);
+                            setTimeout(() => {
+                              scrollToSection("cities");
+                            }, 100);
+                          }}
+                          className={`city-card-item max-w-[270px] w-full h-[370px] p-7 rounded-[36px] border-2 transition-all cursor-pointer font-serif flex flex-col justify-end group hover:scale-[1.03] relative overflow-hidden text-left ${selectedCity.toLowerCase() === city.name.toLowerCase() ? "bg-[#050c08] border-[#00D084]" : "bg-[#050907] border-white/10 hover:border-[#00D084]/60"}`}
+                        >
+                          <img src={city.heroImage} alt={city.name} className="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500 pointer-events-none" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#050c08] via-[#050c08]/65 to-transparent pointer-events-none" />
+                          <div className="relative z-10">
+                            <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 backdrop-blur-md border border-[#00D084]/40 flex items-center justify-center text-[#00D084] mb-4 group-hover:scale-110 transition-transform">
+                              <MapPin className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-3xl font-serif font-black text-white group-hover:text-[#00D084] transition-colors">{city.name}</h3>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  // Searched City Content overlay (rendered dynamically instead of navigating)
+                  <div className="space-y-16">
+                    {/* Header bar for city results */}
+                    <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-white/10 gap-4 text-left">
+                      <div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-[#00D084] text-[10px] font-black uppercase tracking-widest mb-2 font-sans">
+                          <Sparkles className="w-3.5 h-3.5 fill-[#00D084]" /> Real-Time Location Connected
+                        </div>
+                        <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-sans">
+                          Nearest Service Centers in <span className="text-[#00D084]">{activeSearchedCity.name}</span>
+                        </h2>
+                        <p className="text-white/70 text-sm mt-1 max-w-xl font-medium font-sans">
+                          Detected certified EV workshops sorted by real-time proximity. 100% genuine OEM spares & battery diagnostic bays on duty.
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          setActiveSearchedCity(null);
+                          setSearchCity("");
+                          setSelectedCity("Pune");
+                        }}
+                        className="px-5 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all cursor-pointer font-sans"
+                      >
+                        ← View All Cities
+                      </button>
+                    </div>
+
+                    {/* Nearest Centers Grid */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-left">
+                      {getCityServiceCenters(activeSearchedCity.name, searchCity).map((center) => (
+                        <div
+                          key={center.id}
+                          className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 font-sans ${
+                            center.isNearest
+                              ? "border-[#00D084] bg-gradient-to-br from-[#03190e] via-[#052418] to-[#020503] shadow-[0_0_50px_rgba(0,208,132,0.3)] scale-[1.01]"
+                              : "border-white/15 bg-[#050907] hover:border-[#00D084]/60"
+                          }`}
+                        >
+                          {center.isNearest && (
+                            <div className="absolute top-0 right-0 px-4 py-1.5 rounded-bl-2xl bg-[#00D084] text-[#020403] text-[10px] font-black uppercase tracking-widest shadow-md flex items-center gap-1.5 z-10">
+                              <Zap className="w-3.5 h-3.5 fill-[#020403]" /> 🏆 NEAREST CERTIFIED HUB • {center.distanceKm} KM AWAY
+                            </div>
+                          )}
+
+                          <div className="space-y-4">
+                            <div className="flex items-start justify-between gap-4 pt-2">
+                              <div>
+                                <h3 className="text-xl md:text-2xl font-black text-white leading-tight">
+                                  {center.name}
+                                </h3>
+                                <p className="text-xs text-white/70 font-medium flex items-center gap-1.5 mt-1.5">
+                                  <MapPin className="w-4 h-4 text-[#00D084] shrink-0" />
+                                  {center.address}
+                                </p>
+                              </div>
+                              
+                              {!center.isNearest && (
+                                <span className="shrink-0 text-xs font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-3 py-1 rounded-full border border-[#00D084]/30">
+                                  📍 {center.distanceKm} km
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Quick Metrics Bar */}
+                            <div className="flex flex-wrap items-center gap-2.5 pt-1 text-xs">
+                              <span className="flex items-center gap-1 text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded-lg border border-amber-400/20">
+                                ★ {center.rating} ({center.reviewsCount} reviews)
+                              </span>
+                              <span className="flex items-center gap-1 text-[#00D084] font-bold bg-[#00D084]/10 px-2.5 py-1 rounded-lg border border-[#00D084]/20">
+                                ⚡ {center.baysAvailable} Bays Available
+                              </span>
+                              <span className="flex items-center gap-1 text-white/80 font-bold bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+                                👨‍🔧 {center.techniciansOnDuty} Certified Techs
+                              </span>
+                            </div>
+
+                            {/* Brands Serviced */}
+                            <div className="space-y-1.5 pt-1">
+                              <span className="text-[11px] text-white/50 font-bold block uppercase tracking-wider">
+                                Supported Brands:
+                              </span>
+                              <div className="flex flex-wrap gap-1.5">
+                                {center.brandsServiced.map((b, i) => (
+                                  <span
+                                    key={i}
+                                    className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border bg-white/10 text-white/95 border-white/15`}
+                                  >
+                                    {b}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Action Buttons */}
+                          <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                            <a
+                              href={center.mapUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all flex items-center gap-1.5 cursor-pointer"
+                            >
+                              <Navigation className="w-3.5 h-3.5 text-[#00D084]" /> Get Directions
+                            </a>
+
+                            <a
+                              href={`tel:${center.phone.replace(/\s+/g, "")}`}
+                              className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all flex items-center gap-1.5 cursor-pointer"
+                            >
+                              <Phone className="w-3.5 h-3.5 text-[#00D084]" /> Call Hub
+                            </a>
+
+                            <button
+                              onClick={() => {
+                                setBookingService({ title: `Diagnostic Booking - ${center.name}`, price: "₹199" });
+                                setBookingModalOpen(true);
+                              }}
+                              className="px-5 py-2.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_20px_rgba(0,208,132,0.4)]"
+                            >
+                              <CalendarCheck className="w-3.5 h-3.5 fill-[#020403]" /> Book Appointment
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+
+
+                    {/* Infrastructure details */}
+                    <div className="pt-8 text-center max-w-7xl mx-auto">
+                      <div className="text-center max-w-2xl mx-auto mb-12">
+                        <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084] font-sans">
+                          HUB INFRASTRUCTURE
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-black text-white mt-2 font-sans">
+                          Certified Standards in {activeSearchedCity.name}
+                        </h2>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left font-sans">
+                        <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
+                          <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
+                            <BatteryCharging className="w-6 h-6" />
+                          </div>
+                          <h3 className="text-xl font-bold text-white">Active Cell Balancing</h3>
+                          <p className="text-xs text-white/60 leading-relaxed">
+                            Automated high-voltage active battery balancing restoring 95%+ original battery pack health.
+                          </p>
+                        </div>
+
+                        <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
+                          <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
+                            <Cpu className="w-6 h-6" />
+                          </div>
+                          <h3 className="text-xl font-bold text-white">BMS Firmware Flashing</h3>
+                          <p className="text-xs text-white/60 leading-relaxed">
+                            Official multi-brand ECU scanner updates ensuring error-free thermal shutdown thresholds.
+                          </p>
+                        </div>
+
+                        <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
+                          <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
+                            <ShieldCheck className="w-6 h-6" />
+                          </div>
+                          <h3 className="text-xl font-bold text-white">100% Refundable Slot</h3>
+                          <p className="text-xs text-white/60 leading-relaxed">
+                            Pre-booking slot tokens guarantee priority doorstep service with 100% money-back policy.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </section>
 
@@ -1289,6 +1810,24 @@ function FindServicesPage() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* City Pre-booking slots Modal */}
+      {activeSearchedCity && (
+        <CityPreBookingModal
+          isOpen={preBookingModalOpen}
+          onClose={() => setPreBookingModalOpen(false)}
+          cityName={activeSearchedCity.name}
+          initialSlots={
+            DEFAULT_CITY_SLOTS[activeSearchedCity.id.toLowerCase().replace(/[^a-z0-9]+/g, "-")] ||
+            activeSearchedCity.areas.map((areaName, i) => ({
+              id: `${activeSearchedCity.id.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${i + 1}`,
+              area: areaName,
+              pincode: `${411000 + (i + 1) * 7}`,
+              status: i % 3 === 2 ? "booked" : "available",
+            }))
+          }
+        />
+      )}
 
       {/* ── Footer ── */}
       <Footer />

@@ -93,6 +93,9 @@ function FranchisePage() {
   // Franchise Models Expandable Services Dropdown state
   const [expandedModels, setExpandedModels] = useState<{ [key: string]: boolean }>({});
 
+  // Franchise Model Details Modal state
+  const [detailsModalModel, setDetailsModalModel] = useState<DetailedFranchiseModel | null>(null);
+
   // Hero section & ScrollTrigger refs
   const heroTextRef = useRef<HTMLDivElement>(null);
   const contentOverlayRef = useRef<HTMLDivElement>(null);
@@ -981,7 +984,8 @@ function FranchisePage() {
                 whileHover={{ y: -10, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 key={model.type}
-                className={`model-card-reveal bg-gradient-to-b from-white/[0.03] to-white/[0.002] border backdrop-blur-xl rounded-[32px] p-8 flex flex-col justify-between transition-all duration-300 relative font-serif ${
+                onClick={() => setDetailsModalModel(model)}
+                className={`model-card-reveal bg-gradient-to-b from-white/[0.03] to-white/[0.002] border backdrop-blur-xl rounded-[32px] p-8 flex flex-col justify-between transition-all duration-300 relative font-serif cursor-pointer ${
                   model.popular
                     ? "border-[#00D084]/50 shadow-[0_0_35px_rgba(0,208,132,0.22)]"
                     : "border-white/10 hover:border-white/20"
@@ -1036,90 +1040,22 @@ function FranchisePage() {
                         <span className="text-white font-bold">{model.vehicles}</span>
                       </div>
                     </div>
-
-                    {/* Separator line */}
-                    <div className="h-[1px] bg-white/10 my-4" />
-
-                    {/* Checklist Features */}
-                    <div className="space-y-3.5 text-xs text-white/85">
-                      {model.includes.slice(0, 4).map((inc, i) => (
-                        <div key={i} className="flex items-start gap-3 text-left">
-                          <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
-                            <Check className="w-3 h-3 text-white" />
-                          </div>
-                          <span className="leading-tight">{inc}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Dropdown Toggle Button for All Services */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleModelDropdown(model.type);
-                      }}
-                      className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-[#00D084]/15 border border-white/15 hover:border-[#00D084]/40 text-xs font-serif font-bold text-white hover:text-[#00D084] flex items-center justify-between transition-all cursor-pointer mt-4 group"
-                    >
-                      <span className="flex items-center gap-2">
-                        <Sparkles className="w-3.5 h-3.5 text-[#00D084]" />
-                        {expandedModels[model.type]
-                          ? "Hide Package Breakdown"
-                          : "View Included Setup"}
-                      </span>
-                      {expandedModels[model.type] ? (
-                        <ChevronUp className="w-4 h-4 text-[#00D084]" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-[#00D084]" />
-                      )}
-                    </button>
-
-                    {/* Collapsible Dropdown Panel */}
-                    <AnimatePresence>
-                      {expandedModels[model.type] && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.25, ease: "easeInOut" }}
-                          className="overflow-hidden"
-                        >
-                          <div className="bg-black/40 border border-[#00D084]/30 rounded-2xl p-4 space-y-2 mt-2 text-xs shadow-inner">
-                            {[
-                              "Multi-Bay Workshop Setup",
-                              "Diagnostic & Testing Tools",
-                              "Battery Diagnostic & Balancing Equipment",
-                              "Spare Parts Racks",
-                              "MY EV SERVICE Software",
-                              "Staff Training & Certification",
-                              "Marketing & Launch Support",
-                              "Safety & Fire Compliance",
-                              "6 Months Business Ops Support",
-                            ].map((service, idx) => (
-                              <div key={idx} className="flex items-start gap-2 text-white/90">
-                                <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0 mt-0.5" />
-                                <span>{service}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
 
                   <div className="mt-8 flex flex-col gap-4">
-                    <div className="bg-[#00D084]/10 border border-[#00D084]/20 rounded-xl p-3 text-xs text-[#00D084] text-center font-bold">
-                      {model.osSavings}
-                    </div>
-
-                    <p className="text-[11px] text-white/40 italic text-center mb-2">
-                      Best for: {model.bestFor}
-                    </p>
-
                     {/* Centered button matching the screenshot */}
                     <div className="flex justify-center w-full">
                       <button
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setSelectedModel(model);
+                          let investmentVal = "₹10L - ₹20L";
+                          if (model.type === "garage") {
+                            investmentVal = "< ₹10 Lakh";
+                          } else if (model.type === "hub") {
+                            investmentVal = "> ₹20L";
+                          }
+                          setForm((prev) => ({ ...prev, investmentRange: investmentVal }));
                           scrollToForm();
                         }}
                         className="w-full bg-white text-black font-extrabold text-xs py-3 px-8 rounded-full hover:bg-white/90 transition-all shadow-md cursor-pointer text-center"
@@ -1851,6 +1787,162 @@ function FranchisePage() {
                 <span className="text-[#00D084] font-extrabold bg-[#00D084]/15 border border-[#00D084]/30 px-3 py-1 rounded-full text-center">
                   {activeVideo.statBadge}
                 </span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Franchise Model Details Modal */}
+      <AnimatePresence>
+        {detailsModalModel && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            onClick={() => setDetailsModalModel(null)}
+          >
+            <motion.div
+              initial={{ y: "100vh", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100vh", opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 180 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl bg-gradient-to-b from-[#07120a] to-[#040805] border border-[#00D084]/40 rounded-3xl p-6 sm:p-8 shadow-[0_0_50px_rgba(0,208,132,0.15)] font-serif md:overflow-visible overflow-y-auto max-h-[95vh] z-10"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setDetailsModalModel(null)}
+                className="absolute top-4 right-4 sm:top-6 sm:right-6 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer z-20"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Glowing Accent Ring in background */}
+              <div className="absolute -top-20 -left-20 w-48 h-48 bg-[#00D084]/10 rounded-full blur-[60px] pointer-events-none" />
+              <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-blue-900/10 rounded-full blur-[60px] pointer-events-none" />
+
+              {/* Modal Content - 2 Columns on desktop to fit without scrolling */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 relative z-10 text-left">
+                {/* Left Column: Info & Stats */}
+                <div className="space-y-4">
+                  {/* Header */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-bold text-[#00D084] uppercase tracking-widest bg-[#00D084]/10 px-3 py-0.5 rounded-full border border-[#00D084]/20 font-sans">
+                        {detailsModalModel.type.toUpperCase()} MODEL
+                      </span>
+                      {detailsModalModel.badge && (
+                        <span className="text-[9px] font-bold text-white bg-[#00D084] px-2 py-0.5 rounded-full uppercase tracking-wider font-sans">
+                          {detailsModalModel.badge}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                      {detailsModalModel.name}
+                    </h3>
+                    <p className="text-xs text-white/60 leading-relaxed font-light">
+                      {detailsModalModel.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Main Stats Grid */}
+                  <div className="grid grid-cols-3 gap-3 bg-black/40 border border-white/10 rounded-2xl p-3 sm:p-4 text-xs">
+                    <div className="space-y-0.5">
+                      <span className="text-[9px] text-white/40 uppercase tracking-wider block font-sans">Investment</span>
+                      <span className="text-sm font-bold text-white block truncate">{detailsModalModel.investment}</span>
+                      {detailsModalModel.originalInvestment && (
+                        <span className="text-[9px] text-white/30 line-through block truncate">{detailsModalModel.originalInvestment}</span>
+                      )}
+                    </div>
+                    <div className="space-y-0.5 border-l border-white/10 pl-3">
+                      <span className="text-[9px] text-white/40 uppercase tracking-wider block font-sans">Required Area</span>
+                      <span className="text-sm font-bold text-[#00D084] block truncate">{detailsModalModel.area}</span>
+                      <span className="text-[9px] text-white/50 block">5km radius</span>
+                    </div>
+                    <div className="space-y-0.5 border-l border-white/10 pl-3">
+                      <span className="text-[9px] text-white/40 uppercase tracking-wider block font-sans">Setup/Bays</span>
+                      <span className="text-sm font-bold text-white block truncate">{detailsModalModel.bays}</span>
+                      <span className="text-[9px] text-white/50 block truncate font-sans">{detailsModalModel.vehicles}</span>
+                    </div>
+                  </div>
+
+                  {/* Offer Details if present */}
+                  {detailsModalModel.foundingOffer && (
+                    <div className="bg-[#00D084]/10 border border-[#00D084]/20 rounded-2xl p-3 sm:p-4 flex items-start gap-2.5">
+                      <Sparkles className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="text-[11px] font-bold text-[#00D084] uppercase tracking-wider">Founding Partner Benefit</h4>
+                        <p className="text-[10px] sm:text-[11px] text-white/90 mt-0.5 font-light leading-relaxed">
+                          {detailsModalModel.foundingOffer}. Plus, enjoy 2 years of free Autobot OS setup and a reduced revenue share model.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* More Details / Additional Setup Services */}
+                  <div className="bg-black/50 border border-white/5 rounded-2xl p-3 sm:p-4 space-y-3 text-[11px] text-white/80">
+                    <div className="flex justify-between items-start gap-3">
+                      <div>
+                        <span className="font-bold text-white block text-[11px]">Autobot OS Integration</span>
+                        <span className="text-white/50 block mt-0.5 text-[10px] leading-snug">Automated lead routing, live diagnostics, parts ordering & accounting.</span>
+                      </div>
+                      <span className="text-[#00D084] font-bold shrink-0 text-[11px] font-sans">{detailsModalModel.osSavings}</span>
+                    </div>
+                    <div className="h-[1px] bg-white/5" />
+                    <div>
+                      <span className="font-bold text-white block text-[11px]">Target Partners & Best Fit</span>
+                      <span className="text-white/50 block mt-0.5 text-[10px] leading-snug">{detailsModalModel.bestFor}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Inclusions & CTA */}
+                <div className="flex flex-col justify-between space-y-4">
+                  {/* Package Highlights (Detailed list of inclusions) */}
+                  <div className="space-y-2.5">
+                    <h4 className="text-[11px] font-bold text-white/70 uppercase tracking-widest flex items-center gap-2 font-sans">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084]" />
+                      Included in Package Setup
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] sm:text-[11px]">
+                      {detailsModalModel.includes.map((inc, i) => (
+                        <div key={i} className="flex items-start gap-2 bg-white/[0.02] border border-white/5 hover:border-[#00D084]/30 rounded-xl p-2 sm:p-2.5 text-white/90 transition-all leading-snug">
+                          <Check className="w-3.5 h-3.5 text-[#00D084] shrink-0 mt-0.5" />
+                          <span>{inc}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Call to Actions */}
+                  <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-white/10">
+                    <button
+                      onClick={() => {
+                        setSelectedModel(detailsModalModel);
+                        let investmentVal = "₹10L - ₹20L";
+                        if (detailsModalModel.type === "garage") {
+                          investmentVal = "< ₹10 Lakh";
+                        } else if (detailsModalModel.type === "hub") {
+                          investmentVal = "> ₹20L";
+                        }
+                        setForm((prev) => ({ ...prev, investmentRange: investmentVal }));
+                        setDetailsModalModel(null);
+                        scrollToForm();
+                      }}
+                      className="w-full sm:w-auto flex-1 py-3 px-6 rounded-xl bg-[#00D084] text-[#020403] text-xs font-bold uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer text-center font-serif"
+                    >
+                      Apply for {detailsModalModel.name}
+                    </button>
+                    <button
+                      onClick={() => setDetailsModalModel(null)}
+                      className="w-full sm:w-auto py-3 px-6 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-wider text-white transition-all cursor-pointer text-center font-serif"
+                    >
+                      Close Details
+                    </button>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.div>
