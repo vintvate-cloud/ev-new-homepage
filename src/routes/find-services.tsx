@@ -1164,6 +1164,14 @@ function FindServicesPage() {
                               <Phone className="w-3.5 h-3.5 text-[#00D084]" /> Call Hub
                             </a>
 
+                            <Link
+                              to="/service-centres/$centerId"
+                              params={{ centerId: center.id }}
+                              className="px-5 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] bg-white/5 text-white text-xs font-black uppercase tracking-wider hover:bg-[#00D084] hover:text-[#020403] transition-all cursor-pointer flex items-center gap-1.5"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" /> View Centre
+                            </Link>
+
                             <button
                               onClick={() => {
                                 setBookingService({ title: `Diagnostic Booking - ${center.name}`, price: "₹199" });

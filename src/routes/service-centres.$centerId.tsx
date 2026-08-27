@@ -45,7 +45,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export const Route = createFileRoute("/service-centres")({
+export const Route = createFileRoute("/service-centres/$centerId")({
   component: ServiceCentresPage,
 });
 
@@ -89,6 +89,8 @@ const scaleIn: Variants = {
 };
 
 export function ServiceCentresPage() {
+  const { centerId } = Route.useParams();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLDivElement>(null);
   const contentOverlayRef = useRef<HTMLDivElement>(null);
@@ -437,7 +439,10 @@ export function ServiceCentresPage() {
                   EV PRO Service Centre
                 </h1>
                 <p className="text-lg sm:text-xl font-serif font-extrabold text-[#00D084]">
-                  Your Trusted EV Care Partner in Pune
+                  Centre ID: {centerId}
+                </p>
+                <p className="text-md sm:text-lg font-serif text-white/80">
+                  Your Trusted EV Care Partner
                 </p>
               </div>
 
