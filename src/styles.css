@@ -987,4 +987,34 @@ html.theme-light .warehouse-arc-rail .arc-label {
   animation-play-state: paused;
 }
 
+/* Vertical Marquee Animations for Alternate Moving Gallery Columns */
+@keyframes marqueeDown {
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes marqueeUp {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0%); }
+}
+
+.animate-marquee-down {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  animation: marqueeDown 35s linear infinite;
+}
+
+.animate-marquee-up {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  animation: marqueeUp 32s linear infinite;
+}
+
+.gallery-vertical-container:hover .animate-marquee-down,
+.gallery-vertical-container:hover .animate-marquee-up {
+  animation-play-state: paused;
+}
+
 
