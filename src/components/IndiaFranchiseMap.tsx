@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "@tanstack/react-router";
 import { CityRadarNode, CITIES_RADAR } from "../data/franchiseData";
 import { Compass, CheckCircle2, ArrowRight, Sparkles, MapPin, Layers } from "lucide-react";
 
@@ -8,6 +9,7 @@ interface IndiaFranchiseMapProps {
 }
 
 export function IndiaFranchiseMap({ onSelectCity }: IndiaFranchiseMapProps) {
+  const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState<CityRadarNode>(CITIES_RADAR[0]);
   const [hoveredCity, setHoveredCity] = useState<CityRadarNode | null>(null);
   const [isClient, setIsClient] = useState(false);
@@ -165,7 +167,10 @@ export function IndiaFranchiseMap({ onSelectCity }: IndiaFranchiseMapProps) {
 
               {/* Reserve Territory CTA */}
               <button
-                onClick={() => onSelectCity(displayCity.name, displayCity.state)}
+                onClick={() => {
+                  const cityKey = displayCity.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+                  navigate({ to: `/franchise/pre-booking/${cityKey}` });
+                }}
                 className="w-full py-4 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-2xl"
               >
                 Reserve {displayCity.name} Territory <ArrowRight className="w-4 h-4" />
