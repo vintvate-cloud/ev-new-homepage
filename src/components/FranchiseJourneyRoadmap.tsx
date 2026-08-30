@@ -45,6 +45,12 @@ export function FranchiseJourneyRoadmap() {
           const leftPos = 12 + progress * (89 - 12);
           if (vehicleRef.current) {
             vehicleRef.current.style.left = `${leftPos}%`;
+            
+            // Rotate logo image based on scroll progress
+            const logoImg = vehicleRef.current.querySelector(".roadmap-logo-img") as HTMLImageElement;
+            if (logoImg) {
+              logoImg.style.transform = `scale(1.25) rotate(${progress * 720}deg)`;
+            }
           }
           if (trailRef.current) {
             trailRef.current.style.width = `${leftPos}%`;
@@ -78,7 +84,7 @@ export function FranchiseJourneyRoadmap() {
       ref={sectionRef}
       className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 font-serif relative z-20"
     >
-      <div className="w-full bg-[#030704] border border-white/10 rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
+      <div className="w-full bg-[#020403] rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
         {/* Ambient Radial Background Glows */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00D084]/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
@@ -87,7 +93,7 @@ export function FranchiseJourneyRoadmap() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f293710_1px,transparent_1px),linear-gradient(to_bottom,#1f293710_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
         {/* Section Header */}
-        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-white/10 pb-6">
+        <div className="relative z-10 mb-8 border-b border-white/10 pb-6">
           <div>
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#00D084]" /> GSAP ScrollTrigger Pinned Journey
@@ -96,28 +102,12 @@ export function FranchiseJourneyRoadmap() {
               Your <span className="text-[#00D084]">90-Day</span> Onboarding Highway
             </h3>
           </div>
-
-          {/* Live HUD Telemetry Bar */}
-          <div className="flex items-center gap-4 bg-[#020503] border border-white/15 px-4 py-2.5 rounded-2xl shadow-inner">
-            <div className="flex items-center gap-2">
-              <Gauge className="w-4 h-4 text-[#00D084] animate-pulse" />
-              <span className="text-xs font-serif text-white/60">Telemetry:</span>
-            </div>
-            <span className="text-xs font-serif font-black text-[#00D084]">
-              {hudPercent}% Flow Complete
-            </span>
-            <span className="text-xs font-serif text-white/40 hidden sm:inline">•</span>
-            <span className="text-xs font-serif font-bold text-white hidden sm:inline">
-              Phase 0{activeStepIdx + 1} Pinned
-            </span>
-          </div>
         </div>
 
         {/* HIGHWAY TRACK WITH GSAP PINNED EV VEHICLE */}
         <div className="relative z-10 mb-10 pt-6 pb-4">
           <div className="relative h-16 bg-[#020503] border border-white/15 rounded-3xl overflow-hidden flex items-center px-4 shadow-2xl">
-            {/* Animated Highway Center Lane Dashes */}
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-[repeating-linear-gradient(to_right,#ffffff20_0px,#ffffff20_16px,transparent_16px,transparent_32px)]" />
+
 
             {/* Active Energized Trail Line behind EV Vehicle */}
             <div
@@ -126,31 +116,6 @@ export function FranchiseJourneyRoadmap() {
               style={{ width: "12%" }}
             />
 
-            {/* Waypoint Milestone Stop Nodes (Day 15, 40, 65, 90) */}
-            <div className="absolute inset-x-0 flex justify-between px-6 sm:px-12 z-20 pointer-events-none">
-              {ONBOARDING_STEPS_90_DAYS.map((step, idx) => {
-                const isPassed = idx <= activeStepIdx;
-                const isCurrent = idx === activeStepIdx;
-                return (
-                  <div key={idx} className="flex flex-col items-center">
-                    <div
-                      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-500 ${isCurrent
-                          ? "bg-[#00D084] border-white scale-125 shadow-[0_0_15px_#00D084]"
-                          : isPassed
-                            ? "bg-[#00D084]/30 border-[#00D084]"
-                            : "bg-[#040806] border-white/20"
-                        }`}
-                    >
-                      {isPassed ? (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-                      ) : (
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
 
             {/* GSAP PINNED MOVING EV VEHICLE INDICATOR */}
             <div
@@ -159,24 +124,15 @@ export function FranchiseJourneyRoadmap() {
               style={{ left: "12%" }}
             >
               {/* Headlight Forward Beam Light Glow */}
-              <div className="absolute left-8 w-24 h-12 bg-gradient-to-r from-[#00D084]/40 to-transparent blur-md rounded-r-full pointer-events-none" />
+              <div className="absolute left-10 w-28 h-16 bg-gradient-to-r from-[#00D084]/40 to-transparent blur-md rounded-r-full pointer-events-none" />
 
-              {/* EV Vehicle Badge */}
-              <div className="relative bg-[#020503] border-2 border-[#00D084] rounded-2xl px-3.5 py-2 flex items-center gap-2 shadow-[0_0_24px_rgba(0,208,132,0.8)]">
-                <div className="absolute -inset-1 rounded-2xl bg-[#00D084]/30 blur-sm animate-pulse pointer-events-none" />
-
-                <div className="relative z-10 w-7 h-7 rounded-xl bg-[#00D084] text-[#020403] flex items-center justify-center font-bold shadow-md">
-                  <Zap className="w-4 h-4 fill-[#020403]" />
-                </div>
-
-                <div className="relative z-10 text-left">
-                  <span className="text-[9px] font-serif font-black uppercase text-[#00D084] tracking-wider block leading-none">
-                    EV DRIVING
-                  </span>
-                  <span className="text-[11px] font-serif font-extrabold text-white leading-none block mt-0.5">
-                    Phase 0{activeStepIdx + 1}
-                  </span>
-                </div>
+              {/* EV Vehicle Logo Indicator */}
+              <div className="relative w-16 h-16 rounded-xl bg-black border-2 border-[#00D084] flex items-center justify-center overflow-hidden shrink-0">
+                <img
+                  src="/logo.jpeg"
+                  alt="EV Logo"
+                  className="roadmap-logo-img w-full h-full object-cover scale-125 relative z-10"
+                />
               </div>
             </div>
           </div>

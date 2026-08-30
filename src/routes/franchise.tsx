@@ -1074,7 +1074,7 @@ function FranchisePage() {
       {/* =========================================================================
           BRAND COLLABORATIONS & PR MEDIA SHOWCASE (3D FLIP LOGOS)
          ========================================================================= */}
-      <section className="brand-collaborations-section py-24 px-6 bg-[#030604] border-t border-white/10 font-serif relative overflow-hidden">
+      <section className="brand-collaborations-section py-24 px-6 bg-[#020403] font-serif relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
@@ -1443,7 +1443,7 @@ function FranchisePage() {
       {/* =========================================================================
           DEVELOPED EV WORKSHOP CENTERS GALLERY SECTION (MOVING & PREMIUM BENTO)
          ========================================================================= */}
-      <section className="developed-centers-section py-24 bg-[#020403] border-t border-white/10 font-serif relative overflow-hidden">
+      <section className="developed-centers-section py-24 bg-[#020403] font-serif relative overflow-hidden">
         {/* Glow Effects */}
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#00D084]/10 rounded-full blur-[140px] pointer-events-none" />
         
@@ -1651,7 +1651,7 @@ function FranchisePage() {
       {/* =========================================================================
           9. CATEGORIZED FAQS ACCORDION
          ========================================================================= */}
-      <section className="faq-section py-24 px-6 bg-[#020403] font-serif border-t border-white/10">
+      <section className="faq-section py-24 px-6 bg-[#020403] font-serif">
         <div className="max-w-4xl mx-auto">
           <div className="faq-header-reveal text-center mb-12">
             <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">

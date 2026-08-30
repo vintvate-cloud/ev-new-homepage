@@ -21,7 +21,7 @@ import factory from "@/assets/factory.jpg";
 export type Theme = "warm" | "mid" | "dark";
 
 const PRIMARY_NAV = [
-  { label: "Service Centres", href: "/service-centres", menuIdx: null },
+  { label: "About Us", href: "/about", menuIdx: null },
   { label: "Franchise", href: "/franchise", menuIdx: 0 },
   { label: "Services", href: "/services", menuIdx: 1 },
   { label: "Careers", href: "/careers", menuIdx: null },

@@ -28,7 +28,7 @@ export function IndiaFranchiseMap({ onSelectCity }: IndiaFranchiseMapProps) {
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/10 rounded-full blur-[90px] pointer-events-none" />
 
       {/* Section Header */}
-      <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-white/10 pb-6">
+      <div className="relative z-10 mb-8 border-b border-white/10 pb-6">
         <div>
           <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center gap-2">
             <Compass className="w-4 h-4 text-[#00D084]" /> Official Geographic Map of India
@@ -36,13 +36,6 @@ export function IndiaFranchiseMap({ onSelectCity }: IndiaFranchiseMapProps) {
           <h3 className="text-2xl sm:text-4xl font-serif font-extrabold text-white mt-1">
             Pan-India Territory Coverage
           </h3>
-        </div>
-        <div className="flex items-center gap-3 text-xs font-serif text-white/70">
-          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 text-[#00D084] font-bold">
-            <span className="w-2 h-2 rounded-full bg-[#00D084] animate-ping" />
-            9 Key Metropolitan Hubs Active
-          </span>
-          <span className="hidden sm:inline text-white/40">• Hover on nodes for instant side-panel info</span>
         </div>
       </div>
 
