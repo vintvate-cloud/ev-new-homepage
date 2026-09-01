@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 export interface GalleryCard {
   src: string;
   x: number;
@@ -190,10 +192,10 @@ export function FranchiseWorkshopsGallery({
   className = "",
 }: FranchiseWorkshopsGalleryProps) {
   return (
-    <section className={`hero-gallery-section relative h-screen min-h-[640px] overflow-hidden bg-[#020403] text-white font-sans border-t border-white/10 ${className}`}>
-      {/* LEFT TEXT CONTENT */}
-      <div className="absolute left-6 sm:left-[6%] md:left-[8%] top-[8%] md:top-[10%] z-20">
-        <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-[68px] font-extrabold leading-[1.02] tracking-[-0.04em] text-white font-serif">
+    <section className={`hero-gallery-section relative h-[580px] sm:h-[640px] md:h-screen min-h-[540px] md:min-h-[640px] overflow-hidden bg-[#020403] text-white font-sans border-t border-white/10 ${className}`}>
+      {/* SECTION HEADER (Identical across Mobile & Desktop) */}
+      <div className="absolute left-5 sm:left-[6%] md:left-[8%] top-[5%] sm:top-[8%] md:top-[10%] z-20 pointer-events-none">
+        <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-[68px] font-extrabold leading-[1.02] tracking-[-0.04em] text-white font-serif">
           {titleLine1}
           <br />
           {titleLine2}
@@ -202,27 +204,51 @@ export function FranchiseWorkshopsGallery({
         </h2>
       </div>
 
-      {/* IMAGE DESIGN CANVAS */}
+      {/* FIXED CARD CANVAS (Identical 2D layout scaled proportionally for phone, tablet, and desktop) */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="relative w-full h-full max-w-[1200px] left-[10%] sm:left-[20%] md:left-[26%] lg:left-[30%] scale-90 sm:scale-100 md:scale-110 lg:scale-125 origin-left">
-          {cards.map((card, index) => (
-            <div
-              key={index}
-              className="absolute overflow-hidden rounded-[13px] border border-white/12 hover:border-[#00D084] transition-all duration-300 hover:scale-105 cursor-pointer shadow-xl group"
-              style={{
-                left: `${card.x}px`,
-                top: `${card.y}px`,
-                width: `${card.w}px`,
-                height: `${card.h}px`,
-              }}
-            >
-              <img
-                src={card.src}
-                alt="Gallery artwork"
-                className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-              />
-            </div>
-          ))}
+        <div className="relative w-full h-full max-w-[1200px] left-[16%] sm:left-[20%] md:left-[26%] lg:left-[30%] scale-[0.65] sm:scale-[0.80] md:scale-[1.0] lg:scale-[1.18] xl:scale-[1.28] origin-left">
+          {cards.map((card, index) => {
+            const isEven = index % 2 === 0;
+
+            return (
+              <div
+                key={index}
+                className="absolute overflow-hidden rounded-[13px] border border-white/12 hover:border-[#00D084] transition-all duration-300 hover:scale-105 cursor-pointer shadow-xl group"
+                style={{
+                  left: `${card.x}px`,
+                  top: `${card.y}px`,
+                  width: `${card.w}px`,
+                  height: `${card.h}px`,
+                  willChange: "transform",
+                  transform: "translateZ(0)",
+                }}
+              >
+                {/* Internal Image Continuous Vertical Scroll Container */}
+                <motion.div
+                  className="flex flex-col w-full h-[200%]"
+                  animate={{
+                    y: isEven ? ["0%", "-50%"] : ["-50%", "0%"],
+                  }}
+                  transition={{
+                    duration: 12 + (index % 3) * 4,
+                    ease: "linear",
+                    repeat: Infinity,
+                  }}
+                >
+                  <img
+                    src={card.src}
+                    alt="Gallery artwork"
+                    className="w-full h-1/2 object-cover group-hover:scale-108 transition-transform duration-500"
+                  />
+                  <img
+                    src={card.src}
+                    alt="Gallery artwork loop"
+                    className="w-full h-1/2 object-cover group-hover:scale-108 transition-transform duration-500"
+                  />
+                </motion.div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
