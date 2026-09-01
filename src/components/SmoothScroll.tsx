@@ -16,13 +16,21 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     if (typeof window === "undefined") return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouchMobile = window.innerWidth < 768 || "ontouchstart" in window;
+
     if (reduced) return;
+
+    // On touch screens/mobile devices, disable Lenis touch hijacking to ensure native 120Hz smooth scrolling
+    if (isTouchMobile) {
+      ScrollTrigger.config({ ignoreMobileResize: true });
+      return;
+    }
 
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
     });
 
     lenisRef.current = lenis;
