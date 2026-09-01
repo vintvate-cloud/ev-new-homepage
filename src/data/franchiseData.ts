@@ -909,6 +909,32 @@ export const PARTNER_VIDEO_INTERVIEWS: PartnerVideoInterview[] = [
     quoteOneLiner: "Zero technical friction. Their 10-day hands-on academy trained my technicians to diagnose BMS errors effortlessly.",
     statBadge: "35+ EVs Daily",
   },
+  {
+    id: "video-mumbai",
+    partnerName: "Vikram Salvi",
+    role: "Master Hub Owner",
+    city: "Mumbai West",
+    model: "Master Hub (25L)",
+    videoTitle: "Powering Commercial 2W & 3W Fleets across Bandra & Andheri",
+    thumbnail: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80",
+    videoUrl: "/lab-3d-centre.mp4",
+    duration: "3:20 mins",
+    quoteOneLiner: "Servicing over 60 electric delivery scooters per day with guaranteed OEM spares.",
+    statBadge: "₹22L/Mo Revenue",
+  },
+  {
+    id: "video-hyd",
+    partnerName: "K. Srinivas Rao",
+    role: "Franchise Partner",
+    city: "Hyderabad Tech",
+    model: "Centre Model (15L)",
+    videoTitle: "High-Voltage Battery Quick-Diagnostics & Cell Balancing Hub",
+    thumbnail: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&auto=format&fit=crop&q=80",
+    videoUrl: "/lab-3d-centre.mp4",
+    duration: "4:05 mins",
+    quoteOneLiner: "Restoring battery pack capacity to 95%+ with certified diagnostic gear.",
+    statBadge: "12-Month Payback",
+  },
 ];
 
 // Developed EV Service Centers Gallery Data

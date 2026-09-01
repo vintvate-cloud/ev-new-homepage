@@ -45,12 +45,6 @@ export function FranchiseJourneyRoadmap() {
           const leftPos = 12 + progress * (89 - 12);
           if (vehicleRef.current) {
             vehicleRef.current.style.left = `${leftPos}%`;
-            
-            // Rotate logo image based on scroll progress
-            const logoImg = vehicleRef.current.querySelector(".roadmap-logo-img") as HTMLImageElement;
-            if (logoImg) {
-              logoImg.style.transform = `scale(1.25) rotate(${progress * 720}deg)`;
-            }
           }
           if (trailRef.current) {
             trailRef.current.style.width = `${leftPos}%`;

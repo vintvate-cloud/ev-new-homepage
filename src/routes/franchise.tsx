@@ -8,6 +8,7 @@ import { Footer } from "../components/Footer";
 import { IndiaFranchiseMap } from "../components/IndiaFranchiseMap";
 import { FranchiseJourneyRoadmap } from "../components/FranchiseJourneyRoadmap";
 import { FranchiseWorkshopsGallery } from "../components/FranchiseWorkshopsGallery";
+import { FranchiseVideoCurvedFan } from "../components/FranchiseVideoCurvedFan";
 import {
   DETAILED_FRANCHISE_MODELS,
   FAQ_CATEGORIES,
@@ -504,12 +505,15 @@ function FranchisePage() {
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
         <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
-          {/* Full-bleed background image - No shadow/overlay, 100% crystal clear */}
+          {/* Full-bleed premium background image */}
           <img
-            src="/ev-franchise-hero.jpg"
-            alt="EV Service Workshop Hero"
-            className="hero-bg-img w-full h-full object-cover object-center opacity-100 pointer-events-none"
+            src="/ev-master-workshop-hero.png"
+            alt="EV Master Service Workshop Hero"
+            className="hero-bg-img w-full h-full object-cover object-center opacity-85 pointer-events-none"
           />
+          {/* Subtle Dark Vignette Scrim for crystal clear legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/60 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020403] via-transparent to-black/50 pointer-events-none" />
 
           {/* Hero Content Container (Text & Form - text slowly fades out on scroll) */}
           <div
@@ -716,52 +720,134 @@ function FranchisePage() {
           </section>
 
       {/* =========================================================================
-          3. OUR VISION & MISSION SECTION
+          3. OUR VISION & MISSION EDITORIAL SHOWCASE
          ========================================================================= */}
-      <section className="vision-section py-24 px-6 bg-[#020403] font-serif">
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="vision-reveal text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
-            Our Vision
-          </span>
-          <h2 className="vision-reveal text-3xl md:text-5xl font-serif font-extrabold text-white mb-6 leading-tight">
-            We Are Building India's Largest EV Service Network
-          </h2>
-          <p className="vision-reveal text-white/70 text-base md:text-lg leading-relaxed font-serif font-light mb-6">
-            The EV revolution is accelerating rapidly, but the service ecosystem is still fragmented. At MY EV SERVICE, we are building a pan-India multi-brand EV service network powered by our proprietary Autobot OS, an AI-powered digital operating system for EV service businesses.
-          </p>
-          <div className="vision-reveal bg-[#050907] border border-[#00D084]/30 rounded-2xl p-6 text-left my-8 space-y-2">
-            <span className="text-xs font-serif font-bold uppercase tracking-wider text-[#00D084]">
-              Our Mission is Simple:
-            </span>
-            <p className="text-lg font-serif font-bold text-white leading-snug">
-              Empower the next generation of entrepreneurs to build successful EV businesses while creating India's most trusted EV service infrastructure.
-            </p>
-          </div>
-          <p className="vision-reveal text-white/60 text-sm md:text-base leading-relaxed font-serif font-light mb-8">
-            We are inviting young entrepreneurs, garage owners, investors, and automotive professionals to join our network and launch their own EV service business with a field-tested, technology-driven 90-day model.
-          </p>
-
-          <button
-            onClick={scrollToForm}
-            className="vision-reveal px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer"
+      <section className="vision-section py-28 px-6 bg-[#020403] font-serif border-t border-white/10">
+        <div className="max-w-7xl mx-auto space-y-16">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+            className="text-center max-w-3xl mx-auto space-y-3"
           >
-            Apply for Franchise Opportunity
-          </button>
+            <span className="text-xs font-mono uppercase tracking-[0.3em] text-white/50 block">
+              Vision & Mission
+            </span>
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-serif font-normal text-white tracking-tight leading-[1.1]">
+              Building India's Electric Infrastructure
+            </h2>
+            <p className="text-white/60 text-xs sm:text-sm font-serif font-light max-w-xl mx-auto leading-relaxed pt-1">
+              Powering the transition to zero-emission mobility through automated diagnostic technology and decentralized service hubs.
+            </p>
+          </motion.div>
+
+          {/* 2-Column Editorial Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* Left Card: Our Vision */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+              className="lg:col-span-6 bg-[#060709] border border-white/10 rounded-[32px] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-white/20 transition-all duration-500"
+            >
+              <div className="space-y-6">
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
+                    01 / OUR VISION
+                  </span>
+                  <span className="text-xs font-mono text-white/40">Pan-India Network</span>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-normal text-white leading-snug">
+                    India's Largest Multi-Brand EV Service Network
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/70 font-serif font-light leading-relaxed">
+                    The EV revolution is accelerating rapidly, but the service ecosystem remains fragmented. At MY EV SERVICE, we are building a nationwide multi-brand service network powered by Autobot OS — our proprietary AI operating system for EV repair hubs.
+                  </p>
+                </div>
+              </div>
+
+              {/* Bottom Stat Highlights */}
+              <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <span className="text-xs font-mono text-white/40 block uppercase tracking-wider">Target Reach</span>
+                  <span className="text-lg font-serif font-medium text-white mt-1 block">100+ Master Hubs</span>
+                </div>
+                <div>
+                  <span className="text-xs font-mono text-white/40 block uppercase tracking-wider">Technology</span>
+                  <span className="text-lg font-serif font-medium text-white mt-1 block">AI Autobot OS</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Card: Our Mission */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+              className="lg:col-span-6 bg-[#050A07] border border-[#00D084]/25 rounded-[32px] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#00D084]/40 transition-all duration-500"
+            >
+              <div className="space-y-6">
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#00D084]">
+                    02 / OUR MISSION
+                  </span>
+                  <span className="text-xs font-mono text-[#00D084]">90-Day Execution</span>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-normal text-white leading-snug">
+                    Empowering Next-Gen Automotive Entrepreneurs
+                  </h3>
+                  
+                  <div className="border-l-2 border-[#00D084] pl-4 py-1 space-y-2">
+                    <p className="text-sm sm:text-base font-serif font-light text-white/90 leading-relaxed italic">
+                      "Empower young entrepreneurs, garage owners, and automotive professionals to build high-margin EV service businesses backed by field-tested training and corporate fleet contracts."
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Action Button */}
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-4">
+                <span className="text-xs font-mono text-white/50 hidden sm:inline-block">Ready to expand?</span>
+                <button
+                  type="button"
+                  onClick={scrollToForm}
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-black font-sans font-semibold text-xs uppercase tracking-widest hover:bg-white/90 transition-all cursor-pointer shadow-lg flex items-center justify-center gap-2"
+                >
+                  <span>Apply for Franchise</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* =========================================================================
           4. PAN-INDIA INTERACTIVE MAP WITH HOVER CARDS FOR CITIES
          ========================================================================= */}
-      <section className="py-24 px-6 bg-[#020403] font-serif">
-        <div className="max-w-7xl mx-auto">
+      <section className="map-section py-24 px-6 bg-[#020403] font-serif border-t border-white/10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+          className="max-w-7xl mx-auto"
+        >
           <IndiaFranchiseMap
             onSelectCity={(cityName, stateName) => {
               setForm((prev) => ({ ...prev, city: cityName, state: stateName }));
               scrollToForm();
             }}
           />
-        </div>
+        </motion.div>
       </section>
 
       {/* =========================================================================
@@ -770,32 +856,34 @@ function FranchisePage() {
       <FranchiseJourneyRoadmap />
 
       {/* =========================================================================
-          6. TRADITIONAL GARAGE VS MY EV SERVICE HUB INTERACTIVE COMPARISON
+          6. TRADITIONAL GARAGE VS MY EV SERVICE HUB EDITORIAL COMPARISON
          ========================================================================= */}
-      <section className="comparison-section py-24 px-6 bg-[#020403] font-serif">
+      <section className="comparison-section py-24 px-6 bg-[#020403] font-serif border-t border-white/10">
         <div className="max-w-7xl mx-auto">
-          <div className="comparison-header-reveal text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
-              <ArrowLeftRight className="w-4 h-4" /> Interactive Comparison Matrix
+          {/* Section Header */}
+          <div className="comparison-header-reveal text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-mono uppercase tracking-[0.3em] text-white/50 block mb-2">
+              Comparative Analysis
             </span>
-            <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 mb-4 tracking-tight">
-              Traditional Garage vs. MY EV SERVICE Hub
+            <h2 className="text-3xl md:text-5xl font-serif font-normal text-white tracking-tight">
+              Operational Framework
             </h2>
-            <p className="text-white/70 text-base font-serif font-light">
-              Hover & click on any feature category to inspect live visual score metrics comparing traditional mechanics with our AI Autobot OS.
+            <p className="text-white/60 text-xs sm:text-sm font-serif font-light mt-3 leading-relaxed">
+              An architectural breakdown contrasting traditional independent mechanics against the Autobot OS platform.
             </p>
           </div>
 
           {/* Feature Category Selector Tabs */}
-          <div className="comparison-tabs-reveal flex flex-wrap items-center justify-center gap-2.5 mb-10">
+          <div className="comparison-tabs-reveal flex flex-wrap items-center justify-center gap-2 mb-12">
             {COMPARISON_FEATURES.map((item, idx) => (
               <button
                 key={idx}
+                type="button"
                 onClick={() => setSelectedCompFeature(idx)}
-                className={`px-4 py-3 rounded-2xl text-xs font-serif font-bold transition-all cursor-pointer border ${
+                className={`px-5 py-2.5 rounded-full text-xs font-sans transition-all cursor-pointer border ${
                   selectedCompFeature === idx
-                    ? "bg-[#00D084] text-[#020403] border-[#00D084] scale-105 shadow-[0_0_15px_rgba(0,208,132,0.4)]"
-                    : "bg-[#050907] text-white/70 border-white/10 hover:border-white/30 hover:text-white"
+                    ? "bg-white text-black font-semibold border-white"
+                    : "bg-white/5 text-white/70 border-white/10 hover:border-white/25 hover:text-white"
                 }`}
               >
                 {item.title}
@@ -803,138 +891,112 @@ function FranchisePage() {
             ))}
           </div>
 
-          {/* Interactive Comparison Visual Display */}
+          {/* Editorial Comparison Cards Grid */}
           <div className="comparison-cards-grid grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Left: Traditional Garage Breakdown */}
-            <div className="comparison-card-left lg:col-span-6 bg-red-950/20 border-2 border-red-500/30 hover:border-red-500/60 rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 font-serif overflow-hidden">
-              <div className="space-y-5">
-                {/* Visual Image Header */}
-                <div className="relative h-44 sm:h-52 w-full rounded-2xl overflow-hidden border border-red-500/20 group">
-                  <img
-                    src="/find-services-hero.jpg"
-                    alt="Traditional Garage Visual"
-                    className="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-red-950 via-red-950/60 to-transparent" />
-                  <div className="absolute top-3 left-3 bg-red-500/90 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full backdrop-blur-md">
-                    Manual Operations
-                  </div>
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-red-200">
-                    <span>Diagnostic Tools: <strong>None</strong></span>
-                    <span className="text-red-400 font-bold">Uncertified SOPs</span>
-                  </div>
-                </div>
-
+            {/* Left Card: Traditional Workshop */}
+            <div className="comparison-card-left lg:col-span-6 bg-[#060709] border border-white/10 rounded-[32px] flex flex-col justify-between overflow-hidden transition-all duration-300">
+              {/* Card Top Content */}
+              <div className="p-8 sm:p-10 space-y-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-serif font-bold text-red-400 uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
-                    OLD ERA TRADITIONAL GARAGE
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
+                    CONVENTIONAL WORKSHOP
                   </span>
-                  <span className="text-xs font-serif font-bold text-red-400">
-                    Score: {COMPARISON_FEATURES[selectedCompFeature].tradScore}/100
+                  <span className="text-xs font-mono text-white/40">
+                    {COMPARISON_FEATURES[selectedCompFeature].tradScore}% Efficiency
                   </span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-serif font-bold text-white">
-                  Fragmented & Manual Operations
-                </h3>
-
-                <div className="bg-[#020503] border border-white/10 rounded-2xl p-4 space-y-2">
-                  <span className="text-[11px] text-white/50 block font-serif">
-                    CURRENT FEATURE STATUS:
-                  </span>
-                  <p className="text-sm font-serif font-bold text-red-300 flex items-start gap-2">
-                    <span className="text-red-400 font-black">✕</span>
-                    <span>{COMPARISON_FEATURES[selectedCompFeature].traditional}</span>
+                <div className="space-y-2">
+                  <h3 className="text-xl sm:text-2xl font-serif font-medium text-white/90">
+                    Manual & Fragmented Operations
+                  </h3>
+                  <p className="text-xs text-white/50 leading-relaxed font-serif">
+                    {COMPARISON_FEATURES[selectedCompFeature].traditional}
                   </p>
+                </div>
+
+                {/* Quiet Progress Bar */}
+                <div className="pt-2">
+                  <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-white/30"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${COMPARISON_FEATURES[selectedCompFeature].tradScore}%` }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Visual Metric Score Bar */}
-              <div className="space-y-1.5 pt-4">
-                <div className="flex justify-between text-xs text-white/60">
-                  <span>Efficiency & Tech Rating</span>
-                  <span className="text-red-400 font-bold">
-                    {COMPARISON_FEATURES[selectedCompFeature].tradScore}%
-                  </span>
-                </div>
-                <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-red-500 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${COMPARISON_FEATURES[selectedCompFeature].tradScore}%` }}
-                    transition={{ duration: 0.6 }}
-                  />
+              {/* Full Width Image at Card Bottom */}
+              <div className="relative h-56 sm:h-64 w-full overflow-hidden mt-auto">
+                <img
+                  src="/find-services-hero.jpg"
+                  alt="Conventional Workshop"
+                  className="w-full h-full object-cover grayscale opacity-40 transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#060709] via-[#060709]/40 to-transparent" />
+                <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#060709] to-transparent pointer-events-none" />
+                <div className="absolute bottom-4 left-6 text-[11px] font-mono text-white/40">
+                  Legacy Infrastructure
                 </div>
               </div>
             </div>
 
-            {/* Right: MY EV SERVICE Hub Breakdown */}
-            <div className="comparison-card-right lg:col-span-6 bg-[#00D084]/10 border-2 border-[#00D084] rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 font-serif shadow-[0_0_35px_rgba(0,208,132,0.2)] overflow-hidden">
-              <div className="space-y-5">
-                {/* Visual Image Header */}
-                <div className="relative h-44 sm:h-52 w-full rounded-2xl overflow-hidden border border-[#00D084]/40 group">
-                  <img
-                    src="/ev-services-hero.jpg"
-                    alt="MY EV SERVICE Visual"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#04120a] via-[#04120a]/50 to-transparent" />
-                  <div className="absolute top-3 left-3 bg-[#00D084] text-[#020403] text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow-[0_0_12px_#00D084]">
-                    AI Diagnostic Bay
-                  </div>
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-[#00D084]">
-                    <span>Autobot OS: <strong>Online</strong></span>
-                    <span className="text-white font-bold">100% Certified SOPs</span>
-                  </div>
-                </div>
-
+            {/* Right Card: MY EV SERVICE Hub */}
+            <div className="comparison-card-right lg:col-span-6 bg-[#050B08] border border-[#00D084]/25 rounded-[32px] flex flex-col justify-between overflow-hidden transition-all duration-300">
+              {/* Card Top Content */}
+              <div className="p-8 sm:p-10 space-y-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-serif font-bold text-[#00D084] uppercase tracking-widest bg-[#00D084]/20 px-3 py-1 rounded-full border border-[#00D084]/40">
-                    AI AUTOBOT OS POWERED HUB
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#00D084]">
+                    MY EV SERVICE HUB
                   </span>
-                  <span className="text-xs font-serif font-bold text-[#00D084]">
-                    Score: {COMPARISON_FEATURES[selectedCompFeature].myevScore}/100
+                  <span className="text-xs font-mono text-[#00D084]">
+                    {COMPARISON_FEATURES[selectedCompFeature].myevScore}% Efficiency
                   </span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-serif font-bold text-white">
-                  Automated & High-Yield EV Ecosystem
-                </h3>
-
-                <div className="bg-[#020503] border border-[#00D084]/30 rounded-2xl p-4 space-y-2">
-                  <span className="text-[11px] text-[#00D084] block font-serif font-bold">
-                    AUTOBOT OS ADVANTAGE:
-                  </span>
-                  <p className="text-sm font-serif font-bold text-white flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
-                    <span>{COMPARISON_FEATURES[selectedCompFeature].myev}</span>
+                <div className="space-y-2">
+                  <h3 className="text-xl sm:text-2xl font-serif font-medium text-white">
+                    Automated & High-Yield Ecosystem
+                  </h3>
+                  <p className="text-xs text-white/80 leading-relaxed font-serif">
+                    {COMPARISON_FEATURES[selectedCompFeature].myev}
                   </p>
+                </div>
+
+                {/* Quiet Progress Bar */}
+                <div className="pt-2">
+                  <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-[#00D084]/80"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${COMPARISON_FEATURES[selectedCompFeature].myevScore}%` }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Visual Metric Score Bar */}
-              <div className="space-y-1.5 pt-4">
-                <div className="flex justify-between text-xs text-white/60">
-                  <span>Efficiency & Tech Rating</span>
-                  <span className="text-[#00D084] font-bold">
-                    {COMPARISON_FEATURES[selectedCompFeature].myevScore}%
-                  </span>
-                </div>
-                <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-[#00D084] rounded-full shadow-[0_0_12px_#00D084]"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${COMPARISON_FEATURES[selectedCompFeature].myevScore}%` }}
-                    transition={{ duration: 0.6 }}
-                  />
+              {/* Full Width Image at Card Bottom */}
+              <div className="relative h-56 sm:h-64 w-full overflow-hidden mt-auto">
+                <img
+                  src="/ev-services-hero.jpg"
+                  alt="MY EV SERVICE Hub"
+                  className="w-full h-full object-cover opacity-75 transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050B08] via-[#050B08]/40 to-transparent" />
+                <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#050B08] to-transparent pointer-events-none" />
+                <div className="absolute bottom-4 left-6 text-[11px] font-mono text-[#00D084]">
+                  Autobot OS Powered
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Feature Context Description Banner */}
-          <div className="mt-8 bg-[#050907] border border-white/15 rounded-2xl p-6 text-center text-xs sm:text-sm text-white/80 font-serif">
-            <span className="font-bold text-[#00D084]">Key Takeaway: </span>
+          {/* Editorial Takeaway Banner */}
+          <div className="mt-10 bg-[#050706] border border-white/10 rounded-2xl p-6 text-center text-xs sm:text-sm text-white/70 font-serif leading-relaxed">
+            <span className="font-semibold text-white">Strategic Takeaway: </span>
             {COMPARISON_FEATURES[selectedCompFeature].desc}
           </div>
         </div>
@@ -1073,120 +1135,109 @@ function FranchisePage() {
       </section>
 
       {/* =========================================================================
-          BRAND COLLABORATIONS & PR MEDIA SHOWCASE (3D FLIP LOGOS)
+          BRAND COLLABORATIONS & PR MEDIA SHOWCASE (EDITORIAL SHOWCASE)
          ========================================================================= */}
-      <section className="brand-collaborations-section py-24 px-6 bg-[#020403] font-serif relative overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
-              <Sparkles className="w-4 h-4" /> Strategic Ecosystem Partnerships
+      <section className="brand-collaborations-section py-24 px-6 bg-[#020403] font-serif border-t border-white/10">
+        <div className="max-w-7xl mx-auto space-y-12">
+          {/* Header */}
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs font-mono uppercase tracking-[0.3em] text-white/50 block mb-2">
+              Strategic Ecosystem
             </span>
-            <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 mb-4 tracking-tight">
-              OEM Collaborations & PR Media Coverage
+            <h2 className="text-3xl md:text-5xl font-serif font-normal text-white tracking-tight">
+              OEM Collaborations & Media
             </h2>
-            <p className="text-white/70 text-xs sm:text-sm font-serif font-light">
-              Click any brand logo to flip for quick partnership specs and explore relevant PR articles, group photos & joint initiatives on the right.
+            <p className="text-white/60 text-xs sm:text-sm font-serif font-light mt-3 leading-relaxed">
+              Strategic partnerships, fleet MoUs, and national media coverage highlighting MY EV SERVICE expansion.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Left: Premium 3x3 Bento Flip Card Logo Grid */}
-            <div className="lg:col-span-6 space-y-4 flex flex-col justify-between">
-              <div className="flex items-center justify-between px-1">
-                <span className="text-xs font-bold text-white/70 uppercase tracking-widest flex items-center gap-2">
-                  <Layers className="w-3.5 h-3.5 text-[#00D084]" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Left: Premium 3x3 Bento Brand Tile Grid */}
+            <div className="lg:col-span-5 space-y-3">
+              <div className="flex items-center justify-between px-1 mb-2">
+                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/40">
                   Partner Ecosystem (3x3 Grid)
                 </span>
-                <span className="text-[10px] text-[#00D084] font-mono bg-[#00D084]/10 border border-[#00D084]/30 px-2 py-0.5 rounded-full">
-                  Click logo card to flip 3D ↻
+                <span className="text-[10px] font-mono text-white/50">
+                  Select brand to view specs
                 </span>
               </div>
 
-              {/* 3x3 Grid of 9 Premium Brand Cards */}
-              <div className="grid grid-cols-3 gap-3 sm:gap-3.5">
+              <div className="grid grid-cols-3 gap-3">
                 {BRAND_COLLABORATIONS.map((brand) => {
                   const isSelected = selectedBrandId === brand.id;
                   const isFlipped = flippedBrandId === brand.id;
                   return (
                     <div
                       key={brand.id}
-                      className="h-36 sm:h-40 cursor-pointer"
+                      className="h-32 sm:h-36 cursor-pointer"
                       style={{ perspective: 1000 }}
+                      onClick={() => {
+                        setSelectedBrandId(brand.id);
+                        setFlippedBrandId(isFlipped ? null : brand.id);
+                      }}
                     >
                       <motion.div
                         animate={{ rotateY: isFlipped ? 180 : 0 }}
-                        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
                         style={{ transformStyle: "preserve-3d" }}
-                        onClick={() => {
-                          setSelectedBrandId(brand.id);
-                          setFlippedBrandId(isFlipped ? null : brand.id);
-                        }}
-                        className={`relative w-full h-full rounded-2xl ${
+                        className={`relative w-full h-full rounded-2xl border transition-all ${
                           isSelected
-                            ? "border-2 border-[#00D084] shadow-[0_0_25px_rgba(0,208,132,0.35)] bg-gradient-to-b from-[#07160d] to-[#040906]"
-                            : "border border-white/10 hover:border-white/30 bg-[#050907] hover:bg-white/[0.04]"
+                            ? "bg-[#08120C] border-white/40 shadow-xl ring-1 ring-white/20"
+                            : "bg-[#06080A] border-white/10 hover:border-white/25 hover:bg-white/[0.04]"
                         }`}
                       >
-                        {/* Front Side: Logo, Name & Category */}
+                        {/* Front Side: Category Tag, Logo & Brand Name */}
                         <div
                           style={{ backfaceVisibility: "hidden" }}
-                          className="absolute inset-0 p-2.5 sm:p-3 flex flex-col items-center justify-between rounded-2xl"
+                          className="absolute inset-0 p-3 flex flex-col items-center justify-between text-center rounded-2xl"
                         >
-                          <div className="w-full flex items-center justify-between">
-                            <span className="text-[8px] sm:text-[9px] font-mono text-white/40 uppercase tracking-tight truncate">
-                              {brand.category}
-                            </span>
+                          <div className="w-full flex items-center justify-between text-[8px] font-mono text-white/40 uppercase tracking-wider">
+                            <span className="truncate">{brand.category.split(" ")[0]}</span>
                             {isSelected && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#00D084]" />
                             )}
                           </div>
 
-                          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black/60 border border-white/10 p-1.5 flex items-center justify-center transition-transform hover:scale-105 shadow-inner">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-black border border-white/15 p-2 flex items-center justify-center shadow-inner">
                             <img
                               src={brand.logo}
                               alt={brand.name}
-                              className="w-full h-full object-contain rounded-lg"
+                              className="w-full h-full object-contain rounded-md"
                             />
                           </div>
 
-                          <div className="text-center w-full">
-                            <span className="text-[11px] sm:text-xs font-bold text-white block truncate hover:text-[#00D084] transition-colors leading-tight">
-                              {brand.name}
-                            </span>
-                            <span className="text-[8px] text-[#00D084] block font-mono">
-                              Inspect ↻
-                            </span>
-                          </div>
+                          <span className="text-[11px] sm:text-xs font-serif font-medium text-white truncate w-full">
+                            {brand.name}
+                          </span>
                         </div>
 
-                        {/* Back Side: Partnership Specs */}
+                        {/* Back Side: Specs Overview */}
                         <div
                           style={{
                             backfaceVisibility: "hidden",
                             transform: "rotateY(180deg)",
                           }}
-                          className="absolute inset-0 p-3 bg-[#08130c] border border-[#00D084]/50 rounded-2xl flex flex-col justify-between text-left"
+                          className="absolute inset-0 p-3 bg-[#07130D] border border-white/30 rounded-2xl flex flex-col justify-between text-left"
                         >
                           <div>
-                            <span className="text-[9px] sm:text-[10px] font-bold text-[#00D084] uppercase tracking-wider block mb-1 border-b border-[#00D084]/20 pb-0.5 truncate">
-                              {brand.name} Specs
+                            <span className="text-[9px] font-mono font-semibold text-[#00D084] uppercase block mb-1 truncate border-b border-white/10 pb-0.5">
+                              {brand.name}
                             </span>
-                            <div className="space-y-1 pt-1">
-                              {brand.flipStats.map((st, i) => (
-                                <div key={i} className="flex justify-between items-center text-[8px] sm:text-[9px]">
-                                  <span className="text-white/60 truncate">{st.label}:</span>
-                                  <span className="text-white font-bold shrink-0">{st.value}</span>
+                            <div className="space-y-1 pt-0.5">
+                              {brand.flipStats.slice(0, 2).map((st, i) => (
+                                <div key={i} className="text-[8px] sm:text-[9px] font-mono">
+                                  <span className="text-white/50 block truncate">{st.label}</span>
+                                  <span className="text-white font-semibold truncate">{st.value}</span>
                                 </div>
                               ))}
                             </div>
                           </div>
 
-                          <button
-                            type="button"
-                            className="w-full bg-[#00D084] text-black text-[9px] font-extrabold py-1 rounded transition-colors text-center shadow-md"
-                          >
-                            Selected →
-                          </button>
+                          <span className="text-[8px] font-mono text-[#00D084] uppercase tracking-wider block text-right">
+                            Active ✓
+                          </span>
                         </div>
                       </motion.div>
                     </div>
@@ -1195,70 +1246,86 @@ function FranchisePage() {
               </div>
             </div>
 
-            {/* Right: Dynamic Selected Brand Media & PR Showcase Panel */}
-            <div className="lg:col-span-6 bg-[#050a07] border border-white/15 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl flex flex-col justify-between">
+            {/* Right: Selected Brand Media Showcase Panel */}
+            <div className="lg:col-span-7 bg-[#050806] border border-white/10 rounded-[32px] p-6 sm:p-10 space-y-8">
               {(() => {
                 const activeBrand =
                   BRAND_COLLABORATIONS.find((b) => b.id === selectedBrandId) ||
                   BRAND_COLLABORATIONS[0];
                 return (
-                  <div className="space-y-6">
-                    {/* Header Banner */}
+                  <div className="space-y-8">
+                    {/* Brand Profile Banner */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-black/60 border border-[#00D084]/40 p-2 shrink-0">
+                        <div className="w-14 h-14 rounded-2xl bg-black border border-white/20 p-2 shrink-0 flex items-center justify-center">
                           <img
                             src={activeBrand.logo}
                             alt={activeBrand.name}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain rounded-lg"
                           />
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <h3 className="text-xl font-serif font-bold text-white">
+                            <h3 className="text-xl font-serif font-medium text-white">
                               {activeBrand.name}
                             </h3>
-                            <span className="text-[10px] font-mono text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 px-2 py-0.5 rounded-full uppercase">
+                            <span className="text-[10px] font-mono text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/30 px-2.5 py-0.5 rounded-full">
                               {activeBrand.category}
                             </span>
                           </div>
-                          <p className="text-xs text-white/60 font-light mt-1">
+                          <p className="text-xs text-white/60 font-serif font-light mt-1.5 leading-relaxed">
                             {activeBrand.description}
                           </p>
                         </div>
                       </div>
                     </div>
 
-                    {/* PR Articles & Group Photos Grid */}
-                    <div className="space-y-4">
-                      <h4 className="text-xs font-bold text-white/70 uppercase tracking-widest flex items-center gap-2">
-                        <ExternalLink className="w-3.5 h-3.5 text-[#00D084]" />
-                        Collaborations, MoU Photos & PR Articles
-                      </h4>
+                    {/* Partnership Specs */}
+                    <div className="grid grid-cols-3 gap-3">
+                      {activeBrand.flipStats.map((st, i) => (
+                        <div
+                          key={i}
+                          className="bg-black/50 border border-white/10 rounded-2xl p-3.5 text-left"
+                        >
+                          <span className="text-[10px] font-mono text-white/40 block truncate">
+                            {st.label}
+                          </span>
+                          <span className="text-xs sm:text-sm font-mono font-semibold text-white mt-1 block truncate">
+                            {st.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* PR & Media Coverage Articles */}
+                    <div className="space-y-4 pt-2">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/40 block">
+                        Media & Press Coverage
+                      </span>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {activeBrand.mediaShowcase.map((item) => (
                           <div
                             key={item.id}
-                            className="bg-[#080e0a] border border-white/10 hover:border-[#00D084]/50 rounded-2xl overflow-hidden group transition-all duration-300 flex flex-col justify-between shadow-md"
+                            className="bg-[#070A08] border border-white/10 rounded-2xl overflow-hidden group transition-all duration-300 flex flex-col justify-between"
                           >
                             <div>
-                              <div className="relative h-36 w-full overflow-hidden">
+                              <div className="relative h-40 w-full overflow-hidden">
                                 <img
                                   src={item.img}
                                   alt={item.title}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
                                 />
-                                <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-md border border-white/10 text-[9px] font-mono text-[#00D084] px-2 py-0.5 rounded">
+                                <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md border border-white/15 text-[9px] font-mono text-white/70 px-2.5 py-1 rounded-md">
                                   {item.tag}
                                 </div>
-                                <div className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-md text-[9px] font-mono text-white/60 px-2 py-0.5 rounded">
+                                <div className="absolute bottom-3 right-3 bg-black/80 text-[9px] font-mono text-white/50 px-2 py-0.5 rounded">
                                   {item.date}
                                 </div>
                               </div>
 
                               <div className="p-4">
-                                <h5 className="text-xs font-serif font-bold text-white group-hover:text-[#00D084] transition-colors leading-snug line-clamp-2">
+                                <h5 className="text-xs font-serif font-medium text-white/90 leading-snug line-clamp-2">
                                   {item.title}
                                 </h5>
                               </div>
@@ -1269,9 +1336,9 @@ function FranchisePage() {
                                 href={item.prUrl}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#00D084] hover:underline"
+                                className="inline-flex items-center gap-1.5 text-[11px] font-mono text-white/70 hover:text-white transition-colors"
                               >
-                                <span>Read PR & Media Article</span>
+                                <span>Read Media Article</span>
                                 <ArrowRight className="w-3 h-3" />
                               </a>
                             </div>
@@ -1290,77 +1357,76 @@ function FranchisePage() {
       {/* =========================================================================
           8. DUAL OPPOSITE MOVING MARQUEE REVIEWS & VIDEO INTERVIEWS
          ========================================================================= */}
-      <section className="testimonials-section py-24 bg-[#020403] font-serif overflow-hidden relative">
-        <div className="testimonials-header-reveal max-w-7xl mx-auto px-6 mb-12 text-center">
-          <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center justify-center gap-1.5">
-            <Quote className="w-4 h-4" /> Partner Success Stories
+      <section className="testimonials-section py-24 bg-[#020403] font-serif overflow-hidden relative border-t border-white/10">
+        <div className="testimonials-header-reveal max-w-7xl mx-auto px-6 mb-16 text-center">
+          <span className="text-xs font-mono uppercase tracking-[0.3em] text-white/50 block mb-2">
+            Verified Partner Reviews
           </span>
-          <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-serif font-normal text-white tracking-tight">
             What Our Partners Say
           </h2>
-          <p className="text-white/60 text-xs sm:text-sm font-serif font-light mt-2">
-            One line real partner reviews below & video interviews featuring live operational workshops
+          <p className="text-white/60 text-xs sm:text-sm font-serif font-light mt-3 max-w-xl mx-auto leading-relaxed">
+            Real revenue milestones, payback timelines, and operational feedback from active MY EV SERVICE hub owners.
           </p>
         </div>
 
         {/* Dual Marquee Container (Hover to Pause) */}
-        <div className="marquee-container space-y-10 relative">
+        <div className="marquee-container space-y-12 relative">
           {/* Gradient Blur Edges Overlay */}
-          <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[#020403] to-transparent z-10 pointer-events-none" />
-          <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-[#020403] to-transparent z-10 pointer-events-none" />
+          <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-[#020403] via-[#020403]/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-[#020403] via-[#020403]/80 to-transparent z-10 pointer-events-none" />
 
           {/* Row 1: One-Liner Partner Reviews Marquee */}
-          <div className="flex overflow-hidden">
-            <div className="animate-marquee-left flex gap-6">
+          <div className="flex overflow-hidden py-2">
+            <div className="animate-marquee-left flex gap-8">
               {[...PARTNER_TESTIMONIALS_ROW1, ...PARTNER_TESTIMONIALS_ROW1].map(
                 (partner, idx) => (
                   <div
                     key={`row1-${partner.id}-${idx}`}
-                    className="w-[320px] sm:w-[360px] shrink-0 bg-[#050907] border border-white/10 hover:border-[#00D084] rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-xl group hover:scale-[1.03] cursor-pointer"
+                    className="w-[380px] sm:w-[460px] md:w-[500px] shrink-0 bg-[#06080A] border border-white/10 hover:border-white/25 rounded-[32px] p-7 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-2xl group hover:-translate-y-1 cursor-pointer"
                   >
-                    <div className="space-y-3">
-                      {/* Top Header: Avatar + Author + City Badge */}
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2.5">
+                    <div className="space-y-4">
+                      {/* Top Header: Avatar + Author + Rating */}
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3.5">
                           <div
-                            className={`w-9 h-9 rounded-full bg-gradient-to-tr ${partner.avatarBg} border border-white/20 flex items-center justify-center text-white font-serif font-black text-xs shadow-sm`}
+                            className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${partner.avatarBg} border border-white/20 flex items-center justify-center text-white font-serif font-bold text-base shadow-md shrink-0`}
                           >
                             {partner.author.charAt(0)}
                           </div>
-                          <div>
-                            <h4 className="text-xs font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
+                          <div className="min-w-0">
+                            <h4 className="text-sm sm:text-base font-serif font-medium text-white group-hover:text-white/90 transition-colors truncate">
                               {partner.author}
                             </h4>
-                            <p className="text-[10px] text-white/50 font-serif">
-                              {partner.role} •{" "}
-                              <span className="text-[#00D084] font-semibold">{partner.city}</span>
+                            <p className="text-xs font-mono text-white/50 truncate mt-0.5">
+                              {partner.role} • <span className="text-white/80">{partner.city}</span>
                             </p>
                           </div>
                         </div>
 
                         {/* Rating Stars */}
-                        <div className="flex items-center gap-0.5 text-[#00D084]">
+                        <div className="flex items-center gap-1 text-amber-400 shrink-0">
                           {[...Array(partner.rating)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-[#00D084]" />
+                            <Star key={i} className="w-3.5 h-3.5 fill-current" />
                           ))}
                         </div>
                       </div>
 
-                      {/* One-Liner Green Headline */}
-                      <h5 className="text-xs sm:text-sm font-serif font-extrabold text-[#00D084] leading-snug">
+                      {/* Editorial Headline */}
+                      <h5 className="text-base sm:text-lg font-serif font-medium text-white leading-snug pt-1">
                         "{partner.headline}"
                       </h5>
 
                       {/* Quote Body */}
-                      <p className="text-[11px] text-white/70 font-serif font-light leading-relaxed line-clamp-3">
+                      <p className="text-xs sm:text-sm text-white/70 font-serif font-light leading-relaxed">
                         {partner.quote}
                       </p>
                     </div>
 
                     {/* Bottom Stat Pill */}
-                    <div className="pt-3 mt-3 border-t border-white/10 flex justify-between items-center text-[10px] font-serif">
-                      <span className="text-white/40 font-semibold">Verified Partner</span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] font-bold">
+                    <div className="pt-4 mt-6 border-t border-white/10 flex justify-between items-center text-xs font-mono">
+                      <span className="text-white/40">Verified Franchise Partner</span>
+                      <span className="px-3.5 py-1 rounded-full bg-white/5 border border-white/15 text-white font-semibold">
                         {partner.stats}
                       </span>
                     </div>
@@ -1369,77 +1435,11 @@ function FranchisePage() {
               )}
             </div>
           </div>
-
-          {/* Row 2: Partner Video Interviews Cards (Minimal & Premium Cinema Cards) */}
-          <div className="max-w-7xl mx-auto px-6 pt-6">
-            <div className="flex items-center justify-between mb-8">
-              <span className="text-xs font-serif font-bold text-white/80 uppercase tracking-widest flex items-center gap-2">
-                <Play className="w-4 h-4 text-[#00D084]" /> Video Interviews & Case Studies
-              </span>
-              <span className="text-[11px] text-[#00D084] font-mono bg-[#00D084]/10 border border-[#00D084]/30 px-3 py-1 rounded-full">
-                Tap card to play interview ▶
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {PARTNER_VIDEO_INTERVIEWS.map((vid) => (
-                <div
-                  key={vid.id}
-                  onClick={() => setActiveVideo(vid)}
-                  className="group relative h-64 sm:h-72 rounded-3xl border border-white/10 hover:border-[#00D084] bg-[#050907] overflow-hidden cursor-pointer transition-all duration-500 shadow-2xl hover:shadow-[0_0_35px_rgba(0,208,132,0.3)] hover:-translate-y-1.5 flex flex-col justify-between"
-                >
-                  {/* High Resolution Poster Image */}
-                  <img
-                    src={vid.thumbnail}
-                    alt={vid.videoTitle}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-75"
-                  />
-
-                  {/* Gradient Scrim Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#040806] via-[#040806]/40 to-black/30" />
-
-                  {/* Top Glassmorphism Badges */}
-                  <div className="relative z-10 p-4 flex items-center justify-between">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
-                      <span className="text-[10px] font-mono font-bold text-white uppercase tracking-wider">
-                        {vid.city} • {vid.model}
-                      </span>
-                    </div>
-
-                    <span className="text-[10px] font-mono font-bold text-white/80 bg-black/60 border border-white/15 px-2.5 py-1 rounded-full backdrop-blur-md">
-                      {vid.duration}
-                    </span>
-                  </div>
-
-                  {/* Center Glowing Play Button */}
-                  <div className="relative z-10 flex items-center justify-center my-auto">
-                    <div className="w-14 h-14 rounded-full bg-[#00D084] text-black flex items-center justify-center shadow-[0_0_30px_#00D084] group-hover:scale-115 transition-transform duration-300 border-2 border-white/40">
-                      <Play className="w-6 h-6 fill-black ml-1" />
-                    </div>
-                  </div>
-
-                  {/* Bottom Minimal Info Overlay */}
-                  <div className="relative z-10 p-5 pt-0 space-y-2">
-                    <h4 className="text-sm sm:text-base font-serif font-bold text-white group-hover:text-[#00D084] transition-colors leading-snug line-clamp-1">
-                      {vid.videoTitle}
-                    </h4>
-
-                    <div className="flex items-center justify-between pt-1 border-t border-white/10 text-xs">
-                      <span className="text-white/70 font-medium truncate">
-                        {vid.partnerName}
-                      </span>
-                      <span className="text-[10px] font-extrabold text-[#00D084] bg-[#00D084]/20 border border-[#00D084]/40 px-2.5 py-0.5 rounded-full shrink-0">
-                        {vid.statBadge}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
+
+      {/* Row 2: Partner Video Interviews & Case Studies 3D Curved Fan Arc */}
+      <FranchiseVideoCurvedFan onSelectVideo={setActiveVideo} />
 
       {/* =========================================================================
           DEVELOPED EV WORKSHOP CENTERS GALLERY SECTION
