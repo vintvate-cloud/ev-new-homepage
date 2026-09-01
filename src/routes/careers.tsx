@@ -25,7 +25,17 @@ import {
   Users,
   DollarSign,
   ChevronRight,
+  ChevronLeft,
   FilterX,
+  Play,
+  Sparkles,
+  Quote,
+  Video,
+  Volume2,
+  Tv,
+  Flame,
+  Eye,
+  PlayCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -173,6 +183,111 @@ const HIRING_STEPS = [
   },
 ];
 
+interface CultureVideo {
+  id: string;
+  title: string;
+  speaker: string;
+  role: string;
+  category: "Leadership" | "Tech & Diagnostics" | "Culture & Team" | "Day in the Life";
+  duration: string;
+  thumbnail: string;
+  videoUrl: string;
+  quote: string;
+  views: string;
+  tags: string[];
+  featured?: boolean;
+}
+
+const VIDEO_CATEGORIES = [
+  "All Videos",
+  "Leadership",
+  "Tech & Diagnostics",
+  "Culture & Team",
+  "Day in the Life",
+];
+
+const CULTURE_VIDEOS: CultureVideo[] = [
+  {
+    id: "cult-feat",
+    title: "Engineering India's Next-Gen Multi-Brand EV Service Network",
+    speaker: "Ashwini Tiwari",
+    role: "Founder & CEO, My EV Service",
+    category: "Leadership",
+    duration: "08:45",
+    thumbnail: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=1200&auto=format&fit=crop&q=85",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-factory-42867-large.mp4",
+    quote: "We aren't just fixing electric scooters — we are building the digital diagnostic backbone for 100M+ electric vehicles across India.",
+    views: "48K views",
+    tags: ["Vision 2030", "Founder Interview", "EV Ecosystem"],
+    featured: true,
+  },
+  {
+    id: "cult-02",
+    title: "Inside our R&D Lab: Live BMS Cell Balancing & IoT Diagnostics",
+    speaker: "Rajesh Varma",
+    role: "Lead EV Telematics & IoT Architect",
+    category: "Tech & Diagnostics",
+    duration: "05:20",
+    thumbnail: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-robotic-arm-in-a-high-tech-factory-42868-large.mp4",
+    quote: "When a battery health signal drops 2%, our IoT hub alerts the service team before the rider even feels the range dip.",
+    views: "32K views",
+    tags: ["BMS Diagnostics", "IoT Firmware", "Hardware Lab"],
+  },
+  {
+    id: "cult-03",
+    title: "Why I Switched from Legacy Automotive to My EV Service",
+    speaker: "Priya Sharma",
+    role: "Senior Field Service Specialist",
+    category: "Culture & Team",
+    duration: "04:15",
+    thumbnail: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=80",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-green-screen-41541-large.mp4",
+    quote: "The culture of rapid learning and high-voltage workshop safety standards is unlike any traditional service station in India.",
+    views: "24K views",
+    tags: ["Career Growth", "Women in EV", "Culture"],
+  },
+  {
+    id: "cult-04",
+    title: "Day in the Life of a Doorstep EV Mobile Specialist in Mumbai",
+    speaker: "Karan Desai",
+    role: "Fleet Operations Lead",
+    category: "Day in the Life",
+    duration: "06:10",
+    thumbnail: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop&q=80",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-factory-42867-large.mp4",
+    quote: "From 24/7 emergency dispatches to doorstep battery swaps, every day brings a new challenge and zero dull moments.",
+    views: "19K views",
+    tags: ["Doorstep RSA", "Field Ops", "Daily Vlogs"],
+  },
+  {
+    id: "cult-05",
+    title: "Scaling Pan-India EV Hubs: Zero-to-One Franchise Journey",
+    speaker: "Vikram Rao",
+    role: "VP of Franchise Expansion",
+    category: "Leadership",
+    duration: "07:05",
+    thumbnail: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&auto=format&fit=crop&q=80",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-robotic-arm-in-a-high-tech-factory-42868-large.mp4",
+    quote: "We empower local garage entrepreneurs to convert into state-of-the-art EV diagnostic hubs with 100% tech support.",
+    views: "29K views",
+    tags: ["Franchise Network", "Expansion", "Business Growth"],
+  },
+  {
+    id: "cult-06",
+    title: "Autobot Academy Training: Master High-Voltage Safety SOPs",
+    speaker: "Sandeep Mane",
+    role: "Chief Diagnostic Instructor",
+    category: "Tech & Diagnostics",
+    duration: "05:50",
+    thumbnail: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop&q=80",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-factory-42867-large.mp4",
+    quote: "Safety is non-negotiable. Every technician gets 120+ hours of hands-on high-voltage insulation training before hitting the hub floor.",
+    views: "41K views",
+    tags: ["HV Safety", "Autobot Academy", "Skill Upgrading"],
+  },
+];
+
 const WHY_WORK_WITH_US = [
   {
     icon: TrendingUp,
@@ -201,6 +316,21 @@ function CareersPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedJob, setSelectedJob] = useState<JobPosition | null>(null);
   const [applyModalOpen, setApplyModalOpen] = useState(false);
+
+  // Culture Videos & 3D Carousel State
+  const [selectedVideoCategory, setSelectedVideoCategory] = useState("All Videos");
+  const [selectedCultureVideo, setSelectedCultureVideo] = useState<CultureVideo | null>(null);
+  const [currentVideoIdx, setCurrentVideoIdx] = useState(0);
+  const [isSliderHovered, setIsSliderHovered] = useState(false);
+
+  // Auto-slide effect (2-second stuck pause on each card, moving left to right)
+  useEffect(() => {
+    if (isSliderHovered) return;
+    const interval = setInterval(() => {
+      setCurrentVideoIdx((prev) => (prev + 1) % 4);
+    }, 3500); // 1.5s smooth transition + 2.0s stuck pause
+    return () => clearInterval(interval);
+  }, [isSliderHovered]);
 
   const heroTextRef = useRef<HTMLDivElement>(null);
   const contentOverlayRef = useRef<HTMLDivElement>(null);
@@ -232,6 +362,11 @@ function CareersPage() {
       return matchesDept && matchesSearch;
     });
   }, [selectedDept, searchQuery]);
+
+  const filteredCultureVideos = useMemo(() => {
+    if (selectedVideoCategory === "All Videos") return CULTURE_VIDEOS;
+    return CULTURE_VIDEOS.filter((video) => video.category === selectedVideoCategory);
+  }, [selectedVideoCategory]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -304,6 +439,25 @@ function CareersPage() {
           }
         );
       }
+
+      // Culture Videos Cards Staggered Slide Up
+      gsap.fromTo(
+        ".culture-video-card",
+        { opacity: 0, y: 55, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          stagger: 0.08,
+          duration: 0.75,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".culture-videos-grid",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
 
       // 3. Why Work With Us cards staggered 3D perspective slide-in
       gsap.fromTo(
@@ -464,6 +618,205 @@ function CareersPage() {
           className="relative z-10 bg-[#070908] min-h-screen mt-[calc(100vh-80px)] pt-12 rounded-t-[40px] border-t border-white/10 shadow-2xl"
         >
           <div ref={contentUpRef}>
+
+      {/* =========================================================================
+          1. INSIDE MY EV SERVICE: INTERVIEWS & CULTURE SHOWCASE SECTION
+         ========================================================================= */}
+      <section className="pt-20 pb-12 px-6 bg-[#020403] font-serif relative overflow-hidden">
+        {/* Glowing Background Radial Light */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#00D084]/5 blur-[140px] rounded-full pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10 space-y-14">
+          
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 text-[#00D084] text-xs font-mono font-bold uppercase tracking-widest">
+              <Sparkles className="w-3.5 h-3.5" /> Inside My EV Service
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-serif font-extrabold text-white tracking-tight">
+              Life, Leadership & <span className="text-[#00D084]">Tech Interviews</span>
+            </h2>
+            <p className="text-white/70 text-base font-serif font-light max-w-2xl mx-auto">
+              Hear directly from our founders, lead IoT architects, workshop diagnostic specialists, and field engineers about building India's #1 EV service ecosystem.
+            </p>
+
+            {/* Category Pill Filters */}
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+              {VIDEO_CATEGORIES.map((cat, idx) => (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setSelectedVideoCategory(cat);
+                    if (cat === "All Videos" || cat === "Leadership") setCurrentVideoIdx(0);
+                    else if (cat === "Tech & Diagnostics") setCurrentVideoIdx(1);
+                    else if (cat === "Culture & Team") setCurrentVideoIdx(2);
+                    else if (cat === "Day in the Life") setCurrentVideoIdx(3);
+                  }}
+                  className={`px-4 py-2 rounded-full text-xs font-serif font-bold transition-all cursor-pointer border ${
+                    selectedVideoCategory === cat
+                      ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.4)]"
+                      : "bg-white/5 text-white/70 border-white/10 hover:border-white/20 hover:text-white"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 3D Peek Auto-Sliding 4-Card Carousel */}
+          <div
+            className="relative w-full overflow-hidden py-6"
+            onMouseEnter={() => setIsSliderHovered(true)}
+            onMouseLeave={() => setIsSliderHovered(false)}
+          >
+            {/* Prev & Next Floating Navigation Buttons */}
+            <button
+              onClick={() => setCurrentVideoIdx((prev) => (prev - 1 + 4) % 4)}
+              className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-[#00D084] hover:text-[#020403] hover:border-[#00D084] transition-all cursor-pointer shadow-2xl"
+              aria-label="Previous Video"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={() => setCurrentVideoIdx((prev) => (prev + 1) % 4)}
+              className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-[#00D084] hover:text-[#020403] hover:border-[#00D084] transition-all cursor-pointer shadow-2xl"
+              aria-label="Next Video"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+
+            {/* 3D Carousel Cards Track (Active center, 10% peek blur on sides) */}
+            <div className="relative max-w-7xl mx-auto min-h-[500px] sm:min-h-[440px] flex items-center justify-center px-2 sm:px-12 overflow-hidden">
+              {CULTURE_VIDEOS.slice(0, 4).map((video, idx) => {
+                const total = 4;
+                let offset = (idx - currentVideoIdx + total) % total;
+                if (offset > total / 2) offset -= total; // -1, 0, 1, 2
+
+                const isCenter = offset === 0;
+                const isLeft = offset === -1 || (currentVideoIdx === 0 && idx === 3);
+                const isRight = offset === 1 || (currentVideoIdx === 3 && idx === 0);
+
+                return (
+                  <motion.div
+                    key={video.id}
+                    layout
+                    initial={false}
+                    animate={{
+                      x: isCenter ? "0%" : isLeft ? "-78%" : isRight ? "78%" : "0%",
+                      scale: isCenter ? 1 : 0.88,
+                      opacity: isCenter ? 1 : 0.4,
+                      filter: isCenter ? "blur(0px)" : "blur(8px)",
+                      zIndex: isCenter ? 20 : isLeft || isRight ? 10 : 0,
+                    }}
+                    transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+                    onClick={() => {
+                      if (isCenter) setSelectedCultureVideo(video);
+                      else setCurrentVideoIdx(idx);
+                    }}
+                    style={{
+                      isolate: "isolate",
+                      borderRadius: "32px",
+                      overflow: "hidden",
+                    }}
+                    className={`absolute w-[84%] sm:w-[80%] lg:w-[76%] rounded-[32px] border transition-all cursor-pointer shadow-2xl ${
+                      isCenter ? "border-[#00D084] shadow-[0_20px_50px_rgba(0,208,132,0.2)]" : "border-white/20"
+                    }`}
+                  >
+                    {/* Inner Clipped Layout Wrapper */}
+                    <div
+                      style={{ borderRadius: "31px", overflow: "hidden" }}
+                      className="w-full h-full bg-[#080d09] grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-[31px] overflow-hidden"
+                    >
+                      {/* Media Thumbnail Side */}
+                      <div className="lg:col-span-7 relative h-56 sm:h-72 lg:h-auto overflow-hidden bg-black">
+                        <img
+                          src={video.thumbnail}
+                          alt={video.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-85"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#080d09] via-transparent to-black/40" />
+
+                        {/* Top Badges */}
+                        <div className="absolute top-4 left-4 flex items-center gap-2">
+                          <span className="px-3 py-1 rounded-full bg-[#00D084] text-[#020403] text-[10px] font-mono font-extrabold uppercase tracking-wider shadow-md">
+                            Interview Video #{idx + 1}
+                          </span>
+                          <span className="px-2.5 py-1 rounded-full bg-black/80 text-white/80 text-[10px] font-mono border border-white/20">
+                            {video.duration}
+                          </span>
+                        </div>
+
+                        {/* Pulse Play Button Overlay */}
+                        {isCenter && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-16 h-16 rounded-full bg-[#00D084] text-[#020403] flex items-center justify-center shadow-[0_0_35px_rgba(0,208,132,0.9)] hover:scale-110 transition-transform">
+                              <Play className="w-7 h-7 fill-[#020403] ml-1" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Text & Quote Content Side */}
+                      <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-4 sm:space-y-6 bg-gradient-to-b from-[#0a100b] to-[#060a07]">
+                        <div className="space-y-3 sm:space-y-4">
+                          <div className="flex items-center gap-2 text-xs font-mono text-[#00D084]">
+                            <Tv className="w-4 h-4" />
+                            <span>{video.views}</span>
+                            <span>•</span>
+                            <span>{video.category}</span>
+                          </div>
+
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-white leading-snug sm:leading-tight">
+                            {video.title}
+                          </h3>
+
+                          {/* Speaker Info */}
+                          <div className="pt-2 border-t border-white/10">
+                            <div className="text-sm font-serif font-bold text-white">{video.speaker}</div>
+                            <div className="text-xs text-white/60 font-mono">{video.role}</div>
+                          </div>
+                        </div>
+
+                        {/* Key Quote Box */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-3.5 sm:p-4 relative space-y-2">
+                          <Quote className="w-5 h-5 text-[#00D084]/40 absolute top-3 right-3" />
+                          <p className="text-xs sm:text-sm text-white/80 italic font-serif leading-relaxed pr-6 line-clamp-2 sm:line-clamp-none">
+                            "{video.quote}"
+                          </p>
+                        </div>
+
+                        {/* Call To Action */}
+                        <div className="flex items-center justify-between pt-1 text-xs font-serif font-bold text-[#00D084]">
+                          <span>Watch Full Video ({video.duration})</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Bullet Indicator Dots */}
+            <div className="flex items-center justify-center gap-2.5 pt-4">
+              {CULTURE_VIDEOS.slice(0, 4).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentVideoIdx(idx)}
+                  className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                    currentVideoIdx === idx
+                      ? "w-8 bg-[#00D084] shadow-[0_0_10px_rgba(0,208,132,0.8)]"
+                      : "w-2.5 bg-white/20 hover:bg-white/40"
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
 
       {/* =========================================================================
           2. WHY WORK WITH US SECTION
@@ -881,6 +1234,73 @@ function CareersPage() {
               </div>
             </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* Culture Video Player Modal */}
+      <AnimatePresence>
+        {selectedCultureVideo && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#090e0b] border border-white/20 rounded-3xl max-w-4xl w-full p-6 sm:p-8 relative overflow-hidden shadow-2xl space-y-6 font-serif text-white"
+            >
+              {/* Glowing Top Accent */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00D084] to-transparent" />
+
+              {/* Modal Header */}
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <span className="text-[10px] font-mono text-[#00D084] uppercase font-bold tracking-widest bg-[#00D084]/15 px-3 py-1 rounded-full border border-[#00D084]/30 inline-block mb-2">
+                    {selectedCultureVideo.category} • {selectedCultureVideo.duration}
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug">
+                    {selectedCultureVideo.title}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setSelectedCultureVideo(null)}
+                  className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer border border-white/10 shrink-0 shadow-md"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Video Player Frame */}
+              <div className="relative aspect-video rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl">
+                <video
+                  src={selectedCultureVideo.videoUrl}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Speaker Bio & Key Takeaway Quote */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center bg-white/5 border border-white/10 p-5 rounded-2xl">
+                <div className="md:col-span-4 space-y-1 border-r-0 md:border-r border-white/10 pr-0 md:pr-4">
+                  <div className="text-sm font-bold text-white">{selectedCultureVideo.speaker}</div>
+                  <div className="text-xs text-[#00D084] font-mono">{selectedCultureVideo.role}</div>
+                  <div className="text-[11px] text-white/50 font-mono mt-1">👁️ {selectedCultureVideo.views}</div>
+                </div>
+                <div className="md:col-span-8 italic text-xs sm:text-sm text-white/80 font-serif leading-relaxed">
+                  "{selectedCultureVideo.quote}"
+                </div>
+              </div>
+
+              {/* Tags list */}
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                {selectedCultureVideo.tags.map((tag, idx) => (
+                  <span key={idx} className="text-[10px] font-mono bg-white/5 text-white/60 px-2.5 py-1 rounded-md border border-white/10">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
 

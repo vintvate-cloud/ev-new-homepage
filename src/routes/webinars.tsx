@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
+import Lenis from "lenis";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -271,6 +272,67 @@ function WebinarsPage() {
   const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
   const [selectedDrawerItem, setSelectedDrawerItem] = useState<any>(null);
   const [viewAllModalOpen, setViewAllModalOpen] = useState(false);
+
+  const viewAllBodyRef = useRef<HTMLDivElement>(null);
+  const viewAllContentRef = useRef<HTMLDivElement>(null);
+  const drawerBodyRef = useRef<HTMLDivElement>(null);
+  const drawerContentRef = useRef<HTMLDivElement>(null);
+
+  // Lenis Smooth Scroll setup for viewAllModalOpen (All Upcoming Live Sessions popup)
+  useEffect(() => {
+    if (!viewAllModalOpen || !viewAllBodyRef.current || !viewAllContentRef.current) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const modalLenis = new Lenis({
+      wrapper: viewAllBodyRef.current,
+      content: viewAllContentRef.current,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: true,
+    });
+
+    let rafId: number;
+    function update(time: number) {
+      modalLenis.raf(time);
+      rafId = requestAnimationFrame(update);
+    }
+    rafId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      modalLenis.destroy();
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [viewAllModalOpen]);
+
+  // Lenis Smooth Scroll setup for sideDrawerOpen
+  useEffect(() => {
+    if (!sideDrawerOpen || !drawerBodyRef.current || !drawerContentRef.current) return;
+
+    const modalLenis = new Lenis({
+      wrapper: drawerBodyRef.current,
+      content: drawerContentRef.current,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: true,
+    });
+
+    let rafId: number;
+    function update(time: number) {
+      modalLenis.raf(time);
+      rafId = requestAnimationFrame(update);
+    }
+    rafId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      modalLenis.destroy();
+    };
+  }, [sideDrawerOpen]);
 
   const handleCloseDrawer = () => {
     setSideDrawerOpen(false);
@@ -1455,8 +1517,14 @@ function WebinarsPage() {
                 </button>
 
                 {/* Main Scrollable Content */}
-                <div className="flex-1 h-0 overflow-y-auto p-8 pt-20">
-                  <span className="text-[10px] font-bold tracking-widest text-[#00D084] uppercase block mb-3">
+                <div
+                  ref={drawerBodyRef}
+                  data-lenis-prevent
+                  className="flex-1 h-0 overflow-y-auto p-8 pt-20 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                >
+                  <div ref={drawerContentRef}>
+                    <span className="text-[10px] font-bold tracking-widest text-[#00D084] uppercase block mb-3">
                     {selectedDrawerItem.category || (selectedDrawerItem.views ? "REPLAY" : "CURATED PATH")}
                   </span>
 
@@ -1538,6 +1606,7 @@ function WebinarsPage() {
                     )}
                   </div>
                 </div>
+              </div>
 
                 {/* Action Footer */}
                 <div className="p-8 border-t border-white/10 bg-[#07070a]/90 backdrop-blur-md">
@@ -1615,27 +1684,27 @@ function WebinarsPage() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 220 }}
-              className="relative w-full max-w-7xl bg-[#0a0a0f] border-t border-white/10 rounded-t-[40px] shadow-2xl flex flex-col max-h-[85vh] z-10"
+              className="relative w-[96%] max-w-[1560px] bg-[#0a0a0f] border-t border-x border-white/15 rounded-t-[44px] shadow-[0_-25px_60px_rgba(0,0,0,0.9)] flex flex-col max-h-[90vh] z-10"
             >
               {/* Premium Drag-like Handle indicator */}
               <div className="flex justify-center py-4 shrink-0">
-                <div className="w-12 h-1.5 rounded-full bg-white/20" />
+                <div className="w-14 h-1.5 rounded-full bg-white/20" />
               </div>
 
               {/* Close Button */}
               <button
                 onClick={() => setViewAllModalOpen(false)}
-                className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/10 text-white/50 hover:text-white transition-all z-20 cursor-pointer"
+                className="absolute top-6 right-6 p-2.5 rounded-full hover:bg-white/10 text-white/50 hover:text-white transition-all z-20 cursor-pointer border border-white/10 bg-white/5"
               >
                 <X className="w-5 h-5" />
               </button>
 
               {/* Modal Header */}
-              <div className="px-8 pb-6 border-b border-white/5 shrink-0 text-left">
+              <div className="px-8 sm:px-12 pb-6 border-b border-white/5 shrink-0 text-left">
                 <span className="text-[10px] font-bold tracking-widest text-[#00D084] uppercase block mb-1">
                   {activeTab === "upcoming" ? "LIVE SESSIONS" : activeTab === "archive" ? "ARCHIVE REPLAYS" : "RECOMMENDED PATHS"}
                 </span>
-                <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
                   {activeTab === "upcoming"
                     ? `All Upcoming Live Sessions (${UPCOMING_WEBINARS.length})`
                     : activeTab === "archive"
@@ -1645,8 +1714,13 @@ function WebinarsPage() {
               </div>
 
               {/* Scrollable Grid of Cards */}
-              <div className="flex-1 overflow-y-auto p-8 no-scrollbar pb-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div
+                ref={viewAllBodyRef}
+                data-lenis-prevent
+                className="flex-1 overflow-y-auto p-6 sm:p-10 pb-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
+                <div ref={viewAllContentRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {/* Render based on active tab */}
                   {activeTab === "upcoming" &&
                     UPCOMING_WEBINARS.map((item) => (
