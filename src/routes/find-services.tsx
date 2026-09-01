@@ -186,6 +186,122 @@ function Service3DCard({ srv, onBook, isCenter }: { srv: any; onBook: () => void
   );
 }
 
+// ─── City SVG Icon Component for Landmarks ──────────────────────────────────
+function CitySvgIcon({ cityId, className = "w-7 h-7" }: { cityId: string; className?: string }) {
+  const id = cityId.toLowerCase();
+
+  if (id.includes("pune")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 40H40V22L24 10L8 22V40Z" fill="url(#pune_g)" stroke="#00D084" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M18 40V28C18 24.6863 20.6863 22 24 22C27.3137 22 30 24.6863 30 28V40" fill="#030c07" stroke="#00D084" strokeWidth="2" />
+        <path d="M14 18H18M30 18H34M24 10V4" stroke="#00D084" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="24" cy="16" r="3" fill="#00D084" />
+        <defs>
+          <linearGradient id="pune_g" x1="8" y1="10" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#00D084" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#030c07" stopOpacity="0.8" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  if (id.includes("mumbai")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="38" width="36" height="4" rx="1" fill="#38bdf8" />
+        <path d="M10 38V16L14 12H34L38 16V38" stroke="#38bdf8" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M18 38V24C18 20.6863 20.6863 18 24 18C27.3137 18 30 20.6863 30 24V38" fill="#030c07" stroke="#38bdf8" strokeWidth="2" />
+        <circle cx="24" cy="11" r="4" fill="#38bdf8" fillOpacity="0.4" stroke="#38bdf8" strokeWidth="1.5" />
+        <path d="M6 38C12 36 18 40 24 38C30 36 36 40 42 38" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (id.includes("bangalore") || id.includes("bengaluru")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 40V22L24 12L38 22V40H10Z" fill="url(#blr_g)" stroke="#10b981" strokeWidth="2" />
+        <path d="M24 6V12M18 40V26H30V40" stroke="#10b981" strokeWidth="2" />
+        <path d="M25 28L21 34H26L23 40" stroke="#00D084" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <defs>
+          <linearGradient id="blr_g" x1="10" y1="12" x2="38" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#10b981" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#030c07" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  if (id.includes("delhi") || id.includes("ncr") || id.includes("gurgaon") || id.includes("noida")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 40H40V18H36V12H12V18H8V40Z" fill="url(#delhi_g)" stroke="#f59e0b" strokeWidth="2" />
+        <path d="M17 40V26C17 22.134 20.134 19 24 19C27.866 19 31 22.134 31 26V40" fill="#030c07" stroke="#f59e0b" strokeWidth="2" />
+        <path d="M12 12H36M16 8H32" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
+        <defs>
+          <linearGradient id="delhi_g" x1="8" y1="8" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#f59e0b" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#030c07" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  if (id.includes("hyderabad")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 40V14M18 40V20M30 40V20M38 40V14" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" />
+        <rect x="14" y="20" width="20" height="20" fill="url(#hyd_g)" stroke="#a855f7" strokeWidth="2" />
+        <path d="M20 40V30C20 27.7909 21.7909 26 24 26C26.2091 26 28 27.7909 28 30V40" fill="#030c07" stroke="#a855f7" strokeWidth="2" />
+        <circle cx="10" cy="10" r="3" fill="#a855f7" />
+        <circle cx="38" cy="10" r="3" fill="#a855f7" />
+        <defs>
+          <linearGradient id="hyd_g" x1="14" y1="20" x2="34" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#a855f7" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#030c07" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  if (id.includes("ahmedabad") || id.includes("surat")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 40V20C12 13.3726 17.3726 8 24 8C30.6274 8 36 13.3726 36 20V40" fill="url(#ahmed_g)" stroke="#ec4899" strokeWidth="2" />
+        <path d="M18 40V24C18 20.6863 20.6863 18 24 18C27.3137 18 30 20.6863 30 24V40" fill="#030c07" stroke="#ec4899" strokeWidth="2" />
+        <circle cx="24" cy="13" r="2.5" fill="#ec4899" />
+        <defs>
+          <linearGradient id="ahmed_g" x1="12" y1="8" x2="36" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#ec4899" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#030c07" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  return (
+    <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 40V20H18V12H30V24H40V40H8Z" fill="url(#gen_g)" stroke="#00D084" strokeWidth="2" strokeLinejoin="round" />
+      <rect x="13" y="24" width="3" height="4" fill="#00D084" />
+      <rect x="23" y="16" width="3" height="4" fill="#00D084" />
+      <rect x="23" y="24" width="3" height="4" fill="#00D084" />
+      <rect x="33" y="28" width="3" height="4" fill="#00D084" />
+      <defs>
+        <linearGradient id="gen_g" x1="8" y1="12" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#00D084" stopOpacity="0.35" />
+          <stop offset="1" stopColor="#030c07" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
 // ─── Route ─────────────────────────────────────────────────────────────────────
 export const Route = createFileRoute("/find-services")({ component: FindServicesPage });
 
@@ -203,7 +319,7 @@ function FindServicesPage() {
   const [carouselIdx, setCarouselIdx] = useState(0);
   const [isServicesPaused, setIsServicesPaused] = useState(false);
   const [activeServiceCategory, setActiveServiceCategory] = useState("All Services");
-  const [activeSubNav, setActiveSubNav] = useState("cities");
+  const [activeSubNav, setActiveSubNav] = useState("hubs");
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const isDraggingWave = useRef(false);
@@ -219,11 +335,23 @@ function FindServicesPage() {
 
   // Inline selection flow states
   const [inlineBookingOpen, setInlineBookingOpen] = useState(false);
-  const [inlineStep, setInlineStep] = useState<"brand" | "model" | "service">("brand");
+  const [inlineStep, setInlineStep] = useState<"city" | "brand" | "model" | "service">("city");
   const [inlineSelectedBrand, setInlineSelectedBrand] = useState("");
   const [inlineSelectedModel, setInlineSelectedModel] = useState("");
   const [inlineBrandSearch, setInlineBrandSearch] = useState("");
   const [inlineBrandFilter, setInlineBrandFilter] = useState<"ALL" | "2W" | "3W">("ALL");
+  const [citySearchQuery, setCitySearchQuery] = useState("");
+
+  const filteredCityCards = useMemo(() => {
+    if (!citySearchQuery.trim()) return cities;
+    const q = citySearchQuery.toLowerCase();
+    return cities.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.state.toLowerCase().includes(q) ||
+        (c.areas && c.areas.some((a) => a.toLowerCase().includes(q)))
+    );
+  }, [cities, citySearchQuery]);
 
   // Inline calculations
   const filteredInlineBrands = useMemo(() => {
@@ -322,13 +450,16 @@ function FindServicesPage() {
   useEffect(() => {
     if (!inlineBookingOpen || !inlineScrollWrapperRef.current || !inlineScrollContentRef.current) return;
 
+    const isTouchDevice = typeof window !== "undefined" && (window.innerWidth < 768 || "ontouchstart" in window);
+    if (isTouchDevice) return; // Native touch scrolling inside modal
+
     const localLenis = new Lenis({
       wrapper: inlineScrollWrapperRef.current,
       content: inlineScrollContentRef.current,
       duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
     });
 
     let rafId: number;
@@ -365,12 +496,12 @@ function FindServicesPage() {
 
   // Auto-rotate experiences & carousel
   useEffect(() => {
-    const timer = setInterval(() => setExpActiveIdx(p => (p + 1) % EXPERIENCES_DATA.length), 2000);
+    const timer = setInterval(() => setExpActiveIdx(p => (p + 1) % EXPERIENCES_DATA.length), 3000);
     return () => clearInterval(timer);
   }, []);
   useEffect(() => {
     if (isServicesPaused) return;
-    const interval = setInterval(() => setCarouselIdx(p => (p + 1) % POPULAR_SERVICES.length), 4000);
+    const interval = setInterval(() => setCarouselIdx(p => (p + 1) % POPULAR_SERVICES.length), 5000);
     return () => clearInterval(interval);
   }, [isServicesPaused]);
 
@@ -384,19 +515,26 @@ function FindServicesPage() {
 
   useEffect(() => {
     const sections = [
-      { id: "cities", el: citiesSectionRef },
+      { id: "hubs", el: citiesSectionRef },
       { id: "services", el: contentOverlayRef },
       { id: "brands", el: brandsSectionRef },
       { id: "why-us", el: whySectionRef },
       { id: "callout", el: calloutRef },
     ];
+    let ticking = false;
     const onScroll = () => {
-      const scrollY = window.scrollY + 220;
-      for (const section of [...sections].reverse()) {
-        if (section.el.current && section.el.current.offsetTop <= scrollY) {
-          setActiveSubNav(section.id);
-          break;
-        }
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY + 220;
+          for (const section of [...sections].reverse()) {
+            if (section.el.current && section.el.current.offsetTop <= scrollY) {
+              setActiveSubNav((prev) => (prev !== section.id ? section.id : prev));
+              break;
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -410,14 +548,15 @@ function FindServicesPage() {
       // 2. Hero parallax: background scales and fades as content overlay rises
       if (heroBgRef.current && contentOverlayRef.current) {
         gsap.to(heroBgRef.current, {
-          scale: 1.2,
-          opacity: 0.2,
+          scale: 1.15,
+          opacity: 0.25,
           ease: "none",
+          force3D: true,
           scrollTrigger: {
             trigger: contentOverlayRef.current,
             start: "top 100%",
             end: "top 20%",
-            scrub: 0.8,
+            scrub: 0.5,
           },
         });
       }
@@ -426,14 +565,15 @@ function FindServicesPage() {
       if (heroTextRef.current && contentOverlayRef.current) {
         gsap.to(heroTextRef.current, {
           opacity: 0,
-          scale: 0.9,
-          y: -55,
+          scale: 0.94,
+          y: -40,
           ease: "power1.out",
+          force3D: true,
           scrollTrigger: {
             trigger: contentOverlayRef.current,
             start: "top 92%",
             end: "top 32%",
-            scrub: 0.6,
+            scrub: 0.5,
           },
         });
       }
@@ -442,51 +582,50 @@ function FindServicesPage() {
       if (contentUpRef.current) {
         gsap.fromTo(
           contentUpRef.current,
-          { y: 100, opacity: 0 },
+          { y: 60, opacity: 0 },
           {
             y: 0, opacity: 1, ease: "power2.out",
+            force3D: true,
             scrollTrigger: {
               trigger: contentUpRef.current,
               start: "top 92%",
               end: "top 48%",
-              scrub: 0.6,
+              scrub: 0.5,
             },
           }
         );
       }
 
-
-
       // 6. Cities section staggered entrance
       gsap.fromTo(
         ".city-card-item",
-        { opacity: 0, y: 60, rotateX: 12, transformPerspective: 900 },
+        { opacity: 0, y: 40 },
         {
-          opacity: 1, y: 0, rotateX: 0,
-          stagger: 0.07, duration: 0.7, ease: "power3.out",
-          scrollTrigger: { trigger: ".cities-section-inner", start: "top 82%" },
+          opacity: 1, y: 0,
+          stagger: 0.05, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: ".cities-section-inner", start: "top 85%", toggleActions: "play none none none" },
         }
       );
 
-      // 7. Brand cards 3D perspective reveal on scroll
+      // 7. Brand cards reveal on scroll
       gsap.fromTo(
         ".brand-card-item",
-        { opacity: 0, scale: 0.7, y: 100, rotateY: 55, transformPerspective: 1200 },
+        { opacity: 0, scale: 0.9, y: 40 },
         {
-          opacity: 1, scale: 1, y: 0, rotateY: 0,
-          stagger: 0.08, duration: 0.95, ease: "power4.out",
-          scrollTrigger: { trigger: brandsSectionRef.current, start: "top 85%" },
+          opacity: 1, scale: 1, y: 0,
+          stagger: 0.05, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: brandsSectionRef.current, start: "top 88%", toggleActions: "play none none none" },
         }
       );
 
-      // 8. Why choose us cards flip in
+      // 8. Why choose us cards entrance
       gsap.fromTo(
         ".why-card-item",
-        { opacity: 0, y: 50, rotateY: -8, transformPerspective: 800 },
+        { opacity: 0, y: 40 },
         {
-          opacity: 1, y: 0, rotateY: 0,
-          stagger: 0.1, duration: 0.7, ease: "power3.out",
-          scrollTrigger: { trigger: whySectionRef.current, start: "top 82%" },
+          opacity: 1, y: 0,
+          stagger: 0.07, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: whySectionRef.current, start: "top 85%", toggleActions: "play none none none" },
         }
       );
 
@@ -695,6 +834,100 @@ function FindServicesPage() {
                         exit={{ opacity: 0, y: 15 }}
                         className="absolute inset-0 bg-[#030d07]/98 z-30 p-6 sm:p-7 flex flex-col justify-between"
                       >
+                        {/* CITY STEP */}
+                        {inlineStep === "city" && (
+                          <div className="flex-1 flex flex-col min-h-0 text-left">
+                            {/* Minimal Top Bar with Title and Close Button */}
+                            <div className="flex items-center justify-between mb-3 shrink-0">
+                              <div>
+                                <span className="text-[9px] uppercase font-mono font-bold text-[#00D084] block">40+ Onboarded EV Hubs</span>
+                                <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-wider">Select Your City</h4>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => setInlineBookingOpen(false)}
+                                className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            {/* Search Input & Detect Location Row */}
+                            <div className="flex items-center gap-2 mb-3 shrink-0">
+                              <div className="relative flex-1">
+                                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#00D084]" />
+                                <input
+                                  type="text"
+                                  value={citySearchQuery}
+                                  onChange={(e) => setCitySearchQuery(e.target.value)}
+                                  placeholder="Search city or area (e.g. Pune, Baner, Bandra)..."
+                                  className="w-full bg-[#020503] border border-white/15 rounded-xl pl-10 pr-3 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00D084] transition-all font-bold"
+                                />
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  handleDetectLocation();
+                                  setInlineBookingOpen(false);
+                                }}
+                                disabled={isDetectingLoc}
+                                className="px-3 py-2.5 rounded-xl bg-[#00D084]/15 border border-[#00D084]/40 hover:bg-[#00D084]/25 text-[#00D084] text-[10px] font-mono font-bold transition-all cursor-pointer shrink-0 flex items-center gap-1"
+                              >
+                                <Navigation className={`w-3 h-3 ${isDetectingLoc ? "animate-spin" : ""}`} />
+                                <span>Detect 📍</span>
+                              </button>
+                            </div>
+
+                            {/* Cities Grid with Beautiful SVGs */}
+                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                              <div ref={inlineScrollContentRef} className="grid grid-cols-2 gap-2.5">
+                                {filteredCityCards.map((c) => {
+                                  const isSelected = searchCity.toLowerCase() === c.name.toLowerCase();
+
+                                  return (
+                                    <button
+                                      key={c.id}
+                                      type="button"
+                                      onClick={() => {
+                                        setSearchCity(c.name);
+                                        setSelectedCity(c.name);
+                                        setInlineBookingOpen(false);
+                                      }}
+                                      className={`p-3 rounded-2xl border transition-all text-left flex flex-col justify-between cursor-pointer group relative overflow-hidden ${
+                                        isSelected
+                                          ? "bg-[#00D084]/15 border-[#00D084] shadow-[0_0_25px_rgba(0,208,132,0.35)]"
+                                          : "bg-[#090f0c] border-white/10 hover:border-[#00D084]/50 hover:bg-white/5"
+                                      }`}
+                                    >
+                                      <div className="flex items-start justify-between gap-1.5 mb-2">
+                                        <div className="w-10 h-10 rounded-xl bg-black/50 border border-white/15 flex items-center justify-center p-1.5 group-hover:scale-105 transition-transform shrink-0">
+                                          <CitySvgIcon cityId={c.id} className="w-full h-full" />
+                                        </div>
+                                        <span className="text-[9px] font-mono font-extrabold text-[#00D084] bg-[#00D084]/15 px-2 py-0.5 rounded-full border border-[#00D084]/30 shrink-0">
+                                          ⚡ {c.centersCount} Hubs
+                                        </span>
+                                      </div>
+
+                                      <div>
+                                        <h5 className="text-xs font-black text-white leading-tight group-hover:text-[#00D084] transition-colors flex items-center gap-1">
+                                          {c.name}
+                                          {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0" />}
+                                        </h5>
+                                        <p className="text-[9px] text-white/50 font-medium truncate mt-0.5">{c.state}</p>
+                                        {c.areas && c.areas.length > 0 && (
+                                          <p className="text-[8.5px] text-white/40 truncate mt-1 border-t border-white/5 pt-1">
+                                            {c.areas.slice(0, 3).join(", ")}
+                                          </p>
+                                        )}
+                                      </div>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
                         {/* BRAND STEP */}
                         {inlineStep === "brand" && (
                           <div className="flex-1 flex flex-col min-h-0">
@@ -866,7 +1099,7 @@ function FindServicesPage() {
                   <form onSubmit={handleSearchSubmit} className="space-y-4">
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <label className="text-[11px] text-white/80 font-black uppercase tracking-wider block">Enter City or Area</label>
+                        <label className="text-[11px] text-white/80 font-black uppercase tracking-wider block">Select City or Location</label>
                         <button type="button" onClick={handleDetectLocation} disabled={isDetectingLoc}
                           className="text-[10px] text-[#00D084] font-mono font-bold hover:underline flex items-center gap-1 cursor-pointer bg-[#00D084]/10 px-2.5 py-0.5 rounded-full border border-[#00D084]/30 hover:bg-[#00D084]/20 transition-all">
                           <Navigation className={`w-3 h-3 text-[#00D084] ${isDetectingLoc ? "animate-spin" : "animate-pulse"}`} />
@@ -874,11 +1107,31 @@ function FindServicesPage() {
                         </button>
                       </div>
                       <div className="relative">
-                        <MapPin className="w-4 h-4 text-[#00D084] absolute left-3.5 top-3.5" />
-                        <input type="text" placeholder="e.g. Pune, Baner, Wakad, Mumbai" value={searchCity}
-                          onChange={e => { setSearchCity(e.target.value); setSelectedCity(e.target.value); }}
-                          required
-                          className="w-full bg-[#020503] border border-white/20 hover:border-[#00D084]/60 focus:border-[#00D084] focus:ring-2 focus:ring-[#00D084]/40 rounded-xl pl-10 pr-3.5 py-3 text-xs font-black text-white focus:outline-none transition-all placeholder:text-white/40 shadow-lg" />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setInlineBookingOpen(true);
+                            setInlineStep("city");
+                          }}
+                          className="w-full bg-[#020503] border border-[#00D084]/30 hover:border-[#00D084] focus:border-[#00D084] focus:ring-2 focus:ring-[#00D084]/40 rounded-xl pl-3.5 pr-4 py-3 text-xs font-black text-white text-left focus:outline-none cursor-pointer transition-all shadow-lg flex items-center justify-between group"
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            {searchCity ? (
+                              <div className="w-7 h-7 rounded-lg bg-[#00D084]/15 border border-[#00D084]/40 flex items-center justify-center p-1 shrink-0">
+                                <CitySvgIcon cityId={searchCity} className="w-5 h-5" />
+                              </div>
+                            ) : (
+                              <MapPin className="w-4 h-4 text-[#00D084] shrink-0" />
+                            )}
+                            <span className={searchCity ? "text-white font-black truncate" : "text-white/60 font-semibold"}>
+                              {searchCity ? searchCity : "Select City (Pune, Mumbai, Bangalore...)"}
+                            </span>
+                          </div>
+
+                          <span className="text-[10px] font-mono text-[#00D084] bg-[#00D084]/10 px-2 py-0.5 rounded-md border border-[#00D084]/30 shrink-0 group-hover:bg-[#00D084] group-hover:text-black transition-all">
+                            SELECT CITY →
+                          </span>
+                        </button>
                       </div>
                     </div>
                     <div>
@@ -954,7 +1207,7 @@ function FindServicesPage() {
             </div>
             <div className="flex items-center gap-1 shrink-0">
               {[
-                { id: "cities", label: "Cities" },
+                { id: "hubs", label: "Centers" },
                 { id: "services", label: "Services" },
                 { id: "how-it-works", label: "How It Works" },
                 { id: "brands", label: "Brands" },
@@ -999,89 +1252,48 @@ function FindServicesPage() {
             </section>
 
             {/* =================================================================
-                3. ALL CITIES NETWORK OR SEARCHED CITY DETAILS
+                3. SERVICE CENTERS IN SELECTED CITY
                ================================================================= */}
-            <section id="cities" ref={citiesSectionRef} className="py-20 px-6 bg-[#020403] font-serif">
-              <div className="max-w-7xl mx-auto cities-section-inner">
-                {!activeSearchedCity ? (
-                  <>
-                    <motion.div
-                      initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
-                      variants={fadeInUp}
-                      className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4"
-                    >
-                      <div>
-                        <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">Coverage</span>
-                        <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight font-sans">All Cities</h2>
-                      </div>
-                      <div className="flex items-center gap-3 text-xs font-serif font-bold">
-                        <span className="px-3.5 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] font-sans">{cities.length} {cities.length === 1 ? "city" : "cities"} in our network</span>
-                        <motion.button whileHover={{ scale: 1.04 }} onClick={() => setOnboardModalOpen(true)}
-                          className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#00D084] hover:text-[#020403] border border-white/20 text-white transition-all cursor-pointer flex items-center gap-1.5 font-sans">
-                          <Plus className="w-3.5 h-3.5" /><span>Onboard New City</span>
-                        </motion.button>
-                      </div>
-                    </motion.div>
+            {(() => {
+              const currentCityObj = activeSearchedCity || findMatchingAvailableCity(searchCity) || cities[0];
+              const cityName = currentCityObj ? currentCityObj.name : "Pune";
+              const centersList = getCityServiceCenters(cityName, searchCity);
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-                      {cities.map((city) => (
-                        <button
-                          key={city.id}
-                          type="button"
-                          onClick={() => {
-                            setActiveSearchedCity(city);
-                            setSearchCity(city.name);
-                            setSelectedCity(city.name);
-                            setTimeout(() => {
-                              scrollToSection("cities");
-                            }, 100);
-                          }}
-                          className={`city-card-item max-w-[270px] w-full h-[370px] p-7 rounded-[36px] border-2 transition-all cursor-pointer font-serif flex flex-col justify-end group hover:scale-[1.03] relative overflow-hidden text-left ${selectedCity.toLowerCase() === city.name.toLowerCase() ? "bg-[#050c08] border-[#00D084]" : "bg-[#050907] border-white/10 hover:border-[#00D084]/60"}`}
-                        >
-                          <img src={city.heroImage} alt={city.name} className="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500 pointer-events-none" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#050c08] via-[#050c08]/65 to-transparent pointer-events-none" />
-                          <div className="relative z-10">
-                            <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 backdrop-blur-md border border-[#00D084]/40 flex items-center justify-center text-[#00D084] mb-4 group-hover:scale-110 transition-transform">
-                              <MapPin className="w-6 h-6" />
-                            </div>
-                            <h3 className="text-3xl font-serif font-black text-white group-hover:text-[#00D084] transition-colors">{city.name}</h3>
+              return (
+                <section id="hubs" ref={citiesSectionRef} className="py-16 px-6 bg-[#020403] font-serif">
+                  <div className="max-w-7xl mx-auto cities-section-inner">
+                    <div className="space-y-12">
+                      {/* Header bar for city results */}
+                      <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-white/10 gap-4 text-left">
+                        <div>
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-[#00D084] text-[10px] font-black uppercase tracking-widest mb-2 font-sans">
+                            <Sparkles className="w-3.5 h-3.5 fill-[#00D084]" /> Real-Time Location Connected
                           </div>
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  // Searched City Content overlay (rendered dynamically instead of navigating)
-                  <div className="space-y-16">
-                    {/* Header bar for city results */}
-                    <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-white/10 gap-4 text-left">
-                      <div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-[#00D084] text-[10px] font-black uppercase tracking-widest mb-2 font-sans">
-                          <Sparkles className="w-3.5 h-3.5 fill-[#00D084]" /> Real-Time Location Connected
+                          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-sans">
+                            Nearest Service Centers in <span className="text-[#00D084]">{cityName}</span>
+                          </h2>
+                          <p className="text-white/70 text-sm mt-1 max-w-xl font-medium font-sans">
+                            Detected certified EV workshops sorted by real-time proximity. 100% genuine OEM spares & battery diagnostic bays on duty.
+                          </p>
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-sans">
-                          Nearest Service Centers in <span className="text-[#00D084]">{activeSearchedCity.name}</span>
-                        </h2>
-                        <p className="text-white/70 text-sm mt-1 max-w-xl font-medium font-sans">
-                          Detected certified EV workshops sorted by real-time proximity. 100% genuine OEM spares & battery diagnostic bays on duty.
-                        </p>
-                      </div>
 
-                      <button
-                        onClick={() => {
-                          setActiveSearchedCity(null);
-                          setSearchCity("");
-                          setSelectedCity("Pune");
-                        }}
-                        className="px-5 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all cursor-pointer font-sans"
-                      >
-                        ← View All Cities
-                      </button>
-                    </div>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setInlineBookingOpen(true);
+                              setInlineStep("city");
+                            }}
+                            className="px-5 py-2.5 rounded-xl bg-[#00D084]/15 border border-[#00D084]/40 hover:bg-[#00D084] hover:text-[#020403] text-xs font-bold text-[#00D084] transition-all cursor-pointer font-sans flex items-center gap-2"
+                          >
+                            <MapPin className="w-4 h-4 text-[#00D084]" /> Change City ({cityName})
+                          </button>
+                        </div>
+                      </div>
 
                     {/* Nearest Centers Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-left">
-                      {getCityServiceCenters(activeSearchedCity.name, searchCity).map((center) => (
+                      {getCityServiceCenters(cityName, searchCity).map((center) => (
                         <div
                           key={center.id}
                           className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 font-sans ${
@@ -1195,7 +1407,7 @@ function FindServicesPage() {
                           HUB INFRASTRUCTURE
                         </span>
                         <h2 className="text-3xl md:text-4xl font-black text-white mt-2 font-sans">
-                          Certified Standards in {activeSearchedCity.name}
+                          Certified Standards in {cityName}
                         </h2>
                       </div>
 
@@ -1232,9 +1444,10 @@ function FindServicesPage() {
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
-            </section>
+                </div>
+              </section>
+            );
+          })()}
 
             {/* =================================================================
                 4. POPULAR SERVICES — 3D Wave Carousel
