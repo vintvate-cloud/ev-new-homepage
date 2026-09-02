@@ -6,6 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAPTextReveal } from "../components/ui/gsap-text-reveal";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
+import RadialArcGalleryShowcase from "../components/RadialArcGalleryShowcase";
+import AucklandStyleLocationShowcase from "../components/AucklandStyleLocationShowcase";
 import {
   Star,
   MapPin,
@@ -24,6 +26,7 @@ import {
   ChevronUp,
   Play,
   ArrowRight,
+  ArrowLeft,
   Sparkles,
   Calendar,
   UserCheck,
@@ -89,7 +92,7 @@ const scaleIn: Variants = {
 };
 
 export function ServiceCentresPage() {
-  const { centerId } = Route.useParams();
+  const centerId = "pune";
 
   const containerRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLDivElement>(null);
@@ -120,6 +123,28 @@ export function ServiceCentresPage() {
 
   // FAQ State
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
+
+  // Promo Code Copied Feedback State
+  const [copiedPromo, setCopiedPromo] = useState(false);
+
+  const handleCopyPromo = () => {
+    navigator.clipboard.writeText("MYEV20");
+    setCopiedPromo(true);
+    toast.success("Promo code MYEV20 copied to clipboard!");
+    setTimeout(() => setCopiedPromo(false), 3000);
+  };
+
+  // Address Copy Feedback State
+  const [copiedAddress, setCopiedAddress] = useState(false);
+
+  const handleCopyAddress = () => {
+    navigator.clipboard.writeText(
+      "EV PRO Service Centre, SR No. 82/1, Plot No. 5, Kharadi, Near EON IT Park Phase 1, Pune - 411014, Maharashtra"
+    );
+    setCopiedAddress(true);
+    toast.success("Hub address copied to clipboard!");
+    setTimeout(() => setCopiedAddress(false), 3000);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -184,14 +209,14 @@ export function ServiceCentresPage() {
 
   // Brands list with logos/names
   const BRANDS = [
-    { name: "Ola Electric", tag: "Ola S1 Pro / Air / X" },
-    { name: "Ather Energy", tag: "Ather 450X / Apex" },
-    { name: "TVS iQube", tag: "iQube S / ST" },
-    { name: "Bajaj Chetak", tag: "Chetak Premium / Urban" },
-    { name: "Hero Electric", tag: "Optima / Nyx" },
-    { name: "Vida EV", tag: "Vida V1 Pro" },
-    { name: "Tata EV", tag: "Nexon EV / Tiago EV" },
-    { name: "MG EV", tag: "ZS EV / Comet EV" },
+    { name: "Ola Electric", tag: "Ola S1 Pro / Air / X", logo: "/brands/ola.jpeg" },
+    { name: "Ather Energy", tag: "Ather 450X / Apex", logo: "/brands/ather.jpeg" },
+    { name: "TVS iQube", tag: "iQube S / ST", logo: "/brands/tvs.webp" },
+    { name: "Bajaj Chetak", tag: "Chetak Premium / Urban", logo: "/brands/bajaj.png" },
+    { name: "Hero Electric", tag: "Optima / Nyx", logo: "/brands/hero-electric.jpeg" },
+    { name: "Tata EV", tag: "Nexon EV / Tiago EV", logo: "/brands/tata.webp" },
+    { name: "MG EV", tag: "ZS EV / Comet EV", logo: "/brands/mg.webp" },
+    { name: "Mahindra EV", tag: "XUV400 / Treo", logo: "/brands/mahindra.jpeg" },
   ];
 
   // Services Catalog
@@ -287,67 +312,64 @@ export function ServiceCentresPage() {
   const DIAGNOSTIC_TOOLS = [
     {
       name: "Battery Analyzer",
-      desc: "Cell-level voltage & internal resistance tester",
-      icon: BatteryCharging,
-      tag: "HIGH VOLTAGE",
+      bulletName: "• Battery Analyzer",
+      image: "/tools/battery-analyzer.png",
     },
     {
       name: "Motor Tester",
-      desc: "Stator winding & hall sensor diagnostic bench",
-      icon: Wrench,
-      tag: "PRECISION TEST",
+      bulletName: "Motor Tester",
+      image: "/tools/motor-tester.png",
     },
     {
       name: "BMS Diagnostic Tool",
-      desc: "CAN-bus data logging & balancing suite",
-      icon: Cpu,
-      tag: "CAN-BUS AI",
+      bulletName: "BMS Diagnostic Tool",
+      image: "/tools/bms-diagnostic.png",
     },
     {
       name: "Thermal Imaging",
-      desc: "Infrared heat spot detection camera",
-      icon: Thermometer,
-      tag: "INFRARED SCAN",
+      bulletName: "Thermal Imaging",
+      image: "/tools/thermal-imaging.png",
     },
     {
       name: "EV Scanner",
-      desc: "Multi-brand OBD-II scanner for electric 2W/3W",
-      icon: Activity,
-      tag: "MULTI-BRAND",
+      bulletName: "EV Scanner",
+      image: "/tools/ev-scanner.png",
     },
     {
       name: "Fast Charger Tester",
-      desc: "DC fast charging protocol diagnostic suite",
-      icon: Zap,
-      tag: "FAST CHARGE",
+      bulletName: "Fast Charger Tester",
+      image: "/tools/fast-charger-tester.png",
     },
   ];
 
   // Customer Reviews
   const REVIEWS = [
     {
-      name: "Rohit S.",
-      model: "Ola S1 Pro",
-      rating: 5,
-      comment: "Excellent service! Battery check was very detailed and transparent. Staff is professional and helpful.",
+      name: "Rohit Sharma",
+      role: "Ola S1 Pro Owner",
+      city: "Kharadi, Pune",
+      brandLogo: "Ola Electric",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      quote: "They tailor their solutions to our specific EV battery diagnostic needs and safety goals.",
       time: "2 days ago",
-      avatarBg: "from-blue-600 to-indigo-700",
     },
     {
-      name: "Priya K.",
-      model: "Ather 450X",
-      rating: 5,
-      comment: "Quick service and genuine parts. My scooter is running like new. Highly recommended!",
+      name: "Ananya Deshmukh",
+      role: "Ather 450X Owner",
+      city: "Viman Nagar, Pune",
+      brandLogo: "Ather Energy",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+      quote: "They organized their workshop repair workflow and internal vehicle management outstandingly.",
       time: "1 week ago",
-      avatarBg: "from-emerald-500 to-teal-700",
     },
     {
-      name: "Vikram M.",
-      model: "TVS iQube",
-      rating: 5,
-      comment: "Very good experience. They explain every issue clearly with solutions. Will definitely visit again.",
+      name: "Vikram Malhotra",
+      role: "TVS iQube S Owner",
+      city: "Hadapsar, Pune",
+      brandLogo: "TVS iQube",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+      quote: "Working with Autobot master technicians for my annual electric scooter service was a great experience.",
       time: "2 weeks ago",
-      avatarBg: "from-purple-600 to-pink-600",
     },
   ];
 
@@ -411,15 +433,15 @@ export function ServiceCentresPage() {
       {/* =========================================================================
           1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
          ========================================================================= */}
-      <div className="fixed top-0 left-0 right-0 h-screen w-full overflow-hidden bg-black z-0 flex items-center justify-center pt-20">
-        {/* Background Hero Poster Image */}
+      <div className="fixed top-0 left-0 right-0 h-screen w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center pt-20">
+        {/* Background Hero Poster Image - Realistic, bright, zero heavy black flare */}
         <img
-          src="/ev-franchise-hero.jpg"
-          alt="EV PRO Service Centre Pune"
-          className="w-full h-full object-cover object-center opacity-45 pointer-events-none"
+          src="/ev-service-centre-real-hero.png"
+          alt="EV PRO Service Centre"
+          className="w-full h-full object-cover object-center opacity-90 pointer-events-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020403] via-black/50 to-black/70 pointer-events-none" />
-        <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#020403]/50 to-[#020403] pointer-events-none" />
+        {/* Subtle scrim overlay for crisp text readability without heavy black flares */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-black/55 pointer-events-none" />
 
         {/* Hero Content Container (Fades out & scales via GSAP on scroll) */}
         <div
@@ -480,16 +502,14 @@ export function ServiceCentresPage() {
               </div>
             </div>
 
-            {/* Right Column: Find Your Service Centre Interactive Form */}
-            <div className="lg:col-span-5 bg-[#030704]/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 relative font-serif border border-white/20 shadow-2xl overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[#00D084]/20 rounded-full blur-[70px] pointer-events-none" />
-
+            {/* Right Column: Find Your Service Centre Interactive Form (True Glassmorphism) */}
+            <div className="lg:col-span-5 bg-[#050b14]/40 backdrop-blur-2xl rounded-[32px] p-6 sm:p-8 relative font-serif border border-white/20 hover:border-white/35 shadow-[0_16px_40px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300">
               <div className="mb-5 text-left relative z-10 border-b border-white/10 pb-4">
                 <h3 className="text-xl sm:text-2xl font-serif font-black text-white tracking-tight flex items-center justify-between">
                   Find Your Service Centre
                   <Search className="w-5 h-5 text-[#00D084]" />
                 </h3>
-                <p className="text-xs text-white/60 font-serif font-medium mt-1">
+                <p className="text-xs text-white/70 font-serif font-medium mt-1">
                   Get personalized services & instant price estimate
                 </p>
               </div>
@@ -502,15 +522,15 @@ export function ServiceCentresPage() {
                   <select
                     value={selectedCity}
                     onChange={(e) => setSelectedCity(e.target.value)}
-                    className="w-full bg-[#020503] hover:bg-black focus:bg-black rounded-xl px-4 py-2.5 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border border-white/20 cursor-pointer"
+                    className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
                   >
-                    <option value="Pune">Pune (Kharadi EON IT Park Hub)</option>
-                    <option value="Mumbai">Mumbai (Andheri West Hub)</option>
-                    <option value="Bangalore">Bangalore (Koramangala Hub)</option>
-                    <option value="Delhi NCR">Delhi NCR (Gurugram Hub)</option>
-                    <option value="Hyderabad">Hyderabad (HITECH City Hub)</option>
-                    <option value="Chennai">Chennai (Guindy Hub)</option>
-                    <option value="Ahmedabad">Ahmedabad (SG Highway Hub)</option>
+                    <option value="Pune" className="bg-[#040C1A] text-white">Pune (Kharadi EON IT Park Hub)</option>
+                    <option value="Mumbai" className="bg-[#040C1A] text-white">Mumbai (Andheri West Hub)</option>
+                    <option value="Bangalore" className="bg-[#040C1A] text-white">Bangalore (Koramangala Hub)</option>
+                    <option value="Delhi NCR" className="bg-[#040C1A] text-white">Delhi NCR (Gurugram Hub)</option>
+                    <option value="Hyderabad" className="bg-[#040C1A] text-white">Hyderabad (HITECH City Hub)</option>
+                    <option value="Chennai" className="bg-[#040C1A] text-white">Chennai (Guindy Hub)</option>
+                    <option value="Ahmedabad" className="bg-[#040C1A] text-white">Ahmedabad (SG Highway Hub)</option>
                   </select>
                 </div>
 
@@ -518,15 +538,15 @@ export function ServiceCentresPage() {
                   <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
                     Select Vehicle Type
                   </label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-3 gap-2.5">
                     {(["2W", "3W", "4W"] as const).map((type) => (
                       <button
                         key={type}
                         type="button"
                         onClick={() => setSelectedVehicle(type)}
-                        className={`py-2 rounded-xl text-xs font-serif font-bold transition-all border flex items-center justify-center gap-1.5 cursor-pointer ${selectedVehicle === type
-                            ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_12px_rgba(0,208,132,0.4)]"
-                            : "bg-[#020503] text-white/70 border-white/10 hover:border-white/30 hover:text-white"
+                        className={`py-2.5 rounded-2xl text-xs font-serif font-bold transition-all border flex items-center justify-center gap-1.5 cursor-pointer backdrop-blur-md ${selectedVehicle === type
+                            ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_15px_rgba(0,208,132,0.4)]"
+                            : "bg-white/[0.06] hover:bg-white/[0.12] text-white/80 border-white/15 hover:border-white/30"
                           }`}
                       >
                         <Zap className="w-3.5 h-3.5" />
@@ -544,15 +564,15 @@ export function ServiceCentresPage() {
                     <select
                       value={selectedBrand}
                       onChange={(e) => setSelectedBrand(e.target.value)}
-                      className="w-full bg-[#020503] hover:bg-black rounded-xl px-3 py-2.5 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border border-white/20 cursor-pointer"
+                      className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
                     >
-                      <option value="Ola Electric">Ola Electric</option>
-                      <option value="Ather Energy">Ather Energy</option>
-                      <option value="TVS iQube">TVS iQube</option>
-                      <option value="Bajaj Chetak">Bajaj Chetak</option>
-                      <option value="Hero Electric">Hero Electric</option>
-                      <option value="Vida EV">Vida EV</option>
-                      <option value="Tata EV">Tata EV</option>
+                      <option value="Ola Electric" className="bg-[#040C1A] text-white">Ola Electric</option>
+                      <option value="Ather Energy" className="bg-[#040C1A] text-white">Ather Energy</option>
+                      <option value="TVS iQube" className="bg-[#040C1A] text-white">TVS iQube</option>
+                      <option value="Bajaj Chetak" className="bg-[#040C1A] text-white">Bajaj Chetak</option>
+                      <option value="Hero Electric" className="bg-[#040C1A] text-white">Hero Electric</option>
+                      <option value="Vida EV" className="bg-[#040C1A] text-white">Vida EV</option>
+                      <option value="Tata EV" className="bg-[#040C1A] text-white">Tata EV</option>
                     </select>
                   </div>
 
@@ -563,20 +583,20 @@ export function ServiceCentresPage() {
                     <select
                       value={selectedModel}
                       onChange={(e) => setSelectedModel(e.target.value)}
-                      className="w-full bg-[#020503] hover:bg-black rounded-xl px-3 py-2.5 text-xs text-white font-serif font-bold focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border border-white/20 cursor-pointer"
+                      className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
                     >
-                      <option value="Ola S1 Pro">Ola S1 Pro</option>
-                      <option value="Ather 450X">Ather 450X</option>
-                      <option value="TVS iQube S">TVS iQube S</option>
-                      <option value="Chetak Premium">Chetak Premium</option>
-                      <option value="Nexon EV">Nexon EV</option>
+                      <option value="Ola S1 Pro" className="bg-[#040C1A] text-white">Ola S1 Pro</option>
+                      <option value="Ather 450X" className="bg-[#040C1A] text-white">Ather 450X</option>
+                      <option value="TVS iQube S" className="bg-[#040C1A] text-white">TVS iQube S</option>
+                      <option value="Chetak Premium" className="bg-[#040C1A] text-white">Chetak Premium</option>
+                      <option value="Nexon EV" className="bg-[#040C1A] text-white">Nexon EV</option>
                     </select>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-2 shadow-xl"
+                  className="w-full py-4 rounded-2xl bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-xs sm:text-sm font-serif font-black uppercase tracking-wider hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-3 shadow-xl"
                 >
                   Book Service Now <ArrowRight className="w-4 h-4" />
                 </button>
@@ -584,7 +604,7 @@ export function ServiceCentresPage() {
                 <div className="pt-2 text-center">
                   <a
                     href="tel:18001234567"
-                    className="text-xs font-serif font-bold text-white/70 hover:text-[#00D084] inline-flex items-center gap-1.5 transition-colors"
+                    className="text-xs font-serif font-bold text-white/80 hover:text-[#00D084] inline-flex items-center gap-1.5 transition-colors bg-white/[0.04] hover:bg-white/[0.08] px-4 py-2 rounded-xl border border-white/10"
                   >
                     <PhoneCall className="w-3.5 h-3.5 text-[#00D084]" /> Call Centre 1800-123-4567
                   </a>
@@ -607,20 +627,20 @@ export function ServiceCentresPage() {
 
         {/* CARDS RISING UP ANIMATEDLY (GSAP SCRUBBED FROM BOTTOM OVER HERO) */}
         <div ref={cardsUpRef}>
-          {/* TRUST & FEATURE BANNER (4 PILLARS STRIP) */}
-          <section className="bg-[#040805] border-y border-white/10 py-6 px-6 font-serif">
+          {/* TRUST & FEATURE BANNER (4 PILLARS STRIP - EDITORIAL MINIMAL) */}
+          <section className="bg-[#030604] border-y border-white/10 py-10 px-6 font-serif">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
-              className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6"
+              className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10"
             >
               {[
-                { title: "Genuine Parts", desc: "100% Original OEM Components", icon: ShieldCheck },
-                { title: "Quick & Reliable", desc: "On-Time Service Guarantee", icon: Clock },
-                { title: "Transparent Pricing", desc: "Zero Hidden Charges & Estimates", icon: CheckCircle2 },
-                { title: "Pick & Drop", desc: "Doorstep Pickup Available", icon: Navigation },
+                { num: "01", title: "Genuine Parts", desc: "100% Original OEM Components", icon: ShieldCheck },
+                { num: "02", title: "Quick & Reliable", desc: "60-Min Service Guarantee", icon: Clock },
+                { num: "03", title: "Transparent Pricing", desc: "Zero Hidden Fees & Live Estimate", icon: CheckCircle2 },
+                { num: "04", title: "Pick & Drop", desc: "Doorstep Pickup Across City", icon: Navigation },
               ].map((pillar, i) => {
                 const IconComponent = pillar.icon;
                 return (
@@ -628,16 +648,21 @@ export function ServiceCentresPage() {
                     key={i}
                     variants={staggerItem}
                     whileHover={{ y: -3 }}
-                    className="flex items-center gap-3 text-left transition-all"
+                    className="flex flex-col text-left space-y-2.5 transition-all group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] shrink-0">
-                      <IconComponent className="w-5 h-5" />
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono text-[#00D084] tracking-widest uppercase font-bold">
+                        PILLAR {pillar.num}
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#00D084] group-hover:bg-[#00D084]/15 group-hover:border-[#00D084]/40 transition-colors">
+                        <IconComponent className="w-4 h-4" />
+                      </div>
                     </div>
                     <div>
-                      <h4 className="text-xs sm:text-sm font-serif font-extrabold text-white">
+                      <h4 className="text-sm sm:text-base font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
                         {pillar.title}
                       </h4>
-                      <p className="text-[10px] sm:text-xs text-white/50 font-serif leading-tight">
+                      <p className="text-xs text-white/50 font-serif leading-relaxed mt-0.5">
                         {pillar.desc}
                       </p>
                     </div>
@@ -647,63 +672,63 @@ export function ServiceCentresPage() {
             </motion.div>
           </section>
 
-          {/* ABOUT EV PRO SERVICE CENTRE & VIDEO TOUR SECTION */}
-          <section className="py-24 px-6 max-w-7xl mx-auto font-serif">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* ABOUT EV PRO SERVICE CENTRE & VIDEO TOUR SECTION (HIGH EDITORIAL SHOWCASE) */}
+          <section className="py-28 px-6 max-w-7xl mx-auto font-serif">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={fadeInUp}
-                className="lg:col-span-6 space-y-6 text-left"
+                className="lg:col-span-6 space-y-7 text-left"
               >
-                <div>
-                  <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                    About Our Hub
+                <div className="space-y-2">
+                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#00D084] block">
+                    Excellence in EV Care
                   </span>
-                  <h2 className="text-3xl sm:text-5xl font-serif font-extrabold text-white mt-2 leading-tight gsap-slide-up">
-                    About EV PRO Service Centre
+                  <h2 className="text-3xl sm:text-5xl font-serif font-extrabold text-white leading-[1.15] tracking-tight gsap-slide-up">
+                    Architects of Next-Gen Electric Mobility Maintenance.
                   </h2>
                 </div>
 
                 <p className="text-sm sm:text-base text-white/80 font-serif font-light leading-relaxed">
-                  EV Pro Service Centre is your one-stop destination for all electric vehicle service and repair needs. Equipped with advanced diagnostic tools, experienced technicians, and genuine OEM parts, we ensure your EV performs at its best.
+                  EV PRO Service Centre is Pune's premier destination for electric vehicle diagnostic, battery health management, and mechanical restoration. Engineered with OEM-grade diagnostic bays, certified master technicians, and authentic component supply lines, we deliver unparalleled reliability.
                 </p>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
-                  <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-center space-y-1">
-                    <div className="text-xs text-white/50 uppercase font-bold">ESTABLISHED</div>
-                    <div className="text-xl font-black text-white">2022</div>
+                  <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-left space-y-1 hover:border-[#00D084]/40 transition-all">
+                    <div className="text-[10px] font-mono text-white/50 uppercase tracking-widest font-bold">ESTABLISHED</div>
+                    <div className="text-2xl font-serif font-extrabold text-white">2022</div>
                   </div>
-                  <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-center space-y-1">
-                    <div className="text-xs text-white/50 uppercase font-bold">TECHNICIANS</div>
-                    <div className="text-xl font-black text-[#00D084]">12+ Experts</div>
+                  <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-left space-y-1 hover:border-[#00D084]/40 transition-all">
+                    <div className="text-[10px] font-mono text-white/50 uppercase tracking-widest font-bold">EXPERT TEAM</div>
+                    <div className="text-2xl font-serif font-extrabold text-[#00D084]">12+ Techs</div>
                   </div>
-                  <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-center space-y-1">
-                    <div className="text-xs text-white/50 uppercase font-bold">SERVICES DONE</div>
-                    <div className="text-xl font-black text-white">10,000+</div>
+                  <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-left space-y-1 hover:border-[#00D084]/40 transition-all">
+                    <div className="text-[10px] font-mono text-white/50 uppercase tracking-widest font-bold">COMPLETED</div>
+                    <div className="text-2xl font-serif font-extrabold text-white">10k+ EVs</div>
                   </div>
-                  <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-center space-y-1">
-                    <div className="text-xs text-white/50 uppercase font-bold">RATING</div>
-                    <div className="text-xl font-black text-[#00D084]">4.7 / 5</div>
+                  <div className="bg-[#050907] border border-white/10 rounded-2xl p-4 text-left space-y-1 hover:border-[#00D084]/40 transition-all">
+                    <div className="text-[10px] font-mono text-white/50 uppercase tracking-widest font-bold">SATISFACTION</div>
+                    <div className="text-2xl font-serif font-extrabold text-[#00D084]">4.7 ★</div>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4 pt-2">
+                <div className="flex flex-wrap items-center gap-4 pt-4">
                   <button
                     onClick={() => toast.info("EV Pro Service Centre Pune Profile Brochure sent!")}
-                    className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-serif font-bold transition-all cursor-pointer"
+                    className="px-7 py-3.5 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/20 text-white text-xs font-serif font-bold transition-all cursor-pointer shadow-lg"
                   >
-                    Know More About Us
+                    Download Profile Brochure
                   </button>
                   <button
                     onClick={() => {
                       const el = document.getElementById("centre-location-map");
                       if (el) el.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="px-6 py-3 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer"
+                    className="px-7 py-3.5 rounded-2xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer shadow-[0_0_20px_rgba(0,208,132,0.4)]"
                   >
-                    Visit Centre
+                    Directions to Centre
                   </button>
                 </div>
               </motion.div>
@@ -715,23 +740,27 @@ export function ServiceCentresPage() {
                 variants={scaleIn}
                 className="lg:col-span-6 relative"
               >
-                <div className="relative rounded-3xl overflow-hidden border-2 border-white/15 shadow-2xl group cursor-pointer bg-black">
+                <div className="relative rounded-[32px] overflow-hidden border border-white/20 shadow-2xl group cursor-pointer bg-black">
                   <img
-                    src="/ev-franchise-hero.jpg"
+                    src="/ev-service-centre-real-hero.png"
                     alt="Watch Centre Video Tour"
-                    className="w-full h-80 sm:h-96 object-cover object-center opacity-80 group-hover:scale-105 transition-all duration-500"
+                    className="w-full h-80 sm:h-[420px] object-cover object-center opacity-85 group-hover:scale-105 transition-all duration-700 filter brightness-95"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
                   <div
                     onClick={() => setVideoTourOpen(true)}
-                    className="absolute inset-0 flex items-center justify-center flex-col gap-3"
+                    className="absolute inset-0 flex items-center justify-center flex-col gap-4"
                   >
-                    <div className="w-16 h-16 rounded-full bg-[#00D084] text-[#020403] flex items-center justify-center shadow-[0_0_30px_rgba(0,208,132,0.8)] group-hover:scale-110 transition-transform">
-                      <Play className="w-7 h-7 fill-[#020403] ml-1" />
+                    <div className="relative">
+                      <div className="absolute -inset-3 bg-[#00D084]/40 rounded-full blur-xl animate-pulse" />
+                      <div className="w-20 h-20 rounded-full bg-[#00D084] text-[#020403] flex items-center justify-center shadow-[0_0_40px_rgba(0,208,132,0.9)] group-hover:scale-110 transition-transform duration-300 relative z-10">
+                        <Play className="w-8 h-8 fill-[#020403] ml-1" />
+                      </div>
                     </div>
-                    <span className="px-4 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-xs font-serif font-extrabold text-white flex items-center gap-2">
-                      <Sparkles className="w-3.5 h-3.5 text-[#00D084]" /> Watch Centre Tour Video
+
+                    <span className="px-5 py-2 rounded-full bg-black/70 backdrop-blur-md border border-white/25 text-xs font-serif font-extrabold text-white flex items-center gap-2 shadow-xl">
+                      <Sparkles className="w-4 h-4 text-[#00D084]" /> Watch Centre Video Tour
                     </span>
                   </div>
                 </div>
@@ -739,24 +768,24 @@ export function ServiceCentresPage() {
             </div>
           </section>
 
-          {/* OUR SERVICES GRID */}
-          <section className="py-24 px-6 bg-[#030604] border-y border-white/10 font-serif">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          {/* OUR SERVICES CATALOG (EDITORIAL LUXURY CARDS) */}
+          <section className="py-28 px-6 bg-[#030604] border-y border-white/10 font-serif">
+            <div className="max-w-7xl mx-auto space-y-16">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
                 <div>
-                  <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                    Transparent EV Care
+                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#00D084] block">
+                    Transparent EV Care Catalog
                   </span>
                   <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 tracking-tight gsap-slide-up">
-                    Our Services
+                    Precision Service Catalog
                   </h2>
                 </div>
 
                 <button
                   onClick={() => toast.info("Displaying full 24-point EV service catalog!")}
-                  className="text-xs font-serif font-bold text-[#00D084] hover:underline inline-flex items-center gap-1.5"
+                  className="text-xs font-mono font-bold text-[#00D084] hover:underline inline-flex items-center gap-2 uppercase tracking-wider"
                 >
-                  View All Services <ChevronRight className="w-4 h-4" />
+                  View Full 24-Point Inspection <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
 
@@ -765,46 +794,46 @@ export function ServiceCentresPage() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               >
                 {SERVICES_LIST.map((service) => (
                   <motion.div
                     key={service.id}
                     variants={staggerItem}
-                    whileHover={{ y: -6, scale: 1.02 }}
-                    className={`bg-[#050907] border rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 relative group ${service.popular ? "border-[#00D084] shadow-[0_0_25px_rgba(0,208,132,0.15)]" : "border-white/10 hover:border-white/30"
+                    whileHover={{ y: -8 }}
+                    className={`bg-[#060a07] border rounded-[28px] p-7 sm:p-8 flex flex-col justify-between transition-all duration-500 relative group shadow-2xl ${service.popular ? "border-[#00D084]/60 shadow-[0_0_30px_rgba(0,208,132,0.15)]" : "border-white/10 hover:border-white/30"
                       }`}
                   >
                     {service.popular && (
-                      <span className="absolute top-4 right-4 bg-[#00D084] text-[#020403] text-[9px] font-serif font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                      <span className="absolute top-6 right-6 bg-[#00D084] text-[#020403] text-[9px] font-mono font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-[0_0_12px_rgba(0,208,132,0.4)]">
                         MOST POPULAR
                       </span>
                     )}
 
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div>
-                        <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
+                        <h3 className="text-xl sm:text-2xl font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
                           {service.title}
                         </h3>
-                        <p className="text-xs text-white/50 font-serif mt-0.5">
+                        <p className="text-xs text-white/50 font-serif mt-1">
                           {service.subtitle}
                         </p>
                       </div>
 
-                      <div className="flex items-baseline justify-between pt-2 border-t border-white/10">
-                        <span className="text-3xl font-serif font-extrabold text-[#00D084]">
+                      <div className="flex items-baseline justify-between pt-3 border-t border-white/10">
+                        <span className="text-3xl sm:text-4xl font-serif font-black text-[#00D084]">
                           {service.price}
                         </span>
-                        <span className="text-xs font-serif text-white/60 flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-white/40" /> {service.duration}
+                        <span className="text-xs font-mono text-white/60 flex items-center gap-1.5 bg-white/5 px-3 py-1 rounded-full border border-white/10">
+                          <Clock className="w-3.5 h-3.5 text-[#00D084]" /> {service.duration}
                         </span>
                       </div>
 
-                      <div className="space-y-2 pt-2 border-t border-white/10 text-xs font-serif text-white/80">
+                      <div className="space-y-2.5 pt-3 border-t border-white/10 text-xs font-serif text-white/80">
                         {service.features.map((feat, idx) => (
-                          <div key={idx} className="flex items-start gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0 mt-0.5" />
-                            <span>{feat}</span>
+                          <div key={idx} className="flex items-start gap-2.5">
+                            <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
+                            <span className="leading-snug">{feat}</span>
                           </div>
                         ))}
                       </div>
@@ -812,9 +841,9 @@ export function ServiceCentresPage() {
 
                     <button
                       onClick={() => handleServiceCardBook(service.title, service.price)}
-                      className="w-full mt-6 py-3 rounded-2xl bg-white/5 hover:bg-[#00D084] text-white hover:text-[#020403] border border-white/15 hover:border-[#00D084] text-xs font-serif font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                      className="w-full mt-8 py-3.5 rounded-2xl bg-white/5 hover:bg-[#00D084] text-white hover:text-[#020403] border border-white/15 hover:border-[#00D084] text-xs font-serif font-black uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-lg"
                     >
-                      Book Now
+                      Book This Service
                     </button>
                   </motion.div>
                 ))}
@@ -822,259 +851,425 @@ export function ServiceCentresPage() {
             </div>
           </section>
 
-          {/* ADVANCED TOOLS. EXPERT CARE SHOWCASE */}
-          <section className="py-24 px-6 max-w-7xl mx-auto font-serif">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                OEM Grade Infrastructure
-              </span>
-              <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-white mt-2 mb-4 tracking-tight gsap-slide-up">
-                Advanced Tools. Expert Care.
-              </h2>
-              <p className="text-white/70 text-sm sm:text-base font-serif font-light">
-                We use industry-leading tools and technology to deliver OEM-level service experience.
-              </p>
-            </div>
-
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
-            >
-              {DIAGNOSTIC_TOOLS.map((tool, idx) => {
-                const IconComp = tool.icon;
-                return (
-                  <motion.div
-                    key={idx}
-                    variants={staggerItem}
-                    whileHover={{ y: -5, scale: 1.04 }}
-                    className="bg-[#050907] border border-white/10 hover:border-[#00D084] rounded-3xl p-5 text-center flex flex-col items-center justify-between space-y-3 transition-all duration-300 group shadow-lg"
-                  >
-                    <div className="w-12 h-12 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] group-hover:scale-110 transition-transform">
-                      <IconComp className="w-6 h-6" />
-                    </div>
-
-                    <div>
-                      <h4 className="text-xs sm:text-sm font-serif font-bold text-white group-hover:text-[#00D084] transition-colors leading-snug">
-                        {tool.name}
-                      </h4>
-                      <p className="text-[10px] text-white/50 font-serif mt-1 leading-tight">
-                        {tool.desc}
-                      </p>
-                    </div>
-
-                    <span className="text-[9px] font-serif font-extrabold text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/20 px-2 py-0.5 rounded-full uppercase">
-                      {tool.tag}
-                    </span>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </section>
-
-          {/* TECH BACKED NETWORK, BRANDS & SPECIAL OFFER BANNER */}
-          <section className="py-24 px-6 bg-[#030604] border-t border-white/10 font-serif">
-            <div className="max-w-7xl mx-auto space-y-16">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  variants={fadeInUp}
-                  className="lg:col-span-4 bg-[#050907] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col justify-between shadow-xl"
-                >
-                  <div>
-                    <span className="text-xs font-serif font-bold uppercase tracking-wider text-[#00D084]">
-                      AUTOBOT OS BACKED
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1">
-                      Technology Backed Service Network
-                    </h3>
-                  </div>
-
-                  <div className="space-y-3 text-xs text-white/80 font-serif">
-                    {[
-                      "Centralized service tracking & CRM",
-                      "Real-time technician allocation & dispatch",
-                      "Digital service reports & inspection videos",
-                      "Paperless & transparent billing process",
-                      "Nationwide warranty & service support",
-                    ].map((item, idx) => (
-                      <div key={idx} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="pt-2">
-                    <span className="px-3 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] text-[11px] font-serif font-bold flex items-center justify-center gap-2">
-                      <Sparkles className="w-3.5 h-3.5" /> Powered by Autobot OS Cloud App
-                    </span>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  variants={fadeInUp}
-                  className="lg:col-span-4 bg-[#050907] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col justify-between shadow-xl text-center"
-                >
-                  <div>
-                    <span className="text-xs font-serif font-bold uppercase tracking-wider text-[#00D084]">
-                      MULTI-BRAND EXPERTISE
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1">
-                      Brands We Service
-                    </h3>
-                    <p className="text-xs text-white/50 font-serif mt-1">
-                      We service all leading EV brands with original parts
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    {BRANDS.map((brand, idx) => (
-                      <div
-                        key={idx}
-                        className="bg-[#020503] border border-white/10 hover:border-[#00D084]/50 rounded-2xl p-3 text-center space-y-0.5 transition-all"
-                      >
-                        <div className="text-xs font-serif font-bold text-white">{brand.name}</div>
-                        <div className="text-[9px] text-[#00D084] font-serif font-semibold">{brand.tag}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="text-xs text-white/50 font-serif italic">
-                    + 5 More Regional Electric 2W & 3W OEMs
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  variants={scaleIn}
-                  className="lg:col-span-4 bg-gradient-to-br from-[#05140b] via-[#020603] to-[#040c07] border-2 border-[#00D084]/60 rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col justify-between shadow-[0_0_30px_rgba(0,208,132,0.2)] relative overflow-hidden"
-                >
-                  <div className="absolute top-3 right-3 w-14 h-14 rounded-full bg-[#00D084] text-[#020403] flex items-center justify-center font-extrabold text-lg shadow-lg rotate-12">
-                    <Percent className="w-7 h-7 stroke-[3]" />
-                  </div>
-
-                  <div>
-                    <span className="text-xs font-serif font-bold uppercase tracking-wider text-[#00D084]">
-                      LIMITED TIME OFFER!
-                    </span>
-                    <h3 className="text-2xl sm:text-3xl font-serif font-black text-white mt-1 leading-snug">
-                      Get Flat <span className="text-[#00D084]">20% OFF</span> On General Service
-                    </h3>
-                    <p className="text-xs text-white/60 font-serif mt-2">
-                      Valid till 31 May 2025 across all Pune hubs
-                    </p>
-                  </div>
-
-                  <div className="bg-[#020503] border border-[#00D084]/40 rounded-2xl p-4 space-y-1 text-xs">
-                    <span className="text-[#00D084] font-bold block">PROMO CODE: MYEV20</span>
-                    <span className="text-white/70 block">Show promo code at checkout or mention over phone</span>
-                  </div>
-
-                  <button
-                    onClick={() => handleServiceCardBook("General EV Service (20% OFF)", "₹479")}
-                    className="w-full py-3.5 rounded-2xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-xl"
-                  >
-                    Book Now & Save
-                  </button>
-                </motion.div>
-              </div>
-            </div>
-          </section>
-
-          {/* WHAT OUR CUSTOMERS SAY */}
-          <section className="py-24 px-6 max-w-7xl mx-auto font-serif">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={fadeInUp}
-                className="lg:col-span-4 bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-6 text-center shadow-xl"
-              >
-                <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                  Customer Reviews
+          <section className="py-24 px-6 bg-[#020403] border-t border-white/10 font-serif">
+            <div className="max-w-7xl mx-auto space-y-14">
+              <div className="text-center max-w-2xl mx-auto space-y-3">
+                <span className="text-xs font-mono uppercase tracking-[0.3em] text-white/50 block">
+                  OEM Diagnostic Suite
                 </span>
-                <h3 className="text-5xl font-serif font-black text-white">4.7</h3>
-
-                <div className="flex items-center justify-center gap-1 text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-amber-400" />
-                  ))}
-                </div>
-
-                <p className="text-xs text-white/60 font-serif">Based on 128 verified customer reviews in Pune</p>
-
-                <div className="space-y-2 pt-4 border-t border-white/10 text-xs font-serif text-white/70">
-                  {[
-                    { star: "5 ★", pct: 78 },
-                    { star: "4 ★", pct: 14 },
-                    { star: "3 ★", pct: 5 },
-                    { star: "2 ★", pct: 2 },
-                    { star: "1 ★", pct: 1 },
-                  ].map((bar, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <span className="w-8 font-bold">{bar.star}</span>
-                      <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
-                        <div className="h-full bg-[#00D084] rounded-full" style={{ width: `${bar.pct}%` }} />
-                      </div>
-                      <span className="w-8 text-right text-white/50">{bar.pct}%</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+                <h2 className="text-3xl sm:text-5xl font-serif font-normal text-white tracking-tight">
+                  Advanced Tools & Infrastructure
+                </h2>
+                <p className="text-xs sm:text-sm text-white/60 font-serif font-light leading-relaxed pt-1">
+                  We use industry-leading diagnostic hardware and hardware scanners engineered for OEM-level precision.
+                </p>
+              </div>
 
               <motion.div
                 variants={staggerContainer}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-4"
+                viewport={{ once: true, amount: 0.1 }}
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 items-end"
+              >
+                {DIAGNOSTIC_TOOLS.map((tool, idx) => (
+                  <motion.div
+                    key={idx}
+                    variants={staggerItem}
+                    whileHover={{ y: -6 }}
+                    className="flex flex-col items-center justify-between text-center transition-all duration-300 group cursor-pointer"
+                  >
+                    {/* Floating Tool Image (Contained & Distinct) */}
+                    <div className="w-full h-44 sm:h-52 md:h-60 flex items-center justify-center p-3 relative overflow-hidden">
+                      <img
+                        src={tool.image}
+                        alt={tool.name}
+                        className="max-h-full max-w-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+
+                    {/* Tool Label */}
+                    <h4 className="text-xs sm:text-sm font-sans font-bold text-white/90 group-hover:text-[#00D084] transition-colors mt-4 tracking-tight">
+                      {tool.bulletName}
+                    </h4>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </section>
+
+          {/* TECH BACKED NETWORK, BRANDS & SPECIAL OFFER BANNER (ARCHITECTURAL DARK GLASS BENTO GRID) */}
+          <section className="py-24 px-6 bg-[#020403] border-t border-white/10 font-serif">
+            <div className="max-w-7xl mx-auto space-y-16">
+              {/* Header Label */}
+              <div className="flex flex-col items-center text-center space-y-3 max-w-2xl mx-auto">
+                <span className="text-xs font-mono uppercase tracking-[0.35em] text-[#00D084] font-bold">
+                  ECOSYSTEM & TRUST SUITE
+                </span>
+                <h2 className="text-3xl sm:text-5xl font-serif font-black tracking-tight text-white">
+                  Engineered for <span className="text-white/40 font-light">Peak Performance</span>
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                {/* CARD 1: AUTOBOT OS BACKED (CYBER TERMINAL TECH SUITE) */}
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={fadeInUp}
+                  className="lg:col-span-4 bg-[#050a07] border border-white/12 hover:border-[#00D084]/50 rounded-[32px] p-7 sm:p-9 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden group transition-all duration-500"
+                >
+                  {/* Subtle Grid Accent */}
+                  <div className="absolute inset-0 bg-[radial-gradient(#00D084_1px,transparent_1px)] [background-size:16px_16px] opacity-[0.04] pointer-events-none" />
+
+                  <div className="space-y-6 relative z-10 text-left">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 text-[#00D084] text-[10px] font-mono tracking-widest uppercase font-bold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" /> AUTOBOT OS v4.2
+                      </span>
+                      <Cpu className="w-5 h-5 text-white/40 group-hover:text-[#00D084] transition-colors" />
+                    </div>
+
+                    <div>
+                      <h3 className="text-2xl sm:text-3xl font-serif font-black text-white tracking-tight leading-tight">
+                        Technology Backed Service Network
+                      </h3>
+                      <p className="text-xs text-white/50 font-serif mt-2 leading-relaxed">
+                        End-to-end cloud telematics & real-time diagnostic pipeline.
+                      </p>
+                    </div>
+
+                    {/* Cyber Terminal Status Snippet */}
+                    <div className="bg-black/80 border border-white/10 rounded-2xl p-3.5 space-y-1 font-mono text-[11px]">
+                      <div className="flex items-center justify-between text-white/40 text-[9px] uppercase tracking-wider">
+                        <span>STATUS: ONLINE</span>
+                        <span className="text-[#00D084]">99.9% UPTIME</span>
+                      </div>
+                      <div className="text-white/80 font-semibold truncate">
+                        sys_dispatch // live_tracking_active
+                      </div>
+                    </div>
+
+                    <div className="space-y-3 text-xs text-white/80 font-serif pt-1">
+                      {[
+                        "Centralized service tracking & CRM",
+                        "Real-time technician allocation & dispatch",
+                        "Digital service reports & inspection videos",
+                        "Paperless & transparent billing process",
+                        "Nationwide warranty & service support",
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex items-start gap-3 group/item">
+                          <div className="w-2 h-2 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] shrink-0 mt-1.5 group-hover/item:scale-125 transition-transform" />
+                          <span className="leading-relaxed">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-6 relative z-10">
+                    <div className="w-full py-3.5 rounded-2xl bg-white/[0.04] border border-white/10 group-hover:border-[#00D084]/40 text-[#00D084] text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all">
+                      <Sparkles className="w-4 h-4" /> Powered by Autobot OS Cloud App
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* CARD 2: MULTI-BRAND EXPERTISE (FROSTED BRAND TILES GRID) */}
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={fadeInUp}
+                  className="lg:col-span-4 bg-[#050a07] border border-white/12 hover:border-[#00D084]/50 rounded-[32px] p-7 sm:p-9 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden group transition-all duration-500"
+                >
+                  <div className="space-y-6 relative z-10">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono tracking-widest text-[#00D084] uppercase font-bold">
+                        OEM CERTIFIED COMPATIBILITY
+                      </span>
+                      <Zap className="w-5 h-5 text-white/40 group-hover:text-[#00D084] transition-colors" />
+                    </div>
+
+                    <div className="text-left">
+                      <h3 className="text-2xl sm:text-3xl font-serif font-black text-white tracking-tight">
+                        Brands We Service
+                      </h3>
+                      <p className="text-xs text-white/50 font-serif mt-1">
+                        Factory-trained maintenance with original parts
+                      </p>
+                    </div>
+
+                    {/* Premium Asymmetric Bento Brand Grid */}
+                    <div className="grid grid-cols-12 gap-3 text-left">
+                      {/* Featured Hero Brand 1 (Ola Electric) - Spans 7 cols */}
+                      <div className="col-span-12 sm:col-span-7 bg-white/[0.04] hover:bg-[#00D084]/15 border border-white/12 hover:border-[#00D084]/60 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between transition-all duration-300 group/tile cursor-pointer backdrop-blur-md shadow-md">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <div className="w-9 h-9 rounded-xl bg-white/[0.08] border border-white/15 flex items-center justify-center p-1.5 shrink-0 group-hover/tile:scale-105 transition-transform overflow-hidden">
+                            <img src="/brands/ola.jpeg" alt="Ola Electric" className="w-full h-full object-contain filter brightness-95 group-hover/tile:brightness-100 rounded-lg" />
+                          </div>
+                          <div className="overflow-hidden">
+                            <div className="text-xs font-serif font-black text-white group-hover/tile:text-[#00D084] transition-colors truncate">Ola Electric</div>
+                            <div className="text-[9.5px] text-[#00D084] font-mono font-medium truncate">S1 Pro / Air / X</div>
+                          </div>
+                        </div>
+                        <span className="text-[9px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-2 py-0.5 rounded-full border border-[#00D084]/30 hidden sm:inline-block shrink-0">TOP</span>
+                      </div>
+
+                      {/* Featured Hero Brand 2 (Ather Energy) - Spans 5 cols */}
+                      <div className="col-span-12 sm:col-span-5 bg-white/[0.04] hover:bg-[#00D084]/15 border border-white/12 hover:border-[#00D084]/60 rounded-2xl p-3 sm:p-3.5 flex items-center gap-3 transition-all duration-300 group/tile cursor-pointer backdrop-blur-md shadow-md">
+                        <div className="w-9 h-9 rounded-xl bg-white/[0.08] border border-white/15 flex items-center justify-center p-1.5 shrink-0 group-hover/tile:scale-105 transition-transform overflow-hidden">
+                          <img src="/brands/ather.jpeg" alt="Ather Energy" className="w-full h-full object-contain filter brightness-95 group-hover/tile:brightness-100 rounded-lg" />
+                        </div>
+                        <div className="overflow-hidden">
+                          <div className="text-xs font-serif font-black text-white group-hover/tile:text-[#00D084] transition-colors truncate">Ather</div>
+                          <div className="text-[9.5px] text-[#00D084] font-mono font-medium truncate">450X / Apex</div>
+                        </div>
+                      </div>
+
+                      {/* Secondary Brands Row 1 */}
+                      {[
+                        { name: "TVS iQube", tag: "iQube ST", logo: "/brands/tvs.webp" },
+                        { name: "Tata EV", tag: "Nexon EV", logo: "/brands/tata.webp" },
+                      ].map((b, idx) => (
+                        <div
+                          key={idx}
+                          className="col-span-6 bg-white/[0.03] hover:bg-[#00D084]/10 border border-white/10 hover:border-[#00D084]/50 rounded-2xl p-3 flex items-center gap-3 transition-all duration-300 group/tile cursor-pointer backdrop-blur-md shadow-md"
+                        >
+                          <div className="w-8 h-8 rounded-xl bg-white/[0.08] border border-white/15 flex items-center justify-center p-1 shrink-0 group-hover/tile:scale-105 transition-transform overflow-hidden">
+                            <img src={b.logo} alt={b.name} className="w-full h-full object-contain filter brightness-95 group-hover/tile:brightness-100 rounded-lg" />
+                          </div>
+                          <div className="overflow-hidden">
+                            <div className="text-xs font-serif font-bold text-white group-hover/tile:text-[#00D084] transition-colors truncate">{b.name}</div>
+                            <div className="text-[9px] text-[#00D084] font-mono font-medium truncate opacity-80">{b.tag}</div>
+                          </div>
+                        </div>
+                      ))}
+
+                      {/* Secondary Brands Row 2 */}
+                      {[
+                        { name: "Bajaj Chetak", tag: "Chetak Urban", logo: "/brands/bajaj.png" },
+                        { name: "Hero Electric", tag: "Optima / Nyx", logo: "/brands/hero-electric.jpeg" },
+                      ].map((b, idx) => (
+                        <div
+                          key={idx}
+                          className="col-span-6 bg-white/[0.03] hover:bg-[#00D084]/10 border border-white/10 hover:border-[#00D084]/50 rounded-2xl p-3 flex items-center gap-3 transition-all duration-300 group/tile cursor-pointer backdrop-blur-md shadow-md"
+                        >
+                          <div className="w-8 h-8 rounded-xl bg-white/[0.08] border border-white/15 flex items-center justify-center p-1 shrink-0 group-hover/tile:scale-105 transition-transform overflow-hidden">
+                            <img src={b.logo} alt={b.name} className="w-full h-full object-contain filter brightness-95 group-hover/tile:brightness-100 rounded-lg" />
+                          </div>
+                          <div className="overflow-hidden">
+                            <div className="text-xs font-serif font-bold text-white group-hover/tile:text-[#00D084] transition-colors truncate">{b.name}</div>
+                            <div className="text-[9px] text-[#00D084] font-mono font-medium truncate opacity-80">{b.tag}</div>
+                          </div>
+                        </div>
+                      ))}
+
+                      {/* Secondary Brands Row 3 */}
+                      {[
+                        { name: "MG EV", tag: "ZS EV / Comet", logo: "/brands/mg.webp" },
+                        { name: "Mahindra EV", tag: "XUV400 / Treo", logo: "/brands/mahindra.jpeg" },
+                      ].map((b, idx) => (
+                        <div
+                          key={idx}
+                          className="col-span-6 bg-white/[0.03] hover:bg-[#00D084]/10 border border-white/10 hover:border-[#00D084]/50 rounded-2xl p-3 flex items-center gap-3 transition-all duration-300 group/tile cursor-pointer backdrop-blur-md shadow-md"
+                        >
+                          <div className="w-8 h-8 rounded-xl bg-white/[0.08] border border-white/15 flex items-center justify-center p-1 shrink-0 group-hover/tile:scale-105 transition-transform overflow-hidden">
+                            <img src={b.logo} alt={b.name} className="w-full h-full object-contain filter brightness-95 group-hover/tile:brightness-100 rounded-lg" />
+                          </div>
+                          <div className="overflow-hidden">
+                            <div className="text-xs font-serif font-bold text-white group-hover/tile:text-[#00D084] transition-colors truncate">{b.name}</div>
+                            <div className="text-[9px] text-[#00D084] font-mono font-medium truncate opacity-80">{b.tag}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-6 relative z-10 text-center">
+                    <span className="text-xs font-mono font-semibold text-white/50 tracking-wider inline-flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00D084]" /> + 5 More Regional Electric 2W & 3W OEMs
+                    </span>
+                  </div>
+                </motion.div>
+
+                {/* CARD 3: LIMITED TIME OFFER (HIGH-IMPACT MARKETING POSTER TICKET PASS) */}
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={scaleIn}
+                  className="lg:col-span-4 bg-[#030805] border-2 border-[#00D084]/60 rounded-[32px] p-7 sm:p-9 flex flex-col justify-between shadow-[0_0_50px_rgba(0,208,132,0.3)] relative overflow-hidden group transition-all duration-500 min-h-[460px]"
+                >
+                  {/* Poster Background Image Visual */}
+                  <img
+                    src="/gallery/hydraulic-lift.png"
+                    alt="EV Service Offer Marketing Poster Visual"
+                    className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.38] contrast-125 group-hover:scale-108 transition-transform duration-700 pointer-events-none"
+                  />
+
+                  {/* Dark Gradient Poster Vignette Overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/80 to-[#020503]/40 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#00D084]/15 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Digital Ticket Side Notches */}
+                  <div className="w-6 h-6 rounded-full bg-[#020403] border-r border-[#00D084]/40 absolute -left-3 top-1/2 -translate-y-1/2 z-20" />
+                  <div className="w-6 h-6 rounded-full bg-[#020403] border-l border-[#00D084]/40 absolute -right-3 top-1/2 -translate-y-1/2 z-20" />
+
+                  {/* Header Badge Row */}
+                  <div className="flex items-center justify-between relative z-10">
+                    <span className="px-3.5 py-1 rounded-full bg-[#00D084] text-[#020403] text-[10px] font-mono font-extrabold uppercase tracking-widest shadow-[0_0_20px_rgba(0,208,132,0.6)]">
+                      SPECIAL PROMO PASS
+                    </span>
+
+                    {/* Rotating Poster Discount Badge Stamp */}
+                    <div className="w-14 h-14 rounded-full bg-[#00D084] text-[#020403] flex flex-col items-center justify-center font-serif shadow-[0_0_25px_rgba(0,208,132,0.8)] rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                      <span className="text-[10px] font-mono font-black uppercase leading-none tracking-tighter">FLAT</span>
+                      <span className="text-base font-black leading-none mt-0.5">20%</span>
+                      <span className="text-[8px] font-mono font-bold uppercase leading-none">OFF</span>
+                    </div>
+                  </div>
+
+                  {/* Poster Main Content */}
+                  <div className="space-y-4 my-4 relative z-10 text-left">
+                    <div className="space-y-1.5">
+                      <div className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#00D084] tracking-widest uppercase font-bold bg-[#00D084]/10 px-2.5 py-0.5 rounded-md border border-[#00D084]/30 backdrop-blur-md">
+                        <Sparkles className="w-3 h-3" /> PUNE WORKSHOP PROMO
+                      </div>
+                      <h3 className="text-3xl sm:text-4xl font-serif font-black text-white leading-tight tracking-tight">
+                        General EV <span className="text-[#00D084] underline decoration-[#00D084]/50 underline-offset-4">Service Offer</span>
+                      </h3>
+                      <p className="text-xs text-white/70 font-serif leading-relaxed pt-1">
+                        Full 36-point telemetric diagnosis, battery SoH report & thermal scan included.
+                      </p>
+                    </div>
+
+                    {/* Interactive Promo Coupon Voucher Block */}
+                    <div className="bg-black/80 backdrop-blur-md border-2 border-dashed border-[#00D084]/50 hover:border-[#00D084] rounded-2xl p-4 flex items-center justify-between transition-all group/coupon shadow-xl">
+                      <div className="space-y-0.5">
+                        <span className="text-[10px] font-mono text-white/50 uppercase tracking-widest block">
+                          VOUCHER PROMO CODE
+                        </span>
+                        <span className="text-lg font-mono font-black text-[#00D084] tracking-widest block">
+                          MYEV20
+                        </span>
+                      </div>
+
+                      <button
+                        onClick={handleCopyPromo}
+                        className="px-3.5 py-2 rounded-xl bg-[#00D084]/20 hover:bg-[#00D084] text-[#00D084] hover:text-[#020403] border border-[#00D084]/40 text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-md"
+                      >
+                        {copiedPromo ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" /> Copied!
+                          </>
+                        ) : (
+                          <>
+                            <Share2 className="w-3.5 h-3.5" /> Copy Code
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* CTA Button */}
+                  <div className="pt-2 relative z-10">
+                    <button
+                      onClick={() => handleServiceCardBook("General EV Service (20% OFF)", "₹479")}
+                      className="w-full py-4 rounded-2xl bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer shadow-[0_0_30px_rgba(0,208,132,0.5)] flex items-center justify-center gap-2"
+                    >
+                      Claim Offer & Book Service <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* WHAT OUR CUSTOMERS SAY - LUXURY EDITORIAL CAROUSEL */}
+          <section className="py-28 px-6 max-w-7xl mx-auto font-serif">
+            <div className="space-y-12">
+              {/* Header Row matching screenshot */}
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-white/10 pb-8">
+                <div className="space-y-2 text-left">
+                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#00D084] block">
+                    OUR REVIEWS
+                  </span>
+                  <h2 className="text-3xl sm:text-5xl font-serif font-extrabold text-white tracking-tight">
+                    What Our <span className="text-white/40 font-light">Customers</span> Say
+                  </h2>
+                </div>
+
+                {/* Circular Arrow Navigation Buttons matching screenshot */}
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => toast.info("Viewing previous reviews")}
+                    className="w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-[#00D084] hover:border-[#00D084] hover:text-[#020403] text-white flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-95"
+                    aria-label="Previous Review"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => toast.info("Viewing next reviews")}
+                    className="w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-[#00D084] hover:border-[#00D084] hover:text-[#020403] text-white flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-95"
+                    aria-label="Next Review"
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* 3 Tall Cards Grid matching screenshot */}
+              <motion.div
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.15 }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
               >
                 {REVIEWS.map((review, idx) => (
                   <motion.div
                     key={idx}
                     variants={staggerItem}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    className="bg-[#050907] border border-white/10 hover:border-[#00D084]/50 rounded-3xl p-6 flex flex-col justify-between space-y-4 shadow-xl transition-all font-serif"
+                    whileHover={{ y: -8 }}
+                    className="bg-[#060a07] border border-white/12 hover:border-white/25 rounded-[32px] p-7 sm:p-9 flex flex-col justify-between min-h-[380px] sm:min-h-[420px] shadow-2xl transition-all duration-500 group text-left relative overflow-hidden"
                   >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2.5">
-                          <div
-                            className={`w-9 h-9 rounded-full bg-gradient-to-tr ${review.avatarBg} flex items-center justify-center text-white font-black text-xs shadow-md`}
-                          >
-                            {review.name.charAt(0)}
-                          </div>
-                          <div>
-                            <h4 className="text-xs font-bold text-white">{review.name}</h4>
-                            <p className="text-[10px] text-[#00D084] font-semibold">{review.model}</p>
-                          </div>
-                        </div>
-                      </div>
+                    {/* Top Row: Circular Avatar + Brand Pill Badge */}
+                    <div className="flex items-center justify-between">
+                      <img
+                        src={review.avatar}
+                        alt={review.name}
+                        className="w-12 h-12 rounded-full object-cover border border-white/20 shadow-md group-hover:scale-105 transition-transform"
+                      />
 
-                      <div className="flex items-center gap-0.5 text-amber-400">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                        ))}
+                      <div className="px-4 py-1.5 rounded-full border border-white/15 bg-white/5 text-xs font-sans font-bold text-white/90 flex items-center gap-1.5 backdrop-blur-md">
+                        <Zap className="w-3.5 h-3.5 text-[#00D084]" />
+                        <span>{review.brandLogo}</span>
                       </div>
-
-                      <p className="text-xs text-white/80 font-light leading-relaxed">
-                        "{review.comment}"
-                      </p>
+                    </div>
+                    <div className="my-4">
+                      <span className="text-4xl sm:text-5xl text-[#00D084] font-serif leading-none block select-none opacity-90">
+                        “
+                      </span>
                     </div>
 
-                    <div className="pt-2 border-t border-white/10 text-[10px] text-white/40 font-semibold">
-                      {review.time} • Verified Customer
+                    {/* Review Quote text matching screenshot style */}
+                    <p className="text-base sm:text-xl font-serif font-medium text-white group-hover:text-white/90 transition-colors leading-snug my-2">
+                      {review.quote}
+                    </p>
+
+                    {/* Bottom Metadata Block with left vertical border matching screenshot */}
+                    <div className="pt-4 border-t border-white/10 mt-6">
+                      <div className="border-l-2 border-[#00D084] pl-3.5 space-y-0.5">
+                        <h4 className="text-sm font-sans font-bold text-white group-hover:text-[#00D084] transition-colors">
+                          {review.name}
+                        </h4>
+                        <p className="text-xs font-sans text-white/60">
+                          {review.role}
+                        </p>
+                        <p className="text-[11px] font-sans text-white/40">
+                          {review.city}
+                        </p>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
@@ -1103,123 +1298,11 @@ export function ServiceCentresPage() {
             </div>
           </section>
 
-          {/* PHOTO GALLERY & LOCATION MAP SECTION */}
-          <section className="py-24 px-6 max-w-7xl mx-auto font-serif">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-              <div className="lg:col-span-6 space-y-6">
-                <div>
-                  <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                    Workshop Inside Look
-                  </span>
-                  <h3 className="text-2xl sm:text-4xl font-serif font-extrabold text-white mt-1 gsap-slide-up">
-                    Photo Gallery
-                  </h3>
-                </div>
+          {/* RADIAL ARC DOME GALLERY SHOWCASE */}
+          <RadialArcGalleryShowcase />
 
-                <div className="flex flex-wrap items-center gap-2">
-                  {(["workshop", "team", "equipment", "vehicles"] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveGalleryTab(tab)}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-serif font-bold capitalize transition-all cursor-pointer border ${activeGalleryTab === tab
-                          ? "bg-[#00D084] text-[#020403] border-[#00D084]"
-                          : "bg-[#050907] text-white/70 border-white/10 hover:border-white/30 hover:text-white"
-                        }`}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeGalleryTab}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.3 }}
-                    className="grid grid-cols-2 gap-3"
-                  >
-                    {GALLERY_ITEMS[activeGalleryTab].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="group relative rounded-2xl overflow-hidden border border-white/15 h-36 sm:h-44 bg-black shadow-lg cursor-pointer"
-                      >
-                        <img
-                          src={item.src}
-                          alt={item.label}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-                        <span className="absolute bottom-2.5 left-2.5 right-2.5 text-[11px] font-serif font-bold text-white leading-tight">
-                          {item.label}
-                        </span>
-                      </div>
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              <div id="centre-location-map" className="lg:col-span-6 space-y-6">
-                <div>
-                  <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084]">
-                    Centre Coordinates
-                  </span>
-                  <h3 className="text-2xl sm:text-4xl font-serif font-extrabold text-white mt-1 gsap-slide-up">
-                    Find Us Here
-                  </h3>
-                </div>
-
-                <div className="bg-[#050907] border-2 border-[#00D084]/40 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3 text-xs font-serif">
-                      <MapPin className="w-5 h-5 text-[#00D084] shrink-0 mt-0.5" />
-                      <div>
-                        <h4 className="font-extrabold text-white text-sm">EV PRO Service Centre</h4>
-                        <p className="text-white/70 mt-0.5 leading-relaxed">
-                          SR No. 82/1, Plot No. 5, Kharadi, Near EON IT Park, Pune - 411014, Maharashtra, India
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-serif pt-3 border-t border-white/10">
-                      <div className="flex items-center gap-2 text-white/80">
-                        <Clock className="w-4 h-4 text-[#00D084] shrink-0" />
-                        <span>Mon - Sun 9:00 AM - 8:00 PM</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-white/80">
-                        <Phone className="w-4 h-4 text-[#00D084] shrink-0" />
-                        <span>1800-123-4567</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="relative h-44 rounded-2xl overflow-hidden border border-white/15 bg-[#020503] flex items-center justify-center group shadow-inner">
-                    <img
-                      src="/ev-franchise-hero.jpg"
-                      alt="Pune Kharadi Map"
-                      className="w-full h-full object-cover opacity-50 pointer-events-none"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" />
-
-                    <div className="relative z-10 text-center space-y-2">
-                      <div className="w-10 h-10 rounded-full bg-[#00D084] text-[#020403] flex items-center justify-center mx-auto shadow-[0_0_20px_#00D084]">
-                        <MapPin className="w-5 h-5 fill-[#020403]" />
-                      </div>
-                      <a
-                        href="https://maps.google.com/?q=EON+IT+Park+Pune"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="px-4 py-2 rounded-xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-wider inline-flex items-center gap-1.5 hover:bg-[#00e08f] transition-all cursor-pointer shadow-lg"
-                      >
-                        Get Directions <Navigation className="w-3.5 h-3.5" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+          {/* AUCKLAND/AUTEX REFERENCE LOCATION & MAP SHOWCASE */}
+          <AucklandStyleLocationShowcase />
 
           {/* FREQUENTLY ASKED QUESTIONS (ACCORDION) */}
           <section className="py-24 px-6 bg-[#030604] border-t border-white/10 font-serif">
@@ -1277,27 +1360,42 @@ export function ServiceCentresPage() {
             </div>
           </section>
 
-          {/* BOTTOM CALL TO ACTION BANNER */}
-          <section className="py-20 px-6 bg-gradient-to-r from-[#030e07] via-[#020503] to-[#041209] font-serif border-t border-white/10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D084]/15 rounded-full blur-[100px] pointer-events-none" />
-            <div className="max-w-5xl mx-auto text-center space-y-6 relative z-10">
+          {/* BRIGHT FULL-WIDTH CINEMATIC CALL TO ACTION BANNER */}
+          <section className="py-24 px-6 bg-[#040705] font-serif border-t border-white/10 relative overflow-hidden min-h-[480px] flex items-center justify-center">
+            {/* Bright Full-Width Background Photo */}
+            <img
+              src="/ev-master-workshop-hero.png"
+              alt="EV Service Master Workshop Visual"
+              className="absolute inset-0 w-full h-full object-cover object-center filter brightness-85 contrast-105 pointer-events-none transition-transform duration-1000"
+            />
+
+            {/* Subtle Vignette Gradient for Legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/50 pointer-events-none" />
+
+            {/* Floating Banner Content (No Frosted Glass Box) */}
+            <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
+              <span className="text-xs font-mono tracking-[0.3em] text-[#00D084] uppercase font-bold block">
+                EV PRO FLAGSHIP SERVICE
+              </span>
+
               <h2 className="text-3xl sm:text-5xl font-serif font-black text-white tracking-tight leading-tight gsap-slide-up">
                 Ready to Give Your EV the Best Care?
               </h2>
-              <p className="text-sm sm:text-base text-white/70 font-serif font-light max-w-2xl mx-auto">
+
+              <p className="text-sm sm:text-base text-white/90 font-serif font-light max-w-2xl mx-auto leading-relaxed">
                 Book your service today and experience the difference with AI-powered diagnostics and genuine OEM parts.
               </p>
 
-              <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
                 <button
                   onClick={() => handleServiceCardBook("General EV Service", "₹599")}
-                  className="px-8 py-4 rounded-2xl bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-2xl"
+                  className="px-8 py-4 rounded-full bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-xs font-serif font-black uppercase tracking-widest transition-all cursor-pointer shadow-2xl hover:scale-105"
                 >
                   Book Service Now
                 </button>
                 <a
                   href="tel:18001234567"
-                  className="px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-serif font-bold uppercase tracking-widest transition-all cursor-pointer flex items-center gap-2"
+                  className="px-8 py-4 rounded-full bg-black/40 hover:bg-black/60 border border-white/30 text-white text-xs font-serif font-bold uppercase tracking-widest transition-all cursor-pointer flex items-center gap-2 backdrop-blur-md"
                 >
                   <PhoneCall className="w-4 h-4 text-[#00D084]" /> Call 1800-123-4567
                 </a>

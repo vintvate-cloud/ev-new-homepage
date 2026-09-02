@@ -319,7 +319,7 @@ function FindServicesPage() {
   const [carouselIdx, setCarouselIdx] = useState(0);
   const [isServicesPaused, setIsServicesPaused] = useState(false);
   const [activeServiceCategory, setActiveServiceCategory] = useState("All Services");
-  const [activeSubNav, setActiveSubNav] = useState("hubs");
+  const [activeSubNav, setActiveSubNav] = useState("cities");
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const isDraggingWave = useRef(false);
@@ -515,7 +515,7 @@ function FindServicesPage() {
 
   useEffect(() => {
     const sections = [
-      { id: "hubs", el: citiesSectionRef },
+      { id: "cities", el: citiesSectionRef },
       { id: "services", el: contentOverlayRef },
       { id: "brands", el: brandsSectionRef },
       { id: "why-us", el: whySectionRef },
@@ -695,7 +695,7 @@ function FindServicesPage() {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // 1. Validate City field
     const queryCity = searchCity.trim();
     if (!queryCity) {
@@ -825,7 +825,7 @@ function FindServicesPage() {
               >
                 <div className="bg-[#030c07]/95 border-2 border-[#00D084]/50 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] relative overflow-hidden space-y-5 text-left">
                   <div className="absolute top-0 right-0 w-40 h-40 bg-[#00D084]/20 rounded-full blur-3xl pointer-events-none" />
-                  
+
                   <AnimatePresence>
                     {inlineBookingOpen && (
                       <motion.div
@@ -893,11 +893,10 @@ function FindServicesPage() {
                                         setSelectedCity(c.name);
                                         setInlineBookingOpen(false);
                                       }}
-                                      className={`p-3 rounded-2xl border transition-all text-left flex flex-col justify-between cursor-pointer group relative overflow-hidden ${
-                                        isSelected
+                                      className={`p-3 rounded-2xl border transition-all text-left flex flex-col justify-between cursor-pointer group relative overflow-hidden ${isSelected
                                           ? "bg-[#00D084]/15 border-[#00D084] shadow-[0_0_25px_rgba(0,208,132,0.35)]"
                                           : "bg-[#090f0c] border-white/10 hover:border-[#00D084]/50 hover:bg-white/5"
-                                      }`}
+                                        }`}
                                     >
                                       <div className="flex items-start justify-between gap-1.5 mb-2">
                                         <div className="w-10 h-10 rounded-xl bg-black/50 border border-white/15 flex items-center justify-center p-1.5 group-hover:scale-105 transition-transform shrink-0">
@@ -948,33 +947,30 @@ function FindServicesPage() {
                               <button
                                 type="button"
                                 onClick={() => setInlineBrandFilter("ALL")}
-                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${
-                                  inlineBrandFilter === "ALL"
+                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${inlineBrandFilter === "ALL"
                                     ? "bg-[#00D084] text-black shadow-md"
                                     : "text-white/60 hover:text-white"
-                                }`}
+                                  }`}
                               >
                                 All (2W & 3W)
                               </button>
                               <button
                                 type="button"
                                 onClick={() => setInlineBrandFilter("2W")}
-                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${
-                                  inlineBrandFilter === "2W"
+                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${inlineBrandFilter === "2W"
                                     ? "bg-[#00D084] text-black shadow-md"
                                     : "text-white/60 hover:text-white"
-                                }`}
+                                  }`}
                               >
                                 🛵 2-Wheelers
                               </button>
                               <button
                                 type="button"
                                 onClick={() => setInlineBrandFilter("3W")}
-                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${
-                                  inlineBrandFilter === "3W"
+                                className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${inlineBrandFilter === "3W"
                                     ? "bg-[#00D084] text-black shadow-md"
                                     : "text-white/60 hover:text-white"
-                                }`}
+                                  }`}
                               >
                                 🛺 3-Wheelers
                               </button>
@@ -1207,7 +1203,7 @@ function FindServicesPage() {
             </div>
             <div className="flex items-center gap-1 shrink-0">
               {[
-                { id: "hubs", label: "Centers" },
+                { id: "cities", label: "Cities" },
                 { id: "services", label: "Services" },
                 { id: "how-it-works", label: "How It Works" },
                 { id: "brands", label: "Brands" },
@@ -1291,163 +1287,162 @@ function FindServicesPage() {
                         </div>
                       </div>
 
-                    {/* Nearest Centers Grid */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-left">
-                      {getCityServiceCenters(cityName, searchCity).map((center) => (
-                        <div
-                          key={center.id}
-                          className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 font-sans ${
-                            center.isNearest
-                              ? "border-[#00D084] bg-gradient-to-br from-[#03190e] via-[#052418] to-[#020503] shadow-[0_0_50px_rgba(0,208,132,0.3)] scale-[1.01]"
-                              : "border-white/15 bg-[#050907] hover:border-[#00D084]/60"
-                          }`}
-                        >
-                          {center.isNearest && (
-                            <div className="absolute top-0 right-0 px-4 py-1.5 rounded-bl-2xl bg-[#00D084] text-[#020403] text-[10px] font-black uppercase tracking-widest shadow-md flex items-center gap-1.5 z-10">
-                              <Zap className="w-3.5 h-3.5 fill-[#020403]" /> 🏆 NEAREST CERTIFIED HUB • {center.distanceKm} KM AWAY
-                            </div>
-                          )}
-
-                          <div className="space-y-4">
-                            <div className="flex items-start justify-between gap-4 pt-2">
-                              <div>
-                                <h3 className="text-xl md:text-2xl font-black text-white leading-tight">
-                                  {center.name}
-                                </h3>
-                                <p className="text-xs text-white/70 font-medium flex items-center gap-1.5 mt-1.5">
-                                  <MapPin className="w-4 h-4 text-[#00D084] shrink-0" />
-                                  {center.address}
-                                </p>
+                      {/* Nearest Centers Grid */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-left">
+                        {getCityServiceCenters(cityName, searchCity).map((center) => (
+                          <div
+                            key={center.id}
+                            className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 font-sans ${center.isNearest
+                                ? "border-[#00D084] bg-gradient-to-br from-[#03190e] via-[#052418] to-[#020503] shadow-[0_0_50px_rgba(0,208,132,0.3)] scale-[1.01]"
+                                : "border-white/15 bg-[#050907] hover:border-[#00D084]/60"
+                              }`}
+                          >
+                            {center.isNearest && (
+                              <div className="absolute top-0 right-0 px-4 py-1.5 rounded-bl-2xl bg-[#00D084] text-[#020403] text-[10px] font-black uppercase tracking-widest shadow-md flex items-center gap-1.5 z-10">
+                                <Zap className="w-3.5 h-3.5 fill-[#020403]" /> 🏆 NEAREST CERTIFIED HUB • {center.distanceKm} KM AWAY
                               </div>
-                              
-                              {!center.isNearest && (
-                                <span className="shrink-0 text-xs font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-3 py-1 rounded-full border border-[#00D084]/30">
-                                  📍 {center.distanceKm} km
-                                </span>
-                              )}
-                            </div>
+                            )}
 
-                            {/* Quick Metrics Bar */}
-                            <div className="flex flex-wrap items-center gap-2.5 pt-1 text-xs">
-                              <span className="flex items-center gap-1 text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded-lg border border-amber-400/20">
-                                ★ {center.rating} ({center.reviewsCount} reviews)
-                              </span>
-                              <span className="flex items-center gap-1 text-[#00D084] font-bold bg-[#00D084]/10 px-2.5 py-1 rounded-lg border border-[#00D084]/20">
-                                ⚡ {center.baysAvailable} Bays Available
-                              </span>
-                              <span className="flex items-center gap-1 text-white/80 font-bold bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
-                                👨‍🔧 {center.techniciansOnDuty} Certified Techs
-                              </span>
-                            </div>
+                            <div className="space-y-4">
+                              <div className="flex items-start justify-between gap-4 pt-2">
+                                <div>
+                                  <h3 className="text-xl md:text-2xl font-black text-white leading-tight">
+                                    {center.name}
+                                  </h3>
+                                  <p className="text-xs text-white/70 font-medium flex items-center gap-1.5 mt-1.5">
+                                    <MapPin className="w-4 h-4 text-[#00D084] shrink-0" />
+                                    {center.address}
+                                  </p>
+                                </div>
 
-                            {/* Brands Serviced */}
-                            <div className="space-y-1.5 pt-1">
-                              <span className="text-[11px] text-white/50 font-bold block uppercase tracking-wider">
-                                Supported Brands:
-                              </span>
-                              <div className="flex flex-wrap gap-1.5">
-                                {center.brandsServiced.map((b, i) => (
-                                  <span
-                                    key={i}
-                                    className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border bg-white/10 text-white/95 border-white/15`}
-                                  >
-                                    {b}
+                                {!center.isNearest && (
+                                  <span className="shrink-0 text-xs font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-3 py-1 rounded-full border border-[#00D084]/30">
+                                    📍 {center.distanceKm} km
                                   </span>
-                                ))}
+                                )}
+                              </div>
+
+                              {/* Quick Metrics Bar */}
+                              <div className="flex flex-wrap items-center gap-2.5 pt-1 text-xs">
+                                <span className="flex items-center gap-1 text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded-lg border border-amber-400/20">
+                                  ★ {center.rating} ({center.reviewsCount} reviews)
+                                </span>
+                                <span className="flex items-center gap-1 text-[#00D084] font-bold bg-[#00D084]/10 px-2.5 py-1 rounded-lg border border-[#00D084]/20">
+                                  ⚡ {center.baysAvailable} Bays Available
+                                </span>
+                                <span className="flex items-center gap-1 text-white/80 font-bold bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+                                  👨‍🔧 {center.techniciansOnDuty} Certified Techs
+                                </span>
+                              </div>
+
+                              {/* Brands Serviced */}
+                              <div className="space-y-1.5 pt-1">
+                                <span className="text-[11px] text-white/50 font-bold block uppercase tracking-wider">
+                                  Supported Brands:
+                                </span>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {center.brandsServiced.map((b, i) => (
+                                    <span
+                                      key={i}
+                                      className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border bg-white/10 text-white/95 border-white/15`}
+                                    >
+                                      {b}
+                                    </span>
+                                  ))}
+                                </div>
                               </div>
                             </div>
+
+                            {/* Action Buttons */}
+                            <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                              <a
+                                href={center.mapUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all flex items-center gap-1.5 cursor-pointer"
+                              >
+                                <Navigation className="w-3.5 h-3.5 text-[#00D084]" /> Get Directions
+                              </a>
+
+                              <a
+                                href={`tel:${center.phone.replace(/\s+/g, "")}`}
+                                className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all flex items-center gap-1.5 cursor-pointer"
+                              >
+                                <Phone className="w-3.5 h-3.5 text-[#00D084]" /> Call Hub
+                              </a>
+
+                              <Link
+                                to="/service-centres/$centerId"
+                                params={{ centerId: center.id }}
+                                className="px-5 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] bg-white/5 text-white text-xs font-black uppercase tracking-wider hover:bg-[#00D084] hover:text-[#020403] transition-all cursor-pointer flex items-center gap-1.5"
+                              >
+                                <ExternalLink className="w-3.5 h-3.5" /> View Centre
+                              </Link>
+
+                              <button
+                                onClick={() => {
+                                  setBookingService({ title: `Diagnostic Booking - ${center.name}`, price: "₹199" });
+                                  setBookingModalOpen(true);
+                                }}
+                                className="px-5 py-2.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_20px_rgba(0,208,132,0.4)]"
+                              >
+                                <CalendarCheck className="w-3.5 h-3.5 fill-[#020403]" /> Book Appointment
+                              </button>
+                            </div>
                           </div>
-
-                          {/* Action Buttons */}
-                          <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-                            <a
-                              href={center.mapUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all flex items-center gap-1.5 cursor-pointer"
-                            >
-                              <Navigation className="w-3.5 h-3.5 text-[#00D084]" /> Get Directions
-                            </a>
-
-                            <a
-                              href={`tel:${center.phone.replace(/\s+/g, "")}`}
-                              className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] text-xs font-bold text-white hover:text-[#00D084] transition-all flex items-center gap-1.5 cursor-pointer"
-                            >
-                              <Phone className="w-3.5 h-3.5 text-[#00D084]" /> Call Hub
-                            </a>
-
-                            <Link
-                              to="/service-centres/$centerId"
-                              params={{ centerId: center.id }}
-                              className="px-5 py-2.5 rounded-xl border border-white/20 hover:border-[#00D084] bg-white/5 text-white text-xs font-black uppercase tracking-wider hover:bg-[#00D084] hover:text-[#020403] transition-all cursor-pointer flex items-center gap-1.5"
-                            >
-                              <ExternalLink className="w-3.5 h-3.5" /> View Centre
-                            </Link>
-
-                            <button
-                              onClick={() => {
-                                setBookingService({ title: `Diagnostic Booking - ${center.name}`, price: "₹199" });
-                                setBookingModalOpen(true);
-                              }}
-                              className="px-5 py-2.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_20px_rgba(0,208,132,0.4)]"
-                            >
-                              <CalendarCheck className="w-3.5 h-3.5 fill-[#020403]" /> Book Appointment
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-
-
-                    {/* Infrastructure details */}
-                    <div className="pt-8 text-center max-w-7xl mx-auto">
-                      <div className="text-center max-w-2xl mx-auto mb-12">
-                        <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084] font-sans">
-                          HUB INFRASTRUCTURE
-                        </span>
-                        <h2 className="text-3xl md:text-4xl font-black text-white mt-2 font-sans">
-                          Certified Standards in {cityName}
-                        </h2>
+                        ))}
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left font-sans">
-                        <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
-                          <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
-                            <BatteryCharging className="w-6 h-6" />
-                          </div>
-                          <h3 className="text-xl font-bold text-white">Active Cell Balancing</h3>
-                          <p className="text-xs text-white/60 leading-relaxed">
-                            Automated high-voltage active battery balancing restoring 95%+ original battery pack health.
-                          </p>
+
+
+                      {/* Infrastructure details */}
+                      <div className="pt-8 text-center max-w-7xl mx-auto">
+                        <div className="text-center max-w-2xl mx-auto mb-12">
+                          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084] font-sans">
+                            HUB INFRASTRUCTURE
+                          </span>
+                          <h2 className="text-3xl md:text-4xl font-black text-white mt-2 font-sans">
+                            Certified Standards in {cityName}
+                          </h2>
                         </div>
 
-                        <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
-                          <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
-                            <Cpu className="w-6 h-6" />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left font-sans">
+                          <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
+                            <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
+                              <BatteryCharging className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white">Active Cell Balancing</h3>
+                            <p className="text-xs text-white/60 leading-relaxed">
+                              Automated high-voltage active battery balancing restoring 95%+ original battery pack health.
+                            </p>
                           </div>
-                          <h3 className="text-xl font-bold text-white">BMS Firmware Flashing</h3>
-                          <p className="text-xs text-white/60 leading-relaxed">
-                            Official multi-brand ECU scanner updates ensuring error-free thermal shutdown thresholds.
-                          </p>
-                        </div>
 
-                        <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
-                          <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
-                            <ShieldCheck className="w-6 h-6" />
+                          <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
+                            <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
+                              <Cpu className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white">BMS Firmware Flashing</h3>
+                            <p className="text-xs text-white/60 leading-relaxed">
+                              Official multi-brand ECU scanner updates ensuring error-free thermal shutdown thresholds.
+                            </p>
                           </div>
-                          <h3 className="text-xl font-bold text-white">100% Refundable Slot</h3>
-                          <p className="text-xs text-white/60 leading-relaxed">
-                            Pre-booking slot tokens guarantee priority doorstep service with 100% money-back policy.
-                          </p>
+
+                          <div className="bg-[#050907] border border-white/10 rounded-3xl p-8 space-y-3">
+                            <div className="w-12 h-12 rounded-2xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084]">
+                              <ShieldCheck className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white">100% Refundable Slot</h3>
+                            <p className="text-xs text-white/60 leading-relaxed">
+                              Pre-booking slot tokens guarantee priority doorstep service with 100% money-back policy.
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </section>
-            );
-          })()}
+                </section>
+              );
+            })()}
 
             {/* =================================================================
                 4. POPULAR SERVICES — 3D Wave Carousel
