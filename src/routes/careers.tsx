@@ -715,7 +715,7 @@ function CareersPage() {
                       else setCurrentVideoIdx(idx);
                     }}
                     style={{
-                      isolate: "isolate",
+                      isolation: "isolate",
                       borderRadius: "32px",
                       overflow: "hidden",
                     }}
