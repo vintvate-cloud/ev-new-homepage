@@ -476,6 +476,53 @@ function HeroGetStartedForm() {
   );
 }
 
+function HeroTypewriter({
+  words = ["AMC PLANS", "GENUINE PARTS", "RSA SERVICE", "CERTIFIED TECHS", "AI DIAGNOSTICS", "DOORSTEP REPAIRS"],
+  typingSpeed = 90,
+  deletingSpeed = 40,
+  pauseDuration = 2000,
+}: {
+  words?: string[];
+  typingSpeed?: number;
+  deletingSpeed?: number;
+  pauseDuration?: number;
+}) {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const targetWord = words[wordIndex % words.length];
+
+    let timer: NodeJS.Timeout;
+
+    if (!isDeleting && currentText === targetWord) {
+      timer = setTimeout(() => setIsDeleting(true), pauseDuration);
+    } else if (isDeleting && currentText === "") {
+      setIsDeleting(false);
+      setWordIndex((prev) => (prev + 1) % words.length);
+    } else {
+      const speed = isDeleting ? deletingSpeed : typingSpeed;
+      timer = setTimeout(() => {
+        setCurrentText(
+          isDeleting
+            ? targetWord.substring(0, currentText.length - 1)
+            : targetWord.substring(0, currentText.length + 1)
+        );
+      }, speed);
+    }
+
+    return () => clearTimeout(timer);
+  }, [currentText, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
+
+  return (
+    <span className="text-[#00D084] italic font-serif font-light inline-flex items-center tracking-normal uppercase whitespace-nowrap">
+      <span>{currentText}</span>
+      <span className="inline-block w-[3px] h-[0.8em] bg-[#00D084] ml-1.5 animate-pulse rounded-full shadow-[0_0_10px_#00D084] not-italic" />
+    </span>
+  );
+}
+
 function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -503,13 +550,7 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
     setActiveSlide(index);
   };
 
-  // Auto-play interval
-  useEffect(() => {
-    const interval = setInterval(() => {
-      scrollToSlide((activeSlide + 1) % HERO_SLIDES.length);
-    }, 7000);
-    return () => clearInterval(interval);
-  }, [activeSlide]);
+  // Auto-play disabled: Slide 0 remains default until user clicks a navigation button
 
   const renderIcon = (iconName: string) => {
     switch (iconName) {
@@ -603,28 +644,19 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                 }}
               >
                 <h1
-                  className="m-0 p-0 leading-none transition-colors duration-300 flex justify-center flex-wrap"
+                  className="m-0 p-0 leading-none transition-colors duration-300 flex justify-center items-center flex-nowrap whitespace-nowrap gap-x-2 sm:gap-x-3 text-center w-full max-w-full overflow-hidden select-none"
                   style={{
                     color: "var(--foreground)",
-                    fontSize: "clamp(1.2rem, 3.8vw, 4.4rem)",
+                    fontSize: "clamp(0.95rem, 3.0vw, 3.8rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.02em",
                     fontFamily: "var(--font-sans)",
                   }}
                 >
-                  {slide.heading.split(" ").map((word, i) => {
-                    const isItalic = i === 1; // standard format
-                    return (
-                      <span
-                        key={i}
-                        className={`mr-[0.25em] inline-block uppercase ${isItalic ? "italic text-[#00D084] font-serif normal-case font-light" : "font-extrabold"
-                          }`}
-                        style={isItalic ? { fontFamily: "var(--font-serif)", textTransform: "none" } : undefined}
-                      >
-                        {word}
-                      </span>
-                    );
-                  })}
+                  <span className="text-white font-extrabold uppercase whitespace-nowrap">
+                    INDIA'S PROFESSIONAL SERVICE NETWORK
+                  </span>
+                  <HeroTypewriter words={["AMC PLANS", "GENUINE PARTS", "RSA SERVICE", "CERTIFIED TECHS", "AI DIAGNOSTICS", "DOORSTEP REPAIRS"]} />
                 </h1>
               </div>
 
