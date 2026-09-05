@@ -95,11 +95,87 @@ type Theme = "warm" | "mid" | "dark";
 
 import { Nav } from "./Nav";
 
-/* ---------------- Hero ---------------- */
+/* ---------------- Hero Data & Synchronized Keyword Graphics ---------------- */
+const KEYWORD_GRAPHICS = [
+  {
+    keyword: "AMC PLANS",
+    title: "Annual Maintenance Protection",
+    badge: "100% COVERED",
+    desc: "Free periodic inspections, zero downtime guarantee, and full motor & battery cover.",
+    icon: <ShieldCheck className="h-5 w-5 text-[#00D084]" />,
+    accentColor: "#00D084",
+    metrics: [
+      { label: "Coverage", val: "100%" },
+      { label: "Free Service", val: "4x / Year" },
+    ],
+  },
+  {
+    keyword: "GENUINE PARTS",
+    title: "100% Original OEM Parts",
+    badge: "FACTORY CERTIFIED",
+    desc: "Direct OEM spare parts sourcing with 1-year replacement warranty on components.",
+    icon: <Package className="h-5 w-5 text-[#00D084]" />,
+    accentColor: "#00D084",
+    metrics: [
+      { label: "Warranty", val: "1 Year" },
+      { label: "OEM Grade", val: "Grade A+" },
+    ],
+  },
+  {
+    keyword: "RSA SERVICE",
+    title: "24/7 Roadside Assistance",
+    badge: "15 MIN RESPONSE",
+    desc: "Emergency flat-bed towing, mobile battery boost, and instant technician dispatch.",
+    icon: <PhoneCall className="h-5 w-5 text-[#00D084]" />,
+    accentColor: "#00D084",
+    metrics: [
+      { label: "Response", val: "< 15 Mins" },
+      { label: "Towing", val: "Free 50km" },
+    ],
+  },
+  {
+    keyword: "CERTIFIED TECHS",
+    title: "Master EV Specialists",
+    badge: "LEVEL-3 MASTER",
+    desc: "Certified high-voltage technicians trained on OEM diagnostics & safety standards.",
+    icon: <Shield className="h-5 w-5 text-[#00D084]" />,
+    accentColor: "#00D084",
+    metrics: [
+      { label: "Techs", val: "100+ Master" },
+      { label: "Rating", val: "4.9 / 5.0" },
+    ],
+  },
+  {
+    keyword: "AI DIAGNOSTICS",
+    title: "Real-Time BMS & ECU Scans",
+    badge: "99.9% ACCURACY",
+    desc: "Advanced AI thermal matrix scanning, BMS health metrics, and instant fault isolation.",
+    icon: <Cpu className="h-5 w-5 text-[#00D084]" />,
+    accentColor: "#00D084",
+    metrics: [
+      { label: "Scan Time", val: "60 Secs" },
+      { label: "Accuracy", val: "99.9%" },
+    ],
+  },
+  {
+    keyword: "DOORSTEP REPAIRS",
+    title: "Mobile Doorstep Workshop",
+    badge: "AT YOUR HOME",
+    desc: "Equipped mobile service vans arrive directly at your home or office location.",
+    icon: <Wrench className="h-5 w-5 text-[#00D084]" />,
+    accentColor: "#00D084",
+    metrics: [
+      { label: "Doorstep", val: "Same Day" },
+      { label: "Cities", val: "25+ Active" },
+    ],
+  },
+];
+
 const HERO_SLIDES = [
   {
     id: "scooter",
-    heading: "THE PREMIER EV SERVICE ECOSYSTEM",
+    heading: "INDIA'S PROFESSIONAL SERVICE NETWORK",
+    typewriterWords: ["AMC PLANS", "GENUINE PARTS", "RSA SERVICE", "CERTIFIED TECHS", "AI DIAGNOSTICS", "DOORSTEP REPAIRS"],
     cardTitle: "VOLTRIDE X1",
     cardDesc: "VoltRide X1 is a stylish commuter choice.",
     cardImg: evScooterSmall,
@@ -121,16 +197,17 @@ const HERO_SLIDES = [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80",
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80"
     ],
-    commands: [
-      { cmd: "CMD_01", label: "BOOK SERVICE", icon: "zap", href: "#ev-services" },
-      { cmd: "CMD_02", label: "FIND CENTRE", icon: "map-pin", href: "#nearest-center" },
-      { cmd: "CMD_03", label: "REQUEST RSA", icon: "phone-call", href: "#request-rsa", isRsa: true },
-      { cmd: "CMD_04", label: "FRANCHISE", icon: "store", href: "#join-franchise" },
+    buttons: [
+      { id: "b1", label: "Book EV Service", icon: "zap", isPrimary: true, action: "booking" },
+      { id: "b2", label: "Find Nearest Centre", icon: "map-pin", to: "/service-centres" },
+      { id: "b3", label: "Request RSA", icon: "phone-call", href: "tel:+919582390001", isRsa: true },
+      { id: "b4", label: "Join Franchise Network", icon: "store", to: "/franchise" },
     ]
   },
   {
     id: "motorcycle",
-    heading: "PERFORMANCE MOTORCYCLE TUNING CYCLE",
+    heading: "PERFORMANCE EV MOTORCYCLE TUNING & CARE",
+    typewriterWords: ["DYNO TUNING", "ECU FLASHING", "TRACK TELEMETRY", "RACE SUSPENSION"],
     cardTitle: "APEX RAPTOR",
     cardDesc: "Raptor series for high-velocity sports dynamics.",
     cardImg: evMotorcycleHero,
@@ -152,16 +229,17 @@ const HERO_SLIDES = [
       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&h=100&q=80",
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100&q=80"
     ],
-    commands: [
-      { cmd: "TUNE_01", label: "DYNO RUN", icon: "activity", href: "#ev-services" },
-      { cmd: "TUNE_02", label: "ECU FLASH", icon: "cpu", href: "#ev-services" },
-      { cmd: "TUNE_03", label: "SUSPENSION", icon: "wrench", href: "#ev-services" },
-      { cmd: "TUNE_04", label: "DIAGNOSTICS", icon: "crosshair", href: "#ev-services" },
+    buttons: [
+      { id: "m1", label: "Book Dyno Tuning", icon: "zap", isPrimary: true, action: "booking" },
+      { id: "m2", label: "ECU Flash Service", icon: "cpu", to: "/services" },
+      { id: "m3", label: "Suspension Setup", icon: "wrench", to: "/services" },
+      { id: "m4", label: "Track Diagnostics", icon: "crosshair", to: "/services" },
     ]
   },
   {
     id: "cargo",
-    heading: "COMMERCIAL 3-WHEELER FLIGHT SYSTEMS",
+    heading: "COMMERCIAL 3-WHEELER FLEET & LOGISTICS CARE",
+    typewriterWords: ["BATTERY SWAPPING", "THERMAL SCANS", "HUB ROUTING", "FLEET ANALYTICS"],
     cardTitle: "CARGOPRO 3",
     cardDesc: "Commercial heavy-load cargo chassis.",
     cardImg: evThreewheelerHero,
@@ -183,11 +261,11 @@ const HERO_SLIDES = [
       "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=100&h=100&q=80",
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&h=100&q=80"
     ],
-    commands: [
-      { cmd: "FLT_01", label: "BATTERY SWAP", icon: "zap", href: "#ev-services" },
-      { cmd: "FLT_02", label: "LOAD SCAN", icon: "gauge", href: "#ev-services" },
-      { cmd: "FLT_03", label: "HUB ROUTER", icon: "map", href: "#ev-services" },
-      { cmd: "FLT_04", label: "FLEET CONNECT", icon: "globe", href: "#ev-services" },
+    buttons: [
+      { id: "c1", label: "Battery Swap Hub", icon: "zap", isPrimary: true, action: "booking" },
+      { id: "c2", label: "Load & Battery Scan", icon: "gauge", to: "/services" },
+      { id: "c3", label: "Hub Route Planner", icon: "map", to: "/service-centres" },
+      { id: "c4", label: "Fleet Operations Connect", icon: "globe", to: "/contact" },
     ]
   }
 ];
@@ -476,20 +554,242 @@ function HeroGetStartedForm() {
   );
 }
 
+/* ---------------- Slide 2 Dedicated Performance Form ---------------- */
+function HeroPerformanceTuningForm({ onOpenBooking }: { onOpenBooking?: () => void }) {
+  const [selectedTune, setSelectedTune] = useState<"dyno" | "ecu" | "track">("dyno");
+
+  const TUNES = [
+    {
+      id: "dyno",
+      title: "Dyno Telemetry Run",
+      desc: "High-speed dyno power & torque sweep",
+      badge: "Power Audit",
+      icon: <Activity className="h-4 w-4 text-[#059669]" />,
+    },
+    {
+      id: "ecu",
+      title: "ECU Remap & Flash",
+      desc: "Custom throttle curves & BMS optimization",
+      badge: "Track Ready",
+      icon: <Cpu className="h-4 w-4 text-[#059669]" />,
+    },
+    {
+      id: "track",
+      title: "Full Race Diagnostics",
+      desc: "Suspension, thermal & brake telemetry",
+      badge: "Pro Setup",
+      icon: <Crosshair className="h-4 w-4 text-[#059669]" />,
+    },
+  ] as const;
+
+  return (
+    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#059669]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none">
+      <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#059669]/10 rounded-full blur-2xl pointer-events-none" />
+
+      <div className="space-y-3">
+        <div>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-[#059669]/30 bg-[#059669]/10 backdrop-blur-md mb-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#059669] shadow-[0_0_8px_#059669] animate-pulse" />
+            <span className="text-[9px] font-mono font-bold tracking-widest text-[#059669] uppercase">
+              PERFORMANCE TUNING
+            </span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white leading-tight">
+            Motorcycle Calibration
+          </h3>
+        </div>
+
+        <div className="space-y-2">
+          {TUNES.map((tune) => {
+            const isSelected = selectedTune === tune.id;
+            return (
+              <button
+                key={tune.id}
+                type="button"
+                onClick={() => setSelectedTune(tune.id)}
+                className={`w-full text-left p-2.5 sm:p-3 rounded-xl border transition-all duration-300 flex items-center justify-between gap-2.5 cursor-pointer ${
+                  isSelected
+                    ? "bg-[#059669]/15 border-[#059669] shadow-[0_0_15px_rgba(5,150,105,0.2)]"
+                    : "bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]"
+                }`}
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center border shrink-0 ${isSelected ? "bg-[#059669]/20 border-[#059669]/40" : "bg-white/5 border-white/10"}`}>
+                    {tune.icon}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-extrabold text-xs uppercase tracking-wider text-white truncate">
+                        {tune.title}
+                      </span>
+                      {isSelected && (
+                        <span className="text-[8px] font-mono text-[#059669] uppercase bg-[#059669]/20 border border-[#059669]/30 px-1 py-0.2 rounded shrink-0">
+                          Active
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[10px] text-white/60 font-light mt-0.5 truncate">
+                      {tune.desc}
+                    </p>
+                  </div>
+                </div>
+
+                <span className="text-[9px] font-mono text-white/50 border border-white/10 bg-white/5 px-2 py-0.5 rounded-full shrink-0 hidden sm:inline">
+                  {tune.badge}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="pt-0.5 space-y-2">
+          <button
+            type="button"
+            onClick={() => onOpenBooking ? onOpenBooking() : (window.location.href = "/services")}
+            className="w-full bg-[#059669] hover:bg-[#10b981] text-white font-extrabold uppercase tracking-wider text-xs py-3 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(5,150,105,0.3)] hover:scale-[1.01] cursor-pointer"
+          >
+            <span>Book Dyno Calibration</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+
+          <div className="flex items-center justify-center gap-1.5 text-[9px] font-mono text-white/40">
+            <Activity className="h-3 w-3 text-[#059669]" />
+            <span>OEM Telemetry Standards & Dyno Certified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- Slide 3 Dedicated Commercial Fleet Form ---------------- */
+function HeroFleetLogisticsForm({ onOpenBooking }: { onOpenBooking?: () => void }) {
+  const [selectedFleet, setSelectedFleet] = useState<"swap" | "scan" | "hub">("swap");
+
+  const FLEET_OPTIONS = [
+    {
+      id: "swap",
+      title: "Battery Swap Hub",
+      desc: "3-minute rapid battery replacement",
+      badge: "Zero Downtime",
+      icon: <Zap className="h-4 w-4 text-[#10b981]" />,
+    },
+    {
+      id: "scan",
+      title: "Cargo Fleet AMC",
+      desc: "12-point thermal & load diagnostics",
+      badge: "Commercial AMC",
+      icon: <Gauge className="h-4 w-4 text-[#10b981]" />,
+    },
+    {
+      id: "hub",
+      title: "Hub Route Router",
+      desc: "Smart fleet dispatch & GPS tracking",
+      badge: "Logistics Pro",
+      icon: <Map className="h-4 w-4 text-[#10b981]" />,
+    },
+  ] as const;
+
+  return (
+    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#10b981]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none">
+      <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#10b981]/10 rounded-full blur-2xl pointer-events-none" />
+
+      <div className="space-y-3">
+        <div>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-[#10b981]/30 bg-[#10b981]/10 backdrop-blur-md mb-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981] animate-pulse" />
+            <span className="text-[9px] font-mono font-bold tracking-widest text-[#10b981] uppercase">
+              COMMERCIAL FLEET
+            </span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white leading-tight">
+            Fleet Operations Hub
+          </h3>
+        </div>
+
+        <div className="space-y-2">
+          {FLEET_OPTIONS.map((opt) => {
+            const isSelected = selectedFleet === opt.id;
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => setSelectedFleet(opt.id)}
+                className={`w-full text-left p-2.5 sm:p-3 rounded-xl border transition-all duration-300 flex items-center justify-between gap-2.5 cursor-pointer ${
+                  isSelected
+                    ? "bg-[#10b981]/15 border-[#10b981] shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                    : "bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]"
+                }`}
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center border shrink-0 ${isSelected ? "bg-[#10b981]/20 border-[#10b981]/40" : "bg-white/5 border-white/10"}`}>
+                    {opt.icon}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-extrabold text-xs uppercase tracking-wider text-white truncate">
+                        {opt.title}
+                      </span>
+                      {isSelected && (
+                        <span className="text-[8px] font-mono text-[#10b981] uppercase bg-[#10b981]/20 border border-[#10b981]/30 px-1 py-0.2 rounded shrink-0">
+                          Active
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[10px] text-white/60 font-light mt-0.5 truncate">
+                      {opt.desc}
+                    </p>
+                  </div>
+                </div>
+
+                <span className="text-[9px] font-mono text-white/50 border border-white/10 bg-white/5 px-2 py-0.5 rounded-full shrink-0 hidden sm:inline">
+                  {opt.badge}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="pt-0.5 space-y-2">
+          <button
+            type="button"
+            onClick={() => onOpenBooking ? onOpenBooking() : (window.location.href = "/services")}
+            className="w-full bg-[#10b981] hover:bg-[#34d399] text-black font-extrabold uppercase tracking-wider text-xs py-3 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:scale-[1.01] cursor-pointer"
+          >
+            <span>Schedule Fleet Service</span>
+            <ArrowRight className="h-3.5 w-3.5 text-black" />
+          </button>
+
+          <div className="flex items-center justify-center gap-1.5 text-[9px] font-mono text-white/40">
+            <Globe className="h-3 w-3 text-[#10b981]" />
+            <span>99.8% Fleet Uptime & 24/7 Commercial RSA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function HeroTypewriter({
   words = ["AMC PLANS", "GENUINE PARTS", "RSA SERVICE", "CERTIFIED TECHS", "AI DIAGNOSTICS", "DOORSTEP REPAIRS"],
   typingSpeed = 90,
   deletingSpeed = 40,
   pauseDuration = 2000,
+  onWordIndexChange,
 }: {
   words?: string[];
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseDuration?: number;
+  onWordIndexChange?: (index: number) => void;
 }) {
   const [wordIndex, setWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    onWordIndexChange?.(wordIndex % words.length);
+  }, [wordIndex, words, onWordIndexChange]);
 
   useEffect(() => {
     const targetWord = words[wordIndex % words.length];
@@ -527,6 +827,7 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeKeywordIndex, setActiveKeywordIndex] = useState(0);
 
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
@@ -550,24 +851,24 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
     setActiveSlide(index);
   };
 
-  // Auto-play disabled: Slide 0 remains default until user clicks a navigation button
-
   const renderIcon = (iconName: string) => {
     switch (iconName) {
-      case "zap": return <Zap className="h-3.5 w-3.5 text-[#00D084]" />;
-      case "map-pin": return <MapPin className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "phone-call": return <PhoneCall className="h-3.5 w-3.5 text-red-400 group-hover:text-red-300" />;
-      case "store": return <Store className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "activity": return <Activity className="h-3.5 w-3.5 text-[#00D084]" />;
-      case "cpu": return <Cpu className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "wrench": return <Wrench className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "crosshair": return <Crosshair className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "gauge": return <Gauge className="h-3.5 w-3.5 text-[#00D084]" />;
-      case "map": return <Map className="h-3.5 w-3.5 text-[#00D084]" />;
-      case "globe": return <Globe className="h-3.5 w-3.5 text-[#00D084]" />;
-      default: return <Zap className="h-3.5 w-3.5" />;
+      case "zap": return <Zap className="h-4 w-4" />;
+      case "map-pin": return <MapPin className="h-4 w-4" />;
+      case "phone-call": return <PhoneCall className="h-3.5 w-3.5 text-[#00D084]" />;
+      case "store": return <Store className="h-3.5 w-3.5 text-[#00D084]" />;
+      case "activity": return <Activity className="h-4 w-4" />;
+      case "cpu": return <Cpu className="h-4 w-4" />;
+      case "wrench": return <Wrench className="h-4 w-4" />;
+      case "crosshair": return <Crosshair className="h-4 w-4" />;
+      case "gauge": return <Gauge className="h-4 w-4" />;
+      case "map": return <Map className="h-4 w-4" />;
+      case "globe": return <Globe className="h-4 w-4" />;
+      default: return <Zap className="h-4 w-4" />;
     }
   };
+
+  const currentSlideObj = HERO_SLIDES[activeSlide] || HERO_SLIDES[0];
 
   return (
     <section
@@ -636,7 +937,7 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                 </div>
               </div>
 
-              {/* HEADING */}
+              {/* HEADING FOR THIS SPECIFIC SLIDE ONLY */}
               <div
                 className="w-full text-center px-4 relative z-10"
                 style={{
@@ -647,20 +948,25 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                   className="m-0 p-0 leading-none transition-colors duration-300 flex justify-center items-center flex-nowrap whitespace-nowrap gap-x-2 sm:gap-x-3 text-center w-full max-w-full overflow-hidden select-none"
                   style={{
                     color: "var(--foreground)",
-                    fontSize: "clamp(0.95rem, 3.0vw, 3.8rem)",
+                    fontSize: "clamp(0.85rem, 2.7vw, 3.4rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.02em",
                     fontFamily: "var(--font-sans)",
                   }}
                 >
                   <span className="text-white font-extrabold uppercase whitespace-nowrap">
-                    INDIA'S PROFESSIONAL SERVICE NETWORK
+                    {slide.heading}
                   </span>
-                  <HeroTypewriter words={["AMC PLANS", "GENUINE PARTS", "RSA SERVICE", "CERTIFIED TECHS", "AI DIAGNOSTICS", "DOORSTEP REPAIRS"]} />
+                  <HeroTypewriter
+                    words={slide.typewriterWords}
+                    onWordIndexChange={(idx) => {
+                      if (index === 0) setActiveKeywordIndex(idx);
+                    }}
+                  />
                 </h1>
               </div>
 
-              {/* DESKTOP LAYOUT CONTENT (Visible only on desktop) */}
+              {/* DESKTOP LAYOUT CONTENT */}
               <div className="hidden md:block">
                 {/* BIG EV VEHICLE IMAGE */}
                 <AnimatePresence mode="wait">
@@ -683,10 +989,141 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                   )}
                 </AnimatePresence>
 
-                {/* HAPPY RIDERS STATS PILL */}
+                {/* SLIDE 1: KEYWORD-SYNCHRONIZED GRAPHIC CARD */}
+                {index === 0 && isCurrent && KEYWORD_GRAPHICS[activeKeywordIndex] && (
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`kw-card-${activeKeywordIndex}`}
+                      initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="absolute z-20 pointer-events-auto bg-[#070c09]/90 border border-[#00D084]/40 backdrop-blur-xl p-3.5 sm:p-4 rounded-2xl shadow-[0_15px_40px_rgba(0,208,132,0.25)] text-left space-y-2 max-w-[280px]"
+                      style={{
+                        right: "6%",
+                        top: "38%",
+                      }}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-lg bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center shrink-0">
+                            {KEYWORD_GRAPHICS[activeKeywordIndex].icon}
+                          </div>
+                          <span className="text-xs font-black uppercase text-white tracking-wider">
+                            {KEYWORD_GRAPHICS[activeKeywordIndex].keyword}
+                          </span>
+                        </div>
+                        <span className="text-[8px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 px-1.5 py-0.5 rounded-full uppercase">
+                          {KEYWORD_GRAPHICS[activeKeywordIndex].badge}
+                        </span>
+                      </div>
+
+                      <p className="text-[10px] text-white/80 font-medium leading-snug m-0">
+                        {KEYWORD_GRAPHICS[activeKeywordIndex].desc}
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-1.5 pt-1 border-t border-white/10">
+                        {KEYWORD_GRAPHICS[activeKeywordIndex].metrics.map((m, i) => (
+                          <div key={i} className="bg-white/5 rounded-lg p-1.5 text-center">
+                            <span className="text-[8px] font-mono text-white/50 block uppercase">{m.label}</span>
+                            <span className="text-[11px] font-extrabold text-[#00D084] block">{m.val}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                )}
+
+                {/* SLIDE 2: DYNO TELEMETRY HUD GRAPHIC CARD */}
+                {index === 1 && isCurrent && (
+                  <motion.div
+                    key="slide2-hud"
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="absolute z-20 pointer-events-auto bg-[#06120c]/90 border border-[#059669]/40 backdrop-blur-xl p-3.5 sm:p-4 rounded-2xl shadow-[0_15px_40px_rgba(5,150,105,0.25)] text-left space-y-2 max-w-[290px]"
+                    style={{ right: "6%", top: "36%" }}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <Activity className="h-4 w-4 text-[#059669] animate-pulse" />
+                        <span className="text-xs font-black uppercase text-white tracking-wider">
+                          DYNO TELEMETRY HUD
+                        </span>
+                      </div>
+                      <span className="text-[8px] font-mono font-bold text-[#10b981] bg-[#059669]/20 border border-[#059669]/40 px-1.5 py-0.5 rounded-full uppercase">
+                        LIVE TELEMETRY
+                      </span>
+                    </div>
+
+                    <p className="text-[10px] text-white/80 font-medium leading-snug m-0">
+                      Real-time power curve, throttle map diagnostics & ECU calibration.
+                    </p>
+
+                    <div className="grid grid-cols-3 gap-1.5 pt-1 border-t border-white/10">
+                      <div className="bg-white/5 rounded-lg p-1.5 text-center">
+                        <span className="text-[8px] font-mono text-white/50 block uppercase">Peak Power</span>
+                        <span className="text-[11px] font-extrabold text-[#10b981] block">38.5 kW</span>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-1.5 text-center">
+                        <span className="text-[8px] font-mono text-white/50 block uppercase">Top Speed</span>
+                        <span className="text-[11px] font-extrabold text-[#10b981] block">165 km/h</span>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-1.5 text-center">
+                        <span className="text-[8px] font-mono text-white/50 block uppercase">0-60 Time</span>
+                        <span className="text-[11px] font-extrabold text-[#10b981] block">2.9 Sec</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* SLIDE 3: COMMERCIAL FLEET HUD GRAPHIC CARD */}
+                {index === 2 && isCurrent && (
+                  <motion.div
+                    key="slide3-hud"
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="absolute z-20 pointer-events-auto bg-[#06120c]/90 border border-[#10b981]/40 backdrop-blur-xl p-3.5 sm:p-4 rounded-2xl shadow-[0_15px_40px_rgba(16,185,129,0.25)] text-left space-y-2 max-w-[290px]"
+                    style={{ right: "6%", top: "36%" }}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <Globe className="h-4 w-4 text-[#10b981] animate-spin" style={{ animationDuration: "12s" }} />
+                        <span className="text-xs font-black uppercase text-white tracking-wider">
+                          COMMERCIAL FLEET HUD
+                        </span>
+                      </div>
+                      <span className="text-[8px] font-mono font-bold text-[#10b981] bg-[#10b981]/20 border border-[#10b981]/40 px-1.5 py-0.5 rounded-full uppercase">
+                        99.8% UPTIME
+                      </span>
+                    </div>
+
+                    <p className="text-[10px] text-white/80 font-medium leading-snug m-0">
+                      Rapid 3-minute swap hubs, thermal diagnostics & cargo chassis monitoring.
+                    </p>
+
+                    <div className="grid grid-cols-3 gap-1.5 pt-1 border-t border-white/10">
+                      <div className="bg-white/5 rounded-lg p-1.5 text-center">
+                        <span className="text-[8px] font-mono text-white/50 block uppercase">Swap Time</span>
+                        <span className="text-[11px] font-extrabold text-[#10b981] block">3 Mins</span>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-1.5 text-center">
+                        <span className="text-[8px] font-mono text-white/50 block uppercase">Active Fleets</span>
+                        <span className="text-[11px] font-extrabold text-[#10b981] block">1,200+</span>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-1.5 text-center">
+                        <span className="text-[8px] font-mono text-white/50 block uppercase">Thermal Scan</span>
+                        <span className="text-[11px] font-extrabold text-[#10b981] block">Optimal</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* RIDERS STATS PILL */}
                 <div
                   className="absolute z-10 flex items-center gap-3"
-                  style={{ right: "5%", top: "26%" }}
+                  style={{ right: "5%", top: "24%" }}
                 >
                   <div className="flex -space-x-3">
                     {slide.riders.map((imgUrl, i) => (
@@ -705,55 +1142,112 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
         })}
       </div>
 
-      {/* FIXED & STATIONARY GET STARTED MULTI-STEP FORM */}
+      {/* DYNAMIC LEFT FORM / PANEL tied to active slide */}
       <div
         className="absolute z-30 pointer-events-auto left-5 right-5 md:left-[6.5%] top-[170px] md:top-[210px] w-auto md:w-[32%] max-w-[400px]"
       >
-        <HeroGetStartedForm />
+        <AnimatePresence mode="wait">
+          {activeSlide === 0 ? (
+            <motion.div
+              key="form-0"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.35 }}
+            >
+              <HeroGetStartedForm />
+            </motion.div>
+          ) : activeSlide === 1 ? (
+            <motion.div
+              key="form-1"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.35 }}
+            >
+              <HeroPerformanceTuningForm onOpenBooking={onOpenBooking} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="form-2"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.35 }}
+            >
+              <HeroFleetLogisticsForm onOpenBooking={onOpenBooking} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* QUICK ACTION BUTTONS */}
+      {/* SLIDE-SPECIFIC QUICK ACTION BUTTONS */}
       <div className="absolute z-30 bottom-24 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 flex flex-col items-center gap-3 pointer-events-auto font-sans">
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          {/* Book EV Service */}
-          <button
-            onClick={() => onOpenBooking ? onOpenBooking() : (window.location.href = "/services")}
-            className="bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:scale-105 cursor-pointer"
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`buttons-slide-${activeSlide}`}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col items-center gap-3 w-full"
           >
-            <Zap className="h-4 w-4 fill-[#020403] text-[#020403]" />
-            <span>Book EV Service</span>
-            <ArrowRight className="h-4 w-4 text-[#020403]" />
-          </button>
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+              {currentSlideObj.buttons.slice(0, 2).map((btn) => {
+                if (btn.isPrimary) {
+                  return (
+                    <button
+                      key={btn.id}
+                      onClick={() => onOpenBooking ? onOpenBooking() : (window.location.href = "/services")}
+                      className="bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:scale-105 cursor-pointer"
+                    >
+                      {renderIcon(btn.icon)}
+                      <span>{btn.label}</span>
+                      <ArrowRight className="h-4 w-4 text-[#020403]" />
+                    </button>
+                  );
+                }
+                return (
+                  <Link
+                    key={btn.id}
+                    to={btn.to || "/services"}
+                    className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                  >
+                    {renderIcon(btn.icon)}
+                    <span>{btn.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
 
-          {/* Find Nearest Centre */}
-          <Link
-            to="/service-centres"
-            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
-          >
-            <MapPin className="h-4 w-4 text-white" />
-            <span>Find Nearest Centre</span>
-          </Link>
-        </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          {/* Request RSA */}
-          <a
-            href="tel:+919582390001"
-            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-red-500/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
-          >
-            <PhoneCall className="h-3.5 w-3.5 text-[#00D084]" />
-            <span>Request RSA</span>
-          </a>
-
-          {/* Join Franchise Network */}
-          <Link
-            to="/franchise"
-            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
-          >
-            <Store className="h-3.5 w-3.5 text-[#00D084]" />
-            <span>Join Franchise Network</span>
-          </Link>
-        </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+              {currentSlideObj.buttons.slice(2, 4).map((btn) => {
+                if (btn.href) {
+                  return (
+                    <a
+                      key={btn.id}
+                      href={btn.href}
+                      className={`bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 ${btn.isRsa ? "hover:border-red-500/40" : "hover:border-[#00D084]/40"} font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md`}
+                    >
+                      {renderIcon(btn.icon)}
+                      <span>{btn.label}</span>
+                    </a>
+                  );
+                }
+                return (
+                  <Link
+                    key={btn.id}
+                    to={btn.to || "/services"}
+                    className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                  >
+                    {renderIcon(btn.icon)}
+                    <span>{btn.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Navigation Dot Indicators */}
