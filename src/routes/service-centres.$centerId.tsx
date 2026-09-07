@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import Lenis from "lenis";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,6 +9,8 @@ import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import RadialArcGalleryShowcase from "../components/RadialArcGalleryShowcase";
 import AucklandStyleLocationShowcase from "../components/AucklandStyleLocationShowcase";
+import { getOnboardedCities, getCityServiceCenters, ServiceCenter } from "../data/cities";
+import { EV_BRANDS_POPULAR, EV_CATALOG, getBrandLogoUrl } from "../data/evCatalog";
 import {
   Star,
   MapPin,
@@ -24,6 +27,7 @@ import {
   Activity,
   ChevronDown,
   ChevronUp,
+  ChevronLeft,
   Play,
   ArrowRight,
   ArrowLeft,
@@ -91,6 +95,87 @@ const scaleIn: Variants = {
   },
 };
 
+function CitySvgIcon({ cityId, className = "w-7 h-7" }: { cityId: string; className?: string }) {
+  const id = cityId.toLowerCase();
+
+  if (id.includes("pune")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 40H40V22L24 10L8 22V40Z" fill="url(#pune_g)" stroke="#00D084" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M18 40V28C18 24.6863 20.6863 22 24 22C27.3137 22 30 24.6863 30 28V40" fill="#030c07" stroke="#00D084" strokeWidth="2" />
+        <path d="M14 18H18M30 18H34M24 10V4" stroke="#00D084" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="24" cy="16" r="3" fill="#00D084" />
+        <defs>
+          <linearGradient id="pune_g" x1="8" y1="10" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#00D084" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#030c07" stopOpacity="0.8" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  if (id.includes("mumbai")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="38" width="36" height="4" rx="1" fill="#38bdf8" />
+        <path d="M10 38V16L14 12H34L38 16V38" stroke="#38bdf8" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M18 38V24C18 20.6863 20.6863 18 24 18C27.3137 18 30 20.6863 30 24V38" fill="#030c07" stroke="#38bdf8" strokeWidth="2" />
+        <circle cx="24" cy="11" r="4" fill="#38bdf8" fillOpacity="0.4" stroke="#38bdf8" strokeWidth="1.5" />
+        <path d="M6 38C12 36 18 40 24 38C30 36 36 40 42 38" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (id.includes("bangalore") || id.includes("bengaluru")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 40V22L24 12L38 22V40H10Z" fill="url(#blr_g)" stroke="#10b981" strokeWidth="2" />
+        <path d="M24 6V12M18 40V26H30V40" stroke="#10b981" strokeWidth="2" />
+        <path d="M25 28L21 34H26L23 40" stroke="#00D084" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <defs>
+          <linearGradient id="blr_g" x1="10" y1="12" x2="38" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#10b981" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#030c07" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  if (id.includes("delhi") || id.includes("ncr") || id.includes("gurgaon") || id.includes("noida")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 40H40V18H36V12H12V18H8V40Z" fill="url(#delhi_g)" stroke="#f59e0b" strokeWidth="2" />
+        <path d="M17 40V26C17 22.134 20.134 19 24 19C27.866 19 31 22.134 31 26V40" fill="#030c07" stroke="#f59e0b" strokeWidth="2" />
+        <path d="M12 12H36M16 8H32" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
+        <defs>
+          <linearGradient id="delhi_g" x1="8" y1="8" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#f59e0b" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#030c07" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  return (
+    <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 40V20H18V12H30V24H40V40H8Z" fill="url(#gen_g)" stroke="#00D084" strokeWidth="2" strokeLinejoin="round" />
+      <rect x="13" y="24" width="3" height="4" fill="#00D084" />
+      <rect x="23" y="16" width="3" height="4" fill="#00D084" />
+      <rect x="23" y="24" width="3" height="4" fill="#00D084" />
+      <rect x="33" y="28" width="3" height="4" fill="#00D084" />
+      <defs>
+        <linearGradient id="gen_g" x1="8" y1="12" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#00D084" stopOpacity="0.35" />
+          <stop offset="1" stopColor="#030c07" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
 export function ServiceCentresPage() {
   const centerId = "pune";
 
@@ -104,9 +189,148 @@ export function ServiceCentresPage() {
 
   // Widget Selection State
   const [selectedCity, setSelectedCity] = useState("Pune");
-  const [selectedVehicle, setSelectedVehicle] = useState<"2W" | "3W" | "4W">("2W");
+  const [selectedCenter, setSelectedCenter] = useState("Kharadi EON IT Park Hub");
+  const [selectedVehicle, setSelectedVehicle] = useState<"2W" | "3W">("2W");
   const [selectedBrand, setSelectedBrand] = useState("Ola Electric");
   const [selectedModel, setSelectedModel] = useState("Ola S1 Pro");
+
+  // Inline Selection Overlay Flow State (Renders INSIDE the form container card!)
+  const [inlineFlowOpen, setInlineFlowOpen] = useState(false);
+  const [inlineFlowStep, setInlineFlowStep] = useState<"center" | "brand" | "model">("center");
+
+  const [centerSearchQuery, setCenterSearchQuery] = useState("");
+  const [activeCenterCity, setActiveCenterCity] = useState("Pune");
+
+  const [selectedBrandTemp, setSelectedBrandTemp] = useState("Ola Electric");
+  const [brandSearchQuery, setBrandSearchQuery] = useState("");
+  const [brandCategoryFilter, setBrandCategoryFilter] = useState<"ALL" | "2W" | "3W">("ALL");
+
+  // Refs for local Lenis smooth scroll inside the inline form card
+  const inlineScrollWrapperRef = useRef<HTMLDivElement>(null);
+  const inlineScrollContentRef = useRef<HTMLDivElement>(null);
+
+  // Initialize smooth local scroll with Lenis for the active inline form step content
+  useEffect(() => {
+    if (!inlineFlowOpen || !inlineScrollWrapperRef.current || !inlineScrollContentRef.current) return;
+
+    const isTouchDevice = typeof window !== "undefined" && (window.innerWidth < 768 || "ontouchstart" in window);
+    if (isTouchDevice) return; // Native touch scrolling on mobile
+
+    const localLenis = new Lenis({
+      wrapper: inlineScrollWrapperRef.current,
+      content: inlineScrollContentRef.current,
+      duration: 1.0,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: false,
+    });
+
+    let rafId: number;
+    function update(time: number) {
+      localLenis.raf(time);
+      rafId = requestAnimationFrame(update);
+    }
+    rafId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      localLenis.destroy();
+    };
+  }, [inlineFlowOpen, inlineFlowStep]);
+
+  // Cities List for Center Switcher
+  const onboardedCities = useMemo(() => getOnboardedCities(), []);
+
+  // Filtered Centers for Active Selected City
+  const availableCenters = useMemo(() => {
+    const list = getCityServiceCenters(activeCenterCity);
+    if (!centerSearchQuery.trim()) return list;
+    const q = centerSearchQuery.toLowerCase();
+    return list.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.address.toLowerCase().includes(q) ||
+        c.area.toLowerCase().includes(q) ||
+        c.brandsServiced.some((b) => b.toLowerCase().includes(q))
+    );
+  }, [activeCenterCity, centerSearchQuery]);
+
+  // Filtered Brands for Brand Selection Step (Screenshot 2)
+  const filteredBrands = useMemo(() => {
+    let list = EV_BRANDS_POPULAR;
+    if (brandCategoryFilter !== "ALL") {
+      list = list.filter((b) => b.category === brandCategoryFilter);
+    }
+    if (brandSearchQuery.trim()) {
+      const q = brandSearchQuery.toLowerCase();
+      list = list.filter(
+        (b) => b.name.toLowerCase().includes(q) || b.displayName.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [brandCategoryFilter, brandSearchQuery]);
+
+  // Models list for Step 2
+  const availableModelsForBrand = useMemo(() => {
+    if (!selectedBrandTemp) return [];
+    const getBrandKey = (brand: string) => {
+      const b = brand.toLowerCase();
+      if (b.includes("ola")) return "ola";
+      if (b.includes("ather")) return "ather";
+      if (b.includes("tvs")) return "tvs";
+      if (b.includes("bajaj") || b.includes("chetak")) return "bajaj";
+      if (b.includes("hero")) return "hero";
+      if (b.includes("revolt")) return "revolt";
+      if (b.includes("ampere")) return "ampere";
+      if (b.includes("simple")) return "simple";
+      if (b.includes("tork")) return "tork";
+      if (b.includes("okinawa")) return "okinawa";
+      if (b.includes("mahindra")) return "mahindra";
+      if (b.includes("piaggio") || b.includes("ape")) return "piaggio";
+      if (b.includes("kinetic")) return "kinetic";
+      return b;
+    };
+    const key = getBrandKey(selectedBrandTemp);
+    const set = new Set(
+      EV_CATALOG.filter((m) => m.make.toLowerCase().includes(key)).map((m) => m.model)
+    );
+    const result = Array.from(set);
+    return result.length > 0
+      ? result
+      : ["Standard Edition EV", "Pro Edition EV", "Extended Range EV"];
+  }, [selectedBrandTemp]);
+
+  const getModelDisplayInfo = (brand: string, modelName: string) => {
+    const getBrandKey = (b: string) => {
+      const val = b.toLowerCase();
+      if (val.includes("ola")) return "ola";
+      if (val.includes("ather")) return "ather";
+      if (val.includes("tvs")) return "tvs";
+      if (val.includes("bajaj") || val.includes("chetak")) return "bajaj";
+      if (val.includes("hero")) return "hero";
+      if (val.includes("revolt")) return "revolt";
+      if (val.includes("ampere")) return "ampere";
+      if (val.includes("simple")) return "simple";
+      if (val.includes("tork")) return "tork";
+      if (val.includes("okinawa")) return "okinawa";
+      if (val.includes("mahindra")) return "mahindra";
+      if (val.includes("piaggio") || val.includes("ape")) return "piaggio";
+      if (val.includes("kinetic")) return "kinetic";
+      return val;
+    };
+    const key = getBrandKey(brand);
+    const matched = EV_CATALOG.find(
+      (item) =>
+        item.make.toLowerCase().includes(key) &&
+        item.model.toLowerCase() === modelName.toLowerCase()
+    );
+    const imageUrl = matched?.modelImageUrl || matched?.logoUrl || getBrandLogoUrl(brand);
+    return {
+      modelName,
+      imageUrl,
+      battery: matched?.batteryKwh ? `${matched.batteryKwh} kWh` : undefined,
+    };
+  };
 
   // Interactive Booking Modal
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -197,7 +421,7 @@ export function ServiceCentresPage() {
   const handleQuickBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success(
-      `Service slot request received for ${selectedBrand} ${selectedModel} in ${selectedCity}! Our advisor will call you within 15 minutes.`
+      `Service slot request received for ${selectedBrand} ${selectedModel} at ${selectedCenter} (${selectedCity})! Our advisor will call you within 15 minutes.`
     );
   };
 
@@ -503,7 +727,309 @@ export function ServiceCentresPage() {
             </div>
 
             {/* Right Column: Find Your Service Centre Interactive Form (True Glassmorphism) */}
-            <div className="lg:col-span-5 bg-[#050b14]/40 backdrop-blur-2xl rounded-[32px] p-6 sm:p-8 relative font-serif border border-white/20 hover:border-white/35 shadow-[0_16px_40px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300">
+            <div className="lg:col-span-5 bg-[#050b14]/90 backdrop-blur-2xl rounded-[32px] p-6 sm:p-8 relative font-serif border border-white/20 hover:border-white/35 shadow-[0_16px_40px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300">
+              
+              {/* =========================================================================
+                  INLINE SELECTION FLOW OVERLAY (Renders INSIDE the form box like screenshot)
+                 ========================================================================= */}
+              <AnimatePresence>
+                {inlineFlowOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 15 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="absolute inset-0 bg-[#030d07]/98 backdrop-blur-3xl z-30 p-5 sm:p-6 flex flex-col justify-between text-left font-sans rounded-[32px] overflow-hidden"
+                  >
+                    {/* 1. CENTER SELECTION STEP (Screenshot 3 Flow Inside Form Card) */}
+                    {inlineFlowStep === "center" && (
+                      <div className="flex-1 flex flex-col min-h-0 text-left">
+                        <div className="flex items-center justify-between mb-3 shrink-0">
+                          <div>
+                            <span className="text-[9px] uppercase font-mono font-bold text-[#00D084] block">
+                              40+ ONBOARDED EV HUBS
+                            </span>
+                            <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-wider">
+                              Select Center in {selectedCity}
+                            </h4>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setInlineFlowOpen(false)}
+                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        {/* City Switcher Horizontal Pills */}
+                        <div className="flex items-center gap-1.5 mb-3 overflow-x-auto shrink-0 scrollbar-none pb-1">
+                          {onboardedCities.map((c) => (
+                            <button
+                              key={c.id}
+                              type="button"
+                              onClick={() => {
+                                setActiveCenterCity(c.name);
+                                setSelectedCity(c.name);
+                              }}
+                              className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1 ${
+                                activeCenterCity.toLowerCase() === c.name.toLowerCase()
+                                  ? "bg-[#00D084] text-[#020403] font-black shadow-[0_0_10px_rgba(0,208,132,0.4)]"
+                                  : "bg-white/5 hover:bg-white/10 text-white/70 border border-white/10"
+                              }`}
+                            >
+                              <span>{c.name}</span>
+                              <span className="text-[8.5px] opacity-75 font-mono">({c.centersCount})</span>
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Search Input & Detect Location Row */}
+                        <div className="flex items-center gap-2 mb-3 shrink-0">
+                          <div className="relative flex-1">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#00D084]" />
+                            <input
+                              type="text"
+                              value={centerSearchQuery}
+                              onChange={(e) => setCenterSearchQuery(e.target.value)}
+                              placeholder={`Search center/area in ${activeCenterCity}...`}
+                              className="w-full bg-[#020503] border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00D084] transition-all font-bold"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              toast.info(`📍 Nearest hub detected in ${activeCenterCity}!`);
+                            }}
+                            className="px-2.5 py-2 rounded-xl bg-[#00D084]/15 border border-[#00D084]/40 hover:bg-[#00D084]/25 text-[#00D084] text-[10px] font-mono font-bold transition-all cursor-pointer shrink-0 flex items-center gap-1"
+                          >
+                            <Navigation className="w-3 h-3" />
+                            <span>Detect 📍</span>
+                          </button>
+                        </div>
+
+                        {/* Center Cards Grid (Exact Screenshot 3 Design Card Layout with local Lenis scroll) */}
+                        <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                          <div ref={inlineScrollContentRef} className="grid grid-cols-2 gap-2.5">
+                            {availableCenters.map((c) => {
+                              const isSelected = selectedCenter.toLowerCase().includes(c.area.toLowerCase()) || selectedCenter === c.name;
+
+                              return (
+                                <button
+                                  key={c.id}
+                                  type="button"
+                                  onClick={() => {
+                                    setSelectedCenter(c.name);
+                                    setSelectedCity(activeCenterCity);
+                                    setInlineFlowOpen(false);
+                                    toast.success(`Selected center: ${c.name}`);
+                                  }}
+                                  className={`p-3 rounded-2xl border transition-all text-left flex flex-col justify-between cursor-pointer group relative overflow-hidden ${
+                                    isSelected
+                                      ? "bg-[#00D084]/15 border-[#00D084] shadow-[0_0_25px_rgba(0,208,132,0.35)]"
+                                      : "bg-[#090f0c] border-white/10 hover:border-[#00D084]/50 hover:bg-white/5"
+                                  }`}
+                                >
+                                  <div className="flex items-start justify-between gap-1.5 mb-2">
+                                    <div className="w-9 h-9 rounded-xl bg-black/50 border border-white/15 flex items-center justify-center p-1.5 group-hover:scale-105 transition-transform shrink-0">
+                                      <CitySvgIcon cityId={activeCenterCity} className="w-full h-full" />
+                                    </div>
+                                    <span className="text-[9px] font-mono font-extrabold text-[#00D084] bg-[#00D084]/15 px-2 py-0.5 rounded-full border border-[#00D084]/30 shrink-0">
+                                      ⚡ {c.baysAvailable} Bays
+                                    </span>
+                                  </div>
+
+                                  <div>
+                                    <h5 className="text-[11.5px] font-black text-white leading-tight group-hover:text-[#00D084] transition-colors flex items-center justify-between gap-1">
+                                      <span className="truncate">{c.name}</span>
+                                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0" />}
+                                    </h5>
+                                    <p className="text-[9px] text-white/50 font-medium truncate mt-0.5">{activeCenterCity}, MH</p>
+                                    <p className="text-[8.5px] text-white/40 truncate mt-1 border-t border-white/5 pt-1">
+                                      {c.address}
+                                    </p>
+                                  </div>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 2. BRAND SELECTION STEP (Screenshot 2 Flow Inside Form Card) */}
+                    {inlineFlowStep === "brand" && (
+                      <div className="flex-1 flex flex-col min-h-0 text-left">
+                        <div className="flex items-center justify-between mb-3 shrink-0">
+                          <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-wider">
+                            Select EV Manufacturer
+                          </h4>
+                          <button
+                            type="button"
+                            onClick={() => setInlineFlowOpen(false)}
+                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        {/* Category Tabs */}
+                        <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 mb-3 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => setBrandCategoryFilter("ALL")}
+                            className={`flex-1 py-1.5 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
+                              brandCategoryFilter === "ALL"
+                                ? "bg-[#00D084] text-black shadow-md font-black"
+                                : "text-white/60 hover:text-white"
+                            }`}
+                          >
+                            All (2W & 3W)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setBrandCategoryFilter("2W")}
+                            className={`flex-1 py-1.5 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
+                              brandCategoryFilter === "2W"
+                                ? "bg-[#00D084] text-black shadow-md font-black"
+                                : "text-white/60 hover:text-white"
+                            }`}
+                          >
+                            🛵 2-Wheelers
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setBrandCategoryFilter("3W")}
+                            className={`flex-1 py-1.5 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
+                              brandCategoryFilter === "3W"
+                                ? "bg-[#00D084] text-black shadow-md font-black"
+                                : "text-white/60 hover:text-white"
+                            }`}
+                          >
+                            🛺 3-Wheelers
+                          </button>
+                        </div>
+
+                        {/* Search Input */}
+                        <div className="relative mb-3 shrink-0">
+                          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#00D084]" />
+                          <input
+                            type="text"
+                            value={brandSearchQuery}
+                            onChange={(e) => setBrandSearchQuery(e.target.value)}
+                            placeholder="Search brand (Ola, Ather, TVS, Bajaj, Mahindra...)"
+                            className="w-full bg-[#020503] border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00D084] transition-all font-bold"
+                          />
+                        </div>
+
+                        {/* Brands 3-Column Grid (Exact Screenshot 2 style inside form with local Lenis scroll) */}
+                        <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                          <div ref={inlineScrollContentRef} className="grid grid-cols-3 gap-2.5">
+                            {filteredBrands.map((b) => (
+                              <button
+                                key={b.name}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedBrandTemp(b.displayName);
+                                  setInlineFlowStep("model");
+                                }}
+                                className="p-3 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center gap-2 cursor-pointer group"
+                              >
+                                <div className="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center p-1.5 bg-black/40 overflow-hidden shrink-0 group-hover:scale-105 transition-transform">
+                                  {b.logoUrl ? (
+                                    <img src={b.logoUrl} alt={b.displayName} className="w-full h-full object-contain" />
+                                  ) : (
+                                    <span className="text-lg">{b.icon}</span>
+                                  )}
+                                </div>
+                                <span className="text-[10px] font-black text-white leading-tight truncate w-full group-hover:text-[#00D084] transition-colors">
+                                  {b.displayName}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 3. MODEL SELECTION STEP (Inside Form Card) */}
+                    {inlineFlowStep === "model" && (
+                      <div className="flex-1 flex flex-col min-h-0 text-left">
+                        <div className="flex items-center justify-between mb-3 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => setInlineFlowStep("brand")}
+                            className="flex items-center gap-1 text-xs font-bold text-[#00D084] hover:underline cursor-pointer bg-transparent border-none p-0 focus:outline-none"
+                          >
+                            <ChevronLeft className="w-4 h-4 text-[#00D084]" />
+                            <span>Back to Brands</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setInlineFlowOpen(false)}
+                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        <div className="mb-3 shrink-0 text-left">
+                          <span className="text-[9px] uppercase font-mono font-bold text-[#00D084] block mb-0.5">
+                            {selectedBrandTemp}
+                          </span>
+                          <h4 className="text-base sm:text-lg font-black text-white tracking-tight leading-none">
+                            Select Model
+                          </h4>
+                        </div>
+
+                        {/* Models Grid with local Lenis scroll */}
+                        <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                          <div ref={inlineScrollContentRef} className="grid grid-cols-2 gap-2.5">
+                            {availableModelsForBrand.map((m) => {
+                              const info = getModelDisplayInfo(selectedBrandTemp, m);
+                              return (
+                                <button
+                                  key={m}
+                                  type="button"
+                                  onClick={() => {
+                                    setSelectedBrand(selectedBrandTemp);
+                                    setSelectedModel(m);
+                                    setInlineFlowOpen(false);
+                                    toast.success(`Selected model: ${selectedBrandTemp} ${m}`);
+                                  }}
+                                  className="p-3 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all text-left flex items-center justify-between gap-2 cursor-pointer group"
+                                >
+                                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                    <div className="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center bg-black/40 overflow-hidden shrink-0 p-1 group-hover:scale-105 transition-transform">
+                                      {info.imageUrl ? (
+                                        <img src={info.imageUrl} alt={m} className="w-full h-full object-contain rounded-full" />
+                                      ) : (
+                                        <div className="w-full h-full flex items-center justify-center font-extrabold text-[#00D084] text-[9px]">
+                                          EV
+                                        </div>
+                                      )}
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                      <p className="text-xs font-black text-white truncate group-hover:text-[#00D084] transition-colors">
+                                        {m}
+                                      </p>
+                                      <p className="text-[9px] text-white/50 leading-tight mt-0.5 truncate">
+                                        {selectedBrandTemp} {info.battery ? `• ${info.battery}` : ""}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-[#00D084] transition-all shrink-0 ml-1" />
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <div className="mb-5 text-left relative z-10 border-b border-white/10 pb-4">
                 <h3 className="text-xl sm:text-2xl font-serif font-black text-white tracking-tight flex items-center justify-between">
                   Find Your Service Centre
@@ -514,37 +1040,50 @@ export function ServiceCentresPage() {
                 </p>
               </div>
 
-              <form onSubmit={handleQuickBookingSubmit} className="space-y-4 text-left relative z-10">
+              <form onSubmit={handleQuickBookingSubmit} className="space-y-4 text-left relative z-10 font-sans">
+                {/* 1. SELECT SERVICE CENTER IN CITY */}
                 <div>
-                  <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
-                    Select City
-                  </label>
-                  <select
-                    value={selectedCity}
-                    onChange={(e) => setSelectedCity(e.target.value)}
-                    className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-[11px] font-sans font-black text-white/90 uppercase tracking-wider block">
+                      Select Center in {selectedCity}
+                    </label>
+                    <span className="text-[9px] font-mono text-[#00D084] bg-[#00D084]/15 px-2 py-0.5 rounded-md border border-[#00D084]/30 font-bold">
+                      {activeCenterCity} HUBS
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveCenterCity(selectedCity);
+                      setInlineFlowStep("center");
+                      setInlineFlowOpen(true);
+                    }}
+                    className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-4 py-3 text-xs text-white font-sans font-bold focus:outline-none transition-all border border-[#00D084]/30 hover:border-[#00D084] backdrop-blur-md cursor-pointer flex items-center justify-between group shadow-lg"
                   >
-                    <option value="Pune" className="bg-[#040C1A] text-white">Pune (Kharadi EON IT Park Hub)</option>
-                    <option value="Mumbai" className="bg-[#040C1A] text-white">Mumbai (Andheri West Hub)</option>
-                    <option value="Bangalore" className="bg-[#040C1A] text-white">Bangalore (Koramangala Hub)</option>
-                    <option value="Delhi NCR" className="bg-[#040C1A] text-white">Delhi NCR (Gurugram Hub)</option>
-                    <option value="Hyderabad" className="bg-[#040C1A] text-white">Hyderabad (HITECH City Hub)</option>
-                    <option value="Chennai" className="bg-[#040C1A] text-white">Chennai (Guindy Hub)</option>
-                    <option value="Ahmedabad" className="bg-[#040C1A] text-white">Ahmedabad (SG Highway Hub)</option>
-                  </select>
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Building2 className="w-4 h-4 text-[#00D084] shrink-0" />
+                      <span className="truncate text-white font-black">
+                        {selectedCenter ? `${selectedCenter} (${selectedCity})` : `${selectedCity} Service Hub`}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#00D084] bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/30 shrink-0 group-hover:bg-[#00D084] group-hover:text-black transition-all">
+                      CHANGE CENTER →
+                    </span>
+                  </button>
                 </div>
 
+                {/* 2. SELECT VEHICLE TYPE */}
                 <div>
-                  <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
+                  <label className="text-[11px] font-sans font-black text-white/90 uppercase tracking-wider block mb-1">
                     Select Vehicle Type
                   </label>
-                  <div className="grid grid-cols-3 gap-2.5">
-                    {(["2W", "3W", "4W"] as const).map((type) => (
+                  <div className="grid grid-cols-2 gap-3">
+                    {(["2W", "3W"] as const).map((type) => (
                       <button
                         key={type}
                         type="button"
                         onClick={() => setSelectedVehicle(type)}
-                        className={`py-2.5 rounded-2xl text-xs font-serif font-bold transition-all border flex items-center justify-center gap-1.5 cursor-pointer backdrop-blur-md ${selectedVehicle === type
+                        className={`py-2.5 rounded-2xl text-xs font-sans font-bold transition-all border flex items-center justify-center gap-1.5 cursor-pointer backdrop-blur-md ${selectedVehicle === type
                             ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_15px_rgba(0,208,132,0.4)]"
                             : "bg-white/[0.06] hover:bg-white/[0.12] text-white/80 border-white/15 hover:border-white/30"
                           }`}
@@ -556,47 +1095,34 @@ export function ServiceCentresPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
-                      Select Brand
-                    </label>
-                    <select
-                      value={selectedBrand}
-                      onChange={(e) => setSelectedBrand(e.target.value)}
-                      className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
-                    >
-                      <option value="Ola Electric" className="bg-[#040C1A] text-white">Ola Electric</option>
-                      <option value="Ather Energy" className="bg-[#040C1A] text-white">Ather Energy</option>
-                      <option value="TVS iQube" className="bg-[#040C1A] text-white">TVS iQube</option>
-                      <option value="Bajaj Chetak" className="bg-[#040C1A] text-white">Bajaj Chetak</option>
-                      <option value="Hero Electric" className="bg-[#040C1A] text-white">Hero Electric</option>
-                      <option value="Vida EV" className="bg-[#040C1A] text-white">Vida EV</option>
-                      <option value="Tata EV" className="bg-[#040C1A] text-white">Tata EV</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
-                      Select Model
-                    </label>
-                    <select
-                      value={selectedModel}
-                      onChange={(e) => setSelectedModel(e.target.value)}
-                      className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
-                    >
-                      <option value="Ola S1 Pro" className="bg-[#040C1A] text-white">Ola S1 Pro</option>
-                      <option value="Ather 450X" className="bg-[#040C1A] text-white">Ather 450X</option>
-                      <option value="TVS iQube S" className="bg-[#040C1A] text-white">TVS iQube S</option>
-                      <option value="Chetak Premium" className="bg-[#040C1A] text-white">Chetak Premium</option>
-                      <option value="Nexon EV" className="bg-[#040C1A] text-white">Nexon EV</option>
-                    </select>
-                  </div>
+                {/* 3. COMBINED SELECT BRAND & MODEL FIELD (Only 1 Field as requested!) */}
+                <div>
+                  <label className="text-[11px] font-sans font-black text-white/90 uppercase tracking-wider block mb-1">
+                    Select EV Brand & Model
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setInlineFlowStep("brand");
+                      setInlineFlowOpen(true);
+                    }}
+                    className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-4 py-3 text-xs text-white font-sans font-bold focus:outline-none transition-all border border-[#00D084]/30 hover:border-[#00D084] backdrop-blur-md cursor-pointer flex items-center justify-between group shadow-lg"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Wrench className="w-4 h-4 text-[#00D084] shrink-0" />
+                      <span className="truncate text-white font-black">
+                        {selectedBrand && selectedModel ? `${selectedBrand} ${selectedModel}` : "Select EV Brand & Model..."}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#00D084] bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/30 shrink-0 group-hover:bg-[#00D084] group-hover:text-black transition-all">
+                      SELECT MODEL →
+                    </span>
+                  </button>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-2xl bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-xs sm:text-sm font-serif font-black uppercase tracking-wider hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-3 shadow-xl"
+                  className="w-full py-4 rounded-2xl bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-xs sm:text-sm font-sans font-black uppercase tracking-wider hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-3 shadow-xl"
                 >
                   Book Service Now <ArrowRight className="w-4 h-4" />
                 </button>
@@ -604,7 +1130,7 @@ export function ServiceCentresPage() {
                 <div className="pt-2 text-center">
                   <a
                     href="tel:18001234567"
-                    className="text-xs font-serif font-bold text-white/80 hover:text-[#00D084] inline-flex items-center gap-1.5 transition-colors bg-white/[0.04] hover:bg-white/[0.08] px-4 py-2 rounded-xl border border-white/10"
+                    className="text-xs font-sans font-bold text-white/80 hover:text-[#00D084] inline-flex items-center gap-1.5 transition-colors bg-white/[0.04] hover:bg-white/[0.08] px-4 py-2 rounded-xl border border-white/10"
                   >
                     <PhoneCall className="w-3.5 h-3.5 text-[#00D084]" /> Call Centre 1800-123-4567
                   </a>
@@ -1508,7 +2034,7 @@ export function ServiceCentresPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-[#050907] border-2 border-white/20 rounded-3xl p-6 max-w-2xl w-full relative font-serif shadow-2xl space-y-4"
+              className="bg-[#050907] border-2 border-white/20 rounded-3xl p-6 max-w-2xl w-full relative font-serif shadow-2xl space-y-4 text-left"
             >
               <button
                 onClick={() => setVideoTourOpen(false)}

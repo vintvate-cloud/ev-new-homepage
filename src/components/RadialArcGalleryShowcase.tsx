@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * RadialArcGalleryShowcase
- * Dynamic GSAP ScrollTrigger Fan-Out gallery dome
+ * Dynamic GSAP ScrollTrigger Fan-Out gallery dome with interactive Lightbox Modal Portal
  */
 
 const ARC_CARDS = [
@@ -56,6 +58,8 @@ const ARC_CARDS = [
 export default function RadialArcGalleryShowcase() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const [geom, setGeom] = useState({
     radius: 480,
@@ -64,6 +68,35 @@ export default function RadialArcGalleryShowcase() {
     cardH: 182,
     containerH: 640,
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleNext = useCallback(() => {
+    setSelectedIndex((prev) => (prev === null ? null : (prev + 1) % ARC_CARDS.length));
+  }, []);
+
+  const handlePrev = useCallback(() => {
+    setSelectedIndex((prev) =>
+      prev === null ? null : (prev - 1 + ARC_CARDS.length) % ARC_CARDS.length
+    );
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setSelectedIndex(null);
+  }, []);
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleClose();
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedIndex, handleClose, handleNext, handlePrev]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -176,6 +209,7 @@ export default function RadialArcGalleryShowcase() {
               ref={(el) => {
                 cardsRef.current[i] = el;
               }}
+              onClick={() => setSelectedIndex(i)}
               className="absolute pointer-events-auto rounded-[20px] sm:rounded-[28px] md:rounded-[32px] overflow-hidden border border-white/20 hover:border-[#00D084] shadow-[0_25px_50px_rgba(0,0,0,0.9)] bg-black cursor-pointer group transition-all duration-300 left-1/2 top-0"
               style={{
                 width: `${geom.cardW}px`,
@@ -187,10 +221,11 @@ export default function RadialArcGalleryShowcase() {
                 alt={card.title}
                 className="w-full h-full object-cover rounded-[20px] sm:rounded-[28px] md:rounded-[32px] group-hover:scale-108 transition-transform duration-500 filter brightness-95 group-hover:brightness-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
-                <span className="text-[10px] font-sans font-bold text-[#00D084] leading-tight">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
+                <span className="text-[10px] font-sans font-bold text-[#00D084] leading-tight pr-1">
                   {card.title}
                 </span>
+                <Maximize2 className="w-3.5 h-3.5 text-white/80 shrink-0 group-hover:text-[#00D084] transition-colors" />
               </div>
             </div>
           ))}
@@ -237,6 +272,77 @@ export default function RadialArcGalleryShowcase() {
           </div>
         </div>
       </div>
+
+      {/* ---------- LIGHTBOX MODAL (PORTAL) ---------- */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {selectedIndex !== null && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-8 select-none"
+                onClick={handleClose}
+              >
+                {/* Floating Close Button */}
+                <button
+                  onClick={handleClose}
+                  className="fixed top-6 right-6 sm:top-8 sm:right-8 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors cursor-pointer border border-white/10"
+                  aria-label="Close"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+
+                {/* Left Floating Arrow */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrev();
+                  }}
+                  className="fixed left-4 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-3.5 sm:p-4 rounded-full bg-black/50 hover:bg-[#00D084] text-white hover:text-black border border-white/20 transition-all duration-200 backdrop-blur-md group cursor-pointer"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-7 h-7 sm:w-8 sm:h-8 transition-transform group-hover:-translate-x-0.5" />
+                </button>
+
+                {/* Right Floating Arrow */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNext();
+                  }}
+                  className="fixed right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-3.5 sm:p-4 rounded-full bg-black/50 hover:bg-[#00D084] text-white hover:text-black border border-white/20 transition-all duration-200 backdrop-blur-md group cursor-pointer"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-7 h-7 sm:w-8 sm:h-8 transition-transform group-hover:translate-x-0.5" />
+                </button>
+
+                {/* Main Centered Image Only (No Box, No Shadows) */}
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="relative max-w-[90vw] max-h-[88vh] flex items-center justify-center"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <img
+                    key={selectedIndex}
+                    src={ARC_CARDS[selectedIndex].image}
+                    alt={ARC_CARDS[selectedIndex].title}
+                    className="max-w-[90vw] max-h-[85vh] w-auto h-auto object-contain rounded-2xl select-none"
+                  />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </section>
   );
 }
+
+
+
