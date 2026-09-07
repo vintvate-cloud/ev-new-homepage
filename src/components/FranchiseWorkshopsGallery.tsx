@@ -213,7 +213,7 @@ export function FranchiseWorkshopsGallery({
             return (
               <div
                 key={index}
-                className="absolute overflow-hidden rounded-[13px] border border-white/12 hover:border-[#00D084] transition-all duration-300 hover:scale-105 cursor-pointer shadow-xl group"
+                className="absolute overflow-hidden rounded-[13px] border border-white/12 hover:border-[#00D084] transition-all duration-300 hover:scale-105 cursor-pointer group"
                 style={{
                   left: `${card.x}px`,
                   top: `${card.y}px`,

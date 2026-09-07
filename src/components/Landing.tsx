@@ -3315,96 +3315,133 @@ function EVServices() {
         {/* Bento Grid */}
         <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
 
-          {/* Card 1: Battery Health Check (Wide Rectangle) */}
-          <GlowCard className="md:col-span-8 flex flex-col md:flex-row justify-between gap-6 min-h-[320px] glow-card-stagger">
-            <div className="flex-1 flex flex-col justify-between">
+          {/* Card 1: Battery Health Check (Wide Rectangle with Filled Background Image) */}
+          <GlowCard className="md:col-span-8 flex flex-col md:flex-row justify-between gap-6 min-h-[320px] glow-card-stagger relative overflow-hidden">
+            {/* FULL CARD BACKGROUND IMAGE FILL */}
+            <img 
+              src="/tools/bms-diagnostic.png" 
+              alt="" 
+              className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-105 transition-all duration-700 pointer-events-none z-0 filter brightness-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/90 to-transparent pointer-events-none z-0" />
+
+            <div className="flex-1 flex flex-col justify-between z-10 relative">
               <div>
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                   <Battery className="h-5 w-5 text-[#00D084]" />
                 </div>
-                <h3 className="text-2xl font-serif text-white mb-2">Battery Health Check</h3>
-                <p className="text-[#a1a1aa] text-sm leading-relaxed max-w-sm">
+                <h3 className="text-2xl font-serif font-black text-white mb-2">Battery Health Check</h3>
+                <p className="text-white/90 text-sm font-bold leading-relaxed max-w-sm">
                   Comprehensive battery diagnostics with cell level voltage scan and capacity verification.
                 </p>
               </div>
               <div className="flex items-baseline gap-3 mt-4">
-                <span className="text-2xl font-bold text-[#00D084]">Starting from ₹399</span>
-                <span className="text-sm text-[#52525b] line-through">₹1,499</span>
+                <span className="text-2xl font-black text-[#00D084]">Starting from ₹399</span>
+                <span className="text-sm text-white/50 line-through font-bold">₹1,499</span>
               </div>
             </div>
-            {/* Visual Panel */}
-            <div className="w-full md:w-[240px] h-[180px] bg-black/40 rounded-2xl border border-white/5 p-4 flex flex-col justify-between">
-              <span className="text-[10px] text-gray-500 font-mono">BMS HEALTH METRICS</span>
-              <div className="flex items-center justify-between gap-4">
-                <div className="h-24 w-12 border-2 border-white/20 rounded-lg p-1 relative flex flex-col justify-end">
-                  <div className="w-full bg-[#00D084] rounded-sm transition-all duration-500 h-[88%]" />
-                  <div className="absolute top-[-5px] left-1/2 -translate-x-1/2 w-4 h-1 bg-white/20 rounded-t-sm" />
+            {/* Visual Panel with Graphic Image (No Shadow) */}
+            <div className="relative w-full md:w-[240px] h-[190px] bg-black/70 rounded-2xl border border-white/15 p-4 flex flex-col justify-between overflow-hidden group z-10">
+              <img 
+                src="/tools/bms-diagnostic.png" 
+                alt="BMS Diagnostic" 
+                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-500" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent pointer-events-none" />
+              <div className="relative z-10 flex flex-col justify-between h-full">
+                <span className="text-[10px] text-gray-200 font-mono font-bold tracking-wider">BMS HEALTH METRICS</span>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="h-20 w-10 border-2 border-[#00D084]/40 rounded-lg p-1 relative flex flex-col justify-end bg-black/80">
+                    <div className="w-full bg-[#00D084] rounded-sm transition-all duration-500 h-[88%]" />
+                    <div className="absolute top-[-5px] left-1/2 -translate-x-1/2 w-4 h-1 bg-[#00D084] rounded-t-sm" />
+                  </div>
+                  <div className="flex-1 flex flex-col gap-1">
+                    <div className="flex justify-between text-[11px] font-mono"><span className="text-white/90 font-bold">Health</span><span className="text-[#00D084] font-black">94%</span></div>
+                    <div className="flex justify-between text-[11px] font-mono"><span className="text-white/90 font-bold">Cycles</span><span className="text-white font-bold">182</span></div>
+                    <div className="flex justify-between text-[11px] font-mono"><span className="text-white/90 font-bold">Temp</span><span className="text-white font-bold">32°C</span></div>
+                  </div>
                 </div>
-                <div className="flex-1 flex flex-col gap-1.5">
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-[#a1a1aa]">Health</span><span className="text-[#00D084]">94%</span></div>
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-[#a1a1aa]">Cycles</span><span className="text-white">182</span></div>
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-[#a1a1aa]">Temp</span><span className="text-white">32°C</span></div>
-                </div>
+                <span className="text-[10px] text-[#00D084] font-extrabold tracking-widest text-center mt-1 bg-[#00D084]/15 border border-[#00D084]/30 py-0.5 rounded-full backdrop-blur-md">SYSTEMS PASS</span>
               </div>
-              <span className="text-[10px] text-[#00D084] font-bold tracking-widest text-center mt-1">SYSTEMS PASS</span>
             </div>
           </GlowCard>
 
-          {/* Card 2: Motor & Controller (Square) */}
-          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[320px] glow-card-stagger">
-            <div>
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
-                <Gauge className="h-5 w-5 text-[#00D084]" />
+          {/* Card 2: Motor & Controller (Square with Filled Background Image) */}
+          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden">
+            {/* FULL CARD BACKGROUND IMAGE FILL */}
+            <img 
+              src="/tools/motor-tester.png" 
+              alt="" 
+              className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700 pointer-events-none z-0 filter brightness-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/90 to-black/50 pointer-events-none z-0" />
+
+            <div className="z-10 relative">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
+                  <Gauge className="h-5 w-5 text-[#00D084]" />
+                </div>
+                <span className="text-[9px] font-mono font-black text-[#00D084] bg-black/80 backdrop-blur-md border border-[#00D084]/30 px-2.5 py-1 rounded-full uppercase">
+                  Dyno Certified
+                </span>
               </div>
-              <h3 className="text-2xl font-serif text-white mb-2">Motor & Controller</h3>
-              <p className="text-[#a1a1aa] text-sm leading-relaxed">
+              <h3 className="text-2xl font-serif font-black text-white mb-2">Motor & Controller</h3>
+              <p className="text-white/90 text-sm font-bold leading-relaxed mb-4">
                 Electric motor inspection, controller diagnostics, and thermal stress mapping.
               </p>
             </div>
-            <div className="flex items-baseline justify-between mt-4">
-              <span className="text-xl font-bold text-[#00D084]">₹1,999</span>
-              <span className="text-xs text-[#a1a1aa]">1h 30m duration</span>
+            <div className="flex items-baseline justify-between mt-4 border-t border-white/15 pt-3 z-10 relative">
+              <span className="text-xl font-black text-[#00D084]">₹1,999</span>
+              <span className="text-xs text-white/80 font-bold">1h 30m duration</span>
             </div>
           </GlowCard>
 
-          {/* Card 3: Charging System (Tall Vertical Rectangle) */}
-          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[660px] glow-card-stagger">
-            <div>
+          {/* Card 3: Charging System (Tall Vertical Rectangle with Filled Background Image) */}
+          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[660px] glow-card-stagger relative overflow-hidden">
+            {/* FULL CARD BACKGROUND IMAGE FILL */}
+            <img 
+              src="/tools/fast-charger-tester.png" 
+              alt="" 
+              className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700 pointer-events-none z-0 filter brightness-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/90 to-black/50 pointer-events-none z-0" />
+
+            <div className="z-10 relative">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <Zap className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-3xl font-serif text-white mb-4">Charging System</h3>
-              <p className="text-[#a1a1aa] text-sm leading-relaxed mb-6">
+              <h3 className="text-3xl font-serif font-black text-white mb-4">Charging System</h3>
+              <p className="text-white/90 text-sm font-bold leading-relaxed mb-4">
                 Charger diagnostics, port inspection, and speed profiling to guarantee maximum safety.
               </p>
 
               {/* Supported protocols */}
-              <div className="flex flex-col gap-2 mt-4">
-                <span className="text-[10px] uppercase tracking-wider text-[#71717a] font-bold mb-1">PROTOCOLS TESTED</span>
-                <div className="flex justify-between items-center bg-white/5 rounded-xl p-3 border border-white/5">
-                  <span className="text-xs text-white">CCS2 Fast Charge</span>
+              <div className="flex flex-col gap-2 mt-6">
+                <span className="text-[10px] uppercase tracking-wider text-[#00D084] font-mono font-black mb-1">PROTOCOLS TESTED</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/10">
+                  <span className="text-xs font-bold text-white">CCS2 Fast Charge</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
-                <div className="flex justify-between items-center bg-white/5 rounded-xl p-3 border border-white/5">
-                  <span className="text-xs text-white">GB/T Standard</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/10">
+                  <span className="text-xs font-bold text-white">GB/T Standard</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
-                <div className="flex justify-between items-center bg-white/5 rounded-xl p-3 border border-white/5">
-                  <span className="text-xs text-white">Bharat AC 001</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/10">
+                  <span className="text-xs font-bold text-white">Bharat AC 001</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col gap-4">
+            <div className="mt-8 pt-6 border-t border-white/15 flex flex-col gap-4 z-10 relative">
               <div className="flex justify-between items-end">
                 <div>
-                  <span className="text-[10px] text-gray-500 uppercase">Starting From</span>
-                  <div className="text-2xl font-bold text-[#00D084]">₹899</div>
+                  <span className="text-[10px] text-gray-300 uppercase font-mono font-bold">Starting From</span>
+                  <div className="text-2xl font-black text-[#00D084]">₹899</div>
                 </div>
-                <span className="text-xs text-[#a1a1aa]">45 min test</span>
+                <span className="text-xs text-white/80 font-bold">45 min test</span>
               </div>
-              <button className="w-full rounded-full bg-white py-3 text-sm font-bold text-black transition-colors hover:bg-[#00D084] hover:text-black">
+              <button className="w-full rounded-full bg-white py-3 text-sm font-extrabold text-black transition-colors hover:bg-[#00D084] hover:text-black cursor-pointer">
                 Book Inspection
               </button>
             </div>
@@ -3441,27 +3478,34 @@ function EVServices() {
               />
             </div>
 
-            {/* Left Content (Software Updates) */}
-            <div className="absolute left-0 top-0 bottom-0 w-[55%] p-8 z-10 flex flex-col justify-between">
-              <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
+            {/* Left Content (Software Updates with Filled Background Image) */}
+            <div className="absolute left-0 top-0 bottom-0 w-[55%] p-8 z-10 flex flex-col justify-between overflow-hidden">
+              <img 
+                src="/tools/ev-scanner.png" 
+                alt="" 
+                className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-105 transition-all duration-700 pointer-events-none z-0 filter brightness-90" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/90 to-transparent pointer-events-none z-0" />
+
+              <div className="z-10 relative">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-4">
                   <Cpu className="h-5 w-5 text-[#00D084]" />
                 </div>
-                <h3 className="text-2xl font-serif text-white mb-2">Software Updates</h3>
-                <p className="text-[#a1a1aa] text-sm leading-relaxed">
+                <h3 className="text-2xl font-serif font-black text-white mb-2">Software Updates</h3>
+                <p className="text-white/90 text-sm font-bold leading-relaxed mb-3">
                   Latest firmware updates, BMS calibration, and live system speed profiling.
                 </p>
               </div>
 
               {/* Live firmware modules */}
-              <div className="flex flex-col gap-2 mt-4">
-                <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
-                  <span className="text-xs text-white">BMS Firmware</span>
-                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
+              <div className="flex flex-col gap-2 z-10 relative">
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-lg p-2.5 border border-white/10">
+                  <span className="text-xs font-bold text-white">BMS Firmware</span>
+                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-black">v4.2.1 Active</span>
                 </div>
-                <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
-                  <span className="text-xs text-white">Telemetry OS</span>
-                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-lg p-2.5 border border-white/10">
+                  <span className="text-xs font-bold text-white">Telemetry OS</span>
+                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-black">v2.1.0 Stable</span>
                 </div>
               </div>
             </div>
@@ -3469,117 +3513,152 @@ function EVServices() {
             {/* Bottom Right Horizontal Content */}
             <div className="absolute left-[58%] bottom-0 right-0 h-[48%] p-8 z-10 flex items-center justify-between">
               <div>
-                <div className="text-[11px] uppercase tracking-widest text-[#71717a] mb-1">Calibration Status</div>
-                <div className="text-lg font-bold text-white">All Systems Optimized</div>
+                <div className="text-[11px] uppercase tracking-widest text-white/70 mb-1 font-mono font-bold">Calibration Status</div>
+                <div className="text-lg font-black text-white">All Systems Optimized</div>
               </div>
-              <span className="text-2xl font-bold text-[#00D084]">100% OK</span>
+              <span className="text-2xl font-black text-[#00D084]">100% OK</span>
             </div>
 
-            {/* Nestled Square Card (Advanced Battery Diagnostic) */}
+            {/* Nestled Square Card (Advanced Battery Diagnostic with Filled Background Graphic) */}
             <div className="absolute left-[58%] top-0 right-0 h-[48%] z-20">
-              <GlowCard className="w-full h-full p-6 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
+              <GlowCard className="w-full h-full p-5 flex flex-col justify-between overflow-hidden relative group">
+                <img 
+                  src="/tools/thermal-imaging.png" 
+                  alt="" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-45 group-hover:scale-105 transition-all duration-700 pointer-events-none z-0 filter brightness-90" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/85 to-black/40 pointer-events-none z-0" />
+
+                <div className="flex justify-between items-start z-10 relative">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
                     <Activity className="h-5 w-5 text-[#00D084]" />
                   </div>
-                  <span className="text-xs font-bold text-[#00D084]">₹999</span>
+                  <span className="text-xs font-black text-[#00D084] bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#00D084]/30">₹999</span>
                 </div>
-                <div>
-                  <h4 className="text-lg font-serif text-white mb-1">Advanced Diagnostics</h4>
-                  <p className="text-[#a1a1aa] text-[11px] leading-snug">Cell voltage analysis and safety telemetry mapping.</p>
+
+                <div className="z-10 relative">
+                  <h4 className="text-base font-serif font-black text-white mb-0.5">Advanced Diagnostics</h4>
+                  <p className="text-white/95 text-[10.5px] font-bold leading-snug">Cell voltage analysis and safety telemetry mapping.</p>
                 </div>
               </GlowCard>
             </div>
           </div>
 
           {/* Mobile Fallback Cards (Visible only on mobile/tablet) */}
-          <GlowCard className="md:hidden flex flex-col justify-between min-h-[320px] glow-card-stagger">
-            <div>
+          <GlowCard className="md:hidden flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden">
+            <img src="/tools/ev-scanner.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/90 to-black/50" />
+            <div className="z-10 relative">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <Cpu className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-2xl font-serif text-white mb-2">Software Updates</h3>
-              <p className="text-[#a1a1aa] text-sm leading-relaxed">
+              <h3 className="text-2xl font-serif font-black text-white mb-2">Software Updates</h3>
+              <p className="text-white/90 text-sm font-bold leading-relaxed mb-3">
                 Latest firmware updates, BMS calibration, and live system speed profiling.
               </p>
 
-              <div className="flex flex-col gap-2 mt-4">
+              <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
-                  <span className="text-xs text-white">BMS Firmware</span>
-                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
+                  <span className="text-xs font-bold text-white">BMS Firmware</span>
+                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-black">v4.2.1 Active</span>
                 </div>
                 <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
-                  <span className="text-xs text-white">Telemetry OS</span>
-                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
+                  <span className="text-xs font-bold text-white">Telemetry OS</span>
+                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-black">v2.1.0 Stable</span>
                 </div>
               </div>
             </div>
-            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-[#00D084]">
-              <span className="text-gray-400">Calibration Status</span>
+            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-black text-[#00D084] z-10 relative">
+              <span className="text-gray-300 font-bold">Calibration Status</span>
               <span>All Systems Optimized</span>
             </div>
           </GlowCard>
 
-          <GlowCard className="md:hidden flex flex-col justify-between min-h-[220px] glow-card-stagger">
-            <div className="flex justify-between items-start">
+          <GlowCard className="md:hidden flex flex-col justify-between min-h-[220px] glow-card-stagger relative overflow-hidden">
+            <img src="/tools/thermal-imaging.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/90 to-black/50" />
+            <div className="flex justify-between items-start z-10 relative">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
                 <Activity className="h-5 w-5 text-[#00D084]" />
               </div>
-              <span className="text-xs font-bold text-[#00D084]">₹999</span>
+              <span className="text-xs font-black text-[#00D084]">₹999</span>
             </div>
-            <div className="mt-4">
-              <h4 className="text-lg font-serif text-white mb-1">Advanced Diagnostics</h4>
-              <p className="text-[#a1a1aa] text-xs leading-relaxed">Cell voltage analysis and safety telemetry mapping.</p>
+            <div className="mt-4 z-10 relative">
+              <h4 className="text-lg font-serif font-black text-white mb-1">Advanced Diagnostics</h4>
+              <p className="text-white/90 text-xs font-bold leading-relaxed">Cell voltage analysis and safety telemetry mapping.</p>
             </div>
           </GlowCard>
 
-          {/* Card 6: Battery Cell Balancing (Full Width Horizontal) */}
-          <GlowCard className="md:col-span-12 flex flex-col md:flex-row gap-8 justify-between items-center min-h-[300px] glow-card-stagger">
-            <div className="flex-1">
+          {/* Card 6: Battery Cell Balancing (Full Width Horizontal with Filled Background Image) */}
+          <GlowCard className="md:col-span-12 flex flex-col md:flex-row gap-8 justify-between items-center min-h-[300px] glow-card-stagger relative overflow-hidden">
+            {/* FULL CARD BACKGROUND IMAGE FILL */}
+            <img 
+              src="/tools/battery-analyzer.png" 
+              alt="" 
+              className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-105 transition-all duration-700 pointer-events-none z-0 filter brightness-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/95 to-[#080d0a]/70 pointer-events-none z-0" />
+
+            <div className="flex-1 z-10 relative">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <RefreshCw className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-3xl font-serif text-white mb-3">Battery Cell Balancing</h3>
-              <p className="text-[#a1a1aa] text-base leading-relaxed max-w-xl">
+              <h3 className="text-3xl font-serif font-black text-white mb-3">Battery Cell Balancing</h3>
+              <p className="text-white/90 text-base font-bold leading-relaxed max-w-xl">
                 Equalization of battery cells to maximize energy efficiency, overall range, and longevity. Includes active load calibration.
               </p>
               <div className="mt-6 flex items-center gap-6">
                 <div>
-                  <span className="text-xs text-[#71717a] block uppercase tracking-wider mb-1">Service Cost</span>
-                  <span className="text-2xl font-bold text-[#00D084]">₹1,399</span>
+                  <span className="text-xs text-gray-300 block uppercase tracking-wider mb-1 font-mono font-bold">Service Cost</span>
+                  <span className="text-2xl font-black text-[#00D084]">₹1,399</span>
                 </div>
-                <button className="rounded-full bg-[#00D084] px-8 py-3 text-sm font-bold text-black transition-transform hover:scale-105">
+                <button className="rounded-full bg-[#00D084] px-8 py-3 text-sm font-extrabold text-black transition-transform hover:scale-105 cursor-pointer">
                   Book Balancing
                 </button>
               </div>
             </div>
 
-            {/* Animated Cells Visualization */}
-            <div className="w-full md:w-[450px] bg-black/40 rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
-              <div className="flex justify-between items-center text-xs text-[#a1a1aa]">
-                <span>Active Equalization Module</span>
-                <span className="text-[#00D084] font-mono animate-pulse">● CALIBRATING</span>
+            {/* Added Battery Analyzer Visual Panel & Animated Cells (No Shadows) */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto shrink-0 z-10 relative">
+              <div className="w-full sm:w-[220px] h-[160px] relative rounded-2xl overflow-hidden border border-white/15 bg-black/70 group shrink-0">
+                <img 
+                  src="/tools/battery-analyzer.png" 
+                  alt="Battery Cell Analyzer" 
+                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent p-3 flex flex-col justify-end">
+                  <span className="text-[10px] font-mono font-black text-[#00D084]">ACTIVE CELL BALANCER</span>
+                  <span className="text-[10px] font-mono font-bold text-white/90 mt-0.5">EQUALIZATION: 100% PASS</span>
+                </div>
               </div>
-              <div className="grid grid-cols-8 gap-2 h-24 items-end">
-                {[3.8, 3.9, 3.8, 4.0, 3.9, 3.8, 4.0, 3.9].map((volts, idx) => (
-                  <div key={idx} className="flex flex-col items-center gap-2 h-full justify-end">
-                    <div
-                      className={`w-full bg-[#00D084] rounded-t-sm ${idx % 4 === 0
-                        ? "voltage-bar"
-                        : idx % 4 === 1
-                          ? "voltage-bar-delay-1"
-                          : idx % 4 === 2
-                            ? "voltage-bar-delay-2"
-                            : "voltage-bar-delay-3"
-                        }`}
-                      style={{
-                        height: `${(volts / 4.2) * 100}%`,
-                        opacity: 0.5 + (idx % 3) * 0.15
-                      }}
-                    />
-                    <span className="text-[9px] font-mono text-gray-500">{volts}V</span>
-                  </div>
-                ))}
+
+              {/* Animated Cells Visualization (No Shadow) */}
+              <div className="w-full sm:w-[240px] bg-black/70 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex flex-col gap-3">
+                <div className="flex justify-between items-center text-[10px] text-gray-300 font-bold">
+                  <span>Active Module</span>
+                  <span className="text-[#00D084] font-mono font-black animate-pulse">● CALIBRATING</span>
+                </div>
+                <div className="grid grid-cols-8 gap-1.5 h-20 items-end">
+                  {[3.8, 3.9, 3.8, 4.0, 3.9, 3.8, 4.0, 3.9].map((volts, idx) => (
+                    <div key={idx} className="flex flex-col items-center gap-1 h-full justify-end">
+                      <div
+                        className={`w-full bg-[#00D084] rounded-t-sm ${idx % 4 === 0
+                          ? "voltage-bar"
+                          : idx % 4 === 1
+                            ? "voltage-bar-delay-1"
+                            : idx % 4 === 2
+                              ? "voltage-bar-delay-2"
+                              : "voltage-bar-delay-3"
+                          }`}
+                        style={{
+                          height: `${(volts / 4.2) * 100}%`,
+                          opacity: 0.5 + (idx % 3) * 0.15
+                        }}
+                      />
+                      <span className="text-[8px] font-mono text-gray-400">{volts}V</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </GlowCard>

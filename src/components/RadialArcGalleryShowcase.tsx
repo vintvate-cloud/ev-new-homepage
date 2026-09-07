@@ -210,7 +210,7 @@ export default function RadialArcGalleryShowcase() {
                 cardsRef.current[i] = el;
               }}
               onClick={() => setSelectedIndex(i)}
-              className="absolute pointer-events-auto rounded-[20px] sm:rounded-[28px] md:rounded-[32px] overflow-hidden border border-white/20 hover:border-[#00D084] shadow-[0_25px_50px_rgba(0,0,0,0.9)] bg-black cursor-pointer group transition-all duration-300 left-1/2 top-0"
+              className="absolute pointer-events-auto rounded-[20px] sm:rounded-[28px] md:rounded-[32px] overflow-hidden border border-white/20 hover:border-[#00D084] bg-black cursor-pointer group transition-all duration-300 left-1/2 top-0"
               style={{
                 width: `${geom.cardW}px`,
                 height: `${geom.cardH}px`,
@@ -222,10 +222,10 @@ export default function RadialArcGalleryShowcase() {
                 className="w-full h-full object-cover rounded-[20px] sm:rounded-[28px] md:rounded-[32px] group-hover:scale-108 transition-transform duration-500 filter brightness-95 group-hover:brightness-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
-                <span className="text-[10px] font-sans font-bold text-[#00D084] leading-tight pr-1">
+                <span className="text-[10px] font-sans font-black text-[#00D084] leading-tight pr-1 uppercase tracking-wider">
                   {card.title}
                 </span>
-                <Maximize2 className="w-3.5 h-3.5 text-white/80 shrink-0 group-hover:text-[#00D084] transition-colors" />
+                <Maximize2 className="w-3.5 h-3.5 text-white shrink-0 group-hover:text-[#00D084] transition-colors" />
               </div>
             </div>
           ))}
@@ -249,24 +249,24 @@ export default function RadialArcGalleryShowcase() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-white/10 pt-8 text-center">
           {/* Feature 1 */}
           <div className="space-y-1 sm:border-r border-white/10 sm:pr-4">
-            <h4 className="text-sm font-serif font-bold text-white">Realistic Results</h4>
-            <p className="text-[11px] font-serif text-white/40">
+            <h4 className="text-sm font-serif font-black uppercase text-white tracking-wide">Realistic Results</h4>
+            <p className="text-[11px] font-serif font-bold text-white/85">
               Telemetric 40-point diagnostic reports
             </p>
           </div>
 
           {/* Feature 2 */}
           <div className="space-y-1 sm:border-r border-white/10 sm:px-4">
-            <h4 className="text-sm font-serif font-bold text-white">Fast Service</h4>
-            <p className="text-[11px] font-serif text-white/40">
+            <h4 className="text-sm font-serif font-black uppercase text-white tracking-wide">Fast Service</h4>
+            <p className="text-[11px] font-serif font-bold text-white/85">
               Same-day servicing & CCTV lounge access
             </p>
           </div>
 
           {/* Feature 3 */}
           <div className="space-y-1 sm:pl-4">
-            <h4 className="text-sm font-serif font-bold text-white">OEM Certified</h4>
-            <p className="text-[11px] font-serif text-white/40">
+            <h4 className="text-sm font-serif font-black uppercase text-white tracking-wide">OEM Certified</h4>
+            <p className="text-[11px] font-serif font-bold text-white/85">
               100% factory parts & warranty protection
             </p>
           </div>
