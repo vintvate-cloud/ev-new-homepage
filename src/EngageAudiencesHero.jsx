@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { GalleryLightbox } from "./components/GalleryLightbox";
 
 /**
  * EngageAudiencesHero
@@ -45,11 +46,20 @@ const photos = [
 
 export default function EngageAudiencesHero() {
   const [mounted, setMounted] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 40);
     return () => clearTimeout(t);
   }, []);
+
+  const lightboxItems = photos.map((p) => ({
+    image: p.src,
+    title: p.alt,
+    description: "State-of-the-art EV Workshop infrastructure & certified diagnostic tools.",
+    category: "EV WORKSHOP GALLERY",
+  }));
 
   return (
     <section
@@ -209,7 +219,12 @@ export default function EngageAudiencesHero() {
         {photos.map((photo, i) => (
           <div
             key={photo.src + i}
-            className="eah-photo h-[220px] w-[140px] flex-shrink-0 overflow-hidden rounded-[24px] border border-white/20 shadow-[0_18px_35px_-10px_rgba(0,0,0,0.8)] sm:h-[280px] sm:w-[170px] md:h-[320px] md:w-[190px]"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActivePhotoIndex(i);
+              setLightboxOpen(true);
+            }}
+            className="eah-photo h-[220px] w-[140px] flex-shrink-0 overflow-hidden rounded-[24px] border border-white/20 shadow-[0_18px_35px_-10px_rgba(0,0,0,0.8)] sm:h-[280px] sm:w-[170px] md:h-[320px] md:w-[190px] cursor-pointer touch-manipulation"
             style={{
               transform: `rotate(${photo.rotate}deg)`,
               animationDelay: `${0.4 + i * 0.08}s`,
@@ -239,6 +254,15 @@ export default function EngageAudiencesHero() {
           Book Your EV Service Now
         </button>
       </div>
+
+      <GalleryLightbox
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        items={lightboxItems}
+        currentIndex={activePhotoIndex}
+        onIndexChange={setActivePhotoIndex}
+      />
     </section>
   );
 }
+

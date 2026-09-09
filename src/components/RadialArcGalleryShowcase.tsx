@@ -2,53 +2,71 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { GalleryLightbox, LightboxItem } from "./GalleryLightbox";
+import { Sparkles, ZoomIn } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * RadialArcGalleryShowcase
- * Dynamic GSAP ScrollTrigger Fan-Out gallery dome
+ * Dynamic GSAP ScrollTrigger Fan-Out gallery dome with Lightbox integration
  */
 
 const ARC_CARDS = [
   {
     image: "/gallery/hydraulic-lift.png",
     title: "Hydraulic Lift Bay",
+    description: "Heavy-duty multi-vehicle hydraulic lift system with dual-stage mechanical safety locks.",
+    category: "SERVICE INFRASTRUCTURE",
     angle: -84,
   },
   {
     image: "/gallery/battery-lab.png",
     title: "Battery Diagnostic Lab",
+    description: "Thermal imaging and high-voltage battery cell health testing facility for EV battery packs.",
+    category: "HIGH VOLTAGE LAB",
     angle: -60,
   },
   {
     image: "/ev-service-centre-real-hero.png",
     title: "Master Technicians",
+    description: "OEM-certified EV engineers providing expert care and precision motor tuning.",
+    category: "CERTIFIED TEAM",
     angle: -36,
   },
   {
     image: "/gallery/scanner.png",
     title: "CAN-Bus Telemetry Scan",
+    description: "Advanced OBD-III & CAN-Bus telemetry diagnostic scanners for real-time sensor analysis.",
+    category: "DIAGNOSTIC TECH",
     angle: -12,
   },
   {
     image: "/gallery/handover.png",
     title: "Vehicle Key Ceremony",
+    description: "Premium customer vehicle delivery ritual with multi-point quality compliance certificate.",
+    category: "CUSTOMER EXPERIENCE",
     angle: 12,
   },
   {
     image: "/tools/fast-charger-tester.png",
     title: "DC Charger Tester",
+    description: "High-power DC fast charger simulation & load testing diagnostic equipment.",
+    category: "CHARGING TELEMETRY",
     angle: 36,
   },
   {
     image: "/gallery/lounge.png",
     title: "VIP Customer Lounge",
+    description: "Air-conditioned premium customer waiting lounge with live CCTV workshop streaming.",
+    category: "LOUNGE & HOSPITALITY",
     angle: 60,
   },
   {
     image: "/tools/bms-diagnostic.png",
     title: "BMS Cell Balancer",
+    description: "Precision automated battery management cell balancing and equalization workstation.",
+    category: "BMS BALANCING",
     angle: 84,
   },
 ];
@@ -56,6 +74,9 @@ const ARC_CARDS = [
 export default function RadialArcGalleryShowcase() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
 
   const [geom, setGeom] = useState({
     radius: 480,
@@ -158,6 +179,18 @@ export default function RadialArcGalleryShowcase() {
     return () => ctx.revert();
   }, [geom]);
 
+  const lightboxItems: LightboxItem[] = ARC_CARDS.map((card) => ({
+    image: card.image,
+    title: card.title,
+    description: card.description,
+    category: card.category,
+  }));
+
+  const openCardInLightbox = (index: number) => {
+    setActiveCardIndex(index);
+    setLightboxOpen(true);
+  };
+
   return (
     <section
       ref={sectionRef}
@@ -169,14 +202,18 @@ export default function RadialArcGalleryShowcase() {
         style={{ height: `${geom.containerH}px` }}
       >
         {/* SEMI-CIRCULAR ARC CARDS LAYER (GSAP SCROLL FAN-OUT) */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 z-30 pointer-events-none">
           {ARC_CARDS.map((card, i) => (
             <div
               key={i}
               ref={(el) => {
                 cardsRef.current[i] = el;
               }}
-              className="absolute pointer-events-auto rounded-[20px] sm:rounded-[28px] md:rounded-[32px] overflow-hidden border border-white/20 hover:border-[#00D084] shadow-[0_25px_50px_rgba(0,0,0,0.9)] bg-black cursor-pointer group transition-all duration-300 left-1/2 top-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                openCardInLightbox(i);
+              }}
+              className="absolute z-30 pointer-events-auto rounded-[20px] sm:rounded-[28px] md:rounded-[32px] overflow-hidden border border-white/20 hover:border-[#00D084] shadow-[0_25px_50px_rgba(0,0,0,0.9)] bg-black cursor-pointer group transition-all duration-300 left-1/2 top-0 hover:scale-105 active:scale-95 touch-manipulation"
               style={{
                 width: `${geom.cardW}px`,
                 height: `${geom.cardH}px`,
@@ -187,17 +224,27 @@ export default function RadialArcGalleryShowcase() {
                 alt={card.title}
                 className="w-full h-full object-cover rounded-[20px] sm:rounded-[28px] md:rounded-[32px] group-hover:scale-108 transition-transform duration-500 filter brightness-95 group-hover:brightness-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
-                <span className="text-[10px] font-sans font-bold text-[#00D084] leading-tight">
-                  {card.title}
-                </span>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3">
+                <div className="flex justify-end">
+                  <span className="p-1.5 rounded-full bg-[#00D084]/20 border border-[#00D084]/40 text-[#00D084] backdrop-blur-md">
+                    <ZoomIn className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[10px] font-sans font-bold text-[#00D084] leading-tight block">
+                    {card.title}
+                  </span>
+                  <span className="text-[8px] font-sans text-white/60 block mt-0.5">
+                    Tap to expand
+                  </span>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
         {/* MINIMAL LIGHT TYPOGRAPHY CONTENT INSIDE ARC */}
-        <div className="relative z-20 text-center max-w-xl mx-auto px-4 space-y-4 mb-4 -translate-y-24 sm:-translate-y-32">
+        <div className="relative z-10 pointer-events-none text-center max-w-xl mx-auto px-4 space-y-3 mb-4 -translate-y-24 sm:-translate-y-32">
           <motion.h2
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -206,6 +253,16 @@ export default function RadialArcGalleryShowcase() {
           >
             Explore Our EV Service Gallery
           </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-xs sm:text-sm font-sans text-[#00D084] flex items-center justify-center gap-1.5 font-medium"
+          >
+            <Sparkles className="w-4 h-4 animate-pulse" />
+            <span>Tap any image to view in ultra HD mode</span>
+          </motion.p>
         </div>
       </div>
 
@@ -237,6 +294,16 @@ export default function RadialArcGalleryShowcase() {
           </div>
         </div>
       </div>
+
+      {/* ---------- PREMIUM LIGHTBOX MODAL ---------- */}
+      <GalleryLightbox
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        items={lightboxItems}
+        currentIndex={activeCardIndex}
+        onIndexChange={setActiveCardIndex}
+      />
     </section>
   );
 }
+

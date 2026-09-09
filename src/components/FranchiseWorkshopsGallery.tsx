@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { GalleryLightbox, LightboxItem } from "./GalleryLightbox";
 
 export interface GalleryCard {
   src: string;
@@ -6,6 +8,7 @@ export interface GalleryCard {
   y: number;
   w: number;
   h: number;
+  title?: string;
 }
 
 export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
@@ -16,6 +19,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 510,
     w: 140,
     h: 190,
+    title: "3D EV Component Architecture",
   },
   {
     src: "/ai-gallery/ev_charging_hub.png",
@@ -23,6 +27,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 440,
     w: 140,
     h: 190,
+    title: "Commercial EV Charging Hub",
   },
   {
     src: "/ai-gallery/nature_flowers.png",
@@ -30,6 +35,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 370,
     w: 140,
     h: 190,
+    title: "Eco-Friendly Workshop Ambience",
   },
   {
     src: "/ai-gallery/ev_battery_tech.png",
@@ -37,6 +43,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 572,
     w: 140,
     h: 160,
+    title: "HV Battery Module Diagnostic Bench",
   },
 
   // COLUMN 1 — black cat
@@ -46,6 +53,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 308,
     w: 142,
     h: 165,
+    title: "EV Lifestyle & Community",
   },
   {
     src: "/ai-gallery/indoor_plant.png",
@@ -53,6 +61,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 482,
     w: 142,
     h: 160,
+    title: "Green Infrastructure Facility",
   },
 
   // COLUMN 2 — plant + portrait + mountain car
@@ -62,6 +71,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 217,
     w: 140,
     h: 132,
+    title: "Lounge Ecosystem",
   },
   {
     src: "/ai-gallery/warm_portrait.png",
@@ -69,6 +79,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 357,
     w: 140,
     h: 132,
+    title: "Certified Master Service Lead",
   },
   {
     src: "/ai-gallery/mountain_car.png",
@@ -76,6 +87,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 498,
     w: 140,
     h: 130,
+    title: "All-Terrain EV Diagnostic Run",
   },
   {
     src: "/images/ev_sports_car.png",
@@ -83,6 +95,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 640,
     w: 140,
     h: 150,
+    title: "Performance Sport Tuning",
   },
 
   // COLUMN 3 — cat + flowers + ruins (ancient arch)
@@ -92,6 +105,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 148,
     w: 140,
     h: 98,
+    title: "EV Design Aesthetics",
   },
   {
     src: "/ai-gallery/nature_flowers.png",
@@ -99,6 +113,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 255,
     w: 140,
     h: 151,
+    title: "Zero Emission Sustainable Care",
   },
   {
     src: "/ai-gallery/ancient_arch.png",
@@ -106,6 +121,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 415,
     w: 140,
     h: 140,
+    title: "Heritage Tech Synthesis",
   },
   {
     src: "/ai-gallery/ev_workshop_bay.png",
@@ -113,6 +129,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 567,
     w: 140,
     h: 155,
+    title: "Multi-Bay Hydraulic Service Hub",
   },
 
   // COLUMN 4 — chair + abstract + mountain car
@@ -122,6 +139,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 69,
     w: 140,
     h: 168,
+    title: "Executive Customer Lounge",
   },
   {
     src: "/ai-gallery/abstract_3d.png",
@@ -129,6 +147,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 246,
     w: 140,
     h: 163,
+    title: "CAN-Bus Sensor Mapping",
   },
   {
     src: "/ai-gallery/mountain_car.png",
@@ -136,6 +155,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 418,
     w: 140,
     h: 138,
+    title: "Long-Range EV Highway Test",
   },
   {
     src: "/images/ev_superbike.png",
@@ -143,6 +163,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 568,
     w: 140,
     h: 150,
+    title: "High Voltage Superbike Diagnostics",
   },
 
   // COLUMN 5 — astronaut + dark car + faces
@@ -152,6 +173,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 41,
     w: 140,
     h: 201,
+    title: "Next-Gen Autonomous Tech",
   },
   {
     src: "/ev-workshop-careers.png",
@@ -159,6 +181,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 251,
     w: 140,
     h: 181,
+    title: "OEM Franchise Workshop Bay",
   },
   {
     src: "/ai-gallery/warm_portrait.png",
@@ -166,6 +189,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 441,
     w: 140,
     h: 145,
+    title: "Dedicated Franchise Partner Support",
   },
   {
     src: "/ai-gallery/ev_battery_tech.png",
@@ -173,6 +197,7 @@ export const WORKSHOP_GALLERY_CARDS: GalleryCard[] = [
     y: 596,
     w: 140,
     h: 160,
+    title: "Thermal Battery Management Lab",
   },
 ];
 
@@ -191,6 +216,16 @@ export function FranchiseWorkshopsGallery({
   cards = WORKSHOP_GALLERY_CARDS,
   className = "",
 }: FranchiseWorkshopsGalleryProps) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+
+  const lightboxItems: LightboxItem[] = cards.map((card, i) => ({
+    image: card.src,
+    title: card.title || `Workshop Gallery Photo #${i + 1}`,
+    description: "State-of-the-art EV service hub facility and franchise infrastructure.",
+    category: "FRANCHISE WORKSHOP SHOWCASE",
+  }));
+
   return (
     <section className={`hero-gallery-section relative h-[580px] sm:h-[640px] md:h-screen min-h-[540px] md:min-h-[640px] overflow-hidden bg-[#020403] text-white font-sans border-t border-white/10 ${className}`}>
       {/* SECTION HEADER (Identical across Mobile & Desktop) */}
@@ -202,6 +237,9 @@ export function FranchiseWorkshopsGallery({
           <br />
           {titleLine3}
         </h2>
+        <p className="mt-2 text-xs sm:text-sm text-[#00D084] font-medium font-sans pointer-events-auto">
+          Tap any image to explore in full view
+        </p>
       </div>
 
       {/* FIXED CARD CANVAS (Identical 2D layout scaled proportionally for phone, tablet, and desktop) */}
@@ -213,7 +251,12 @@ export function FranchiseWorkshopsGallery({
             return (
               <div
                 key={index}
-                className="absolute overflow-hidden rounded-[13px] border border-white/12 hover:border-[#00D084] transition-all duration-300 hover:scale-105 cursor-pointer shadow-xl group"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveCardIndex(index);
+                  setLightboxOpen(true);
+                }}
+                className="absolute z-30 pointer-events-auto overflow-hidden rounded-[13px] border border-white/12 hover:border-[#00D084] transition-all duration-300 hover:scale-105 cursor-pointer shadow-xl group touch-manipulation"
                 style={{
                   left: `${card.x}px`,
                   top: `${card.y}px`,
@@ -237,12 +280,12 @@ export function FranchiseWorkshopsGallery({
                 >
                   <img
                     src={card.src}
-                    alt="Gallery artwork"
+                    alt={card.title || "Gallery artwork"}
                     className="w-full h-1/2 object-cover group-hover:scale-108 transition-transform duration-500"
                   />
                   <img
                     src={card.src}
-                    alt="Gallery artwork loop"
+                    alt={card.title || "Gallery artwork loop"}
                     className="w-full h-1/2 object-cover group-hover:scale-108 transition-transform duration-500"
                   />
                 </motion.div>
@@ -251,6 +294,15 @@ export function FranchiseWorkshopsGallery({
           })}
         </div>
       </div>
+
+      <GalleryLightbox
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        items={lightboxItems}
+        currentIndex={activeCardIndex}
+        onIndexChange={setActiveCardIndex}
+      />
     </section>
   );
 }
+

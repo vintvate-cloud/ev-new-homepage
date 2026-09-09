@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,6 +8,8 @@ import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import RadialArcGalleryShowcase from "../components/RadialArcGalleryShowcase";
 import AucklandStyleLocationShowcase from "../components/AucklandStyleLocationShowcase";
+import { getOnboardedCities, EVCity } from "../data/cities";
+import { EV_BRANDS_POPULAR, EV_CATALOG, getBrandLogoUrl } from "../data/evCatalog";
 import {
   Star,
   MapPin,
@@ -24,6 +26,7 @@ import {
   Activity,
   ChevronDown,
   ChevronUp,
+  ChevronLeft,
   Play,
   ArrowRight,
   ArrowLeft,
@@ -46,6 +49,88 @@ import { toast } from "sonner";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+}
+
+// ─── City SVG Icon Component for Landmarks ──────────────────────────────────
+function CitySvgIcon({ cityId, className = "w-7 h-7" }: { cityId: string; className?: string }) {
+  const id = cityId.toLowerCase();
+
+  if (id.includes("pune")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 40H40V22L24 10L8 22V40Z" fill="url(#pune_g)" stroke="#00D084" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M18 40V28C18 24.6863 20.6863 22 24 22C27.3137 22 30 24.6863 30 28V40" fill="#030c07" stroke="#00D084" strokeWidth="2" />
+        <path d="M14 18H18M30 18H34M24 10V4" stroke="#00D084" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="24" cy="16" r="3" fill="#00D084" />
+        <defs>
+          <linearGradient id="pune_g" x1="8" y1="10" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#00D084" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#030c07" stopOpacity="0.8" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  if (id.includes("mumbai")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="38" width="36" height="4" rx="1" fill="#38bdf8" />
+        <path d="M10 38V16L14 12H34L38 16V38" stroke="#38bdf8" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M18 38V24C18 20.6863 20.6863 18 24 18C27.3137 18 30 20.6863 30 24V38" fill="#030c07" stroke="#38bdf8" strokeWidth="2" />
+        <circle cx="24" cy="11" r="4" fill="#38bdf8" fillOpacity="0.4" stroke="#38bdf8" strokeWidth="1.5" />
+        <path d="M6 38C12 36 18 40 24 38C30 36 36 40 42 38" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (id.includes("bangalore") || id.includes("bengaluru")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 40V22L24 12L38 22V40H10Z" fill="url(#blr_g)" stroke="#10b981" strokeWidth="2" />
+        <path d="M24 6V12M18 40V26H30V40" stroke="#10b981" strokeWidth="2" />
+        <path d="M25 28L21 34H26L23 40" stroke="#00D084" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <defs>
+          <linearGradient id="blr_g" x1="10" y1="12" x2="38" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#10b981" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#030c07" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  if (id.includes("delhi") || id.includes("ncr") || id.includes("gurgaon") || id.includes("noida")) {
+    return (
+      <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 40H40V18H36V12H12V18H8V40Z" fill="url(#delhi_g)" stroke="#f59e0b" strokeWidth="2" />
+        <path d="M17 40V26C17 22.134 20.134 19 24 19C27.866 19 31 22.134 31 26V40" fill="#030c07" stroke="#f59e0b" strokeWidth="2" />
+        <path d="M12 12H36M16 8H32" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
+        <defs>
+          <linearGradient id="delhi_g" x1="8" y1="8" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#f59e0b" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#030c07" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  return (
+    <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 40V20H18V12H30V24H40V40H8Z" fill="url(#gen_g)" stroke="#00D084" strokeWidth="2" strokeLinejoin="round" />
+      <rect x="13" y="24" width="3" height="4" fill="#00D084" />
+      <rect x="23" y="16" width="3" height="4" fill="#00D084" />
+      <rect x="23" y="24" width="3" height="4" fill="#00D084" />
+      <rect x="33" y="28" width="3" height="4" fill="#00D084" />
+      <defs>
+        <linearGradient id="gen_g" x1="8" y1="12" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#00D084" stopOpacity="0.35" />
+          <stop offset="1" stopColor="#030c07" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
 }
 
 export const Route = createFileRoute("/service-centres/$centerId")({
@@ -107,6 +192,133 @@ export function ServiceCentresPage() {
   const [selectedVehicle, setSelectedVehicle] = useState<"2W" | "3W" | "4W">("2W");
   const [selectedBrand, setSelectedBrand] = useState("Ola Electric");
   const [selectedModel, setSelectedModel] = useState("Ola S1 Pro");
+
+  // Inline selection flow states matching find-services.tsx
+  const [inlineBookingOpen, setInlineBookingOpen] = useState(false);
+  const [inlineStep, setInlineStep] = useState<"city" | "brand" | "model">("city");
+  const [inlineSelectedBrand, setInlineSelectedBrand] = useState("Ola Electric");
+  const [inlineSelectedModel, setInlineSelectedModel] = useState("Ola S1 Pro");
+  const [inlineBrandSearch, setInlineBrandSearch] = useState("");
+  const [inlineBrandFilter, setInlineBrandFilter] = useState<"ALL" | "2W" | "3W">("ALL");
+  const [citySearchQuery, setCitySearchQuery] = useState("");
+  const [isDetectingLoc, setIsDetectingLoc] = useState(false);
+  const [cities, setCities] = useState<EVCity[]>(() => getOnboardedCities());
+
+  const filteredCityCards = useMemo(() => {
+    if (!citySearchQuery.trim()) return cities;
+    const q = citySearchQuery.toLowerCase();
+    return cities.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.state.toLowerCase().includes(q) ||
+        (c.areas && c.areas.some((a) => a.toLowerCase().includes(q)))
+    );
+  }, [cities, citySearchQuery]);
+
+  const filteredInlineBrands = useMemo(() => {
+    let brands = EV_BRANDS_POPULAR;
+    if (inlineBrandFilter !== "ALL") {
+      brands = brands.filter((b) => b.category === inlineBrandFilter);
+    }
+    if (inlineBrandSearch.trim()) {
+      const q = inlineBrandSearch.toLowerCase();
+      brands = brands.filter(
+        (b) => b.name.toLowerCase().includes(q) || b.displayName.toLowerCase().includes(q)
+      );
+    }
+    return brands;
+  }, [inlineBrandFilter, inlineBrandSearch]);
+
+  const inlineAvailableModels = useMemo(() => {
+    if (!inlineSelectedBrand) return [];
+    const getBrandKey = (brand: string) => {
+      const b = brand.toLowerCase();
+      if (b.includes("ola")) return "ola";
+      if (b.includes("ather")) return "ather";
+      if (b.includes("tvs")) return "tvs";
+      if (b.includes("bajaj") || b.includes("chetak")) return "bajaj";
+      if (b.includes("hero")) return "hero";
+      if (b.includes("revolt")) return "revolt";
+      if (b.includes("ampere")) return "ampere";
+      if (b.includes("simple")) return "simple";
+      if (b.includes("tork")) return "tork";
+      if (b.includes("okinawa")) return "okinawa";
+      if (b.includes("mahindra")) return "mahindra";
+      if (b.includes("piaggio") || b.includes("ape")) return "piaggio";
+      if (b.includes("kinetic")) return "kinetic";
+      return b;
+    };
+    const key = getBrandKey(inlineSelectedBrand);
+    const set = new Set(
+      EV_CATALOG.filter((m) => m.make.toLowerCase().includes(key)).map((m) => m.model)
+    );
+    const result = Array.from(set);
+    return result.length > 0
+      ? result
+      : ["Standard Edition EV", "Pro Edition EV", "Extended Range EV"];
+  }, [inlineSelectedBrand]);
+
+  const getModelDisplayInfo = (brand: string, modelName: string) => {
+    const getBrandKey = (b: string) => {
+      const val = b.toLowerCase();
+      if (val.includes("ola")) return "ola";
+      if (val.includes("ather")) return "ather";
+      if (val.includes("tvs")) return "tvs";
+      if (val.includes("bajaj") || val.includes("chetak")) return "bajaj";
+      if (val.includes("hero")) return "hero";
+      if (val.includes("revolt")) return "revolt";
+      if (val.includes("ampere")) return "ampere";
+      if (val.includes("simple")) return "simple";
+      if (val.includes("tork")) return "tork";
+      if (val.includes("okinawa")) return "okinawa";
+      if (val.includes("mahindra")) return "mahindra";
+      if (val.includes("piaggio") || val.includes("ape")) return "piaggio";
+      if (val.includes("kinetic")) return "kinetic";
+      return val;
+    };
+    const key = getBrandKey(brand);
+    const matched = EV_CATALOG.find(
+      (item) =>
+        item.make.toLowerCase().includes(key) &&
+        item.model.toLowerCase() === modelName.toLowerCase()
+    );
+    const imageUrl = matched?.modelImageUrl || matched?.logoUrl || getBrandLogoUrl(brand);
+    return {
+      modelName,
+      imageUrl,
+      battery: matched?.batteryKwh ? `${matched.batteryKwh} kWh` : undefined,
+    };
+  };
+
+  const handleDetectLocation = () => {
+    if (typeof window === "undefined" || !navigator.geolocation) {
+      toast.error("Geolocation not supported.");
+      return;
+    }
+    setIsDetectingLoc(true);
+    toast.info("Detecting your live coordinates & city...");
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+          const data = await res.json();
+          const city = data.address?.city || data.address?.town || data.address?.suburb || data.address?.state_district || "Pune";
+          setSelectedCity(city);
+          toast.success(`📍 Live Location Detected: ${city}!`);
+        } catch {
+          toast.success(`📍 Location detected near Pune!`);
+        } finally {
+          setIsDetectingLoc(false);
+        }
+      },
+      () => {
+        setIsDetectingLoc(false);
+        toast.error("Location permission denied.");
+      },
+      { timeout: 10000 }
+    );
+  };
 
   // Interactive Booking Modal
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -502,40 +714,310 @@ export function ServiceCentresPage() {
               </div>
             </div>
 
-            {/* Right Column: Find Your Service Centre Interactive Form (True Glassmorphism) */}
-            <div className="lg:col-span-5 bg-[#050b14]/40 backdrop-blur-2xl rounded-[32px] p-6 sm:p-8 relative font-serif border border-white/20 hover:border-white/35 shadow-[0_16px_40px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300">
-              <div className="mb-5 text-left relative z-10 border-b border-white/10 pb-4">
-                <h3 className="text-xl sm:text-2xl font-serif font-black text-white tracking-tight flex items-center justify-between">
+            {/* Right Column: Find Your Service Centre Interactive Form (Matching find-services.tsx) */}
+            <div className="lg:col-span-5 bg-[#030c07]/95 border-2 border-[#00D084]/50 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] relative overflow-hidden space-y-5 text-left font-sans">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[#00D084]/20 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Interactive Step Drawer Overlay */}
+              <AnimatePresence>
+                {inlineBookingOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 15 }}
+                    className="absolute inset-0 bg-[#030d07]/98 z-30 p-6 sm:p-7 flex flex-col justify-between rounded-[32px]"
+                  >
+                    {/* CITY STEP */}
+                    {inlineStep === "city" && (
+                      <div className="flex-1 flex flex-col min-h-0 text-left">
+                        <div className="flex items-center justify-between mb-3 shrink-0">
+                          <div>
+                            <span className="text-[9px] uppercase font-mono font-bold text-[#00D084] block">40+ Onboarded EV Hubs</span>
+                            <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-wider">Select Your City</h4>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setInlineBookingOpen(false)}
+                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        <div className="flex items-center gap-2 mb-3 shrink-0">
+                          <div className="relative flex-1">
+                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#00D084]" />
+                            <input
+                              type="text"
+                              value={citySearchQuery}
+                              onChange={(e) => setCitySearchQuery(e.target.value)}
+                              placeholder="Search city or area (e.g. Pune, Baner, Bandra)..."
+                              className="w-full bg-[#020503] border border-white/15 rounded-xl pl-10 pr-3 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00D084] transition-all font-bold"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleDetectLocation();
+                              setInlineBookingOpen(false);
+                            }}
+                            disabled={isDetectingLoc}
+                            className="px-3 py-2.5 rounded-xl bg-[#00D084]/15 border border-[#00D084]/40 hover:bg-[#00D084]/25 text-[#00D084] text-[10px] font-mono font-bold transition-all cursor-pointer shrink-0 flex items-center gap-1"
+                          >
+                            <Navigation className={`w-3 h-3 ${isDetectingLoc ? "animate-spin" : ""}`} />
+                            <span>Detect 📍</span>
+                          </button>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                          <div className="grid grid-cols-2 gap-2.5">
+                            {filteredCityCards.map((c) => {
+                              const isSelected = selectedCity.toLowerCase() === c.name.toLowerCase();
+                              return (
+                                <button
+                                  key={c.id}
+                                  type="button"
+                                  onClick={() => {
+                                    setSelectedCity(c.name);
+                                    setInlineBookingOpen(false);
+                                  }}
+                                  className={`p-3 rounded-2xl border transition-all text-left flex flex-col justify-between cursor-pointer group relative overflow-hidden ${isSelected
+                                      ? "bg-[#00D084]/15 border-[#00D084] shadow-[0_0_25px_rgba(0,208,132,0.35)]"
+                                      : "bg-[#090f0c] border-white/10 hover:border-[#00D084]/50 hover:bg-white/5"
+                                    }`}
+                                >
+                                  <div className="flex items-start justify-between gap-1.5 mb-2">
+                                    <div className="w-10 h-10 rounded-xl bg-black/50 border border-white/15 flex items-center justify-center p-1.5 group-hover:scale-105 transition-transform shrink-0">
+                                      <CitySvgIcon cityId={c.id} className="w-full h-full" />
+                                    </div>
+                                    <span className="text-[9px] font-mono font-extrabold text-[#00D084] bg-[#00D084]/15 px-2 py-0.5 rounded-full border border-[#00D084]/30 shrink-0">
+                                      ⚡ {c.centersCount} Hubs
+                                    </span>
+                                  </div>
+
+                                  <div>
+                                    <h5 className="text-xs font-black text-white leading-tight group-hover:text-[#00D084] transition-colors flex items-center gap-1">
+                                      {c.name}
+                                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084] shrink-0" />}
+                                    </h5>
+                                    <p className="text-[9px] text-white/50 font-medium truncate mt-0.5">{c.state}</p>
+                                  </div>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* BRAND STEP */}
+                    {inlineStep === "brand" && (
+                      <div className="flex-1 flex flex-col min-h-0">
+                        <div className="flex items-center justify-between mb-4 shrink-0 text-left">
+                          <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-wider">Select EV Manufacturer</h4>
+                          <button
+                            type="button"
+                            onClick={() => setInlineBookingOpen(false)}
+                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 mb-4 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => setInlineBrandFilter("ALL")}
+                            className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${inlineBrandFilter === "ALL"
+                                ? "bg-[#00D084] text-black shadow-md"
+                                : "text-white/60 hover:text-white"
+                              }`}
+                          >
+                            All (2W & 3W)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setInlineBrandFilter("2W")}
+                            className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${inlineBrandFilter === "2W"
+                                ? "bg-[#00D084] text-black shadow-md"
+                                : "text-white/60 hover:text-white"
+                              }`}
+                          >
+                            🛵 2-Wheelers
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setInlineBrandFilter("3W")}
+                            className={`flex-1 py-2 text-[10px] sm:text-[11px] font-bold rounded-xl transition-all cursor-pointer ${inlineBrandFilter === "3W"
+                                ? "bg-[#00D084] text-black shadow-md"
+                                : "text-white/60 hover:text-white"
+                              }`}
+                          >
+                            🛺 3-Wheelers
+                          </button>
+                        </div>
+
+                        <div className="relative mb-4 shrink-0">
+                          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#00D084]" />
+                          <input
+                            type="text"
+                            value={inlineBrandSearch}
+                            onChange={(e) => setInlineBrandSearch(e.target.value)}
+                            placeholder="Search brand (Ola, Ather, TVS, Bajaj, Hero, Tata...)"
+                            className="w-full bg-[#020503] border border-white/15 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00D084] transition-all"
+                          />
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                          <div className="grid grid-cols-3 gap-2.5">
+                            {filteredInlineBrands.map((b) => (
+                              <button
+                                key={b.name}
+                                type="button"
+                                onClick={() => {
+                                  setInlineSelectedBrand(b.name);
+                                  setSelectedBrand(b.displayName);
+                                  setInlineStep("model");
+                                }}
+                                className="p-3 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center gap-2.5 cursor-pointer group"
+                              >
+                                <div className="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center p-1.5 bg-black/40 overflow-hidden shrink-0 group-hover:scale-105 transition-transform">
+                                  {b.logoUrl ? (
+                                    <img src={b.logoUrl} alt={b.displayName} className="w-full h-full object-contain" />
+                                  ) : (
+                                    <span className="text-lg">{b.icon}</span>
+                                  )}
+                                </div>
+                                <span className="text-[10px] font-black text-white leading-tight truncate w-full">{b.displayName}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* MODEL STEP */}
+                    {inlineStep === "model" && (
+                      <div className="flex-1 flex flex-col min-h-0 text-left">
+                        <div className="flex items-center justify-between mb-4 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => setInlineStep("brand")}
+                            className="flex items-center gap-1 text-xs font-bold text-[#00D084] hover:underline cursor-pointer bg-transparent border-none p-0 focus:outline-none"
+                          >
+                            <ChevronLeft className="w-4 h-4 text-[#00D084]" />
+                            <span>Back to Brands</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setInlineBookingOpen(false)}
+                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        <div className="mb-4 shrink-0 text-left">
+                          <span className="text-[9px] uppercase font-mono font-bold text-[#00D084] block mb-0.5">{inlineSelectedBrand}</span>
+                          <h4 className="text-lg sm:text-xl font-black text-white tracking-tight leading-none">Select Model</h4>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                          <div className="grid grid-cols-2 gap-2.5">
+                            {inlineAvailableModels.map((m) => {
+                              const info = getModelDisplayInfo(inlineSelectedBrand, m);
+                              return (
+                                <button
+                                  key={m}
+                                  type="button"
+                                  onClick={() => {
+                                    setInlineSelectedModel(m);
+                                    setSelectedModel(m);
+                                    setInlineBookingOpen(false);
+                                  }}
+                                  className="p-3 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all text-left flex items-center gap-2.5 cursor-pointer group justify-between"
+                                >
+                                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                    <div className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center bg-black/40 overflow-hidden shrink-0 p-1 group-hover:scale-105 transition-transform">
+                                      {info.imageUrl ? (
+                                        <img src={info.imageUrl} alt={m} className="w-full h-full object-contain rounded-full" />
+                                      ) : (
+                                        <div className="w-full h-full flex items-center justify-center font-extrabold text-[#00D084] text-[10px]">EV</div>
+                                      )}
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                      <p className="text-xs sm:text-sm font-black text-white truncate group-hover:text-[#00D084] transition-colors">{m}</p>
+                                      <p className="text-[9px] text-white/50 leading-tight mt-0.5 break-words">
+                                        {inlineSelectedBrand} Electric {info.battery ? `• ${info.battery}` : ""}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-[#00D084] transition-all shrink-0 ml-1.5" />
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Main Form Fields when step drawer is closed */}
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <h3 className="text-lg sm:text-xl font-black text-white uppercase tracking-wider flex items-center gap-2">
                   Find Your Service Centre
-                  <Search className="w-5 h-5 text-[#00D084]" />
                 </h3>
-                <p className="text-xs text-white/70 font-serif font-medium mt-1">
-                  Get personalized services & instant price estimate
-                </p>
+                <span className="text-[10px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/30 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" /> INSTANT SEARCH
+                </span>
               </div>
 
               <form onSubmit={handleQuickBookingSubmit} className="space-y-4 text-left relative z-10">
+                {/* Select City Field */}
                 <div>
-                  <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
-                    Select City
-                  </label>
-                  <select
-                    value={selectedCity}
-                    onChange={(e) => setSelectedCity(e.target.value)}
-                    className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-4 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-[11px] text-white/80 font-black uppercase tracking-wider block">
+                      Select City
+                    </label>
+                    <button
+                      type="button"
+                      onClick={handleDetectLocation}
+                      disabled={isDetectingLoc}
+                      className="text-[10px] text-[#00D084] font-mono font-bold hover:underline flex items-center gap-1 cursor-pointer bg-[#00D084]/10 px-2.5 py-0.5 rounded-full border border-[#00D084]/30 hover:bg-[#00D084]/20 transition-all"
+                    >
+                      <Navigation className={`w-3 h-3 text-[#00D084] ${isDetectingLoc ? "animate-spin" : "animate-pulse"}`} />
+                      <span>{isDetectingLoc ? "Detecting..." : "Detect Location 📍"}</span>
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setInlineBookingOpen(true);
+                      setInlineStep("city");
+                    }}
+                    className="w-full bg-[#020503] border border-[#00D084]/30 hover:border-[#00D084] focus:border-[#00D084] focus:ring-2 focus:ring-[#00D084]/40 rounded-2xl pl-3.5 pr-4 py-3 text-xs font-black text-white text-left focus:outline-none cursor-pointer transition-all shadow-lg flex items-center justify-between group"
                   >
-                    <option value="Pune" className="bg-[#040C1A] text-white">Pune (Kharadi EON IT Park Hub)</option>
-                    <option value="Mumbai" className="bg-[#040C1A] text-white">Mumbai (Andheri West Hub)</option>
-                    <option value="Bangalore" className="bg-[#040C1A] text-white">Bangalore (Koramangala Hub)</option>
-                    <option value="Delhi NCR" className="bg-[#040C1A] text-white">Delhi NCR (Gurugram Hub)</option>
-                    <option value="Hyderabad" className="bg-[#040C1A] text-white">Hyderabad (HITECH City Hub)</option>
-                    <option value="Chennai" className="bg-[#040C1A] text-white">Chennai (Guindy Hub)</option>
-                    <option value="Ahmedabad" className="bg-[#040C1A] text-white">Ahmedabad (SG Highway Hub)</option>
-                  </select>
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-7 h-7 rounded-lg bg-[#00D084]/15 border border-[#00D084]/40 flex items-center justify-center p-1 shrink-0">
+                        <CitySvgIcon cityId={selectedCity} className="w-5 h-5" />
+                      </div>
+                      <span className="text-white font-black truncate">
+                        {selectedCity} (Hub Active)
+                      </span>
+                    </div>
+
+                    <span className="text-[10px] font-mono text-[#00D084] bg-[#00D084]/10 px-2.5 py-1 rounded-md border border-[#00D084]/30 shrink-0 group-hover:bg-[#00D084] group-hover:text-black transition-all">
+                      CHANGE CITY →
+                    </span>
+                  </button>
                 </div>
 
+                {/* Vehicle Type Field (2W / 3W / 4W) */}
                 <div>
-                  <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
+                  <label className="text-[11px] font-black text-white/80 uppercase tracking-wider block mb-1.5">
                     Select Vehicle Type
                   </label>
                   <div className="grid grid-cols-3 gap-2.5">
@@ -544,8 +1026,8 @@ export function ServiceCentresPage() {
                         key={type}
                         type="button"
                         onClick={() => setSelectedVehicle(type)}
-                        className={`py-2.5 rounded-2xl text-xs font-serif font-bold transition-all border flex items-center justify-center gap-1.5 cursor-pointer backdrop-blur-md ${selectedVehicle === type
-                            ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_15px_rgba(0,208,132,0.4)]"
+                        className={`py-2.5 rounded-2xl text-xs font-black transition-all border flex items-center justify-center gap-1.5 cursor-pointer backdrop-blur-md ${selectedVehicle === type
+                            ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_20px_rgba(0,208,132,0.45)] scale-[1.02]"
                             : "bg-white/[0.06] hover:bg-white/[0.12] text-white/80 border-white/15 hover:border-white/30"
                           }`}
                       >
@@ -556,55 +1038,56 @@ export function ServiceCentresPage() {
                   </div>
                 </div>
 
+                {/* Brand & Model Selectors */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
+                    <label className="text-[11px] font-black text-white/80 uppercase tracking-wider block mb-1.5">
                       Select Brand
                     </label>
-                    <select
-                      value={selectedBrand}
-                      onChange={(e) => setSelectedBrand(e.target.value)}
-                      className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setInlineBookingOpen(true);
+                        setInlineStep("brand");
+                      }}
+                      className="w-full bg-[#020503] border border-[#00D084]/30 hover:border-[#00D084] focus:border-[#00D084] rounded-2xl px-3.5 py-3 text-xs text-white font-black text-left cursor-pointer transition-all flex items-center justify-between group"
                     >
-                      <option value="Ola Electric" className="bg-[#040C1A] text-white">Ola Electric</option>
-                      <option value="Ather Energy" className="bg-[#040C1A] text-white">Ather Energy</option>
-                      <option value="TVS iQube" className="bg-[#040C1A] text-white">TVS iQube</option>
-                      <option value="Bajaj Chetak" className="bg-[#040C1A] text-white">Bajaj Chetak</option>
-                      <option value="Hero Electric" className="bg-[#040C1A] text-white">Hero Electric</option>
-                      <option value="Vida EV" className="bg-[#040C1A] text-white">Vida EV</option>
-                      <option value="Tata EV" className="bg-[#040C1A] text-white">Tata EV</option>
-                    </select>
+                      <span className="truncate">{selectedBrand}</span>
+                      <ChevronDown className="w-3.5 h-3.5 text-[#00D084] shrink-0" />
+                    </button>
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-serif font-bold text-white/80 uppercase tracking-wider block mb-1">
+                    <label className="text-[11px] font-black text-white/80 uppercase tracking-wider block mb-1.5">
                       Select Model
                     </label>
-                    <select
-                      value={selectedModel}
-                      onChange={(e) => setSelectedModel(e.target.value)}
-                      className="w-full bg-white/[0.07] hover:bg-white/[0.12] focus:bg-black/90 rounded-2xl px-3 py-3 text-xs text-white font-serif font-bold focus:outline-none focus:ring-2 focus:ring-[#00D084]/60 transition-all border border-white/20 hover:border-white/30 backdrop-blur-md cursor-pointer"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setInlineBookingOpen(true);
+                        setInlineStep("model");
+                      }}
+                      className="w-full bg-[#020503] border border-[#00D084]/30 hover:border-[#00D084] focus:border-[#00D084] rounded-2xl px-3.5 py-3 text-xs text-white font-black text-left cursor-pointer transition-all flex items-center justify-between group"
                     >
-                      <option value="Ola S1 Pro" className="bg-[#040C1A] text-white">Ola S1 Pro</option>
-                      <option value="Ather 450X" className="bg-[#040C1A] text-white">Ather 450X</option>
-                      <option value="TVS iQube S" className="bg-[#040C1A] text-white">TVS iQube S</option>
-                      <option value="Chetak Premium" className="bg-[#040C1A] text-white">Chetak Premium</option>
-                      <option value="Nexon EV" className="bg-[#040C1A] text-white">Nexon EV</option>
-                    </select>
+                      <span className="truncate">{selectedModel}</span>
+                      <ChevronDown className="w-3.5 h-3.5 text-[#00D084] shrink-0" />
+                    </button>
                   </div>
                 </div>
 
+                {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-2xl bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-xs sm:text-sm font-serif font-black uppercase tracking-wider hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-3 shadow-xl"
+                  className="w-full py-4 rounded-2xl bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-xs sm:text-sm font-black uppercase tracking-wider hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-3 shadow-[0_0_30px_rgba(0,208,132,0.4)]"
                 >
                   Book Service Now <ArrowRight className="w-4 h-4" />
                 </button>
 
+                {/* Call Centre CTA */}
                 <div className="pt-2 text-center">
                   <a
                     href="tel:18001234567"
-                    className="text-xs font-serif font-bold text-white/80 hover:text-[#00D084] inline-flex items-center gap-1.5 transition-colors bg-white/[0.04] hover:bg-white/[0.08] px-4 py-2 rounded-xl border border-white/10"
+                    className="text-xs font-bold text-white/80 hover:text-[#00D084] inline-flex items-center gap-1.5 transition-colors bg-white/[0.04] hover:bg-white/[0.08] px-4 py-2 rounded-xl border border-white/10"
                   >
                     <PhoneCall className="w-3.5 h-3.5 text-[#00D084]" /> Call Centre 1800-123-4567
                   </a>

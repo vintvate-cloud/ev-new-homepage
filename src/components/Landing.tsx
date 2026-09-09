@@ -6,6 +6,7 @@ import { Link } from "@tanstack/react-router";
 import { Footer } from "./Footer";
 import { CustomerStoriesWall } from "./CustomerStoriesWall";
 import { BookingModal } from "./BookingModal";
+import RadialArcGalleryShowcase from "./RadialArcGalleryShowcase";
 import { Reveal, StaggerContainer, StaggerItem, SequentialHeader } from "./ui/scroll-reveal";
 import { GSAPHeader, GSAPText, useGSAPTextReveal } from "./ui/gsap-text-reveal";
 import {
@@ -476,13 +477,90 @@ function HeroGetStartedForm() {
   );
 }
 
+const HERO_TYPEWRITER_ITEMS = [
+  {
+    word: "DOORSTEP REPAIRS",
+    img: "/hero/doorstep_repairs.png",
+    statValue: "60-MIN",
+    statLabel: "doorstep arrival guarantee",
+    ghostText: "DOORSTEP EV REPAIRS & SERVICE",
+    style: {
+      width: "clamp(420px, 46%, 840px)",
+      bottom: "-20px",
+      right: "6%",
+    },
+  },
+  {
+    word: "GENUINE PARTS",
+    img: "/hero/genuine_parts.png",
+    statValue: "100%",
+    statLabel: "OEM verified spare components",
+    ghostText: "OEM GENUINE SPARE PARTS",
+    style: {
+      width: "clamp(420px, 46%, 840px)",
+      bottom: "0px",
+      right: "6%",
+    },
+  },
+  {
+    word: "RSA SERVICE",
+    img: "/hero/rsa_service.png",
+    statValue: "24/7",
+    statLabel: "emergency roadside assistance",
+    ghostText: "24/7 EMERGENCY RSA RESCUE",
+    style: {
+      width: "clamp(440px, 48%, 880px)",
+      bottom: "-10px",
+      right: "5%",
+    },
+  },
+  {
+    word: "CERTIFIED TECHS",
+    img: "/hero/certified_techs.png",
+    statValue: "250+",
+    statLabel: "Autobot Academy master techs",
+    ghostText: "CERTIFIED MASTER TECHNICIANS",
+    style: {
+      width: "clamp(400px, 44%, 800px)",
+      bottom: "20px",
+      right: "7%",
+    },
+  },
+  {
+    word: "AI DIAGNOSTICS",
+    img: "/hero/ai_diagnostics.png",
+    statValue: "32-PT",
+    statLabel: "CAN-bus battery health scan",
+    ghostText: "REAL-TIME CAN-BUS TELEMETRY",
+    style: {
+      width: "clamp(380px, 42%, 780px)",
+      bottom: "25px",
+      right: "8%",
+    },
+  },
+  {
+    word: "AMC PLANS",
+    img: "/hero/amc_plans.png",
+    statValue: "3-YR",
+    statLabel: "annual care warranty coverage",
+    ghostText: "FULL AMC ANNUAL COVERAGE",
+    style: {
+      width: "clamp(450px, 48%, 900px)",
+      bottom: "-15px",
+      right: "6%",
+    },
+  },
+];
+
 function HeroTypewriter({
-  words = ["AMC PLANS", "GENUINE PARTS", "RSA SERVICE", "CERTIFIED TECHS", "AI DIAGNOSTICS", "DOORSTEP REPAIRS"],
+  items = HERO_TYPEWRITER_ITEMS,
+  onIndexChange,
   typingSpeed = 90,
   deletingSpeed = 40,
-  pauseDuration = 2000,
+  pauseDuration = 2200,
 }: {
-  words?: string[];
+  items?: typeof HERO_TYPEWRITER_ITEMS;
+  onIndexChange?: (index: number) => void;
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseDuration?: number;
@@ -492,7 +570,7 @@ function HeroTypewriter({
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const targetWord = words[wordIndex % words.length];
+    const targetWord = items[wordIndex % items.length].word;
 
     let timer: NodeJS.Timeout;
 
@@ -500,7 +578,9 @@ function HeroTypewriter({
       timer = setTimeout(() => setIsDeleting(true), pauseDuration);
     } else if (isDeleting && currentText === "") {
       setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % words.length);
+      const nextIndex = (wordIndex + 1) % items.length;
+      setWordIndex(nextIndex);
+      if (onIndexChange) onIndexChange(nextIndex);
     } else {
       const speed = isDeleting ? deletingSpeed : typingSpeed;
       timer = setTimeout(() => {
@@ -513,7 +593,7 @@ function HeroTypewriter({
     }
 
     return () => clearTimeout(timer);
-  }, [currentText, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
+  }, [currentText, isDeleting, wordIndex, items, typingSpeed, deletingSpeed, pauseDuration, onIndexChange]);
 
   return (
     <span className="text-[#00D084] italic font-serif font-light inline-flex items-center tracking-normal uppercase whitespace-nowrap">
@@ -527,6 +607,9 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeTypewriterIdx, setActiveTypewriterIdx] = useState(0);
+
+  const activeTypewriterItem = HERO_TYPEWRITER_ITEMS[activeTypewriterIdx] || HERO_TYPEWRITER_ITEMS[0];
 
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
@@ -548,25 +631,6 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
       behavior: "smooth"
     });
     setActiveSlide(index);
-  };
-
-  // Auto-play disabled: Slide 0 remains default until user clicks a navigation button
-
-  const renderIcon = (iconName: string) => {
-    switch (iconName) {
-      case "zap": return <Zap className="h-3.5 w-3.5 text-[#00D084]" />;
-      case "map-pin": return <MapPin className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "phone-call": return <PhoneCall className="h-3.5 w-3.5 text-red-400 group-hover:text-red-300" />;
-      case "store": return <Store className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "activity": return <Activity className="h-3.5 w-3.5 text-[#00D084]" />;
-      case "cpu": return <Cpu className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "wrench": return <Wrench className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "crosshair": return <Crosshair className="h-3.5 w-3.5 text-white/70 group-hover:text-[#00D084]" />;
-      case "gauge": return <Gauge className="h-3.5 w-3.5 text-[#00D084]" />;
-      case "map": return <Map className="h-3.5 w-3.5 text-[#00D084]" />;
-      case "globe": return <Globe className="h-3.5 w-3.5 text-[#00D084]" />;
-      default: return <Zap className="h-3.5 w-3.5" />;
-    }
   };
 
   return (
@@ -617,9 +681,9 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                   />
                 </svg>
 
-                {/* Ghost text inside the shape */}
+                {/* Ghost text inside the shape - dynamically changes with typewriter */}
                 <div
-                  className="absolute pointer-events-none font-black uppercase leading-[0.9] select-none hidden md:block"
+                  className="absolute pointer-events-none font-black uppercase leading-[0.9] select-none hidden md:block transition-all duration-700"
                   style={{
                     fontSize: "clamp(2rem, 5.5vw, 6.2rem)",
                     color: "rgba(255, 255, 255, 0.12)",
@@ -632,7 +696,7 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                     whiteSpace: "normal",
                   }}
                 >
-                  {slide.ghostText}
+                  {activeTypewriterItem.ghostText}
                 </div>
               </div>
 
@@ -656,36 +720,38 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                   <span className="text-white font-extrabold uppercase whitespace-nowrap">
                     INDIA'S PROFESSIONAL SERVICE NETWORK
                   </span>
-                  <HeroTypewriter words={["AMC PLANS", "GENUINE PARTS", "RSA SERVICE", "CERTIFIED TECHS", "AI DIAGNOSTICS", "DOORSTEP REPAIRS"]} />
+                  <HeroTypewriter
+                    items={HERO_TYPEWRITER_ITEMS}
+                    onIndexChange={(idx) => setActiveTypewriterIdx(idx)}
+                  />
                 </h1>
               </div>
 
               {/* DESKTOP LAYOUT CONTENT (Visible only on desktop) */}
               <div className="hidden md:block">
-                {/* BIG EV VEHICLE IMAGE */}
+                {/* DYNAMIC FULL-FIDELITY STUDIO VISUAL IMAGE CHANGING WITH TYPEWRITER TEXT */}
                 <AnimatePresence mode="wait">
                   {isCurrent && (
                     <motion.img
-                      key={`img-desk-${slide.id}`}
-                      initial={{ x: 120, opacity: 0, scale: 0.8 }}
+                      key={`typewriter-img-${activeTypewriterItem.word}`}
+                      initial={{ x: 100, opacity: 0, scale: 0.9 }}
                       animate={{ x: 0, opacity: 1, scale: 1 }}
-                      exit={{ x: -120, opacity: 0, scale: 0.8 }}
-                      transition={{ duration: 0.7, ease: "easeOut" }}
-                      src={slide.bigImg}
-                      alt={slide.cardTitle}
+                      exit={{ x: -100, opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                      src={activeTypewriterItem.img}
+                      alt={activeTypewriterItem.word}
                       className="pointer-events-none select-none block absolute z-[2] animate-float"
                       style={{
-                        ...slide.bigImgStyle,
+                        ...activeTypewriterItem.style,
                         objectFit: "contain",
-                        filter: "drop-shadow(0 40px 80px rgba(0,0,0,0.25))",
                       }}
                     />
                   )}
                 </AnimatePresence>
 
-                {/* HAPPY RIDERS STATS PILL */}
+                {/* DYNAMIC RIDERS & STATS PILL */}
                 <div
-                  className="absolute z-10 flex items-center gap-3"
+                  className="absolute z-10 flex items-center gap-3 transition-all duration-500"
                   style={{ right: "5%", top: "26%" }}
                 >
                   <div className="flex -space-x-3">
@@ -694,8 +760,8 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                     ))}
                   </div>
                   <div className="flex flex-col text-left">
-                    <span className="text-sm font-bold text-foreground leading-none">{slide.statsValue}</span>
-                    <span className="text-[10px] text-muted-foreground font-medium">{slide.statsLabel}</span>
+                    <span className="text-sm font-bold text-foreground leading-none">{activeTypewriterItem.statValue}</span>
+                    <span className="text-[10px] text-muted-foreground font-medium">{activeTypewriterItem.statLabel}</span>
                   </div>
                 </div>
               </div>
@@ -2822,8 +2888,14 @@ function EVServices() {
         <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
 
           {/* Card 1: Battery Health Check (Wide Rectangle) */}
-          <GlowCard className="md:col-span-8 flex flex-col md:flex-row justify-between gap-6 min-h-[320px] glow-card-stagger">
-            <div className="flex-1 flex flex-col justify-between">
+          <GlowCard className="md:col-span-8 flex flex-col md:flex-row justify-between gap-6 min-h-[320px] glow-card-stagger relative overflow-hidden group">
+            {/* Background Visual Overlay */}
+            <div className="absolute right-0 top-0 bottom-0 w-full md:w-3/5 pointer-events-none opacity-80 group-hover:opacity-100 transition-all duration-700 overflow-hidden rounded-2xl z-0">
+              <img src="/services/expert_battery_health.jpg" alt="Battery Health Diagnostics" className="w-full h-full object-cover object-right transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/60 to-transparent" />
+            </div>
+
+            <div className="flex-1 flex flex-col justify-between relative z-10">
               <div>
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                   <Battery className="h-5 w-5 text-[#00D084]" />
@@ -2839,7 +2911,7 @@ function EVServices() {
               </div>
             </div>
             {/* Visual Panel */}
-            <div className="w-full md:w-[240px] h-[180px] bg-black/40 rounded-2xl border border-white/5 p-4 flex flex-col justify-between">
+            <div className="w-full md:w-[240px] h-[180px] bg-black/60 backdrop-blur-md rounded-2xl border border-white/10 p-4 flex flex-col justify-between relative z-10">
               <span className="text-[10px] text-gray-500 font-mono">BMS HEALTH METRICS</span>
               <div className="flex items-center justify-between gap-4">
                 <div className="h-24 w-12 border-2 border-white/20 rounded-lg p-1 relative flex flex-col justify-end">
@@ -2857,8 +2929,14 @@ function EVServices() {
           </GlowCard>
 
           {/* Card 2: Motor & Controller (Square) */}
-          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[320px] glow-card-stagger">
-            <div>
+          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden group">
+            {/* Background Visual Overlay */}
+            <div className="absolute inset-0 pointer-events-none opacity-70 group-hover:opacity-90 transition-all duration-700 overflow-hidden rounded-2xl z-0">
+              <img src="/services/expert_motor_controller.jpg" alt="Motor & Controller" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/65 to-transparent" />
+            </div>
+
+            <div className="relative z-10">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <Gauge className="h-5 w-5 text-[#00D084]" />
               </div>
@@ -2867,15 +2945,21 @@ function EVServices() {
                 Electric motor inspection, controller diagnostics, and thermal stress mapping.
               </p>
             </div>
-            <div className="flex items-baseline justify-between mt-4">
+            <div className="flex items-baseline justify-between mt-4 relative z-10">
               <span className="text-xl font-bold text-[#00D084]">₹1,999</span>
               <span className="text-xs text-[#a1a1aa]">1h 30m duration</span>
             </div>
           </GlowCard>
 
           {/* Card 3: Charging System (Tall Vertical Rectangle) */}
-          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[660px] glow-card-stagger">
-            <div>
+          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[660px] glow-card-stagger relative overflow-hidden group">
+            {/* Background Visual Overlay */}
+            <div className="absolute inset-0 pointer-events-none opacity-70 group-hover:opacity-90 transition-all duration-700 overflow-hidden rounded-2xl z-0">
+              <img src="/services/expert_charging_system.jpg" alt="Charging System" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/70 to-[#080d0a]/20" />
+            </div>
+
+            <div className="relative z-10">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <Zap className="h-5 w-5 text-[#00D084]" />
               </div>
@@ -2887,22 +2971,22 @@ function EVServices() {
               {/* Supported protocols */}
               <div className="flex flex-col gap-2 mt-4">
                 <span className="text-[10px] uppercase tracking-wider text-[#71717a] font-bold mb-1">PROTOCOLS TESTED</span>
-                <div className="flex justify-between items-center bg-white/5 rounded-xl p-3 border border-white/5">
+                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-xl p-3 border border-white/10">
                   <span className="text-xs text-white">CCS2 Fast Charge</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
-                <div className="flex justify-between items-center bg-white/5 rounded-xl p-3 border border-white/5">
+                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-xl p-3 border border-white/10">
                   <span className="text-xs text-white">GB/T Standard</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
-                <div className="flex justify-between items-center bg-white/5 rounded-xl p-3 border border-white/5">
+                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-xl p-3 border border-white/10">
                   <span className="text-xs text-white">Bharat AC 001</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col gap-4">
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col gap-4 relative z-10">
               <div className="flex justify-between items-end">
                 <div>
                   <span className="text-[10px] text-gray-500 uppercase">Starting From</span>
@@ -2948,8 +3032,14 @@ function EVServices() {
             </div>
 
             {/* Left Content (Software Updates) */}
-            <div className="absolute left-0 top-0 bottom-0 w-[55%] p-8 z-10 flex flex-col justify-between">
-              <div>
+            <div className="absolute left-0 top-0 bottom-0 w-[55%] p-8 z-10 flex flex-col justify-between overflow-hidden rounded-l-3xl">
+              {/* Background Visual Overlay */}
+              <div className="absolute inset-0 pointer-events-none opacity-75 group-hover:opacity-95 transition-all duration-700 overflow-hidden z-0">
+                <img src="/services/expert_software_updates.jpg" alt="Software Updates" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/60 to-transparent" />
+              </div>
+
+              <div className="relative z-10">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                   <Cpu className="h-5 w-5 text-[#00D084]" />
                 </div>
@@ -2960,12 +3050,12 @@ function EVServices() {
               </div>
 
               {/* Live firmware modules */}
-              <div className="flex flex-col gap-2 mt-4">
-                <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
+              <div className="flex flex-col gap-2 mt-4 relative z-10">
+                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-lg p-2.5 border border-white/10">
                   <span className="text-xs text-white">BMS Firmware</span>
                   <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
                 </div>
-                <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
+                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-lg p-2.5 border border-white/10">
                   <span className="text-xs text-white">Telemetry OS</span>
                   <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
                 </div>
@@ -2983,14 +3073,20 @@ function EVServices() {
 
             {/* Nestled Square Card (Advanced Battery Diagnostic) */}
             <div className="absolute left-[58%] top-0 right-0 h-[48%] z-20">
-              <GlowCard className="w-full h-full p-6 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
+              <GlowCard className="w-full h-full p-6 flex flex-col justify-between relative overflow-hidden group">
+                {/* Background Visual Overlay */}
+                <div className="absolute inset-0 pointer-events-none opacity-75 group-hover:opacity-95 transition-all duration-700 overflow-hidden rounded-2xl z-0">
+                  <img src="/tools/thermal-imaging.png" alt="Advanced Diagnostics" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/60 to-transparent" />
+                </div>
+
+                <div className="flex justify-between items-start relative z-10">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
                     <Activity className="h-5 w-5 text-[#00D084]" />
                   </div>
                   <span className="text-xs font-bold text-[#00D084]">₹999</span>
                 </div>
-                <div>
+                <div className="relative z-10">
                   <h4 className="text-lg font-serif text-white mb-1">Advanced Diagnostics</h4>
                   <p className="text-[#a1a1aa] text-[11px] leading-snug">Cell voltage analysis and safety telemetry mapping.</p>
                 </div>
@@ -2999,8 +3095,12 @@ function EVServices() {
           </div>
 
           {/* Mobile Fallback Cards (Visible only on mobile/tablet) */}
-          <GlowCard className="md:hidden flex flex-col justify-between min-h-[320px] glow-card-stagger">
-            <div>
+          <GlowCard className="md:hidden flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none opacity-60 z-0">
+              <img src="/services/expert_software_updates.jpg" alt="Software Updates" className="w-full h-full object-cover object-center" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/70 to-transparent" />
+            </div>
+            <div className="relative z-10">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <Cpu className="h-5 w-5 text-[#00D084]" />
               </div>
@@ -3020,28 +3120,38 @@ function EVServices() {
                 </div>
               </div>
             </div>
-            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-[#00D084]">
+            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-[#00D084] relative z-10">
               <span className="text-gray-400">Calibration Status</span>
               <span>All Systems Optimized</span>
             </div>
           </GlowCard>
 
-          <GlowCard className="md:hidden flex flex-col justify-between min-h-[220px] glow-card-stagger">
-            <div className="flex justify-between items-start">
+          <GlowCard className="md:hidden flex flex-col justify-between min-h-[220px] glow-card-stagger relative overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none opacity-60 z-0">
+              <img src="/tools/thermal-imaging.png" alt="Advanced Diagnostics" className="w-full h-full object-cover object-center" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/70 to-transparent" />
+            </div>
+            <div className="flex justify-between items-start relative z-10">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
                 <Activity className="h-5 w-5 text-[#00D084]" />
               </div>
               <span className="text-xs font-bold text-[#00D084]">₹999</span>
             </div>
-            <div className="mt-4">
+            <div className="mt-4 relative z-10">
               <h4 className="text-lg font-serif text-white mb-1">Advanced Diagnostics</h4>
               <p className="text-[#a1a1aa] text-xs leading-relaxed">Cell voltage analysis and safety telemetry mapping.</p>
             </div>
           </GlowCard>
 
           {/* Card 6: Battery Cell Balancing (Full Width Horizontal) */}
-          <GlowCard className="md:col-span-12 flex flex-col md:flex-row gap-8 justify-between items-center min-h-[300px] glow-card-stagger">
-            <div className="flex-1">
+          <GlowCard className="md:col-span-12 flex flex-col md:flex-row gap-8 justify-between items-center min-h-[300px] glow-card-stagger relative overflow-hidden group">
+            {/* Background Visual Overlay */}
+            <div className="absolute right-0 top-0 bottom-0 w-full md:w-3/5 pointer-events-none opacity-80 group-hover:opacity-100 transition-all duration-700 overflow-hidden rounded-2xl z-0">
+              <img src="/ai-gallery/ev_battery_tech.png" alt="Battery Cell Balancing" className="w-full h-full object-cover object-right transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/60 to-transparent" />
+            </div>
+
+            <div className="flex-1 relative z-10">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <RefreshCw className="h-5 w-5 text-[#00D084]" />
               </div>
@@ -3061,7 +3171,7 @@ function EVServices() {
             </div>
 
             {/* Animated Cells Visualization */}
-            <div className="w-full md:w-[450px] bg-black/40 rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
+            <div className="w-full md:w-[450px] bg-black/60 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex flex-col gap-4 relative z-10">
               <div className="flex justify-between items-center text-xs text-[#a1a1aa]">
                 <span>Active Equalization Module</span>
                 <span className="text-[#00D084] font-mono animate-pulse">● CALIBRATING</span>
@@ -3150,6 +3260,7 @@ function ValuePackages() {
       popular: true,
       icon: <Shield className="w-6 h-6 text-[#00D084]" />,
       themeColor: "#00D084",
+      bgImg: "/packages/basic-care.png",
       features: [
         "15-Point General Inspection",
         "Brake Adjustment & Cleaning",
@@ -3165,6 +3276,7 @@ function ValuePackages() {
       popular: true,
       icon: <Gauge className="w-6 h-6 text-[#10B981]" />,
       themeColor: "#10B981",
+      bgImg: "/packages/smart-protect.png",
       features: [
         "Comprehensive Diagnostic Scan",
         "Battery Health & BMS Analysis",
@@ -3180,6 +3292,7 @@ function ValuePackages() {
       popular: false,
       icon: <Activity className="w-6 h-6 text-[#06B6D4]" />,
       themeColor: "#06B6D4",
+      bgImg: "/packages/complete-health.png",
       features: [
         "Deep Battery Cell Balancing",
         "Thermal System Diagnostics",
@@ -3195,6 +3308,7 @@ function ValuePackages() {
       popular: false,
       icon: <Truck className="w-6 h-6 text-[#6366F1]" />,
       themeColor: "#6366F1",
+      bgImg: "/packages/fleet-maintenance.png",
       features: [
         "Priority Doorstep Dispatch",
         "Standardized Diagnostic Logs",
@@ -3328,11 +3442,21 @@ function ValuePackages() {
                 >
                   {/* Glow Overlay */}
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"
                     style={{
                       background: `linear-gradient(135deg, ${pkg.themeColor}10, transparent)`
                     }}
                   />
+
+                  {/* Premium Background Graphic Visual */}
+                  <div className="absolute right-0 bottom-0 top-0 w-3/5 pointer-events-none overflow-hidden rounded-r-[28px] opacity-75 group-hover:opacity-95 transition-all duration-700 z-0">
+                    <img 
+                      src={pkg.bgImg} 
+                      alt={pkg.title} 
+                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f0c] via-[#0a0f0c]/60 to-transparent" />
+                  </div>
 
                   {/* Always Visible Header Area */}
                   <div>
