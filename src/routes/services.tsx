@@ -577,6 +577,8 @@ function ServicesPage() {
               "https://images.unsplash.com/photo-1558441719-2347b7341ed2?w=800&auto=format&fit=crop&q=80";
             const tagCode = `SAVINGS • 0${index + 1}`;
 
+            const VectorIcon = pkg.icon || ShieldCheck;
+
             return (
               <div
                 key={pkg.id}
@@ -598,33 +600,41 @@ function ServicesPage() {
                     : "shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:scale-[1.02]"
                 }`}
               >
-                {/* Full Card Cover Image */}
+                {/* Full Card Cover Image - High Clarity & Visibility */}
                 <img
                   src={bgImg}
                   alt={pkg.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 pointer-events-none"
+                  className="absolute inset-0 w-full h-full object-cover filter brightness-110 contrast-105 group-hover:scale-108 transition-transform duration-700 pointer-events-none"
                 />
 
-                {/* Dark Vignette Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/30 pointer-events-none" />
+                {/* Lightweight Bottom Vignette Overlay so top 75% of image is crystal clear */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-black/5 pointer-events-none" />
 
-                {/* Bottom Overlay Content */}
-                <div className="mt-auto relative z-10">
+                {/* Top Vector Icon Box Badge */}
+                <div className="relative z-10 w-12 h-12 rounded-2xl bg-black/60 backdrop-blur-xl border border-[#00D084]/40 flex items-center justify-center shadow-[0_0_20px_rgba(0,208,132,0.3)] shrink-0 mb-auto">
+                  <VectorIcon className="w-6 h-6 text-[#00D084]" strokeWidth={2.2} />
+                </div>
+
+                {/* Bottom Overlay Content with Scrim for 100% Text Visibility */}
+                <div className="mt-auto relative z-10 p-4 sm:p-5 rounded-2xl bg-black/50 backdrop-blur-md border border-white/10 shadow-2xl">
 
                   {/* Title & Tag */}
-                  <h3 className="text-2xl font-black text-white leading-snug mb-1.5 drop-shadow-md group-hover:text-[#00D084] transition-colors">
+                  <h3 className="text-xl sm:text-2xl font-black text-white leading-snug mb-1.5 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] group-hover:text-[#00D084] transition-colors">
                     {pkg.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-white/80 font-normal leading-relaxed line-clamp-2 mb-3">
+                  <p className="text-xs sm:text-sm text-white/95 font-medium leading-relaxed line-clamp-2 mb-3 drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)]">
                     {pkg.desc}
                   </p>
 
                   {/* Price Row */}
-                  <div className="flex items-baseline gap-2 mb-4 font-mono">
-                    <span className="text-3xl font-black text-white">{pkg.price}</span>
-                    <span className="text-xs text-white/50 line-through">{pkg.oldPrice}</span>
+                  <div className="flex items-baseline gap-2.5 mb-4 font-mono">
+                    <span className="text-2xl sm:text-3xl font-black text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">{pkg.price}</span>
+                    <span className="text-xs sm:text-sm text-white/70 font-bold line-through drop-shadow-md">{pkg.oldPrice}</span>
+                    <span className="ml-auto text-[10px] font-extrabold uppercase tracking-widest text-[#00D084] bg-[#00D084]/20 border border-[#00D084]/40 px-2 py-0.5 rounded-full">
+                      {pkg.save}
+                    </span>
                   </div>
 
                   {/* 2 Action Buttons: DETAILS & BOOK NOW */}
@@ -643,7 +653,7 @@ function ServicesPage() {
                           specs: pkg.features,
                         });
                       }}
-                      className="py-3 rounded-full border border-white/40 text-white hover:bg-white/15 backdrop-blur-md text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer text-center"
+                      className="py-2.5 rounded-full border border-white/40 bg-black/40 text-white hover:bg-white/20 backdrop-blur-md text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer text-center shadow-md"
                     >
                       DETAILS
                     </button>
@@ -652,7 +662,7 @@ function ServicesPage() {
                         e.stopPropagation();
                         handleBookPackage(pkg);
                       }}
-                      className="py-3 rounded-full bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-[11px] font-black uppercase tracking-wider transition-all shadow-md cursor-pointer text-center"
+                      className="py-2.5 rounded-full bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-[11px] font-black uppercase tracking-wider transition-all shadow-lg cursor-pointer text-center"
                     >
                       BOOK NOW
                     </button>

@@ -193,6 +193,7 @@ export interface ServiceCenter {
   baysAvailable: number;
   techniciansOnDuty: number;
   isNearest?: boolean;
+  image?: string;
 }
 
 export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: string): ServiceCenter[] {
@@ -217,6 +218,7 @@ export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: strin
       baysAvailable: 4,
       techniciansOnDuty: 8,
       isNearest: true,
+      image: "/ev-service-centre-real-hero.png",
     },
     {
       id: `${clean}-2`,
@@ -233,6 +235,7 @@ export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: strin
       servicesOffered: ["Periodic General Service", "Battery Diagnostics", "Doorstep Pickup"],
       baysAvailable: 2,
       techniciansOnDuty: 5,
+      image: "/ev-master-workshop-hero.png",
     },
     {
       id: `${clean}-3`,
@@ -249,6 +252,7 @@ export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: strin
       servicesOffered: ["BMS Firmware Flashing", "Battery Pack Repair", "Motor Tuning"],
       baysAvailable: 3,
       techniciansOnDuty: 6,
+      image: "/franchise-banner-building.png",
     },
     {
       id: `${clean}-4`,

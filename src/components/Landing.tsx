@@ -1348,6 +1348,7 @@ const SPARE_PARTS = [
     desc: "High density energy packs with built-in thermal management and battery monitoring system (BMS).",
     price: "₹24,999",
     icon: <Zap className="h-5 w-5 text-[#00D084]" />,
+    bgImg: "/services/expert_battery_health.jpg",
     hud: {
       type: "ENERGY STORAGE MODULE",
       density: "240 Wh/kg",
@@ -1361,6 +1362,7 @@ const SPARE_PARTS = [
     desc: "Fast charging power adapter blocks with voltage protection and intelligent auto-shutoff.",
     price: "₹3,499",
     icon: <Zap className="h-5 w-5 text-[#00D084]" />,
+    bgImg: "/services/expert_charging_system.jpg",
     hud: {
       type: "HIGH FREQUENCY RECTIFIER",
       density: "96.8% Efficiency",
@@ -1374,6 +1376,7 @@ const SPARE_PARTS = [
     desc: "Advanced digital motor controller units for smooth power delivery and regenerative braking.",
     price: "₹7,999",
     icon: <Cpu className="h-5 w-5 text-[#00D084]" />,
+    bgImg: "/services/expert_motor_controller.jpg",
     hud: {
       type: "DIGITAL POWER INVERTER",
       density: "Field-Oriented Control",
@@ -1383,12 +1386,13 @@ const SPARE_PARTS = [
     }
   },
   {
-    title: "EV Optimized Tires",
-    desc: "Low rolling resistance specialized tubeless tires designed for maximum range and grip.",
+    title: "EV Optimized Tires & Spares",
+    desc: "Low rolling resistance specialized tubeless tires & OEM spare components for maximum range.",
     price: "₹1,899",
     icon: <Bike className="h-6 w-6 text-[#00D084]" />,
+    bgImg: "/hero/genuine_parts.png",
     hud: {
-      type: "COMPOSITE GRIP TYRE",
+      type: "COMPOSITE GRIP TYRE & SPARES",
       density: "Low Roll Compound",
       thermal: "All-Weather Silica",
       config: "Load Index 92 (630kg)",
@@ -1435,9 +1439,8 @@ function GenuineSpareParts() {
 
   return (
     <section ref={containerRef} id="warehouse" className="relative bg-[#020403] py-28 border-b border-white/5 overflow-hidden">
-
       {/* Ambient glowing spots */}
-      <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#00D084]/2 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#00D084]/5 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-6 relative z-10">
 
@@ -1455,7 +1458,13 @@ function GenuineSpareParts() {
 
           {/* Left panel: Live CAD Telemetry HUD */}
           <Reveal className="lg:col-span-5 flex flex-col" yOffset={30}>
-            <div className="bg-gradient-to-br from-[#050806] to-[#010201] border border-white/5 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-full">
+            <div className="bg-gradient-to-br from-[#050806] to-[#010201] border border-white/10 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-full shadow-2xl">
+
+              {/* Active Part Background Image in Left Panel - Properly Visible */}
+              <div className="absolute inset-0 opacity-75 md:opacity-85 pointer-events-none overflow-hidden z-0">
+                <img src={activePart.bgImg} alt={activePart.title} className="w-full h-full object-cover object-center filter saturate-125 brightness-110 contrast-105 transition-all duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#050806]/75 via-[#050806]/40 to-[#010201]/95" />
+              </div>
 
               {/* Grid graphic background */}
               <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
@@ -1467,11 +1476,11 @@ function GenuineSpareParts() {
 
               <div ref={hudRef} className="relative z-10 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                    <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                    <span className="text-[10px] uppercase tracking-widest text-white/50 font-mono font-bold">
                       CAD Specification HUD
                     </span>
-                    <span className="text-[9px] font-mono text-[#00D084] bg-[#00D084]/10 rounded px-2 py-0.5 font-bold">
+                    <span className="text-[9px] font-mono text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 rounded px-2.5 py-0.5 font-bold">
                       OEM_CERTIFIED
                     </span>
                   </div>
@@ -1480,38 +1489,38 @@ function GenuineSpareParts() {
                     <span className="text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
                       System Classification
                     </span>
-                    <h4 className="text-white font-bold text-lg mt-1 font-mono tracking-tight">
+                    <h4 className="text-white font-bold text-lg mt-1 font-mono tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                       {activePart.hud.type}
                     </h4>
                   </div>
 
                   {/* Specs List */}
                   <div className="mt-8 space-y-4">
-                    <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
-                      <span className="text-white/40 font-mono">VOLTAGE CLASS</span>
-                      <span className="text-white font-mono font-bold">{activePart.hud.voltage}</span>
+                    <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
+                      <span className="text-white/70 font-mono">VOLTAGE CLASS</span>
+                      <span className="text-white font-mono font-bold drop-shadow-md">{activePart.hud.voltage}</span>
                     </div>
-                    <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
-                      <span className="text-white/40 font-mono">EFFICIENCY / DENSITY</span>
-                      <span className="text-white font-mono font-bold">{activePart.hud.density}</span>
+                    <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
+                      <span className="text-white/70 font-mono">EFFICIENCY / DENSITY</span>
+                      <span className="text-white font-mono font-bold drop-shadow-md">{activePart.hud.density}</span>
                     </div>
-                    <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
-                      <span className="text-white/40 font-mono">BMS CONFIGURATION</span>
-                      <span className="text-white font-mono font-bold">{activePart.hud.config}</span>
+                    <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
+                      <span className="text-white/70 font-mono">BMS CONFIGURATION</span>
+                      <span className="text-white font-mono font-bold drop-shadow-md">{activePart.hud.config}</span>
                     </div>
-                    <div className="flex justify-between border-b border-white/[0.03] pb-2 text-xs">
-                      <span className="text-white/40 font-mono">THERMAL COEFFICIENT</span>
-                      <span className="text-[#00D084] font-mono font-bold">{activePart.hud.thermal}</span>
+                    <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
+                      <span className="text-white/70 font-mono">THERMAL COEFFICIENT</span>
+                      <span className="text-[#00D084] font-mono font-bold drop-shadow-md">{activePart.hud.thermal}</span>
                     </div>
                   </div>
 
                   {/* Assurance points */}
                   <ul className="mt-8 space-y-3">
-                    <li className="flex items-center gap-2.5 text-xs text-white/70">
+                    <li className="flex items-center gap-2.5 text-xs text-white font-medium drop-shadow-md">
                       <Check className="h-4 w-4 text-[#00D084]" />
                       <span>100% Genuine OEM Standards</span>
                     </li>
-                    <li className="flex items-center gap-2.5 text-xs text-white/70">
+                    <li className="flex items-center gap-2.5 text-xs text-white font-medium drop-shadow-md">
                       <Check className="h-4 w-4 text-[#00D084]" />
                       <span>12-Month Replacement Warranty</span>
                     </li>
@@ -1519,14 +1528,14 @@ function GenuineSpareParts() {
                 </div>
 
                 {/* Order action */}
-                <div className="mt-12 pt-6 border-t border-white/5 flex items-center justify-between gap-6">
+                <div className="mt-12 pt-6 border-t border-white/10 flex items-center justify-between gap-6">
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-white/40 font-mono uppercase">Catalogue Price</span>
-                    <span className="text-xl font-bold text-white font-mono mt-0.5">{activePart.price}</span>
+                    <span className="text-[10px] text-white/70 font-mono uppercase font-bold">Catalogue Price</span>
+                    <span className="text-xl font-bold text-white font-mono mt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">{activePart.price}</span>
                   </div>
                   <a
                     href="#warehouse"
-                    className="rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer"
+                    className="rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
                     style={{ background: "#00D084", color: "#020403" }}
                   >
                     <ShoppingCart className="h-4 w-4" />
@@ -1545,27 +1554,33 @@ function GenuineSpareParts() {
                 <StaggerItem
                   key={i}
                   onMouseEnter={() => setHoveredIdx(i)}
-                  className={`spare-part-card group bg-[#050806] border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer ${isHovered
-                      ? "border-[#00D084]/40 bg-[#070c09] shadow-[0_15px_30px_-10px_rgba(0,208,132,0.05)]"
-                      : "border-white/5 hover:border-white/10 hover:bg-[#070b08]"
+                  className={`spare-part-card group bg-[#050806] border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer relative overflow-hidden ${isHovered
+                      ? "border-[#00D084]/50 bg-[#070c09] shadow-[0_15px_30px_-10px_rgba(0,208,132,0.15)]"
+                      : "border-white/10 hover:border-white/20 hover:bg-[#070b08]"
                     }`}
                 >
-                  <div>
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${isHovered ? "bg-[#00D084]/20 text-[#00D084]" : "bg-white/5 text-[#00D084]/80"
+                  {/* Card Background Graphic Visual - Properly Visible */}
+                  <div className="absolute right-0 top-0 bottom-0 w-1/2 md:w-[55%] pointer-events-none opacity-90 group-hover:opacity-100 transition-all duration-500 overflow-hidden rounded-r-2xl z-0">
+                    <img src={part.bgImg} alt={part.title} className="w-full h-full object-cover object-center filter saturate-125 brightness-110 contrast-105 transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#050806] via-[#050806]/35 to-transparent" />
+                  </div>
+
+                  <div className="relative z-10">
+                    <div className={`w-11 h-11 rounded-2xl flex items-center justify-center transition-colors duration-300 backdrop-blur-md shadow-md ${isHovered ? "bg-[#00D084]/25 text-[#00D084] border border-[#00D084]/50 shadow-[0_0_15px_rgba(0,208,132,0.3)]" : "bg-black/60 text-[#00D084] border border-white/20"
                       }`}>
                       {part.icon}
                     </div>
-                    <h3 className="text-white font-bold text-sm mt-5 group-hover:text-[#00D084] transition-colors">
+                    <h3 className="text-white font-bold text-base mt-4 group-hover:text-[#00D084] transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                       {part.title}
                     </h3>
-                    <p className="text-xs text-muted-foreground mt-3 leading-relaxed font-light">
+                    <p className="text-xs text-white/95 mt-2 leading-relaxed font-medium max-w-[210px] drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)]">
                       {part.desc}
                     </p>
                   </div>
 
-                  <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-white">{part.price}</span>
-                    <span className="text-[10px] text-[#00D084] font-mono group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                  <div className="mt-8 pt-4 border-t border-white/15 flex items-center justify-between relative z-10">
+                    <span className="text-xs font-mono font-black text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">{part.price}</span>
+                    <span className="text-[10px] text-[#00D084] font-mono group-hover:translate-x-1 transition-transform flex items-center gap-1 font-black px-2 py-0.5 rounded bg-black/60 backdrop-blur-md border border-[#00D084]/30 shadow-md">
                       SPEC &gt;
                     </span>
                   </div>
@@ -3405,7 +3420,7 @@ function ValuePackages() {
             return (
               <div
                 key={i}
-                className="relative w-full h-[200px] md:h-[190px]"
+                className="relative w-full h-[250px] md:h-[240px]"
                 onMouseEnter={() => setMouseOverPlaceholder(i)}
                 onMouseLeave={() => setMouseOverPlaceholder(null)}
               >
@@ -3415,7 +3430,7 @@ function ValuePackages() {
                   onMouseEnter={() => setMouseOverActive(true)}
                   onMouseLeave={() => setMouseOverActive(false)}
                   onClick={() => setHoveredIdx(isHovered ? null : i)}
-                  className="rounded-[28px] border p-6 md:p-8 flex flex-col justify-between overflow-hidden cursor-pointer"
+                  className="rounded-[28px] border p-6 md:p-8 flex flex-col justify-between overflow-hidden cursor-pointer group"
                   style={isHovered ? {
                     position: "fixed",
                     inset: 0,
@@ -3434,9 +3449,9 @@ function ValuePackages() {
                     width: "100%",
                     height: "100%",
                     zIndex: 10,
-                    borderColor: "rgba(255,255,255,0.1)",
+                    borderColor: "rgba(255,255,255,0.12)",
                     boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
-                    backgroundColor: "rgba(10, 15, 12, 0.6)"
+                    backgroundColor: "rgba(10, 15, 12, 0.75)"
                   }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
@@ -3444,34 +3459,35 @@ function ValuePackages() {
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"
                     style={{
-                      background: `linear-gradient(135deg, ${pkg.themeColor}10, transparent)`
+                      background: `linear-gradient(135deg, ${pkg.themeColor}15, transparent)`
                     }}
                   />
 
-                  {/* Premium Background Graphic Visual */}
-                  <div className="absolute right-0 bottom-0 top-0 w-3/5 pointer-events-none overflow-hidden rounded-r-[28px] opacity-75 group-hover:opacity-95 transition-all duration-700 z-0">
+                  {/* Premium Background Graphic Visual - Crisp & Visible */}
+                  <div className="absolute right-0 bottom-0 top-0 w-1/2 md:w-[54%] pointer-events-none overflow-hidden rounded-r-[28px] opacity-90 group-hover:opacity-100 transition-all duration-700 z-0">
                     <img 
                       src={pkg.bgImg} 
                       alt={pkg.title} 
-                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" 
+                      className="w-full h-full object-cover object-center filter brightness-110 contrast-105 transition-transform duration-700 group-hover:scale-110" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f0c] via-[#0a0f0c]/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0d1410] via-[#0d1410]/35 to-transparent" />
                   </div>
 
-                  {/* Always Visible Header Area */}
-                  <div>
+                  {/* Always Visible Header Area - Enhanced High-Contrast Text */}
+                  <div className="relative z-10">
                     <div className="flex justify-between items-start">
                       <div className="flex gap-4 items-center">
                         <div
-                          className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border transition-all duration-500"
+                          className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/60 backdrop-blur-xl border transition-all duration-500 shadow-[0_0_20px_rgba(0,208,132,0.3)] shrink-0"
                           style={{
-                            borderColor: isHovered ? `${pkg.themeColor}50` : "rgba(255,255,255,0.1)",
-                            backgroundColor: isHovered ? `${pkg.themeColor}10` : "rgba(255,255,255,0.05)"
+                            borderColor: isHovered ? `${pkg.themeColor}80` : "rgba(0,208,132,0.4)",
+                            boxShadow: isHovered ? `0 0 25px ${pkg.themeColor}50` : "0 0 15px rgba(0,208,132,0.25)",
+                            backgroundColor: "rgba(0,0,0,0.6)"
                           }}
                         >
                           {pkg.icon}
                         </div>
-                        <h3 className="text-xl md:text-2xl font-serif text-white font-medium">
+                        <h3 className="text-xl md:text-2xl font-serif text-white font-bold drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
                           {pkg.title}
                         </h3>
                       </div>
@@ -3479,17 +3495,17 @@ function ValuePackages() {
                       <div className="flex flex-col gap-1 items-end shrink-0">
                         {pkg.popular && (
                           <span
-                            className="text-[9px] uppercase tracking-widest font-bold px-3 py-0.5 rounded-full border"
+                            className="text-[9px] uppercase tracking-widest font-extrabold px-3 py-0.5 rounded-full border shadow-md backdrop-blur-md"
                             style={{
-                              borderColor: `${pkg.themeColor}40`,
-                              backgroundColor: `${pkg.themeColor}15`,
+                              borderColor: `${pkg.themeColor}60`,
+                              backgroundColor: "rgba(0,0,0,0.7)",
                               color: pkg.themeColor
                             }}
                           >
                             Most Popular
                           </span>
                         )}
-                        <span className="text-[9px] uppercase tracking-widest font-bold bg-white/5 border border-white/10 text-white/60 px-3 py-0.5 rounded-full">
+                        <span className="text-[9px] uppercase tracking-widest font-extrabold bg-black/60 backdrop-blur-md border border-white/20 text-white/90 px-3 py-0.5 rounded-full shadow-md">
                           Launch Offer
                         </span>
                       </div>
@@ -3498,11 +3514,11 @@ function ValuePackages() {
                     {/* Slashed Pricing Row */}
                     <div className="mt-6 flex items-baseline justify-between">
                       <div className="flex items-baseline gap-2.5">
-                        <span className="text-3xl md:text-4xl font-bold tracking-tight text-white">{pkg.price}</span>
-                        <span className="text-base line-through text-white/30">{pkg.oldPrice}</span>
+                        <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">{pkg.price}</span>
+                        <span className="text-base line-through text-white/70 font-semibold drop-shadow-[0_1px_5px_rgba(0,0,0,0.9)]">{pkg.oldPrice}</span>
                       </div>
                       <span
-                        className="text-xs font-bold uppercase tracking-widest"
+                        className="text-xs font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/10 shadow-md"
                         style={{ color: pkg.themeColor }}
                       >
                         {pkg.save}
@@ -3518,10 +3534,10 @@ function ValuePackages() {
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.35, ease: "easeInOut" }}
-                        className="overflow-hidden mt-6"
+                        className="overflow-hidden mt-6 relative z-10"
                       >
-                        <div className="pt-4 border-t border-white/10 flex flex-col gap-6">
-                          <p className="text-white/60 text-sm md:text-base leading-relaxed">
+                        <div className="pt-4 border-t border-white/20 flex flex-col gap-6">
+                          <p className="text-white font-medium text-sm md:text-base leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)]">
                             {pkg.desc}
                           </p>
 
@@ -3530,13 +3546,13 @@ function ValuePackages() {
                             {pkg.features.map((feature, fIdx) => (
                               <div key={fIdx} className="flex gap-3 items-center">
                                 <div
-                                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                                  className="w-2 h-2 rounded-full shrink-0 shadow-md"
                                   style={{
                                     backgroundColor: pkg.themeColor,
-                                    boxShadow: `0 0 8px ${pkg.themeColor}`
+                                    boxShadow: `0 0 10px ${pkg.themeColor}`
                                   }}
                                 />
-                                <span className="text-white/80 text-sm">{feature}</span>
+                                <span className="text-white font-medium text-sm drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)]">{feature}</span>
                               </div>
                             ))}
                           </div>

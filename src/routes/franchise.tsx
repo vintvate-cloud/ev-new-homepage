@@ -45,6 +45,9 @@ import {
   MapPin,
   RotateCcw,
   Layers,
+  Cpu,
+  GraduationCap,
+  Globe,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -698,24 +701,57 @@ function FranchisePage() {
           className="relative z-10 bg-[#020403] min-h-screen mt-[calc(100vh-80px)] pt-8 rounded-t-[40px] border-t border-white/10 shadow-2xl"
         >
           {/* =========================================================================
-              KEY BADGES SECTION BELOW HERO (RISING UP ANIMATEDLY)
+              REMARKABLE MILESTONES SHOWCASE SECTION (CONNECTED MINIMAL GLASS BAR - APPLE / TESLA LUXURY STYLE)
              ========================================================================= */}
-          <section ref={cardsUpRef} className="bg-[#020403] py-8 px-6 font-serif rounded-t-[40px]">
-            <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-              {[
-                "10+ Years EV R&D",
-                "AI Powered Autobot OS",
-                "Certified Training",
-                "Pan-India Expansion",
-              ].map((badge, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-center gap-2.5 text-xs sm:text-sm text-white/90 font-serif font-extrabold bg-[#050907] border border-white/10 px-4 py-3.5 rounded-2xl hover:border-[#00D084]/40 transition-all shadow-md"
-                >
-                  <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0" />
-                  <span>{badge}</span>
+          <section ref={cardsUpRef} className="bg-[#020403] py-12 px-6 font-sans rounded-t-[40px]">
+            <div className="max-w-7xl mx-auto">
+              {/* Connected Floating Glass Bar Container */}
+              <div className="bg-white/[0.02] backdrop-blur-2xl border border-white/10 rounded-3xl p-3 sm:p-4 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-white/10">
+                  {[
+                    {
+                      id: "m1",
+                      title: "10+ Years EV R&D",
+                      icon: Cpu
+                    },
+                    {
+                      id: "m2",
+                      title: "AI Powered Autobot OS",
+                      icon: Sparkles
+                    },
+                    {
+                      id: "m3",
+                      title: "Certified Training",
+                      icon: GraduationCap
+                    },
+                    {
+                      id: "m4",
+                      title: "Pan-India Expansion",
+                      icon: Globe
+                    }
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div
+                        key={item.id}
+                        className="group p-5 sm:p-6 flex items-center gap-4 transition-all duration-300 hover:bg-white/[0.03] rounded-2xl cursor-pointer"
+                      >
+                        {/* Minimal Vector Icon Circle Badge */}
+                        <div className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#00D084] group-hover:border-[#00D084] transition-all duration-300">
+                          <Icon className="w-5 h-5 text-[#00D084] group-hover:text-black transition-colors duration-300" strokeWidth={1.8} />
+                        </div>
+
+                        {/* Minimal Title */}
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm sm:text-base font-sans font-bold text-white/90 tracking-tight group-hover:text-white transition-colors leading-tight">
+                            {item.title}
+                          </h4>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
+              </div>
             </div>
           </section>
 
@@ -751,16 +787,25 @@ function FranchisePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-              className="lg:col-span-6 bg-[#060709] border border-white/10 rounded-[32px] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-white/20 transition-all duration-500"
+              className="lg:col-span-6 bg-[#060709] border border-white/10 rounded-[32px] overflow-hidden flex flex-col justify-between hover:border-white/20 transition-all duration-500 group shadow-2xl relative"
             >
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
+              {/* Relevant Graphic Image Header with Scrim Overlay */}
+              <div className="h-52 sm:h-60 relative w-full overflow-hidden shrink-0">
+                <img
+                  src="/images/vision_ev_network.jpg"
+                  alt="Multi-Brand EV Service Network"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-95"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#060709] via-[#060709]/40 to-transparent" />
+                <div className="absolute top-5 left-6 right-6 flex items-center justify-between z-10">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/90 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 font-bold">
                     01 / OUR VISION
                   </span>
-                  <span className="text-xs font-mono text-white/40">Pan-India Network</span>
+                  <span className="text-xs font-mono text-white/80 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">Pan-India Network</span>
                 </div>
+              </div>
 
+              <div className="p-8 sm:p-10 flex-1 flex flex-col justify-between space-y-8 relative z-10 -mt-4">
                 <div className="space-y-4">
                   <h3 className="text-2xl sm:text-3xl font-serif font-normal text-white leading-snug">
                     India's Largest Multi-Brand EV Service Network
@@ -769,17 +814,17 @@ function FranchisePage() {
                     The EV revolution is accelerating rapidly, but the service ecosystem remains fragmented. At MY EV SERVICE, we are building a nationwide multi-brand service network powered by Autobot OS — our proprietary AI operating system for EV repair hubs.
                   </p>
                 </div>
-              </div>
 
-              {/* Bottom Stat Highlights */}
-              <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
-                <div>
-                  <span className="text-xs font-mono text-white/40 block uppercase tracking-wider">Target Reach</span>
-                  <span className="text-lg font-serif font-medium text-white mt-1 block">100+ Master Hubs</span>
-                </div>
-                <div>
-                  <span className="text-xs font-mono text-white/40 block uppercase tracking-wider">Technology</span>
-                  <span className="text-lg font-serif font-medium text-white mt-1 block">AI Autobot OS</span>
+                {/* Bottom Stat Highlights */}
+                <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+                  <div>
+                    <span className="text-xs font-mono text-white/40 block uppercase tracking-wider">Target Reach</span>
+                    <span className="text-lg font-serif font-medium text-white mt-1 block">100+ Master Hubs</span>
+                  </div>
+                  <div>
+                    <span className="text-xs font-mono text-white/40 block uppercase tracking-wider">Technology</span>
+                    <span className="text-lg font-serif font-medium text-white mt-1 block">AI Autobot OS</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -790,16 +835,25 @@ function FranchisePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-              className="lg:col-span-6 bg-[#050A07] border border-[#00D084]/25 rounded-[32px] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#00D084]/40 transition-all duration-500"
+              className="lg:col-span-6 bg-[#050A07] border border-[#00D084]/25 rounded-[32px] overflow-hidden flex flex-col justify-between hover:border-[#00D084]/40 transition-all duration-500 group shadow-2xl relative"
             >
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#00D084]">
+              {/* Relevant Graphic Image Header with Scrim Overlay */}
+              <div className="h-52 sm:h-60 relative w-full overflow-hidden shrink-0">
+                <img
+                  src="/images/mission_ev_entrepreneur.jpg"
+                  alt="Next-Gen Automotive Entrepreneurs"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-95"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050A07] via-[#050A07]/40 to-transparent" />
+                <div className="absolute top-5 left-6 right-6 flex items-center justify-between z-10">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#00D084] bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-[#00D084]/30 font-bold">
                     02 / OUR MISSION
                   </span>
-                  <span className="text-xs font-mono text-[#00D084]">90-Day Execution</span>
+                  <span className="text-xs font-mono text-[#00D084] bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-[#00D084]/30">90-Day Execution</span>
                 </div>
+              </div>
 
+              <div className="p-8 sm:p-10 flex-1 flex flex-col justify-between space-y-8 relative z-10 -mt-4">
                 <div className="space-y-4">
                   <h3 className="text-2xl sm:text-3xl font-serif font-normal text-white leading-snug">
                     Empowering Next-Gen Automotive Entrepreneurs
@@ -811,19 +865,19 @@ function FranchisePage() {
                     </p>
                   </div>
                 </div>
-              </div>
 
-              {/* Bottom Action Button */}
-              <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-4">
-                <span className="text-xs font-mono text-white/50 hidden sm:inline-block">Ready to expand?</span>
-                <button
-                  type="button"
-                  onClick={scrollToForm}
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-black font-sans font-semibold text-xs uppercase tracking-widest hover:bg-white/90 transition-all cursor-pointer shadow-lg flex items-center justify-center gap-2"
-                >
-                  <span>Apply for Franchise</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                {/* Bottom Action Button */}
+                <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-4">
+                  <span className="text-xs font-mono text-white/50 hidden sm:inline-block">Ready to expand?</span>
+                  <button
+                    type="button"
+                    onClick={scrollToForm}
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-black font-sans font-semibold text-xs uppercase tracking-widest hover:bg-white/90 transition-all cursor-pointer shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <span>Apply for Franchise</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </motion.div>
           </div>

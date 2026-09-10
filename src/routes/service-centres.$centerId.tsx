@@ -44,6 +44,8 @@ import {
   Mail,
   Navigation,
   Percent,
+  GraduationCap,
+  Globe,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -440,6 +442,7 @@ export function ServiceCentresPage() {
       subtitle: "Comprehensive checkup & maintenance",
       price: "₹599",
       duration: "60 mins",
+      img: "/gallery/hydraulic-lift.png",
       features: [
         "Full 36-Point EV System Diagnostics",
         "Brake Pad & Fluid Inspection",
@@ -455,6 +458,7 @@ export function ServiceCentresPage() {
       subtitle: "Battery health check & performance report",
       price: "₹499",
       duration: "45 mins",
+      img: "/services/expert_battery_health.jpg",
       features: [
         "Cell Level Voltage Balancing",
         "State of Health (SoH) Analysis",
@@ -469,6 +473,7 @@ export function ServiceCentresPage() {
       subtitle: "Expert repair for motor & controller issues",
       price: "₹1,499",
       duration: "120 mins",
+      img: "/services/expert_motor_controller.jpg",
       features: [
         "Stator Winding Resistance Test",
         "Hall Sensor Replacement",
@@ -483,6 +488,7 @@ export function ServiceCentresPage() {
       subtitle: "Latest software update & calibration",
       price: "₹299",
       duration: "30 mins",
+      img: "/services/expert_software_updates.jpg",
       features: [
         "Official OEM Firmware Flash",
         "Throttle Response Re-calibration",
@@ -497,6 +503,7 @@ export function ServiceCentresPage() {
       subtitle: "Charging port, cable & charger diagnostics",
       price: "₹399",
       duration: "45 mins",
+      img: "/services/expert_charging_system.jpg",
       features: [
         "Charge Port Pin Tension Test",
         "Home Fast Charger Load Test",
@@ -511,6 +518,7 @@ export function ServiceCentresPage() {
       subtitle: "Complete electrical system inspection",
       price: "₹799",
       duration: "60 mins",
+      img: "/gallery/scanner.png",
       features: [
         "12V Auxiliary Battery Health Test",
         "DC-DC Converter Output Diagnostic",
@@ -1284,16 +1292,27 @@ export function ServiceCentresPage() {
                     key={service.id}
                     variants={staggerItem}
                     whileHover={{ y: -8 }}
-                    className={`bg-[#060a07] border rounded-[28px] p-7 sm:p-8 flex flex-col justify-between transition-all duration-500 relative group shadow-2xl ${service.popular ? "border-[#00D084]/60 shadow-[0_0_30px_rgba(0,208,132,0.15)]" : "border-white/10 hover:border-white/30"
+                    className={`bg-[#060a07] border rounded-[28px] overflow-hidden flex flex-col justify-between transition-all duration-500 relative group shadow-2xl ${service.popular ? "border-[#00D084]/60 shadow-[0_0_30px_rgba(0,208,132,0.15)]" : "border-white/10 hover:border-white/30"
                       }`}
                   >
-                    {service.popular && (
-                      <span className="absolute top-6 right-6 bg-[#00D084] text-[#020403] text-[9px] font-mono font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-[0_0_12px_rgba(0,208,132,0.4)]">
-                        MOST POPULAR
-                      </span>
-                    )}
+                    {/* Minimal Header Thumbnail Image */}
+                    <div className="relative w-full h-44 sm:h-48 overflow-hidden bg-black/60 shrink-0">
+                      <img
+                        src={service.img}
+                        alt={service.title}
+                        className="w-full h-full object-cover object-center filter brightness-105 contrast-105 group-hover:scale-108 transition-transform duration-700 pointer-events-none"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#060a07] via-[#060a07]/30 to-transparent pointer-events-none" />
 
-                    <div className="space-y-5">
+                      {service.popular && (
+                        <span className="absolute top-4 right-4 bg-[#00D084] text-[#020403] text-[9px] font-mono font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-[0_0_12px_rgba(0,208,132,0.4)] z-10">
+                          MOST POPULAR
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Card Body Content */}
+                    <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-5">
                       <div>
                         <h3 className="text-xl sm:text-2xl font-serif font-bold text-white group-hover:text-[#00D084] transition-colors">
                           {service.title}
@@ -1320,14 +1339,14 @@ export function ServiceCentresPage() {
                           </div>
                         ))}
                       </div>
-                    </div>
 
-                    <button
-                      onClick={() => handleServiceCardBook(service.title, service.price)}
-                      className="w-full mt-8 py-3.5 rounded-2xl bg-white/5 hover:bg-[#00D084] text-white hover:text-[#020403] border border-white/15 hover:border-[#00D084] text-xs font-serif font-black uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-lg"
-                    >
-                      Book This Service
-                    </button>
+                      <button
+                        onClick={() => handleServiceCardBook(service.title, service.price)}
+                        className="w-full mt-6 py-3.5 rounded-2xl bg-white/5 hover:bg-[#00D084] text-white hover:text-[#020403] border border-white/15 hover:border-[#00D084] text-xs font-serif font-black uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-lg"
+                      >
+                        Book This Service
+                      </button>
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1378,6 +1397,59 @@ export function ServiceCentresPage() {
                   </motion.div>
                 ))}
               </motion.div>
+            </div>
+          </section>
+
+          {/* REMARKABLE MILESTONES SHOWCASE SECTION (CONNECTED MINIMAL GLASS BAR - APPLE / TESLA LUXURY STYLE) */}
+          <section className="py-12 px-6 bg-[#020403] font-sans">
+            <div className="max-w-7xl mx-auto">
+              {/* Connected Floating Glass Bar Container */}
+              <div className="bg-white/[0.02] backdrop-blur-2xl border border-white/10 rounded-3xl p-3 sm:p-4 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-white/10">
+                  {[
+                    {
+                      id: "m1",
+                      title: "10+ Years EV R&D",
+                      icon: Cpu
+                    },
+                    {
+                      id: "m2",
+                      title: "AI Powered Autobot OS",
+                      icon: Sparkles
+                    },
+                    {
+                      id: "m3",
+                      title: "Certified Training",
+                      icon: GraduationCap
+                    },
+                    {
+                      id: "m4",
+                      title: "Pan-India Expansion",
+                      icon: Globe
+                    }
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div
+                        key={item.id}
+                        className="group p-5 sm:p-6 flex items-center gap-4 transition-all duration-300 hover:bg-white/[0.03] rounded-2xl cursor-pointer"
+                      >
+                        {/* Minimal Vector Icon Circle Badge */}
+                        <div className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#00D084] group-hover:border-[#00D084] transition-all duration-300">
+                          <Icon className="w-5 h-5 text-[#00D084] group-hover:text-black transition-colors duration-300" strokeWidth={1.8} />
+                        </div>
+
+                        {/* Minimal Title */}
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm sm:text-base font-sans font-bold text-white/90 tracking-tight group-hover:text-white transition-colors leading-tight">
+                            {item.title}
+                          </h4>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </section>
 

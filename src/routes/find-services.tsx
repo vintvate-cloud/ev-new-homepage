@@ -1194,14 +1194,15 @@ function FindServicesPage() {
           {/* ── Sticky Sub-Nav Bar ── */}
           <div
             ref={subNavRef}
-            className="sticky top-20 z-40 bg-[#040806]/90 backdrop-blur-xl border border-white/10 rounded-full mx-4 sm:mx-6 lg:mx-12 mt-5 px-4 sm:px-6 py-2.5 shadow-2xl flex items-center justify-between overflow-x-auto no-scrollbar gap-3"
+            className="sticky top-20 z-40 bg-[#060b08]/95 backdrop-blur-2xl border border-white/20 rounded-full mx-4 sm:mx-6 lg:mx-12 mt-6 px-5 sm:px-8 py-3.5 shadow-[0_15px_40px_rgba(0,0,0,0.9)] flex items-center justify-between overflow-x-auto no-scrollbar gap-4 sm:gap-6"
             style={{ scrollbarWidth: "none" }}
           >
-            <div className="flex items-center gap-1.5 shrink-0">
-              <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
-              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#00D084] hidden sm:block">Find Services</span>
+            <div className="flex items-center gap-2.5 shrink-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#00D084] animate-pulse shadow-[0_0_10px_#00D084]" />
+              <span className="text-xs sm:text-sm font-sans font-extrabold uppercase tracking-widest text-[#00D084] hidden sm:block">Find Services</span>
             </div>
-            <div className="flex items-center gap-1 shrink-0">
+
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               {[
                 { id: "cities", label: "Cities" },
                 { id: "services", label: "Services" },
@@ -1211,23 +1212,25 @@ function FindServicesPage() {
                 { id: "callout", label: "Book" },
               ].map(tab => (
                 <button key={tab.id} onClick={() => scrollToSection(tab.id)}
-                  className={`relative px-3 sm:px-4 py-1.5 rounded-full text-[11px] font-mono font-semibold transition-colors cursor-pointer whitespace-nowrap ${activeSubNav === tab.id ? "text-[#020403] font-bold" : "text-white/60 hover:text-white hover:bg-white/5"}`}
+                  className={`relative px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-sans font-bold transition-all cursor-pointer whitespace-nowrap ${activeSubNav === tab.id ? "text-[#020403]" : "text-white/80 hover:text-white hover:bg-white/10"}`}
                 >
                   {activeSubNav === tab.id && (
                     <motion.div
                       layoutId="findServicesNavPill"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      className="absolute inset-0 bg-[#00D084] rounded-full shadow-[0_0_18px_rgba(0,208,132,0.5)] z-0"
+                      className="absolute inset-0 bg-[#00D084] rounded-full shadow-[0_0_20px_rgba(0,208,132,0.6)] z-0"
                     />
                   )}
                   <span className="relative z-10">{tab.label}</span>
                 </button>
               ))}
             </div>
+
             <motion.button
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => { setBookingModalOpen(true); }}
-              className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-[#00D084] hover:bg-[#00D084] hover:text-[#020403] text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer"
+              className="shrink-0 px-5 py-2 sm:py-2.5 rounded-full bg-[#00D084] text-[#020403] hover:bg-[#05e593] text-xs sm:text-sm font-sans font-extrabold uppercase tracking-wider transition-all cursor-pointer shadow-[0_0_16px_rgba(0,208,132,0.5)]"
             >
               Book Now
             </motion.button>
@@ -1303,8 +1306,21 @@ function FindServicesPage() {
                               </div>
                             )}
 
+                            {/* Center Front Storefront Thumbnail Image */}
+                            <div className="relative w-full h-44 sm:h-48 rounded-2xl overflow-hidden mb-2 border border-white/10 group-hover:border-[#00D084]/40 transition-colors">
+                              <img
+                                src={center.image || "/ev-service-centre-real-hero.png"}
+                                alt={center.name}
+                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#050907] via-transparent to-transparent pointer-events-none" />
+                              <div className="absolute bottom-2.5 left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#00D084]">
+                                🏢 STOREFRONT IDENTIFICATION
+                              </div>
+                            </div>
+
                             <div className="space-y-4">
-                              <div className="flex items-start justify-between gap-4 pt-2">
+                              <div className="flex items-start justify-between gap-4 pt-1">
                                 <div>
                                   <h3 className="text-xl md:text-2xl font-black text-white leading-tight">
                                     {center.name}
