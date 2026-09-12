@@ -229,6 +229,9 @@ export function Footer() {
                 <Link to="/find-services" className="hover:text-[#00D084] transition-colors">Service Network</Link>
               </li>
               <li>
+                <Link to="/awards" className="hover:text-[#00D084] transition-colors">Awards & Honors</Link>
+              </li>
+              <li>
                 <Link to="/news" className="hover:text-[#00D084] transition-colors">Press & Media</Link>
               </li>
               <li>

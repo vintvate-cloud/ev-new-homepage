@@ -30,6 +30,8 @@ const PRIMARY_NAV = [
 
 const MORE_NAV = [
   { label: "Media & PR", href: "/media", desc: "Press releases & media coverage" },
+  { label: "Awards & Honors", href: "/awards", desc: "Industry trophies & excellence awards" },
+  { label: "EV Accessories Store", href: "/store", desc: "Certified EV gear, chargers & parts" },
   { label: "Webinars & Live", href: "/webinars", desc: "Technical EV workshops & live Q&A" },
   { label: "Events & Meets", href: "/events", desc: "EV industry summits & partner meets" },
   { label: "EV Industry News", href: "/news", desc: "Latest aftermarket EV updates" },
@@ -37,7 +39,17 @@ const MORE_NAV = [
   { label: "AI Track Assistant", href: "/track", desc: "Automated status & diagnostic tracking" },
 ];
 
-export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBooking?: () => void }) {
+export function Nav({
+  theme = "dark",
+  onOpenBooking,
+  cartCount = 0,
+  onOpenCart,
+}: {
+  theme?: Theme;
+  onOpenBooking?: () => void;
+  cartCount?: number;
+  onOpenCart?: () => void;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
@@ -455,13 +467,25 @@ export function Nav({ theme = "dark", onOpenBooking }: { theme?: Theme; onOpenBo
               {/* Shopping Cart Button (Circular Icon matching screenshot) */}
               <a
                 href="/store"
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${siteTheme === "light"
+                onClick={(e) => {
+                  if (onOpenCart) {
+                    e.preventDefault();
+                    onOpenCart();
+                  }
+                }}
+                className={`relative w-9 h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+                  siteTheme === "light"
                     ? "border-black/20 text-black hover:bg-black/5"
                     : "border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/10"
-                  }`}
-                title="EV Spare Parts Store"
+                }`}
+                title="EV Store & Accessories"
               >
                 <ShoppingCart className="w-4 h-4" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#00D084] text-[#020403] text-[9px] font-black flex items-center justify-center shadow-[0_0_10px_#00D084] animate-pulse">
+                    {cartCount}
+                  </span>
+                )}
               </a>
 
               {/* Login Button (Pill button with User Icon matching screenshot) */}
