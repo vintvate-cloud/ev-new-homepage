@@ -63,21 +63,22 @@ export function Nav({
   const moreLeaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollY = useRef(0);
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
-    if (
-      typeof document !== "undefined" &&
-      document.documentElement.classList.contains("theme-light")
-    ) {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("theme-preference");
+      if (saved === "dark") return "dark";
       return "light";
     }
-    return "dark";
+    return "light";
   });
 
   useEffect(() => {
     if (typeof document === "undefined") return;
     if (siteTheme === "light") {
       document.documentElement.classList.add("theme-light");
+      localStorage.setItem("theme-preference", "light");
     } else {
       document.documentElement.classList.remove("theme-light");
+      localStorage.setItem("theme-preference", "dark");
     }
   }, [siteTheme]);
 

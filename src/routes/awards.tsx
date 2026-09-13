@@ -168,6 +168,150 @@ const CATEGORIES = [
   "Leadership & Innovation",
 ];
 
+function AwardItemRow({
+  award,
+  index,
+  onSelect,
+}: {
+  award: AwardItem;
+  index: number;
+  onSelect: (award: AwardItem) => void;
+}) {
+  const isEven = index % 2 === 0;
+
+  const getTierColor = (tier: string) => {
+    if (tier === "Gold")
+      return "border-[#FFD700]/50 text-[#FFD700] bg-[#FFD700]/15 shadow-[0_0_15px_rgba(255,215,0,0.25)]";
+    if (tier === "Platinum")
+      return "border-slate-300/50 text-slate-200 bg-slate-200/15 shadow-[0_0_15px_rgba(226,232,240,0.25)]";
+    return "border-[#00D084]/50 text-[#00D084] bg-[#00D084]/15 shadow-[0_0_15px_rgba(0,208,132,0.25)]";
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center py-6 lg:py-10 group overflow-hidden">
+      {/* Image Card Column - Slides from Left if even, Right if odd */}
+      <motion.div
+        initial={{ opacity: 0, x: isEven ? -70 : 70, scale: 0.95 }}
+        whileInView={{ opacity: 1, x: 0, scale: 1 }}
+        viewport={{ once: false, amount: 0.25 }}
+        transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        whileHover={{ scale: 1.02, y: -4 }}
+        onClick={() => onSelect(award)}
+        className={`lg:col-span-6 relative h-72 sm:h-96 lg:h-[380px] w-full rounded-3xl overflow-hidden bg-slate-900 border border-white/15 shadow-2xl cursor-pointer group-hover:border-[#00D084]/60 group-hover:shadow-[0_0_35px_rgba(0,208,132,0.2)] transition-all duration-500 ${
+          isEven ? "lg:order-1" : "lg:order-2"
+        }`}
+      >
+        <img
+          src={award.image}
+          alt={award.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out opacity-90 group-hover:opacity-100"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none" />
+
+        {/* Floating Ambient Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#00D084]/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+
+        {/* Year Badge */}
+        <div className="absolute top-5 left-5 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-mono font-bold text-[#00D084] border border-white/15 shadow-lg">
+          {award.year}
+        </div>
+
+        {/* Tier Badge */}
+        <div
+          className={`absolute top-5 right-5 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-mono font-extrabold uppercase tracking-widest border ${getTierColor(
+            award.tier
+          )}`}
+        >
+          {award.tier} Trophy
+        </div>
+
+        {/* Location Badge */}
+        <div className="absolute bottom-5 left-5 bg-black/85 backdrop-blur-md px-4 py-2 rounded-2xl text-xs font-mono text-white/90 border border-white/15 flex items-center gap-2 shadow-lg">
+          <Calendar className="w-4 h-4 text-[#00D084]" /> {award.location}
+        </div>
+      </motion.div>
+
+      {/* Content Details Column - Slides from Right if even, Left if odd */}
+      <motion.div
+        initial={{ opacity: 0, x: isEven ? 70 : -70 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: false, amount: 0.25 }}
+        transition={{ duration: 0.75, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+        className={`lg:col-span-6 space-y-6 ${isEven ? "lg:order-2" : "lg:order-1"}`}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.45, delay: 0.15 }}
+          className="flex flex-wrap items-center gap-2.5"
+        >
+          <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/35 px-4 py-1.5 rounded-full shadow-[0_0_12px_rgba(0,208,132,0.15)]">
+            {award.category}
+          </span>
+          <span className="text-xs font-mono text-white/50">
+            Presented by {award.organization}
+          </span>
+        </motion.div>
+
+        <motion.h3
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.45, delay: 0.22 }}
+          onClick={() => onSelect(award)}
+          className="text-3xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-[#00D084] transition-colors leading-[1.15] cursor-pointer"
+        >
+          {award.title}
+        </motion.h3>
+
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.45, delay: 0.28 }}
+          className="text-sm sm:text-base text-white/75 font-light leading-relaxed"
+        >
+          {award.summary}
+        </motion.p>
+
+        {/* Citation Callout Box */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.45, delay: 0.34 }}
+          className="p-5 rounded-2xl bg-white/[0.03] border border-white/10 text-xs sm:text-sm text-white/90 italic font-light border-l-4 border-l-[#00D084] shadow-inner backdrop-blur-md"
+        >
+          "{award.citation}"
+        </motion.div>
+
+        {/* Details & Pop-up Trigger Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.45, delay: 0.4 }}
+          className="pt-2 flex items-center justify-between"
+        >
+          <span className="text-xs font-mono text-white/50">
+            Jury: {award.jury.split(" ")[0]}...
+          </span>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => onSelect(award)}
+            className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(0,208,132,0.35)] hover:shadow-[0_0_35px_rgba(0,208,132,0.6)]"
+          >
+            View Details <ChevronRight className="w-4 h-4" />
+          </motion.button>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
 function AwardsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All Trophies");
   const [selectedAward, setSelectedAward] = useState<AwardItem | null>(null);
@@ -230,10 +374,7 @@ function AwardsPage() {
     return () => ctx.revert();
   }, []);
 
-  const filteredAwards = useMemo(() => {
-    if (selectedCategory === "All Trophies") return AWARDS_LIST;
-    return AWARDS_LIST.filter((item) => item.category === selectedCategory);
-  }, [selectedCategory]);
+  const filteredAwards = AWARDS_LIST;
 
   return (
     <div className="min-h-screen bg-[#020503] text-white selection:bg-[#00D084] selection:text-black font-sans relative overflow-x-hidden">
@@ -340,113 +481,30 @@ function AwardsPage() {
           </section>
 
           {/* =========================================================================
-              4. CATEGORY FILTER & HEADER
+              4. SECTION HEADER
              ========================================================================= */}
           <section className="pt-8 pb-4 px-6 lg:px-12 max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-              <div>
-                <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
-                  Hall of Honors
-                </span>
-                <h2 className="text-3xl sm:text-5xl font-bold tracking-[-0.04em] text-white">
-                  Featured Industry Accolades
-                </h2>
-              </div>
-
-              {/* Category Pills */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-                {CATEGORIES.map((cat) => {
-                  const isActive = selectedCategory === cat;
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => setSelectedCategory(cat)}
-                      className={`shrink-0 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer border ${
-                        isActive
-                          ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-[0_0_20px_rgba(0,208,132,0.4)] scale-105"
-                          : "bg-[#080d0a] text-white/70 border-white/10 hover:border-white/25 hover:text-white"
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="mb-8">
+              <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
+                Hall of Honors
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-bold tracking-[-0.04em] text-white">
+                Featured Industry Accolades
+              </h2>
             </div>
 
             {/* =========================================================================
-                5. 3D GLOWING TROPHY CARDS GRID
+                5. ALTERNATING ZIGZAG FEATURED ACCOLADES SECTION
                ========================================================================= */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
-              {filteredAwards.map((award) => {
-                const getTierColor = (tier: string) => {
-                  if (tier === "Gold") return "border-[#FFD700]/40 text-[#FFD700] bg-[#FFD700]/10";
-                  if (tier === "Platinum") return "border-slate-300/40 text-slate-200 bg-slate-200/10";
-                  return "border-[#00D084]/40 text-[#00D084] bg-[#00D084]/10";
-                };
-
-                return (
-                  <motion.div
-                    key={award.id}
-                    onClick={() => setSelectedAward(award)}
-                    whileHover={{ scale: 1.03, y: -6 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                    className="group relative rounded-3xl border border-white/10 hover:border-[#00D084]/60 bg-[#070c09] overflow-hidden transition-all duration-500 shadow-2xl cursor-pointer flex flex-col justify-between"
-                  >
-                    {/* Top Image Banner */}
-                    <div className="relative h-56 w-full overflow-hidden bg-slate-900">
-                      <img
-                        src={award.image}
-                        alt={award.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#070c09] via-transparent to-black/40" />
-
-                      {/* Year Badge */}
-                      <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono font-bold text-[#00D084] border border-white/15">
-                        {award.year}
-                      </div>
-
-                      {/* Tier Badge */}
-                      <div
-                        className={`absolute top-4 right-4 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono font-extrabold uppercase tracking-widest border ${getTierColor(
-                          award.tier
-                        )}`}
-                      >
-                        {award.tier} Trophy
-                      </div>
-                    </div>
-
-                    {/* Content Section */}
-                    <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                      <div className="space-y-2">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-[#00D084] block font-bold">
-                          {award.organization}
-                        </span>
-
-                        <h3 className="text-xl font-bold tracking-tight text-white group-hover:text-[#00D084] transition-colors leading-snug">
-                          {award.title}
-                        </h3>
-
-                        <p className="text-xs text-white/65 font-light leading-relaxed line-clamp-3">
-                          {award.summary}
-                        </p>
-                      </div>
-
-                      {/* Bottom Action */}
-                      <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                        <span className="text-[11px] font-mono text-white/50 flex items-center gap-1">
-                          <Calendar className="w-3.5 h-3.5 text-[#00D084]" /> {award.location}
-                        </span>
-
-                        <span className="text-xs font-bold text-[#00D084] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                          Details <ChevronRight className="w-4 h-4" />
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
+            <div className="space-y-12 lg:space-y-16 py-8">
+              {filteredAwards.map((award, index) => (
+                <AwardItemRow
+                  key={award.id}
+                  award={award}
+                  index={index}
+                  onSelect={setSelectedAward}
+                />
+              ))}
             </div>
           </section>
 

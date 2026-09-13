@@ -268,7 +268,7 @@ function AboutPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white leading-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)]"
+              className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white keep-white leading-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)]"
             >
               Powering India's <br />
               <span className="text-[#00D084] drop-shadow-[0_0_35px_rgba(0,208,132,0.5)]">Next Generation</span> EV Network
@@ -279,7 +279,7 @@ function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-base sm:text-xl font-medium text-white/85 leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]"
+              className="text-base sm:text-xl font-medium text-white/85 keep-white leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]"
             >
               A technology-driven multi-brand electric vehicle service network built to support the rapidly growing electric mobility ecosystem in India.
             </motion.p>
@@ -746,10 +746,10 @@ function AboutPage() {
 
               {/* Banner Content */}
               <div className="relative z-10 max-w-2xl space-y-4">
-                <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight drop-shadow-md">
+                <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white keep-white leading-tight drop-shadow-md">
                   Let's Explore With Us
                 </h2>
-                <p className="text-xs sm:text-base text-white/80 font-light leading-relaxed max-w-xl mx-auto drop-shadow-sm">
+                <p className="text-xs sm:text-base text-white/80 keep-white font-light leading-relaxed max-w-xl mx-auto drop-shadow-sm">
                   Join India's fastest-growing multi-brand EV workshop network. Empower your business with AI diagnostics and 24/7 operational support.
                 </p>
                 

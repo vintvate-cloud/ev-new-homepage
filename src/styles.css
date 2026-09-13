@@ -94,10 +94,16 @@
 }
 
 html, body, #root {
-  background-color: #020403 !important;
+  background-color: var(--page-bg, #020403);
   /* Hide scrollbar visually but keep page scrollable */
   scrollbar-width: none !important; /* Firefox */
   -ms-overflow-style: none !important;  /* IE and Edge */
+}
+
+html.theme-light,
+html.theme-light body,
+html.theme-light #root {
+  background-color: #ffffff !important;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -458,40 +464,129 @@ body, header, section, footer, div, h1, h2, h3, h4, h5, h6, p, span, a, button {
   transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, fill 0.4s ease, stroke 0.4s ease;
 }
 
-/* Force light background for hardcoded dark sections */
+/* Force light background for all dark section & page wrappers */
 html.theme-light #ev-services,
 html.theme-light #experience,
 html.theme-light #top,
 html.theme-light footer,
-html.theme-light section,
 html.theme-light main,
-html.theme-light [class*="bg-[#050906]"],
+html.theme-light [class*="min-h-screen"],
+html.theme-light [class*="bg-[#010201]"],
+html.theme-light [class*="bg-[#020302]"],
 html.theme-light [class*="bg-[#020403]"],
+html.theme-light [class*="bg-[#020503]"],
+html.theme-light [class*="bg-[#030504]"],
+html.theme-light [class*="bg-[#030604]"],
 html.theme-light [class*="bg-[#030704]"],
-html.theme-light [class*="bg-[#030604]"] {
+html.theme-light [class*="bg-[#040605]"],
+html.theme-light [class*="bg-[#040805]"],
+html.theme-light [class*="bg-[#040806]"],
+html.theme-light [class*="bg-[#050705]"],
+html.theme-light [class*="bg-[#050706]"],
+html.theme-light [class*="bg-[#050806]"],
+html.theme-light [class*="bg-[#050906]"],
+html.theme-light [class*="bg-[#050907]"],
+html.theme-light [class*="bg-[#050A07]"],
+html.theme-light [class*="bg-[#050a07]"],
+html.theme-light [class*="bg-[#050c08]"],
+html.theme-light [class*="bg-[#060709]"],
+html.theme-light [class*="bg-[#060807]"],
+html.theme-light [class*="bg-[#06080A]"],
+html.theme-light [class*="bg-[#06080a]"],
+html.theme-light [class*="bg-[#060907]"],
+html.theme-light [class*="bg-[#060c09]"],
+html.theme-light [class*="bg-[#070908]"],
+html.theme-light [class*="bg-[#070e0a]"],
+html.theme-light [class*="bg-[#06110a]"],
+html.theme-light [class*="bg-[#0b120d]"],
+html.theme-light [class*="bg-[#090f0b]"],
+html.theme-light [class*="bg-[#060b08]"],
+html.theme-light [class*="bg-[#030c07]"],
+html.theme-light [class*="bg-[#030d07]"],
+html.theme-light [class*="bg-[#070b08]"],
+html.theme-light [class*="bg-[#070b09]"],
+html.theme-light [class*="bg-[#070c09]"],
+html.theme-light [class*="bg-[#080b09]"],
+html.theme-light [class*="bg-[#080d09]"],
+html.theme-light [class*="bg-[#080d0a]"],
+html.theme-light [class*="bg-[#080e0a]"],
+html.theme-light [class*="bg-[#080f0b]"],
+html.theme-light [class*="bg-[#080F0B]"],
+html.theme-light [class*="bg-[#090e0b]"],
+html.theme-light [class*="bg-[#090f0c]"],
+html.theme-light [class*="bg-[#090F0C]"],
+html.theme-light [class*="bg-[#07070a]"],
+html.theme-light [class*="bg-[#07070A]"],
+html.theme-light [class*="bg-[#0a0a0f]"],
+html.theme-light [class*="bg-[#0a0f0c]"],
+html.theme-light [class*="bg-[#0a100b]"],
+html.theme-light [class*="bg-[#0a100d]"],
+html.theme-light [class*="bg-[#0b0f0c]"],
+html.theme-light [class*="bg-[#0b120e]"],
+html.theme-light [class*="bg-[#060a07]"],
+html.theme-light [class*="bg-[#0d1410]"],
+html.theme-light [class*="bg-[#0e120f]"],
+html.theme-light [class*="bg-[#0e1310]"],
+html.theme-light [class*="bg-[#131815]"],
+html.theme-light [class*="bg-[#101015]"],
+html.theme-light [class*="bg-[#141b17]"],
+html.theme-light [class*="bg-[#1a1408]"],
+html.theme-light [class*="bg-[#000]"],
+html.theme-light [class*="bg-[#000000]"],
+html.theme-light [class*="bg-black"],
+html.theme-light [class*="bg-slate-950"],
+html.theme-light [class*="bg-slate-900"],
+html.theme-light [class*="bg-zinc-950"],
+html.theme-light [class*="bg-zinc-900"] {
   background-color: #ffffff !important;
   color: #09090b !important;
 }
 
 /* Set card and bento box background overrides in light mode */
 html.theme-light .glow-card,
+html.theme-light [class*="bg-[#060b08]"],
+html.theme-light [class*="bg-[#030c07]"],
+html.theme-light [class*="bg-[#030d07]"],
 html.theme-light [class*="bg-[#0a0f0c]"],
+html.theme-light [class*="bg-[#090f0c]"],
+html.theme-light [class*="bg-[#090F0C]"],
+html.theme-light [class*="bg-[#07070a]"],
+html.theme-light [class*="bg-[#07070A]"],
+html.theme-light [class*="bg-[#080d09]"],
 html.theme-light [class*="bg-[#080d0a]"],
+html.theme-light [class*="bg-[#080f0b]"],
+html.theme-light [class*="bg-[#080F0B]"],
+html.theme-light [class*="bg-[#0a100b]"],
+html.theme-light [class*="bg-[#0b0f0c]"],
+html.theme-light [class*="bg-[#060a07]"],
 html.theme-light [class*="bg-[#030604]"],
 html.theme-light [class*="bg-[#030704]"],
 html.theme-light [class*="bg-[#020403]"],
+html.theme-light [class*="bg-[#020503]"],
+html.theme-light [class*="bg-[#040806]"],
 html.theme-light [class*="bg-[#050706]"],
 html.theme-light [class*="bg-[#050806]"],
 html.theme-light [class*="bg-[#050906]"],
 html.theme-light [class*="bg-[#050907]"],
+html.theme-light [class*="bg-[#050c08]"],
+html.theme-light [class*="bg-[#060709]"],
 html.theme-light [class*="bg-[#060807]"],
+html.theme-light [class*="bg-[#06080A]"],
+html.theme-light [class*="bg-[#06080a]"],
 html.theme-light [class*="bg-[#060c09]"],
 html.theme-light [class*="bg-[#070b08]"],
 html.theme-light [class*="bg-[#070c09]"],
 html.theme-light [class*="bg-[#070b09]"],
-html.theme-light [class*="bg-black/40"],
-html.theme-light [class*="bg-black/50"],
-html.theme-light [class*="bg-black/60"],
+html.theme-light [class*="bg-[#070e0a]"],
+html.theme-light [class*="bg-[#06110a]"],
+html.theme-light [class*="bg-[#0b120d]"],
+html.theme-light [class*="bg-[#090f0b]"],
+html.theme-light [class*="bg-[#070908]"],
+html.theme-light [class*="bg-[#0e120f]"],
+html.theme-light [class*="bg-[#131815]"],
+html.theme-light [class*="bg-[#101015]"],
+html.theme-light [class*="bg-[#0a0a0f]"],
+html.theme-light [class*="bg-black/"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light .bg-card {
   background-color: #ffffff !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
@@ -515,8 +610,68 @@ html.theme-light textarea::placeholder {
 
 /* Light mode overrides for gradients */
 html.theme-light [class*="from-[#060c09]"],
-html.theme-light [class*="to-[#020403]"] {
-  background: #f8faf9 !important;
+html.theme-light [class*="to-[#020403]"],
+html.theme-light [class*="from-[#050806]"],
+html.theme-light [class*="to-[#010201]"],
+html.theme-light [class*="from-[#060907]"],
+html.theme-light [class*="to-[#030504]"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+html.theme-light [class*="from-black"],
+html.theme-light [class*="from-[#020403]"],
+html.theme-light [class*="from-[#030504]"],
+html.theme-light [class*="from-[#020503]"],
+html.theme-light [class*="from-[#030604]"],
+html.theme-light [class*="from-[#040806]"],
+html.theme-light [class*="from-[#050c08]"],
+html.theme-light [class*="from-[#060709]"],
+html.theme-light [class*="from-[#06080A]"],
+html.theme-light [class*="from-[#06080a]"],
+html.theme-light [class*="from-[#070b09]"],
+html.theme-light [class*="from-[#080d09]"],
+html.theme-light [class*="from-[#080d0a]"],
+html.theme-light [class*="from-[#0a100b]"],
+html.theme-light [class*="from-[#0b0f0c]"],
+html.theme-light [class*="from-[#060a07]"],
+html.theme-light [class*="from-[#040906]"],
+html.theme-light [class*="from-[#060e0a]"],
+html.theme-light [class*="from-[#07120a]"],
+html.theme-light [class*="from-[#071915]"],
+html.theme-light [class*="from-[#08120c]"] {
+  --tw-gradient-from: #ffffff var(--tw-gradient-from-position, ) !important;
+}
+
+html.theme-light [class*="to-black"],
+html.theme-light [class*="to-[#020403]"],
+html.theme-light [class*="to-[#030504]"],
+html.theme-light [class*="to-[#020503]"],
+html.theme-light [class*="to-[#030604]"],
+html.theme-light [class*="to-[#040806]"],
+html.theme-light [class*="to-[#060709]"],
+html.theme-light [class*="to-[#070b09]"],
+html.theme-light [class*="to-[#080d09]"],
+html.theme-light [class*="to-[#0a100b]"],
+html.theme-light [class*="to-[#060a07]"],
+html.theme-light [class*="to-[#0b0f0c]"],
+html.theme-light [class*="to-[#040906]"],
+html.theme-light [class*="to-[#040805]"],
+html.theme-light [class*="to-[#040705]"],
+html.theme-light [class*="to-[#050c08]"],
+html.theme-light [class*="to-[#050906]"],
+html.theme-light [class*="to-[#050907]"] {
+  --tw-gradient-to: #ffffff var(--tw-gradient-to-position, ) !important;
+}
+
+html.theme-light [class*="via-black"],
+html.theme-light [class*="via-black/50"],
+html.theme-light [class*="via-black/60"],
+html.theme-light [class*="via-[#030504]"],
+html.theme-light [class*="via-[#020403]"],
+html.theme-light [class*="via-[#060709]"],
+html.theme-light [class*="via-[#060709]/40"] {
+  --tw-gradient-via: rgba(255, 255, 255, 0.4) var(--tw-gradient-via-position, ) !important;
 }
 
 html.theme-light [class*="from-[#00D084]/15"],
@@ -525,7 +680,7 @@ html.theme-light [class*="to-[#00D084]/10"] {
   background: linear-gradient(135deg, rgba(0,208,132,0.1) 0%, #ffffff 50%, rgba(0,208,132,0.08) 100%) !important;
 }
 
-/* Set specific light green background for active selection states in light mode */
+/* Specific light green background for active selection states in light mode */
 html.theme-light [class*="bg-[#0d1410]"] {
   background-color: rgba(0, 208, 132, 0.08) !important;
   border-color: rgba(0, 208, 132, 0.3) !important;
@@ -603,20 +758,12 @@ html.theme-light [style*="position: fixed"][style*="width: 90vw"] {
 }
 
 /* Convert all white background opacities to dark overlays for light mode readability */
-html.theme-light .bg-white\/5,
-html.theme-light .bg-white\/10,
-html.theme-light .bg-white\/\[0\.02\],
-html.theme-light .bg-white\/\[0\.05\],
-html.theme-light .bg-white\/\[0\.015\] {
+html.theme-light [class*="bg-white/"] {
   background-color: rgba(9, 9, 11, 0.05) !important;
 }
 
 /* Convert white border opacities to subtle dark lines */
-html.theme-light .border-white\/5,
-html.theme-light .border-white\/10,
-html.theme-light .border-white\/20,
-html.theme-light .border-white\/\[0\.08\],
-html.theme-light .border-white\/\[0\.1\] {
+html.theme-light [class*="border-white/"] {
   border-color: rgba(9, 9, 11, 0.08) !important;
 }
 
@@ -632,27 +779,24 @@ html.theme-light label {
 }
 
 /* Transform white text with various opacities to black/charcoal in light mode */
-html.theme-light .text-white:not(.bg-\[\#00D084\] *, .bg-\[\#00B574\] *, .bg-emerald-500 *, .bg-emerald-600 *, .bg-emerald-700 *, .keep-white),
-html.theme-light .text-white\/90,
-html.theme-light .text-white\/85,
-html.theme-light .text-white\/80,
-html.theme-light .text-white\/70,
-html.theme-light .text-white\/60,
-html.theme-light .text-white\/50,
-html.theme-light .text-white\/40,
-html.theme-light .text-white\/30 {
+html.theme-light .text-white:not(.keep-white),
+html.theme-light [class*="text-white/"]:not(.keep-white) {
   color: #09090b !important;
 }
 
 /* Keep specific text elements white in light mode */
 html.theme-light .keep-white,
-html.theme-light h2.keep-white {
+html.theme-light .keep-white *,
+html.theme-light h1.keep-white,
+html.theme-light h2.keep-white,
+html.theme-light p.keep-white,
+html.theme-light span.keep-white {
   color: #ffffff !important;
 }
 
 /* Keep gray texts legible in light mode */
-html.theme-light .text-\[\#a1a1aa\],
-html.theme-light .text-\[\#71717a\] {
+html.theme-light [class*="text-[#a1a1aa]"],
+html.theme-light [class*="text-[#71717a]"] {
   color: #52525b !important;
 }
 
@@ -664,18 +808,32 @@ html.theme-light header .glass {
 }
 
 /* Do NOT change green colors! Preserve all green accents */
-html.theme-light .text-\[\#00D084\]:not(.keep-white),
-html.theme-light .text-\[\#00B574\]:not(.keep-white),
+html.theme-light [class*="text-[#00D084]"]:not(.keep-white),
+html.theme-light [class*="text-[#00B574]"]:not(.keep-white),
 html.theme-light .text-emerald-400:not(.keep-white),
 html.theme-light .text-emerald-500:not(.keep-white),
 html.theme-light .text-emerald-600:not(.keep-white) {
   color: #00B574 !important;
 }
 
-html.theme-light .bg-\[\#00D084\],
-html.theme-light .bg-\[\#00B574\],
+html.theme-light [class*="bg-[#00D084]"]:not([class*="selection:"]):not([class*="from-"]):not([class*="to-"]):not([class*="via-"]),
+html.theme-light [class*="bg-[#00B574]"]:not([class*="selection:"]):not([class*="from-"]):not([class*="to-"]):not([class*="via-"]),
 html.theme-light .bg-emerald-500 {
   background-color: #00D084 !important;
+}
+
+/* Contact Page Watermark Text Styling for Dark & Light Themes */
+.contact-bg-watermark {
+  color: transparent !important;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.12) !important;
+  transition: all 0.4s ease;
+}
+
+html.theme-light .contact-bg-watermark {
+  color: transparent !important;
+  -webkit-text-stroke: 2.5px #00B574 !important;
+  opacity: 0.45 !important;
+  filter: drop-shadow(0 0 12px rgba(0, 208, 132, 0.2));
 }
 
 /* ==========================================================================

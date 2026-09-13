@@ -823,7 +823,7 @@ function FindServicesPage() {
                 transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                 className="lg:col-span-5 w-full"
               >
-                <div className="bg-[#030c07]/95 border-2 border-[#00D084]/50 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] relative overflow-hidden space-y-5 text-left">
+                <div className="bg-[#030c07]/95 border-2 border-[#00D084]/50 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] relative overflow-hidden space-y-5 text-left keep-white">
                   <div className="absolute top-0 right-0 w-40 h-40 bg-[#00D084]/20 rounded-full blur-3xl pointer-events-none" />
 
                   <AnimatePresence>
@@ -1295,9 +1295,9 @@ function FindServicesPage() {
                         {getCityServiceCenters(cityName, searchCity).map((center) => (
                           <div
                             key={center.id}
-                            className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 font-sans ${center.isNearest
-                                ? "border-[#00D084] bg-gradient-to-br from-[#03190e] via-[#052418] to-[#020503] shadow-[0_0_50px_rgba(0,208,132,0.3)] scale-[1.01]"
-                                : "border-white/15 bg-[#050907] hover:border-[#00D084]/60"
+                            className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 font-sans keep-white ${center.isNearest
+                                ? "border-[#00D084] bg-gradient-to-br from-[#03190e] via-[#052418] to-[#020503] shadow-[0_0_50px_rgba(0,208,132,0.35)] scale-[1.01]"
+                                : "border-[#00D084]/40 bg-gradient-to-br from-[#04150c] via-[#062015] to-[#020503] hover:border-[#00D084] shadow-[0_0_30px_rgba(0,208,132,0.15)]"
                               }`}
                           >
                             {center.isNearest && (
@@ -1688,7 +1688,7 @@ function FindServicesPage() {
               variants={scaleIn}
               className="py-12 px-6 max-w-7xl mx-auto font-sans"
             >
-              <div className="relative rounded-[32px] overflow-hidden border border-white/20 bg-[#071915] min-h-[300px] flex flex-col lg:flex-row items-center justify-between p-8 sm:p-10 lg:p-12 shadow-2xl">
+              <div className="relative rounded-[32px] overflow-hidden border border-[#00D084]/40 bg-[#071915] min-h-[300px] flex flex-col lg:flex-row items-center justify-between p-8 sm:p-10 lg:p-12 shadow-2xl keep-white">
                 <div className="absolute inset-y-0 right-0 w-full lg:w-[55%] bg-cover bg-right bg-no-repeat pointer-events-none opacity-90"
                   style={{ backgroundImage: "url('/franchise-bg.png')" }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-[#071915] via-[#071915]/80 to-transparent" />

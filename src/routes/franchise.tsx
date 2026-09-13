@@ -835,7 +835,7 @@ function FranchisePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-              className="lg:col-span-6 bg-[#050A07] border border-[#00D084]/25 rounded-[32px] overflow-hidden flex flex-col justify-between hover:border-[#00D084]/40 transition-all duration-500 group shadow-2xl relative"
+              className="lg:col-span-6 bg-[#060709] border border-[#00D084]/25 rounded-[32px] overflow-hidden flex flex-col justify-between hover:border-[#00D084]/40 transition-all duration-500 group shadow-2xl relative"
             >
               {/* Relevant Graphic Image Header with Scrim Overlay */}
               <div className="h-52 sm:h-60 relative w-full overflow-hidden shrink-0">
@@ -844,7 +844,7 @@ function FranchisePage() {
                   alt="Next-Gen Automotive Entrepreneurs"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-95"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050A07] via-[#050A07]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#060709] via-[#060709]/40 to-transparent" />
                 <div className="absolute top-5 left-6 right-6 flex items-center justify-between z-10">
                   <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#00D084] bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-[#00D084]/30 font-bold">
                     02 / OUR MISSION
@@ -1238,8 +1238,8 @@ function FranchisePage() {
                         style={{ transformStyle: "preserve-3d" }}
                         className={`relative w-full h-full rounded-2xl border transition-all ${
                           isSelected
-                            ? "bg-[#08120C] border-white/40 shadow-xl ring-1 ring-white/20"
-                            : "bg-[#06080A] border-white/10 hover:border-white/25 hover:bg-white/[0.04]"
+                            ? "bg-[#060709] border-white/40 shadow-xl ring-1 ring-[#00D084]/40"
+                            : "bg-[#060709]/80 border-white/10 hover:border-white/25 hover:bg-white/[0.04]"
                         }`}
                       >
                         {/* Front Side: Category Tag, Logo & Brand Name */}
@@ -1254,7 +1254,7 @@ function FranchisePage() {
                             )}
                           </div>
 
-                          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-black border border-white/15 p-2 flex items-center justify-center shadow-inner">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white/10 border border-white/15 p-2 flex items-center justify-center shadow-inner">
                             <img
                               src={brand.logo}
                               alt={brand.name}
@@ -1273,7 +1273,7 @@ function FranchisePage() {
                             backfaceVisibility: "hidden",
                             transform: "rotateY(180deg)",
                           }}
-                          className="absolute inset-0 p-3 bg-[#07130D] border border-white/30 rounded-2xl flex flex-col justify-between text-left"
+                          className="absolute inset-0 p-3 bg-[#060709] border border-white/30 rounded-2xl flex flex-col justify-between text-left"
                         >
                           <div>
                             <span className="text-[9px] font-mono font-semibold text-[#00D084] uppercase block mb-1 truncate border-b border-white/10 pb-0.5">
@@ -1311,7 +1311,7 @@ function FranchisePage() {
                     {/* Brand Profile Banner */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-black border border-white/20 p-2 shrink-0 flex items-center justify-center">
+                        <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 p-2 shrink-0 flex items-center justify-center">
                           <img
                             src={activeBrand.logo}
                             alt={activeBrand.name}
@@ -1339,7 +1339,7 @@ function FranchisePage() {
                       {activeBrand.flipStats.map((st, i) => (
                         <div
                           key={i}
-                          className="bg-black/50 border border-white/10 rounded-2xl p-3.5 text-left"
+                          className="bg-[#060709] border border-white/10 rounded-2xl p-3.5 text-left"
                         >
                           <span className="text-[10px] font-mono text-white/40 block truncate">
                             {st.label}
@@ -1361,7 +1361,7 @@ function FranchisePage() {
                         {activeBrand.mediaShowcase.map((item) => (
                           <div
                             key={item.id}
-                            className="bg-[#070A08] border border-white/10 rounded-2xl overflow-hidden group transition-all duration-300 flex flex-col justify-between"
+                            className="bg-[#060709] border border-white/10 rounded-2xl overflow-hidden group transition-all duration-300 flex flex-col justify-between"
                           >
                             <div>
                               <div className="relative h-40 w-full overflow-hidden">
