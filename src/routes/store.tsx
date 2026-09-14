@@ -239,26 +239,19 @@ function StorePage() {
 
           {/* Radial Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-black/40 to-black/60 pointer-events-none" />
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00D084]/15 rounded-full blur-[160px] pointer-events-none" />
 
           {/* Hero Content Container */}
           <div
             ref={heroTextRef}
             className="absolute inset-0 flex flex-col justify-center items-center px-6 sm:px-12 lg:px-16 max-w-5xl mx-auto space-y-5 z-10 text-center pointer-events-none"
           >
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/40 bg-[#00D084]/15 px-4 py-1.5 text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] shadow-[0_0_20px_rgba(0,208,132,0.3)]">
-              <Package className="w-4 h-4" />
-              100% CERTIFIED OEM STANDARD ACCESSORIES
-            </div>
-
             {/* Title */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.04em] text-white leading-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
-              Genuine <span className="text-[#00D084]">EV Accessories</span> &amp; Gear
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.04em] text-white keep-white leading-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+              Genuine <span className="text-[#00D084] keep-white">EV Accessories</span> &amp; Gear
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-xl font-light text-white/90 leading-relaxed max-w-3xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
+            <p className="text-base sm:text-xl font-medium text-white/95 keep-white leading-relaxed max-w-3xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
               Upgrade your electric ride with smart helmets, portable DC fast chargers, LiFePO4 battery modules, and Bluetooth diagnostic telematics.
             </p>
           </div>

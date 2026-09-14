@@ -2907,7 +2907,7 @@ function EVServices() {
             {/* Background Visual Overlay */}
             <div className="absolute right-0 top-0 bottom-0 w-full md:w-3/5 pointer-events-none opacity-80 group-hover:opacity-100 transition-all duration-700 overflow-hidden rounded-2xl z-0">
               <img src="/services/expert_battery_health.jpg" alt="Battery Health Diagnostics" className="w-full h-full object-cover object-right transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/80 to-transparent" />
             </div>
 
             <div className="flex-1 flex flex-col justify-between relative z-10">
@@ -2915,101 +2915,101 @@ function EVServices() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                   <Battery className="h-5 w-5 text-[#00D084]" />
                 </div>
-                <h3 className="text-2xl font-serif text-white mb-2">Battery Health Check</h3>
-                <p className="text-[#a1a1aa] text-sm leading-relaxed max-w-sm">
+                <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md">Battery Health Check</h3>
+                <p className="text-white/80 keep-white text-sm leading-relaxed max-w-sm drop-shadow-sm">
                   Comprehensive battery diagnostics with cell level voltage scan and capacity verification.
                 </p>
               </div>
               <div className="flex items-baseline gap-3 mt-4">
-                <span className="text-2xl font-bold text-[#00D084]">Starting from ₹399</span>
-                <span className="text-sm text-[#52525b] line-through">₹1,499</span>
+                <span className="text-2xl font-bold text-[#00D084] keep-white">Starting from ₹399</span>
+                <span className="text-sm text-white/50 keep-white line-through">₹1,499</span>
               </div>
             </div>
             {/* Visual Panel */}
-            <div className="w-full md:w-[240px] h-[180px] bg-black/60 backdrop-blur-md rounded-2xl border border-white/10 p-4 flex flex-col justify-between relative z-10">
-              <span className="text-[10px] text-gray-500 font-mono">BMS HEALTH METRICS</span>
+            <div className="w-full md:w-[240px] h-[180px] bg-black/75 backdrop-blur-md rounded-2xl border border-white/20 p-4 flex flex-col justify-between relative z-10">
+              <span className="text-[10px] text-white/60 keep-white font-mono">BMS HEALTH METRICS</span>
               <div className="flex items-center justify-between gap-4">
-                <div className="h-24 w-12 border-2 border-white/20 rounded-lg p-1 relative flex flex-col justify-end">
+                <div className="h-24 w-12 border-2 border-white/30 rounded-lg p-1 relative flex flex-col justify-end">
                   <div className="w-full bg-[#00D084] rounded-sm transition-all duration-500 h-[88%]" />
-                  <div className="absolute top-[-5px] left-1/2 -translate-x-1/2 w-4 h-1 bg-white/20 rounded-t-sm" />
+                  <div className="absolute top-[-5px] left-1/2 -translate-x-1/2 w-4 h-1 bg-white/30 rounded-t-sm" />
                 </div>
                 <div className="flex-1 flex flex-col gap-1.5">
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-[#a1a1aa]">Health</span><span className="text-[#00D084]">94%</span></div>
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-[#a1a1aa]">Cycles</span><span className="text-white">182</span></div>
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-[#a1a1aa]">Temp</span><span className="text-white">32°C</span></div>
+                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white">Health</span><span className="text-[#00D084] keep-white">94%</span></div>
+                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white">Cycles</span><span className="text-white keep-white">182</span></div>
+                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white">Temp</span><span className="text-white keep-white">32°C</span></div>
                 </div>
               </div>
-              <span className="text-[10px] text-[#00D084] font-bold tracking-widest text-center mt-1">SYSTEMS PASS</span>
+              <span className="text-[10px] text-[#00D084] keep-white font-bold tracking-widest text-center mt-1">SYSTEMS PASS</span>
             </div>
           </GlowCard>
 
           {/* Card 2: Motor & Controller (Square) */}
           <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden group">
             {/* Background Visual Overlay */}
-            <div className="absolute inset-0 pointer-events-none opacity-70 group-hover:opacity-90 transition-all duration-700 overflow-hidden rounded-2xl z-0">
+            <div className="absolute inset-0 pointer-events-none opacity-80 group-hover:opacity-95 transition-all duration-700 overflow-hidden rounded-2xl z-0">
               <img src="/services/expert_motor_controller.jpg" alt="Motor & Controller" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/65 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/75 to-transparent" />
             </div>
 
             <div className="relative z-10">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <Gauge className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-2xl font-serif text-white mb-2">Motor & Controller</h3>
-              <p className="text-[#a1a1aa] text-sm leading-relaxed">
+              <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md">Motor & Controller</h3>
+              <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm">
                 Electric motor inspection, controller diagnostics, and thermal stress mapping.
               </p>
             </div>
             <div className="flex items-baseline justify-between mt-4 relative z-10">
-              <span className="text-xl font-bold text-[#00D084]">₹1,999</span>
-              <span className="text-xs text-[#a1a1aa]">1h 30m duration</span>
+              <span className="text-xl font-bold text-[#00D084] keep-white">₹1,999</span>
+              <span className="text-xs text-white/70 keep-white">1h 30m duration</span>
             </div>
           </GlowCard>
 
           {/* Card 3: Charging System (Tall Vertical Rectangle) */}
           <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[660px] glow-card-stagger relative overflow-hidden group">
             {/* Background Visual Overlay */}
-            <div className="absolute inset-0 pointer-events-none opacity-70 group-hover:opacity-90 transition-all duration-700 overflow-hidden rounded-2xl z-0">
+            <div className="absolute inset-0 pointer-events-none opacity-85 group-hover:opacity-95 transition-all duration-700 overflow-hidden rounded-2xl z-0">
               <img src="/services/expert_charging_system.jpg" alt="Charging System" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/70 to-[#080d0a]/20" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/75 to-black/30" />
             </div>
 
             <div className="relative z-10">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <Zap className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-3xl font-serif text-white mb-4">Charging System</h3>
-              <p className="text-[#a1a1aa] text-sm leading-relaxed mb-6">
+              <h3 className="text-3xl font-serif text-white keep-white mb-4 drop-shadow-md">Charging System</h3>
+              <p className="text-white/85 keep-white text-sm leading-relaxed mb-6 drop-shadow-sm">
                 Charger diagnostics, port inspection, and speed profiling to guarantee maximum safety.
               </p>
 
               {/* Supported protocols */}
               <div className="flex flex-col gap-2 mt-4">
-                <span className="text-[10px] uppercase tracking-wider text-[#71717a] font-bold mb-1">PROTOCOLS TESTED</span>
-                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-xl p-3 border border-white/10">
-                  <span className="text-xs text-white">CCS2 Fast Charge</span>
+                <span className="text-[10px] uppercase tracking-wider text-white/70 keep-white font-bold mb-1">PROTOCOLS TESTED</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20">
+                  <span className="text-xs text-white keep-white font-medium">CCS2 Fast Charge</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
-                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-xl p-3 border border-white/10">
-                  <span className="text-xs text-white">GB/T Standard</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20">
+                  <span className="text-xs text-white keep-white font-medium">GB/T Standard</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
-                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-xl p-3 border border-white/10">
-                  <span className="text-xs text-white">Bharat AC 001</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20">
+                  <span className="text-xs text-white keep-white font-medium">Bharat AC 001</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col gap-4 relative z-10">
+            <div className="mt-8 pt-6 border-t border-white/20 flex flex-col gap-4 relative z-10">
               <div className="flex justify-between items-end">
                 <div>
-                  <span className="text-[10px] text-gray-500 uppercase">Starting From</span>
-                  <div className="text-2xl font-bold text-[#00D084]">₹899</div>
+                  <span className="text-[10px] text-white/70 keep-white uppercase">Starting From</span>
+                  <div className="text-2xl font-bold text-[#00D084] keep-white">₹899</div>
                 </div>
-                <span className="text-xs text-[#a1a1aa]">45 min test</span>
+                <span className="text-xs text-white/70 keep-white">45 min test</span>
               </div>
-              <button className="w-full rounded-full bg-white py-3 text-sm font-bold text-black transition-colors hover:bg-[#00D084] hover:text-black">
+              <button className="w-full rounded-full bg-[#00D084] hover:bg-[#00e894] py-3.5 text-sm font-extrabold text-black transition-all shadow-md">
                 Book Inspection
               </button>
             </div>
@@ -3049,30 +3049,30 @@ function EVServices() {
             {/* Left Content (Software Updates) */}
             <div className="absolute left-0 top-0 bottom-0 w-[55%] p-8 z-10 flex flex-col justify-between overflow-hidden rounded-l-3xl">
               {/* Background Visual Overlay */}
-              <div className="absolute inset-0 pointer-events-none opacity-75 group-hover:opacity-95 transition-all duration-700 overflow-hidden z-0">
+              <div className="absolute inset-0 pointer-events-none opacity-85 group-hover:opacity-95 transition-all duration-700 overflow-hidden z-0">
                 <img src="/services/expert_software_updates.jpg" alt="Software Updates" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
               </div>
 
               <div className="relative z-10">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                   <Cpu className="h-5 w-5 text-[#00D084]" />
                 </div>
-                <h3 className="text-2xl font-serif text-white mb-2">Software Updates</h3>
-                <p className="text-[#a1a1aa] text-sm leading-relaxed">
+                <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md">Software Updates</h3>
+                <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm">
                   Latest firmware updates, BMS calibration, and live system speed profiling.
                 </p>
               </div>
 
               {/* Live firmware modules */}
               <div className="flex flex-col gap-2 mt-4 relative z-10">
-                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-lg p-2.5 border border-white/10">
-                  <span className="text-xs text-white">BMS Firmware</span>
-                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-lg p-2.5 border border-white/20">
+                  <span className="text-xs text-white keep-white font-medium">BMS Firmware</span>
+                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
                 </div>
-                <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-lg p-2.5 border border-white/10">
-                  <span className="text-xs text-white">Telemetry OS</span>
-                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-lg p-2.5 border border-white/20">
+                  <span className="text-xs text-white keep-white font-medium">Telemetry OS</span>
+                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
                 </div>
               </div>
             </div>
@@ -3080,30 +3080,30 @@ function EVServices() {
             {/* Bottom Right Horizontal Content */}
             <div className="absolute left-[58%] bottom-0 right-0 h-[48%] p-8 z-10 flex items-center justify-between">
               <div>
-                <div className="text-[11px] uppercase tracking-widest text-[#71717a] mb-1">Calibration Status</div>
-                <div className="text-lg font-bold text-white">All Systems Optimized</div>
+                <div className="text-[11px] uppercase tracking-widest text-slate-600 dark:text-[#71717a] font-bold mb-1">Calibration Status</div>
+                <div className="text-lg font-bold text-slate-900 dark:text-white">All Systems Optimized</div>
               </div>
-              <span className="text-2xl font-bold text-[#00D084]">100% OK</span>
+              <span className="text-2xl font-bold text-[#00B574] dark:text-[#00D084]">100% OK</span>
             </div>
 
             {/* Nestled Square Card (Advanced Battery Diagnostic) */}
             <div className="absolute left-[58%] top-0 right-0 h-[48%] z-20">
               <GlowCard className="w-full h-full p-6 flex flex-col justify-between relative overflow-hidden group">
                 {/* Background Visual Overlay */}
-                <div className="absolute inset-0 pointer-events-none opacity-75 group-hover:opacity-95 transition-all duration-700 overflow-hidden rounded-2xl z-0">
+                <div className="absolute inset-0 pointer-events-none opacity-85 group-hover:opacity-95 transition-all duration-700 overflow-hidden rounded-2xl z-0">
                   <img src="/tools/thermal-imaging.png" alt="Advanced Diagnostics" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
                 </div>
 
                 <div className="flex justify-between items-start relative z-10">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
                     <Activity className="h-5 w-5 text-[#00D084]" />
                   </div>
-                  <span className="text-xs font-bold text-[#00D084]">₹999</span>
+                  <span className="text-xs font-bold text-[#00D084] keep-white">₹999</span>
                 </div>
                 <div className="relative z-10">
-                  <h4 className="text-lg font-serif text-white mb-1">Advanced Diagnostics</h4>
-                  <p className="text-[#a1a1aa] text-[11px] leading-snug">Cell voltage analysis and safety telemetry mapping.</p>
+                  <h4 className="text-lg font-serif text-white keep-white mb-1 drop-shadow-md">Advanced Diagnostics</h4>
+                  <p className="text-white/80 keep-white text-[11px] leading-snug drop-shadow-sm">Cell voltage analysis and safety telemetry mapping.</p>
                 </div>
               </GlowCard>
             </div>
@@ -3111,27 +3111,27 @@ function EVServices() {
 
           {/* Mobile Fallback Cards (Visible only on mobile/tablet) */}
           <GlowCard className="md:hidden flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none opacity-60 z-0">
+            <div className="absolute inset-0 pointer-events-none opacity-80 z-0">
               <img src="/services/expert_software_updates.jpg" alt="Software Updates" className="w-full h-full object-cover object-center" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/70 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent" />
             </div>
             <div className="relative z-10">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
                 <Cpu className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-2xl font-serif text-white mb-2">Software Updates</h3>
-              <p className="text-[#a1a1aa] text-sm leading-relaxed">
+              <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md">Software Updates</h3>
+              <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm">
                 Latest firmware updates, BMS calibration, and live system speed profiling.
               </p>
 
               <div className="flex flex-col gap-2 mt-4">
-                <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
-                  <span className="text-xs text-white">BMS Firmware</span>
-                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
+                <div className="flex justify-between items-center bg-black/60 rounded-lg p-2.5 border border-white/20">
+                  <span className="text-xs text-white keep-white">BMS Firmware</span>
+                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
                 </div>
-                <div className="flex justify-between items-center bg-white/5 rounded-lg p-2.5 border border-white/5">
-                  <span className="text-xs text-white">Telemetry OS</span>
-                  <span className="text-[10px] bg-[#00D084]/15 text-[#00D084] px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
+                <div className="flex justify-between items-center bg-black/60 rounded-lg p-2.5 border border-white/20">
+                  <span className="text-xs text-white keep-white">Telemetry OS</span>
+                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
                 </div>
               </div>
             </div>
@@ -4118,29 +4118,28 @@ function TechnicianCareers() {
         </div>
 
         {/* Bottom Card */}
-        <div className="h-auto md:h-[25%] shrink-0 rounded-2xl overflow-hidden relative flex items-center p-6 md:p-8 bg-[#0a0f0c] border border-white/10 group">
-          <img src={tech} alt="Inside My EV Services" className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity transition-transform group-hover:scale-105 duration-700" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#030604] via-[#030604]/80 to-transparent" />
+        <div className="h-auto md:h-[25%] shrink-0 rounded-2xl overflow-hidden relative flex items-center p-6 md:p-8 border-0 shadow-none group">
+          <img src={tech} alt="Inside My EV Services" className="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform group-hover:scale-105 duration-700" />
 
           <div className="relative z-10 w-full flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="max-w-md text-center md:text-left">
-              <h2 className="text-3xl md:text-4xl font-serif font-semibold text-white mb-2 keep-white">Ready to accelerate your career?</h2>
-              <p className="text-[#a1a1aa] text-sm">Join India's fastest growing multi-brand EV service network.</p>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-white keep-white mb-2 drop-shadow-md">Ready to accelerate your career?</h2>
+              <p className="text-white/90 keep-white text-sm font-medium drop-shadow-sm">Join India's fastest growing multi-brand EV service network.</p>
             </div>
 
             <div className="flex items-center gap-8">
               <div className="flex gap-8 hidden sm:flex">
                 <div className="text-left">
-                  <div className="text-4xl text-[#00D084] font-bold tracking-tight mb-0.5">~45<span className="text-xl tracking-normal"> min</span></div>
-                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium mt-1">Avg. Job Completion</div>
+                  <div className="text-4xl text-[#00D084] keep-white font-bold tracking-tight mb-0.5 drop-shadow-sm">~45<span className="text-xl tracking-normal"> min</span></div>
+                  <div className="text-[10px] uppercase tracking-wider text-white/80 keep-white font-semibold mt-1 drop-shadow-sm">Avg. Job Completion</div>
                 </div>
                 <div className="text-left">
-                  <div className="text-4xl text-[#00D084] font-bold tracking-tight mb-0.5">94%<span className="text-xl tracking-normal"></span></div>
-                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium mt-1">Job Acceptance Rate</div>
+                  <div className="text-4xl text-[#00D084] keep-white font-bold tracking-tight mb-0.5 drop-shadow-sm">94%<span className="text-xl tracking-normal"></span></div>
+                  <div className="text-[10px] uppercase tracking-wider text-white/80 keep-white font-semibold mt-1 drop-shadow-sm">Job Acceptance Rate</div>
                 </div>
               </div>
 
-              <button onClick={() => setIsOpen(true)} className="bg-white hover:bg-gray-100 text-black px-8 py-4 text-sm rounded-full font-semibold transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
+              <button onClick={() => setIsOpen(true)} className="bg-[#00D084] hover:bg-[#00e894] text-black px-8 py-4 text-sm rounded-full font-extrabold transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer shadow-lg">
                 Apply as Technician <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -4880,11 +4879,15 @@ function ResourcesJourney() {
         {RESOURCES.map((res, i) => (
           <div key={res.id} className="w-[100vw] h-full relative flex items-center justify-center p-6 md:p-12 lg:p-24">
 
-            {/* Background Image with Parallax & Gradients */}
+            {/* Background Image with Parallax & Crisp Visibility */}
             <div className="absolute inset-0 z-0">
-              <img src={res.img} alt={res.title} className="w-full h-full object-cover opacity-20 filter grayscale blur-[2px]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#030604] via-[#030604]/80 to-[#030604]/20" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#030604] via-[#030604]/40 to-[#030604]" />
+              <img
+                src={res.img}
+                alt={res.title}
+                className="w-full h-full object-cover object-center opacity-75 md:opacity-85 transition-all duration-700"
+              />
+              <div className="absolute inset-0 resource-bg-overlay-top bg-gradient-to-t from-[#030604]/90 via-transparent to-[#030604]/30 pointer-events-none" />
+              <div className="absolute inset-0 resource-bg-overlay-right bg-gradient-to-r from-[#030604]/85 via-transparent to-[#030604]/75 pointer-events-none" />
             </div>
 
             <div className="resource-content relative z-10 w-full max-w-[1400px] flex flex-col md:flex-row gap-12 lg:gap-24 items-center opacity-0 translate-y-12">
@@ -4892,11 +4895,11 @@ function ResourcesJourney() {
               {/* Text Content */}
               <div className="md:w-1/2 flex flex-col">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 px-4 py-1.5 mb-8 w-max">
-                  <span className="text-[11px] uppercase tracking-widest text-[#00D084] font-medium keep-white">
+                  <span className="text-[11px] uppercase tracking-widest text-[#00D084] font-medium">
                     {res.eyebrow}
                   </span>
                 </div>
-                <h2 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-[1.1] tracking-tight text-balance keep-white">
+                <h2 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-[1.1] tracking-tight text-balance">
                   {res.title}
                 </h2>
                 <p className="text-[#a1a1aa] text-lg md:text-xl leading-relaxed max-w-md">
@@ -4921,7 +4924,7 @@ function ResourcesJourney() {
                       <span className="text-[11px] uppercase tracking-widest text-[#71717a] font-medium">
                         {res.tags[0]}
                       </span>
-                      <button className="flex items-center gap-2 text-sm font-bold text-[#00D084] group-hover:text-white transition-colors">
+                      <button className="flex items-center gap-2 text-sm font-bold text-[#00D084] group-hover:text-[#00B574] transition-colors">
                         {res.tags[1]}
                         <ArrowRight className="w-4 h-4" />
                       </button>
@@ -5508,12 +5511,12 @@ function EcosystemOfferings() {
             return (
               <StaggerItem
                 key={card.id}
-                className={`group relative rounded-[32px] border ${card.borderAccent} bg-gradient-to-br ${card.bgGradient} p-8 md:p-10 flex flex-col justify-between overflow-hidden min-h-[380px] transition-all duration-500 hover:-translate-y-1`}
+                className={`group relative rounded-[32px] border ${card.borderAccent} bg-gradient-to-br ${card.bgGradient} p-8 md:p-10 flex flex-col justify-between overflow-hidden min-h-[380px] transition-all duration-500 hover:-translate-y-1 shadow-sm hover:shadow-md`}
               >
                 {/* Background Translucent Floating Icon */}
                 <div
                   className={`absolute bottom-[-20px] ${isLeft ? "right-[-20px]" : "left-[-20px]"
-                    } pointer-events-none opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-105 transition-all duration-500`}
+                    } pointer-events-none opacity-[0.05] group-hover:opacity-[0.10] group-hover:scale-105 transition-all duration-500`}
                 >
                   <card.Icon className="w-64 h-64 stroke-[1.2]" style={{ color: card.accent }} />
                 </div>
@@ -5528,16 +5531,16 @@ function EcosystemOfferings() {
                     className="flex items-center gap-2 rounded-full px-4.5 py-1.5 text-[10px] font-mono tracking-wider uppercase"
                   >
                     <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ backgroundColor: card.accent }} />
-                    <span className="text-white/80">{card.badge}</span>
+                    <span className="text-slate-700 dark:text-white/80 font-semibold">{card.badge}</span>
                   </div>
                 </div>
 
                 {/* Main Content Area */}
-                <div className={`flex flex-col gap-4 relative z-10 ${isLeft ? "max-w-[80%] text-left items-start" : "max-w-[80%] ml-auto text-right items-end"}`}>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white leading-none">
+                <div className={`flex flex-col gap-4 relative z-10 ${isLeft ? "max-w-[85%] text-left items-start" : "max-w-[85%] ml-auto text-right items-end"}`}>
+                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-none">
                     {card.title}
                   </h3>
-                  <p className="text-xs md:text-sm text-white/55 leading-relaxed">
+                  <p className="text-xs md:text-sm text-slate-600 dark:text-white/60 leading-relaxed font-normal">
                     {card.desc}
                   </p>
                 </div>
@@ -5547,9 +5550,9 @@ function EcosystemOfferings() {
                   <a
                     href={card.href}
                     style={{
-                      boxShadow: `0 4px 20px ${card.accent}20`
+                      boxShadow: `0 4px 20px ${card.accent}30`
                     }}
-                    className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-white text-black font-extrabold text-[10.5px] tracking-wider uppercase px-5 py-3.5 hover:scale-[1.03] active:scale-95 transition-all duration-300 group-hover:bg-[#00D084] group-hover:text-black"
+                    className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-[#00D084] text-black font-extrabold text-[10.5px] tracking-wider uppercase px-5 py-3.5 hover:scale-[1.03] active:scale-95 transition-all duration-300 hover:bg-[#00e894]"
                   >
                     <span>{card.cta}</span>
                     <ArrowRight className="h-3.5 w-3.5" />
