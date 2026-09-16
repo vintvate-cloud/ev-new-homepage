@@ -546,71 +546,7 @@ function AwardsPage() {
               </div>
           </section>
 
-          {/* =========================================================================
-              7. HALL OF FAME TIMELINE (2024 - 2026)
-             ========================================================================= */}
-          <section className="py-16 px-6 lg:px-12 max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
-                Excellence Journey
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-                Hall of Fame Milestones
-              </h2>
-            </div>
 
-            <div className="relative border-l-2 border-[#00D084]/30 ml-4 md:ml-32 space-y-12 pl-6 md:pl-10">
-              
-              {/* Milestone 2026 */}
-              <div className="relative group">
-                <div className="absolute -left-[31px] md:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#00D084] border-4 border-[#020503] shadow-[0_0_15px_#00D084]" />
-                <span className="md:absolute md:-left-32 md:top-1 text-sm font-mono font-black text-[#00D084] uppercase tracking-wider block mb-2 md:mb-0">
-                  AUG 2026
-                </span>
-                <div className="bg-[#080d0a] border border-white/10 hover:border-[#00D084]/50 rounded-2xl p-6 shadow-xl transition-all">
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    National Clean Mobility Leadership Winner
-                  </h3>
-                  <p className="text-xs text-white/70 font-light leading-relaxed">
-                    Recognized as India's premier EV aftermarket ecosystem after passing 450,000 completed diagnostic service sessions.
-                  </p>
-                </div>
-              </div>
-
-              {/* Milestone 2025 */}
-              <div className="relative group">
-                <div className="absolute -left-[31px] md:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#00D084] border-4 border-[#020503] shadow-[0_0_15px_#00D084]" />
-                <span className="md:absolute md:-left-32 md:top-1 text-sm font-mono font-black text-[#00D084] uppercase tracking-wider block mb-2 md:mb-0">
-                  NOV 2025
-                </span>
-                <div className="bg-[#080d0a] border border-white/10 hover:border-[#00D084]/50 rounded-2xl p-6 shadow-xl transition-all">
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    ET Auto Green Mobility Pioneer Award
-                  </h3>
-                  <p className="text-xs text-white/70 font-light leading-relaxed">
-                    Achieved 85+ million zero-emission delivery kilometers supported by 24/7 mobile RSA emergency fleet vans.
-                  </p>
-                </div>
-              </div>
-
-              {/* Milestone 2024 */}
-              <div className="relative group">
-                <div className="absolute -left-[31px] md:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#00D084] border-4 border-[#020503] shadow-[0_0_15px_#00D084]" />
-                <span className="md:absolute md:-left-32 md:top-1 text-sm font-mono font-black text-[#00D084] uppercase tracking-wider block mb-2 md:mb-0">
-                  JUN 2024
-                </span>
-                <div className="bg-[#080d0a] border border-white/10 hover:border-[#00D084]/50 rounded-2xl p-6 shadow-xl transition-all">
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    Digital India Consumer Mobility Trophy
-                  </h3>
-                  <p className="text-xs text-white/70 font-light leading-relaxed">
-                    Launched India's first transparent digital diagnostic health scorecard with real-time video streaming of EV repairs.
-                  </p>
-                </div>
-              </div>
-
-            </div>
-          </section>
 
           {/* Footer */}
           <Footer />

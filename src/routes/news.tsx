@@ -18,6 +18,9 @@ import { toast } from "sonner";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { motion, AnimatePresence } from "framer-motion";
+import Lenis from "lenis";
+
 export const Route = createFileRoute("/news")({
   component: EVNewsPage,
 });
@@ -196,6 +199,34 @@ function EVNewsPage() {
 
   const heroTextRef = useRef<HTMLDivElement>(null);
   const cardsOverlayRef = useRef<HTMLDivElement>(null);
+  const modalScrollContainerRef = useRef<HTMLDivElement>(null);
+  const modalScrollContentRef = useRef<HTMLDivElement>(null);
+
+  // Lenis Smooth Scroll initialization inside popup modal drawer
+  useEffect(() => {
+    if (!selectedArticle || !readerOpen || !modalScrollContainerRef.current) return;
+
+    const lenis = new Lenis({
+      wrapper: modalScrollContainerRef.current,
+      content: modalScrollContentRef.current || undefined,
+      eventsTarget: modalScrollContainerRef.current,
+      smoothWheel: true,
+      duration: 1.0,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+
+    let rafId: number;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, [selectedArticle, readerOpen]);
 
   const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
     if (
@@ -334,22 +365,22 @@ function EVNewsPage() {
           />
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-black/40 to-black/60 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/70 to-black/50 pointer-events-none" />
 
           {/* Hero Content Container */}
           <div
             ref={heroTextRef}
-            className="absolute inset-0 flex flex-col justify-end pb-16 px-6 sm:px-12 lg:px-16 max-w-4xl mx-auto space-y-3 z-10 text-left pointer-events-auto"
+            className="absolute inset-0 w-full max-w-5xl mx-auto flex flex-col justify-end pb-28 sm:pb-32 lg:pb-36 px-6 sm:px-12 lg:px-16 space-y-4 z-10 text-left pointer-events-auto"
           >
             <span className="text-xs font-sans font-semibold uppercase text-[#00D084] tracking-widest block drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
               {currentHero.category} • {currentHero.date}
             </span>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-[-0.04em] !text-white leading-[1.08] drop-shadow-[0_4px_25px_rgba(0,0,0,0.98)] max-w-3xl">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-[-0.04em] !text-white leading-[1.08] drop-shadow-[0_4px_25px_rgba(0,0,0,0.98)] max-w-4xl">
               {currentHero.title}
             </h1>
 
-            <p className="text-xs sm:text-sm font-sans font-medium text-white/90 leading-relaxed max-w-xl line-clamp-2 drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
+            <p className="text-xs sm:text-sm font-sans font-medium text-white/90 leading-relaxed max-w-2xl line-clamp-2 drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
               {currentHero.excerpt}
             </p>
 
@@ -428,7 +459,7 @@ function EVNewsPage() {
             </div>
 
             {/* Category Filter Pills */}
-            <div className="flex items-center gap-3 overflow-x-auto pt-4 pb-6 mb-8 scrollbar-none">
+            <div className="flex items-center gap-3 overflow-x-auto p-2 pt-4 pb-6 mb-8 scrollbar-none">
               {NEWS_CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat;
                 return (
@@ -464,17 +495,18 @@ function EVNewsPage() {
                     <div className="lg:col-span-7">
                       <div
                         onClick={() => handleOpenArticle(article)}
-                        className="relative h-[340px] sm:h-[400px] w-full rounded-[32px] overflow-hidden shadow-xl bg-slate-900 border border-white/10 group cursor-pointer"
+                        className={`relative h-[340px] sm:h-[400px] w-full rounded-[32px] overflow-hidden bg-slate-900 border group cursor-pointer ${
+                          isLight ? "border-black/10" : "border-white/10"
+                        }`}
                       >
                         <img
                           src={article.img}
                           alt={article.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
                         {/* Category Pill Badge */}
-                        <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-sans font-semibold uppercase text-[#00D084] border border-[#00D084]/30 shadow-md">
+                        <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-sans font-semibold uppercase text-[#00D084] border border-[#00D084]/30">
                           {article.category}
                         </div>
 
@@ -667,93 +699,142 @@ function EVNewsPage() {
       </div>
 
       {/* =========================================================================
-          6. FULL-SCREEN IMMERSIVE READER OVERLAY MODAL
+          6. ARTICLE READER BOTTOM SHEET POP-UP (MATCHING AWARDS PAGE POP-UP DRAWER)
          ========================================================================= */}
-      {readerOpen && selectedArticle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl overflow-y-auto">
-          <div
-            className={`border rounded-[36px] max-w-3xl w-full p-6 md:p-12 relative overflow-hidden shadow-2xl my-8 animate-in fade-in zoom-in duration-300 ${
-              isLight
-                ? "bg-white border-[#d6e3da] text-[#1a2320]"
-                : "bg-[#060b08] border-white/20 text-white"
-            }`}
-          >
-            {/* Reading Progress Line */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#00D084] shadow-[0_0_10px_#00D084]" />
-
-            <button
+      <AnimatePresence>
+        {readerOpen && selectedArticle && (
+          <>
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setReaderOpen(false)}
-              className={`absolute top-6 right-6 p-3 rounded-full transition-all cursor-pointer ${
+              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md cursor-pointer"
+            />
+
+            {/* Bottom Sheet Drawer touching bottom, left, and right borders */}
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 280 }}
+              className={`fixed bottom-0 left-0 right-0 z-50 border-t border-x rounded-t-[36px] max-h-[85vh] h-[85vh] w-full p-6 md:p-10 shadow-2xl overflow-hidden ${
                 isLight
-                  ? "text-slate-400 hover:text-slate-900 bg-slate-100"
-                  : "text-white/40 hover:text-white bg-white/10 border border-white/10"
+                  ? "bg-[#f4f8f5] text-[#1a2320] border-black/10"
+                  : "bg-[#070c09] text-white border-white/20"
               }`}
             >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="mb-8 text-left">
-              <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 px-3.5 py-1 rounded-full">
-                {selectedArticle.category}
-              </span>
-
-              <h2 className="text-3xl sm:text-5xl font-sans font-black tracking-[-0.04em] mt-4 mb-4 leading-tight">
-                {selectedArticle.title}
-              </h2>
-
-              <div className="flex flex-wrap items-center gap-4 text-xs font-sans opacity-70 border-b border-slate-200/10 pb-5">
-                <span className="flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-[#00D084]" /> {selectedArticle.author.name} ({selectedArticle.author.role})
-                </span>
-                <span>•</span>
-                <span>{selectedArticle.date}</span>
-                <span>•</span>
-                <span>{selectedArticle.readTime}</span>
-              </div>
-            </div>
-
-            {/* Modal Featured Image */}
-            <div className="relative h-72 sm:h-96 w-full rounded-3xl overflow-hidden mb-8 bg-slate-900 border border-white/10 shadow-xl">
-              <img
-                src={selectedArticle.img}
-                alt={selectedArticle.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Article Body Paragraphs */}
-            <div className="space-y-6 text-base sm:text-lg font-sans font-light leading-relaxed opacity-90 mb-10 text-left">
-              {selectedArticle.content.map((paragraph, pi) => (
-                <p key={pi} className="first-letter:text-4xl first-letter:font-black first-letter:text-[#00D084] first-letter:mr-2">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-
-            {/* Modal Bottom Actions */}
-            <div className="pt-6 border-t border-slate-200/10 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => {
-                    toast.success("Article link copied to clipboard!");
-                  }}
-                  className="px-6 py-3 rounded-full border border-white/20 text-xs font-sans font-bold flex items-center gap-2 hover:bg-white/10 transition-all cursor-pointer"
-                >
-                  <Share2 className="w-3.5 h-3.5 text-[#00D084]" />
-                  Share Story
-                </button>
-              </div>
-
+              {/* Close Button */}
               <button
                 onClick={() => setReaderOpen(false)}
-                className="px-9 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-lg"
+                className={`absolute top-6 right-6 z-20 p-3 rounded-full transition-colors cursor-pointer ${
+                  isLight
+                    ? "bg-black/5 hover:bg-black/10 text-slate-700"
+                    : "bg-white/10 hover:bg-white/20 text-white/70 hover:text-white"
+                }`}
               >
-                CLOSE READER
+                <X className="w-5 h-5" />
               </button>
-            </div>
-          </div>
-        </div>
-      )}
+
+              {/* Side-by-Side Grid: Left Image (Fixed) + Right Text (Scrollable) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-stretch max-w-7xl mx-auto w-full pt-2 overflow-hidden">
+                
+                {/* LEFT COLUMN: FIXED IMAGE (Non-scrollable) */}
+                <div className="lg:col-span-5 h-56 lg:h-full relative rounded-2xl overflow-hidden bg-slate-900 border border-white/10 shadow-xl shrink-0">
+                  <img
+                    src={selectedArticle.img}
+                    alt={selectedArticle.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-sans font-semibold uppercase text-[#00D084] border border-[#00D084]/30 shadow-md">
+                    {selectedArticle.category}
+                  </div>
+                  <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-xl text-xs font-sans text-white/90 border border-white/10 shadow-lg flex items-center gap-2">
+                    <User className="w-3.5 h-3.5 text-[#00D084]" />
+                    {selectedArticle.author.name}
+                  </div>
+                </div>
+
+                {/* RIGHT COLUMN: SCROLLABLE TEXT SIDE (Lenis Smooth Scroll, Hidden Scrollbar) */}
+                <div
+                  ref={modalScrollContainerRef}
+                  tabIndex={0}
+                  className="lg:col-span-7 h-full max-h-full overflow-y-auto overscroll-contain touch-pan-y pr-2 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden focus:outline-none"
+                >
+                  <div ref={modalScrollContentRef} className="space-y-6 pb-12 pr-4 text-left">
+                    {/* Header Info */}
+                    <div className="pr-10">
+                      <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 px-3.5 py-1 rounded-full">
+                        {selectedArticle.category}
+                      </span>
+
+                      <h2 className="text-2xl sm:text-4xl font-sans font-black tracking-[-0.04em] mt-4 mb-3 leading-snug">
+                        {selectedArticle.title}
+                      </h2>
+
+                      <div className={`flex flex-wrap items-center gap-3 text-xs font-sans border-b pb-4 ${isLight ? "text-[#607267] border-black/10" : "text-white/60 border-white/10"}`}>
+                        <span className="flex items-center gap-1.5">
+                          <User className="w-3.5 h-3.5 text-[#00D084]" />
+                          {selectedArticle.author.name} ({selectedArticle.author.role})
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5 text-[#00D084]" />
+                          {selectedArticle.date}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 text-[#00D084]" />
+                          {selectedArticle.readTime}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Excerpt Callout */}
+                    <div className={`p-4 rounded-xl text-xs sm:text-sm italic font-light border-l-4 border-l-[#00D084] shadow-inner ${isLight ? "bg-black/5 text-[#1a2320]" : "bg-white/5 text-white/90"}`}>
+                      "{selectedArticle.excerpt}"
+                    </div>
+
+                    {/* Article Content Paragraphs */}
+                    <div className="space-y-5 text-sm sm:text-base font-sans font-light leading-relaxed opacity-90">
+                      {selectedArticle.content.map((paragraph, pi) => (
+                        <p key={pi} className="first-letter:text-3xl first-letter:font-black first-letter:text-[#00D084] first-letter:mr-2">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+
+                    {/* Bottom Action Buttons */}
+                    <div className={`pt-6 border-t flex items-center justify-between gap-4 ${isLight ? "border-black/10" : "border-white/10"}`}>
+                      <button
+                        onClick={() => {
+                          toast.success("Article link copied to clipboard!");
+                        }}
+                        className={`px-6 py-3 rounded-full text-xs font-sans font-bold flex items-center gap-2 transition-all cursor-pointer border ${
+                          isLight
+                            ? "border-black/20 text-[#1a2320] hover:bg-black/5"
+                            : "border-white/20 text-white hover:bg-white/10"
+                        }`}
+                      >
+                        <Share2 className="w-4 h-4 text-[#00D084]" /> Share Story
+                      </button>
+
+                      <button
+                        onClick={() => setReaderOpen(false)}
+                        className="px-8 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-lg cursor-pointer"
+                      >
+                        Close Window
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

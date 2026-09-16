@@ -28,6 +28,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { toast } from "sonner";
 import { BookingModal } from "../components/BookingModal";
+import Lenis from "lenis";
 
 export const Route = createFileRoute("/store")({
   component: StorePage,
@@ -71,10 +72,38 @@ function StorePage() {
 
   const heroTextRef = useRef<HTMLDivElement>(null);
   const cardsOverlayRef = useRef<HTMLDivElement>(null);
+  const modalScrollContainerRef = useRef<HTMLDivElement>(null);
+  const modalScrollContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Lenis Smooth Scroll initialization inside popup modal drawer
+  useEffect(() => {
+    if (!selectedProduct || !modalScrollContainerRef.current) return;
+
+    const lenis = new Lenis({
+      wrapper: modalScrollContainerRef.current,
+      content: modalScrollContentRef.current || undefined,
+      eventsTarget: modalScrollContainerRef.current,
+      smoothWheel: true,
+      duration: 1.0,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+
+    let rafId: number;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, [selectedProduct]);
 
   // GSAP ScrollTrigger Stuck Hero Animation
   useEffect(() => {
@@ -271,7 +300,13 @@ function StorePage() {
           <section className="pt-12 pb-6 px-6 lg:px-12 max-w-7xl mx-auto">
             
             {/* Category Pills Slider */}
-            <div className="mb-6 flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none">
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-6 flex items-center gap-3 overflow-x-auto p-2 scrollbar-none"
+            >
               {STORE_CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat;
                 return (
@@ -288,10 +323,16 @@ function StorePage() {
                   </button>
                 );
               })}
-            </div>
+            </motion.div>
 
             {/* Search Bar & Sorting Bar */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#070c09] border border-white/10 rounded-2xl p-4 md:px-6 shadow-xl mb-8">
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#070c09] border border-white/10 rounded-2xl p-4 md:px-6 shadow-xl mb-8"
+            >
               <div className="relative w-full md:w-96">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                 <input
@@ -334,32 +375,34 @@ function StorePage() {
                   <ShoppingCart className="w-4 h-4" /> Cart ({totalCartCount})
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* =========================================================================
-                4. PRODUCTS CATALOG GRID
+                4. PRODUCTS CATALOG GRID (STAGGERED SCROLL ANIMATED CARDS)
                ========================================================================= */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4">
-              {filteredProducts.map((prd) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-4">
+              {filteredProducts.map((prd, idx) => (
                 <motion.div
                   key={prd.id}
+                  initial={{ opacity: 0, y: 35, scale: 0.96 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{ duration: 0.55, delay: (idx % 4) * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={{ scale: 1.02, y: -4 }}
-                  transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                  className="bg-[#070c09] border border-white/10 hover:border-[#00D084]/50 rounded-3xl overflow-hidden transition-all duration-300 shadow-2xl flex flex-col justify-between group relative"
+                  className="flex flex-col justify-between group relative"
                 >
-                  {/* Top Image Box */}
-                  <div className="relative h-56 w-full overflow-hidden bg-slate-900">
+                  {/* Top Image Container */}
+                  <div className="relative h-60 w-full rounded-[28px] overflow-hidden bg-slate-900 mb-4 border border-white/10 group-hover:border-[#00D084]/40 transition-colors">
                     <img
                       src={prd.image}
                       alt={prd.name}
-                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#070c09] via-transparent to-black/30" />
 
                     {/* Popular / Discount Badges */}
-                    <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start">
+                    <div className="absolute top-3.5 left-3.5 flex flex-col gap-1 items-start">
                       {prd.popular && (
-                        <span className="bg-[#00D084] text-[#020403] text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-[0_0_10px_#00D084]">
+                        <span className="bg-[#00D084] text-[#020403] text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
                           BESTSELLER
                         </span>
                       )}
@@ -368,10 +411,10 @@ function StorePage() {
                       </span>
                     </div>
 
-                    {/* Quick View Button Overlay */}
+                    {/* Quick View Details Icon */}
                     <button
                       onClick={() => setSelectedProduct(prd)}
-                      className="absolute bottom-4 right-4 p-2.5 rounded-full bg-black/80 border border-white/20 text-white/80 hover:text-white hover:border-[#00D084] transition-all opacity-0 group-hover:opacity-100 backdrop-blur-md cursor-pointer"
+                      className="absolute bottom-3.5 right-3.5 p-2 rounded-full bg-black/80 border border-white/20 text-white/80 hover:text-white hover:border-[#00D084] transition-all opacity-0 group-hover:opacity-100 backdrop-blur-md cursor-pointer"
                       title="Quick View Details"
                     >
                       <Eye className="w-4 h-4 text-[#00D084]" />
@@ -379,54 +422,51 @@ function StorePage() {
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="flex-1 flex flex-col justify-between space-y-3 px-1">
                     <div>
-                      <div className="flex items-center justify-between text-xs font-mono text-[#00D084] mb-1">
-                        <span>{prd.category}</span>
-                        <div className="flex items-center gap-1 text-amber-400">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-[#00D084] mb-1.5">
+                        <span className="truncate max-w-[150px]">{prd.category}</span>
+                        <div className="flex items-center gap-1 text-amber-400 shrink-0">
                           <Star className="w-3.5 h-3.5 fill-amber-400" />
                           <span className="font-bold">{prd.rating}</span>
-                          <span className="text-white/40 text-[10px]">({prd.reviewsCount})</span>
                         </div>
                       </div>
 
                       <h3
                         onClick={() => setSelectedProduct(prd)}
-                        className="text-lg font-bold text-white group-hover:text-[#00D084] transition-colors leading-snug cursor-pointer mb-2"
+                        className="text-base font-bold text-white group-hover:text-[#00D084] transition-colors leading-snug cursor-pointer mb-2 line-clamp-1"
                       >
                         {prd.name}
                       </h3>
 
-                      <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-3">
+                      <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-4">
                         {prd.desc}
                       </p>
+                    </div>
 
-                      {/* Specs snippet */}
-                      <div className="bg-white/5 border border-white/5 rounded-xl p-3 space-y-1.5">
-                        {prd.specs.slice(0, 2).map((sp, idx) => (
-                          <div key={idx} className="flex justify-between text-[11px] font-mono">
-                            <span className="text-white/40">{sp.label}:</span>
-                            <span className="text-white font-medium">{sp.value}</span>
-                          </div>
-                        ))}
+                    {/* Rates Row */}
+                    <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono mb-1">
+                      <span className="text-white/50">Rates (Store):</span>
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-base font-bold text-[#00D084]">{prd.price}</span>
+                        <span className="text-[10px] text-white/40 line-through">{prd.oldPrice}</span>
                       </div>
                     </div>
 
-                    {/* Price & Add to Cart */}
-                    <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-2">
-                      <div>
-                        <span className="text-[9px] text-white/40 font-mono block uppercase">PRICE</span>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-xl font-black text-white font-mono">{prd.price}</span>
-                          <span className="text-xs text-white/40 line-through font-mono">{prd.oldPrice}</span>
-                        </div>
-                      </div>
+                    {/* Dual Action Buttons (DETAILS & ADD TO CART / BOOK NOW) */}
+                    <div className="flex items-center gap-2.5 pt-1">
+                      <button
+                        onClick={() => setSelectedProduct(prd)}
+                        className="flex-1 py-2.5 rounded-full border border-[#00D084]/40 text-[#00D084] text-[11px] font-bold uppercase tracking-wider hover:bg-[#00D084]/15 hover:border-[#00D084] transition-all cursor-pointer flex items-center justify-center"
+                      >
+                        DETAILS
+                      </button>
 
                       <button
                         onClick={() => handleAddToCart(prd)}
-                        className="px-5 py-2.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_15px_rgba(0,208,132,0.3)] cursor-pointer flex items-center gap-1.5 shrink-0"
+                        className="flex-1 py-2.5 rounded-full bg-[#00D084] text-[#020403] text-[11px] font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_15px_rgba(0,208,132,0.35)] cursor-pointer flex items-center justify-center gap-1"
                       >
-                        <ShoppingCart className="w-3.5 h-3.5" /> ADD TO CART
+                        ADD TO CART
                       </button>
                     </div>
                   </div>
@@ -612,78 +652,162 @@ function StorePage() {
       </AnimatePresence>
 
       {/* =========================================================================
-          6. QUICK VIEW PRODUCT DETAIL MODAL
+          6. QUICK VIEW PRODUCT DETAIL BOTTOM SHEET POP-UP (MATCHING AWARDS PAGE)
          ========================================================================= */}
       <AnimatePresence>
         {selectedProduct && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl">
+          <>
+            {/* Backdrop Overlay */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#070c09] border border-white/20 rounded-[36px] max-w-2xl w-full p-6 md:p-8 relative overflow-hidden shadow-2xl text-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProduct(null)}
+              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md cursor-pointer"
+            />
+
+            {/* Bottom Sheet Drawer touching bottom, left, and right borders */}
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 280 }}
+              className="fixed bottom-0 left-0 right-0 z-50 bg-[#070c09] border-t border-x border-white/20 rounded-t-[36px] max-h-[85vh] h-[85vh] w-full p-6 md:p-10 shadow-2xl text-white overflow-hidden"
             >
+              {/* Close Button */}
               <button
                 onClick={() => setSelectedProduct(null)}
-                className="absolute top-6 right-6 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors cursor-pointer"
+                className="absolute top-6 right-6 z-20 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                <div className="h-64 w-full rounded-2xl overflow-hidden bg-slate-900 border border-white/10 relative">
+              {/* Side-by-Side Grid: Left Image (Fixed) + Right Text (Scrollable) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-stretch max-w-7xl mx-auto w-full pt-2 overflow-hidden">
+                
+                {/* LEFT COLUMN: FIXED IMAGE (Non-scrollable) */}
+                <div className="lg:col-span-5 h-56 lg:h-full relative rounded-2xl overflow-hidden bg-slate-900 border border-white/10 shadow-xl shrink-0">
                   <img
                     src={selectedProduct.image}
                     alt={selectedProduct.name}
                     className="w-full h-full object-cover"
                   />
-                  <span className="absolute top-3 left-3 bg-[#00D084] text-[#020403] text-[9px] font-black uppercase px-2.5 py-0.5 rounded-full">
+                  <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-mono font-bold uppercase text-[#00D084] border border-[#00D084]/30 shadow-md">
                     {selectedProduct.category}
-                  </span>
+                  </div>
+                  <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-xl text-xs font-mono text-white/90 border border-white/10 shadow-lg">
+                    {selectedProduct.discount}
+                  </div>
                 </div>
 
-                <div className="space-y-4">
-                  <h3 className="text-xl font-bold text-white leading-snug">
-                    {selectedProduct.name}
-                  </h3>
+                {/* RIGHT COLUMN: SCROLLABLE TEXT SIDE (Lenis Smooth Scroll, Hidden Scrollbar) */}
+                <div
+                  ref={modalScrollContainerRef}
+                  tabIndex={0}
+                  className="lg:col-span-7 h-full max-h-full overflow-y-auto overscroll-contain touch-pan-y pr-2 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden focus:outline-none"
+                >
+                  <div ref={modalScrollContentRef} className="space-y-6 pb-12 pr-4 text-left">
+                    {/* Header Info */}
+                    <div className="pr-10">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 px-3.5 py-1 rounded-full">
+                        {selectedProduct.category}
+                      </span>
 
-                  <div className="flex items-center gap-2 text-xs font-mono text-amber-400">
-                    <Star className="w-4 h-4 fill-amber-400" />
-                    <span className="font-bold">{selectedProduct.rating}</span>
-                    <span className="text-white/50">({selectedProduct.reviewsCount} verified reviews)</span>
+                      <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mt-4 mb-2 leading-snug">
+                        {selectedProduct.name}
+                      </h2>
+
+                      <div className="flex items-center gap-3 text-xs font-mono text-amber-400 pb-2">
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4 fill-amber-400" />
+                          <span className="font-bold">{selectedProduct.rating}</span>
+                        </div>
+                        <span className="text-white/40">•</span>
+                        <span className="text-white/60">{selectedProduct.reviewsCount} verified customer reviews</span>
+                      </div>
+                    </div>
+
+                    {/* Price Banner */}
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between font-mono">
+                      <div>
+                        <span className="text-[10px] text-white/40 uppercase block">Total Price</span>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-2xl font-black text-[#00D084]">{selectedProduct.price}</span>
+                          <span className="text-xs text-white/40 line-through">{selectedProduct.oldPrice}</span>
+                        </div>
+                      </div>
+                      <span className="px-3 py-1 bg-[#00D084]/20 border border-[#00D084]/40 text-[#00D084] rounded-lg text-xs font-bold">
+                        {selectedProduct.discount}
+                      </span>
+                    </div>
+
+                    {/* Product Description */}
+                    <div>
+                      <h4 className="text-xs font-mono uppercase font-bold text-[#00D084] mb-2">
+                        Product Overview
+                      </h4>
+                      <p className="text-xs sm:text-sm text-white/80 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5">
+                        {selectedProduct.desc}
+                      </p>
+                    </div>
+
+                    {/* Vehicle Compatibility */}
+                    <div>
+                      <h4 className="text-xs font-mono uppercase font-bold text-[#00D084] mb-2">
+                        Vehicle Compatibility & Warranty
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+                        <div className="p-3.5 bg-white/5 rounded-xl border border-white/10">
+                          <span className="text-white/40 text-[10px] uppercase block mb-1">Compatibility</span>
+                          <span className="text-white font-medium">{selectedProduct.compatibility}</span>
+                        </div>
+                        <div className="p-3.5 bg-white/5 rounded-xl border border-white/10">
+                          <span className="text-white/40 text-[10px] uppercase block mb-1">Warranty</span>
+                          <span className="text-white font-medium">{selectedProduct.warranty}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Technical Specs */}
+                    <div>
+                      <h4 className="text-xs font-mono uppercase font-bold text-[#00D084] mb-2">
+                        Key Specifications
+                      </h4>
+                      <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-2 font-mono text-xs">
+                        {selectedProduct.specs.map((sp, idx) => (
+                          <div key={idx} className="flex justify-between border-b border-white/5 pb-2 last:border-b-0 last:pb-0">
+                            <span className="text-white/50">{sp.label}:</span>
+                            <span className="text-white font-bold">{sp.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bottom Action Buttons */}
+                    <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-4">
+                      <button
+                        onClick={() => setSelectedProduct(null)}
+                        className="px-6 py-3.5 rounded-full border border-white/20 text-xs font-bold text-white hover:bg-white/10 transition-all cursor-pointer"
+                      >
+                        Close Details
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          handleAddToCart(selectedProduct);
+                          setSelectedProduct(null);
+                        }}
+                        className="px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.4)] cursor-pointer flex items-center gap-2"
+                      >
+                        <ShoppingCart className="w-4 h-4" /> ADD TO CART
+                      </button>
+                    </div>
                   </div>
-
-                  <p className="text-xs text-white/70 font-light leading-relaxed">
-                    {selectedProduct.desc}
-                  </p>
-
-                  <div className="space-y-1.5 pt-2 border-t border-white/10 text-xs font-mono">
-                    <div className="text-white/50 text-[10px] uppercase">Vehicle Compatibility</div>
-                    <div className="text-white font-medium">{selectedProduct.compatibility}</div>
-                  </div>
-
-                  <div className="flex items-baseline gap-3 pt-2">
-                    <span className="text-2xl font-black text-[#00D084] font-mono">
-                      {selectedProduct.price}
-                    </span>
-                    <span className="text-xs text-white/40 line-through font-mono">
-                      {selectedProduct.oldPrice}
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      handleAddToCart(selectedProduct);
-                      setSelectedProduct(null);
-                    }}
-                    className="w-full py-3.5 rounded-xl bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <ShoppingCart className="w-4 h-4" /> ADD TO SHOPPING CART
-                  </button>
                 </div>
+
               </div>
             </motion.div>
-          </div>
+          </>
         )}
       </AnimatePresence>
 
