@@ -582,6 +582,14 @@ html.theme-light [class*="fixed"][class*="inset-0"][class*="bg-black/90"] {
 /* Set card and bento box background overrides in light mode */
 html.theme-light .glow-card,
 html.theme-light .bento-card,
+html.theme-light [class*="from-[#03190e]"]:not(.fixed),
+html.theme-light [class*="from-[#04150c]"]:not(.fixed),
+html.theme-light [class*="from-[#052418]"]:not(.fixed),
+html.theme-light [class*="from-[#062015]"]:not(.fixed),
+html.theme-light [class*="via-[#052418]"]:not(.fixed),
+html.theme-light [class*="via-[#062015]"]:not(.fixed),
+html.theme-light [class*="bg-[#050b07]"]:not(.fixed):not([class*="inset-0"]),
+html.theme-light [class*="bg-[#050907]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#060b08]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#030c07]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#030d07]"]:not(.fixed):not([class*="inset-0"]),
@@ -605,7 +613,6 @@ html.theme-light [class*="bg-[#040806]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#050706]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#050806]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#050906]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050907]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#050c08]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#060709]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-[#060807]"]:not(.fixed):not([class*="inset-0"]),
@@ -627,9 +634,10 @@ html.theme-light [class*="bg-[#0a0a0f]"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light [class*="bg-black/"]:not(.fixed):not([class*="inset-0"]),
 html.theme-light .bg-card {
   background-color: #ffffff !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-image: none !important;
+  border-color: rgba(0, 208, 132, 0.3) !important;
   color: #09090b !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
 }
 
 /* Light mode overrides for form controls and inputs */
@@ -652,6 +660,10 @@ html.theme-light [class*="to-[#020403]"],
 html.theme-light [class*="from-[#050806]"],
 html.theme-light [class*="to-[#010201]"],
 html.theme-light [class*="from-[#060907]"],
+html.theme-light [class*="from-[#03190e]"],
+html.theme-light [class*="from-[#04150c]"],
+html.theme-light [class*="from-[#052418]"],
+html.theme-light [class*="from-[#062015]"],
 html.theme-light [class*="to-[#030504]"] {
   background-color: #ffffff !important;
   background-image: none !important;
@@ -662,6 +674,10 @@ html.theme-light [class*="from-[#020403]"],
 html.theme-light [class*="from-[#030504]"],
 html.theme-light [class*="from-[#030604]"],
 html.theme-light [class*="from-[#020503]"],
+html.theme-light [class*="from-[#03190e]"],
+html.theme-light [class*="from-[#04150c]"],
+html.theme-light [class*="from-[#052418]"],
+html.theme-light [class*="from-[#062015]"],
 html.theme-light [class*="from-[#040806]"],
 html.theme-light [class*="from-[#050c08]"],
 html.theme-light [class*="from-[#060709]"],
@@ -712,6 +728,8 @@ html.theme-light [class*="via-black/60"],
 html.theme-light [class*="via-[#030504]"],
 html.theme-light [class*="via-[#030604]"],
 html.theme-light [class*="via-[#020403]"],
+html.theme-light [class*="via-[#052418]"],
+html.theme-light [class*="via-[#062015]"],
 html.theme-light [class*="via-[#060709]"],
 html.theme-light [class*="via-[#070908]"],
 html.theme-light [class*="via-[#080d0a]"],

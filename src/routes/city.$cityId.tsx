@@ -267,7 +267,7 @@ function CityPageComponent() {
                 {serviceCenters.map((center) => (
                   <div
                     key={center.id}
-                    className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 keep-white ${
+                    className={`relative overflow-hidden rounded-3xl border-2 transition-all duration-300 p-6 md:p-7 flex flex-col justify-between space-y-6 ${
                       center.isNearest
                         ? "border-[#00D084] bg-gradient-to-br from-[#03190e] via-[#052418] to-[#020503] shadow-[0_0_50px_rgba(0,208,132,0.35)] scale-[1.01]"
                         : "border-[#00D084]/40 bg-gradient-to-br from-[#04150c] via-[#062015] to-[#020503] hover:border-[#00D084] shadow-[0_0_30px_rgba(0,208,132,0.15)]"
