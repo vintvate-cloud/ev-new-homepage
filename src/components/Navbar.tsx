@@ -11,6 +11,8 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
+import { useTheme } from "../context/ThemeContext";
+
 interface NavbarProps {
   onOpenBooking?: () => void;
 }
@@ -22,25 +24,7 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("theme-preference");
-      if (saved === "dark") return "dark";
-      return "light";
-    }
-    return "light";
-  });
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (siteTheme === "light") {
-      document.documentElement.classList.add("theme-light");
-      localStorage.setItem("theme-preference", "light");
-    } else {
-      document.documentElement.classList.remove("theme-light");
-      localStorage.setItem("theme-preference", "dark");
-    }
-  }, [siteTheme]);
+  const { siteTheme, setSiteTheme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {

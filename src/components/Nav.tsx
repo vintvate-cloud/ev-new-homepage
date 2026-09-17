@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import {
@@ -17,6 +18,7 @@ import tech from "@/assets/tech.jpg";
 import interior from "@/assets/interior.jpg";
 import energy from "@/assets/energy.jpg";
 import factory from "@/assets/factory.jpg";
+import { useTheme } from "../context/ThemeContext";
 
 export type Theme = "warm" | "mid" | "dark";
 
@@ -62,25 +64,7 @@ export function Nav({
   const leaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const moreLeaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollY = useRef(0);
-  const [siteTheme, setSiteTheme] = useState<"dark" | "light">(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("theme-preference");
-      if (saved === "dark") return "dark";
-      return "light";
-    }
-    return "light";
-  });
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (siteTheme === "light") {
-      document.documentElement.classList.add("theme-light");
-      localStorage.setItem("theme-preference", "light");
-    } else {
-      document.documentElement.classList.remove("theme-light");
-      localStorage.setItem("theme-preference", "dark");
-    }
-  }, [siteTheme]);
+  const { siteTheme, setSiteTheme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => {
@@ -178,7 +162,7 @@ export function Nav({
             }`}
         >
           {/* Logo OUTSIDE the bordered navbar pill container */}
-          <a href="/" className="flex items-center shrink-0 group overflow-hidden rounded-xl">
+          <Link to="/" className="flex items-center shrink-0 group overflow-hidden rounded-xl">
             <img
               src="/logo.jpeg"
               alt="My EV Service Logo"
@@ -188,7 +172,7 @@ export function Nav({
                   : "border border-white/20 shadow-[0_0_15px_rgba(0,0,0,0.6)] bg-black"
                 }`}
             />
-          </a>
+          </Link>
 
           {/* Bordered Navbar Pill Container starting from MY EV SERVICE text */}
           <div
@@ -203,7 +187,7 @@ export function Nav({
               boxShadow: siteTheme === "light" ? "0 4px 24px rgba(0,0,0,0.06)" : "0 4px 24px rgba(0,0,0,0.4)",
             }}
           >
-            <a href="/" className="flex items-center gap-2 group">
+            <Link to="/" className="flex items-center gap-2 group">
               <span
                 id="nav-logo-text"
                 className={`text-[14px] font-bold tracking-[0.15em] uppercase transition-colors ${siteTheme === "light" ? "text-black" : "text-white"
@@ -211,7 +195,7 @@ export function Nav({
               >
                 MY EV SERVICE
               </span>
-            </a>
+            </Link>
 
             {/* Desktop Nav with Mega Menu */}
             <div className="relative hidden items-center gap-1 xl:flex">
@@ -219,12 +203,12 @@ export function Nav({
                 {PRIMARY_NAV.map((n, i) => {
                   const hasMenu = n.menuIdx !== null && MEGA_MENUS[n.menuIdx!];
                   return (
-                    <a
+                    <Link
                       key={n.label}
                       ref={(el) => {
                         itemRefs.current[i] = el;
                       }}
-                      href={n.href}
+                      to={n.href}
                       onMouseEnter={() => (hasMenu ? handleNavEnter(n.menuIdx!) : handleNavLeave())}
                       className="relative z-10 px-3 py-1.5 text-[12px] font-bold tracking-wide flex items-center gap-1 text-[#00D084] hover:text-[#00e08f] transition-colors"
                     >
@@ -235,7 +219,7 @@ export function Nav({
                           style={{ position: "relative", zIndex: 1 }}
                         />
                       )}
-                    </a>
+                    </Link>
                   );
                 })}
 
@@ -289,9 +273,9 @@ export function Nav({
 
                         <div className="space-y-0.5">
                           {MORE_NAV.map((item) => (
-                            <a
+                            <Link
                               key={item.label}
-                              href={item.href}
+                              to={item.href}
                               className={`group flex items-center justify-between rounded-xl px-3 py-2 transition-all ${siteTheme === "light"
                                   ? "hover:bg-black/5 text-black/80 hover:text-black"
                                   : "hover:bg-white/10 text-white/80 hover:text-white"
@@ -306,7 +290,7 @@ export function Nav({
                                 </span>
                               </div>
                               <ArrowUpRight className="w-3.5 h-3.5 text-white/20 group-hover:text-[#00D084] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       </motion.div>
@@ -466,8 +450,8 @@ export function Nav({
               </button>
 
               {/* Shopping Cart Button (Circular Icon matching screenshot) */}
-              <a
-                href="/store"
+              <Link
+                to="/store"
                 onClick={(e) => {
                   if (onOpenCart) {
                     e.preventDefault();
@@ -487,11 +471,11 @@ export function Nav({
                     {cartCount}
                   </span>
                 )}
-              </a>
+              </Link>
 
               {/* Login Button (Pill button with User Icon matching screenshot) */}
-              <a
-                href="/login"
+              <Link
+                to="/login"
                 className={`hidden sm:flex px-4 py-2 rounded-full border text-xs font-medium items-center gap-2 transition-all cursor-pointer ${siteTheme === "light"
                     ? "border-black/20 text-black hover:bg-black/5"
                     : "border-white/20 text-white/90 hover:text-white hover:border-white/40 hover:bg-white/10"
@@ -499,7 +483,7 @@ export function Nav({
               >
                 <User className="w-4 h-4" />
                 <span>Login</span>
-              </a>
+              </Link>
 
               {/* Book Service CTA Button (Mint Green Pill matching screenshot) */}
               <button
@@ -556,18 +540,21 @@ export function Nav({
         <div className="flex flex-col gap-1 px-6 pt-6 overflow-y-auto max-h-[82vh]">
           {open &&
             [...PRIMARY_NAV, ...MORE_NAV].map((n, i) => (
-              <motion.a
+              <motion.div
                 key={n.label}
-                href={n.href}
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.03 * i + 0.08, duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-                onClick={() => setOpen(false)}
-                className="flex items-center justify-between border-b border-border/40 py-3.5 text-xl font-semibold tracking-tight text-foreground"
               >
-                {n.label}
-                <ArrowUpRight className="h-4 w-4 text-[#00D084]" />
-              </motion.a>
+                <Link
+                  to={n.href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-between border-b border-border/40 py-3.5 text-xl font-semibold tracking-tight text-foreground"
+                >
+                  {n.label}
+                  <ArrowUpRight className="h-4 w-4 text-[#00D084]" />
+                </Link>
+              </motion.div>
             ))}
         </div>
       </motion.div>
