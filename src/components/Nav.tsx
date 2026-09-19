@@ -231,7 +231,8 @@ export function Nav({
                 >
                   <button
                     type="button"
-                    className="px-3 py-1.5 text-[12px] font-bold tracking-wide flex items-center gap-1 text-[#00D084] hover:text-[#00e08f] transition-colors cursor-pointer"
+                    onClick={() => setMoreDropdownOpen((prev) => !prev)}
+                    className="px-3 py-1.5 text-[12px] font-bold tracking-wide flex items-center gap-1 text-[#00D084] hover:text-[#00e08f] transition-colors cursor-pointer select-none"
                   >
                     <span>More</span>
                     <ChevronDown
@@ -240,7 +241,7 @@ export function Nav({
                     />
                   </button>
 
-                  {/* More Dropdown Glass Panel */}
+                  {/* More Dropdown Panel */}
                   <AnimatePresence>
                     {moreDropdownOpen && (
                       <motion.div
@@ -248,48 +249,65 @@ export function Nav({
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.96 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute top-[calc(100%+12px)] right-0 w-64 origin-top-right z-50 rounded-2xl border border-white/15 p-2.5 shadow-2xl backdrop-blur-2xl"
                         style={{
-                          background:
-                            siteTheme === "light"
-                              ? "rgba(255, 255, 255, 0.98)"
-                              : "rgba(8, 12, 10, 0.96)",
+                          backgroundColor: siteTheme === "light" ? "#ffffff" : "#080c0a",
                         }}
+                        className={`absolute top-[calc(100%+12px)] right-0 w-72 origin-top-right z-[100] rounded-2xl p-3 shadow-[0_25px_60px_rgba(0,0,0,0.3)] ${
+                          siteTheme === "light"
+                            ? "border border-slate-200 text-slate-900"
+                            : "border border-white/15 text-white"
+                        }`}
                       >
                         {/* Arrow pointer */}
                         <div
+                          style={{
+                            backgroundColor: siteTheme === "light" ? "#ffffff" : "#080c0a",
+                          }}
                           className={`absolute -top-2 right-5 w-3.5 h-3.5 rotate-45 rounded-sm border-l border-t ${siteTheme === "light"
-                              ? "border-black/10 bg-white"
-                              : "border-white/15 bg-[#080c0a]"
+                              ? "border-slate-200"
+                              : "border-white/15"
                             }`}
                         />
 
-                        <div className="px-3 py-1.5 border-b border-white/10 mb-1 flex items-center justify-between">
-                          <span className="text-[9px] font-mono font-bold text-[#00D084] uppercase tracking-wider">
+                        <div className={`px-3 py-2 border-b mb-1.5 flex items-center justify-between ${
+                          siteTheme === "light" ? "border-slate-100" : "border-white/10"
+                        }`}>
+                          <span className="text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-wider">
                             Ecosystem Resources
                           </span>
-                          <span className="text-[9px] text-white/40 font-mono">6 Modules</span>
+                          <span className={`text-[10px] font-mono font-semibold ${
+                            siteTheme === "light" ? "text-slate-500" : "text-white/40"
+                          }`}>{MORE_NAV.length} Modules</span>
                         </div>
 
-                        <div className="space-y-0.5">
+                        <div className="space-y-1">
                           {MORE_NAV.map((item) => (
                             <Link
                               key={item.label}
                               to={item.href}
-                              className={`group flex items-center justify-between rounded-xl px-3 py-2 transition-all ${siteTheme === "light"
-                                  ? "hover:bg-black/5 text-black/80 hover:text-black"
-                                  : "hover:bg-white/10 text-white/80 hover:text-white"
+                              onClick={() => setMoreDropdownOpen(false)}
+                              className={`group flex items-center justify-between rounded-xl px-3 py-2.5 transition-all ${siteTheme === "light"
+                                  ? "hover:bg-slate-100/90 text-slate-900"
+                                  : "hover:bg-white/10 text-white"
                                 }`}
                             >
                               <div>
                                 <span className="block text-xs font-bold leading-tight group-hover:text-[#00D084] transition-colors">
                                   {item.label}
                                 </span>
-                                <span className="block text-[9.5px] text-white/40 group-hover:text-white/60 transition-colors mt-0.5">
+                                <span className={`block text-[10px] transition-colors mt-0.5 ${
+                                  siteTheme === "light"
+                                    ? "text-slate-600 group-hover:text-slate-900 font-medium"
+                                    : "text-white/50 group-hover:text-white/80"
+                                }`}>
                                   {item.desc}
                                 </span>
                               </div>
-                              <ArrowUpRight className="w-3.5 h-3.5 text-white/20 group-hover:text-[#00D084] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+                              <ArrowUpRight className={`w-3.5 h-3.5 transition-all shrink-0 ml-2 ${
+                                siteTheme === "light"
+                                  ? "text-slate-400 group-hover:text-[#00D084]"
+                                  : "text-white/30 group-hover:text-[#00D084]"
+                              } group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
                             </Link>
                           ))}
                         </div>
@@ -325,15 +343,14 @@ export function Nav({
                       {/* Glass panel */}
                       <div
                         className={`relative overflow-hidden rounded-[24px] border ${siteTheme === "light"
-                            ? "border-black/10 shadow-[0_32px_80px_rgba(0,0,0,0.15)]"
+                            ? "border-slate-200 shadow-[0_32px_80px_rgba(0,0,0,0.2)]"
                             : "border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.7)]"
                           }`}
                         style={{
-                          background:
+                          backgroundColor:
                             siteTheme === "light"
-                              ? "rgba(255, 255, 255, 0.98)"
-                              : "rgba(8, 12, 10, 0.95)",
-                          backdropFilter: "blur(40px)",
+                              ? "#ffffff"
+                              : "rgba(8, 12, 10, 0.98)",
                         }}
                       >
                         {/* Top neon line */}
@@ -416,7 +433,7 @@ export function Nav({
                                     </span>
                                     <span
                                       className={`block text-[10px] transition-colors mt-0.5 ${siteTheme === "light"
-                                          ? "text-black/40 group-hover:text-black/60"
+                                          ? "text-slate-500 group-hover:text-slate-800 font-medium"
                                           : "text-white/35 group-hover:text-white/50"
                                         }`}
                                     >
