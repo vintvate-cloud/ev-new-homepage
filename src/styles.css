@@ -744,12 +744,9 @@ html.theme-light [class*="to-[#00D084]/10"] {
   background: linear-gradient(135deg, rgba(0, 208, 132, 0.1) 0%, #ffffff 50%, rgba(0, 208, 132, 0.08) 100%) !important;
 }
 
-html.theme-light .resource-bg-overlay-top {
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.7) 0%, transparent 60%, rgba(255, 255, 255, 0.3) 100%) !important;
-}
-
+html.theme-light .resource-bg-overlay-top,
 html.theme-light .resource-bg-overlay-right {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.6) 0%, transparent 50%, rgba(255, 255, 255, 0.5) 100%) !important;
+  display: none !important;
 }
 
 /* Light mode overrides for badge pills & icons */

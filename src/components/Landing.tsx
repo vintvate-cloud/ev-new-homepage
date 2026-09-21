@@ -4884,10 +4884,8 @@ function ResourcesJourney() {
               <img
                 src={res.img}
                 alt={res.title}
-                className="w-full h-full object-cover object-center opacity-75 md:opacity-85 transition-all duration-700"
+                className="w-full h-full object-cover object-center opacity-100 transition-all duration-700"
               />
-              <div className="absolute inset-0 resource-bg-overlay-top bg-gradient-to-t from-[#030604]/90 via-transparent to-[#030604]/30 pointer-events-none" />
-              <div className="absolute inset-0 resource-bg-overlay-right bg-gradient-to-r from-[#030604]/85 via-transparent to-[#030604]/75 pointer-events-none" />
             </div>
 
             <div className="resource-content relative z-10 w-full max-w-[1400px] flex flex-col md:flex-row gap-12 lg:gap-24 items-center opacity-0 translate-y-12">
