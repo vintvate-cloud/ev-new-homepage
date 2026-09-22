@@ -191,7 +191,7 @@ function CityPageComponent() {
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0 LIKE MEDIA PAGE)
             - 100% Clear Hero Image (No dark shadow overlay layer!)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Hero Poster Image - 100% Crystal Clear */}
           <img
             src={currentCity.heroImage}
@@ -205,12 +205,12 @@ function CityPageComponent() {
             className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-4xl space-y-4 z-10 transition-all pointer-events-none"
           >
             {/* Title - Bold & Clear like Media Page */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white leading-tight">
               {currentCity.name} EV Hubs
             </h1>
 
             {/* Description - Bold & Clear like Media Page */}
-            <p className="text-lg sm:text-xl font-bold text-white leading-relaxed max-w-2xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]">
+            <p className="text-lg sm:text-xl font-bold text-white leading-relaxed max-w-2xl">
               {currentCity.description}
             </p>
 

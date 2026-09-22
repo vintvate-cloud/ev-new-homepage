@@ -387,26 +387,14 @@ function InvestorRelationsPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (MATCHING MEDIA & ABOUT PAGES - Z-0)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center">
-          {/* Cool Blurry EV Investment Poster Image */}
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center">
+          {/* Clear EV Investment Poster Image */}
           <img
             ref={heroImageRef}
             src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&auto=format&fit=crop&q=85"
             alt="Autobot OS Investor Hero"
-            className="w-full h-full object-cover object-center filter blur-sm scale-105 opacity-60 pointer-events-none transition-all duration-300"
+            className="w-full h-full object-cover object-center scale-105 opacity-100 pointer-events-none transition-all duration-300"
           />
-
-          {/* Dynamic Floating Glow Rings */}
-          <motion.div
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.25, 0.45, 0.25],
-            }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[750px] bg-[#00D084]/20 rounded-full blur-[190px] pointer-events-none"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020403] via-black/50 to-black/30 pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(2,4,3,0.85)_100%)] pointer-events-none" />
 
           {/* Hero Content Container (Fades & Scales out via GSAP as cards rise) */}
           <div
@@ -417,10 +405,10 @@ function InvestorRelationsPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)]"
+              className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight"
             >
               The Operating System for India's <br />
-              <span className="text-[#00D084] drop-shadow-[0_0_35px_rgba(0,208,132,0.5)]">
+              <span className="text-[#00D084]">
                 EV Services Economy
               </span>
             </motion.h1>
@@ -429,7 +417,7 @@ function InvestorRelationsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-xs sm:text-sm md:text-base font-normal text-white/80 leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]"
+              className="text-xs sm:text-sm md:text-base font-normal text-white/80 leading-relaxed max-w-xl mx-auto"
             >
               Autobot OS is a full-stack infrastructure platform powering EV service delivery at scale — from technician dispatch and inventory tracking to franchise operations and financial automation. Built for the defining decade of India's electric mobility transition.
             </motion.p>
@@ -442,15 +430,15 @@ function InvestorRelationsPage() {
             >
               <button
                 onClick={() => scrollToSection("market")}
-                className="px-6 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-wider hover:bg-[#00e08f] hover:scale-105 shadow-[0_0_25px_rgba(0,208,132,0.35)] transition-all cursor-pointer flex items-center gap-2"
+                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-6 py-3 rounded-full bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-wider hover:bg-[#00e08f] hover:scale-105 shadow-[0_0_25px_rgba(0,208,132,0.35)] transition-all cursor-pointer"
               >
-                Explore the Opportunity <ArrowRight className="w-4 h-4" />
+                <span>Explore the Opportunity</span> <ArrowRight className="w-4 h-4 shrink-0" />
               </button>
               <button
                 onClick={() => setDeckModalOpen(true)}
-                className="px-6 py-3 rounded-full border border-white/20 bg-black/50 backdrop-blur-md text-white text-xs font-bold hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all cursor-pointer flex items-center gap-2"
+                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-6 py-3 rounded-full border border-white/20 bg-[#0a0f0d]/85 text-white text-xs font-bold hover:bg-black/95 hover:border-white/40 hover:scale-105 transition-all cursor-pointer backdrop-blur-md shadow-xl"
               >
-                Connect With Our Team <Users className="w-4 h-4 text-[#00D084]" />
+                <span>Connect With Our Team</span> <Users className="w-4 h-4 text-[#00D084] shrink-0" />
               </button>
             </motion.div>
           </div>

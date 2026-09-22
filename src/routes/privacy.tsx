@@ -144,7 +144,7 @@ function PrivacyPage() {
       <Nav onOpenBooking={() => setBookingModalOpen(true)} />
 
       {/* Hero Header */}
-      <section className="relative pt-32 pb-16 px-6 overflow-hidden border-b border-white/5 bg-gradient-to-b from-[#060c09] to-[#020403]">
+      <section className="page-hero relative pt-32 pb-16 px-6 overflow-hidden border-b border-white/5 bg-gradient-to-b from-[#060c09] to-[#020403]">
         <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#00D084]/10 rounded-full blur-[150px] pointer-events-none" />
         
         <div className="max-w-5xl mx-auto text-center relative z-10 space-y-4">

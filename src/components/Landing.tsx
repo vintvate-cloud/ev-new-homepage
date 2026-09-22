@@ -794,10 +794,10 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
           {/* Find Nearest Centre */}
           <Link
             to="/service-centres"
-            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+            className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
           >
-            <MapPin className="h-4 w-4 text-white" />
-            <span>Find Nearest Centre</span>
+            <MapPin className="h-4 w-4 text-white keep-white shrink-0" />
+            <span className="text-white keep-white whitespace-nowrap">Find Nearest Centre</span>
           </Link>
         </div>
 
@@ -805,19 +805,19 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
           {/* Request RSA */}
           <a
             href="tel:+919582390001"
-            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-red-500/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+            className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-red-500/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
           >
-            <PhoneCall className="h-3.5 w-3.5 text-[#00D084]" />
-            <span>Request RSA</span>
+            <PhoneCall className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+            <span className="text-white keep-white whitespace-nowrap">Request RSA</span>
           </a>
 
           {/* Join Franchise Network */}
           <Link
             to="/franchise"
-            className="bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+            className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
           >
-            <Store className="h-3.5 w-3.5 text-[#00D084]" />
-            <span>Join Franchise Network</span>
+            <Store className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+            <span className="text-white keep-white whitespace-nowrap">Join Franchise Network</span>
           </Link>
         </div>
       </div>
@@ -1054,16 +1054,15 @@ function EVTypeSelection() {
           <motion.div
             whileHover={{ y: -6 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="bento-card lg:col-span-7 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[36px] p-8 sm:p-10 lg:p-12 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[440px] lg:min-h-[500px] shadow-[0_25px_60px_rgba(0,0,0,0.7)] hover:shadow-[0_30px_70px_rgba(0,208,132,0.18)] transition-all duration-500"
+            className="bento-card lg:col-span-7 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[36px] p-8 sm:p-10 lg:p-12 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[440px] lg:min-h-[500px] hover:shadow-[0_30px_70px_rgba(0,208,132,0.18)] transition-all duration-500"
           >
-            {/* Background Image with Vignette */}
-            <div className="absolute inset-0 z-0 opacity-30 group-hover:opacity-45 transition-opacity duration-700 pointer-events-none">
+            {/* Background Image - 100% Crisp & Visible, No Shadow/Vignette Overlay */}
+            <div className="absolute inset-0 z-0 opacity-85 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <img
                 src={EV_TYPES[0].bgImage}
                 alt={EV_TYPES[0].title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+                className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/75 to-transparent" />
             </div>
 
             {/* Faint Background Mono Code */}
@@ -1073,7 +1072,7 @@ function EVTypeSelection() {
 
             {/* Top Badge & Live Status HUD */}
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 mb-6">
-              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 01 // TWO WHEELER
               </span>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00D084]/30 bg-[#00D084]/10 backdrop-blur-md">
@@ -1086,21 +1085,21 @@ function EVTypeSelection() {
 
             {/* Main Content */}
             <div className="relative z-10 max-w-xl my-auto">
-              <h3 className="text-3xl sm:text-5xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-3 group-hover:text-[#00D084] transition-colors">
+              <h3 className="text-3xl sm:text-5xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-3 group-hover:text-[#00D084] transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                 {EV_TYPES[0].title}
               </h3>
-              <p className="text-sm sm:text-base text-white/70 font-light leading-relaxed mb-6">
+              <p className="text-sm sm:text-base text-white/90 font-medium leading-relaxed mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
                 {EV_TYPES[0].desc}
               </p>
 
               {/* 3 Metric HUD Indicators */}
-              <div className="py-4 border-y border-white/10 grid grid-cols-3 gap-4 mb-6">
+              <div className="py-4 border-y border-white/15 bg-black/40 backdrop-blur-md rounded-xl px-4 grid grid-cols-3 gap-4 mb-6">
                 {EV_TYPES[0].metrics.map((m, i) => (
                   <div key={i} className="flex flex-col">
-                    <span className="text-[9px] font-mono uppercase tracking-widest text-white/40 mb-0.5">
+                    <span className="text-[9px] font-mono uppercase tracking-widest text-white/60 mb-0.5">
                       {m.label}
                     </span>
-                    <span className="text-lg sm:text-2xl font-black font-mono text-[#00D084] tracking-tight">
+                    <span className="text-lg sm:text-2xl font-black font-mono text-[#00D084] tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                       {m.val}
                     </span>
                   </div>
@@ -1111,9 +1110,9 @@ function EVTypeSelection() {
             {/* Bottom Row: Compatible Brands & Action CTA */}
             <div className="relative z-10 pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[10px] font-mono text-white/30 uppercase mr-1">SUPPORTED:</span>
+                <span className="text-[10px] font-mono text-white/70 uppercase mr-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">SUPPORTED:</span>
                 {EV_TYPES[0].brands.map((b, i) => (
-                  <span key={i} className="text-[10px] font-mono text-white/80 bg-white/5 border border-white/10 rounded-full px-3 py-1">
+                  <span key={i} className="text-[10px] font-mono text-white bg-black/50 backdrop-blur-md border border-white/20 rounded-full px-3 py-1 font-semibold">
                     {b}
                   </span>
                 ))}
@@ -1133,16 +1132,15 @@ function EVTypeSelection() {
           <motion.div
             whileHover={{ y: -6 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="bento-card lg:col-span-5 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[36px] p-8 sm:p-10 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[440px] lg:min-h-[500px] shadow-[0_25px_60px_rgba(0,0,0,0.7)] hover:shadow-[0_30px_70px_rgba(0,208,132,0.18)] transition-all duration-500"
+            className="bento-card lg:col-span-5 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[36px] p-8 sm:p-10 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[440px] lg:min-h-[500px] hover:shadow-[0_30px_70px_rgba(0,208,132,0.18)] transition-all duration-500"
           >
-            {/* Background Image with Dark Gradient Overlay */}
-            <div className="absolute inset-0 z-0 opacity-30 group-hover:opacity-45 transition-opacity duration-700 pointer-events-none">
+            {/* Background Image - 100% Crisp & Visible, No Shadow Overlay */}
+            <div className="absolute inset-0 z-0 opacity-85 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <img
                 src={EV_TYPES[1].bgImage}
                 alt={EV_TYPES[1].title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+                className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/80 to-transparent" />
             </div>
 
             {/* Faint Background Mono Code */}
@@ -1152,31 +1150,31 @@ function EVTypeSelection() {
 
             {/* Top Header */}
             <div className="relative z-10 flex items-center justify-between gap-4 mb-6">
-              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 02 // HIGH PERFORMANCE
               </span>
-              <span className="text-[10px] font-mono uppercase tracking-wider text-white/50 border border-white/10 px-3 py-1 rounded-full bg-white/5">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-white/80 border border-white/20 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md font-semibold">
                 4.9/5 RIDER RATING
               </span>
             </div>
 
             {/* Content */}
             <div className="relative z-10 my-auto">
-              <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-3 group-hover:text-[#00D084] transition-colors">
+              <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-3 group-hover:text-[#00D084] transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                 {EV_TYPES[1].title}
               </h3>
-              <p className="text-sm text-white/70 font-light leading-relaxed mb-6">
+              <p className="text-sm text-white/90 font-medium leading-relaxed mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
                 {EV_TYPES[1].desc}
               </p>
 
-              <div className="py-4 border-y border-white/10 grid grid-cols-2 gap-4 mb-6">
+              <div className="py-4 border-y border-white/15 bg-black/40 backdrop-blur-md rounded-xl px-4 grid grid-cols-2 gap-4 mb-6">
                 <div>
-                  <span className="text-[9px] font-mono uppercase text-white/40 block mb-0.5">CELL BALANCING</span>
-                  <span className="text-lg font-mono font-bold text-[#00D084]">0.1mV LIMIT</span>
+                  <span className="text-[9px] font-mono uppercase text-white/60 block mb-0.5">CELL BALANCING</span>
+                  <span className="text-lg font-mono font-bold text-[#00D084] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">0.1mV LIMIT</span>
                 </div>
                 <div>
-                  <span className="text-[9px] font-mono uppercase text-white/40 block mb-0.5">STARTING PRICE</span>
-                  <span className="text-lg font-mono font-bold text-white">₹799</span>
+                  <span className="text-[9px] font-mono uppercase text-white/60 block mb-0.5">STARTING PRICE</span>
+                  <span className="text-lg font-mono font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">₹799</span>
                 </div>
               </div>
             </div>
@@ -1185,7 +1183,7 @@ function EVTypeSelection() {
             <div className="relative z-10 pt-4 flex items-center justify-between gap-4 border-t border-white/10">
               <div className="flex flex-wrap gap-1.5">
                 {EV_TYPES[1].brands.slice(0, 3).map((b, i) => (
-                  <span key={i} className="text-[10px] font-mono text-white/70 bg-white/5 border border-white/10 rounded-full px-2.5 py-1">
+                  <span key={i} className="text-[10px] font-mono text-white bg-black/50 backdrop-blur-md border border-white/20 rounded-full px-2.5 py-1 font-semibold">
                     {b}
                   </span>
                 ))}
@@ -1204,41 +1202,40 @@ function EVTypeSelection() {
           <motion.div
             whileHover={{ y: -6 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
+            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
           >
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-35 transition-opacity duration-700 pointer-events-none">
+            {/* Background Image - 100% Crisp & Visible, No Shadow Overlay */}
+            <div className="absolute inset-0 z-0 opacity-85 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <img
                 src={EV_TYPES[2].bgImage}
                 alt={EV_TYPES[2].title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+                className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/85 to-transparent" />
             </div>
 
             <div className="relative z-10 flex items-center justify-between gap-4 mb-4">
-              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 03 // TRANSIT
               </span>
-              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/20 bg-[#00D084]/5 px-2.5 py-1 rounded-full">
+              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/30 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full font-bold">
                 12,000+ SERVICED
               </span>
             </div>
 
             <div className="relative z-10 my-auto">
-              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors">
+              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                 {EV_TYPES[2].title}
               </h3>
-              <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-4">
+              <p className="text-xs text-white/90 font-medium leading-relaxed line-clamp-2 mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
                 {EV_TYPES[2].desc}
               </p>
             </div>
 
             <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
-              <span className="text-xs font-mono text-white/50">STARTS AT ₹599</span>
+              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">STARTS AT ₹599</span>
               <Link
                 to="/services"
-                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                className="w-9 h-9 rounded-full bg-black/40 border border-white/20 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
               >
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -1249,41 +1246,40 @@ function EVTypeSelection() {
           <motion.div
             whileHover={{ y: -6 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
+            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
           >
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-35 transition-opacity duration-700 pointer-events-none">
+            {/* Background Image - 100% Crisp & Visible, No Shadow Overlay */}
+            <div className="absolute inset-0 z-0 opacity-85 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <img
                 src={EV_TYPES[3].bgImage}
                 alt={EV_TYPES[3].title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+                className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/85 to-transparent" />
             </div>
 
             <div className="relative z-10 flex items-center justify-between gap-4 mb-4">
-              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 04 // LOGISTICS
               </span>
-              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/20 bg-[#00D084]/5 px-2.5 py-1 rounded-full">
+              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/30 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full font-bold">
                 99.8% UPTIME
               </span>
             </div>
 
             <div className="relative z-10 my-auto">
-              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors">
+              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                 {EV_TYPES[3].title}
               </h3>
-              <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-4">
+              <p className="text-xs text-white/90 font-medium leading-relaxed line-clamp-2 mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
                 {EV_TYPES[3].desc}
               </p>
             </div>
 
             <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
-              <span className="text-xs font-mono text-white/50">STARTS AT ₹699</span>
+              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">STARTS AT ₹699</span>
               <Link
                 to="/services"
-                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                className="w-9 h-9 rounded-full bg-black/40 border border-white/20 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
               >
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -1294,38 +1290,37 @@ function EVTypeSelection() {
           <motion.div
             whileHover={{ y: -6 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
+            className="bento-card lg:col-span-4 bg-[#070908]/90 border border-white/10 hover:border-[#00D084]/50 rounded-[32px] p-8 relative overflow-hidden backdrop-blur-2xl group flex flex-col justify-between min-h-[320px] hover:shadow-[0_25px_60px_rgba(0,208,132,0.15)] transition-all duration-500"
           >
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-35 transition-opacity duration-700 pointer-events-none">
+            {/* Background Image - 100% Crisp & Visible, No Shadow Overlay */}
+            <div className="absolute inset-0 z-0 opacity-85 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <img
                 src={EV_TYPES[4].bgImage}
                 alt={EV_TYPES[4].title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+                className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-[#070908]/85 to-transparent" />
             </div>
 
             <div className="relative z-10 flex items-center justify-between gap-4 mb-4">
-              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase">
+              <span className="text-xs font-mono text-[#00D084] font-bold tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 05 // FLEET & DELIVERY
               </span>
-              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/20 bg-[#00D084]/5 px-2.5 py-1 rounded-full">
+              <span className="text-[10px] font-mono text-[#00D084] border border-[#00D084]/30 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full font-bold">
                 24/7 RSA & API
               </span>
             </div>
 
             <div className="relative z-10 my-auto">
-              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors">
+              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-[-0.03em] text-white leading-tight mb-2 group-hover:text-[#00D084] transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                 FLEET & DELIVERY EVs
               </h3>
-              <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-4">
+              <p className="text-xs text-white/90 font-medium leading-relaxed line-clamp-2 mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
                 Enterprise telematics synchronization, rapid 30-minute doorstep RSA, and DC fast charging validation.
               </p>
             </div>
 
             <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
-              <span className="text-xs font-mono text-white/50">CUSTOM SLA MODEL</span>
+              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">CUSTOM SLA MODEL</span>
               <Link
                 to="/services"
                 className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
@@ -1458,12 +1453,12 @@ function GenuineSpareParts() {
 
           {/* Left panel: Live CAD Telemetry HUD */}
           <Reveal className="lg:col-span-5 flex flex-col" yOffset={30}>
-            <div className="bg-gradient-to-br from-[#050806] to-[#010201] border border-white/10 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-full shadow-2xl">
+            <div className="cad-hud-card keep-dark-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-full shadow-2xl">
 
               {/* Active Part Background Image in Left Panel - Properly Visible */}
               <div className="absolute inset-0 opacity-75 md:opacity-85 pointer-events-none overflow-hidden z-0">
                 <img src={activePart.bgImg} alt={activePart.title} className="w-full h-full object-cover object-center filter saturate-125 brightness-110 contrast-105 transition-all duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#050806]/75 via-[#050806]/40 to-[#010201]/95" />
+                <div className="hud-card-overlay absolute inset-0 pointer-events-none" />
               </div>
 
               {/* Grid graphic background */}
@@ -1477,19 +1472,19 @@ function GenuineSpareParts() {
               <div ref={hudRef} className="relative z-10 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                    <span className="text-[10px] uppercase tracking-widest text-white/50 font-mono font-bold">
+                    <span className="hud-title-label text-[10px] uppercase tracking-widest text-white/50 font-mono font-bold">
                       CAD Specification HUD
                     </span>
-                    <span className="text-[9px] font-mono text-[#00D084] bg-[#00D084]/15 border border-[#00D084]/30 rounded px-2.5 py-0.5 font-bold">
+                    <span className="hud-oem-badge text-[9px] font-mono font-bold rounded px-2.5 py-0.5">
                       OEM_CERTIFIED
                     </span>
                   </div>
 
                   <div className="mt-6">
-                    <span className="text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
+                    <span className="hud-system-label text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
                       System Classification
                     </span>
-                    <h4 className="text-white font-bold text-lg mt-1 font-mono tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    <h4 className="hud-system-type keep-white text-white font-bold text-lg mt-1 font-mono tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                       {activePart.hud.type}
                     </h4>
                   </div>
@@ -1497,32 +1492,32 @@ function GenuineSpareParts() {
                   {/* Specs List */}
                   <div className="mt-8 space-y-4">
                     <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
-                      <span className="text-white/70 font-mono">VOLTAGE CLASS</span>
-                      <span className="text-white font-mono font-bold drop-shadow-md">{activePart.hud.voltage}</span>
+                      <span className="hud-spec-label text-white/70 font-mono">VOLTAGE CLASS</span>
+                      <span className="hud-spec-value keep-white text-white font-mono font-bold drop-shadow-md">{activePart.hud.voltage}</span>
                     </div>
                     <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
-                      <span className="text-white/70 font-mono">EFFICIENCY / DENSITY</span>
-                      <span className="text-white font-mono font-bold drop-shadow-md">{activePart.hud.density}</span>
+                      <span className="hud-spec-label text-white/70 font-mono">EFFICIENCY / DENSITY</span>
+                      <span className="hud-spec-value keep-white text-white font-mono font-bold drop-shadow-md">{activePart.hud.density}</span>
                     </div>
                     <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
-                      <span className="text-white/70 font-mono">BMS CONFIGURATION</span>
-                      <span className="text-white font-mono font-bold drop-shadow-md">{activePart.hud.config}</span>
+                      <span className="hud-spec-label text-white/70 font-mono">BMS CONFIGURATION</span>
+                      <span className="hud-spec-value keep-white text-white font-mono font-bold drop-shadow-md">{activePart.hud.config}</span>
                     </div>
                     <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
-                      <span className="text-white/70 font-mono">THERMAL COEFFICIENT</span>
-                      <span className="text-[#00D084] font-mono font-bold drop-shadow-md">{activePart.hud.thermal}</span>
+                      <span className="hud-spec-label text-white/70 font-mono">THERMAL COEFFICIENT</span>
+                      <span className="hud-spec-thermal text-[#00D084] font-mono font-bold drop-shadow-md">{activePart.hud.thermal}</span>
                     </div>
                   </div>
 
                   {/* Assurance points */}
                   <ul className="mt-8 space-y-3">
-                    <li className="flex items-center gap-2.5 text-xs text-white font-medium drop-shadow-md">
+                    <li className="flex items-center gap-2.5 text-xs text-white font-medium drop-shadow-md keep-white">
                       <Check className="h-4 w-4 text-[#00D084]" />
-                      <span>100% Genuine OEM Standards</span>
+                      <span className="keep-white text-white">100% Genuine OEM Standards</span>
                     </li>
-                    <li className="flex items-center gap-2.5 text-xs text-white font-medium drop-shadow-md">
+                    <li className="flex items-center gap-2.5 text-xs text-white font-medium drop-shadow-md keep-white">
                       <Check className="h-4 w-4 text-[#00D084]" />
-                      <span>12-Month Replacement Warranty</span>
+                      <span className="keep-white text-white">12-Month Replacement Warranty</span>
                     </li>
                   </ul>
                 </div>
@@ -1530,12 +1525,12 @@ function GenuineSpareParts() {
                 {/* Order action */}
                 <div className="mt-12 pt-6 border-t border-white/10 flex items-center justify-between gap-6">
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-white/70 font-mono uppercase font-bold">Catalogue Price</span>
-                    <span className="text-xl font-bold text-white font-mono mt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">{activePart.price}</span>
+                    <span className="hud-price-label text-[10px] text-white/70 font-mono uppercase font-bold">Catalogue Price</span>
+                    <span className="hud-price-value keep-white text-xl font-bold text-white font-mono mt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">{activePart.price}</span>
                   </div>
                   <a
                     href="#warehouse"
-                    className="rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
+                    className="hud-order-btn rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
                     style={{ background: "#00D084", color: "#020403" }}
                   >
                     <ShoppingCart className="h-4 w-4" />
@@ -1554,33 +1549,31 @@ function GenuineSpareParts() {
                 <StaggerItem
                   key={i}
                   onMouseEnter={() => setHoveredIdx(i)}
-                  className={`spare-part-card group bg-[#050806] border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer relative overflow-hidden ${isHovered
-                      ? "border-[#00D084]/50 bg-[#070c09] shadow-[0_15px_30px_-10px_rgba(0,208,132,0.15)]"
-                      : "border-white/10 hover:border-white/20 hover:bg-[#070b08]"
+                  className={`spare-part-card keep-dark-card group rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer relative overflow-hidden ${isHovered ? "is-active" : ""
                     }`}
                 >
                   {/* Card Background Graphic Visual - Properly Visible */}
                   <div className="absolute right-0 top-0 bottom-0 w-1/2 md:w-[55%] pointer-events-none opacity-90 group-hover:opacity-100 transition-all duration-500 overflow-hidden rounded-r-2xl z-0">
                     <img src={part.bgImg} alt={part.title} className="w-full h-full object-cover object-center filter saturate-125 brightness-110 contrast-105 transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#050806] via-[#050806]/35 to-transparent" />
+                    <div className="spare-part-img-overlay absolute inset-0 pointer-events-none" />
                   </div>
 
                   <div className="relative z-10">
-                    <div className={`w-11 h-11 rounded-2xl flex items-center justify-center transition-colors duration-300 backdrop-blur-md shadow-md ${isHovered ? "bg-[#00D084]/25 text-[#00D084] border border-[#00D084]/50 shadow-[0_0_15px_rgba(0,208,132,0.3)]" : "bg-black/60 text-[#00D084] border border-white/20"
+                    <div className={`spare-part-icon-box w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-md ${isHovered ? "is-active" : ""
                       }`}>
                       {part.icon}
                     </div>
-                    <h3 className="text-white font-bold text-base mt-4 group-hover:text-[#00D084] transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    <h3 className={`spare-part-title font-bold text-base mt-4 transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] ${isHovered ? "text-[#00D084]" : "keep-white text-white"}`}>
                       {part.title}
                     </h3>
-                    <p className="text-xs text-white/95 mt-2 leading-relaxed font-medium max-w-[210px] drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)]">
+                    <p className="spare-part-desc keep-white text-xs text-white/95 mt-2 leading-relaxed font-medium max-w-[210px] drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)]">
                       {part.desc}
                     </p>
                   </div>
 
-                  <div className="mt-8 pt-4 border-t border-white/15 flex items-center justify-between relative z-10">
-                    <span className="text-xs font-mono font-black text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">{part.price}</span>
-                    <span className="text-[10px] text-[#00D084] font-mono group-hover:translate-x-1 transition-transform flex items-center gap-1 font-black px-2 py-0.5 rounded bg-black/60 backdrop-blur-md border border-[#00D084]/30 shadow-md">
+                  <div className="spare-part-footer mt-8 pt-4 flex items-center justify-between relative z-10">
+                    <span className="spare-part-price keep-white text-xs font-mono font-black text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">{part.price}</span>
+                    <span className="spare-part-spec-btn text-[10px] font-mono group-hover:translate-x-1 transition-transform flex items-center gap-1 font-black px-2 py-0.5 rounded backdrop-blur-md shadow-md">
                       SPEC &gt;
                     </span>
                   </div>
@@ -4566,28 +4559,6 @@ function PartsWarehouse() {
             opacity="0.9"
           />
 
-          {/* 1 static navigation dot in the center of the arc */}
-          <g className="pointer-events-auto">
-            {/* Mid ring — white */}
-            <circle
-              cx={centerDot.x} cy={centerDot.y}
-              r={9}
-              fill="none"
-              stroke="white"
-              strokeWidth={1}
-              opacity={0.4}
-              className="arc-dot"
-            />
-            {/* Core — white (Pulses slightly using the dotGlow filter) */}
-            <circle
-              cx={centerDot.x} cy={centerDot.y}
-              r={3.5}
-              fill="white"
-              opacity={0.95}
-              className="arc-dot"
-              filter="url(#dotGlowF)"
-            />
-          </g>
         </svg>
       </div>
 
@@ -4598,9 +4569,9 @@ function PartsWarehouse() {
         <div className="lg:col-span-5 flex flex-col justify-center lg:h-full py-6 lg:py-12">
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 px-4 py-1.5 mb-8 w-max">
-            <Store className="w-3.5 h-3.5 text-[#00D084]" />
-            <span className="text-[10px] uppercase tracking-[0.22em] text-[#00D084] font-medium font-mono">
+          <div className="warehouse-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 w-max">
+            <Store className="w-3.5 h-3.5 warehouse-badge-icon" />
+            <span className="warehouse-badge-text text-[10px] uppercase tracking-[0.22em] font-medium font-mono">
               Multi-brand parts warehouse
             </span>
           </div>
@@ -4634,9 +4605,6 @@ function PartsWarehouse() {
                     ref={(el) => { itemsRef.current[i] = el; }}
                     className="warehouse-step-item w-full lg:h-[160px] flex flex-col justify-center shrink-0"
                   >
-                    <span className="text-[13px] md:text-[14px] font-mono text-[#00D084]/65 tracking-[0.3em] uppercase block mb-2">
-                      {step.num} / 04
-                    </span>
                     <h3 className="text-2xl md:text-[1.75rem] font-sans font-semibold text-white leading-snug mb-3">
                       {step.title}
                     </h3>
@@ -4666,74 +4634,27 @@ function PartsWarehouse() {
             </div>
           </div>
 
-          {/* Diagnostic Viewport Panel */}
-          <div className="warehouse-panel relative w-full aspect-[3/3.6] max-w-[340px] shrink-0 border border-white/8 bg-black/85 backdrop-blur-2xl overflow-hidden hidden lg:flex items-center justify-center">
+          {/* Showcase Viewport Panel */}
+          <div className="warehouse-panel relative w-full aspect-[3/3.6] max-w-[340px] shrink-0 border border-white/10 bg-black/85 backdrop-blur-2xl overflow-hidden hidden lg:flex items-center justify-center">
 
             {/* Grid texture */}
-            <div className="absolute inset-0 grid-scanner-bg opacity-55 pointer-events-none" />
+            <div className="absolute inset-0 grid-scanner-bg opacity-35 pointer-events-none" />
 
             {/* Emerald ambient background glow */}
             <div
-              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[45%] rounded-full blur-[80px] pointer-events-none transition-opacity duration-1000"
-              style={{ background: "rgba(0,208,132,0.06)" }}
+              className="absolute inset-0 w-full h-full rounded-full blur-[90px] pointer-events-none transition-opacity duration-1000"
+              style={{ background: "radial-gradient(circle at center, rgba(0,208,132,0.15) 0%, transparent 70%)" }}
             />
 
-            {/* Scanline overlay */}
-            <div className="absolute inset-x-0 h-2 bg-[#00D084]/12 blur-[3px] top-0 animate-scanline pointer-events-none" />
-            <div className="absolute inset-x-0 h-px bg-white/25 top-0 animate-scanline pointer-events-none" />
-
-            {/* Corner brackets */}
-            <div className="absolute top-5 left-5 w-5 h-5 border-t border-l border-[#00D084]/45" />
-            <div className="absolute top-5 right-5 w-5 h-5 border-t border-r border-[#00D084]/45" />
-            <div className="absolute bottom-5 left-5 w-5 h-5 border-b border-l border-[#00D084]/45" />
-            <div className="absolute bottom-5 right-5 w-5 h-5 border-b border-r border-[#00D084]/45" />
-
-            {/* HUD top label */}
-            <div className="warehouse-hud-label absolute top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono tracking-[0.32em] text-[#00D084]/50 uppercase select-none whitespace-nowrap">
-              [ SYSTEM VIEWPORT v2.0 ]
-            </div>
-
-            {/* Feature label top-left */}
-            <div className="absolute top-[3.2rem] left-7 text-[8px] font-mono text-[#00D084]/45 select-none tracking-[0.15em] uppercase transition-all duration-400">
-              FEAT:{steps[activeIndex].num} · {steps[activeIndex].title.toUpperCase()}
-            </div>
-
-            {/* Status LEDs top-right */}
-            <div className="absolute top-[3.2rem] right-7 flex flex-col gap-1.5">
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] block animate-pulse" />
-                <span className="text-[8px] font-mono text-[#00D084]/45">SYS.ONLINE</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D084]/60 block animate-pulse" style={{ animationDelay: "0.6s" }} />
-                <span className="text-[8px] font-mono text-[#00D084]/45">CAT.ACTIVE</span>
-              </div>
-            </div>
-
-            {/* Rotating scanner rings */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[82%] h-[82%] rounded-full border border-[#00D084]/5 border-dashed animate-[spin_70s_linear_infinite]" />
-              <div className="absolute w-[55%] h-[55%] rounded-full border border-[#00D084]/5 border-dashed animate-[spin_45s_linear_infinite_reverse]" />
-            </div>
-
-            {/* Coordinate labels bottom */}
-            <div className="warehouse-coord-label absolute bottom-5 left-7 text-[8px] font-mono text-[#9ca3af]/50 select-none">
-              COORD: <span className="text-[#00D084]/65">28.614 // 77.209</span>
-            </div>
-            <div className="absolute bottom-5 right-7 text-[8px] font-mono text-[#00D084]/50 flex items-center gap-1.5 select-none">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] inline-block animate-pulse" />
-              SCANNER ACTIVE
-            </div>
-
-            {/* ── Morphing content with crossfade ── */}
-            <div className="relative z-10 w-full h-full flex items-center justify-center p-8 pt-16 pb-14">
+            {/* ── Morphing content with clean smooth transition ── */}
+            <div className="relative z-10 w-full h-full flex items-center justify-center p-8">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
-                  initial={{ opacity: 0, scale: 0.95, y: 12, filter: "blur(4px)" }}
-                  animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, scale: 0.98, y: -12, filter: "blur(2px)" }}
-                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  initial={{ opacity: 0, scale: 0.88, y: 22 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.92, y: -22 }}
+                  transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
                   className="w-full h-full flex items-center justify-center"
                 >
                   {activeIndex === 0 && (
@@ -4774,20 +4695,6 @@ function PartsWarehouse() {
                 </motion.div>
               </AnimatePresence>
             </div>
-
-            {/* Scanner sweep overlay — fires on each feature change */}
-            <AnimatePresence>
-              <motion.div
-                key={`sweep-${activeIndex}`}
-                initial={{ y: "-110%", opacity: 1 }}
-                animate={{ y: "210%", opacity: 0 }}
-                transition={{ duration: 0.72, ease: "linear" }}
-                className="absolute inset-x-0 h-10 pointer-events-none z-30"
-                style={{
-                  background: "linear-gradient(to bottom, transparent, rgba(0,208,132,0.18) 40%, rgba(0,208,132,0.12) 60%, transparent)",
-                }}
-              />
-            </AnimatePresence>
 
           </div>
         </div>
@@ -4854,19 +4761,21 @@ function ResourcesJourney() {
         0
       );
 
-      // Fade up inner elements
+      // Fade up inner elements - only for subsequent cards (card 0 is already visible from start)
       const cards = gsap.utils.toArray('.resource-content');
       cards.forEach((card: any, index: number) => {
-        tl.fromTo(card,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.2,
-            ease: "power2.out",
-          },
-          index * 0.3 // stagger their fade-in via the scrub timeline
-        );
+        if (index > 0) {
+          tl.fromTo(card,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.25,
+              ease: "power2.out",
+            },
+            index * 0.3
+          );
+        }
       });
 
     }, container);
@@ -4879,16 +4788,18 @@ function ResourcesJourney() {
         {RESOURCES.map((res, i) => (
           <div key={res.id} className="w-[100vw] h-full relative flex items-center justify-center p-6 md:p-12 lg:p-24">
 
-            {/* Background Image with Parallax & Crisp Visibility */}
+            {/* Background Image with Parallax & Soft Contrast Overlays */}
             <div className="absolute inset-0 z-0">
               <img
                 src={res.img}
                 alt={res.title}
-                className="w-full h-full object-cover object-center opacity-100 transition-all duration-700"
+                className="w-full h-full object-cover object-center opacity-90 transition-all duration-700"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/40 pointer-events-none" />
             </div>
 
-            <div className="resource-content relative z-10 w-full max-w-[1400px] flex flex-col md:flex-row gap-12 lg:gap-24 items-center opacity-0 translate-y-12">
+            <div className={`resource-content relative z-10 w-full max-w-[1400px] flex flex-col md:flex-row gap-12 lg:gap-24 items-center ${i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
 
               {/* Text Content */}
               <div className="md:w-1/2 flex flex-col">
@@ -4907,8 +4818,8 @@ function ResourcesJourney() {
 
               {/* Card Content */}
               <div className="md:w-1/2 w-full">
-                <div className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-[#0a0f0c]/80 backdrop-blur-2xl p-8 md:p-12 transition-all hover:bg-white/[0.04] shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#00D084]/5 to-transparent pointer-events-none" />
+                <div className="resource-journey-card group relative overflow-hidden rounded-[32px] border border-white/15 p-8 md:p-12 transition-all shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#00D084]/5 via-white/[0.04] to-transparent pointer-events-none" />
 
                   <div className="relative z-10 flex flex-col h-full min-h-[280px]">
                     <h3 className="text-2xl md:text-3xl font-semibold text-white mb-4 leading-snug">
@@ -5795,10 +5706,10 @@ function QuickAccessSidebar() {
       {/* Floating Trigger Button on the right edge */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#050806]/95 border border-[#00D084]/40 hover:border-[#00D084] text-white w-10 h-28 rounded-l-2xl flex flex-col items-center justify-center gap-2.5 cursor-pointer shadow-[0_0_20px_rgba(0,208,132,0.15)] transition-all duration-300 hover:pr-2 select-none group"
+        className="quick-access-trigger fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#050806]/95 border border-[#00D084]/40 hover:border-[#00D084] text-white w-10 h-28 rounded-l-2xl flex flex-col items-center justify-center gap-2.5 cursor-pointer shadow-[0_0_20px_rgba(0,208,132,0.15)] transition-all duration-300 hover:pr-2 select-none group"
       >
         <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
-        <span className="text-[10px] font-bold font-mono tracking-widest uppercase text-white/80 group-hover:text-white transition-colors flex items-center justify-center"
+        <span className="quick-access-text keep-white text-[10px] font-bold font-mono tracking-widest uppercase text-white group-hover:text-white transition-colors flex items-center justify-center"
           style={{ writingMode: "vertical-lr" }}
         >
           QUICK ACCESS
@@ -5877,17 +5788,17 @@ function QuickAccessSidebar() {
                 {/* 3. 24/7 Assistance */}
                 <a
                   href="tel:+919582390001"
-                  className="bg-[#050806] border border-white/5 hover:border-[#00D084]/30 rounded-2xl p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group block transition-all cursor-pointer"
+                  className="bg-[#050806] keep-dark-card border border-white/5 hover:border-[#00D084]/30 rounded-2xl p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group block transition-all cursor-pointer"
                 >
-                  <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-4 text-xs font-bold text-white/90 text-left">
+                  <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-4 text-xs font-bold text-white/90 text-left keep-white">
                     <PhoneCall className="h-4 w-4 text-[#00D084]" />
-                    <span>24/7 Assistance</span>
+                    <span className="text-white keep-white">24/7 Assistance</span>
                   </div>
 
                   <div className="w-12 h-12 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.1)] mb-3 group-hover:scale-110 transition-transform">
                     <PhoneCall className="h-5 w-5 animate-pulse" />
                   </div>
-                  <span className="text-white font-extrabold text-sm tracking-wider group-hover:text-[#00D084] transition-colors">+91 95823 90001</span>
+                  <span className="text-white keep-white font-extrabold text-sm tracking-wider group-hover:text-[#00D084] transition-colors">+91 95823 90001</span>
                   <span className="text-[10px] text-white/40 mt-1 font-mono">24/7 Emergency Support</span>
                 </a>
 
@@ -5895,11 +5806,11 @@ function QuickAccessSidebar() {
                 <a
                   href="#nearest-center"
                   onClick={() => setIsOpen(false)}
-                  className="bg-[#050806] border border-white/5 hover:border-[#00D084]/30 rounded-2xl p-5 flex flex-col relative overflow-hidden block transition-all cursor-pointer"
+                  className="bg-[#050806] keep-dark-card border border-white/5 hover:border-[#00D084]/30 rounded-2xl p-5 flex flex-col relative overflow-hidden block transition-all cursor-pointer"
                 >
-                  <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-4 text-xs font-bold text-white/90">
+                  <div className="flex items-center gap-2 w-full border-b border-white/5 pb-2.5 mb-4 text-xs font-bold text-white/90 keep-white">
                     <MapPin className="h-4 w-4 text-[#00D084]" />
-                    <span>Find Nearest Centre</span>
+                    <span className="text-white keep-white">Find Nearest Centre</span>
                   </div>
 
                   <div className="h-20 bg-black/85 border border-white/5 rounded-xl relative overflow-hidden flex items-center justify-center">

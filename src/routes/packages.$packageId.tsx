@@ -80,16 +80,14 @@ function PackageDetails() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative w-full h-[70vh] md:h-[80vh] min-h-[600px] overflow-hidden flex items-end">
+      <section className="page-hero relative w-full h-[70vh] md:h-[80vh] min-h-[600px] overflow-hidden flex items-end">
         <div className="absolute inset-0 bg-[#050906]">
           <img 
             ref={imageRef}
             src={pkg.img} 
             alt={pkg.title} 
-            className="w-full h-[120%] object-cover opacity-50 filter grayscale"
+            className="w-full h-[120%] object-cover opacity-100"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050906] via-[#050906]/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050906]/80 to-transparent" />
         </div>
 
         <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 pb-20">

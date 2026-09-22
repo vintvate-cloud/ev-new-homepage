@@ -91,9 +91,6 @@ function ContactPage() {
       {/* Navigation Header */}
       <Nav onOpenBooking={() => setBookingModalOpen(true)} />
 
-      {/* Background Emerald Radial Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-[#00D084]/15 via-[#00D084]/5 to-transparent blur-[170px] pointer-events-none z-0" />
-
       {/* Massive Semi-Transparent Watermark Title "CONTACT" */}
       <div className="absolute top-16 sm:top-20 lg:top-24 left-1/2 -translate-x-1/2 text-[9rem] sm:text-[15rem] lg:text-[20rem] font-black contact-bg-watermark tracking-widest pointer-events-none select-none uppercase font-mono z-0 leading-none">
         CONTACT
@@ -144,7 +141,7 @@ function ContactPage() {
       {/* =========================================================================
           1. HERO & CONTACT HUB (Matching Screenshot Layout with User Details)
          ========================================================================= */}
-      <section className="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto">
+      <section className="page-hero relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
           {/* Left Column: Get in Touch & 4 Contact Cards */}
           <div className="lg:col-span-5 flex flex-col justify-between">

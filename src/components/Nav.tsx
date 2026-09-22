@@ -167,10 +167,12 @@ export function Nav({
               src="/logo.jpeg"
               alt="My EV Service Logo"
               className={`w-auto rounded-xl object-cover scale-125 transition-all duration-300 group-hover:scale-135 ${scrolled ? "h-11 sm:h-12" : "h-14 sm:h-16 lg:h-16"
-                } ${siteTheme === "light"
-                  ? "border border-black/10 shadow-md bg-white"
-                  : "border border-white/20 shadow-[0_0_15px_rgba(0,0,0,0.6)] bg-black"
                 }`}
+              style={{
+                backgroundColor: "var(--nav-logo-bg)",
+                border: "var(--nav-logo-border)",
+                boxShadow: "0 0 15px rgba(0,0,0,0.4)",
+              }}
             />
           </Link>
 
@@ -181,17 +183,17 @@ export function Nav({
                 : "pl-4 sm:pl-5 pr-6 py-2.5 rounded-full"
               }`}
             style={{
-              background: siteTheme === "light" ? "rgba(255, 255, 255, 0.95)" : "rgba(10, 10, 10, 0.85)",
+              background: "var(--nav-bg)",
               backdropFilter: "blur(20px)",
-              border: siteTheme === "light" ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.08)",
-              boxShadow: siteTheme === "light" ? "0 4px 24px rgba(0,0,0,0.06)" : "0 4px 24px rgba(0,0,0,0.4)",
+              border: "var(--nav-border)",
+              boxShadow: "var(--nav-shadow)",
             }}
           >
             <Link to="/" className="flex items-center gap-2 group">
               <span
                 id="nav-logo-text"
-                className={`text-[14px] font-bold tracking-[0.15em] uppercase transition-colors ${siteTheme === "light" ? "text-black" : "text-white"
-                  }`}
+                className="text-[14px] font-bold tracking-[0.15em] uppercase transition-colors"
+                style={{ color: "var(--nav-text)" }}
               >
                 MY EV SERVICE
               </span>
@@ -456,12 +458,13 @@ export function Nav({
             <div className="flex items-center gap-2">
               {/* Theme Toggle Button (Circular Sun Icon matching screenshot) */}
               <button
-                onClick={() => setSiteTheme(siteTheme === "light" ? "dark" : "light")}
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${siteTheme === "light"
-                    ? "border-black/20 text-black hover:bg-black/5"
-                    : "border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/10"
-                  }`}
-                title={siteTheme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
+                onClick={toggleTheme}
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer hover:bg-white/10"
+                style={{
+                  border: "1px solid var(--nav-btn-border)",
+                  color: "var(--nav-btn-text)",
+                }}
+                title="Switch Theme Mode"
               >
                 <Sun className="w-4 h-4" />
               </button>
@@ -475,11 +478,11 @@ export function Nav({
                     onOpenCart();
                   }
                 }}
-                className={`relative w-9 h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
-                  siteTheme === "light"
-                    ? "border-black/20 text-black hover:bg-black/5"
-                    : "border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/10"
-                }`}
+                className="relative w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer hover:bg-white/10"
+                style={{
+                  border: "1px solid var(--nav-btn-border)",
+                  color: "var(--nav-btn-text)",
+                }}
                 title="EV Store & Accessories"
               >
                 <ShoppingCart className="w-4 h-4" />
@@ -493,10 +496,11 @@ export function Nav({
               {/* Login Button (Pill button with User Icon matching screenshot) */}
               <Link
                 to="/login"
-                className={`hidden sm:flex px-4 py-2 rounded-full border text-xs font-medium items-center gap-2 transition-all cursor-pointer ${siteTheme === "light"
-                    ? "border-black/20 text-black hover:bg-black/5"
-                    : "border-white/20 text-white/90 hover:text-white hover:border-white/40 hover:bg-white/10"
-                  }`}
+                className="hidden sm:flex px-4 py-2 rounded-full text-xs font-medium items-center gap-2 transition-all cursor-pointer hover:bg-white/10"
+                style={{
+                  border: "1px solid var(--nav-btn-border)",
+                  color: "var(--nav-btn-text)",
+                }}
               >
                 <User className="w-4 h-4" />
                 <span>Login</span>

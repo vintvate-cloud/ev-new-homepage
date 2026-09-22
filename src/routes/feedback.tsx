@@ -69,7 +69,7 @@ function FeedbackPage() {
           {/* =========================================================================
               LEFT COLUMN: FULL HEIGHT PANEL WITH CURVED RIGHT BORDER
              ========================================================================= */}
-          <div className="lg:col-span-5 bg-[#0b0f0c] border-r border-white/15 rounded-r-[40px] p-8 sm:p-12 lg:p-16 flex flex-col justify-center space-y-6">
+          <div className="page-hero lg:col-span-5 bg-[#0b0f0c] border-r border-white/15 rounded-r-[40px] p-8 sm:p-12 lg:p-16 flex flex-col justify-center space-y-6">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
               Feedback &amp; <br />
               <span className="text-[#00D084]">Report an Issue</span>

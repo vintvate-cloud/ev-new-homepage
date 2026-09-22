@@ -355,32 +355,29 @@ function EVNewsPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0 BEHIND NAVBAR)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Hero Image */}
           <img
             key={currentHero.id}
             src={currentHero.img}
             alt={currentHero.title}
-            className="w-full h-full object-cover object-center opacity-85 pointer-events-none transition-all duration-700 animate-in fade-in duration-500"
+            className="w-full h-full object-cover object-center opacity-100 pointer-events-none transition-all duration-700 animate-in fade-in duration-500"
           />
-
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/70 to-black/50 pointer-events-none" />
 
           {/* Hero Content Container */}
           <div
             ref={heroTextRef}
             className="absolute inset-0 w-full max-w-5xl mx-auto flex flex-col justify-end pb-28 sm:pb-32 lg:pb-36 px-6 sm:px-12 lg:px-16 space-y-4 z-10 text-left pointer-events-auto"
           >
-            <span className="text-xs font-sans font-semibold uppercase text-[#00D084] tracking-widest block drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+            <span className="text-xs font-sans font-semibold uppercase text-[#00D084] tracking-widest block">
               {currentHero.category} • {currentHero.date}
             </span>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-[-0.04em] !text-white leading-[1.08] drop-shadow-[0_4px_25px_rgba(0,0,0,0.98)] max-w-4xl">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-[-0.04em] !text-white leading-[1.08] max-w-4xl">
               {currentHero.title}
             </h1>
 
-            <p className="text-xs sm:text-sm font-sans font-medium text-white/90 leading-relaxed max-w-2xl line-clamp-2 drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
+            <p className="text-xs sm:text-sm font-sans font-medium text-white/90 leading-relaxed max-w-2xl line-clamp-2">
               {currentHero.excerpt}
             </p>
 
@@ -392,10 +389,10 @@ function EVNewsPage() {
                   className="w-11 h-11 rounded-full object-cover border-2 border-[#00D084] shadow-md"
                 />
                 <div>
-                  <span className="block text-sm font-sans font-bold text-white leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                  <span className="block text-sm font-sans font-bold text-white leading-tight">
                     {currentHero.author.name}
                   </span>
-                  <span className="block text-xs font-sans text-white/80 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                  <span className="block text-xs font-sans text-white/80">
                     {currentHero.author.role}
                   </span>
                 </div>
@@ -419,10 +416,10 @@ function EVNewsPage() {
 
                 <button
                   onClick={() => handleOpenArticle(currentHero)}
-                  className="px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest flex items-center gap-2 hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] hover:scale-105 cursor-pointer"
+                  className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] hover:scale-105 cursor-pointer"
                 >
                   <span>READ FULL STORY</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 shrink-0" />
                 </button>
               </div>
             </div>

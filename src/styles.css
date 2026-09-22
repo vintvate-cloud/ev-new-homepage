@@ -91,6 +91,18 @@
   --border-strong: oklch(0.98 0.01 160 / 20%);
   --input: oklch(0.98 0.01 160 / 12%);
   --ring: #00D084;
+
+  /* Navbar theme variables - Dark Default */
+  --nav-bg: rgba(10, 10, 10, 0.85);
+  --nav-border: 1px solid rgba(255, 255, 255, 0.08);
+  --nav-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --nav-text: #ffffff;
+  --nav-btn-border: rgba(255, 255, 255, 0.2);
+  --nav-btn-text: rgba(255, 255, 255, 0.8);
+  --nav-logo-bg: #000000;
+  --nav-logo-border: rgba(255, 255, 255, 0.2);
+  --nav-dropdown-bg: #080c0a;
+  --nav-dropdown-border: rgba(255, 255, 255, 0.15);
 }
 
 html,
@@ -463,6 +475,58 @@ html.theme-light .theme-mid {
   --input: rgba(0, 0, 0, 0.08);
 
   --page-bg: #ffffff;
+
+  /* Navbar theme variables - Light Mode */
+  --nav-bg: rgba(255, 255, 255, 0.95);
+  --nav-border: 1px solid rgba(0, 0, 0, 0.08);
+  --nav-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --nav-text: #000000;
+  --nav-btn-border: rgba(0, 0, 0, 0.2);
+  --nav-btn-text: #000000;
+  --nav-logo-bg: #ffffff;
+  --nav-logo-border: rgba(0, 0, 0, 0.1);
+  --nav-dropdown-bg: #ffffff;
+  --nav-dropdown-border: rgba(0, 0, 0, 0.12);
+}
+
+/* Ensure hero & bento card images have 0% shadow, 0% overlay tint, and 100% full visibility in all themes */
+.fixed.top-20 img,
+.fixed.top-0 img,
+html.theme-light .fixed.top-20 img,
+html.theme-light .fixed.top-0 img,
+.services-bg-img,
+html.theme-light .services-bg-img,
+.bento-card img,
+html.theme-light .bento-card img {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Hide ambient green blur glow blobs in light mode on general pages, but PRESERVE them in hero sections */
+html.theme-light [class*="blur-3xl"][class*="bg-[#00D084]"]:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="blur-2xl"][class*="bg-[#00D084]"]:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="blur-xl"][class*="bg-[#00D084]"]:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="blur-"][class*="bg-[#00D084]"]:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="blur-"][class*="bg-emerald-"]:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+  display: none !important;
+}
+
+/* ZERO TRANSITION ON THEME CHANGE FOR HERO SECTIONS (Hero stays completely rock-solid) */
+.page-hero,
+.page-hero *,
+.page-hero *:before,
+.page-hero *:after,
+[class*="fixed top-20"],
+[class*="fixed top-20"] *,
+[class*="fixed top-0"][class*="h-screen"],
+[class*="fixed top-0"][class*="h-screen"] *,
+section[class*="pt-36"],
+section[class*="pt-36"] *,
+section[class*="pt-32"]:not(#top),
+section[class*="pt-32"]:not(#top) *,
+section[class*="pt-28"]:not(#top),
+section[class*="pt-28"]:not(#top) * {
+  transition: none !important;
 }
 
 /* Base style transition for smooth morphing */
@@ -490,74 +554,74 @@ html.theme-light #experience,
 html.theme-light #top,
 html.theme-light footer,
 html.theme-light main,
-html.theme-light [class*="min-h-screen"]:not(.fixed),
-html.theme-light [class*="bg-[#010201]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#020302]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#020403]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#020503]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030504]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030604]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030704]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#040605]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#040805]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#040806]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050705]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050706]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050806]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050906]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050907]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050A07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050a07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050c08]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060709]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060807]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#06080A]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#06080a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060907]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060c09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070908]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070e0a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#06110a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0b120d]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#090f0b]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060b08]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030c07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030d07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070b08]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070b09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070c09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080b09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080d09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080d0a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080e0a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080f0b]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080F0B]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#090e0b]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#090f0c]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#090F0C]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#07070a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#07070A]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0a0a0f]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0a0f0c]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0a100b]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0a100d]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0b0f0c]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0b120e]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060a07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0e120f]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0e1310]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#131815]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#101015]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#141b17]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#1a1408]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-slate-950"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-slate-900"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-zinc-950"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]) {
+html.theme-light [class*="min-h-screen"]:not(.fixed):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#010201]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#020302]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#020403]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#020503]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030504]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030604]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030704]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#040605]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#040805]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#040806]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050705]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050706]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050806]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050906]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050907]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050A07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050a07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050c08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060709]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060807]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#06080A]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#06080a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060907]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070908]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070e0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#06110a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0b120d]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#090f0b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060b08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030c07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030d07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070b08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070b09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080b09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080d09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080d0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080e0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080f0b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080F0B]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#090e0b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#090f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#090F0C]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07070a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07070A]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0a0a0f]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0a0f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0a100b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0a100d]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0b0f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0b120e]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060a07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0e120f]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0e1310]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#131815]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#101015]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#141b17]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#1a1408]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-slate-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-slate-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-zinc-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *) {
   background-color: #ffffff !important;
   color: #09090b !important;
 }
@@ -588,50 +652,50 @@ html.theme-light [class*="from-[#052418]"]:not(.fixed),
 html.theme-light [class*="from-[#062015]"]:not(.fixed),
 html.theme-light [class*="via-[#052418]"]:not(.fixed),
 html.theme-light [class*="via-[#062015]"]:not(.fixed),
-html.theme-light [class*="bg-[#050b07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050907]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060b08]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030c07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030d07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0a0f0c]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#090f0c]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#090F0C]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#07070a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#07070A]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080d09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080d0a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080f0b]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#080F0B]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0a100b]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0b0f0c]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060a07]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030604]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#030704]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#020403]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#020503]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#040806]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050706]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050806]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050906]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#050c08]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060709]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060807]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#06080A]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#06080a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#060c09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070b08]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070c09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070b09]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070e0a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#06110a]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0b120d]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#090f0b]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#070908]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0e120f]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#131815]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#101015]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-[#0a0a0f]"]:not(.fixed):not([class*="inset-0"]),
-html.theme-light [class*="bg-black/"]:not(.fixed):not([class*="inset-0"]),
+html.theme-light [class*="bg-[#050b07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050907]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060b08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030c07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030d07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0a0f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#090f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#090F0C]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07070a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07070A]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080d09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080d0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080f0b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080F0B]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0a100b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0b0f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060a07]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030604]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030704]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#020403]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#020503]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#040806]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050706]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050806]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050906]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050c08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060709]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060807]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#06080A]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#06080a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070b08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070b09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070e0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#06110a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0b120d]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#090f0b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070908]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0e120f]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#131815]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#101015]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0a0a0f]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-black/"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light .bg-card {
   background-color: #ffffff !important;
   background-image: none !important;
@@ -640,17 +704,17 @@ html.theme-light .bg-card {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* Light mode overrides for form controls and inputs */
-html.theme-light input,
-html.theme-light textarea,
-html.theme-light select {
+/* Light mode overrides for form controls and inputs (EXCLUDING hero section forms) */
+html.theme-light input:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *):not([ref="heroTextRef"] *):not(#hero-partner-form *):not(.hero-form *),
+html.theme-light textarea:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *):not([ref="heroTextRef"] *):not(#hero-partner-form *):not(.hero-form *),
+html.theme-light select:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *):not([ref="heroTextRef"] *):not(#hero-partner-form *):not(.hero-form *) {
   background-color: #ffffff !important;
   color: #09090b !important;
   border-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-html.theme-light input::placeholder,
-html.theme-light textarea::placeholder {
+html.theme-light input:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *):not([ref="heroTextRef"] *):not(#hero-partner-form *):not(.hero-form *)::placeholder,
+html.theme-light textarea:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *):not([ref="heroTextRef"] *):not(#hero-partner-form *):not(.hero-form *)::placeholder {
   color: #71717a !important;
 }
 
@@ -749,19 +813,19 @@ html.theme-light .resource-bg-overlay-right {
   display: none !important;
 }
 
-/* Light mode overrides for badge pills & icons */
-html.theme-light [class*="bg-white/5"]:not(.fixed),
-html.theme-light [class*="bg-white/10"]:not(.fixed),
-html.theme-light [class*="bg-white/[0.03]"]:not(.fixed),
-html.theme-light [class*="bg-white/[0.05]"]:not(.fixed) {
+/* Light mode overrides for badge pills & icons (excluding hero sections) */
+html.theme-light [class*="bg-white/5"]:not(.fixed):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="bg-white/10"]:not(.fixed):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="bg-white/[0.03]"]:not(.fixed):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="bg-white/[0.05]"]:not(.fixed):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   background-color: #f1f5f9 !important;
   border-color: #e2e8f0 !important;
   color: #334155 !important;
 }
 
-html.theme-light [class*="bg-[#00D084]/10"],
-html.theme-light [class*="bg-[#00D084]/15"],
-html.theme-light [class*="bg-[#00D084]/20"] {
+html.theme-light [class*="bg-[#00D084]/10"]:not(.page-hero *):not([class*="fixed top-20"] *),
+html.theme-light [class*="bg-[#00D084]/15"]:not(.page-hero *):not([class*="fixed top-20"] *),
+html.theme-light [class*="bg-[#00D084]/20"]:not(.page-hero *):not([class*="fixed top-20"] *) {
   background-color: rgba(0, 181, 116, 0.12) !important;
   border-color: rgba(0, 181, 116, 0.3) !important;
   color: #008050 !important;
@@ -831,6 +895,21 @@ html.theme-light .quick-sidebar span {
   /* Chrome, Safari, Opera */
 }
 
+/* Quick Access Floating Trigger Button */
+.quick-access-trigger,
+html.theme-light .quick-access-trigger {
+  background-color: rgba(5, 8, 6, 0.95) !important;
+  color: #ffffff !important;
+}
+
+.quick-access-trigger .quick-access-text,
+.quick-access-trigger span.keep-white,
+html.theme-light .quick-access-trigger .quick-access-text,
+html.theme-light .quick-access-trigger span.keep-white,
+html.theme-light .quick-access-trigger span {
+  color: #ffffff !important;
+}
+
 /* Override inline styling for ValuePackages motion.div cards when hovered or default */
 html.theme-light [style*="background-color: rgb(13, 20, 16)"],
 html.theme-light [style*="background-color: rgb(10, 15, 12)"],
@@ -854,61 +933,351 @@ html.theme-light [style*="position: fixed"][style*="width: 90vw"] {
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18), 0 0 50px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Convert all white background opacities to dark overlays for light mode readability, excluding fixed backdrops */
-html.theme-light [class*="bg-white/"]:not(.fixed):not([class*="inset-0"]) {
+/* Convert all white background opacities to dark overlays for light mode readability, excluding fixed backdrops and hero sections */
+html.theme-light [class*="bg-white/"]:not(.fixed):not([class*="inset-0"]):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *) {
   background-color: rgba(9, 9, 11, 0.05) !important;
 }
 
-/* Convert white border opacities to subtle dark lines */
-html.theme-light [class*="border-white/"] {
+/* Convert white border opacities to subtle dark lines, excluding hero sections */
+html.theme-light [class*="border-white/"]:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *) {
   border-color: rgba(9, 9, 11, 0.08) !important;
 }
 
-/* Keep text elements crisp black/gray in light mode */
-html.theme-light h1,
-html.theme-light h2,
-html.theme-light h3,
-html.theme-light h4,
-html.theme-light h5,
-html.theme-light h6,
-html.theme-light label {
+/* Keep text elements crisp black/gray in light mode (excluding always-dark GenuineSpareParts cards and Subpage Hero Sections) */
+html.theme-light h1:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h2:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h3:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h4:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h5:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h6:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light label:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #09090b !important;
 }
 
-html.theme-light p:not(.keep-white) {
+html.theme-light p:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #334155 !important;
 }
 
 /* Transform white text with various opacities to black/charcoal in light mode */
-html.theme-light .text-white:not(.keep-white),
-html.theme-light [class*="text-white/95"]:not(.keep-white),
-html.theme-light [class*="text-white/90"]:not(.keep-white),
-html.theme-light [class*="text-white/85"]:not(.keep-white),
-html.theme-light [class*="text-white/80"]:not(.keep-white),
-html.theme-light [class*="text-white/75"]:not(.keep-white) {
+html.theme-light .text-white:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/95"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/90"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/85"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/80"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/75"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #09090b !important;
 }
 
-html.theme-light [class*="text-white/70"]:not(.keep-white),
-html.theme-light [class*="text-white/65"]:not(.keep-white),
-html.theme-light [class*="text-white/60"]:not(.keep-white),
-html.theme-light [class*="text-white/55"]:not(.keep-white),
-html.theme-light [class*="text-white/50"]:not(.keep-white) {
+html.theme-light [class*="text-white/70"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/65"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/60"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/55"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/50"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #334155 !important;
 }
 
-html.theme-light [class*="text-white/45"]:not(.keep-white),
-html.theme-light [class*="text-white/40"]:not(.keep-white),
-html.theme-light [class*="text-white/35"]:not(.keep-white),
-html.theme-light [class*="text-white/30"]:not(.keep-white) {
+html.theme-light [class*="text-white/45"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/40"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/35"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/30"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #475569 !important;
 }
 
-html.theme-light [class*="text-white/25"]:not(.keep-white),
-html.theme-light [class*="text-white/20"]:not(.keep-white),
-html.theme-light [class*="text-white/15"]:not(.keep-white),
-html.theme-light [class*="text-white/10"]:not(.keep-white) {
+html.theme-light [class*="text-white/25"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/20"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/15"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/10"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #64748b !important;
+}
+
+/* ==========================================================================
+   Subpage Hero Sections — Retain Dark Theme Text & Appearance in Light Mode
+   (All subpages retain dark-theme text colors; Landing page #top is excluded)
+   ========================================================================== */
+html.theme-light .page-hero,
+html.theme-light section[class*="pt-36"],
+html.theme-light section[class*="pt-32"]:not(#top),
+html.theme-light section[class*="pt-28"]:not(#top),
+html.theme-light [class*="fixed top-20"],
+html.theme-light [class*="fixed top-0"][class*="h-screen"] {
+  background-color: #020403 !important;
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   STRICT HERO SECTION LOCK — 100% IDENTICAL IN DARK AND LIGHT THEMES
+   (Landing page #top adapts naturally; all other pages retain pure dark hero UI)
+   ========================================================================== */
+
+/* 1. Hero Container Background & Baseline */
+html.theme-light .page-hero,
+html.theme-light [class*="fixed top-20"],
+html.theme-light [class*="fixed top-0"][class*="h-screen"],
+html.theme-light section[class*="pt-36"],
+html.theme-light section[class*="pt-32"]:not(#top),
+html.theme-light section[class*="pt-28"]:not(#top) {
+  background-color: #020403 !important;
+  color: #ffffff !important;
+}
+
+/* 2. Hero Glass Cards & Form Boxes (Never become white, stay deep dark glass) */
+html.theme-light .page-hero .hero-form,
+html.theme-light .page-hero #hero-partner-form,
+html.theme-light .page-hero [class*="bg-[#030604]"],
+html.theme-light .page-hero [class*="bg-[#020503]"],
+html.theme-light .page-hero [class*="bg-[#0e120f]"],
+html.theme-light .page-hero [class*="bg-[#050c08]"],
+html.theme-light .page-hero [class*="bg-[#050907]"],
+html.theme-light .page-hero [class*="bg-[#050706]"],
+html.theme-light .page-hero [class*="bg-[#0e1310]"],
+html.theme-light .page-hero [class*="bg-[#131815]"],
+html.theme-light .page-hero [class*="bg-[#0b0f0c]"],
+html.theme-light .page-hero [class*="bg-[#030c07]"],
+html.theme-light .page-hero [class*="bg-[#030d07]"],
+html.theme-light .page-hero [class*="bg-[#070d09]"],
+html.theme-light .page-hero [class*="bg-[#080f0b]"],
+html.theme-light [class*="fixed top-20"] .hero-form,
+html.theme-light [class*="fixed top-20"] #hero-partner-form,
+html.theme-light [class*="fixed top-20"] [class*="bg-[#030604]"],
+html.theme-light [class*="fixed top-20"] [class*="bg-[#020503]"],
+html.theme-light [class*="fixed top-20"] [class*="bg-[#030c07]"],
+html.theme-light [class*="fixed top-20"] [class*="bg-[#0b0f0c]"] {
+  background-color: rgba(3, 6, 4, 0.90) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  color: #ffffff !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* 3. Hero Form Inputs, Selects, and Textareas */
+html.theme-light .page-hero input,
+html.theme-light .page-hero textarea,
+html.theme-light .page-hero select,
+html.theme-light [class*="fixed top-20"] input,
+html.theme-light [class*="fixed top-20"] textarea,
+html.theme-light [class*="fixed top-20"] select,
+html.theme-light [class*="fixed top-0"][class*="h-screen"] input,
+html.theme-light section[class*="pt-36"] input,
+html.theme-light section[class*="pt-32"]:not(#top) input {
+  background-color: rgba(0, 0, 0, 0.70) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+html.theme-light .page-hero input:hover,
+html.theme-light .page-hero textarea:hover,
+html.theme-light [class*="fixed top-20"] input:hover {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+html.theme-light .page-hero input:focus,
+html.theme-light .page-hero textarea:focus,
+html.theme-light [class*="fixed top-20"] input:focus {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  border-color: #00D084 !important;
+}
+
+html.theme-light .page-hero input::placeholder,
+html.theme-light .page-hero textarea::placeholder,
+html.theme-light [class*="fixed top-20"] input::placeholder,
+html.theme-light [class*="fixed top-20"] textarea::placeholder,
+html.theme-light [class*="fixed top-0"][class*="h-screen"] input::placeholder,
+html.theme-light section[class*="pt-36"] input::placeholder,
+html.theme-light section[class*="pt-32"]:not(#top) input::placeholder {
+  color: rgba(255, 255, 255, 0.60) !important;
+}
+
+/* 4. Hero Headings, Subtitles, and Titles */
+html.theme-light .page-hero h1:not(#top *),
+html.theme-light .page-hero h2:not(#top *),
+html.theme-light .page-hero h3:not(#top *),
+html.theme-light .page-hero h4:not(#top *),
+html.theme-light .page-hero .hero-title,
+html.theme-light .page-hero .hero-title-reveal,
+html.theme-light [class*="fixed top-20"] h1:not(#top *),
+html.theme-light [class*="fixed top-20"] h2:not(#top *),
+html.theme-light [class*="fixed top-20"] h3:not(#top *),
+html.theme-light [class*="fixed top-0"][class*="h-screen"] h1,
+html.theme-light [class*="fixed top-0"][class*="h-screen"] h2,
+html.theme-light [class*="fixed top-0"][class*="h-screen"] h3,
+html.theme-light section[class*="pt-36"] h1,
+html.theme-light section[class*="pt-32"] h1:not(#top *),
+html.theme-light section[class*="pt-28"] h1:not(#top *) {
+  color: #ffffff !important;
+}
+
+/* 5. Hero Green Accents & Spans */
+html.theme-light .page-hero [class*="text-[#00D084]"],
+html.theme-light .page-hero span[class*="text-[#00D084]"],
+html.theme-light .page-hero .hero-title span,
+html.theme-light .page-hero .hero-title-reveal span,
+html.theme-light [class*="fixed top-20"] [class*="text-[#00D084]"],
+html.theme-light [class*="fixed top-20"] span[class*="text-[#00D084]"],
+html.theme-light [class*="fixed top-0"][class*="h-screen"] [class*="text-[#00D084]"],
+html.theme-light section[class*="pt-36"] [class*="text-[#00D084]"],
+html.theme-light section[class*="pt-32"] [class*="text-[#00D084]"]:not(#top *) {
+  color: #00D084 !important;
+}
+
+html.theme-light .page-hero [class*="text-[#c2d1c7]"],
+html.theme-light [class*="fixed top-20"] [class*="text-[#c2d1c7]"],
+html.theme-light section[class*="pt-36"] [class*="text-[#c2d1c7]"] {
+  color: #c2d1c7 !important;
+}
+
+/* 6. Hero Paragraphs, Labels, and Descriptions */
+html.theme-light .page-hero p:not([class*="text-[#00D084]"]):not([class*="text-emerald"]):not([class*="text-[#c2d1c7]"]):not(#top *),
+html.theme-light .page-hero .hero-desc,
+html.theme-light .page-hero .hero-sub-reveal,
+html.theme-light [class*="fixed top-20"] p:not([class*="text-[#00D084]"]):not([class*="text-emerald"]):not([class*="text-[#c2d1c7]"]):not(#top *),
+html.theme-light [class*="fixed top-0"][class*="h-screen"] p:not([class*="text-[#00D084]"]):not([class*="text-emerald"]):not(#top *),
+html.theme-light section[class*="pt-36"] p:not([class*="text-[#00D084]"]):not([class*="text-emerald"]),
+html.theme-light section[class*="pt-32"] p:not([class*="text-[#00D084]"]):not([class*="text-emerald"]):not(#top *) {
+  color: rgba(255, 255, 255, 0.90) !important;
+}
+
+html.theme-light .page-hero label,
+html.theme-light [class*="fixed top-20"] label,
+html.theme-light [class*="fixed top-0"][class*="h-screen"] label,
+html.theme-light section[class*="pt-36"] label,
+html.theme-light section[class*="pt-32"]:not(#top) label {
+  color: #ffffff !important;
+}
+
+/* 7. Hero White Text & Elements */
+html.theme-light .page-hero .text-white:not(#top *),
+html.theme-light .page-hero span.text-white:not(#top *),
+html.theme-light .page-hero strong.text-white:not(#top *),
+html.theme-light [class*="fixed top-20"] .text-white:not(#top *),
+html.theme-light [class*="fixed top-0"][class*="h-screen"] .text-white,
+html.theme-light section[class*="pt-36"] .text-white,
+html.theme-light section[class*="pt-32"] .text-white:not(#top *),
+html.theme-light section[class*="pt-28"] .text-white:not(#top *) {
+  color: #ffffff !important;
+}
+
+html.theme-light .page-hero [class*="text-white/95"]:not(#top *),
+html.theme-light .page-hero [class*="text-white/90"]:not(#top *),
+html.theme-light .page-hero [class*="text-white/85"]:not(#top *),
+html.theme-light .page-hero [class*="text-white/80"]:not(#top *),
+html.theme-light .page-hero [class*="text-white/70"]:not(#top *),
+html.theme-light .page-hero [class*="text-white/60"]:not(#top *),
+html.theme-light [class*="fixed top-20"] [class*="text-white/95"]:not(#top *),
+html.theme-light [class*="fixed top-20"] [class*="text-white/90"]:not(#top *),
+html.theme-light [class*="fixed top-20"] [class*="text-white/85"]:not(#top *),
+html.theme-light [class*="fixed top-20"] [class*="text-white/80"]:not(#top *),
+html.theme-light [class*="fixed top-20"] [class*="text-white/70"]:not(#top *),
+html.theme-light [class*="fixed top-20"] [class*="text-white/60"]:not(#top *) {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* 8. Hero Buttons (Primary Emerald & Secondary Black/Translucent) */
+.page-hero a,
+.page-hero button,
+[class*="fixed top-20"] a,
+[class*="fixed top-20"] button,
+[ref="heroTextRef"] a,
+[ref="heroTextRef"] button,
+html.theme-light .page-hero a,
+html.theme-light .page-hero button,
+html.theme-light [class*="fixed top-20"] a,
+html.theme-light [class*="fixed top-20"] button,
+html.theme-light [ref="heroTextRef"] a,
+html.theme-light [ref="heroTextRef"] button {
+  white-space: nowrap !important;
+}
+
+.page-hero a svg,
+.page-hero button svg,
+[class*="fixed top-20"] a svg,
+[class*="fixed top-20"] button svg,
+[ref="heroTextRef"] a svg,
+[ref="heroTextRef"] button svg,
+html.theme-light .page-hero a svg,
+html.theme-light .page-hero button svg,
+html.theme-light [class*="fixed top-20"] a svg,
+html.theme-light [class*="fixed top-20"] button svg {
+  flex-shrink: 0 !important;
+}
+
+html.theme-light .page-hero button[class*="bg-[#00D084]"]:not([class*="bg-[#00D084]/"]),
+html.theme-light .page-hero a[class*="bg-[#00D084]"]:not([class*="bg-[#00D084]/"]),
+html.theme-light [class*="fixed top-20"] button[class*="bg-[#00D084]"]:not([class*="bg-[#00D084]/"]),
+html.theme-light [class*="fixed top-20"] a[class*="bg-[#00D084]"]:not([class*="bg-[#00D084]/"]) {
+  background-color: #00D084 !important;
+  color: #020403 !important;
+  border-color: transparent !important;
+}
+
+/* Hero Badges & Accent Pills with Green Tints (100% frozen in dark mode styling) */
+.page-hero [class*="bg-[#00D084]/"],
+[class*="fixed top-20"] [class*="bg-[#00D084]/"],
+html.theme-light .page-hero [class*="bg-[#00D084]/"],
+html.theme-light [class*="fixed top-20"] [class*="bg-[#00D084]/"] {
+  background-color: rgba(0, 208, 132, 0.12) !important;
+  border-color: rgba(0, 208, 132, 0.35) !important;
+  color: #00D084 !important;
+}
+
+.page-hero [class*="bg-[#00D084]/"] *,
+[class*="fixed top-20"] [class*="bg-[#00D084]/"] *,
+html.theme-light .page-hero [class*="bg-[#00D084]/"] *,
+html.theme-light [class*="fixed top-20"] [class*="bg-[#00D084]/"] * {
+  color: #00D084 !important;
+}
+
+/* Secondary Hero Pill Buttons (Collaborate With Us, Brochure, Connect, Request...) */
+.page-hero button[class*="border-white"],
+.page-hero a[class*="border-white"],
+.page-hero button[class*="bg-[#0a0f0d]"],
+.page-hero a[class*="bg-[#0a0f0d]"],
+.page-hero button[class*="bg-black"],
+.page-hero a[class*="bg-black"],
+[class*="fixed top-20"] button[class*="border-white"],
+[class*="fixed top-20"] a[class*="border-white"],
+[class*="fixed top-20"] button[class*="bg-black"],
+[class*="fixed top-20"] a[class*="bg-black"],
+html.theme-light .page-hero button[class*="border-white"],
+html.theme-light .page-hero a[class*="border-white"],
+html.theme-light .page-hero button[class*="bg-[#0a0f0d]"],
+html.theme-light .page-hero a[class*="bg-[#0a0f0d]"],
+html.theme-light .page-hero button[class*="bg-black"],
+html.theme-light .page-hero a[class*="bg-black"],
+html.theme-light [class*="fixed top-20"] button[class*="border-white"],
+html.theme-light [class*="fixed top-20"] a[class*="border-white"],
+html.theme-light [class*="fixed top-20"] button[class*="bg-[#0a0f0d]"],
+html.theme-light [class*="fixed top-20"] a[class*="bg-[#0a0f0d]"],
+html.theme-light [class*="fixed top-20"] button[class*="bg-black"],
+html.theme-light [class*="fixed top-20"] a[class*="bg-black"],
+html.theme-light [ref="heroTextRef"] button[class*="bg-black"],
+html.theme-light [ref="heroTextRef"] a[class*="bg-black"],
+html.theme-light [ref="heroTextRef"] button[class*="border-white"],
+html.theme-light [ref="heroTextRef"] a[class*="border-white"],
+html.theme-light [ref="heroTextRef"] button[class*="bg-[#0a0f0d]"],
+html.theme-light [ref="heroTextRef"] a[class*="bg-[#0a0f0d]"] {
+  background-color: rgba(10, 15, 13, 0.85) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* 9. Hero Badges & Pills */
+html.theme-light .page-hero [class*="bg-white/5"]:not(#top *),
+html.theme-light .page-hero [class*="bg-white/10"]:not(#top *),
+html.theme-light section[class*="pt-36"] [class*="bg-white/5"],
+html.theme-light section[class*="pt-36"] [class*="bg-white/10"],
+html.theme-light section[class*="pt-32"] [class*="bg-white/5"]:not(#top *),
+html.theme-light section[class*="pt-32"] [class*="bg-white/10"]:not(#top *) {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: rgba(255, 255, 255, 0.90) !important;
+}
+
+/* 10. Suppress Ambient Blur Blobs in Hero Forms (Prevents unwanted green shadow/glow) */
+html.theme-light .page-hero .hero-form [class*="blur-"],
+html.theme-light [class*="fixed top-20"] .hero-form [class*="blur-"],
+html.theme-light .page-hero [class*="blur-"][class*="bg-[#00D084]"],
+html.theme-light [class*="fixed top-20"] [class*="blur-"][class*="bg-[#00D084]"] {
+  display: none !important;
 }
 
 /* Keep background watermark numbers (01, 02...) super faint in light mode */
@@ -945,17 +1314,17 @@ html.theme-light header .glass {
 }
 
 /* Do NOT change green colors! Preserve all green accents */
-html.theme-light [class*="text-[#00D084]"]:not(.keep-white),
-html.theme-light [class*="text-[#00B574]"]:not(.keep-white),
-html.theme-light .text-emerald-400:not(.keep-white),
-html.theme-light .text-emerald-500:not(.keep-white),
-html.theme-light .text-emerald-600:not(.keep-white) {
+html.theme-light [class*="text-[#00D084]"]:not(.keep-white):not(.page-hero *):not([class*="fixed top-20"] *),
+html.theme-light [class*="text-[#00B574]"]:not(.keep-white):not(.page-hero *):not([class*="fixed top-20"] *),
+html.theme-light .text-emerald-400:not(.keep-white):not(.page-hero *):not([class*="fixed top-20"] *),
+html.theme-light .text-emerald-500:not(.keep-white):not(.page-hero *):not([class*="fixed top-20"] *),
+html.theme-light .text-emerald-600:not(.keep-white):not(.page-hero *):not([class*="fixed top-20"] *) {
   color: #00B574 !important;
 }
 
-html.theme-light [class*="bg-[#00D084]"]:not([class*="selection:"]):not([class*="from-"]):not([class*="to-"]):not([class*="via-"]),
-html.theme-light [class*="bg-[#00B574]"]:not([class*="selection:"]):not([class*="from-"]):not([class*="to-"]):not([class*="via-"]),
-html.theme-light .bg-emerald-500 {
+html.theme-light [class*="bg-[#00D084]"]:not([class*="bg-[#00D084]/"]):not([class*="selection:"]):not([class*="from-"]):not([class*="to-"]):not([class*="via-"]):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *),
+html.theme-light [class*="bg-[#00B574]"]:not([class*="bg-[#00B574]/"]):not([class*="selection:"]):not([class*="from-"]):not([class*="to-"]):not([class*="via-"]):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *),
+html.theme-light .bg-emerald-500:not(.page-hero *):not([class*="fixed top-20"] *) {
   background-color: #00D084 !important;
 }
 
@@ -1261,33 +1630,60 @@ html.theme-light .stepper-progress {
   animation: scanSweep 0.75s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Thin ambient border glow on the viewport panel */
-@keyframes panelBorderPulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 208, 132, 0);
+/* Smooth levitating float & ambient halo for the showcase panel */
+@keyframes warehouseBoxFloat {
+  0%, 100% {
+    transform: translateY(0px);
   }
-
   50% {
-    box-shadow: 0 0 24px 2px rgba(0, 208, 132, 0.08);
+    transform: translateY(-8px);
   }
 }
 
 .warehouse-panel {
-  animation: panelBorderPulse 5s ease-in-out infinite;
+  animation: warehouseBoxFloat 5s ease-in-out infinite;
   border-radius: 28px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  box-shadow: none !important;
+}
+
+.warehouse-panel:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: none !important;
 }
 
 /* Light-mode overrides */
 html.theme-light .warehouse-panel {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border-color: rgba(0, 176, 116, 0.15) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 208, 132, 0.25) !important;
+  box-shadow: none !important;
 }
 
-html.theme-light .warehouse-panel .warehouse-hud-label,
-html.theme-light .warehouse-panel .warehouse-coord-label {
-  color: rgba(0, 128, 80, 0.6) !important;
+html.theme-light .warehouse-panel:hover {
+  box-shadow: none !important;
+}
+
+/* Warehouse Badge styling */
+.warehouse-badge {
+  background-color: rgba(0, 208, 132, 0.08) !important;
+  border: 1px solid rgba(0, 208, 132, 0.25) !important;
+}
+
+.warehouse-badge .warehouse-badge-icon,
+.warehouse-badge .warehouse-badge-text {
+  color: #00D084 !important;
+  font-weight: 600;
+}
+
+html.theme-light .warehouse-badge {
+  background-color: rgba(0, 181, 116, 0.14) !important;
+  border-color: rgba(0, 181, 116, 0.35) !important;
+}
+
+html.theme-light .warehouse-badge .warehouse-badge-icon,
+html.theme-light .warehouse-badge .warehouse-badge-text {
+  color: #007a48 !important;
+  font-weight: 700 !important;
 }
 
 /* Arc rail light-mode: white → black */
@@ -1385,3 +1781,322 @@ html.theme-light .warehouse-arc-rail .arc-label {
 .gallery-vertical-container:hover .animate-marquee-up {
   animation-play-state: paused;
 }
+
+/* ==========================================================================
+   Genuine Spare Parts & Dark Cards — 100% Identical Across Theme Changes
+   ========================================================================== */
+
+/* CAD Telemetry HUD Card */
+.cad-hud-card,
+html.theme-light .cad-hud-card,
+html.theme-light div.cad-hud-card {
+  background: linear-gradient(135deg, #050806 0%, #010201 100%) !important;
+  background-color: #050806 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+  color: #ffffff !important;
+}
+
+.cad-hud-card img,
+html.theme-light .cad-hud-card img {
+  opacity: 0.85 !important;
+  display: block !important;
+  filter: saturate(1.25) brightness(1.1) contrast(1.05) !important;
+}
+
+.hud-card-overlay,
+html.theme-light .hud-card-overlay,
+html.theme-light .cad-hud-card .hud-card-overlay {
+  background: linear-gradient(to bottom, rgba(5, 8, 6, 0.75) 0%, rgba(5, 8, 6, 0.4) 50%, rgba(1, 2, 1, 0.95) 100%) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(to bottom, rgba(5, 8, 6, 0.75) 0%, rgba(5, 8, 6, 0.4) 50%, rgba(1, 2, 1, 0.95) 100%) !important;
+  display: block !important;
+}
+
+/* CAD HUD Typography & Sub-elements (100% Dark Theme in both themes) */
+.cad-hud-card .hud-title-label,
+html.theme-light .cad-hud-card .hud-title-label,
+html.theme-light .cad-hud-card [class*="text-white/50"] {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.cad-hud-card .hud-oem-badge,
+html.theme-light .cad-hud-card .hud-oem-badge,
+html.theme-light .hud-oem-badge {
+  background-color: rgba(0, 208, 132, 0.15) !important;
+  border: 1px solid rgba(0, 208, 132, 0.3) !important;
+  color: #00D084 !important;
+}
+
+.cad-hud-card .hud-system-label,
+html.theme-light .cad-hud-card .hud-system-label {
+  color: #00D084 !important;
+}
+
+.cad-hud-card h4,
+.cad-hud-card .hud-system-type,
+html.theme-light .cad-hud-card h4,
+html.theme-light .cad-hud-card .hud-system-type,
+html.theme-light .cad-hud-card h4.keep-white {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95) !important;
+}
+
+.cad-hud-card .hud-spec-label,
+html.theme-light .cad-hud-card .hud-spec-label,
+html.theme-light .cad-hud-card [class*="text-white/70"] {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.cad-hud-card .hud-spec-value,
+html.theme-light .cad-hud-card .hud-spec-value,
+html.theme-light .cad-hud-card .hud-spec-value.keep-white {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95) !important;
+}
+
+.cad-hud-card .hud-spec-thermal,
+html.theme-light .cad-hud-card .hud-spec-thermal {
+  color: #00D084 !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95) !important;
+}
+
+.cad-hud-card li,
+.cad-hud-card li span,
+html.theme-light .cad-hud-card li,
+html.theme-light .cad-hud-card li span,
+html.theme-light .cad-hud-card li.keep-white,
+html.theme-light .cad-hud-card li span.keep-white {
+  color: #ffffff !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+}
+
+.cad-hud-card li svg,
+html.theme-light .cad-hud-card li svg {
+  color: #00D084 !important;
+  stroke: #00D084 !important;
+}
+
+.cad-hud-card [class*="border-b"],
+.cad-hud-card [class*="border-t"],
+html.theme-light .cad-hud-card [class*="border-b"],
+html.theme-light .cad-hud-card [class*="border-t"] {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.cad-hud-card .hud-price-label,
+html.theme-light .cad-hud-card .hud-price-label {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.cad-hud-card .hud-price-value,
+html.theme-light .cad-hud-card .hud-price-value,
+html.theme-light .cad-hud-card .hud-price-value.keep-white {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95) !important;
+}
+
+.cad-hud-card .hud-order-btn,
+html.theme-light .cad-hud-card .hud-order-btn {
+  background: #00D084 !important;
+  background-color: #00D084 !important;
+  color: #020403 !important;
+  box-shadow: 0 10px 25px rgba(0, 208, 132, 0.35) !important;
+}
+
+.cad-hud-card .hud-order-btn svg,
+html.theme-light .cad-hud-card .hud-order-btn svg {
+  color: #020403 !important;
+  stroke: #020403 !important;
+}
+
+/* Spare Parts Cards (100% Dark Theme in both themes) */
+.spare-part-card,
+html.theme-light .spare-part-card,
+html.theme-light [class*="spare-part-card"] {
+  background: #050806 !important;
+  background-color: #050806 !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  color: #ffffff !important;
+}
+
+.spare-part-card:hover,
+.spare-part-card.is-active,
+html.theme-light .spare-part-card:hover,
+html.theme-light .spare-part-card.is-active,
+html.theme-light [class*="spare-part-card"]:hover,
+html.theme-light [class*="spare-part-card"].is-active {
+  background: #070c09 !important;
+  background-color: #070c09 !important;
+  border-color: rgba(0, 208, 132, 0.5) !important;
+  box-shadow: 0 15px 30px -10px rgba(0, 208, 132, 0.2) !important;
+}
+
+.spare-part-card img,
+html.theme-light .spare-part-card img {
+  display: block !important;
+  opacity: 0.9 !important;
+  filter: saturate(1.25) brightness(1.1) contrast(1.05) !important;
+}
+
+.spare-part-img-overlay,
+html.theme-light .spare-part-img-overlay,
+html.theme-light .spare-part-card .spare-part-img-overlay {
+  background: linear-gradient(to right, #050806 0%, rgba(5, 8, 6, 0.35) 50%, transparent 100%) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(to right, #050806 0%, rgba(5, 8, 6, 0.35) 50%, transparent 100%) !important;
+  display: block !important;
+}
+
+/* Spare Part Icon Box */
+.spare-part-icon-box,
+html.theme-light .spare-part-icon-box {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #00D084 !important;
+}
+
+.spare-part-icon-box.is-active,
+.spare-part-card:hover .spare-part-icon-box,
+.spare-part-card.is-active .spare-part-icon-box,
+html.theme-light .spare-part-icon-box.is-active,
+html.theme-light .spare-part-card:hover .spare-part-icon-box,
+html.theme-light .spare-part-card.is-active .spare-part-icon-box {
+  background-color: rgba(0, 208, 132, 0.25) !important;
+  border-color: rgba(0, 208, 132, 0.5) !important;
+  box-shadow: 0 0 15px rgba(0, 208, 132, 0.3) !important;
+  color: #00D084 !important;
+}
+
+.spare-part-icon-box svg,
+html.theme-light .spare-part-icon-box svg {
+  color: #00D084 !important;
+  stroke: #00D084 !important;
+}
+
+/* Spare Part Card Typography */
+.spare-part-title,
+html.theme-light .spare-part-title,
+html.theme-light .spare-part-card h3,
+html.theme-light .spare-part-card .spare-part-title.keep-white {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95) !important;
+}
+
+.spare-part-card:hover .spare-part-title,
+.spare-part-card.is-active .spare-part-title,
+html.theme-light .spare-part-card:hover .spare-part-title,
+html.theme-light .spare-part-card.is-active .spare-part-title,
+html.theme-light .spare-part-card.is-active h3 {
+  color: #00D084 !important;
+}
+
+.spare-part-desc,
+html.theme-light .spare-part-desc,
+html.theme-light .spare-part-card p,
+html.theme-light .spare-part-card .spare-part-desc.keep-white {
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.95) !important;
+}
+
+.spare-part-footer,
+html.theme-light .spare-part-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.spare-part-price,
+html.theme-light .spare-part-price,
+html.theme-light .spare-part-card .spare-part-price.keep-white {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95) !important;
+}
+
+.spare-part-spec-btn,
+html.theme-light .spare-part-spec-btn,
+html.theme-light .spare-part-card .spare-part-spec-btn {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(0, 208, 132, 0.3) !important;
+  color: #00D084 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Bento Card and General keep-dark-card rules for other sections */
+html.theme-light .bento-card {
+  background-color: rgba(7, 9, 8, 0.9) !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.theme-light .bento-card h1,
+html.theme-light .bento-card h2,
+html.theme-light .bento-card h3,
+html.theme-light .bento-card h4,
+html.theme-light .bento-card p,
+html.theme-light .bento-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]),
+html.theme-light .bento-card div:not([class*="text-[#00D084]"]) {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   Hero Quick Action Pill Buttons — 100% Crisp White Text in Both Themes
+   ========================================================================== */
+.hero-action-pill,
+html.theme-light .hero-action-pill,
+html.theme-light a.hero-action-pill {
+  background-color: rgba(5, 8, 6, 0.85) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.hero-action-pill:hover,
+html.theme-light .hero-action-pill:hover,
+html.theme-light a.hero-action-pill:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.hero-action-pill span,
+.hero-action-pill .text-white,
+html.theme-light .hero-action-pill span,
+html.theme-light .hero-action-pill .text-white,
+html.theme-light .hero-action-pill .keep-white,
+html.theme-light a.hero-action-pill span,
+html.theme-light a.hero-action-pill .text-white,
+html.theme-light a.hero-action-pill .keep-white {
+  color: #ffffff !important;
+}
+
+.hero-action-pill svg.text-white,
+html.theme-light .hero-action-pill svg.text-white {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* ==========================================================================
+   Resources Journey Card — Frosted Glassmorphism Right From The Start
+   ========================================================================== */
+.resource-journey-card {
+  background: linear-gradient(135deg, rgba(25, 34, 29, 0.88) 0%, rgba(10, 15, 12, 0.94) 100%) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Light mode: Frosted Silver/Glass appearance matching Screenshot 1 */
+html.theme-light .resource-journey-card {
+  background: linear-gradient(135deg, rgba(245, 250, 247, 0.82) 0%, rgba(225, 235, 230, 0.7) 45%, rgba(195, 210, 202, 0.82) 100%) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.85) !important;
+}
+
+.resource-journey-card:hover,
+html.theme-light .resource-journey-card:hover {
+  border-color: rgba(0, 208, 132, 0.4) !important;
+  box-shadow: 0 30px 70px -15px rgba(0, 208, 132, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+}
+

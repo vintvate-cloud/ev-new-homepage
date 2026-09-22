@@ -388,7 +388,7 @@ function AwardsPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0 BEHIND NAVBAR)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Hero Image */}
           <img
             src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&auto=format&fit=crop&q=85"
@@ -398,7 +398,6 @@ function AwardsPage() {
 
           {/* Glowing Radial Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-black/40 to-black/60 pointer-events-none" />
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00D084]/15 rounded-full blur-[160px] pointer-events-none" />
 
           {/* Hero Content Container (Text slowly fades out & scales as cards rise over it) */}
           <div

@@ -56,19 +56,14 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
           <div
             className={`w-full flex items-center justify-between pointer-events-auto px-5 py-2 rounded-full transition-all duration-300 ${
               scrolled
-                ? "shadow-[0_12px_40px_rgba(0,0,0,0.4)] border"
-                : "shadow-xl border"
+                ? "shadow-[0_12px_40px_rgba(0,0,0,0.4)]"
+                : "shadow-xl"
             }`}
             style={{
-              background:
-                siteTheme === "light"
-                  ? "rgba(255, 255, 255, 0.95)"
-                  : "rgba(10, 10, 10, 0.92)",
+              background: "var(--nav-bg)",
               backdropFilter: "blur(24px)",
-              borderColor:
-                siteTheme === "light"
-                  ? "rgba(0, 0, 0, 0.1)"
-                  : "rgba(255, 255, 255, 0.12)",
+              border: "var(--nav-border)",
+              boxShadow: "var(--nav-shadow)",
             }}
           >
             {/* Left Brand Logo (Exact Screenshot Square Icon + Stacked Name) */}
@@ -82,16 +77,14 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
               </div>
               <div className="flex flex-col leading-none">
                 <span
-                  className={`text-[12px] font-black tracking-[0.14em] uppercase ${
-                    siteTheme === "light" ? "text-black" : "text-white"
-                  }`}
+                  className="text-[12px] font-black tracking-[0.14em] uppercase transition-colors"
+                  style={{ color: "var(--nav-text)" }}
                 >
                   MY EV
                 </span>
                 <span
-                  className={`text-[12px] font-black tracking-[0.14em] uppercase ${
-                    siteTheme === "light" ? "text-black" : "text-white"
-                  }`}
+                  className="text-[12px] font-black tracking-[0.14em] uppercase transition-colors"
+                  style={{ color: "var(--nav-text)" }}
                 >
                   SERVICE
                 </span>
@@ -152,24 +145,18 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
 
               {/* Cart Icon */}
               <button
-                className={`p-2 rounded-full transition-colors cursor-pointer hidden sm:flex ${
-                  siteTheme === "light"
-                    ? "text-black hover:bg-black/5"
-                    : "text-white hover:bg-white/10"
-                }`}
+                className="p-2 rounded-full transition-colors cursor-pointer hidden sm:flex hover:bg-white/10"
+                style={{ color: "var(--nav-text)" }}
                 title="View Cart"
               >
-                <ShoppingCart className="w-4 h-4 text-white" />
+                <ShoppingCart className="w-4 h-4" />
               </button>
 
               {/* Login Link */}
               <a
                 href="#login"
-                className={`hidden sm:flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 transition-colors ${
-                  siteTheme === "light"
-                    ? "text-black hover:text-[#00D084]"
-                    : "text-white hover:text-[#00D084]"
-                }`}
+                className="hidden sm:flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 transition-colors hover:text-[#00D084]"
+                style={{ color: "var(--nav-text)" }}
               >
                 <User className="w-4 h-4" />
                 <span>Login</span>

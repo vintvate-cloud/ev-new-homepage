@@ -507,16 +507,13 @@ function FranchisePage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Full-bleed premium background image */}
           <img
             src="/ev-master-workshop-hero.png"
             alt="EV Master Service Workshop Hero"
-            className="hero-bg-img w-full h-full object-cover object-center opacity-85 pointer-events-none"
+            className="hero-bg-img w-full h-full object-cover object-center opacity-100 pointer-events-none"
           />
-          {/* Subtle Dark Vignette Scrim for crystal clear legibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/60 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020403] via-transparent to-black/50 pointer-events-none" />
 
           {/* Hero Content Container (Text & Form - text slowly fades out on scroll) */}
           <div
@@ -525,23 +522,23 @@ function FranchisePage() {
           >
             {/* Left Column: Title & Text */}
             <div className="lg:col-span-7 space-y-6 text-left">
-              <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-[1.10] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+              <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-[1.10]">
                 Launch Your Own <br />
-                <span className="text-[#00D084] font-black drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+                <span className="text-[#00D084] font-black">
                   EV Service Franchise
                 </span>
               </h1>
 
-              <p className="hero-desc text-sm sm:text-base text-white font-serif font-black leading-relaxed max-w-xl drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] bg-black/60 backdrop-blur-md p-5 rounded-2xl border border-white/20">
+              <p className="hero-desc text-sm sm:text-base text-white font-serif font-black leading-relaxed max-w-xl">
                 Launch your own EV service business powered by Autobot OS, India's first AI-powered EV service automation platform. Become part of the fastest-growing EV ecosystem and build a future-ready, high-profit business in 90 days.
               </p>
 
               <div className="hero-cta flex flex-wrap items-center gap-3 pt-2">
                 <button
                   onClick={scrollToForm}
-                  className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer flex items-center gap-2 shadow-2xl"
+                  className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-2xl"
                 >
-                  Become a Partner <ArrowRight className="w-4 h-4" />
+                  <span>Become a Partner</span> <ArrowRight className="w-4 h-4 shrink-0" />
                 </button>
                 <button
                   onClick={() =>
@@ -549,9 +546,9 @@ function FranchisePage() {
                       "Franchise Brochure download link sent to your mobile/email!"
                     )
                   }
-                  className="px-7 py-3.5 rounded-full border border-white/30 bg-black/50 text-white text-xs font-serif font-black uppercase tracking-widest hover:bg-black/70 transition-all flex items-center gap-2 cursor-pointer backdrop-blur-md shadow-2xl"
+                  className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-7 py-3.5 rounded-full border border-white/25 bg-[#0a0f0d]/85 text-white text-xs font-serif font-black uppercase tracking-widest hover:bg-black/95 transition-all cursor-pointer backdrop-blur-md shadow-2xl"
                 >
-                  <Download className="w-4 h-4 text-[#00D084]" /> Download Franchise Brochure
+                  <Download className="w-4 h-4 text-[#00D084] shrink-0" /> <span>Download Franchise Brochure</span>
                 </button>
               </div>
             </div>
@@ -561,9 +558,6 @@ function FranchisePage() {
               id="hero-partner-form"
               className="hero-form lg:col-span-5 bg-[#030604]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-7 relative font-serif border border-white/20 shadow-2xl overflow-hidden"
             >
-              {/* Ambient Radial Lighting Glow */}
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[#00D084]/20 rounded-full blur-[70px] pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#00D084]/15 rounded-full blur-[60px] pointer-events-none" />
 
               <div className="mb-4 text-left relative z-10">
                 <h3 className="text-2xl sm:text-3xl font-serif font-black text-white tracking-tight drop-shadow-md">

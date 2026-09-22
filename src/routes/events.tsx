@@ -449,16 +449,13 @@ function EventsPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Hero Poster Image */}
           <img
             src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80"
             alt="EV Events Hero"
-            className="w-full h-full object-cover object-center opacity-90 pointer-events-none"
+            className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
           />
-
-          {/* Dark Overlay Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-black/40 to-black/60 pointer-events-none" />
 
           {/* Hero Content Container */}
           <div
@@ -466,23 +463,23 @@ function EventsPage() {
             className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-3xl space-y-4 z-10 pointer-events-auto text-white"
           >
             {/* Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] !text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] !text-white leading-tight">
               EV Events &amp; <span className="text-[#00D084]">Workshops</span> <br />
               Across India
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xs sm:text-sm md:text-base !text-white/90 font-light leading-relaxed max-w-xl drop-shadow-md">
+            <p className="text-xs sm:text-sm md:text-base !text-white/90 font-light leading-relaxed max-w-xl">
               Join industry leaders, learn diagnostic skills, and connect with the EV community through our national summits, workshops, and certified training programs.
             </p>
 
             <div className="pt-2">
               <a
                 href="#catalog-section"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#00D084] !text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
+                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-6 py-3 rounded-full bg-[#00D084] !text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
               >
                 <span>EXPLORE ALL EVENTS</span>
-                <ArrowRight className="w-3.5 h-3.5 stroke-[3]" />
+                <ArrowRight className="w-3.5 h-3.5 stroke-[3] shrink-0" />
               </a>
             </div>
           </div>

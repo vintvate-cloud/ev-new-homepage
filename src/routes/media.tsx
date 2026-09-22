@@ -182,7 +182,7 @@ function MediaPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Hero Poster Image - 100% Crystal Clear */}
           <img
             src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=1920&auto=format&fit=crop&q=85"
@@ -196,12 +196,12 @@ function MediaPage() {
             className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-3xl space-y-3 z-10 transition-all pointer-events-none"
           >
             {/* Title - Bold & Clear */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white leading-tight">
               Brand Assets & Media Library
             </h1>
 
             {/* Description - Bold & Clear */}
-            <p className="text-lg sm:text-xl font-bold text-white leading-relaxed max-w-2xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]">
+            <p className="text-lg sm:text-xl font-bold text-white leading-relaxed max-w-2xl">
               Download logos, banners, images and promotional materials for MY EV SERVICE
             </p>
           </div>

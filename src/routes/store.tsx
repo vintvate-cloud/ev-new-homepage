@@ -258,16 +258,13 @@ function StorePage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0 BEHIND NAVBAR)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Hero Image */}
           <img
             src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=1920&auto=format&fit=crop&q=85"
             alt="EV Accessories Store"
-            className="w-full h-full object-cover object-center opacity-70 pointer-events-none"
+            className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
           />
-
-          {/* Radial Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-black/40 to-black/60 pointer-events-none" />
 
           {/* Hero Content Container */}
           <div
@@ -275,12 +272,12 @@ function StorePage() {
             className="absolute inset-0 flex flex-col justify-center items-center px-6 sm:px-12 lg:px-16 max-w-5xl mx-auto space-y-5 z-10 text-center pointer-events-none"
           >
             {/* Title */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.04em] text-white keep-white leading-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.04em] text-white keep-white leading-tight">
               Genuine <span className="text-[#00D084] keep-white">EV Accessories</span> &amp; Gear
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-xl font-medium text-white/95 keep-white leading-relaxed max-w-3xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
+            <p className="text-base sm:text-xl font-medium text-white/95 keep-white leading-relaxed max-w-3xl">
               Upgrade your electric ride with smart helmets, portable DC fast chargers, LiFePO4 battery modules, and Bluetooth diagnostic telematics.
             </p>
           </div>

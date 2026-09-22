@@ -9,7 +9,7 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  siteTheme: "light",
+  siteTheme: "dark",
   setSiteTheme: () => {},
   toggleTheme: () => {},
 });
@@ -23,21 +23,23 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const isDocLight = document.documentElement.classList.contains("theme-light");
       return isDocLight ? "light" : "dark";
     }
-    return "light"; // Default to white (light) theme
+    return "dark"; // Default site theme is dark
   });
 
-  // Client-side mount sync to ensure DOM class and localStorage match state immediately on hydration
+  // Client-side mount sync to ensure React state, DOM class and localStorage match on hydration
   useEffect(() => {
     if (typeof window === "undefined") return;
     const saved = localStorage.getItem("theme-preference");
-    const isDocLight = document.documentElement.classList.contains("theme-light");
-
-    if (saved === "dark" || (!saved && !isDocLight)) {
+    if (saved === "dark") {
       setSiteThemeState("dark");
       document.documentElement.classList.remove("theme-light");
-    } else if (saved === "light" || (!saved && isDocLight)) {
+    } else if (saved === "light") {
       setSiteThemeState("light");
       document.documentElement.classList.add("theme-light");
+    } else {
+      const isDocLight = document.documentElement.classList.contains("theme-light");
+      const currentTheme = isDocLight ? "light" : "dark";
+      setSiteThemeState(currentTheme);
     }
   }, []);
 
@@ -58,17 +60,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setSiteTheme(nextTheme);
   };
 
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (siteTheme === "light") {
-      document.documentElement.classList.add("theme-light");
-      localStorage.setItem("theme-preference", "light");
-    } else {
-      document.documentElement.classList.remove("theme-light");
-      localStorage.setItem("theme-preference", "dark");
-    }
-  }, [siteTheme]);
-
   return (
     <ThemeContext.Provider value={{ siteTheme, setSiteTheme, toggleTheme }}>
       {children}
@@ -79,3 +70,4 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 export function useTheme() {
   return useContext(ThemeContext);
 }
+

@@ -47,7 +47,7 @@ function LoginPage() {
       {/* =========================================================================
           LEFT PANEL: ARTISTIC BRAND SHOWCASE (STAYS CINEMATIC & BOLD)
          ========================================================================= */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-[#040605] p-12 flex-col justify-between overflow-hidden select-none border-r border-white/10">
+      <div className="page-hero hidden lg:flex lg:w-1/2 relative bg-[#040605] p-12 flex-col justify-between overflow-hidden select-none border-r border-white/10">
         
         {/* Abstract Geometry & Neon Accents */}
         <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#00D084]/20 blur-[120px] pointer-events-none" />

@@ -244,19 +244,14 @@ function AboutPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center">
-          {/* Cool Blurry EV Poster Image with Parallax Zoom */}
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center">
+          {/* Clear EV Poster Image with Parallax Zoom */}
           <img
             ref={heroImageRef}
             src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=1920&auto=format&fit=crop&q=85"
             alt="MY EV SERVICE Network Hero"
-            className="w-full h-full object-cover object-center filter blur-sm scale-105 opacity-60 pointer-events-none transition-all duration-300"
+            className="w-full h-full object-cover object-center scale-105 opacity-100 pointer-events-none transition-all duration-300"
           />
-
-          {/* Ambient Lighting Overlays */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[750px] bg-[#00D084]/20 rounded-full blur-[190px] pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#030504] via-black/50 to-black/30 pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(3,5,4,0.85)_100%)] pointer-events-none" />
 
           {/* Hero Content Container (Fades & Scales out via GSAP as cards rise) */}
           <div
@@ -268,10 +263,10 @@ function AboutPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white keep-white leading-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)]"
+              className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white leading-tight"
             >
               Powering India's <br />
-              <span className="text-[#00D084] drop-shadow-[0_0_35px_rgba(0,208,132,0.5)]">Next Generation</span> EV Network
+              <span className="text-[#00D084]">Next Generation</span> EV Network
             </motion.h1>
 
             {/* Subtitle Description */}
@@ -279,7 +274,7 @@ function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-base sm:text-xl font-medium text-white/85 keep-white leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]"
+              className="text-base sm:text-xl font-medium text-white/85 leading-relaxed max-w-2xl mx-auto"
             >
               A technology-driven multi-brand electric vehicle service network built to support the rapidly growing electric mobility ecosystem in India.
             </motion.p>
@@ -293,15 +288,15 @@ function AboutPage() {
             >
               <Link
                 to="/franchise"
-                className="px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-wider hover:bg-[#00e08f] hover:scale-105 shadow-[0_0_30px_rgba(0,208,132,0.4)] transition-all cursor-pointer flex items-center gap-2"
+                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-wider hover:bg-[#00e08f] hover:scale-105 shadow-[0_0_30px_rgba(0,208,132,0.4)] transition-all cursor-pointer"
               >
-                Become a Partner <ArrowRight className="w-4 h-4" />
+                <span>Become a Partner</span> <ArrowRight className="w-4 h-4 shrink-0" />
               </Link>
               <Link
                 to="/contact"
-                className="px-8 py-3.5 rounded-full border border-white/20 bg-black/50 backdrop-blur-md text-white text-xs font-bold hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all flex items-center gap-2"
+                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-3.5 rounded-full border border-white/20 bg-[#0a0f0d]/85 text-white text-xs font-bold hover:bg-black/95 hover:border-white/40 hover:scale-105 transition-all cursor-pointer backdrop-blur-md shadow-xl"
               >
-                Collaborate With Us <Globe className="w-4 h-4 text-[#00D084]" />
+                <span>Collaborate With Us</span> <Globe className="w-4 h-4 text-[#00D084] shrink-0" />
               </Link>
             </motion.div>
           </div>
@@ -339,8 +334,6 @@ function AboutPage() {
              ========================================================================= */}
           <section ref={whoWeAreRef} className="max-w-7xl mx-auto">
             <div className="bg-[#080d0a]/90 border border-white/10 rounded-[36px] p-8 sm:p-12 lg:p-14 shadow-2xl backdrop-blur-md relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D084]/5 rounded-full blur-3xl pointer-events-none" />
-
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
                 {/* Left Column: Overlapping Dual Image Stack */}
@@ -746,10 +739,10 @@ function AboutPage() {
 
               {/* Banner Content */}
               <div className="relative z-10 max-w-2xl space-y-4">
-                <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white keep-white leading-tight drop-shadow-md">
+                <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight drop-shadow-md">
                   Let's Explore With Us
                 </h2>
-                <p className="text-xs sm:text-base text-white/80 keep-white font-light leading-relaxed max-w-xl mx-auto drop-shadow-sm">
+                <p className="text-xs sm:text-base text-white/80 font-light leading-relaxed max-w-xl mx-auto drop-shadow-sm">
                   Join India's fastest-growing multi-brand EV workshop network. Empower your business with AI diagnostics and 24/7 operational support.
                 </p>
                 

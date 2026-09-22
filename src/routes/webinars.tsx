@@ -637,7 +637,7 @@ function WebinarsPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Hero Image */}
           <img
             src="/webinar-hero.png"
@@ -652,14 +652,14 @@ function WebinarsPage() {
           >
             <h1
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4 leading-[1.10]"
-              style={{ fontWeight: 900, WebkitTextStroke: "0.6px white", textShadow: "0 3px 12px rgba(0, 0, 0, 0.85)" }}
+              style={{ fontWeight: 900, WebkitTextStroke: "0.6px white" }}
             >
-              Webinars built for <span className="text-[#00D084]" style={{ WebkitTextStroke: "0.6px #00D084", textShadow: "0 3px 12px rgba(0, 0, 0, 0.85)" }}>EV owner</span>, technicians, and franchises.
+              Webinars built for <span className="text-[#00D084]" style={{ WebkitTextStroke: "0.6px #00D084" }}>EV owner</span>, technicians, and franchises.
             </h1>
 
             <p
               className="text-base sm:text-lg md:text-xl text-white font-black max-w-3xl mx-auto mb-6 leading-relaxed"
-              style={{ fontWeight: 900, WebkitTextStroke: "0.4px white", textShadow: "0 2px 8px rgba(0, 0, 0, 0.85)" }}
+              style={{ fontWeight: 900, WebkitTextStroke: "0.4px white" }}
             >
               Practical, field-tested sessions designed for EV owners, technicians, and franchise partners to master battery diagnostics and shop automation.
             </p>
@@ -667,16 +667,16 @@ function WebinarsPage() {
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
                 href="#featured-section"
-                className="px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-[11px] font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all hover:scale-105 cursor-pointer flex items-center gap-2 shadow-lg"
+                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-[11px] font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all hover:scale-105 cursor-pointer shadow-lg"
               >
-                EXPLORE FEATURED <ArrowRight className="w-3.5 h-3.5" />
+                <span>EXPLORE FEATURED</span> <ArrowRight className="w-3.5 h-3.5 shrink-0" />
               </a>
               <button
                 onClick={() => setRequestTopicModalOpen(true)}
-                className="px-7 py-3.5 rounded-full border border-white/40 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer"
+                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-7 py-3.5 rounded-full border border-white/25 bg-[#0a0f0d]/85 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-black/95 transition-all cursor-pointer backdrop-blur-md shadow-xl"
               >
-                <HelpCircle className="w-3.5 h-3.5 text-[#00D084]" />
-                REQUEST A TOPIC
+                <HelpCircle className="w-3.5 h-3.5 text-[#00D084] shrink-0" />
+                <span>REQUEST A TOPIC</span>
               </button>
             </div>
           </div>

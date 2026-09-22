@@ -600,7 +600,7 @@ function BlogPage() {
         {/* =========================================================================
             1. INFINITE SCROLLING GALLERY HERO (MATCHING SCREENSHOT)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center border-b border-white/10">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center border-b border-white/10">
           
           {/* Columns Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 h-[170vh] -mt-[35vh] w-full overflow-hidden pointer-events-auto px-4 md:px-8 bg-black/95">

@@ -738,13 +738,6 @@ function FindServicesPage() {
   return (
     <div className="min-h-screen bg-[#070908] text-white selection:bg-[#00D084] selection:text-black font-sans relative overflow-x-hidden">
 
-      {/* ── Ambient pulsing glow behind hero ── */}
-      <motion.div
-        animate={{ scale: [1, 1.18, 1], opacity: [0.15, 0.32, 0.15] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="fixed top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#00D084]/15 rounded-full blur-[200px] pointer-events-none z-0"
-      />
-
       {/* ── Nav ── */}
       <Nav onOpenBooking={() => setBookingModalOpen(true)} />
 
@@ -754,7 +747,7 @@ function FindServicesPage() {
         {/* ===================================================================
             1. FIXED STUCK HERO
            =================================================================== */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* BG Image + parallax scrub via heroBgRef */}
           <div ref={heroBgRef} className="absolute inset-0">
             <img
@@ -763,10 +756,6 @@ function FindServicesPage() {
               className="w-full h-full object-cover object-center opacity-100"
             />
           </div>
-
-          {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(7,9,8,0.75)_100%)] pointer-events-none" />
 
           {/* Hero Content */}
           <div
@@ -790,11 +779,11 @@ function FindServicesPage() {
                 >
                   <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" /> INDIA'S #1 EV SERVICE NETWORK
                 </motion.div>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.05] drop-shadow-[0_4px_30px_rgba(0,0,0,1)]">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.05]">
                   Find Service Centers <br />
-                  <span className="text-[#00D084] font-black drop-shadow-[0_0_30px_rgba(0,208,132,0.4)]">Near You</span>
+                  <span className="text-[#00D084] font-black">Near You</span>
                 </h1>
-                <p className="text-base sm:text-lg text-white/90 font-bold leading-relaxed max-w-2xl drop-shadow-[0_2px_16px_rgba(0,0,0,1)]">
+                <p className="text-base sm:text-lg text-white/90 font-bold leading-relaxed max-w-2xl">
                   Your one-stop solution for all EV repair, maintenance and services — quick, reliable and hassle-free.
                 </p>
                 {/* Floating stat chips */}
@@ -823,8 +812,7 @@ function FindServicesPage() {
                 transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                 className="lg:col-span-5 w-full"
               >
-                <div className="bg-[#030c07]/95 border-2 border-[#00D084]/50 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] relative overflow-hidden space-y-5 text-left keep-white">
-                  <div className="absolute top-0 right-0 w-40 h-40 bg-[#00D084]/20 rounded-full blur-3xl pointer-events-none" />
+                <div className="bg-[#030c07]/95 border border-white/20 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-2xl relative overflow-hidden space-y-5 text-left">
 
                   <AnimatePresence>
                     {inlineBookingOpen && (

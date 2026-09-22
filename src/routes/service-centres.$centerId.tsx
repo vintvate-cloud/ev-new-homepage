@@ -653,15 +653,13 @@ export function ServiceCentresPage() {
       {/* =========================================================================
           1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
          ========================================================================= */}
-      <div className="fixed top-0 left-0 right-0 h-screen w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center pt-20">
+      <div className="page-hero fixed top-0 left-0 right-0 h-screen w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center pt-20">
         {/* Background Hero Poster Image - Realistic, bright, zero heavy black flare */}
         <img
           src="/ev-service-centre-real-hero.png"
           alt="EV PRO Service Centre"
-          className="w-full h-full object-cover object-center opacity-90 pointer-events-none"
+          className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
         />
-        {/* Subtle scrim overlay for crisp text readability without heavy black flares */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-black/55 pointer-events-none" />
 
         {/* Hero Content Container (Fades out & scales via GSAP on scroll) */}
         <div
@@ -677,7 +675,7 @@ export function ServiceCentresPage() {
               </div>
 
               <div className="space-y-2">
-                <h1 className="text-4xl sm:text-6xl font-serif font-black tracking-tight text-white leading-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
+                <h1 className="text-4xl sm:text-6xl font-serif font-black tracking-tight text-white leading-none">
                   EV PRO Service Centre
                 </h1>
                 <p className="text-lg sm:text-xl font-serif font-extrabold text-[#00D084]">
@@ -723,8 +721,7 @@ export function ServiceCentresPage() {
             </div>
 
             {/* Right Column: Find Your Service Centre Interactive Form (Matching find-services.tsx) */}
-            <div className="lg:col-span-5 bg-[#030c07]/95 border-2 border-[#00D084]/50 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] relative overflow-hidden space-y-5 text-left font-sans">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-[#00D084]/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="lg:col-span-5 bg-[#030c07]/95 border border-white/20 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-2xl relative overflow-hidden space-y-5 text-left font-sans">
 
               {/* Interactive Step Drawer Overlay */}
               <AnimatePresence>

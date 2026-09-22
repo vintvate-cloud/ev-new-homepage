@@ -268,7 +268,7 @@ function CityPreBookingPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0 LIKE MEDIA PAGE)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Hero Image - 100% Crystal Clear */}
           <img
             src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=1920&auto=format&fit=crop&q=85"
@@ -281,7 +281,7 @@ function CityPreBookingPage() {
             ref={heroTextRef}
             className="absolute inset-0 flex flex-col justify-center px-6 lg:px-16 max-w-4xl space-y-4 z-10 transition-all pointer-events-none text-left"
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.1]">
               TECHNOLOGY-BACKED <br />
               <span className="text-[#00D084]">EV SERVICE NETWORK</span>
             </h1>
@@ -430,8 +430,7 @@ function CityPreBookingPage() {
                 transition={{ duration: 0.7, type: "spring", stiffness: 80 }}
                 className="lg:col-span-4 lg:sticky lg:top-28 z-20"
               >
-                <div className="bg-[#050c08] border-2 border-[#00D084]/40 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-[#00D084]/10 rounded-full blur-[50px] pointer-events-none" />
+                <div className="bg-[#050c08] border border-white/20 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
                   
                   {/* Badges */}
                   <div className="flex items-center justify-between gap-3">

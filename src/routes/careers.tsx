@@ -565,28 +565,25 @@ function CareersPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
           {/* Background Poster Image */}
           <img
             src="/ev-workshop-careers.png"
             alt="EV Workshop Careers"
-            className="w-full h-full object-cover object-center opacity-85 pointer-events-none"
+            className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
           />
-
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#070908] via-black/40 to-black/60 pointer-events-none" />
 
           {/* Hero Text Content Container */}
           <div
             ref={heroTextRef}
             className="absolute inset-0 flex flex-col justify-center items-center px-6 max-w-4xl mx-auto space-y-6 z-10 transition-all pointer-events-none text-center"
           >
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08]">
               Build the Future of <br />
-              <span className="text-[#00D084] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">EV Mobility in India</span>
+              <span className="text-[#00D084]">EV Mobility in India</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] bg-black/50 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-white/15">
+            <p className="text-base sm:text-lg text-white font-medium leading-relaxed max-w-2xl mx-auto">
               Join India's fastest-growing EV service platform. Work on cutting-edge technology, serve a green mission, and grow your career with us.
             </p>
 
@@ -623,9 +620,6 @@ function CareersPage() {
           1. INSIDE MY EV SERVICE: INTERVIEWS & CULTURE SHOWCASE SECTION
          ========================================================================= */}
       <section className="pt-20 pb-12 px-6 bg-[#020403] font-serif relative overflow-hidden">
-        {/* Glowing Background Radial Light */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#00D084]/5 blur-[140px] rounded-full pointer-events-none" />
-
         <div className="max-w-7xl mx-auto relative z-10 space-y-14">
           
           {/* Header */}

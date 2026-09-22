@@ -42,7 +42,7 @@ function CookiePolicyPage() {
       <Nav onOpenBooking={() => setBookingModalOpen(true)} />
 
       {/* Hero Header */}
-      <section className="relative pt-36 pb-20 px-6 overflow-hidden bg-[#020403]">
+      <section className="page-hero relative pt-36 pb-20 px-6 overflow-hidden bg-[#020403]">
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#00D084]/12 rounded-full blur-[180px] pointer-events-none" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10 space-y-6">

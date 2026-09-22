@@ -515,15 +515,14 @@ function ServicesPage() {
         {/* =========================================================================
             1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
            ========================================================================= */}
-        <div className="fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
-          {/* Background image overlay */}
+        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+          {/* Background image */}
           <div
-            className="services-bg-img absolute inset-0 bg-cover bg-center opacity-85 pointer-events-none scale-105 transition-all duration-700"
+            className="services-bg-img absolute inset-0 bg-cover bg-center opacity-100 pointer-events-none scale-105 transition-all duration-700"
             style={{
               backgroundImage: `url('${HERO_BG_IMAGE}')`,
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[#030604] pointer-events-none" />
 
           <div
             ref={heroTextRef}
@@ -532,19 +531,19 @@ function ServicesPage() {
             <span className="hero-sub-reveal text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
               • Certified Diagnostic Hubs Across India
             </span>
-            <h1 className="hero-title-reveal text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
+            <h1 className="hero-title-reveal text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08]">
               Expert <span className="text-[#00D084]">EV Services</span>
             </h1>
-            <p className="hero-sub-reveal text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto drop-shadow-md">
+            <p className="hero-sub-reveal text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto">
               Professional diagnostics and repairs for Electric Scooters, Bikes & Autos
             </p>
             <div className="hero-btn-reveal pt-2">
               <a
                 href="#engineered-section"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
+                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
               >
                 <span>EXPLORE SERVICES</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 shrink-0" />
               </a>
             </div>
           </div>

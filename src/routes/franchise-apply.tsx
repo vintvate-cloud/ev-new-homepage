@@ -76,7 +76,7 @@ function FranchiseApplyPage() {
     <div className="min-h-screen bg-[#020403] text-white font-sans selection:bg-[#00D084] selection:text-black pt-28 pb-20">
       <Nav />
 
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="page-hero max-w-4xl mx-auto px-6">
         {/* Back navigation */}
         <div className="mb-8">
           <Link
@@ -89,8 +89,7 @@ function FranchiseApplyPage() {
         </div>
 
         {/* Auto-detected Slot Card Notification Banner */}
-        <div className="bg-[#050c08] border-2 border-[#00D084]/60 rounded-3xl p-6 sm:p-8 mb-10 shadow-[0_10px_30px_rgba(0,208,132,0.15)] relative overflow-hidden">
-          <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-[#00D084]/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="bg-[#050c08] border border-white/20 rounded-3xl p-6 sm:p-8 mb-10 shadow-2xl relative overflow-hidden">
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
