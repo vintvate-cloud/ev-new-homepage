@@ -533,10 +533,10 @@ function FranchisePage() {
                 Launch your own EV service business powered by Autobot OS, India's first AI-powered EV service automation platform. Become part of the fastest-growing EV ecosystem and build a future-ready, high-profit business in 90 days.
               </p>
 
-              <div className="hero-cta flex flex-wrap items-center gap-3 pt-2">
+              <div className="hero-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-2">
                 <button
                   onClick={scrollToForm}
-                  className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-2xl"
+                  className="inline-flex items-center justify-center shrink-0 gap-2 px-6 sm:px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-serif font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all cursor-pointer shadow-2xl w-full sm:w-auto"
                 >
                   <span>Become a Partner</span> <ArrowRight className="w-4 h-4 shrink-0" />
                 </button>
@@ -546,9 +546,9 @@ function FranchisePage() {
                       "Franchise Brochure download link sent to your mobile/email!"
                     )
                   }
-                  className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-7 py-3.5 rounded-full border border-white/25 bg-[#0a0f0d]/85 text-white text-xs font-serif font-black uppercase tracking-widest hover:bg-black/95 transition-all cursor-pointer backdrop-blur-md shadow-2xl"
+                  className="inline-flex items-center justify-center shrink-0 gap-2 px-6 sm:px-7 py-3.5 rounded-full border border-white/25 bg-[#0a0f0d]/85 text-white text-xs font-serif font-black uppercase tracking-widest hover:bg-black/95 transition-all cursor-pointer backdrop-blur-md shadow-2xl w-full sm:w-auto"
                 >
-                  <Download className="w-4 h-4 text-[#00D084] shrink-0" /> <span>Download Franchise Brochure</span>
+                  <Download className="w-4 h-4 text-[#00D084] shrink-0" /> <span>Download Brochure</span>
                 </button>
               </div>
             </div>
@@ -583,7 +583,7 @@ function FranchisePage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
                       Email (optional)
@@ -611,7 +611,7 @@ function FranchisePage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <div>
                     <label className="text-[11px] font-serif font-extrabold text-white block mb-1">
                       PIN Code
@@ -1212,7 +1212,7 @@ function FranchisePage() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {BRAND_COLLABORATIONS.map((brand) => {
                   const isSelected = selectedBrandId === brand.id;
                   const isFlipped = flippedBrandId === brand.id;
@@ -1329,7 +1329,7 @@ function FranchisePage() {
                     </div>
 
                     {/* Partnership Specs */}
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       {activeBrand.flipStats.map((st, i) => (
                         <div
                           key={i}
@@ -1694,7 +1694,7 @@ function FranchisePage() {
                   </div>
 
                   {/* Main Stats Grid */}
-                  <div className="grid grid-cols-3 gap-3 bg-black/40 border border-white/10 rounded-2xl p-3 sm:p-4 text-xs">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-black/40 border border-white/10 rounded-2xl p-3 sm:p-4 text-xs">
                     <div className="space-y-0.5">
                       <span className="text-[9px] text-white/40 uppercase tracking-wider block font-sans">Investment</span>
                       <span className="text-sm font-bold text-white block truncate">{detailsModalModel.investment}</span>

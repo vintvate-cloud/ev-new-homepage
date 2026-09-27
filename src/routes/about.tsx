@@ -284,21 +284,22 @@ function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-wrap items-center justify-center gap-4 pt-2 pointer-events-auto"
+              className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 pointer-events-auto"
             >
               <Link
                 to="/franchise"
-                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-wider hover:bg-[#00e08f] hover:scale-105 shadow-[0_0_30px_rgba(0,208,132,0.4)] transition-all cursor-pointer"
+                className="inline-flex items-center shrink-0 gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-wider hover:bg-[#00e08f] hover:scale-105 shadow-[0_0_30px_rgba(0,208,132,0.4)] transition-all cursor-pointer w-full sm:w-auto justify-center"
               >
                 <span>Become a Partner</span> <ArrowRight className="w-4 h-4 shrink-0" />
               </Link>
               <Link
                 to="/contact"
-                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-3.5 rounded-full border border-white/20 bg-[#0a0f0d]/85 text-white text-xs font-bold hover:bg-black/95 hover:border-white/40 hover:scale-105 transition-all cursor-pointer backdrop-blur-md shadow-xl"
+                className="inline-flex items-center shrink-0 gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full border border-white/20 bg-[#0a0f0d]/85 text-white text-xs font-bold hover:bg-black/95 hover:border-white/40 hover:scale-105 transition-all cursor-pointer backdrop-blur-md shadow-xl w-full sm:w-auto justify-center"
               >
                 <span>Collaborate With Us</span> <Globe className="w-4 h-4 text-[#00D084] shrink-0" />
               </Link>
             </motion.div>
+
           </div>
         </div>
 
