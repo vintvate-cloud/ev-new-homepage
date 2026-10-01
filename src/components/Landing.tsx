@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useScroll, useTransform, useInView, animate, AnimatePresence, useMotionValue } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Footer } from "./Footer";
 import { CustomerStoriesWall } from "./CustomerStoriesWall";
 import { BookingModal } from "./BookingModal";
@@ -296,8 +296,8 @@ function HeroGetStartedForm() {
                     type="button"
                     onClick={() => setSelectedOption(opt.id)}
                     className={`w-full text-left p-2.5 sm:p-3 rounded-xl border transition-all duration-300 flex items-center justify-between gap-2.5 cursor-pointer ${isSelected
-                        ? "bg-[#00D084]/10 border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.15)]"
-                        : "bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]"
+                      ? "bg-[#00D084]/10 border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.15)]"
+                      : "bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]"
                       }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -829,8 +829,8 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
             key={index}
             onClick={() => scrollToSlide(index)}
             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSlide === index
-                ? "bg-[#00D084] w-6 shadow-[0_0_8px_#00D084]"
-                : "bg-white/20 hover:bg-white/40"
+              ? "bg-[#00D084] w-6 shadow-[0_0_8px_#00D084]"
+              : "bg-white/20 hover:bg-white/40"
               }`}
           />
         ))}
@@ -998,9 +998,94 @@ function EVTypeSelection() {
   return (
     <section
       ref={sectionRef}
-      id="ev-services"
+      id="ev-types"
       className="relative bg-[#020403] py-28 sm:py-36 border-y border-white/10 overflow-hidden text-white font-sans selection:bg-[#00D084] selection:text-black"
     >
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        #ev-types .bento-card,
+        html.theme-light #ev-types .bento-card {
+          background-color: rgba(7, 9, 8, 0.9) !important;
+          background: rgba(7, 9, 8, 0.9) !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+          color: #ffffff !important;
+        }
+        #ev-types .bento-card h1,
+        #ev-types .bento-card h2,
+        #ev-types .bento-card h3,
+        #ev-types .bento-card h4,
+        html.theme-light #ev-types .bento-card h1,
+        html.theme-light #ev-types .bento-card h2,
+        html.theme-light #ev-types .bento-card h3,
+        html.theme-light #ev-types .bento-card h4 {
+          color: #ffffff !important;
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95) !important;
+        }
+        #ev-types .bento-card p,
+        html.theme-light #ev-types .bento-card p {
+          color: rgba(255, 255, 255, 0.9) !important;
+          text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9) !important;
+        }
+        #ev-types .bento-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]),
+        html.theme-light #ev-types .bento-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]) {
+          color: #ffffff !important;
+          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+        }
+        #ev-types .bento-card [class*="text-white"],
+        html.theme-light #ev-types .bento-card [class*="text-white"] {
+          color: #ffffff !important;
+        }
+        #ev-types .bento-card [class*="text-white/"],
+        html.theme-light #ev-types .bento-card [class*="text-white/"] {
+          color: rgba(255, 255, 255, 0.85) !important;
+        }
+        #ev-types .bento-card [class*="text-white/60"],
+        #ev-types .bento-card [class*="text-white/70"],
+        html.theme-light #ev-types .bento-card [class*="text-white/60"],
+        html.theme-light #ev-types .bento-card [class*="text-white/70"] {
+          color: rgba(255, 255, 255, 0.7) !important;
+        }
+        #ev-types .bento-card [class*="bg-black/"],
+        html.theme-light #ev-types .bento-card [class*="bg-black/"] {
+          background-color: rgba(0, 0, 0, 0.55) !important;
+          border-color: rgba(255, 255, 255, 0.18) !important;
+          color: #ffffff !important;
+        }
+        #ev-types .bento-card [class*="bg-black/40"],
+        #ev-types .bento-card [class*="bg-black/50"],
+        html.theme-light #ev-types .bento-card [class*="bg-black/40"],
+        html.theme-light #ev-types .bento-card [class*="bg-black/50"] {
+          background-color: rgba(0, 0, 0, 0.6) !important;
+          border-color: rgba(255, 255, 255, 0.2) !important;
+          color: #ffffff !important;
+        }
+        #ev-types .bento-card a svg,
+        #ev-types .bento-card button svg,
+        html.theme-light #ev-types .bento-card a svg,
+        html.theme-light #ev-types .bento-card button svg {
+          color: inherit !important;
+          stroke: currentColor !important;
+        }
+        #ev-types .bento-card a.rounded-full,
+        html.theme-light #ev-types .bento-card a.rounded-full {
+          background-color: rgba(0, 0, 0, 0.5) !important;
+          border-color: rgba(255, 255, 255, 0.2) !important;
+          color: #ffffff !important;
+        }
+        #ev-types .bento-card a.rounded-full:hover,
+        html.theme-light #ev-types .bento-card a.rounded-full:hover {
+          background-color: #00D084 !important;
+          border-color: #00D084 !important;
+          color: #000000 !important;
+        }
+        #ev-types .bento-card span[class*="text-[#00D084]"],
+        #ev-types .bento-card div[class*="text-[#00D084]"],
+        html.theme-light #ev-types .bento-card span[class*="text-[#00D084]"],
+        html.theme-light #ev-types .bento-card div[class*="text-[#00D084]"] {
+          color: #00D084 !important;
+        }
+        `
+      }} />
       {/* Ambient background glows */}
       <div className="absolute top-1/3 left-1/4 w-[700px] h-[700px] bg-[#00D084]/5 rounded-full blur-[180px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[600px] h-[600px] bg-emerald-950/20 rounded-full blur-[160px] pointer-events-none" />
@@ -1064,11 +1149,6 @@ function EVTypeSelection() {
                 className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-all duration-700"
               />
             </div>
-
-            {/* Faint Background Mono Code */}
-            <span className="text-9xl sm:text-[14rem] font-black font-mono text-white/[0.03] absolute right-6 top-0 select-none pointer-events-none leading-none">
-              01
-            </span>
 
             {/* Top Badge & Live Status HUD */}
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 mb-6">
@@ -1142,11 +1222,6 @@ function EVTypeSelection() {
                 className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-all duration-700"
               />
             </div>
-
-            {/* Faint Background Mono Code */}
-            <span className="text-9xl font-black font-mono text-white/[0.03] absolute right-6 top-0 select-none pointer-events-none leading-none">
-              02
-            </span>
 
             {/* Top Header */}
             <div className="relative z-10 flex items-center justify-between gap-4 mb-6">
@@ -1232,12 +1307,13 @@ function EVTypeSelection() {
             </div>
 
             <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
-              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">STARTS AT ₹599</span>
+              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]" style={{ color: "#ffffff" }}>STARTS AT ₹599</span>
               <Link
                 to="/services"
                 className="w-9 h-9 rounded-full bg-black/40 border border-white/20 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                style={{ backgroundColor: "rgba(0,0,0,0.5)", borderColor: "rgba(255,255,255,0.2)", color: "#ffffff" }}
               >
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="h-4 w-4 text-white group-hover:text-black" style={{ color: "#ffffff" }} />
               </Link>
             </div>
           </motion.div>
@@ -1276,12 +1352,13 @@ function EVTypeSelection() {
             </div>
 
             <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
-              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">STARTS AT ₹699</span>
+              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]" style={{ color: "#ffffff" }}>STARTS AT ₹699</span>
               <Link
                 to="/services"
                 className="w-9 h-9 rounded-full bg-black/40 border border-white/20 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                style={{ backgroundColor: "rgba(0,0,0,0.5)", borderColor: "rgba(255,255,255,0.2)", color: "#ffffff" }}
               >
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="h-4 w-4 text-white group-hover:text-black" style={{ color: "#ffffff" }} />
               </Link>
             </div>
           </motion.div>
@@ -1320,12 +1397,13 @@ function EVTypeSelection() {
             </div>
 
             <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
-              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">CUSTOM SLA MODEL</span>
+              <span className="text-xs font-mono text-white/80 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]" style={{ color: "#ffffff" }}>CUSTOM SLA MODEL</span>
               <Link
                 to="/services"
                 className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#00D084] group-hover:text-black group-hover:border-[#00D084] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                style={{ backgroundColor: "rgba(0,0,0,0.5)", borderColor: "rgba(255,255,255,0.2)", color: "#ffffff" }}
               >
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="h-4 w-4 text-white group-hover:text-black" style={{ color: "#ffffff" }} />
               </Link>
             </div>
           </motion.div>
@@ -1342,6 +1420,8 @@ const SPARE_PARTS = [
     title: "Lithium-Ion Batteries",
     desc: "High density energy packs with built-in thermal management and battery monitoring system (BMS).",
     price: "₹24,999",
+    category: "Lithium Battery Packs",
+    productId: "prod-105",
     icon: <Zap className="h-5 w-5 text-[#00D084]" />,
     bgImg: "/services/expert_battery_health.jpg",
     hud: {
@@ -1356,6 +1436,8 @@ const SPARE_PARTS = [
     title: "Smart Chargers",
     desc: "Fast charging power adapter blocks with voltage protection and intelligent auto-shutoff.",
     price: "₹3,499",
+    category: "Smart Portable Chargers",
+    productId: "prod-102",
     icon: <Zap className="h-5 w-5 text-[#00D084]" />,
     bgImg: "/services/expert_charging_system.jpg",
     hud: {
@@ -1370,6 +1452,8 @@ const SPARE_PARTS = [
     title: "Motor Controllers",
     desc: "Advanced digital motor controller units for smooth power delivery and regenerative braking.",
     price: "₹7,999",
+    category: "BMS Diagnostic Scanners",
+    productId: "prod-103",
     icon: <Cpu className="h-5 w-5 text-[#00D084]" />,
     bgImg: "/services/expert_motor_controller.jpg",
     hud: {
@@ -1384,6 +1468,8 @@ const SPARE_PARTS = [
     title: "EV Optimized Tires & Spares",
     desc: "Low rolling resistance specialized tubeless tires & OEM spare components for maximum range.",
     price: "₹1,899",
+    category: "Riding Accessories",
+    productId: "prod-108",
     icon: <Bike className="h-6 w-6 text-[#00D084]" />,
     bgImg: "/hero/genuine_parts.png",
     hud: {
@@ -1397,6 +1483,7 @@ const SPARE_PARTS = [
 ];
 
 function GenuineSpareParts() {
+  const navigate = useNavigate();
   const [hoveredIdx, setHoveredIdx] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const hudRef = useRef<HTMLDivElement>(null);
@@ -1528,14 +1615,14 @@ function GenuineSpareParts() {
                     <span className="hud-price-label text-[10px] text-white/70 font-mono uppercase font-bold">Catalogue Price</span>
                     <span className="hud-price-value keep-white text-xl font-bold text-white font-mono mt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">{activePart.price}</span>
                   </div>
-                  <a
-                    href="#warehouse"
+                  <button
+                    onClick={() => navigate({ to: "/store", search: { category: activePart.category, product: activePart.productId } })}
                     className="hud-order-btn rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
                     style={{ background: "#00D084", color: "#020403" }}
                   >
                     <ShoppingCart className="h-4 w-4" />
                     Order Component
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -1549,6 +1636,7 @@ function GenuineSpareParts() {
                 <StaggerItem
                   key={i}
                   onMouseEnter={() => setHoveredIdx(i)}
+                  onClick={() => navigate({ to: "/store", search: { category: part.category, product: part.productId } })}
                   className={`spare-part-card keep-dark-card group rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer relative overflow-hidden ${isHovered ? "is-active" : ""
                     }`}
                 >
@@ -1814,8 +1902,8 @@ function HowItWorks() {
           <div
             onClick={() => setActiveStep(0)}
             className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${activeStep === 0
-                ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
-                : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
+              ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
+              : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
               }`}
           >
             {/* Top Indicator */}
@@ -1837,8 +1925,8 @@ function HowItWorks() {
                   <div
                     onClick={(e) => { e.stopPropagation(); setConfigPack("standard"); }}
                     className={`p-3.5 rounded-2xl border transition-all duration-300 relative flex items-center justify-between cursor-pointer ${configPack === "standard"
-                        ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_15px_rgba(0,208,132,0.05)]"
-                        : "bg-black/40 border-white/5 hover:border-white/10"
+                      ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_15px_rgba(0,208,132,0.05)]"
+                      : "bg-black/40 border-white/5 hover:border-white/10"
                       }`}
                   >
                     <div className="flex items-center gap-3">
@@ -1859,8 +1947,8 @@ function HowItWorks() {
                   <div
                     onClick={(e) => { e.stopPropagation(); setConfigPack("pro"); }}
                     className={`p-3.5 rounded-2xl border transition-all duration-300 relative flex items-center justify-between cursor-pointer ${configPack === "pro"
-                        ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_15px_rgba(0,208,132,0.05)]"
-                        : "bg-black/40 border-white/5 hover:border-white/10"
+                      ? "bg-[#0d1410] border-[#00D084]/40 shadow-[0_0_15px_rgba(0,208,132,0.05)]"
+                      : "bg-black/40 border-white/5 hover:border-white/10"
                       }`}
                   >
                     <div className="flex items-center gap-3">
@@ -1900,8 +1988,8 @@ function HowItWorks() {
           <div
             onClick={() => setActiveStep(1)}
             className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${activeStep === 1
-                ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
-                : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
+              ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
+              : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
               }`}
           >
             {/* Top Indicator */}
@@ -1986,8 +2074,8 @@ function HowItWorks() {
           <div
             onClick={() => setActiveStep(2)}
             className={`step-premium-card group relative bg-gradient-to-b border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer min-h-[580px] ${activeStep === 2
-                ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
-                : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
+              ? "from-[#0a120e] to-[#040806] border-[#00D084]/30 shadow-[0_30px_60px_-15px_rgba(0,208,132,0.1)]"
+              : "from-[#060907] to-[#030504] border-white/5 hover:border-white/10 hover:from-[#080d0a] hover:to-[#040705]"
               }`}
           >
             {/* Top Indicator */}
@@ -2085,8 +2173,8 @@ function HowItWorks() {
                   key={i}
                   onClick={() => setActiveStep(i)}
                   className={`flex-1 py-3 px-2 rounded-xl flex flex-col items-center justify-center gap-1 transition-all duration-300 ${isSelected
-                      ? "bg-[#0d1410] border border-[#00D084]/20 text-[#00D084]"
-                      : "text-white/40 border border-transparent"
+                    ? "bg-[#0d1410] border border-[#00D084]/20 text-[#00D084]"
+                    : "text-white/40 border border-transparent"
                     }`}
                 >
                   <span className="text-[10px] font-mono font-bold leading-none">{tab.num}</span>
@@ -2133,8 +2221,8 @@ function HowItWorks() {
                       <div
                         onClick={() => setConfigPack("standard")}
                         className={`p-3 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${configPack === "standard"
-                            ? "bg-[#0d1410] border-[#00D084]/40"
-                            : "bg-black/40 border-white/5"
+                          ? "bg-[#0d1410] border-[#00D084]/40"
+                          : "bg-black/40 border-white/5"
                           }`}
                       >
                         <div className="flex items-center gap-3">
@@ -2154,8 +2242,8 @@ function HowItWorks() {
                       <div
                         onClick={() => setConfigPack("pro")}
                         className={`p-3 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${configPack === "pro"
-                            ? "bg-[#0d1410] border-[#00D084]/40"
-                            : "bg-black/40 border-white/5"
+                          ? "bg-[#0d1410] border-[#00D084]/40"
+                          : "bg-black/40 border-white/5"
                           }`}
                       >
                         <div className="flex items-center gap-3">
@@ -2491,8 +2579,8 @@ function CinematicEcosystem() {
                 key={item.id}
                 onClick={() => setActiveTab(idx)}
                 className={`relative px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2.5 cursor-pointer ${isActive
-                    ? "text-[#020403] font-bold shadow-[0_0_25px_rgba(0,208,132,0.4)]"
-                    : "text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10"
+                  ? "text-[#020403] font-bold shadow-[0_0_25px_rgba(0,208,132,0.4)]"
+                  : "text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10"
                   }`}
               >
                 {isActive && (
@@ -2757,9 +2845,10 @@ interface GlowCardProps {
   children: ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-function GlowCard({ children, className = "", style = {} }: GlowCardProps) {
+function GlowCard({ children, className = "", style = {}, onClick }: GlowCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -2776,8 +2865,14 @@ function GlowCard({ children, className = "", style = {} }: GlowCardProps) {
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      className={`group relative overflow-hidden rounded-[32px] border border-white/10 bg-[#080d0a] p-8 md:p-10 transition-all duration-300 hover:border-[#00D084]/30 ${className}`}
-      style={style}
+      onClick={onClick}
+      className={`glow-card expert-service-card dark-card-locked group relative overflow-hidden rounded-[32px] border border-white/10 bg-[#080d0a] p-8 md:p-10 transition-all duration-300 hover:border-[#00D084]/30 ${className}`}
+      style={{
+        backgroundColor: "#080d0a",
+        borderColor: "rgba(255, 255, 255, 0.12)",
+        color: "#ffffff",
+        ...style
+      }}
     >
       {/* Radial mouse glow effect */}
       <div
@@ -2800,6 +2895,7 @@ function GlowCard({ children, className = "", style = {} }: GlowCardProps) {
 }
 
 function EVServices() {
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const lShapeRef = useRef<HTMLDivElement>(null);
 
@@ -2842,7 +2938,7 @@ function EVServices() {
     <section
       id="ev-services"
       ref={sectionRef}
-      className="relative min-h-screen bg-[#020403] overflow-hidden flex items-center py-24 md:py-32"
+      className="relative min-h-screen bg-[#020403] dark:bg-[#020403] overflow-hidden flex items-center py-24 md:py-32"
     >
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -2865,6 +2961,139 @@ function EVServices() {
           animation: voltPulse 3s ease-in-out infinite;
           animation-delay: 1.2s;
         }
+
+        /* Section Background & Header for Light Theme */
+        #ev-services {
+          background-color: #020403;
+        }
+        html.theme-light #ev-services {
+          background-color: #ffffff !important;
+          color: #09090b !important;
+        }
+        html.theme-light #ev-services .section-header-title,
+        html.theme-light #ev-services .section-header-title span,
+        html.theme-light #ev-services h2.section-header-title {
+          color: #09090b !important;
+          text-shadow: none !important;
+        }
+        html.theme-light #ev-services .section-header-desc {
+          color: #475569 !important;
+          text-shadow: none !important;
+        }
+        html.theme-light #ev-services .section-header-btn {
+          background-color: #f1f5f9 !important;
+          border: 1px solid #cbd5e1 !important;
+          color: #09090b !important;
+        }
+        html.theme-light #ev-services .section-header-btn:hover {
+          background-color: rgba(0, 208, 132, 0.1) !important;
+          border-color: rgba(0, 208, 132, 0.4) !important;
+        }
+
+        /* Grid and Compound containers must stay transparent so section bg shows in gaps */
+        .expert-services-grid,
+        .expert-l-shape,
+        #ev-services .expert-services-grid,
+        #ev-services .expert-l-shape,
+        html.theme-light #ev-services .expert-services-grid,
+        html.theme-light #ev-services .expert-l-shape {
+          background: transparent !important;
+          background-color: transparent !important;
+        }
+
+        /* 100% Dark Lock on individual cards in both themes */
+        #ev-services .glow-card,
+        #ev-services .expert-service-card,
+        #ev-services .expert-l-shape > div > div,
+        html.theme-light #ev-services .glow-card,
+        html.theme-light #ev-services .expert-service-card,
+        html.theme-light #ev-services .expert-l-shape > div > div {
+          background-color: #080d0a !important;
+          background: #080d0a !important;
+          background-image: none !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+          color: #ffffff !important;
+        }
+
+        .expert-services-grid h1,
+        .expert-services-grid h2,
+        .expert-services-grid h3,
+        .expert-services-grid h4,
+        .expert-services-grid h5,
+        .expert-services-grid h6,
+        html.theme-light .expert-services-grid h1,
+        html.theme-light .expert-services-grid h2,
+        html.theme-light .expert-services-grid h3,
+        html.theme-light .expert-services-grid h4,
+        html.theme-light .expert-services-grid h5,
+        html.theme-light .expert-services-grid h6,
+        html.theme-light #ev-services .glow-card h3,
+        html.theme-light #ev-services .glow-card h4 {
+          color: #ffffff !important;
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95) !important;
+        }
+
+        .expert-services-grid p,
+        html.theme-light .expert-services-grid p,
+        html.theme-light #ev-services .glow-card p {
+          color: rgba(255, 255, 255, 0.85) !important;
+          text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9) !important;
+        }
+
+        .expert-services-grid span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]):not([class*="line-through"]),
+        html.theme-light .expert-services-grid span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]):not([class*="line-through"]),
+        html.theme-light #ev-services .glow-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]):not([class*="line-through"]) {
+          color: #ffffff !important;
+        }
+
+        .expert-services-grid [class*="line-through"],
+        html.theme-light .expert-services-grid [class*="line-through"],
+        html.theme-light #ev-services .glow-card [class*="line-through"] {
+          color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .expert-services-grid [class*="text-[#00D084]"],
+        html.theme-light .expert-services-grid [class*="text-[#00D084]"],
+        html.theme-light #ev-services [class*="text-[#00D084]"] {
+          color: #00D084 !important;
+        }
+
+        #ev-services .expert-hud-panel,
+        #ev-services [class*="bg-black/"],
+        html.theme-light #ev-services .expert-hud-panel,
+        html.theme-light #ev-services [class*="bg-black/"] {
+          background-color: rgba(0, 0, 0, 0.8) !important;
+          background: rgba(0, 0, 0, 0.8) !important;
+          border-color: rgba(255, 255, 255, 0.18) !important;
+          backdrop-filter: blur(12px) !important;
+          -webkit-backdrop-filter: blur(12px) !important;
+        }
+
+        #ev-services [class*="bg-[#030604]"],
+        html.theme-light #ev-services [class*="bg-[#030604]"] {
+          background-color: #030604 !important;
+          border-color: rgba(0, 208, 132, 0.3) !important;
+        }
+
+        #ev-services [class*="bg-[#030604]"] svg,
+        html.theme-light #ev-services [class*="bg-[#030604]"] svg {
+          color: #00D084 !important;
+          stroke: #00D084 !important;
+        }
+
+        #ev-services [class*="from-[#080d0a]"],
+        #ev-services [class*="from-black"],
+        html.theme-light #ev-services [class*="from-[#080d0a]"],
+        html.theme-light #ev-services [class*="from-black"] {
+          --tw-gradient-from: #080d0a !important;
+        }
+
+        #ev-services [class*="via-[#080d0a]"],
+        #ev-services [class*="via-black"],
+        html.theme-light #ev-services [class*="via-[#080d0a]"],
+        html.theme-light #ev-services [class*="via-black"] {
+          --tw-gradient-stops: var(--tw-gradient-from, #080d0a), rgba(8, 13, 10, 0.8), var(--tw-gradient-to, rgba(8, 13, 10, 0)) !important;
+        }
       `}} />
 
       <div className="absolute inset-0 z-0">
@@ -2876,133 +3105,152 @@ function EVServices() {
         {/* Section Header with Big Typography */}
         <GSAPText className="flex flex-col md:flex-row md:items-end justify-between gap-8 irregular-grid-item" stagger={0.12}>
           <div>
-            <h2 className="text-5xl md:text-8xl font-black text-white leading-none tracking-tight">
+            <h2 className="section-header-title text-5xl md:text-8xl font-black text-slate-900 dark:text-white leading-none tracking-tight">
               EXPERT<br />
-              <span className="text-white font-sans font-normal">EV SERVICES</span>
+              <span className="font-sans font-normal">EV SERVICES</span>
             </h2>
           </div>
           <div className="max-w-md">
-            <p className="text-[#a1a1aa] text-lg leading-relaxed mb-6">
+            <p className="section-header-desc text-slate-600 dark:text-white/70 text-lg leading-relaxed mb-6">
               Professional diagnostics and repairs for Electric Scooters, Bikes & Autos. Engineered for scale, speed, and maximum vehicle uptime.
             </p>
-            <button className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#0a0f0c] px-6 py-3.5 text-sm font-medium text-white transition-all hover:border-[#00D084]/40 hover:bg-[#00D084]/5">
+            <Link
+              to="/services"
+              className="section-header-btn group inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-[#0a0f0c] px-6 py-3.5 text-sm font-medium text-slate-900 dark:text-white transition-all hover:border-[#00D084]/40 hover:bg-[#00D084]/5 cursor-pointer"
+            >
               View all 68 services
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 text-[#00D084]" />
-            </button>
+            </Link>
           </div>
         </GSAPText>
 
         {/* Bento Grid */}
-        <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
+        <StaggerContainer staggerDelay={0.08} className="expert-services-grid bg-transparent grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
 
           {/* Card 1: Battery Health Check (Wide Rectangle) */}
-          <GlowCard className="md:col-span-8 flex flex-col md:flex-row justify-between gap-6 min-h-[320px] glow-card-stagger relative overflow-hidden group">
+          <GlowCard
+            onClick={() => navigate({ to: "/services", search: { service: "BAT-001" } })}
+            className="md:col-span-8 flex flex-col md:flex-row justify-between gap-6 min-h-[320px] glow-card-stagger relative overflow-hidden group cursor-pointer"
+          >
             {/* Background Visual Overlay */}
             <div className="absolute right-0 top-0 bottom-0 w-full md:w-3/5 pointer-events-none opacity-80 group-hover:opacity-100 transition-all duration-700 overflow-hidden rounded-2xl z-0">
               <img src="/services/expert_battery_health.jpg" alt="Battery Health Diagnostics" className="w-full h-full object-cover object-right transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/80 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/80 to-transparent" style={{ background: "linear-gradient(to right, #080d0a 0%, rgba(8, 13, 10, 0.8) 50%, transparent 100%)" }} />
             </div>
 
             <div className="flex-1 flex flex-col justify-between relative z-10">
               <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6" style={{ backgroundColor: "#030604", borderColor: "rgba(0, 208, 132, 0.3)" }}>
                   <Battery className="h-5 w-5 text-[#00D084]" />
                 </div>
-                <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md">Battery Health Check</h3>
-                <p className="text-white/80 keep-white text-sm leading-relaxed max-w-sm drop-shadow-sm">
+                <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md" style={{ color: "#ffffff" }}>Battery Health Check</h3>
+                <p className="text-white/80 keep-white text-sm leading-relaxed max-w-sm drop-shadow-sm" style={{ color: "rgba(255, 255, 255, 0.8)" }}>
                   Comprehensive battery diagnostics with cell level voltage scan and capacity verification.
                 </p>
               </div>
               <div className="flex items-baseline gap-3 mt-4">
-                <span className="text-2xl font-bold text-[#00D084] keep-white">Starting from ₹399</span>
-                <span className="text-sm text-white/50 keep-white line-through">₹1,499</span>
+                <span className="text-2xl font-bold text-[#00D084] keep-white" style={{ color: "#00D084" }}>Starting from ₹399</span>
+                <span className="text-sm text-white/50 keep-white line-through" style={{ color: "rgba(255, 255, 255, 0.5)" }}>₹1,499</span>
               </div>
             </div>
             {/* Visual Panel */}
-            <div className="w-full md:w-[240px] h-[180px] bg-black/75 backdrop-blur-md rounded-2xl border border-white/20 p-4 flex flex-col justify-between relative z-10">
-              <span className="text-[10px] text-white/60 keep-white font-mono">BMS HEALTH METRICS</span>
+            <div className="expert-hud-panel w-full md:w-[240px] h-[180px] bg-black/80 backdrop-blur-md rounded-2xl border border-white/20 p-4 flex flex-col justify-between relative z-10" style={{ backgroundColor: "rgba(0, 0, 0, 0.8)", borderColor: "rgba(255, 255, 255, 0.2)" }}>
+              <span className="text-[10px] text-white/60 keep-white font-mono" style={{ color: "rgba(255, 255, 255, 0.6)" }}>BMS HEALTH METRICS</span>
               <div className="flex items-center justify-between gap-4">
-                <div className="h-24 w-12 border-2 border-white/30 rounded-lg p-1 relative flex flex-col justify-end">
-                  <div className="w-full bg-[#00D084] rounded-sm transition-all duration-500 h-[88%]" />
-                  <div className="absolute top-[-5px] left-1/2 -translate-x-1/2 w-4 h-1 bg-white/30 rounded-t-sm" />
+                <div className="h-24 w-12 border-2 border-white/30 rounded-lg p-1 relative flex flex-col justify-end" style={{ borderColor: "rgba(255, 255, 255, 0.3)" }}>
+                  <div className="w-full bg-[#00D084] rounded-sm transition-all duration-500 h-[88%]" style={{ backgroundColor: "#00D084" }} />
+                  <div className="absolute top-[-5px] left-1/2 -translate-x-1/2 w-4 h-1 bg-white/30 rounded-t-sm" style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }} />
                 </div>
                 <div className="flex-1 flex flex-col gap-1.5">
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white">Health</span><span className="text-[#00D084] keep-white">94%</span></div>
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white">Cycles</span><span className="text-white keep-white">182</span></div>
-                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white">Temp</span><span className="text-white keep-white">32°C</span></div>
+                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white" style={{ color: "rgba(255, 255, 255, 0.7)" }}>Health</span><span className="text-[#00D084] keep-white font-bold" style={{ color: "#00D084" }}>94%</span></div>
+                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white" style={{ color: "rgba(255, 255, 255, 0.7)" }}>Cycles</span><span className="text-white keep-white font-bold" style={{ color: "#ffffff" }}>182</span></div>
+                  <div className="flex justify-between text-[11px] font-mono"><span className="text-white/70 keep-white" style={{ color: "rgba(255, 255, 255, 0.7)" }}>Temp</span><span className="text-white keep-white font-bold" style={{ color: "#ffffff" }}>32°C</span></div>
                 </div>
               </div>
-              <span className="text-[10px] text-[#00D084] keep-white font-bold tracking-widest text-center mt-1">SYSTEMS PASS</span>
+              <span className="text-[10px] text-[#00D084] keep-white font-bold tracking-widest text-center mt-1" style={{ color: "#00D084" }}>SYSTEMS PASS</span>
             </div>
           </GlowCard>
 
           {/* Card 2: Motor & Controller (Square) */}
-          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden group">
+          <GlowCard
+            onClick={() => navigate({ to: "/services", search: { service: "MOT-001" } })}
+            className="md:col-span-4 flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden group cursor-pointer"
+          >
             {/* Background Visual Overlay */}
             <div className="absolute inset-0 pointer-events-none opacity-80 group-hover:opacity-95 transition-all duration-700 overflow-hidden rounded-2xl z-0">
               <img src="/services/expert_motor_controller.jpg" alt="Motor & Controller" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/75 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/75 to-transparent" style={{ background: "linear-gradient(to top, #080d0a 0%, rgba(8, 13, 10, 0.75) 50%, transparent 100%)" }} />
             </div>
 
             <div className="relative z-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6" style={{ backgroundColor: "#030604", borderColor: "rgba(0, 208, 132, 0.3)" }}>
                 <Gauge className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md">Motor & Controller</h3>
-              <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm">
+              <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md" style={{ color: "#ffffff" }}>Motor & Controller</h3>
+              <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm" style={{ color: "rgba(255, 255, 255, 0.8)" }}>
                 Electric motor inspection, controller diagnostics, and thermal stress mapping.
               </p>
             </div>
             <div className="flex items-baseline justify-between mt-4 relative z-10">
-              <span className="text-xl font-bold text-[#00D084] keep-white">₹1,999</span>
-              <span className="text-xs text-white/70 keep-white">1h 30m duration</span>
+              <span className="text-xl font-bold text-[#00D084] keep-white" style={{ color: "#00D084" }}>₹1,999</span>
+              <span className="text-xs text-white/70 keep-white" style={{ color: "rgba(255, 255, 255, 0.7)" }}>1h 30m duration</span>
             </div>
           </GlowCard>
 
           {/* Card 3: Charging System (Tall Vertical Rectangle) */}
-          <GlowCard className="md:col-span-4 flex flex-col justify-between min-h-[660px] glow-card-stagger relative overflow-hidden group">
+          <GlowCard
+            onClick={() => navigate({ to: "/services", search: { service: "CHG-001" } })}
+            className="md:col-span-4 flex flex-col justify-between min-h-[660px] glow-card-stagger relative overflow-hidden group cursor-pointer"
+          >
             {/* Background Visual Overlay */}
             <div className="absolute inset-0 pointer-events-none opacity-85 group-hover:opacity-95 transition-all duration-700 overflow-hidden rounded-2xl z-0">
               <img src="/services/expert_charging_system.jpg" alt="Charging System" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/75 to-black/30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/75 to-black/30" style={{ background: "linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.75) 50%, rgba(0, 0, 0, 0.3) 100%)" }} />
             </div>
 
             <div className="relative z-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6" style={{ backgroundColor: "#030604", borderColor: "rgba(0, 208, 132, 0.3)" }}>
                 <Zap className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-3xl font-serif text-white keep-white mb-4 drop-shadow-md">Charging System</h3>
-              <p className="text-white/85 keep-white text-sm leading-relaxed mb-6 drop-shadow-sm">
+              <h3 className="text-3xl font-serif text-white keep-white mb-4 drop-shadow-md" style={{ color: "#ffffff" }}>Charging System</h3>
+              <p className="text-white/85 keep-white text-sm leading-relaxed mb-6 drop-shadow-sm" style={{ color: "rgba(255, 255, 255, 0.85)" }}>
                 Charger diagnostics, port inspection, and speed profiling to guarantee maximum safety.
               </p>
 
               {/* Supported protocols */}
               <div className="flex flex-col gap-2 mt-4">
-                <span className="text-[10px] uppercase tracking-wider text-white/70 keep-white font-bold mb-1">PROTOCOLS TESTED</span>
-                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20">
-                  <span className="text-xs text-white keep-white font-medium">CCS2 Fast Charge</span>
+                <span className="text-[10px] uppercase tracking-wider text-white/70 keep-white font-bold mb-1" style={{ color: "rgba(255, 255, 255, 0.7)" }}>PROTOCOLS TESTED</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20" style={{ backgroundColor: "rgba(0, 0, 0, 0.65)", borderColor: "rgba(255, 255, 255, 0.18)" }}>
+                  <span className="text-xs text-white keep-white font-medium" style={{ color: "#ffffff" }}>CCS2 Fast Charge</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
-                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20">
-                  <span className="text-xs text-white keep-white font-medium">GB/T Standard</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20" style={{ backgroundColor: "rgba(0, 0, 0, 0.65)", borderColor: "rgba(255, 255, 255, 0.18)" }}>
+                  <span className="text-xs text-white keep-white font-medium" style={{ color: "#ffffff" }}>GB/T Standard</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
-                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20">
-                  <span className="text-xs text-white keep-white font-medium">Bharat AC 001</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20" style={{ backgroundColor: "rgba(0, 0, 0, 0.65)", borderColor: "rgba(255, 255, 255, 0.18)" }}>
+                  <span className="text-xs text-white keep-white font-medium" style={{ color: "#ffffff" }}>Bharat AC 001</span>
                   <CheckCircle2 className="h-4 w-4 text-[#00D084]" />
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/20 flex flex-col gap-4 relative z-10">
+            <div className="mt-8 pt-6 border-t border-white/20 flex flex-col gap-4 relative z-10" style={{ borderColor: "rgba(255, 255, 255, 0.18)" }}>
               <div className="flex justify-between items-end">
                 <div>
-                  <span className="text-[10px] text-white/70 keep-white uppercase">Starting From</span>
-                  <div className="text-2xl font-bold text-[#00D084] keep-white">₹899</div>
+                  <span className="text-[10px] text-white/70 keep-white uppercase" style={{ color: "rgba(255, 255, 255, 0.7)" }}>Starting From</span>
+                  <div className="text-2xl font-bold text-[#00D084] keep-white" style={{ color: "#00D084" }}>₹899</div>
                 </div>
-                <span className="text-xs text-white/70 keep-white">45 min test</span>
+                <span className="text-xs text-white/70 keep-white" style={{ color: "rgba(255, 255, 255, 0.7)" }}>45 min test</span>
               </div>
-              <button className="w-full rounded-full bg-[#00D084] hover:bg-[#00e894] py-3.5 text-sm font-extrabold text-black transition-all shadow-md">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate({ to: "/services", search: { service: "CHG-001" } });
+                }}
+                className="w-full rounded-full bg-[#00D084] hover:bg-[#00e894] py-3.5 text-sm font-extrabold text-black transition-all shadow-md cursor-pointer"
+                style={{ backgroundColor: "#00D084", color: "#000000" }}
+              >
                 Book Inspection
               </button>
             </div>
@@ -3012,16 +3260,16 @@ function EVServices() {
           <div
             ref={lShapeRef}
             onMouseMove={handleLShapeMouseMove}
-            className="hidden md:block md:col-span-8 relative h-[660px] group glow-card-stagger"
+            className="expert-l-shape bg-transparent hidden md:block md:col-span-8 relative h-[660px] group glow-card-stagger"
           >
             {/* Joined L-shape body backdrop with glow */}
             <div className="absolute inset-0 z-0 pointer-events-none">
               {/* Left vertical portion */}
-              <div className="absolute left-0 top-0 bottom-0 w-[55%] rounded-3xl border border-white/10 bg-[#080d0a] transition-all group-hover:border-[#00D084]/30" />
+              <div className="absolute left-0 top-0 bottom-0 w-[55%] rounded-3xl border border-white/10 bg-[#080d0a] transition-all group-hover:border-[#00D084]/30" style={{ backgroundColor: "#080d0a", borderColor: "rgba(255, 255, 255, 0.12)" }} />
               {/* Bottom horizontal portion */}
-              <div className="absolute left-0 bottom-0 right-0 h-[48%] rounded-3xl border border-white/10 bg-[#080d0a] transition-all group-hover:border-[#00D084]/30" />
+              <div className="absolute left-0 bottom-0 right-0 h-[48%] rounded-3xl border border-white/10 bg-[#080d0a] transition-all group-hover:border-[#00D084]/30" style={{ backgroundColor: "#080d0a", borderColor: "rgba(255, 255, 255, 0.12)" }} />
               {/* Overlap connector block */}
-              <div className="absolute left-[1px] bottom-[1px] w-[54%] h-[47%] bg-[#080d0a]" />
+              <div className="absolute left-[1px] bottom-[1px] w-[54%] h-[47%] bg-[#080d0a]" style={{ backgroundColor: "#080d0a" }} />
 
               {/* Radial mouse glow across L-shape backdrop */}
               <div
@@ -3040,149 +3288,174 @@ function EVServices() {
             </div>
 
             {/* Left Content (Software Updates) */}
-            <div className="absolute left-0 top-0 bottom-0 w-[55%] p-8 z-10 flex flex-col justify-between overflow-hidden rounded-l-3xl">
+            <div
+              onClick={() => navigate({ to: "/services", search: { service: "DIAG-001" } })}
+              className="absolute left-0 top-0 bottom-0 w-[55%] p-8 z-10 flex flex-col justify-between overflow-hidden rounded-l-3xl cursor-pointer"
+            >
               {/* Background Visual Overlay */}
               <div className="absolute inset-0 pointer-events-none opacity-85 group-hover:opacity-95 transition-all duration-700 overflow-hidden z-0">
                 <img src="/services/expert_software_updates.jpg" alt="Software Updates" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" style={{ background: "linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%)" }} />
               </div>
 
               <div className="relative z-10">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6" style={{ backgroundColor: "#030604", borderColor: "rgba(0, 208, 132, 0.3)" }}>
                   <Cpu className="h-5 w-5 text-[#00D084]" />
                 </div>
-                <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md">Software Updates</h3>
-                <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm">
+                <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md" style={{ color: "#ffffff" }}>Software Updates</h3>
+                <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm" style={{ color: "rgba(255, 255, 255, 0.8)" }}>
                   Latest firmware updates, BMS calibration, and live system speed profiling.
                 </p>
               </div>
 
               {/* Live firmware modules */}
               <div className="flex flex-col gap-2 mt-4 relative z-10">
-                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-lg p-2.5 border border-white/20">
-                  <span className="text-xs text-white keep-white font-medium">BMS Firmware</span>
-                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-lg p-2.5 border border-white/20" style={{ backgroundColor: "rgba(0,0,0,0.65)", borderColor: "rgba(255,255,255,0.18)" }}>
+                  <span className="text-xs text-white keep-white font-medium" style={{ color: "#ffffff" }}>BMS Firmware</span>
+                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold" style={{ backgroundColor: "rgba(0,208,132,0.2)", color: "#00D084" }}>v4.2.1 Active</span>
                 </div>
-                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-lg p-2.5 border border-white/20">
-                  <span className="text-xs text-white keep-white font-medium">Telemetry OS</span>
-                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
+                <div className="flex justify-between items-center bg-black/60 backdrop-blur-md rounded-lg p-2.5 border border-white/20" style={{ backgroundColor: "rgba(0,0,0,0.65)", borderColor: "rgba(255,255,255,0.18)" }}>
+                  <span className="text-xs text-white keep-white font-medium" style={{ color: "#ffffff" }}>Telemetry OS</span>
+                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold" style={{ backgroundColor: "rgba(0,208,132,0.2)", color: "#00D084" }}>v2.1.0 Stable</span>
                 </div>
               </div>
             </div>
 
             {/* Bottom Right Horizontal Content */}
-            <div className="absolute left-[58%] bottom-0 right-0 h-[48%] p-8 z-10 flex items-center justify-between">
+            <div
+              onClick={() => navigate({ to: "/services", search: { service: "BAT-002" } })}
+              className="absolute left-[58%] bottom-0 right-0 h-[48%] p-8 z-10 flex items-center justify-between cursor-pointer"
+            >
               <div>
-                <div className="text-[11px] uppercase tracking-widest text-slate-600 dark:text-[#71717a] font-bold mb-1">Calibration Status</div>
-                <div className="text-lg font-bold text-slate-900 dark:text-white">All Systems Optimized</div>
+                <div className="text-[11px] uppercase tracking-widest text-white/60 keep-white font-bold mb-1" style={{ color: "rgba(255, 255, 255, 0.6)" }}>Calibration Status</div>
+                <div className="text-lg font-bold text-white keep-white" style={{ color: "#ffffff" }}>All Systems Optimized</div>
               </div>
-              <span className="text-2xl font-bold text-[#00B574] dark:text-[#00D084]">100% OK</span>
+              <span className="text-2xl font-bold text-[#00D084] keep-white" style={{ color: "#00D084" }}>100% OK</span>
             </div>
 
             {/* Nestled Square Card (Advanced Battery Diagnostic) */}
             <div className="absolute left-[58%] top-0 right-0 h-[48%] z-20">
-              <GlowCard className="w-full h-full p-6 flex flex-col justify-between relative overflow-hidden group">
+              <GlowCard
+                onClick={() => navigate({ to: "/services", search: { service: "BAT-002" } })}
+                className="w-full h-full p-6 flex flex-col justify-between relative overflow-hidden group cursor-pointer"
+              >
                 {/* Background Visual Overlay */}
                 <div className="absolute inset-0 pointer-events-none opacity-85 group-hover:opacity-95 transition-all duration-700 overflow-hidden rounded-2xl z-0">
                   <img src="/tools/thermal-imaging.png" alt="Advanced Diagnostics" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%)" }} />
                 </div>
 
                 <div className="flex justify-between items-start relative z-10">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30" style={{ backgroundColor: "#030604", borderColor: "rgba(0, 208, 132, 0.3)" }}>
                     <Activity className="h-5 w-5 text-[#00D084]" />
                   </div>
-                  <span className="text-xs font-bold text-[#00D084] keep-white">₹999</span>
+                  <span className="text-xs font-bold text-[#00D084] keep-white" style={{ color: "#00D084" }}>₹999</span>
                 </div>
                 <div className="relative z-10">
-                  <h4 className="text-lg font-serif text-white keep-white mb-1 drop-shadow-md">Advanced Diagnostics</h4>
-                  <p className="text-white/80 keep-white text-[11px] leading-snug drop-shadow-sm">Cell voltage analysis and safety telemetry mapping.</p>
+                  <h4 className="text-lg font-serif text-white keep-white mb-1 drop-shadow-md" style={{ color: "#ffffff" }}>Advanced Diagnostics</h4>
+                  <p className="text-white/80 keep-white text-[11px] leading-snug drop-shadow-sm" style={{ color: "rgba(255, 255, 255, 0.8)" }}>Cell voltage analysis and safety telemetry mapping.</p>
                 </div>
               </GlowCard>
             </div>
           </div>
 
           {/* Mobile Fallback Cards (Visible only on mobile/tablet) */}
-          <GlowCard className="md:hidden flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden">
+          <GlowCard
+            onClick={() => navigate({ to: "/services", search: { service: "DIAG-001" } })}
+            className="md:hidden flex flex-col justify-between min-h-[320px] glow-card-stagger relative overflow-hidden cursor-pointer"
+          >
             <div className="absolute inset-0 pointer-events-none opacity-80 z-0">
               <img src="/services/expert_software_updates.jpg" alt="Software Updates" className="w-full h-full object-cover object-center" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, transparent 100%)" }} />
             </div>
             <div className="relative z-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6" style={{ backgroundColor: "#030604", borderColor: "rgba(0, 208, 132, 0.3)" }}>
                 <Cpu className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md">Software Updates</h3>
-              <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm">
+              <h3 className="text-2xl font-serif text-white keep-white mb-2 drop-shadow-md" style={{ color: "#ffffff" }}>Software Updates</h3>
+              <p className="text-white/80 keep-white text-sm leading-relaxed drop-shadow-sm" style={{ color: "rgba(255, 255, 255, 0.8)" }}>
                 Latest firmware updates, BMS calibration, and live system speed profiling.
               </p>
 
               <div className="flex flex-col gap-2 mt-4">
-                <div className="flex justify-between items-center bg-black/60 rounded-lg p-2.5 border border-white/20">
-                  <span className="text-xs text-white keep-white">BMS Firmware</span>
-                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold">v4.2.1 Active</span>
+                <div className="flex justify-between items-center bg-black/60 rounded-lg p-2.5 border border-white/20" style={{ backgroundColor: "rgba(0,0,0,0.65)", borderColor: "rgba(255,255,255,0.18)" }}>
+                  <span className="text-xs text-white keep-white" style={{ color: "#ffffff" }}>BMS Firmware</span>
+                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold" style={{ backgroundColor: "rgba(0,208,132,0.2)", color: "#00D084" }}>v4.2.1 Active</span>
                 </div>
-                <div className="flex justify-between items-center bg-black/60 rounded-lg p-2.5 border border-white/20">
-                  <span className="text-xs text-white keep-white">Telemetry OS</span>
-                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold">v2.1.0 Stable</span>
+                <div className="flex justify-between items-center bg-black/60 rounded-lg p-2.5 border border-white/20" style={{ backgroundColor: "rgba(0,0,0,0.65)", borderColor: "rgba(255,255,255,0.18)" }}>
+                  <span className="text-xs text-white keep-white" style={{ color: "#ffffff" }}>Telemetry OS</span>
+                  <span className="text-[10px] bg-[#00D084]/20 text-[#00D084] keep-white px-2 py-0.5 rounded-full font-bold" style={{ backgroundColor: "rgba(0,208,132,0.2)", color: "#00D084" }}>v2.1.0 Stable</span>
                 </div>
               </div>
             </div>
-            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-[#00D084] relative z-10">
-              <span className="text-gray-400">Calibration Status</span>
-              <span>All Systems Optimized</span>
+            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-[#00D084] relative z-10" style={{ borderColor: "rgba(255,255,255,0.18)" }}>
+              <span className="text-white/60 keep-white" style={{ color: "rgba(255,255,255,0.6)" }}>Calibration Status</span>
+              <span className="text-[#00D084] keep-white" style={{ color: "#00D084" }}>All Systems Optimized</span>
             </div>
           </GlowCard>
 
-          <GlowCard className="md:hidden flex flex-col justify-between min-h-[220px] glow-card-stagger relative overflow-hidden">
+          <GlowCard
+            onClick={() => navigate({ to: "/services", search: { service: "BAT-002" } })}
+            className="md:hidden flex flex-col justify-between min-h-[220px] glow-card-stagger relative overflow-hidden cursor-pointer"
+          >
             <div className="absolute inset-0 pointer-events-none opacity-60 z-0">
               <img src="/tools/thermal-imaging.png" alt="Advanced Diagnostics" className="w-full h-full object-cover object-center" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/70 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080d0a] via-[#080d0a]/70 to-transparent" style={{ background: "linear-gradient(to top, #080d0a 0%, rgba(8, 13, 10, 0.7) 60%, transparent 100%)" }} />
             </div>
             <div className="flex justify-between items-start relative z-10">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30" style={{ backgroundColor: "#030604", borderColor: "rgba(0, 208, 132, 0.3)" }}>
                 <Activity className="h-5 w-5 text-[#00D084]" />
               </div>
-              <span className="text-xs font-bold text-[#00D084]">₹999</span>
+              <span className="text-xs font-bold text-[#00D084] keep-white" style={{ color: "#00D084" }}>₹999</span>
             </div>
             <div className="mt-4 relative z-10">
-              <h4 className="text-lg font-serif text-white mb-1">Advanced Diagnostics</h4>
-              <p className="text-[#a1a1aa] text-xs leading-relaxed">Cell voltage analysis and safety telemetry mapping.</p>
+              <h4 className="text-lg font-serif text-white keep-white mb-1" style={{ color: "#ffffff" }}>Advanced Diagnostics</h4>
+              <p className="text-white/80 keep-white text-xs leading-relaxed" style={{ color: "rgba(255, 255, 255, 0.8)" }}>Cell voltage analysis and safety telemetry mapping.</p>
             </div>
           </GlowCard>
 
           {/* Card 6: Battery Cell Balancing (Full Width Horizontal) */}
-          <GlowCard className="md:col-span-12 flex flex-col md:flex-row gap-8 justify-between items-center min-h-[300px] glow-card-stagger relative overflow-hidden group">
+          <GlowCard
+            onClick={() => navigate({ to: "/services", search: { service: "BAT-003" } })}
+            className="md:col-span-12 flex flex-col md:flex-row gap-8 justify-between items-center min-h-[300px] glow-card-stagger relative overflow-hidden group cursor-pointer"
+          >
             {/* Background Visual Overlay */}
             <div className="absolute right-0 top-0 bottom-0 w-full md:w-3/5 pointer-events-none opacity-80 group-hover:opacity-100 transition-all duration-700 overflow-hidden rounded-2xl z-0">
               <img src="/ai-gallery/ev_battery_tech.png" alt="Battery Cell Balancing" className="w-full h-full object-cover object-right transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#080d0a] via-[#080d0a]/60 to-transparent" style={{ background: "linear-gradient(to right, #080d0a 0%, rgba(8, 13, 10, 0.6) 50%, transparent 100%)" }} />
             </div>
 
             <div className="flex-1 relative z-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#030604] border border-[#00D084]/30 mb-6" style={{ backgroundColor: "#030604", borderColor: "rgba(0, 208, 132, 0.3)" }}>
                 <RefreshCw className="h-5 w-5 text-[#00D084]" />
               </div>
-              <h3 className="text-3xl font-serif text-white mb-3">Battery Cell Balancing</h3>
-              <p className="text-[#a1a1aa] text-base leading-relaxed max-w-xl">
+              <h3 className="text-3xl font-serif text-white keep-white mb-3" style={{ color: "#ffffff" }}>Battery Cell Balancing</h3>
+              <p className="text-white/80 keep-white text-base leading-relaxed max-w-xl" style={{ color: "rgba(255, 255, 255, 0.8)" }}>
                 Equalization of battery cells to maximize energy efficiency, overall range, and longevity. Includes active load calibration.
               </p>
               <div className="mt-6 flex items-center gap-6">
                 <div>
-                  <span className="text-xs text-[#71717a] block uppercase tracking-wider mb-1">Service Cost</span>
-                  <span className="text-2xl font-bold text-[#00D084]">₹1,399</span>
+                  <span className="text-xs text-white/60 keep-white block uppercase tracking-wider mb-1" style={{ color: "rgba(255, 255, 255, 0.6)" }}>Service Cost</span>
+                  <span className="text-2xl font-bold text-[#00D084] keep-white" style={{ color: "#00D084" }}>₹1,399</span>
                 </div>
-                <button className="rounded-full bg-[#00D084] px-8 py-3 text-sm font-bold text-black transition-transform hover:scale-105">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({ to: "/services", search: { service: "BAT-003" } });
+                  }}
+                  className="rounded-full bg-[#00D084] px-8 py-3 text-sm font-bold text-black transition-transform hover:scale-105 cursor-pointer"
+                  style={{ backgroundColor: "#00D084", color: "#000000" }}
+                >
                   Book Balancing
                 </button>
               </div>
             </div>
 
             {/* Animated Cells Visualization */}
-            <div className="w-full md:w-[450px] bg-black/60 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex flex-col gap-4 relative z-10">
-              <div className="flex justify-between items-center text-xs text-[#a1a1aa]">
-                <span>Active Equalization Module</span>
-                <span className="text-[#00D084] font-mono animate-pulse">● CALIBRATING</span>
+            <div className="w-full md:w-[450px] bg-black/60 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex flex-col gap-4 relative z-10" style={{ backgroundColor: "rgba(0,0,0,0.65)", borderColor: "rgba(255, 255, 255, 0.12)" }}>
+              <div className="flex justify-between items-center text-xs text-white/70 keep-white">
+                <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>Active Equalization Module</span>
+                <span className="text-[#00D084] font-mono animate-pulse" style={{ color: "#00D084" }}>● CALIBRATING</span>
               </div>
               <div className="grid grid-cols-8 gap-2 h-24 items-end">
                 {[3.8, 3.9, 3.8, 4.0, 3.9, 3.8, 4.0, 3.9].map((volts, idx) => (
@@ -3458,10 +3731,10 @@ function ValuePackages() {
 
                   {/* Premium Background Graphic Visual - Crisp & Visible */}
                   <div className="absolute right-0 bottom-0 top-0 w-1/2 md:w-[54%] pointer-events-none overflow-hidden rounded-r-[28px] opacity-90 group-hover:opacity-100 transition-all duration-700 z-0">
-                    <img 
-                      src={pkg.bgImg} 
-                      alt={pkg.title} 
-                      className="w-full h-full object-cover object-center filter brightness-110 contrast-105 transition-transform duration-700 group-hover:scale-110" 
+                    <img
+                      src={pkg.bgImg}
+                      alt={pkg.title}
+                      className="w-full h-full object-cover object-center filter brightness-110 contrast-105 transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#0d1410] via-[#0d1410]/35 to-transparent" />
                   </div>

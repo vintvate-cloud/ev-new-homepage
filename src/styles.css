@@ -554,13 +554,13 @@ html.theme-light #experience,
 html.theme-light #top,
 html.theme-light footer,
 html.theme-light main,
-html.theme-light [class*="min-h-screen"]:not(.fixed):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="min-h-screen"]:not(.fixed):not(.page-hero):not(.page-hero *):not(.glow-card *):not(.glow-card):not(.expert-service-card *):not(.expert-service-card),
 html.theme-light [class*="bg-[#010201]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#020302]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#020403]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#020503]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#030504]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-[#030604]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030604]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
 html.theme-light [class*="bg-[#030704]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#040605]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#040805]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
@@ -592,7 +592,7 @@ html.theme-light [class*="bg-[#070b09]"]:not(.fixed):not([class*="inset-0"]):not
 html.theme-light [class*="bg-[#070c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#080b09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#080d09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-[#080d0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#080d0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
 html.theme-light [class*="bg-[#080e0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#080f0b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#080F0B]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
@@ -602,7 +602,7 @@ html.theme-light [class*="bg-[#090F0C]"]:not(.fixed):not([class*="inset-0"]):not
 html.theme-light [class*="bg-[#07070a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#07070A]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#0a0a0f]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-[#0a0f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0a0f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
 html.theme-light [class*="bg-[#0a100b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#0a100d]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#0b0f0c]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
@@ -615,13 +615,13 @@ html.theme-light [class*="bg-[#131815]"]:not(.fixed):not([class*="inset-0"]):not
 html.theme-light [class*="bg-[#101015]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#141b17]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#1a1408]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
 html.theme-light [class*="bg-slate-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-slate-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-zinc-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *) {
+html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *) {
   background-color: #ffffff !important;
   color: #09090b !important;
 }
@@ -644,9 +644,7 @@ html.theme-light [class*="fixed"][class*="inset-0"][class*="bg-black/90"] {
 }
 
 /* Set card and bento box background overrides in light mode */
-html.theme-light .glow-card,
-html.theme-light .bento-card,
-html.theme-light [class*="from-[#03190e]"]:not(.fixed),
+html.theme-light [class*="from-[#03190e]"]:not(.fixed):not(.expert-service-card *):not(.glow-card *):not(.bento-card *),
 html.theme-light [class*="from-[#04150c]"]:not(.fixed),
 html.theme-light [class*="from-[#052418]"]:not(.fixed),
 html.theme-light [class*="from-[#062015]"]:not(.fixed),
@@ -744,61 +742,61 @@ html.theme-light [class*="from-[#052418]"],
 html.theme-light [class*="from-[#062015]"],
 html.theme-light [class*="from-[#040806]"],
 html.theme-light [class*="from-[#050c08]"],
-html.theme-light [class*="from-[#060709]"],
-html.theme-light [class*="from-[#06080A]"],
-html.theme-light [class*="from-[#06080a]"],
-html.theme-light [class*="from-[#070b09]"],
-html.theme-light [class*="from-[#070908]"],
-html.theme-light [class*="from-[#080d09]"],
-html.theme-light [class*="from-[#080d0a]"],
-html.theme-light [class*="from-[#0a100b]"],
-html.theme-light [class*="from-[#0b0f0c]"],
-html.theme-light [class*="from-[#060a07]"],
-html.theme-light [class*="from-[#040906]"],
-html.theme-light [class*="from-[#060e0a]"],
-html.theme-light [class*="from-[#07120a]"],
-html.theme-light [class*="from-[#071915]"],
-html.theme-light [class*="from-[#0d1410]"],
-html.theme-light [class*="from-[#08120c]"] {
+html.theme-light [class*="from-[#060709]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#06080A]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#06080a]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#070b09]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#070908]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#080d09]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#080d0a]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#0a100b]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#0b0f0c]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#060a07]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#040906]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#060e0a]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#07120a]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#071915]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#0d1410]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="from-[#08120c]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *) {
   --tw-gradient-from: #ffffff var(--tw-gradient-from-position, ) !important;
 }
 
-html.theme-light [class*="to-black"],
-html.theme-light [class*="to-[#020403]"],
-html.theme-light [class*="to-[#030504]"],
-html.theme-light [class*="to-[#030604]"],
-html.theme-light [class*="to-[#020503]"],
-html.theme-light [class*="to-[#040806]"],
-html.theme-light [class*="to-[#060709]"],
-html.theme-light [class*="to-[#070b09]"],
-html.theme-light [class*="to-[#070908]"],
-html.theme-light [class*="to-[#080d09]"],
-html.theme-light [class*="to-[#0a100b]"],
-html.theme-light [class*="to-[#060a07]"],
-html.theme-light [class*="to-[#0b0f0c]"],
-html.theme-light [class*="to-[#040906]"],
-html.theme-light [class*="to-[#040805]"],
-html.theme-light [class*="to-[#040705]"],
-html.theme-light [class*="to-[#050c08]"],
-html.theme-light [class*="to-[#050906]"],
-html.theme-light [class*="to-[#0d1410]"],
-html.theme-light [class*="to-[#050907]"] {
+html.theme-light [class*="to-black"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#020403]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#030504]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#030604]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#020503]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#040806]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#060709]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#070b09]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#070908]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#080d09]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#0a100b]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#060a07]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#0b0f0c]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#040906]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#040805]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#040705]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#050c08]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#050906]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#0d1410]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="to-[#050907]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *) {
   --tw-gradient-to: #ffffff var(--tw-gradient-to-position, ) !important;
 }
 
-html.theme-light [class*="via-black"],
-html.theme-light [class*="via-black/50"],
-html.theme-light [class*="via-black/60"],
-html.theme-light [class*="via-[#030504]"],
-html.theme-light [class*="via-[#030604]"],
-html.theme-light [class*="via-[#020403]"],
-html.theme-light [class*="via-[#052418]"],
-html.theme-light [class*="via-[#062015]"],
-html.theme-light [class*="via-[#060709]"],
-html.theme-light [class*="via-[#070908]"],
-html.theme-light [class*="via-[#080d0a]"],
-html.theme-light [class*="via-[#0d1410]"],
-html.theme-light [class*="via-[#060709]/40"] {
+html.theme-light [class*="via-black"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-black/50"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-black/60"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#030504]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#030604]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#020403]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#052418]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#062015]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#060709]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#070908]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#080d0a]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#0d1410]"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
+html.theme-light [class*="via-[#060709]/40"]:not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *) {
   --tw-gradient-via: rgba(255, 255, 255, 0.75) var(--tw-gradient-via-position, ) !important;
 }
 
@@ -814,18 +812,18 @@ html.theme-light .resource-bg-overlay-right {
 }
 
 /* Light mode overrides for badge pills & icons (excluding hero sections) */
-html.theme-light [class*="bg-white/5"]:not(.fixed):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="bg-white/10"]:not(.fixed):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="bg-white/[0.03]"]:not(.fixed):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="bg-white/[0.05]"]:not(.fixed):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light [class*="bg-white/5"]:not(.fixed):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="bg-white/10"]:not(.fixed):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="bg-white/[0.03]"]:not(.fixed):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="bg-white/[0.05]"]:not(.fixed):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   background-color: #f1f5f9 !important;
   border-color: #e2e8f0 !important;
   color: #334155 !important;
 }
 
-html.theme-light [class*="bg-[#00D084]/10"]:not(.page-hero *):not([class*="fixed top-20"] *),
-html.theme-light [class*="bg-[#00D084]/15"]:not(.page-hero *):not([class*="fixed top-20"] *),
-html.theme-light [class*="bg-[#00D084]/20"]:not(.page-hero *):not([class*="fixed top-20"] *) {
+html.theme-light [class*="bg-[#00D084]/10"]:not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *),
+html.theme-light [class*="bg-[#00D084]/15"]:not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *),
+html.theme-light [class*="bg-[#00D084]/20"]:not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *) {
   background-color: rgba(0, 181, 116, 0.12) !important;
   border-color: rgba(0, 181, 116, 0.3) !important;
   color: #008050 !important;
@@ -934,59 +932,59 @@ html.theme-light [style*="position: fixed"][style*="width: 90vw"] {
 }
 
 /* Convert all white background opacities to dark overlays for light mode readability, excluding fixed backdrops and hero sections */
-html.theme-light [class*="bg-white/"]:not(.fixed):not([class*="inset-0"]):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *) {
+html.theme-light [class*="bg-white/"]:not(.fixed):not([class*="inset-0"]):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *) {
   background-color: rgba(9, 9, 11, 0.05) !important;
 }
 
 /* Convert white border opacities to subtle dark lines, excluding hero sections */
-html.theme-light [class*="border-white/"]:not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *) {
+html.theme-light [class*="border-white/"]:not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not([class*="fixed top-20"] *):not([class*="fixed top-0"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *):not(section[class*="pt-28"] *) {
   border-color: rgba(9, 9, 11, 0.08) !important;
 }
 
 /* Keep text elements crisp black/gray in light mode (excluding always-dark GenuineSpareParts cards and Subpage Hero Sections) */
-html.theme-light h1:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h2:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h3:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h4:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h5:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h6:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light label:not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light h1:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h2:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h3:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h4:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h5:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h6:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light label:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #09090b !important;
 }
 
-html.theme-light p:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light p:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #334155 !important;
 }
 
 /* Transform white text with various opacities to black/charcoal in light mode */
-html.theme-light .text-white:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/95"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/90"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/85"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/80"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/75"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light .text-white:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/95"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/90"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/85"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/80"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/75"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #09090b !important;
 }
 
-html.theme-light [class*="text-white/70"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/65"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/60"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/55"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/50"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light [class*="text-white/70"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/65"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/60"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/55"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/50"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #334155 !important;
 }
 
-html.theme-light [class*="text-white/45"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/40"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/35"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/30"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light [class*="text-white/45"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/40"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/35"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/30"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #475569 !important;
 }
 
-html.theme-light [class*="text-white/25"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/20"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/15"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light [class*="text-white/10"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light [class*="text-white/25"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/20"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/15"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light [class*="text-white/10"]:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #64748b !important;
 }
 
@@ -1632,9 +1630,12 @@ html.theme-light .stepper-progress {
 
 /* Smooth levitating float & ambient halo for the showcase panel */
 @keyframes warehouseBoxFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -2022,22 +2023,66 @@ html.theme-light .spare-part-card .spare-part-spec-btn {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Bento Card and General keep-dark-card rules for other sections */
+/* Bento Card (Spectrum of Care) 100% Dark Lock */
+.bento-card,
 html.theme-light .bento-card {
   background-color: rgba(7, 9, 8, 0.9) !important;
-  background-image: none !important;
+  background: rgba(7, 9, 8, 0.9) !important;
   color: #ffffff !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
+.bento-card h1,
+.bento-card h2,
+.bento-card h3,
+.bento-card h4,
 html.theme-light .bento-card h1,
 html.theme-light .bento-card h2,
 html.theme-light .bento-card h3,
-html.theme-light .bento-card h4,
-html.theme-light .bento-card p,
-html.theme-light .bento-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]),
-html.theme-light .bento-card div:not([class*="text-[#00D084]"]) {
+html.theme-light .bento-card h4 {
   color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95) !important;
+}
+
+.bento-card p,
+html.theme-light .bento-card p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9) !important;
+}
+
+.bento-card [class*="bg-black/"],
+html.theme-light .bento-card [class*="bg-black/"] {
+  background-color: rgba(0, 0, 0, 0.55) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.bento-card [class*="bg-black/50"],
+html.theme-light .bento-card [class*="bg-black/50"] {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.bento-card [class*="text-white"],
+html.theme-light .bento-card [class*="text-white"] {
+  color: #ffffff !important;
+}
+
+.bento-card [class*="text-white/"],
+html.theme-light .bento-card [class*="text-white/"] {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.bento-card [class*="text-white/60"],
+html.theme-light .bento-card [class*="text-white/60"] {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.bento-card span[class*="text-[#00D084]"],
+.bento-card div[class*="text-[#00D084]"],
+html.theme-light .bento-card span[class*="text-[#00D084]"],
+html.theme-light .bento-card div[class*="text-[#00D084]"] {
+  color: #00D084 !important;
 }
 
 /* ==========================================================================
@@ -2099,4 +2144,240 @@ html.theme-light .resource-journey-card:hover {
   border-color: rgba(0, 208, 132, 0.4) !important;
   box-shadow: 0 30px 70px -15px rgba(0, 208, 132, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
 }
-
+
+/* ==========================================================================
+   EXPERT EV SERVICES CARDS — 100% DARK THEME LOCK IN BOTH LIGHT & DARK THEMES
+   (Cards maintain identical dark appearance, contrast, and glow across themes)
+   ========================================================================== */
+.expert-service-card,
+.glow-card,
+html.theme-light .expert-service-card,
+html.theme-light .glow-card,
+html.theme-light [class*="expert-service-card"] {
+  background-color: #080d0a !important;
+  background: #080d0a !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7) !important;
+}
+
+.expert-service-card:hover,
+.glow-card:hover,
+html.theme-light .expert-service-card:hover,
+html.theme-light .glow-card:hover {
+  border-color: rgba(0, 208, 132, 0.4) !important;
+  box-shadow: 0 25px 50px -10px rgba(0, 208, 132, 0.2) !important;
+}
+
+/* L-shape container backdrops */
+.expert-l-shape > div > div,
+html.theme-light .expert-l-shape > div > div {
+  background-color: #080d0a !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Card Titles & Headings */
+.expert-service-card h1,
+.expert-service-card h2,
+.expert-service-card h3,
+.expert-service-card h4,
+.expert-l-shape h3,
+.expert-l-shape h4,
+.glow-card h3,
+.glow-card h4,
+html.theme-light .expert-service-card h1,
+html.theme-light .expert-service-card h2,
+html.theme-light .expert-service-card h3,
+html.theme-light .expert-service-card h4,
+html.theme-light .expert-l-shape h3,
+html.theme-light .expert-l-shape h4,
+html.theme-light .glow-card h3,
+html.theme-light .glow-card h4 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Card Descriptions */
+.expert-service-card p,
+.expert-l-shape p,
+.glow-card p,
+html.theme-light .expert-service-card p,
+html.theme-light .expert-l-shape p,
+html.theme-light .glow-card p {
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Card Spans & General Text */
+.expert-service-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]):not([class*="line-through"]),
+.expert-l-shape span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]),
+.glow-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]):not([class*="line-through"]),
+html.theme-light .expert-service-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]):not([class*="line-through"]),
+html.theme-light .expert-l-shape span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]),
+html.theme-light .glow-card span:not([class*="text-[#00D084]"]):not([class*="text-emerald-"]):not([class*="line-through"]) {
+  color: #ffffff !important;
+}
+
+/* Strike-through previous price */
+.expert-service-card [class*="line-through"],
+.glow-card [class*="line-through"],
+html.theme-light .expert-service-card [class*="line-through"],
+html.theme-light .glow-card [class*="line-through"] {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Green Highlight Prices and Status Text (excluding card headings) */
+.expert-service-card span[class*="text-[#00D084]"],
+.expert-l-shape span[class*="text-[#00D084]"],
+.glow-card span[class*="text-[#00D084]"],
+html.theme-light .expert-service-card span[class*="text-[#00D084]"],
+html.theme-light .expert-l-shape span[class*="text-[#00D084]"],
+html.theme-light .glow-card span[class*="text-[#00D084]"],
+html.theme-light #ev-services span[class*="text-[#00D084]"],
+html.theme-light #ev-services div[class*="text-[#00D084]"] {
+  color: #00D084 !important;
+}
+
+/* Section Background & Header for Expert EV Services (#ev-services) in Light Mode */
+#ev-services {
+  background-color: #020403;
+}
+
+html.theme-light #ev-services {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+}
+
+html.theme-light #ev-services .section-header-title,
+html.theme-light #ev-services .section-header-title span,
+html.theme-light #ev-services h2.section-header-title {
+  color: #09090b !important;
+  text-shadow: none !important;
+}
+
+html.theme-light #ev-services .section-header-desc {
+  color: #475569 !important;
+  text-shadow: none !important;
+}
+
+html.theme-light #ev-services .section-header-btn {
+  background-color: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #09090b !important;
+}
+
+html.theme-light #ev-services .section-header-btn:hover {
+  background-color: rgba(0, 208, 132, 0.1) !important;
+  border-color: rgba(0, 208, 132, 0.4) !important;
+}
+
+/* Containers must remain transparent so section background (white in light mode) shows between cards */
+.expert-services-grid,
+.expert-l-shape,
+#ev-services .expert-services-grid,
+#ev-services .expert-l-shape,
+html.theme-light #ev-services .expert-services-grid,
+html.theme-light #ev-services .expert-l-shape {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Card Root Styles - 100% Dark on individual cards in both themes */
+.glow-card,
+.expert-service-card,
+#ev-services .glow-card,
+#ev-services .expert-service-card,
+#ev-services .expert-l-shape > div > div,
+html.theme-light .glow-card,
+html.theme-light .expert-service-card,
+html.theme-light #ev-services .glow-card,
+html.theme-light #ev-services .expert-service-card,
+html.theme-light #ev-services .expert-l-shape > div > div {
+  background-color: #080d0a !important;
+  background: #080d0a !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+/* Inner Sub-panels, HUD Modules & Protocol Pills */
+.expert-service-card .expert-hud-panel,
+.expert-service-card [class*="bg-black/"],
+.expert-l-shape [class*="bg-black/"],
+.glow-card [class*="bg-black/"],
+#ev-services [class*="bg-black/"],
+html.theme-light .expert-service-card .expert-hud-panel,
+html.theme-light .expert-service-card [class*="bg-black/"],
+html.theme-light .expert-l-shape [class*="bg-black/"],
+html.theme-light .glow-card [class*="bg-black/"],
+html.theme-light #ev-services [class*="bg-black/"] {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Icon Box Containers */
+.expert-service-card [class*="bg-[#030604]"],
+.expert-l-shape [class*="bg-[#030604]"],
+.glow-card [class*="bg-[#030604]"],
+#ev-services [class*="bg-[#030604]"],
+html.theme-light .expert-service-card [class*="bg-[#030604]"],
+html.theme-light .expert-l-shape [class*="bg-[#030604]"],
+html.theme-light .glow-card [class*="bg-[#030604]"],
+html.theme-light #ev-services [class*="bg-[#030604]"] {
+  background-color: #030604 !important;
+  border-color: rgba(0, 208, 132, 0.3) !important;
+}
+
+.expert-service-card [class*="bg-[#030604]"] svg,
+.expert-l-shape [class*="bg-[#030604]"] svg,
+.glow-card [class*="bg-[#030604]"] svg,
+#ev-services [class*="bg-[#030604]"] svg,
+html.theme-light .expert-service-card [class*="bg-[#030604]"] svg,
+html.theme-light .expert-l-shape [class*="bg-[#030604]"] svg,
+html.theme-light .glow-card [class*="bg-[#030604]"] svg,
+html.theme-light #ev-services [class*="bg-[#030604]"] svg {
+  color: #00D084 !important;
+  stroke: #00D084 !important;
+}
+
+/* Image gradient overlays inside expert cards */
+.expert-service-card [class*="from-[#080d0a]"],
+.expert-service-card [class*="from-black"],
+.expert-l-shape [class*="from-[#080d0a]"],
+.expert-l-shape [class*="from-black"],
+.glow-card [class*="from-[#080d0a]"],
+.glow-card [class*="from-black"],
+#ev-services [class*="from-[#080d0a]"],
+#ev-services [class*="from-black"],
+html.theme-light .expert-service-card [class*="from-[#080d0a]"],
+html.theme-light .expert-service-card [class*="from-black"],
+html.theme-light .expert-l-shape [class*="from-[#080d0a]"],
+html.theme-light .expert-l-shape [class*="from-black"],
+html.theme-light .glow-card [class*="from-[#080d0a]"],
+html.theme-light .glow-card [class*="from-black"],
+html.theme-light #ev-services [class*="from-[#080d0a]"],
+html.theme-light #ev-services [class*="from-black"] {
+  --tw-gradient-from: #080d0a !important;
+}
+
+.expert-service-card [class*="via-[#080d0a]"],
+.expert-service-card [class*="via-black"],
+.expert-l-shape [class*="via-[#080d0a]"],
+.expert-l-shape [class*="via-black"],
+.glow-card [class*="via-[#080d0a]"],
+.glow-card [class*="via-black"],
+#ev-services [class*="via-[#080d0a]"],
+#ev-services [class*="via-black"],
+html.theme-light .expert-service-card [class*="via-[#080d0a]"],
+html.theme-light .expert-service-card [class*="via-black"],
+html.theme-light .expert-l-shape [class*="via-[#080d0a]"],
+html.theme-light .expert-l-shape [class*="via-black"],
+html.theme-light .glow-card [class*="via-[#080d0a]"],
+html.theme-light .glow-card [class*="via-black"],
+html.theme-light #ev-services [class*="via-[#080d0a]"],
+html.theme-light #ev-services [class*="via-black"] {
+  --tw-gradient-stops: var(--tw-gradient-from), rgba(8, 13, 10, 0.8), var(--tw-gradient-to) !important;
+}

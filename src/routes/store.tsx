@@ -30,7 +30,20 @@ import { toast } from "sonner";
 import { BookingModal } from "../components/BookingModal";
 import Lenis from "lenis";
 
+type StoreSearch = {
+  category?: string;
+  product?: string;
+  search?: string;
+};
+
 export const Route = createFileRoute("/store")({
+  validateSearch: (search: Record<string, unknown>): StoreSearch => {
+    return {
+      category: (search.category as string) || undefined,
+      product: (search.product as string) || undefined,
+      search: (search.search as string) || undefined,
+    };
+  },
   component: StorePage,
 });
 
@@ -40,9 +53,35 @@ interface CartItem {
 }
 
 function StorePage() {
+  const searchParams = Route.useSearch();
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"popular" | "price-low" | "price-high" | "rating">("popular");
+
+  // Sync search parameters from route (category, search, product modal)
+  useEffect(() => {
+    if (searchParams.category) {
+      const matchCat = STORE_CATEGORIES.find(
+        (c) => c.toLowerCase() === searchParams.category?.toLowerCase()
+      );
+      if (matchCat) {
+        setSelectedCategory(matchCat);
+      }
+    }
+    if (searchParams.search) {
+      setSearchQuery(searchParams.search);
+    }
+    if (searchParams.product) {
+      const matchPrd = STORE_PRODUCTS.find(
+        (p) =>
+          p.id === searchParams.product ||
+          p.name.toLowerCase().includes(searchParams.product!.toLowerCase())
+      );
+      if (matchPrd) {
+        setSelectedProduct(matchPrd);
+      }
+    }
+  }, [searchParams]);
 
   // Cart State
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
