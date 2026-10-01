@@ -702,16 +702,16 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
 
               {/* HEADING */}
               <div
-                className="w-full text-center px-4 relative z-10"
+                className="w-full text-center px-3 sm:px-4 relative z-10"
                 style={{
                   paddingTop: "clamp(100px, 12vh, 140px)",
                 }}
               >
                 <h1
-                  className="m-0 p-0 leading-none transition-colors duration-300 flex justify-center items-center flex-nowrap whitespace-nowrap gap-x-2 sm:gap-x-3 text-center w-full max-w-full overflow-hidden select-none"
+                  className="m-0 p-0 leading-tight sm:leading-none transition-colors duration-300 flex justify-center items-center flex-wrap sm:flex-nowrap gap-x-2 sm:gap-x-3 gap-y-1 text-center w-full max-w-full overflow-hidden select-none"
                   style={{
                     color: "var(--foreground)",
-                    fontSize: "clamp(0.95rem, 3.0vw, 3.8rem)",
+                    fontSize: "clamp(0.72rem, 3.0vw, 3.8rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.02em",
                     fontFamily: "var(--font-sans)",
@@ -725,6 +725,44 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                     onIndexChange={(idx) => setActiveTypewriterIdx(idx)}
                   />
                 </h1>
+              </div>
+
+              {/* MOBILE HERO VISUAL IMAGE SHOWCASE (Visible on phone/mobile screens) */}
+              <div className="md:hidden relative w-full flex flex-col items-center justify-center my-3 px-4 z-20">
+                <AnimatePresence mode="wait">
+                  {isCurrent && (
+                    <motion.div
+                      key={`mobile-typewriter-img-${activeTypewriterItem.word}`}
+                      initial={{ opacity: 0, y: 15, scale: 0.94 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -15, scale: 0.94 }}
+                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      className="relative w-full max-w-[340px] xs:max-w-[360px] h-[190px] xs:h-[220px] flex items-center justify-center p-2 rounded-2xl bg-gradient-to-b from-[#0a120e]/80 via-[#040806]/90 to-black/95 border border-[#00D084]/30 shadow-[0_15px_35px_rgba(0,208,132,0.2)] overflow-hidden"
+                    >
+                      {/* Background studio radial lighting */}
+                      <div className="absolute inset-0 bg-radial from-[#00D084]/15 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent pointer-events-none z-[1]" />
+                      
+                      <img
+                        src={activeTypewriterItem.img}
+                        alt={activeTypewriterItem.word}
+                        className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)] animate-float relative z-[1]"
+                      />
+                      
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5 z-[2] flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse" />
+                          <span className="text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-wider truncate max-w-[170px]">
+                            {activeTypewriterItem.word}
+                          </span>
+                        </div>
+                        <span className="text-[9px] font-mono text-white/80 font-bold bg-[#00D084]/20 px-2 py-0.5 rounded-md border border-[#00D084]/30">
+                          {activeTypewriterItem.statValue}
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* DESKTOP LAYOUT CONTENT (Visible only on desktop) */}
@@ -1783,14 +1821,15 @@ function HowItWorksHorizontal() {
       </div>
 
       {/* 2. Sliding Cards Track (z-index 20) */}
+      {/* Desktop GSAP Sliding Track (lg+) */}
       <div
         ref={sectionRef}
-        className="w-full flex flex-col lg:absolute lg:top-0 lg:left-full lg:h-full lg:w-max lg:flex-row lg:items-center py-20 px-6 lg:py-0 lg:px-0 z-20"
+        className="hidden lg:flex w-full lg:absolute lg:top-0 lg:left-full lg:h-full lg:w-max lg:flex-row lg:items-center py-0 px-0 z-20"
       >
-        <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:px-24 w-full">
+        <div className="relative flex flex-row gap-12 items-center px-24 w-full">
 
           {/* Animated Connecting Circuit Pipeline */}
-          <div className="hidden lg:block absolute left-[246px] right-[246px] top-[68px] h-[2px] bg-white/5 z-0">
+          <div className="absolute left-[246px] right-[246px] top-[68px] h-[2px] bg-white/5 z-0">
             <div className="circuit-progress-line h-full bg-gradient-to-r from-[#00D084] to-emerald-400 w-0 shadow-[0_0_10px_#00D084]" />
           </div>
 
@@ -1798,7 +1837,7 @@ function HowItWorksHorizontal() {
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className="w-full lg:w-[300px] bg-[#050806] border border-white/5 hover:border-[#00D084]/30 rounded-[32px] p-8 pt-10 pb-10 flex flex-col items-center min-h-[280px] relative transition-all duration-300 hover:shadow-[0_20px_40px_-20px_rgba(0,208,132,0.06)] shrink-0 z-10 group"
+              className="w-[300px] bg-[#050806] border border-white/5 hover:border-[#00D084]/30 rounded-[32px] p-8 pt-10 pb-10 flex flex-col items-center min-h-[280px] relative transition-all duration-300 hover:shadow-[0_20px_40px_-20px_rgba(0,208,132,0.06)] shrink-0 z-10 group"
             >
               {/* Circle number */}
               <div className="w-14 h-14 rounded-full bg-[#00D084]/10 border border-[#00D084]/20 flex items-center justify-center text-[#00D084] text-base font-bold font-mono shadow-[0_0_15px_rgba(0,208,132,0.1)] group-hover:scale-110 transition-transform duration-300">
@@ -1817,6 +1856,54 @@ function HowItWorksHorizontal() {
             </div>
           ))}
 
+        </div>
+      </div>
+
+      {/* Mobile / Tablet Horizontal Swipe Track (< 1024px) */}
+      <div className="lg:hidden w-full px-4 py-12 z-20">
+        <div className="flex items-center justify-between px-2 mb-4">
+          <span className="text-[11px] font-mono font-bold text-[#00D084] uppercase tracking-widest flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#00D084] animate-ping" />
+            SWIPE TO EXPLORE 4-STEP PROCESS
+          </span>
+          <span className="text-[11px] font-mono text-white/50 font-bold bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+            1 - 4 STEPS
+          </span>
+        </div>
+
+        <div
+          className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {steps.map((step, idx) => (
+            <div
+              key={idx}
+              className="w-[84vw] sm:w-[320px] shrink-0 snap-center bg-gradient-to-b from-[#0a120e] via-[#050907] to-black border border-[#00D084]/30 rounded-[28px] p-6 flex flex-col justify-between min-h-[250px] relative shadow-[0_15px_35px_rgba(0,0,0,0.6)]"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] text-base font-bold font-mono shadow-[0_0_15px_rgba(0,208,132,0.2)]">
+                  {step.num}
+                </div>
+                <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-widest font-bold bg-[#00D084]/10 px-2.5 py-1 rounded-full border border-[#00D084]/20">
+                  STEP 0{idx + 1}
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-white font-extrabold text-xl tracking-tight mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-muted-foreground text-xs leading-relaxed font-light">
+                  {step.desc}
+                </p>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-white/40">
+                <span>VERIFIED EV SERVICE PROTOCOL</span>
+                <ArrowRight className="w-4 h-4 text-[#00D084]" />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -5979,7 +6066,7 @@ function QuickAccessSidebar() {
       {/* Floating Trigger Button on the right edge */}
       <button
         onClick={() => setIsOpen(true)}
-        className="quick-access-trigger fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#050806]/95 border border-[#00D084]/40 hover:border-[#00D084] text-white w-10 h-28 rounded-l-2xl flex flex-col items-center justify-center gap-2.5 cursor-pointer shadow-[0_0_20px_rgba(0,208,132,0.15)] transition-all duration-300 hover:pr-2 select-none group"
+        className="quick-access-trigger hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#050806]/95 border border-[#00D084]/40 hover:border-[#00D084] text-white w-10 h-28 rounded-l-2xl flex-col items-center justify-center gap-2.5 cursor-pointer shadow-[0_0_20px_rgba(0,208,132,0.15)] transition-all duration-300 hover:pr-2 select-none group"
       >
         <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
         <span className="quick-access-text keep-white text-[10px] font-bold font-mono tracking-widest uppercase text-white group-hover:text-white transition-colors flex items-center justify-center"

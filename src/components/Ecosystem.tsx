@@ -47,77 +47,89 @@ const DATA = [
 
 const Card = ({ data, i, progress, range, targetScale }: any) => {
   const scale = useTransform(progress, range, [1, targetScale]);
-  
+
   return (
-    <div className="h-screen flex items-center justify-center sticky top-0 pt-10">
-      <motion.div 
-        style={{ scale, top: `calc(-5vh + ${i * 40}px)` }}
-        className="relative flex flex-col justify-between w-full max-w-[1300px] mx-auto min-h-[88vh] lg:min-h-[90vh] rounded-[2.5rem] border border-border bg-card p-6 md:p-12 lg:p-14 shadow-2xl overflow-hidden origin-top transition-colors duration-300"
+    <div className="min-h-screen flex items-start lg:items-center justify-center sticky top-0 pt-16 md:pt-20">
+      <motion.div
+        style={{
+          scale,
+          top: `calc(75px + ${i * 22}px)`,
+        }}
+        className="relative flex flex-col justify-between w-full max-w-[1300px] mx-auto min-h-[75vh] sm:min-h-[80vh] lg:min-h-[85vh] rounded-[2rem] md:rounded-[2.5rem] border border-border/80 bg-card p-5 sm:p-8 md:p-12 lg:p-14 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden origin-top transition-all duration-300"
       >
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 h-full items-stretch">
+        {/* Subtle glass background glow accent */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#00D084]/[0.03] rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 h-full items-stretch">
           {/* Left Column: Editorial Header & High-End Visual Showcase */}
           <div className="lg:col-span-5 flex flex-col justify-between h-full">
             <div>
-              <div className="inline-flex items-center gap-3 mb-5">
-                <div className="h-1.5 w-1.5 rounded-full bg-[#00D084]" />
-                <span className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground font-semibold">
-                  Phase {data.num}
+              <div className="inline-flex items-center gap-2.5 mb-3 md:mb-5">
+                <div className="h-2 w-2 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084]" />
+                <span className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-[#00D084] font-bold">
+                  Phase {data.num} // ECOSYSTEM LAYER
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl lg:text-[68px] font-semibold tracking-[-0.03em] text-foreground mb-4 uppercase leading-[0.9] text-balance transition-colors duration-300">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-extrabold tracking-[-0.03em] text-foreground mb-3 md:mb-4 uppercase leading-[0.95] text-balance transition-colors duration-300">
                 {data.category}
               </h2>
-              <p className="text-base lg:text-lg text-muted-foreground max-w-md leading-relaxed font-light transition-colors duration-300 mb-5">
+              <p className="text-xs sm:text-sm lg:text-base text-muted-foreground max-w-md leading-relaxed font-light transition-colors duration-300 mb-4 md:mb-5">
                 {data.desc}
               </p>
 
-              {/* Premium Editorial Visual Frame (Clean, no glow, aesthetic) */}
-              <div className="relative rounded-[20px] overflow-hidden border border-border/60 bg-muted/40 group shadow-md mt-2">
-                <img 
-                  src={data.image} 
-                  alt={data.category} 
-                  className="w-full aspect-[16/9] object-cover object-center filter brightness-[0.94] contrast-[1.04] group-hover:scale-105 transition-transform duration-700 ease-out"
+              {/* Premium Editorial Visual Frame */}
+              <div className="relative rounded-[16px] sm:rounded-[20px] overflow-hidden border border-border/60 bg-muted/40 group shadow-md mt-1">
+                <img
+                  src={data.image}
+                  alt={data.category}
+                  className="w-full aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] object-cover object-center filter brightness-[0.94] contrast-[1.04] group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between pointer-events-none">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-white/90 font-bold bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
+                  <span className="text-[9px] md:text-[10px] font-mono uppercase tracking-widest text-white/90 font-bold bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
                     {data.imageCaption}
                   </span>
                   <span className="text-[9px] font-mono text-[#00D084] font-bold">● VERIFIED</span>
                 </div>
               </div>
             </div>
-            
+
             <div className="hidden lg:flex items-center justify-between mt-6 pt-4 border-t border-border/40">
-               <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-semibold">System Architecture</p>
-               <span className="text-[10px] font-mono text-muted-foreground font-semibold">0{i+1} / 03</span>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-semibold">System Architecture</p>
+              <span className="text-[10px] font-mono text-muted-foreground font-semibold">0{i + 1} / 03</span>
             </div>
           </div>
 
           {/* Right Column: Bento Features */}
-          <StaggerContainer staggerDelay={0.1} className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
+          <StaggerContainer staggerDelay={0.1} className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 h-full">
             {data.items.map((item: any, idx: number) => (
-              <StaggerItem 
-                key={idx} 
-                className={`group flex flex-col justify-between p-6 md:p-8 rounded-[24px] bg-muted/20 hover:bg-[#00D084]/[0.02] border border-border hover:border-[#00D084]/30 transition-all duration-500 ease-out ${idx === 0 ? 'sm:col-span-2' : ''}`}
+              <StaggerItem
+                key={idx}
+                className={`group flex flex-col justify-between p-4 sm:p-6 md:p-8 rounded-[20px] sm:rounded-[24px] bg-muted/20 hover:bg-[#00D084]/[0.03] border border-border/80 hover:border-[#00D084]/40 transition-all duration-500 ease-out ${
+                  idx === 0 ? "sm:col-span-2" : ""
+                }`}
               >
-                <div className="flex justify-between items-start mb-6 md:mb-10">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-muted text-muted-foreground group-hover:bg-[#00D084] group-hover:text-background group-hover:border-[#00D084] transition-all duration-500 ease-out">
-                    <item.icon className="h-5 w-5" />
+                <div className="flex justify-between items-start mb-4 md:mb-8">
+                  <div className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-border bg-muted text-muted-foreground group-hover:bg-[#00D084] group-hover:text-background group-hover:border-[#00D084] transition-all duration-500 ease-out">
+                    <item.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
                   <div className="flex items-center gap-2">
                     {item.tag && (
-                      <span className="text-[9px] font-mono uppercase tracking-wider text-muted-foreground/70 bg-muted/40 px-2.5 py-1 rounded-full border border-border/50 group-hover:border-[#00D084]/30 group-hover:text-[#00D084] transition-all">
+                      <span className="text-[8.5px] sm:text-[9px] font-mono uppercase tracking-wider text-muted-foreground/70 bg-muted/40 px-2.5 py-1 rounded-full border border-border/50 group-hover:border-[#00D084]/30 group-hover:text-[#00D084] transition-all">
                         {item.tag}
                       </span>
                     )}
-                    <ArrowRight className="h-4 w-4 text-muted-foreground/30 group-hover:text-[#00D084] -rotate-45 group-hover:rotate-0 transition-all duration-500 ease-out" />
+                    <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground/30 group-hover:text-[#00D084] -rotate-45 group-hover:rotate-0 transition-all duration-500 ease-out" />
                   </div>
                 </div>
-                
+
                 <div>
-                  <h3 className="text-[20px] md:text-[22px] font-medium text-foreground/90 mb-2.5 tracking-tight group-hover:text-foreground transition-colors">{item.title}</h3>
-                  <p className="text-[13.5px] md:text-[14px] text-muted-foreground leading-[1.6] font-light group-hover:text-foreground/70 transition-colors">{item.desc}</p>
+                  <h3 className="text-base sm:text-lg md:text-[22px] font-bold text-foreground/90 mb-1.5 sm:mb-2.5 tracking-tight group-hover:text-foreground transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-[13.5px] md:text-[14px] text-muted-foreground leading-[1.6] font-light group-hover:text-foreground/70 transition-colors">
+                    {item.desc}
+                  </p>
                 </div>
               </StaggerItem>
             ))}
@@ -125,44 +137,48 @@ const Card = ({ data, i, progress, range, targetScale }: any) => {
         </div>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
 export function Ecosystem() {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ['start start', 'end end']
+    offset: ["start start", "end end"],
   });
 
   return (
     <section ref={container} className="relative w-full bg-background font-sans selection:bg-[#00D084] selection:text-[#020403] transition-colors duration-300">
       
       {/* Intro Header */}
-      <div className="relative w-full max-w-[1400px] mx-auto px-6 lg:px-12 pt-40 pb-24 text-center flex flex-col items-center">
-         <h2 className="text-4xl md:text-5xl lg:text-7xl font-semibold tracking-[-0.04em] text-foreground mb-6 leading-tight transition-colors duration-300">
-            India Has No One<br />Doing What We Do.
-         </h2>
-         <p className="text-lg text-muted-foreground max-w-xl font-light transition-colors duration-300">
-           No OEM franchise. No multi-brand EV service platform. No unified ecosystem for 2W & 3W repairs, parts, and payouts — until now.
-         </p>
+      <div className="relative w-full max-w-[1400px] mx-auto px-6 lg:px-12 pt-24 sm:pt-36 md:pt-40 pb-16 sm:pb-24 text-center flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/30 bg-[#00D084]/10 px-3.5 py-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#00D084] mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
+          INDIA'S FIRST UNIFIED EV GRID
+        </div>
+        <h2 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-[-0.04em] text-foreground mb-4 sm:mb-6 leading-tight transition-colors duration-300">
+          India Has No One<br />Doing What We Do.
+        </h2>
+        <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-xl font-light transition-colors duration-300">
+          No OEM franchise. No multi-brand EV service platform. No unified ecosystem for 2W & 3W repairs, parts, and payouts — until now.
+        </p>
       </div>
 
-      <div className="relative z-10 w-full px-4 lg:px-8 pb-32">
+      <div className="relative z-10 w-full px-3 sm:px-6 lg:px-8 pb-32">
         {DATA.map((col, i) => {
-          const targetScale = 1 - ((DATA.length - i) * 0.05);
+          const targetScale = 1 - (DATA.length - i) * 0.04;
           return (
-            <Card 
-              key={i} 
-              i={i} 
-              data={col} 
-              progress={scrollYProgress} 
-              range={[i * 0.25, 1]} 
-              targetScale={targetScale} 
+            <Card
+              key={i}
+              i={i}
+              data={col}
+              progress={scrollYProgress}
+              range={[i * 0.25, 1]}
+              targetScale={targetScale}
             />
-          )
+          );
         })}
       </div>
     </section>
-  )
+  );
 }

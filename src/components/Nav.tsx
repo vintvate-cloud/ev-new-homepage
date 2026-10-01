@@ -158,41 +158,36 @@ export function Nav({
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "py-1" : "py-2"}`}
       >
         <div
-          className={`mx-auto flex max-w-[1400px] items-center gap-2.5 md:gap-3 transition-all duration-500 ${scrolled ? "mx-4 md:mx-8 mt-1.5" : "mx-4 md:mx-8 mt-2"
-            }`}
+          className={`mx-auto flex max-w-[1400px] items-center justify-center transition-all duration-500 ${
+            scrolled ? "px-2.5 sm:px-4 md:px-8 mt-1" : "px-2.5 sm:px-4 md:px-8 mt-2"
+          }`}
         >
-          {/* Logo OUTSIDE the bordered navbar pill container */}
-          <Link to="/" className="flex items-center shrink-0 group overflow-hidden rounded-xl">
-            <img
-              src="/logo.jpeg"
-              alt="My EV Service Logo"
-              className={`w-auto rounded-xl object-cover scale-125 transition-all duration-300 group-hover:scale-135 ${scrolled ? "h-11 sm:h-12" : "h-14 sm:h-16 lg:h-16"
-                }`}
-              style={{
-                backgroundColor: "var(--nav-logo-bg)",
-                border: "var(--nav-logo-border)",
-                boxShadow: "0 0 15px rgba(0,0,0,0.4)",
-              }}
-            />
-          </Link>
-
-          {/* Bordered Navbar Pill Container starting from MY EV SERVICE text */}
+          {/* Bordered Navbar Pill Container with Integrated Logo & Title */}
           <div
-            className={`flex-1 flex items-center justify-between transition-all duration-500 ${scrolled
-                ? "pl-3.5 sm:pl-4 pr-5 py-1.5 rounded-full"
-                : "pl-4 sm:pl-5 pr-6 py-2.5 rounded-full"
-              }`}
+            className={`w-full flex items-center justify-between transition-all duration-500 ${
+              scrolled
+                ? "px-3 sm:px-4 md:px-6 py-1.5 rounded-full"
+                : "px-3.5 sm:px-5 md:px-6 py-2 sm:py-2.5 rounded-full"
+            }`}
             style={{
               background: "var(--nav-bg)",
-              backdropFilter: "blur(20px)",
+              backdropFilter: "blur(24px)",
               border: "var(--nav-border)",
               boxShadow: "var(--nav-shadow)",
             }}
           >
-            <Link to="/" className="flex items-center gap-2 group">
+            {/* Integrated Brand Logo + Title */}
+            <Link to="/" className="flex items-center gap-2.5 shrink-0 group min-w-0">
+              <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-black border border-white/20 p-1 flex items-center justify-center overflow-hidden shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105">
+                <img
+                  src="/logo-myevservice.jpg"
+                  alt="My EV Service Logo"
+                  className="w-full h-full object-contain rounded-md"
+                />
+              </div>
               <span
                 id="nav-logo-text"
-                className="text-[14px] font-bold tracking-[0.15em] uppercase transition-colors"
+                className="text-[12px] sm:text-[13.5px] md:text-[14px] font-black tracking-[0.14em] uppercase transition-colors truncate"
                 style={{ color: "var(--nav-text)" }}
               >
                 MY EV SERVICE
@@ -459,14 +454,14 @@ export function Nav({
               {/* Theme Toggle Button (Circular Sun Icon matching screenshot) */}
               <button
                 onClick={toggleTheme}
-                className="w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer hover:bg-white/10"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all cursor-pointer hover:bg-white/10 shrink-0"
                 style={{
                   border: "1px solid var(--nav-btn-border)",
                   color: "var(--nav-btn-text)",
                 }}
                 title="Switch Theme Mode"
               >
-                <Sun className="w-4 h-4" />
+                <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
 
               {/* Shopping Cart Button (Circular Icon matching screenshot) */}
@@ -478,7 +473,7 @@ export function Nav({
                     onOpenCart();
                   }
                 }}
-                className="relative w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer hover:bg-white/10"
+                className="hidden sm:relative sm:flex w-9 h-9 rounded-full items-center justify-center transition-all cursor-pointer hover:bg-white/10 shrink-0"
                 style={{
                   border: "1px solid var(--nav-btn-border)",
                   color: "var(--nav-btn-text)",
@@ -509,19 +504,20 @@ export function Nav({
               {/* Book Service CTA Button (Mint Green Pill matching screenshot) */}
               <button
                 onClick={() => (onOpenBooking ? onOpenBooking() : (window.location.href = "/services"))}
-                className="rounded-full text-xs font-bold flex items-center gap-2 px-5 py-2 transition-all hover:opacity-95 cursor-pointer bg-[#00D084] text-[#020403] shadow-[0_0_15px_rgba(0,208,132,0.3)]"
+                className="rounded-full text-xs font-bold flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-5 py-2 transition-all hover:opacity-95 cursor-pointer bg-[#00D084] text-[#020403] shadow-[0_0_15px_rgba(0,208,132,0.3)] shrink-0"
               >
-                <Zap className="h-4 w-4 fill-[#020403]" />
-                <span>Book Service</span>
+                <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-[#020403]" />
+                <span className="hidden sm:inline">Book Service</span>
+                <span className="sm:hidden">Book</span>
               </button>
 
               {/* Mobile Hamburger */}
               <button
                 aria-label="Menu"
-                className="xl:hidden inline-flex h-10 w-10 items-center justify-center rounded-full glass text-[#00D084]"
+                className="xl:hidden inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full glass text-[#00D084] shrink-0"
                 onClick={() => setOpen(true)}
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </div>
           </div>
