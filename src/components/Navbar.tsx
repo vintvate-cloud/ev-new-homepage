@@ -50,11 +50,28 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300 pointer-events-none">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-3 sm:px-6 md:px-8 py-2 mt-2">
+        <div className="mx-auto flex max-w-[1440px] items-center gap-3 px-3 sm:px-6 md:px-8 py-2 mt-2">
           
-          {/* Main Floating Pill Capsule Navbar (Exact Match to Screenshot) */}
+          {/* Logo Outside Navbar Border */}
+          <Link to="/" className="shrink-0 pointer-events-auto group">
+            <div
+              className={`transition-all duration-300 group-hover:scale-105 ${
+                scrolled
+                  ? "w-10 h-10 sm:w-11 sm:h-11"
+                  : "w-11 h-11 sm:w-13 sm:h-13 md:w-14 md:h-14"
+              }`}
+            >
+              <img
+                src="/logo-myevservice.jpg"
+                alt="My EV Service Logo"
+                className="w-full h-full object-contain rounded-xl shadow-md"
+              />
+            </div>
+          </Link>
+
+          {/* Main Floating Pill Capsule Navbar */}
           <div
-            className={`w-full flex items-center justify-between pointer-events-auto px-5 py-2 rounded-full transition-all duration-300 ${
+            className={`flex-1 min-w-0 flex items-center justify-between pointer-events-auto px-5 py-2 rounded-full transition-all duration-300 ${
               scrolled
                 ? "shadow-[0_12px_40px_rgba(0,0,0,0.4)]"
                 : "shadow-xl"
@@ -66,15 +83,8 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
               boxShadow: "var(--nav-shadow)",
             }}
           >
-            {/* Left Brand Logo (Exact Screenshot Square Icon + Stacked Name) */}
-            <Link to="/" className="flex items-center gap-3 shrink-0 group">
-              <div className="w-8 h-8 rounded-lg bg-black border border-white/20 p-0.5 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
-                <img
-                  src="/logo-myevservice.jpg"
-                  alt="My EV Service Logo"
-                  className="w-full h-full object-cover rounded-md"
-                />
-              </div>
+            {/* Left Brand Title */}
+            <Link to="/" className="flex items-center shrink-0 group">
               <div className="flex flex-col leading-none">
                 <span
                   className="text-[12px] font-black tracking-[0.14em] uppercase transition-colors"

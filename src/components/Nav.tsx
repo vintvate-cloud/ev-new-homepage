@@ -158,13 +158,34 @@ export function Nav({
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "py-1" : "py-2"}`}
       >
         <div
-          className={`mx-auto flex max-w-[1400px] items-center justify-center transition-all duration-500 ${
+          className={`mx-auto flex max-w-[1400px] items-center gap-2 sm:gap-3 transition-all duration-500 ${
             scrolled ? "px-2.5 sm:px-4 md:px-8 mt-1" : "px-2.5 sm:px-4 md:px-8 mt-2"
           }`}
         >
-          {/* Bordered Navbar Pill Container with Integrated Logo & Title */}
+          {/* Logo Outside Navbar Border */}
+          <Link
+            to="/"
+            className="shrink-0 group flex items-center justify-center cursor-pointer"
+            title="MY EV SERVICE Home"
+          >
+            <div
+              className={`transition-all duration-300 group-hover:scale-105 ${
+                scrolled
+                  ? "h-10 w-10 sm:h-11 sm:w-11"
+                  : "h-11 w-11 sm:h-13 sm:w-13 md:h-14 md:w-14"
+              }`}
+            >
+              <img
+                src="/logo-myevservice.jpg"
+                alt="My EV Service Logo"
+                className="w-full h-full object-contain rounded-xl shadow-md"
+              />
+            </div>
+          </Link>
+
+          {/* Bordered Navbar Pill Container */}
           <div
-            className={`w-full flex items-center justify-between transition-all duration-500 ${
+            className={`flex-1 min-w-0 flex items-center justify-between transition-all duration-500 ${
               scrolled
                 ? "px-3 sm:px-4 md:px-6 py-1.5 rounded-full"
                 : "px-3.5 sm:px-5 md:px-6 py-2 sm:py-2.5 rounded-full"
@@ -176,15 +197,8 @@ export function Nav({
               boxShadow: "var(--nav-shadow)",
             }}
           >
-            {/* Integrated Brand Logo + Title */}
-            <Link to="/" className="flex items-center gap-2.5 shrink-0 group min-w-0">
-              <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-black border border-white/20 p-1 flex items-center justify-center overflow-hidden shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105">
-                <img
-                  src="/logo-myevservice.jpg"
-                  alt="My EV Service Logo"
-                  className="w-full h-full object-contain rounded-md"
-                />
-              </div>
+            {/* Brand Title (Inside Navbar Pill) */}
+            <Link to="/" className="flex items-center shrink-0 group min-w-0">
               <span
                 id="nav-logo-text"
                 className="text-[12px] sm:text-[13.5px] md:text-[14px] font-black tracking-[0.14em] uppercase transition-colors truncate"

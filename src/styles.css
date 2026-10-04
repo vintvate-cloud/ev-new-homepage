@@ -552,6 +552,7 @@ button {
 
 /* Force light background for all dark section & page wrappers, excluding modal backdrop overlays */
 html.theme-light #ev-services,
+html.theme-light #packages,
 html.theme-light #experience,
 html.theme-light #top,
 html.theme-light footer,
@@ -617,13 +618,15 @@ html.theme-light [class*="bg-[#131815]"]:not(.fixed):not([class*="inset-0"]):not
 html.theme-light [class*="bg-[#101015]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#141b17]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#1a1408]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
-html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
-html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *),
-html.theme-light [class*="bg-slate-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-slate-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-zinc-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *) {
+html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
+html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
+html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
+html.theme-light [class*="bg-slate-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card),
+html.theme-light [class*="bg-slate-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card),
+html.theme-light [class*="bg-zinc-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card),
+html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
+html.theme-light [class*="bg-[#080c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
+html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card) {
   background-color: #ffffff !important;
   color: #09090b !important;
 }

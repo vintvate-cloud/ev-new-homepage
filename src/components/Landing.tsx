@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useInView, animate, AnimatePresence, u
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { useTheme } from "../context/ThemeContext";
 import { Footer } from "./Footer";
 import { CustomerStoriesWall } from "./CustomerStoriesWall";
 import { BookingModal } from "./BookingModal";
@@ -3577,6 +3578,8 @@ function EVServices() {
 /* ---------------- Value Packages Showcase (Premium Layout) ---------------- */
 function ValuePackages() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { siteTheme } = useTheme();
+  const isLight = siteTheme === "light";
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [mouseOverActive, setMouseOverActive] = useState<boolean>(false);
   const [mouseOverPlaceholder, setMouseOverPlaceholder] = useState<number | null>(null);
@@ -3626,7 +3629,7 @@ function ValuePackages() {
       oldPrice: "₹2,000",
       save: "Save 50%",
       popular: true,
-      icon: <Shield className="w-6 h-6 text-[#00D084]" />,
+      icon: <Shield className="w-5 h-5 text-[#00D084]" />,
       themeColor: "#00D084",
       bgImg: "/packages/basic-care.png",
       features: [
@@ -3642,7 +3645,7 @@ function ValuePackages() {
       oldPrice: "₹6,000",
       save: "Save 50%",
       popular: true,
-      icon: <Gauge className="w-6 h-6 text-[#10B981]" />,
+      icon: <Gauge className="w-5 h-5 text-[#10B981]" />,
       themeColor: "#10B981",
       bgImg: "/packages/smart-protect.png",
       features: [
@@ -3658,7 +3661,7 @@ function ValuePackages() {
       oldPrice: "₹9,000",
       save: "Save 50%",
       popular: false,
-      icon: <Activity className="w-6 h-6 text-[#06B6D4]" />,
+      icon: <Activity className="w-5 h-5 text-[#06B6D4]" />,
       themeColor: "#06B6D4",
       bgImg: "/packages/complete-health.png",
       features: [
@@ -3674,7 +3677,7 @@ function ValuePackages() {
       oldPrice: "₹15,000",
       save: "Save 50%",
       popular: false,
-      icon: <Truck className="w-6 h-6 text-[#6366F1]" />,
+      icon: <Truck className="w-5 h-5 text-[#6366F1]" />,
       themeColor: "#6366F1",
       bgImg: "/packages/fleet-maintenance.png",
       features: [
@@ -3693,7 +3696,15 @@ function ValuePackages() {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full bg-[#030704] text-white py-24 md:py-36 selection:bg-[#00D084] selection:text-black overflow-hidden transition-colors duration-700">
+    <section
+      ref={containerRef}
+      id="packages"
+      className="relative w-full py-24 md:py-36 selection:bg-[#00D084] selection:text-black overflow-hidden transition-colors duration-500"
+      style={{
+        backgroundColor: isLight ? "#ffffff" : "#030704",
+        color: isLight ? "#0f172a" : "#ffffff"
+      }}
+    >
       {/* Background gradients that shift colors dynamically based on hovered card */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -3701,7 +3712,7 @@ function ValuePackages() {
           style={{
             background: hoveredIdx !== null
               ? `radial-gradient(circle at 50% 50%, ${packs[hoveredIdx].themeColor}12, transparent 65%)`
-              : 'radial-gradient(circle at 50% 50%, rgba(0, 208, 132, 0.05), transparent 60%)'
+              : (isLight ? 'radial-gradient(circle at 50% 50%, rgba(0, 208, 132, 0.03), transparent 60%)' : 'radial-gradient(circle at 50% 50%, rgba(0, 208, 132, 0.05), transparent 60%)')
           }}
         />
         <div className="absolute top-1/4 right-0 w-[40vw] h-[40vh] bg-emerald-500/5 blur-[120px] rounded-full" />
@@ -3716,25 +3727,36 @@ function ValuePackages() {
             Value Packages
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <h2 className="val-header-reveal lg:col-span-5 text-4xl md:text-6xl font-serif font-bold tracking-tight leading-[1.05] text-white">
+            <h2
+              className="val-header-reveal lg:col-span-5 text-4xl md:text-6xl font-serif font-bold tracking-tight leading-[1.05]"
+              style={{ color: isLight ? "#0f172a" : "#ffffff" }}
+            >
               More services.<br />
-              <span className="text-white/40 italic">Better savings.</span>
+              <span className={isLight ? "text-slate-400 italic" : "text-white/40 italic"}>Better savings.</span>
             </h2>
             <div className="val-header-reveal lg:col-span-7 flex flex-col gap-6 md:flex-row md:items-center justify-between">
-              <p className="text-lg text-white/50 leading-relaxed max-w-md">
+              <p
+                className="text-lg leading-relaxed max-w-md"
+                style={{ color: isLight ? "#64748b" : "rgba(255,255,255,0.5)" }}
+              >
                 Pre-bundled EV care packs designed to keep your vehicle at peak performance — at prices you won't find anywhere else.
               </p>
               {/* Header CTAs */}
               <div className="flex flex-wrap gap-4 shrink-0">
                 <a
                   href="#services"
-                  className="group inline-flex items-center gap-2 rounded-full bg-[#00D084] px-6 py-3 text-sm font-bold text-[#020403] transition-all hover:scale-105 hover:bg-white"
+                  className="group inline-flex items-center gap-2 rounded-full bg-[#00D084] px-6 py-3 text-sm font-bold text-[#020403] transition-all hover:scale-105 hover:bg-[#00e894] shadow-md"
                 >
                   Explore All Services <ArrowRight className="h-4 w-4" />
                 </a>
                 <a
                   href="#contact"
-                  className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-transparent px-6 py-3 text-sm font-bold text-white transition-all hover:border-[#00D084]/50 hover:bg-[#00D084]/5"
+                  className="group inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-bold transition-all hover:scale-105"
+                  style={{
+                    borderColor: isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)",
+                    backgroundColor: isLight ? "#f8fafc" : "transparent",
+                    color: isLight ? "#0f172a" : "#ffffff"
+                  }}
                 >
                   Talk to Us
                 </a>
@@ -3743,11 +3765,19 @@ function ValuePackages() {
           </div>
 
           {/* Quick USPs banner */}
-          <div className="val-header-reveal mt-12 grid grid-cols-2 lg:grid-cols-4 gap-6 border-y border-white/10 py-6">
+          <div
+            className="val-header-reveal mt-12 grid grid-cols-2 lg:grid-cols-4 gap-6 border-y py-6"
+            style={{ borderColor: isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.1)" }}
+          >
             {usps.map((usp, idx) => (
               <div key={idx} className="flex gap-3 items-center">
                 <CheckCircle2 className="h-4 w-4 text-[#00D084] shrink-0" />
-                <span className="text-xs md:text-sm text-white/70 font-medium">{usp}</span>
+                <span
+                  className="text-xs md:text-sm font-medium"
+                  style={{ color: isLight ? "#475569" : "rgba(255,255,255,0.7)" }}
+                >
+                  {usp}
+                </span>
               </div>
             ))}
           </div>
@@ -3767,7 +3797,7 @@ function ValuePackages() {
         </AnimatePresence>
 
         {/* 2x2 Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto items-start">
           {packs.map((pkg, i) => {
             const isHovered = hoveredIdx === i;
             return (
@@ -3783,18 +3813,18 @@ function ValuePackages() {
                   onMouseEnter={() => setMouseOverActive(true)}
                   onMouseLeave={() => setMouseOverActive(false)}
                   onClick={() => setHoveredIdx(isHovered ? null : i)}
-                  className="rounded-[28px] border p-6 md:p-8 flex flex-col justify-between overflow-hidden cursor-pointer group"
+                  className="package-card dark-card-locked rounded-[28px] border p-6 md:p-7 flex flex-col justify-between overflow-hidden cursor-pointer group transition-all duration-300"
                   style={isHovered ? {
                     position: "fixed",
                     inset: 0,
                     margin: "auto",
                     width: "90vw",
-                    maxWidth: "480px",
+                    maxWidth: "500px",
                     height: "fit-content",
                     zIndex: 40,
-                    borderColor: `${pkg.themeColor}50`,
-                    boxShadow: `0 30px 60px rgba(0,0,0,0.8), 0 0 50px ${pkg.themeColor}20`,
-                    backgroundColor: "#0d1410"
+                    borderColor: `${pkg.themeColor}60`,
+                    boxShadow: `0 30px 60px rgba(0,0,0,0.9), 0 0 50px ${pkg.themeColor}25`,
+                    backgroundColor: "#080c09"
                   } : {
                     position: "absolute",
                     top: 0,
@@ -3802,76 +3832,98 @@ function ValuePackages() {
                     width: "100%",
                     height: "100%",
                     zIndex: 10,
-                    borderColor: "rgba(255,255,255,0.12)",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
-                    backgroundColor: "rgba(10, 15, 12, 0.75)"
+                    borderColor: "rgba(255, 255, 255, 0.12)",
+                    boxShadow: "0 12px 36px rgba(0, 0, 0, 0.5)",
+                    backgroundColor: "#080c09"
                   }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  {/* Glow Overlay */}
+                  {/* Subtle Glow Overlay on Hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"
                     style={{
-                      background: `linear-gradient(135deg, ${pkg.themeColor}15, transparent)`
+                      background: `linear-gradient(135deg, ${pkg.themeColor}15, transparent 60%)`
                     }}
                   />
 
-                  {/* Premium Background Graphic Visual - Crisp & Visible */}
-                  <div className="absolute right-0 bottom-0 top-0 w-1/2 md:w-[54%] pointer-events-none overflow-hidden rounded-r-[28px] opacity-90 group-hover:opacity-100 transition-all duration-700 z-0">
+                  {/* Dedicated Right Image Visual - Crisp, 100% Bright, No Dark Shadow */}
+                  <div className="absolute right-0 bottom-0 top-0 w-1/2 md:w-[48%] pointer-events-none overflow-hidden rounded-r-[28px] z-0">
                     <img
                       src={pkg.bgImg}
                       alt={pkg.title}
-                      className="w-full h-full object-cover object-center filter brightness-110 contrast-105 transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover object-center filter saturate-110 brightness-105 contrast-105 transition-transform duration-700 group-hover:scale-105"
+                      style={{ filter: "none", opacity: 1 }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#0d1410] via-[#0d1410]/35 to-transparent" />
+                    {/* Only soft left-edge fade so the image seamlessly connects to the dark card background */}
+                    <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-[#080c09] via-[#080c09]/40 to-transparent pointer-events-none" />
                   </div>
 
-                  {/* Always Visible Header Area - Enhanced High-Contrast Text */}
-                  <div className="relative z-10">
-                    <div className="flex justify-between items-start">
-                      <div className="flex gap-4 items-center">
-                        <div
-                          className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/60 backdrop-blur-xl border transition-all duration-500 shadow-[0_0_20px_rgba(0,208,132,0.3)] shrink-0"
-                          style={{
-                            borderColor: isHovered ? `${pkg.themeColor}80` : "rgba(0,208,132,0.4)",
-                            boxShadow: isHovered ? `0 0 25px ${pkg.themeColor}50` : "0 0 15px rgba(0,208,132,0.25)",
-                            backgroundColor: "rgba(0,0,0,0.6)"
-                          }}
-                        >
-                          {pkg.icon}
-                        </div>
-                        <h3 className="text-xl md:text-2xl font-serif text-white font-bold drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
-                          {pkg.title}
-                        </h3>
-                      </div>
-
-                      <div className="flex flex-col gap-1 items-end shrink-0">
+                  {/* Dedicated Left Content Column */}
+                  <div className="relative z-10 w-[55%] sm:w-[54%] md:w-[52%] h-full flex flex-col justify-between pr-2">
+                    <div>
+                      {/* Top Badges */}
+                      <div className="flex flex-wrap items-center gap-1.5 mb-3">
                         {pkg.popular && (
                           <span
-                            className="text-[9px] uppercase tracking-widest font-extrabold px-3 py-0.5 rounded-full border shadow-md backdrop-blur-md"
+                            className="text-[9px] font-mono uppercase tracking-widest font-extrabold px-2.5 py-0.5 rounded-full border shadow-sm"
                             style={{
                               borderColor: `${pkg.themeColor}60`,
-                              backgroundColor: "rgba(0,0,0,0.7)",
+                              backgroundColor: "rgba(0, 0, 0, 0.65)",
                               color: pkg.themeColor
                             }}
                           >
                             Most Popular
                           </span>
                         )}
-                        <span className="text-[9px] uppercase tracking-widest font-extrabold bg-black/60 backdrop-blur-md border border-white/20 text-white/90 px-3 py-0.5 rounded-full shadow-md">
+                        <span
+                          className="text-[9px] font-mono uppercase tracking-widest font-extrabold px-2.5 py-0.5 rounded-full border shadow-sm"
+                          style={{
+                            borderColor: "rgba(255, 255, 255, 0.2)",
+                            backgroundColor: "rgba(0, 0, 0, 0.65)",
+                            color: "rgba(255, 255, 255, 0.9)"
+                          }}
+                        >
                           Launch Offer
                         </span>
+                      </div>
+
+                      {/* Icon + Title */}
+                      <div className="flex gap-2.5 items-center">
+                        <div
+                          className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl border transition-all duration-300 shrink-0"
+                          style={{
+                            borderColor: `${pkg.themeColor}40`,
+                            backgroundColor: "rgba(0, 0, 0, 0.6)",
+                            boxShadow: `0 0 15px ${pkg.themeColor}20`
+                          }}
+                        >
+                          {pkg.icon}
+                        </div>
+                        <h3
+                          className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-white leading-tight drop-shadow-md"
+                          style={{ color: "#ffffff" }}
+                        >
+                          {pkg.title}
+                        </h3>
                       </div>
                     </div>
 
                     {/* Slashed Pricing Row */}
-                    <div className="mt-6 flex items-baseline justify-between">
-                      <div className="flex items-baseline gap-2.5">
-                        <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">{pkg.price}</span>
-                        <span className="text-base line-through text-white/70 font-semibold drop-shadow-[0_1px_5px_rgba(0,0,0,0.9)]">{pkg.oldPrice}</span>
-                      </div>
+                    <div className="mt-4 flex flex-wrap items-baseline gap-2.5">
                       <span
-                        className="text-xs font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/10 shadow-md"
+                        className="text-3xl md:text-4xl font-extrabold tracking-tight text-white drop-shadow-md"
+                        style={{ color: "#ffffff" }}
+                      >
+                        {pkg.price}
+                      </span>
+                      <span
+                        className="text-base line-through font-semibold text-white/50"
+                        style={{ color: "rgba(255, 255, 255, 0.5)" }}
+                      >
+                        {pkg.oldPrice}
+                      </span>
+                      <span
+                        className="text-xs font-mono font-bold uppercase tracking-wider"
                         style={{ color: pkg.themeColor }}
                       >
                         {pkg.save}
@@ -3887,10 +3939,16 @@ function ValuePackages() {
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.35, ease: "easeInOut" }}
-                        className="overflow-hidden mt-6 relative z-10"
+                        className="overflow-hidden mt-6 relative z-10 w-full"
                       >
-                        <div className="pt-4 border-t border-white/20 flex flex-col gap-6">
-                          <p className="text-white font-medium text-sm md:text-base leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)]">
+                        <div
+                          className="pt-4 border-t border-white/20 flex flex-col gap-6"
+                          style={{ borderColor: "rgba(255, 255, 255, 0.2)" }}
+                        >
+                          <p
+                            className="text-white/90 font-medium text-sm md:text-base leading-relaxed"
+                            style={{ color: "rgba(255, 255, 255, 0.9)" }}
+                          >
                             {pkg.desc}
                           </p>
 
@@ -3905,18 +3963,26 @@ function ValuePackages() {
                                     boxShadow: `0 0 10px ${pkg.themeColor}`
                                   }}
                                 />
-                                <span className="text-white font-medium text-sm drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)]">{feature}</span>
+                                <span
+                                  className="text-white font-medium text-sm"
+                                  style={{ color: "#ffffff" }}
+                                >
+                                  {feature}
+                                </span>
                               </div>
                             ))}
                           </div>
 
                           {/* Bottom Row */}
                           <div className="flex items-center justify-between pt-2">
-                            <span className="text-[11px] text-white/40 font-mono">
+                            <span
+                              className="text-[11px] font-mono text-white/40"
+                              style={{ color: "rgba(255, 255, 255, 0.4)" }}
+                            >
                               Valid for 365 days
                             </span>
                             <button
-                              className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition-all duration-300"
+                              className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition-all duration-300 shadow-md"
                               style={{
                                 backgroundColor: pkg.themeColor,
                                 color: "#020403"
