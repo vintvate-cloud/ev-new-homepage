@@ -913,27 +913,31 @@ html.theme-light .quick-access-trigger span {
   color: #ffffff !important;
 }
 
-/* Override inline styling for ValuePackages motion.div cards when hovered or default */
-html.theme-light [style*="background-color: rgb(13, 20, 16)"],
-html.theme-light [style*="background-color: rgb(10, 15, 12)"],
-html.theme-light [style*="background-color: rgba(10, 15, 12"],
-html.theme-light [style*="background-color: #0d1410"],
-html.theme-light [style*="background: rgb(13, 20, 16)"],
-html.theme-light [style*="background: rgb(10, 15, 12)"],
-html.theme-light [style*="background: rgba(10, 15, 12"],
-html.theme-light [style*="background: #0d1410"] {
+/* Package cards and modal theme styling */
+html.theme-light .package-card,
+html.theme-light .package-modal {
   background-color: #ffffff !important;
   background: #ffffff !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* When ValuePackages card is expanded (position: fixed) */
-html.theme-light [style*="position: fixed"][style*="width: 90vw"] {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18), 0 0 50px rgba(0, 0, 0, 0.05) !important;
+html.theme-light .package-card h3,
+html.theme-light .package-modal h3,
+html.theme-light .package-price {
+  color: #0f172a !important;
+}
+
+html:not(.theme-light) .package-card,
+html:not(.theme-light) .package-modal {
+  background-color: #080c09 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html:not(.theme-light) .package-card h3,
+html:not(.theme-light) .package-modal h3,
+html:not(.theme-light) .package-price {
+  color: #ffffff !important;
 }
 
 /* Convert all white background opacities to dark overlays for light mode readability, excluding fixed backdrops and hero sections */

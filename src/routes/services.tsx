@@ -593,7 +593,7 @@ function ServicesPage() {
                     specs: pkg.features,
                   })
                 }
-                className={`pkg-card-reveal relative h-[470px] rounded-[30px] overflow-hidden p-6 sm:p-7 shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col justify-between border-none ${
+                className={`pkg-card-reveal dark-card-locked relative h-[470px] rounded-[30px] overflow-hidden p-6 sm:p-7 shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col justify-between border-none ${
                   isLight
                     ? "shadow-lg hover:shadow-2xl hover:scale-[1.02]"
                     : "shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:scale-[1.02]"

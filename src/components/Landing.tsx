@@ -3580,21 +3580,22 @@ function ValuePackages() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { siteTheme } = useTheme();
   const isLight = siteTheme === "light";
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const [mouseOverActive, setMouseOverActive] = useState<boolean>(false);
-  const [mouseOverPlaceholder, setMouseOverPlaceholder] = useState<number | null>(null);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
+  // Close modal on Escape key and prevent background scrolling
   useEffect(() => {
-    // If mouse is neither over the placeholder nor the active centered card, collapse it
-    if (mouseOverPlaceholder === null && !mouseOverActive) {
-      const timer = setTimeout(() => {
-        setHoveredIdx(null);
-      }, 150); // Grace period for user to move mouse to centered card
-      return () => clearTimeout(timer);
-    } else if (mouseOverPlaceholder !== null) {
-      setHoveredIdx(mouseOverPlaceholder);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedIdx(null);
+    };
+    if (selectedIdx !== null) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
     }
-  }, [mouseOverPlaceholder, mouseOverActive]);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [selectedIdx]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -3623,6 +3624,7 @@ function ValuePackages() {
 
   const packs = [
     {
+      id: "PKG-001",
       title: "Basic Care Pack",
       desc: "Essential protection for your EV",
       price: "₹999",
@@ -3639,6 +3641,7 @@ function ValuePackages() {
       ]
     },
     {
+      id: "PKG-002",
       title: "Smart Protect Pack",
       desc: "Comprehensive protection & diagnostics",
       price: "₹2,999",
@@ -3655,6 +3658,7 @@ function ValuePackages() {
       ]
     },
     {
+      id: "PKG-003",
       title: "Complete EV Health Pack",
       desc: "The ultimate EV health package",
       price: "₹4,499",
@@ -3671,6 +3675,7 @@ function ValuePackages() {
       ]
     },
     {
+      id: "PKG-004",
       title: "Fleet Maintenance Pack",
       desc: "Bulk service for fleet operators",
       price: "₹7,499",
@@ -3705,13 +3710,13 @@ function ValuePackages() {
         color: isLight ? "#0f172a" : "#ffffff"
       }}
     >
-      {/* Background gradients that shift colors dynamically based on hovered card */}
+      {/* Background gradients that shift colors dynamically based on selected card */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute inset-0 transition-all duration-700"
           style={{
-            background: hoveredIdx !== null
-              ? `radial-gradient(circle at 50% 50%, ${packs[hoveredIdx].themeColor}12, transparent 65%)`
+            background: selectedIdx !== null
+              ? `radial-gradient(circle at 50% 50%, ${packs[selectedIdx].themeColor}12, transparent 65%)`
               : (isLight ? 'radial-gradient(circle at 50% 50%, rgba(0, 208, 132, 0.03), transparent 60%)' : 'radial-gradient(circle at 50% 50%, rgba(0, 208, 132, 0.05), transparent 60%)')
           }}
         />
@@ -3783,93 +3788,224 @@ function ValuePackages() {
           </div>
         </div>
 
-        {/* Blur Backdrop */}
-        <AnimatePresence>
-          {hoveredIdx !== null && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-md z-30 cursor-pointer"
-              onClick={() => setHoveredIdx(null)}
-            />
-          )}
-        </AnimatePresence>
-
-        {/* 2x2 Bento Grid */}
+        {/* 2x2 Bento Grid - Clickable Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto items-start">
           {packs.map((pkg, i) => {
-            const isHovered = hoveredIdx === i;
             return (
-              <div
+              <motion.div
                 key={i}
-                className="relative w-full h-[250px] md:h-[240px]"
-                onMouseEnter={() => setMouseOverPlaceholder(i)}
-                onMouseLeave={() => setMouseOverPlaceholder(null)}
+                whileHover={{ y: -3, scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                onClick={() => setSelectedIdx(i)}
+                className="package-card relative w-full h-[250px] md:h-[240px] rounded-[28px] border p-6 md:p-7 flex flex-col justify-between overflow-hidden cursor-pointer group shadow-lg transition-all duration-300"
+                style={{
+                  backgroundColor: isLight ? "#ffffff" : "#080c09",
+                  borderColor: isLight ? "rgba(0, 0, 0, 0.08)" : "rgba(255, 255, 255, 0.12)",
+                  boxShadow: isLight
+                    ? "0 10px 30px -5px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.04)"
+                    : "0 12px 36px rgba(0, 0, 0, 0.5)"
+                }}
               >
-                {/* Visual Card with layout transition */}
-                <motion.div
-                  layout
-                  onMouseEnter={() => setMouseOverActive(true)}
-                  onMouseLeave={() => setMouseOverActive(false)}
-                  onClick={() => setHoveredIdx(isHovered ? null : i)}
-                  className="package-card dark-card-locked rounded-[28px] border p-6 md:p-7 flex flex-col justify-between overflow-hidden cursor-pointer group transition-all duration-300"
-                  style={isHovered ? {
-                    position: "fixed",
-                    inset: 0,
-                    margin: "auto",
-                    width: "90vw",
-                    maxWidth: "500px",
-                    height: "fit-content",
-                    zIndex: 40,
-                    borderColor: `${pkg.themeColor}60`,
-                    boxShadow: `0 30px 60px rgba(0,0,0,0.9), 0 0 50px ${pkg.themeColor}25`,
-                    backgroundColor: "#080c09"
-                  } : {
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    zIndex: 10,
-                    borderColor: "rgba(255, 255, 255, 0.12)",
-                    boxShadow: "0 12px 36px rgba(0, 0, 0, 0.5)",
-                    backgroundColor: "#080c09"
+                {/* Subtle Glow Overlay on Hover */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
+                  style={{
+                    background: `linear-gradient(135deg, ${pkg.themeColor}15, transparent 60%)`
                   }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  {/* Subtle Glow Overlay on Hover */}
+                />
+
+                {/* Dedicated Right Image Visual */}
+                <div className="absolute right-0 bottom-0 top-0 w-1/2 md:w-[48%] pointer-events-none overflow-hidden rounded-r-[28px] z-0">
+                  <img
+                    src={pkg.bgImg}
+                    alt={pkg.title}
+                    className="w-full h-full object-cover object-center filter saturate-110 brightness-105 contrast-105 transition-transform duration-700 group-hover:scale-105"
+                    style={{ opacity: 1 }}
+                  />
+                  {/* Soft left-edge fade so the image seamlessly connects to the card background */}
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"
+                    className="absolute left-0 top-0 bottom-0 w-16 md:w-24 pointer-events-none transition-colors duration-300"
                     style={{
-                      background: `linear-gradient(135deg, ${pkg.themeColor}15, transparent 60%)`
+                      background: isLight
+                        ? "linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.4), transparent)"
+                        : "linear-gradient(to right, #080c09, rgba(8, 12, 9, 0.4), transparent)"
                     }}
                   />
+                </div>
 
-                  {/* Dedicated Right Image Visual - Crisp, 100% Bright, No Dark Shadow */}
-                  <div className="absolute right-0 bottom-0 top-0 w-1/2 md:w-[48%] pointer-events-none overflow-hidden rounded-r-[28px] z-0">
+                {/* Dedicated Left Content Column */}
+                <div className="relative z-10 w-[55%] sm:w-[54%] md:w-[52%] h-full flex flex-col justify-between pr-2">
+                  <div>
+                    {/* Top Badges */}
+                    <div className="flex flex-wrap items-center gap-1.5 mb-3">
+                      {pkg.popular && (
+                        <span
+                          className="text-[9px] font-mono uppercase tracking-widest font-extrabold px-2.5 py-0.5 rounded-full border shadow-sm transition-colors duration-300"
+                          style={{
+                            borderColor: isLight ? "rgba(16, 185, 129, 0.3)" : `${pkg.themeColor}60`,
+                            backgroundColor: isLight ? "rgba(16, 185, 129, 0.12)" : "rgba(0, 0, 0, 0.65)",
+                            color: isLight ? "#047857" : pkg.themeColor
+                          }}
+                        >
+                          Most Popular
+                        </span>
+                      )}
+                      <span
+                        className="text-[9px] font-mono uppercase tracking-widest font-extrabold px-2.5 py-0.5 rounded-full border shadow-sm transition-colors duration-300"
+                        style={{
+                          borderColor: isLight ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.2)",
+                          backgroundColor: isLight ? "#f1f5f9" : "rgba(0, 0, 0, 0.65)",
+                          color: isLight ? "#334155" : "rgba(255, 255, 255, 0.9)"
+                        }}
+                      >
+                        Launch Offer
+                      </span>
+                    </div>
+
+                    {/* Icon + Title */}
+                    <div className="flex gap-2.5 items-center">
+                      <div
+                        className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl border transition-all duration-300 shrink-0"
+                        style={{
+                          borderColor: isLight ? "rgba(16, 185, 129, 0.25)" : `${pkg.themeColor}40`,
+                          backgroundColor: isLight ? "rgba(16, 185, 129, 0.08)" : "rgba(0, 0, 0, 0.6)",
+                          boxShadow: isLight ? "0 2px 10px rgba(16, 185, 129, 0.12)" : `0 0 15px ${pkg.themeColor}20`
+                        }}
+                      >
+                        {pkg.icon}
+                      </div>
+                      <h3
+                        className="text-lg sm:text-xl md:text-2xl font-serif font-bold leading-tight transition-colors duration-300 group-hover:text-[#00D084]"
+                        style={{
+                          color: isLight ? "#0f172a" : "#ffffff",
+                          textShadow: isLight ? "none" : "0 2px 10px rgba(0,0,0,0.5)"
+                        }}
+                      >
+                        {pkg.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Slashed Pricing Row + Click Action Cue */}
+                  <div className="mt-4 flex flex-col gap-1.5">
+                    <div className="flex flex-wrap items-baseline gap-2.5">
+                      <span
+                        className="package-price text-3xl md:text-4xl font-extrabold tracking-tight transition-colors duration-300"
+                        style={{
+                          color: isLight ? "#0f172a" : "#ffffff",
+                          textShadow: isLight ? "none" : "0 2px 10px rgba(0,0,0,0.5)"
+                        }}
+                      >
+                        {pkg.price}
+                      </span>
+                      <span
+                        className="text-base line-through font-semibold transition-colors duration-300"
+                        style={{
+                          color: isLight ? "#94a3b8" : "rgba(255, 255, 255, 0.5)"
+                        }}
+                      >
+                        {pkg.oldPrice}
+                      </span>
+                      <span
+                        className="text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border transition-colors duration-300"
+                        style={{
+                          backgroundColor: isLight ? "rgba(16, 185, 129, 0.1)" : `${pkg.themeColor}15`,
+                          borderColor: isLight ? "rgba(16, 185, 129, 0.25)" : `${pkg.themeColor}30`,
+                          color: isLight ? "#059669" : pkg.themeColor
+                        }}
+                      >
+                        {pkg.save}
+                      </span>
+                    </div>
+
+                    <div
+                      className="flex items-center gap-1.5 text-[11px] font-semibold opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300"
+                      style={{ color: isLight ? "#059669" : "#00D084" }}
+                    >
+                      <span>Click to view package</span>
+                      <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Pop-up Modal (Opened on Click) */}
+        <AnimatePresence>
+          {selectedIdx !== null && (() => {
+            const activePkg = packs[selectedIdx];
+            return (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+                {/* Backdrop Blur Overlay */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="fixed inset-0 bg-black/75 backdrop-blur-md cursor-pointer"
+                  onClick={() => setSelectedIdx(null)}
+                />
+
+                {/* Centered Modal Card */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.94, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.94, y: 15 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="package-modal relative z-10 w-full max-w-[540px] md:max-w-[580px] rounded-[32px] border overflow-hidden p-6 sm:p-8 flex flex-col justify-between shadow-2xl"
+                  style={{
+                    backgroundColor: isLight ? "#ffffff" : "#080c09",
+                    borderColor: isLight ? `${activePkg.themeColor}80` : `${activePkg.themeColor}60`,
+                    boxShadow: isLight
+                      ? `0 30px 60px rgba(0,0,0,0.18), 0 0 40px ${activePkg.themeColor}20`
+                      : `0 30px 60px rgba(0,0,0,0.9), 0 0 50px ${activePkg.themeColor}25`
+                  }}
+                >
+                  {/* Close 'X' Button */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedIdx(null)}
+                    aria-label="Close package details"
+                    className="absolute top-4 right-4 z-30 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md transition-all duration-200 cursor-pointer shadow-lg hover:scale-105"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+
+                  {/* Dedicated Right Image Visual */}
+                  <div className="absolute right-0 bottom-0 top-0 w-1/2 md:w-[48%] pointer-events-none overflow-hidden rounded-r-[32px] z-0">
                     <img
-                      src={pkg.bgImg}
-                      alt={pkg.title}
-                      className="w-full h-full object-cover object-center filter saturate-110 brightness-105 contrast-105 transition-transform duration-700 group-hover:scale-105"
-                      style={{ filter: "none", opacity: 1 }}
+                      src={activePkg.bgImg}
+                      alt={activePkg.title}
+                      className="w-full h-full object-cover object-center filter saturate-110 brightness-105 contrast-105"
+                      style={{ opacity: 1 }}
                     />
-                    {/* Only soft left-edge fade so the image seamlessly connects to the dark card background */}
-                    <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-[#080c09] via-[#080c09]/40 to-transparent pointer-events-none" />
+                    {/* Soft left-edge fade */}
+                    <div
+                      className="absolute left-0 top-0 bottom-0 w-16 md:w-24 pointer-events-none transition-colors duration-300"
+                      style={{
+                        background: isLight
+                          ? "linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.4), transparent)"
+                          : "linear-gradient(to right, #080c09, rgba(8, 12, 9, 0.4), transparent)"
+                      }}
+                    />
                   </div>
 
                   {/* Dedicated Left Content Column */}
-                  <div className="relative z-10 w-[55%] sm:w-[54%] md:w-[52%] h-full flex flex-col justify-between pr-2">
+                  <div className="relative z-10 w-[55%] sm:w-[54%] md:w-[52%] flex flex-col justify-between pr-2">
                     <div>
                       {/* Top Badges */}
                       <div className="flex flex-wrap items-center gap-1.5 mb-3">
-                        {pkg.popular && (
+                        {activePkg.popular && (
                           <span
                             className="text-[9px] font-mono uppercase tracking-widest font-extrabold px-2.5 py-0.5 rounded-full border shadow-sm"
                             style={{
-                              borderColor: `${pkg.themeColor}60`,
-                              backgroundColor: "rgba(0, 0, 0, 0.65)",
-                              color: pkg.themeColor
+                              borderColor: isLight ? "rgba(16, 185, 129, 0.3)" : `${activePkg.themeColor}60`,
+                              backgroundColor: isLight ? "rgba(16, 185, 129, 0.12)" : "rgba(0, 0, 0, 0.65)",
+                              color: isLight ? "#047857" : activePkg.themeColor
                             }}
                           >
                             Most Popular
@@ -3878,9 +4014,9 @@ function ValuePackages() {
                         <span
                           className="text-[9px] font-mono uppercase tracking-widest font-extrabold px-2.5 py-0.5 rounded-full border shadow-sm"
                           style={{
-                            borderColor: "rgba(255, 255, 255, 0.2)",
-                            backgroundColor: "rgba(0, 0, 0, 0.65)",
-                            color: "rgba(255, 255, 255, 0.9)"
+                            borderColor: isLight ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.2)",
+                            backgroundColor: isLight ? "#f1f5f9" : "rgba(0, 0, 0, 0.65)",
+                            color: isLight ? "#334155" : "rgba(255, 255, 255, 0.9)"
                           }}
                         >
                           Launch Offer
@@ -3892,115 +4028,125 @@ function ValuePackages() {
                         <div
                           className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl border transition-all duration-300 shrink-0"
                           style={{
-                            borderColor: `${pkg.themeColor}40`,
-                            backgroundColor: "rgba(0, 0, 0, 0.6)",
-                            boxShadow: `0 0 15px ${pkg.themeColor}20`
+                            borderColor: isLight ? "rgba(16, 185, 129, 0.25)" : `${activePkg.themeColor}40`,
+                            backgroundColor: isLight ? "rgba(16, 185, 129, 0.08)" : "rgba(0, 0, 0, 0.6)",
+                            boxShadow: isLight ? "0 2px 10px rgba(16, 185, 129, 0.12)" : `0 0 15px ${activePkg.themeColor}20`
                           }}
                         >
-                          {pkg.icon}
+                          {activePkg.icon}
                         </div>
                         <h3
-                          className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-white leading-tight drop-shadow-md"
-                          style={{ color: "#ffffff" }}
+                          className="text-lg sm:text-xl md:text-2xl font-serif font-bold leading-tight"
+                          style={{
+                            color: isLight ? "#0f172a" : "#ffffff",
+                            textShadow: isLight ? "none" : "0 2px 10px rgba(0,0,0,0.5)"
+                          }}
                         >
-                          {pkg.title}
+                          {activePkg.title}
                         </h3>
+                      </div>
+
+                      {/* Slashed Pricing Row */}
+                      <div className="mt-4 flex flex-wrap items-baseline gap-2.5">
+                        <span
+                          className="package-price text-3xl md:text-4xl font-extrabold tracking-tight"
+                          style={{
+                            color: isLight ? "#0f172a" : "#ffffff",
+                            textShadow: isLight ? "none" : "0 2px 10px rgba(0,0,0,0.5)"
+                          }}
+                        >
+                          {activePkg.price}
+                        </span>
+                        <span
+                          className="text-base line-through font-semibold"
+                          style={{
+                            color: isLight ? "#94a3b8" : "rgba(255, 255, 255, 0.5)"
+                          }}
+                        >
+                          {activePkg.oldPrice}
+                        </span>
+                        <span
+                          className="text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border"
+                          style={{
+                            backgroundColor: isLight ? "rgba(16, 185, 129, 0.1)" : `${activePkg.themeColor}15`,
+                            borderColor: isLight ? "rgba(16, 185, 129, 0.25)" : `${activePkg.themeColor}30`,
+                            color: isLight ? "#059669" : activePkg.themeColor
+                          }}
+                        >
+                          {activePkg.save}
+                        </span>
                       </div>
                     </div>
 
-                    {/* Slashed Pricing Row */}
-                    <div className="mt-4 flex flex-wrap items-baseline gap-2.5">
-                      <span
-                        className="text-3xl md:text-4xl font-extrabold tracking-tight text-white drop-shadow-md"
-                        style={{ color: "#ffffff" }}
+                    {/* Features and Description */}
+                    <div
+                      className="pt-4 border-t flex flex-col gap-5 mt-5"
+                      style={{
+                        borderColor: isLight ? "rgba(0, 0, 0, 0.08)" : "rgba(255, 255, 255, 0.2)"
+                      }}
+                    >
+                      <p
+                        className="font-medium text-sm md:text-base leading-relaxed"
+                        style={{
+                          color: isLight ? "#475569" : "rgba(255, 255, 255, 0.9)"
+                        }}
                       >
-                        {pkg.price}
-                      </span>
-                      <span
-                        className="text-base line-through font-semibold text-white/50"
-                        style={{ color: "rgba(255, 255, 255, 0.5)" }}
-                      >
-                        {pkg.oldPrice}
-                      </span>
-                      <span
-                        className="text-xs font-mono font-bold uppercase tracking-wider"
-                        style={{ color: pkg.themeColor }}
-                      >
-                        {pkg.save}
-                      </span>
-                    </div>
-                  </div>
+                        {activePkg.desc}
+                      </p>
 
-                  {/* Animated Expanded Reveal Panel */}
-                  <AnimatePresence>
-                    {isHovered && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.35, ease: "easeInOut" }}
-                        className="overflow-hidden mt-6 relative z-10 w-full"
-                      >
-                        <div
-                          className="pt-4 border-t border-white/20 flex flex-col gap-6"
-                          style={{ borderColor: "rgba(255, 255, 255, 0.2)" }}
-                        >
-                          <p
-                            className="text-white/90 font-medium text-sm md:text-base leading-relaxed"
-                            style={{ color: "rgba(255, 255, 255, 0.9)" }}
-                          >
-                            {pkg.desc}
-                          </p>
-
-                          {/* List of features */}
-                          <div className="flex flex-col gap-3">
-                            {pkg.features.map((feature, fIdx) => (
-                              <div key={fIdx} className="flex gap-3 items-center">
-                                <div
-                                  className="w-2 h-2 rounded-full shrink-0 shadow-md"
-                                  style={{
-                                    backgroundColor: pkg.themeColor,
-                                    boxShadow: `0 0 10px ${pkg.themeColor}`
-                                  }}
-                                />
-                                <span
-                                  className="text-white font-medium text-sm"
-                                  style={{ color: "#ffffff" }}
-                                >
-                                  {feature}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Bottom Row */}
-                          <div className="flex items-center justify-between pt-2">
-                            <span
-                              className="text-[11px] font-mono text-white/40"
-                              style={{ color: "rgba(255, 255, 255, 0.4)" }}
-                            >
-                              Valid for 365 days
-                            </span>
-                            <button
-                              className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition-all duration-300 shadow-md"
+                      {/* List of features */}
+                      <div className="flex flex-col gap-3">
+                        {activePkg.features.map((feature, fIdx) => (
+                          <div key={fIdx} className="flex gap-3 items-center">
+                            <div
+                              className="w-2 h-2 rounded-full shrink-0 shadow-md"
                               style={{
-                                backgroundColor: pkg.themeColor,
-                                color: "#020403"
+                                backgroundColor: activePkg.themeColor,
+                                boxShadow: `0 0 10px ${activePkg.themeColor}`
+                              }}
+                            />
+                            <span
+                              className="font-medium text-sm"
+                              style={{
+                                color: isLight ? "#1e293b" : "#ffffff"
                               }}
                             >
-                              Book Package <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                            </button>
+                              {feature}
+                            </span>
                           </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        ))}
+                      </div>
 
+                      {/* Bottom Row */}
+                      <div className="flex items-center justify-between pt-2">
+                        <span
+                          className="text-[11px] font-mono"
+                          style={{
+                            color: isLight ? "#94a3b8" : "rgba(255, 255, 255, 0.4)"
+                          }}
+                        >
+                          Valid for 365 days
+                        </span>
+                        <Link
+                          to="/packages/$packageId"
+                          params={{ packageId: activePkg.id }}
+                          className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition-all duration-300 shadow-md hover:scale-105"
+                          style={{
+                            backgroundColor: activePkg.themeColor,
+                            color: "#020403"
+                          }}
+                        >
+                          Book Package <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </div>
+                    </div>
+
+                  </div>
                 </motion.div>
               </div>
             );
-          })}
-        </div>
+          })()}
+        </AnimatePresence>
 
       </div>
     </section>
