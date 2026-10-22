@@ -43,6 +43,16 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute("/events")({
+  head: () => ({
+    meta: [
+      { title: "EV Industry Events, Summits & Workshops | MY EV SERVICE" },
+      {
+        name: "description",
+        content:
+          "Discover upcoming EV summits, technical workshops, partner meetups, and franchise orientations hosted across India by MY EV SERVICE.",
+      },
+    ],
+  }),
   validateSearch: searchSchema,
   component: EventsPage,
 });

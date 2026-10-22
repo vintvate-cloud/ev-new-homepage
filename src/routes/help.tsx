@@ -22,6 +22,15 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/help")({
+  head: () => ({
+    meta: [
+      { title: "Help & Customer Support Hub | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Get quick assistance, track repair tickets, request emergency roadside help, and contact the MY EV SERVICE customer care team.",
+      },
+    ],
+  }),
   component: HelpPage,
 });
 
@@ -34,7 +43,7 @@ function HelpPage() {
   }, []);
 
   const CATEGORIES = [
-    { title: "Service Booking & RSA", desc: "Doorstep dispatch, scheduling slots, emergency breakdown", link: "/find-services", icon: Wrench },
+    { title: "Service Booking & RSA", desc: "Doorstep dispatch, scheduling slots, emergency breakdown", link: "/service-centre", icon: Wrench },
     { title: "Battery & Diagnostics", desc: "BMS health certificates, cell balancing, range optimization", link: "/services", icon: Zap },
     { title: "Warranty & Refunds", desc: "Claim guarantees, spare parts warranty, refund processing", link: "/warranty", icon: ShieldCheck },
     { title: "Franchise Partnerships", desc: "Hub setup, application requirements, technical support", link: "/franchise", icon: HelpCircle },

@@ -13,6 +13,16 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/feedback")({
+  head: () => ({
+    meta: [
+      { title: "Service Feedback & Issue Reporting | MY EV SERVICE" },
+      {
+        name: "description",
+        content:
+          "Share your EV service experience or report an issue directly to the MY EV SERVICE quality assurance team.",
+      },
+    ],
+  }),
   component: FeedbackPage,
 });
 
@@ -163,7 +173,7 @@ function FeedbackPage() {
                     <input
                       type="tel"
                       required
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 95823 90001"
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       className="w-full bg-[#0b0f0c] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"

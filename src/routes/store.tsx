@@ -41,9 +41,18 @@ export const Route = createFileRoute("/store")({
     return {
       category: (search.category as string) || undefined,
       product: (search.product as string) || undefined,
-      search: (search.search as string) || undefined,
     };
   },
+  head: () => ({
+    meta: [
+      { title: "Buy Genuine EV Spare Parts Online | MY EV SERVICE Store" },
+      {
+        name: "description",
+        content:
+          "Buy authentic EV spare parts, lithium-ion battery cells, smart BMS units, chargers, BLDC motors, and controllers with nationwide express delivery.",
+      },
+    ],
+  }),
   component: StorePage,
 });
 
@@ -898,7 +907,7 @@ function StorePage() {
                         <input
                           type="tel"
                           required
-                          placeholder="+91 98765 43210"
+                          placeholder="+91 95823 90001"
                           value={checkoutForm.phone}
                           onChange={(e) => setCheckoutForm({ ...checkoutForm, phone: e.target.value })}
                           className="w-full bg-[#020503] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"

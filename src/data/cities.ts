@@ -20,7 +20,7 @@ export const INITIAL_CITIES: EVCity[] = [
     heroImage: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&auto=format&fit=crop&q=80",
     status: "active",
     description: "5+ Certified multi-brand EV diagnostic hubs operational across Aundh, Baner, Kalyani Nagar & Kharadi.",
-    contactNumber: "+91 98765 43210",
+    contactNumber: "+91 95823 90001",
   },
   {
     id: "mumbai",
@@ -31,7 +31,7 @@ export const INITIAL_CITIES: EVCity[] = [
     heroImage: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&auto=format&fit=crop&q=80",
     status: "active",
     description: "8+ Diagnostic and battery quick-swap hubs servicing commercial 2W & 3W delivery fleets.",
-    contactNumber: "+91 98765 43211",
+    contactNumber: "+91 95823 90001",
   },
   {
     id: "bangalore",
@@ -42,7 +42,7 @@ export const INITIAL_CITIES: EVCity[] = [
     heroImage: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=1200&auto=format&fit=crop&q=80",
     status: "active",
     description: "12+ High-voltage battery diagnostic centers and EV specialist training hubs across IT corridors.",
-    contactNumber: "+91 98765 43212",
+    contactNumber: "+91 95823 90001",
   },
   {
     id: "delhi-ncr",
@@ -53,7 +53,7 @@ export const INITIAL_CITIES: EVCity[] = [
     heroImage: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1200&auto=format&fit=crop&q=80",
     status: "active",
     description: "10+ Certified centers with rapid 45-minute turnaround for electric scooter fleets and commuters.",
-    contactNumber: "+91 98765 43213",
+    contactNumber: "+91 95823 90001",
   },
   {
     id: "hyderabad",
@@ -64,7 +64,7 @@ export const INITIAL_CITIES: EVCity[] = [
     heroImage: "https://images.unsplash.com/photo-1605379399642-870262d3d051?w=1200&auto=format&fit=crop&q=80",
     status: "active",
     description: "6+ Diagnostic hubs equipped with cell-level active balancing and fast charging diagnostic gear.",
-    contactNumber: "+91 98765 43214",
+    contactNumber: "+91 95823 90001",
   },
   {
     id: "ahmedabad",
@@ -75,7 +75,7 @@ export const INITIAL_CITIES: EVCity[] = [
     heroImage: "https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&auto=format&fit=crop&q=80",
     status: "active",
     description: "4+ Full-stack EV service centers supporting 2W & 3W fleet operations.",
-    contactNumber: "+91 98765 43215",
+    contactNumber: "+91 95823 90001",
   },
 ];
 
@@ -151,7 +151,7 @@ export function onboardNewCity(cityData: Partial<EVCity> & { name: string }): EV
     heroImage: cityData.heroImage || "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&auto=format&fit=crop&q=80",
     status: cityData.status || "active",
     description: cityData.description || `Certified MY EV SERVICE diagnostic hubs now operational in ${cityData.name}.`,
-    contactNumber: cityData.contactNumber || "+91 1800 123 4567",
+    contactNumber: cityData.contactNumber || "+91 95823 90001",
   };
 
   const current = getOnboardedCities();
@@ -211,7 +211,7 @@ export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: strin
       rating: 4.9,
       reviewsCount: 384,
       status: "open",
-      phone: "+91 98765 43210",
+      phone: "+91 95823 90001",
       mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`MY EV SERVICE ${activeArea} ${formatted}`)}`,
       brandsServiced: ["Ather", "Ola Electric", "TVS", "Hero Electric", "Vida", "Bajaj Chetak"],
       servicesOffered: ["Battery Diagnostics", "Cell Equalization", "Motor & FOC Tuning", "BMS Software Flashing"],
@@ -229,7 +229,7 @@ export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: strin
       rating: 4.8,
       reviewsCount: 219,
       status: "open",
-      phone: "+91 98765 43211",
+      phone: "+91 95823 90001",
       mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`EV Service Center North ${formatted}`)}`,
       brandsServiced: ["Ather", "Ola Electric", "TVS"],
       servicesOffered: ["Periodic General Service", "Battery Diagnostics", "Doorstep Pickup"],
@@ -246,7 +246,7 @@ export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: strin
       rating: 4.7,
       reviewsCount: 156,
       status: "open",
-      phone: "+91 98765 43212",
+      phone: "+91 95823 90001",
       mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`EV Battery Repair ${formatted}`)}`,
       brandsServiced: ["Hero Electric", "Vida", "Bajaj Chetak", "Ola Electric"],
       servicesOffered: ["BMS Firmware Flashing", "Battery Pack Repair", "Motor Tuning"],
@@ -263,7 +263,7 @@ export function getCityServiceCenters(cityNameOrSlug: string, searchArea?: strin
       rating: 4.9,
       reviewsCount: 290,
       status: "busy",
-      phone: "+91 98765 43213",
+      phone: "+91 95823 90001",
       mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`EV Hub South ${formatted}`)}`,
       brandsServiced: ["Ather", "TVS", "Ola Electric", "Bajaj Chetak"],
       servicesOffered: ["Battery Health Scan", "General Maintenance", "Emergency RSA"],

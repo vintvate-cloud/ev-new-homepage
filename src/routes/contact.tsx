@@ -32,6 +32,20 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/contact")({
+  head: () => ({
+    meta: [
+      { title: "Contact MY EV SERVICE | EV Service & Franchise Inquiries" },
+      {
+        name: "description",
+        content:
+          "Reach out to MY EV SERVICE for EV service support, franchise opportunities, or general inquiries. We're here to assist you with all your electric vehicle needs.",
+      },
+      { name: "keywords", content: "EV service support, EV franchise inquiries, electric vehicle service contact, MY EV SERVICE contact information" },
+      { property: "og:title", content: "Contact MY EV SERVICE | EV Service & Franchise Inquiries" },
+      { property: "og:description", content: "Reach out to MY EV SERVICE for EV service support, franchise opportunities, or general inquiries." },
+      { property: "og:image", content: "/assets/contact-og-image.jpg" },
+    ],
+  }),
   component: ContactPage,
 });
 
@@ -154,10 +168,10 @@ function ContactPage() {
 
               {/* Title & Description */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] text-white mb-4 leading-tight">
-                Get in Touch
+                Contact MY EV SERVICE
               </h1>
               <p className="text-sm text-white/60 font-light leading-relaxed mb-8 max-w-md">
-                Have questions about our services? Need support? Want to partner with us? We're here to help.
+                Need your EV serviced, want to open a centre, or managing a fleet? Choose the right team below and we'll get back to you within one working day.
               </p>
 
               {/* Stack of 4 Contact Option Cards */}
@@ -248,7 +262,7 @@ function ContactPage() {
                     <div>
                       <div className="text-sm font-bold text-white mb-0.5">Head Office</div>
                       <div className="text-xs text-white/70 leading-snug font-light max-w-[220px]">
-                        405, Vantage Tower C, NDA-Pashan Link Road, Bhavdhan, Pune - 411042
+                        Unit 405, Vantage Tower C, Ram Nagar, Bhavdhan, Pune 411021
                       </div>
                     </div>
                   </div>
@@ -320,7 +334,7 @@ function ContactPage() {
                     <input
                       type="tel"
                       required
-                      placeholder="Phone (e.g. +91 98765 43210)"
+                      placeholder="Phone (e.g. +91 95823 90001)"
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       className="w-full bg-[#131815] border border-white/10 rounded-2xl px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#00D084] transition-colors"
@@ -430,7 +444,7 @@ function ContactPage() {
 
               <h3 className="text-2xl font-semibold tracking-[-0.03em] text-white mb-2">Head Office Location</h3>
               <p className="text-xs text-white/70 leading-relaxed mb-6">
-                405, Vantage Tower C, NDA-Pashan Link Road, Bhavdhan, Pune - 411042
+                Unit 405, Vantage Tower C, Ram Nagar, Bhavdhan, Pune 411021
               </p>
 
               {/* Styled Map Graphic Visual */}

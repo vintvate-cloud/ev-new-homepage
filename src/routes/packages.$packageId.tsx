@@ -10,6 +10,19 @@ if (typeof window !== "undefined") {
 }
 
 export const Route = createFileRoute('/packages/$packageId')({
+  head: ({ params }) => {
+    const pkg = PACKAGES.find(p => p.id === params.packageId);
+    const title = pkg ? `${pkg.title} — EV Service Package` : "EV Service Package | MY EV SERVICE";
+    return {
+      meta: [
+        { title: `${title} | MY EV SERVICE` },
+        {
+          name: "description",
+          content: pkg?.description || "Transparent, fixed-price EV service package with certified diagnostics, genuine spares, and 90-day warranty.",
+        },
+      ],
+    };
+  },
   component: PackageDetails,
 });
 

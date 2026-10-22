@@ -13,6 +13,16 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/login")({
+  head: () => ({
+    meta: [
+      { title: "Customer & Fleet Portal Login | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Sign in to your MY EV SERVICE account to view live service tickets, vehicle telemetry, battery health history, and invoices.",
+      },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   component: LoginPage,
 });
 

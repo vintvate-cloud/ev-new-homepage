@@ -25,6 +25,12 @@ import { toast } from "sonner";
 import Lenis from "lenis";
 
 export const Route = createFileRoute("/awards")({
+  head: () => ({
+    meta: [
+      { title: "Awards & Industry Recognition | MY EV SERVICE" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   component: AwardsPage,
 });
 

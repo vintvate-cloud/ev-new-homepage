@@ -31,6 +31,20 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const Route = createFileRoute("/about")({
+  head: () => ({
+    meta: [
+      { title: "About MY EV SERVICE | EV Service Infrastructure Platform" },
+      {
+        name: "description",
+        content:
+          "Meet MY EV SERVICE — the EV service infrastructure platform building a network of service centres, charging, spare parts and fleet care across India.",
+      },
+      { name: "keywords", content: "MY EV Service India, EV service centre network India, electric vehicle service ecosystem India, EV charging and service infrastructure" },
+      { property: "og:title", content: "About MY EV SERVICE | EV Service Infrastructure Platform" },
+      { property: "og:description", content: "Building India's EV Service Infrastructure Network with certified multi-brand service hubs." },
+      { property: "og:image", content: "/assets/images/my-ev-service-about.jpg" },
+    ],
+  }),
   component: AboutPage,
 });
 
@@ -265,8 +279,8 @@ function AboutPage() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white leading-tight"
             >
-              Powering India's <br />
-              <span className="text-[#00D084]">Next Generation</span> EV Network
+              Building India's <br />
+              <span className="text-[#00D084]">EV Service Infrastructure</span> Network
             </motion.h1>
 
             {/* Subtitle Description */}
@@ -274,9 +288,9 @@ function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-base sm:text-xl font-medium text-white/85 leading-relaxed max-w-2xl mx-auto"
+              className="text-base sm:text-lg font-light text-white/85 leading-relaxed max-w-2xl mx-auto"
             >
-              A technology-driven multi-brand electric vehicle service network built to support the rapidly growing electric mobility ecosystem in India.
+              MY EV SERVICE is the multi-brand EV service platform from Autobot Engineers India Pvt. Ltd. We bring service centres, charging, spare parts and fleet care together so that every EV on Indian roads can be serviced properly.
             </motion.p>
 
             {/* CTA Action Buttons */}
@@ -287,16 +301,16 @@ function AboutPage() {
               className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 pointer-events-auto"
             >
               <Link
-                to="/franchise"
+                to="/oem"
                 className="inline-flex items-center shrink-0 gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-extrabold uppercase tracking-wider hover:bg-[#00e08f] hover:scale-105 shadow-[0_0_30px_rgba(0,208,132,0.4)] transition-all cursor-pointer w-full sm:w-auto justify-center"
               >
-                <span>Become a Partner</span> <ArrowRight className="w-4 h-4 shrink-0" />
+                <span>Partner With Us</span> <ArrowRight className="w-4 h-4 shrink-0" />
               </Link>
               <Link
-                to="/contact"
+                to="/ecosystem"
                 className="inline-flex items-center shrink-0 gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full border border-white/20 bg-[#0a0f0d]/85 text-white text-xs font-bold hover:bg-black/95 hover:border-white/40 hover:scale-105 transition-all cursor-pointer backdrop-blur-md shadow-xl w-full sm:w-auto justify-center"
               >
-                <span>Collaborate With Us</span> <Globe className="w-4 h-4 text-[#00D084] shrink-0" />
+                <span>Explore Our Ecosystem</span> <Globe className="w-4 h-4 text-[#00D084] shrink-0" />
               </Link>
             </motion.div>
 

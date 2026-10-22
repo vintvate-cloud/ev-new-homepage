@@ -34,6 +34,19 @@ import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 
 export const Route = createFileRoute("/franchise_/pre-booking/$cityId")({
+  head: ({ params }) => {
+    const raw = params.cityId || "City";
+    const formattedCity = raw.charAt(0).toUpperCase() + raw.slice(1);
+    return {
+      meta: [
+        { title: `Pre-Book EV Franchise in ${formattedCity} | MY EV SERVICE` },
+        {
+          name: "description",
+          content: `Reserve your exclusive territory and pre-book an EV service hub franchise in ${formattedCity} with MY EV SERVICE. FOCO model, Autobot OS, and rapid setup.`,
+        },
+      ],
+    };
+  },
   component: CityPreBookingPage,
 });
 

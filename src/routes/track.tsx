@@ -20,6 +20,16 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/track")({
+  head: () => ({
+    meta: [
+      { title: "Live EV Service & Repair Tracking | MY EV SERVICE" },
+      {
+        name: "description",
+        content:
+          "Track real-time status of your EV service, battery diagnostics, technician inspection notes, and delivery ETA using your Booking ID or Phone Number.",
+      },
+    ],
+  }),
   component: TrackPage,
 });
 
@@ -52,7 +62,7 @@ function TrackPage() {
         progressPercent: 65,
         vehicleLabel: "Ola S1 Pro (MH 12 EV 8821)",
         technician: "Ramesh Sharma (Master EV Engineer - L3 Certified)",
-        technicianPhone: "+91 98765 43210",
+        technicianPhone: "+91 95823 90001",
         serviceCenter: "Pune Central EV Technology Hub, Baner",
         eta: "35 mins",
         checklist: [
@@ -110,7 +120,7 @@ function TrackPage() {
                   <label className="text-[11px] font-mono text-white/50 block mb-1">Registered Phone Number</label>
                   <input
                     type="tel"
-                    placeholder="e.g. 9876543210"
+                    placeholder="e.g. 9582390001"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     className="w-full bg-[#020403] border border-white/15 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#00D084]"

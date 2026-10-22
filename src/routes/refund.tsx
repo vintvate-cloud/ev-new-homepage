@@ -20,6 +20,16 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/refund")({
+  head: () => ({
+    meta: [
+      { title: "Refund & Cancellation Policy | MY EV SERVICE" },
+      {
+        name: "description",
+        content:
+          "Learn about the cancellation, refund, and rescheduling guidelines for EV servicing, doorstep diagnostic bookings, and spare parts at MY EV SERVICE.",
+      },
+    ],
+  }),
   component: RefundPage,
 });
 

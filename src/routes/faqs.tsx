@@ -18,6 +18,17 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/faqs")({
+  head: () => ({
+    meta: [
+      { title: "EV Service FAQs | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Common questions about multi-brand EV servicing, battery diagnostics, RSA roadside assistance, upfront pricing, 90-day warranty, and franchise opportunities.",
+      },
+      { property: "og:title", content: "EV Service FAQs | MY EV SERVICE" },
+      { property: "og:description", content: "EV Service FAQs: Battery, Pricing, Warranty & Booking." },
+    ],
+  }),
   component: FaqsPage,
 });
 

@@ -27,6 +27,16 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/privacy")({
+  head: () => ({
+    meta: [
+      { title: "Privacy Policy | MY EV SERVICE" },
+      {
+        name: "description",
+        content:
+          "Read the MY EV SERVICE Privacy Policy to understand how we collect, protect, and use your personal data, telemetry, and service records across our platform.",
+      },
+    ],
+  }),
   component: PrivacyPage,
 });
 

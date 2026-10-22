@@ -26,6 +26,19 @@ import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 
 export const Route = createFileRoute("/city/$cityId")({
+  head: ({ params }) => {
+    const raw = params.cityId || "City";
+    const formattedCity = raw.charAt(0).toUpperCase() + raw.slice(1);
+    return {
+      meta: [
+        { title: `EV Service Centre in ${formattedCity} | MY EV SERVICE` },
+        {
+          name: "description",
+          content: `Find certified multi-brand EV service centres, diagnostics, battery balancing, and repairs in ${formattedCity}. Book an appointment with MY EV SERVICE.`,
+        },
+      ],
+    };
+  },
   validateSearch: (search: Record<string, unknown>) => {
     return {
       service: typeof search?.service === "string" ? search.service : undefined,

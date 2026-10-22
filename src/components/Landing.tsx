@@ -719,7 +719,7 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                   }}
                 >
                   <span className="text-white font-extrabold uppercase whitespace-nowrap">
-                    INDIA'S PROFESSIONAL SERVICE NETWORK
+                    INDIA'S MULTI-BRAND EV SERVICE NETWORK
                   </span>
                   <HeroTypewriter
                     items={HERO_TYPEWRITER_ITEMS}
@@ -2522,7 +2522,7 @@ type Vehicle = {
 const VEHICLES: Vehicle[] = [
   {
     id: "model-v", name: "Model V", tag: "Flagship Hypercar", img: hero,
-    desc: "The apex of AURORA engineering. Tri-motor architecture and active aero.",
+    desc: "The apex of electric mobility engineering. High-density battery telemetry and certified multi-brand care.",
     spec: [{ k: "Range", v: "824 km" }, { k: "0-100", v: "1.9s" }, { k: "Power", v: "1,020 hp" }]
   },
   {
@@ -4270,32 +4270,32 @@ function TechShowcase() {
     <section id="tech" className="relative overflow-hidden py-32">
       <div className="mx-auto max-w-[1400px] px-6">
         <Reveal>
-          <p className="eyebrow mb-4">Engineering Philosophy</p>
+          <p className="eyebrow mb-4">Our Technical Expertise</p>
           <h2 className="max-w-3xl text-balance text-5xl md:text-7xl font-semibold tracking-[-0.03em] text-foreground">
-            Every gram considered. Every watt earned.
+            EV specialists. Not petrol mechanics learning on your EV.
           </h2>
         </Reveal>
 
         <div className="mt-20 grid gap-8 lg:grid-cols-12 lg:gap-12 items-stretch">
           <Reveal>
             <div className="relative aspect-square overflow-hidden rounded-2xl lg:col-span-6 h-full group">
-              <img src={tech} alt="Motor rotor" loading="lazy"
+              <img src={tech} alt="Diagnostic Testing Bench" loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-[1400ms] group-hover:scale-[1.05]" />
               <div className="absolute inset-0"
                 style={{ background: "linear-gradient(to top, rgba(0,0,0,0.72), transparent 60%)" }} />
               <div className="absolute bottom-0 left-0 p-8">
-                <p className="text-[10px] uppercase tracking-[0.28em] text-white/60 mb-2 font-medium">Drive Unit</p>
-                <h3 className="text-3xl font-semibold text-white">Aurora Halo Motor</h3>
+                <p className="text-[10px] uppercase tracking-[0.28em] text-white/60 mb-2 font-medium">Diagnostic Lab</p>
+                <h3 className="text-3xl font-semibold text-white">Autobot OS Diagnostic Bench</h3>
               </div>
             </div>
           </Reveal>
 
           <div className="lg:col-span-6 grid gap-6">
             {[
-              { icon: Cpu, title: "Neural Compute Core", body: "Custom silicon delivers 342 TOPS of real-time perception with 8ms of end-to-end latency." },
-              { icon: Battery, title: "4680 Cell Architecture", body: "Structural pack integration reduces weight by 18% while enabling 350 kW peak charging." },
-              { icon: Shield, title: "Machined Safety", body: "A CNC-milled monocoque exceeds every crash standard in North America and the EU." },
-              { icon: Radio, title: "Silent Cabin", body: "Acoustic laminated glass and 14 microphones cancel road noise in real time." },
+              { icon: Cpu, title: "Autobot Academy Certified", body: "Certified master technicians in high-voltage safety, CAN-bus troubleshooting, and live controller telemetry." },
+              { icon: Battery, title: "Cell-Level Testing & Balancing", body: "Active cell-by-cell voltage equalization and pack repair to restore real-world battery range and SOH." },
+              { icon: Shield, title: "Standardized 32-Point Process", body: "One rigorous digital inspection checklist and transparent digital job card enforced at every franchise centre." },
+              { icon: Radio, title: "100% Genuine Spare Parts", body: "Direct OEM-grade replacement batteries, smart chargers, and controllers backed by official warranties." },
             ].map((f, i) => (
               <Reveal key={f.title} delay={i * 0.08}>
                 <div className="group relative overflow-hidden rounded-2xl border border-border bg-card/60 p-6 backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:border-border-strong hover:shadow-elevate">
@@ -4485,10 +4485,10 @@ function LabConfiguration() {
 /* ---------------- Stats ---------------- */
 function Stats() {
   const items = [
-    { v: 1020, s: "hp", label: "Peak Output" },
-    { v: 824, s: " km", label: "WLTP Range" },
-    { v: 1.9, s: "s", label: "0–100 km/h", d: 1 },
-    { v: 402, s: " km/h", label: "Top Speed" },
+    { v: 37808, s: "+", label: "Pune RTO Registered EVs" },
+    { v: 68, s: "+", label: "Multi-Brand Service Operations" },
+    { v: 250, s: "+", label: "Certified Master Technicians" },
+    { v: 99.8, s: "%", label: "Fleet & Commercial Uptime", d: 1 },
   ];
   return (
     <section className="relative overflow-hidden border-y border-border py-24">
@@ -5439,14 +5439,12 @@ function Factory() {
         <div className="grid gap-8 lg:grid-cols-12 items-center">
           <div className="lg:col-span-5">
             <Reveal>
-              <p className="eyebrow mb-4">Behind the Build</p>
+              <p className="eyebrow mb-4">Behind The Network</p>
               <h2 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-balance text-foreground">
-                Made where it's driven.
+                Built by EV Engineers. Powered by Autobot OS.
               </h2>
               <p className="mt-6 max-w-md text-lg text-muted-foreground">
-                Six vertically-integrated gigafactories on three continents.
-                Robotic precision, human oversight — every Aurora is built
-                by 342 people and 1,140 machines.
+                Founded by Autobot Engineers India Pvt. Ltd. in Pune, we combine high-voltage academy training, automated telemetry diagnostics, and certified technicians to keep India's electric mobility moving without downtime.
               </p>
             </Reveal>
           </div>
@@ -5654,11 +5652,11 @@ function Testimonials() {
 
 /* ---------------- FAQ ---------------- */
 const FAQS = [
-  { q: "When can I take delivery?", a: "Reservations placed today are estimated for Q3 2026 delivery in North America, and Q1 2027 in Europe and Asia-Pacific." },
-  { q: "Is charging included?", a: "Every Aurora comes with three years of complimentary charging across our 4,200-station Aurora Grid network." },
-  { q: "What is the warranty?", a: "8 years or 240,000 km on the battery and drive unit. 4 years or 80,000 km bumper-to-bumper." },
-  { q: "Can I service my Aurora anywhere?", a: "Yes. Mobile Service technicians handle 82% of repairs at your home or office. Certified centers cover the rest." },
-  { q: "Do you offer trade-ins?", a: "We accept all makes and models. Our valuation team responds within 24 hours." },
+  { q: "Which EV brands and vehicle types do you service?", a: "We service all major multi-brand electric 2-wheelers, 3-wheelers, and commercial fleets across India including Ola Electric, Ather Energy, TVS iQube, Bajaj Chetak, Hero Electric, Vida, Revolt, Ampere, Mahindra Electric, and Piaggio Ape." },
+  { q: "Do you provide doorstep EV service or do I need to visit a centre?", a: "Both! We provide certified doorstep inspection, battery health diagnostics, periodic maintenance, and minor repairs at your doorstep across covered PIN codes. For intensive battery cell balancing, pack replacements, or motor overhauls, repairs are completed at your nearest certified hub." },
+  { q: "What warranty do you offer on EV repairs and replacement parts?", a: "Every repair completed by MY EV SERVICE comes backed by our 90-Day Workmanship Guarantee along with full manufacturer warranties on all 100% genuine replacement spare parts." },
+  { q: "How transparent is your pricing and approval process?", a: "We operate on 100% upfront pricing with published rate cards starting from ₹399. You receive a complete digital estimate and battery health diagnostic report before work begins, and no repair proceeds without your explicit approval." },
+  { q: "What should I do if my electric vehicle breaks down on the road?", a: "You can request immediate Roadside Assistance (RSA) 24/7 across Pune and covered highways by calling our emergency helpline at +91 95823 90001." },
 ];
 
 function FAQ() {
@@ -5670,7 +5668,7 @@ function FAQ() {
           badge="Frequently Asked Questions"
           title="Answers,"
           highlight="engineered."
-          subtitle="Everything you need to know about our multi-brand electric vehicle diagnostics, doorstep service, and warranty coverage."
+          subtitle="Everything you need to know about our multi-brand electric vehicle diagnostics, doorstep service, upfront pricing, and warranty coverage."
           className="text-center max-w-2xl mx-auto mb-16"
         />
         <StaggerContainer staggerDelay={0.08} className="mt-16 divide-y divide-border">
@@ -5709,7 +5707,7 @@ function CTA() {
   return (
     <section className="relative overflow-hidden py-40">
       <div className="absolute inset-0 -z-10">
-        <img src={roadster} alt="" loading="lazy" className="h-full w-full object-cover opacity-40" />
+        <img src={roadster} alt="EV Service Network" loading="lazy" className="h-full w-full object-cover opacity-40" />
         <div className="absolute inset-0"
           style={{ background: "linear-gradient(to bottom, var(--background), color-mix(in oklab, var(--background) 60%, transparent), var(--background))" }} />
         <div className="absolute inset-0 animate-ember-pulse"
@@ -5717,15 +5715,15 @@ function CTA() {
       </div>
       <div className="mx-auto max-w-4xl px-6 text-center">
         <Reveal>
-          <p className="eyebrow mb-6">Reserve Your Aurora</p>
+          <p className="eyebrow mb-6">Multi-Brand EV Service Network</p>
           <h2 className="text-6xl md:text-8xl font-semibold tracking-[-0.04em] text-balance text-foreground">
-            The next chapter of driving <span className="text-gradient-ember">starts now.</span>
+            Your EV deserves <span className="text-gradient-ember">an EV specialist.</span>
           </h2>
           <p className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground">
-            A fully refundable $500 reservation secures your delivery slot and configuration window.
+            Book in 60 seconds. Doorstep or centre. Every electric brand, diagnosed with certified tools and genuine parts.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Link to="/services" className="btn-primary flex items-center gap-2">Reserve Now <ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/services" className="btn-primary flex items-center gap-2">Book EV Service <ArrowRight className="h-4 w-4 text-[#020403]" /></Link>
           </div>
         </Reveal>
       </div>

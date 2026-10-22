@@ -18,6 +18,17 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/warranty")({
+  head: () => ({
+    meta: [
+      { title: "EV Service Warranty | 90-Day Workmanship Guarantee" },
+      {
+        name: "description",
+        content: "MY EV SERVICE Warranty: 90-day workmanship guarantee on multi-brand EV repairs, genuine parts assurance, and digital warranty claim verification.",
+      },
+      { property: "og:title", content: "EV Service Warranty | 90-Day Workmanship Guarantee" },
+      { property: "og:description", content: "90-day workmanship guarantee on multi-brand EV repairs with genuine parts assurance." },
+    ],
+  }),
   component: WarrantyPage,
 });
 
@@ -115,7 +126,7 @@ function WarrantyPage() {
               <input
                 type="tel"
                 required
-                placeholder="+91 98765 43210"
+                placeholder="+91 95823 90001"
                 value={claimPhone}
                 onChange={(e) => setClaimPhone(e.target.value)}
                 className="w-full bg-[#020403] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"

@@ -15,6 +15,16 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/signup")({
+  head: () => ({
+    meta: [
+      { title: "Create MY EV SERVICE Account | Register Vehicle" },
+      {
+        name: "description",
+        content: "Create a MY EV SERVICE customer profile to track ongoing service tickets, store warranties, and manage EV fleet subscriptions.",
+      },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   component: SignupPage,
 });
 
@@ -209,7 +219,7 @@ function SignupPage() {
                 <input
                   type="tel"
                   required
-                  placeholder="+91 98765 43210"
+                  placeholder="+91 95823 90001"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className={`w-full rounded-full pl-11 pr-4 py-3 text-xs transition-all focus:outline-none focus:border-[#00D084] ${

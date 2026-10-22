@@ -20,6 +20,17 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/hv-safety")({
+  head: () => ({
+    meta: [
+      { title: "High Voltage (HV) Safety Disclaimer | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "High Voltage (HV) safety protocols, ASTM Class 0 insulation standards, and certified technician procedures followed at all MY EV SERVICE centres.",
+      },
+      { property: "og:title", content: "High Voltage (HV) Safety Disclaimer | MY EV SERVICE" },
+      { property: "og:description", content: "High Voltage (HV) safety protocols followed at all MY EV SERVICE centres." },
+    ],
+  }),
   component: HVSafetyPage,
 });
 

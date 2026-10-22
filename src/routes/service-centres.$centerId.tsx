@@ -136,6 +136,22 @@ function CitySvgIcon({ cityId, className = "w-7 h-7" }: { cityId: string; classN
 }
 
 export const Route = createFileRoute("/service-centres/$centerId")({
+  head: ({ params }) => {
+    const raw = params.centerId || "Centre";
+    const formattedCenter = raw
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+    return {
+      meta: [
+        { title: `${formattedCenter} — MY EV SERVICE Centre` },
+        {
+          name: "description",
+          content: `Visit MY EV SERVICE Centre at ${formattedCenter}. Certified multi-brand EV technicians, battery diagnostics, rapid servicing, and genuine spare parts.`,
+        },
+      ],
+    };
+  },
   component: ServiceCentresPage,
 });
 

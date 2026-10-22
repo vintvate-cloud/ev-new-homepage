@@ -63,11 +63,11 @@ export function Footer() {
                 BOOK A SERVICE
               </Link>
               <a
-                href="tel:+919876543210"
+                href="tel:+919582390001"
                 className="px-8 py-4 rounded-full border border-white/20 text-white text-xs font-bold hover:bg-white/10 transition-all flex items-center gap-2"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-[#00D084]" />
-                +91 98765 43210
+                +91 95823 90001
               </a>
             </div>
           </div>
@@ -94,7 +94,7 @@ export function Footer() {
             </Link>
 
             <p className="text-xs text-white/60 font-light leading-relaxed max-w-sm">
-              India's leading EV service platform. Expert care for your electric 2-wheelers and 3-wheelers, delivered at your doorstep by certified technicians.
+              MY EV SERVICE™ — India's multi-brand EV service network. A brand of Autobot Engineers India Pvt. Ltd., Pune. Expert care for 2W, 3W &amp; 4W electric vehicles.
             </p>
 
             <div className="space-y-2.5 text-xs text-white/70">
@@ -111,7 +111,7 @@ export function Footer() {
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
                 <span className="leading-relaxed font-light text-white/60">
-                  405, Vantage Tower C, NDA-Pashan Link Road, Bhavdhan, Pune - 411042
+                  Unit 405, Vantage Tower C, Ram Nagar, Bhavdhan, Pune 411021
                 </span>
               </div>
             </div>
@@ -119,7 +119,7 @@ export function Footer() {
             {/* Social Icons Row */}
             <div className="flex items-center gap-2.5 pt-2">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/myevservice"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00D084] hover:bg-[#00D084]/15 hover:border-[#00D084]/40 transition-all"
@@ -128,7 +128,7 @@ export function Footer() {
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@myevservice"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00D084] hover:bg-[#00D084]/15 hover:border-[#00D084]/40 transition-all"
@@ -137,7 +137,7 @@ export function Footer() {
                 <Youtube className="w-4 h-4" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/myevservice"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00D084] hover:bg-[#00D084]/15 hover:border-[#00D084]/40 transition-all"
@@ -146,7 +146,7 @@ export function Footer() {
                 <Facebook className="w-4 h-4" />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://twitter.com/myevservice"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00D084] hover:bg-[#00D084]/15 hover:border-[#00D084]/40 transition-all"
@@ -155,7 +155,7 @@ export function Footer() {
                 <Twitter className="w-4 h-4" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/myevservice"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00D084] hover:bg-[#00D084]/15 hover:border-[#00D084]/40 transition-all"
@@ -166,10 +166,10 @@ export function Footer() {
             </div>
           </StaggerItem>
 
-          {/* Col 2: SERVICES */}
+          {/* Col 2: SERVICES & HUBS */}
           <StaggerItem className="lg:col-span-2">
             <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] mb-4">
-              SERVICES
+              SERVICES & HUBS
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
@@ -188,51 +188,72 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/services" search={{ service: "BAT-006" }} className="hover:text-[#00D084] transition-colors">
-                  AC & Thermal
-                </Link>
-              </li>
-              <li>
                 <Link to="/services" search={{ service: "DIAG-001" }} className="hover:text-[#00D084] transition-colors">
-                  Software Updates
+                  Software & Diagnostics
                 </Link>
               </li>
               <li>
-                <Link to="/store" className="hover:text-[#00D084] transition-colors">
-                  Spare Parts
+                <Link to="/spare-parts" className="hover:text-[#00D084] transition-colors">
+                  EV Spare Parts
                 </Link>
               </li>
               <li>
-                <Link to="/find-services" className="hover:text-[#00D084] transition-colors">
-                  Find Service Centers
+                <Link to="/ai-tool" className="hover:text-[#00D084] transition-colors">
+                  AI Diagnostics Tool
+                </Link>
+              </li>
+              <li>
+                <Link to="/doorstep-ev-service" className="hover:text-[#00D084] transition-colors">
+                  Doorstep EV Service
+                </Link>
+              </li>
+              <li>
+                <Link to="/roadside-assistance" className="hover:text-[#00D084] transition-colors">
+                  24/7 Roadside Assistance
+                </Link>
+              </li>
+              <li>
+                <Link to="/service-centre" className="hover:text-[#00D084] transition-colors">
+                  Service Centre Network
+                </Link>
+              </li>
+              <li>
+                <Link to="/service-centre-near-me" className="hover:text-[#00D084] transition-colors">
+                  Service Centre Near Me
                 </Link>
               </li>
             </ul>
           </StaggerItem>
 
-          {/* Col 3: COMPANY */}
+          {/* Col 3: COMPANY & ECOSYSTEM */}
           <StaggerItem className="lg:col-span-2">
             <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] mb-4">
-              COMPANY
+              COMPANY & B2B
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
                 <Link to="/about" className="hover:text-[#00D084] transition-colors">About Us</Link>
               </li>
               <li>
+                <Link to="/ecosystem" className="hover:text-[#00D084] transition-colors">Ecosystem Platform</Link>
+              </li>
+              <li>
+                <Link to="/franchise" className="hover:text-[#00D084] transition-colors">Franchise Program</Link>
+              </li>
+              <li>
+                <Link to="/fleet" className="hover:text-[#00D084] transition-colors">Fleet Solutions (B2B)</Link>
+              </li>
+              <li>
+                <Link to="/oem" className="hover:text-[#00D084] transition-colors">OEM Solutions</Link>
+              </li>
+              <li>
+                <Link to="/become-our-partner" className="hover:text-[#00D084] transition-colors">Become Our Partner</Link>
+              </li>
+              <li>
                 <Link to="/careers" className="hover:text-[#00D084] transition-colors">Careers</Link>
               </li>
               <li>
-                <Link to="/franchise" className="hover:text-[#00D084] transition-colors">Franchise</Link>
-              </li>
-              <li>
-                <Link to="/find-services" className="hover:text-[#00D084] transition-colors">Service Network</Link>
-              </li>
-              <li>
-                <Link to="/awards" className="hover:text-[#00D084] transition-colors">Awards & Honors</Link>
-              </li>
-              <li>
-                <Link to="/news" className="hover:text-[#00D084] transition-colors">Press & Media</Link>
+                <Link to="/news-updates" className="hover:text-[#00D084] transition-colors">News & Updates</Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-[#00D084] transition-colors">Contact Us</Link>
@@ -243,10 +264,10 @@ export function Footer() {
             </ul>
           </StaggerItem>
 
-          {/* Col 4: SUPPORT */}
+          {/* Col 4: SUPPORT & RESOURCES */}
           <StaggerItem className="lg:col-span-2">
             <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] mb-4">
-              SUPPORT
+              SUPPORT & GUIDES
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
@@ -256,13 +277,19 @@ export function Footer() {
                 <Link to="/faqs" className="hover:text-[#00D084] transition-colors">FAQs</Link>
               </li>
               <li>
+                <Link to="/blog" className="hover:text-[#00D084] transition-colors">EV Blog & Guides</Link>
+              </li>
+              <li>
+                <Link to="/webinars" className="hover:text-[#00D084] transition-colors">Webinars & Workshops</Link>
+              </li>
+              <li>
                 <Link to="/warranty" className="hover:text-[#00D084] transition-colors">Service Warranty</Link>
               </li>
               <li>
                 <Link to="/track" className="hover:text-[#00D084] transition-colors">Track Service</Link>
               </li>
               <li>
-                <Link to="/feedback" className="hover:text-[#00D084] transition-colors">Feedback</Link>
+                <Link to="/media" className="hover:text-[#00D084] transition-colors">Press & Media</Link>
               </li>
               <li>
                 <Link to="/feedback" className="hover:text-[#00D084] transition-colors">Report an Issue</Link>
@@ -341,16 +368,16 @@ export function Footer() {
               <span>256-bit SSL Secured</span>
             </div>
             <div className="flex items-center gap-2">
-              <Award className="w-3.5 h-3.5 text-[#00D084]" />
-              <span>ISO 9001 Certified</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-[#00D084]" />
+              <span>Autobot Academy Certified Technicians</span>
             </div>
             <div className="flex items-center gap-2">
               <Star className="w-3.5 h-3.5 text-[#00D084] fill-[#00D084]" />
-              <span>Google Rated 4.9</span>
+              <span>100% Genuine EV Spares</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="w-3.5 h-3.5 text-[#00D084]" />
-              <span>Powered by GreenTech</span>
+              <span>Powered by Autobot OS</span>
             </div>
           </div>
         </Reveal>
@@ -361,7 +388,7 @@ export function Footer() {
         <Reveal delay={0.2} yOffset={20}>
           <div className="pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-white/40 font-mono text-center lg:text-left">
             <div>
-              2025-2026, Autobot Emobility Solutions Private Limited, All Rights Reserved • Made with ❤️ in India
+              © 2025–2026, Autobot Engineers India Pvt. Ltd., Pune. All Rights Reserved • Made with ❤️ in India
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4 text-[11px]">
               <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
@@ -376,13 +403,13 @@ export function Footer() {
         </Reveal>
 
         {/* =========================================================================
-            5. MASSIVE FOOTER BRAND TYPOGRAPHY
+            5. MASSIVE FOOTER BRAND TYPOGRAPHY (Semantic div instead of H1 for SEO)
            ========================================================================= */}
         <Reveal delay={0.25} yOffset={20}>
           <div className="mt-12 w-full flex justify-center items-end pointer-events-none select-none overflow-hidden">
-            <h1 className="text-[14vw] md:text-[15vw] font-black leading-none tracking-tighter text-[#00D084] pb-2 text-center opacity-90">
+            <div className="text-[14vw] md:text-[15vw] font-black leading-none tracking-tighter text-[#00D084] pb-2 text-center opacity-90">
               myevservice
-            </h1>
+            </div>
           </div>
         </Reveal>
       </div>

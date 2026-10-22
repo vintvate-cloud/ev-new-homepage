@@ -56,6 +56,20 @@ export const Route = createFileRoute("/webinars")({
       pathId: search.pathId as string | undefined,
     };
   },
+  head: () => ({
+    meta: [
+      { title: "EV Webinars & Workshops India | MY EV SERVICE" },
+      {
+        name: "description",
+        content:
+          "Free MY EV SERVICE webinars on starting an EV service business, EV diagnostics and maintenance, and the future of India's EV ecosystem.",
+      },
+      { name: "keywords", content: "EV Webinars India, electric vehicle webinars, EV business webinar, EV service training webinar, EV industry workshop India" },
+      { property: "og:title", content: "EV Webinars & Workshops | Electric Vehicle Industry Learning | MY EV SERVICE" },
+      { property: "og:description", content: "Free live sessions and on-demand replays on starting an EV service business and EV diagnostics." },
+      { property: "og:image", content: "/assets/images/ev-webinar-india.jpg" },
+    ],
+  }),
   component: WebinarsPage,
 });
 
@@ -1282,7 +1296,7 @@ function WebinarsPage() {
                   <input
                     type="tel"
                     required
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 95823 90001"
                     value={regForm.mobile}
                     onChange={(e) => setRegForm({ ...regForm, mobile: e.target.value })}
                     className="w-full border border-white/15 rounded-xl px-3 py-2.5 text-xs bg-black/50 text-white focus:outline-none focus:border-[#00D084]"

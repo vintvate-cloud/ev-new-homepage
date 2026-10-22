@@ -23,6 +23,17 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/disclaimer")({
+  head: () => ({
+    meta: [
+      { title: "Disclaimer & Limitation of Liability | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Platform Disclaimer & Limitation of Liability for MY EV SERVICE website, Autobot OS digital tools and multi-brand service centers.",
+      },
+      { property: "og:title", content: "Disclaimer & Limitation of Liability | MY EV SERVICE" },
+      { property: "og:description", content: "Platform Disclaimer & Limitation of Liability for MY EV SERVICE." },
+    ],
+  }),
   component: DisclaimerPage,
 });
 

@@ -20,6 +20,17 @@ import { Footer } from "../components/Footer";
 
 // Validate / parse search params for /franchise-apply?city=Pune&area=Aundh&pincode=411007
 export const Route = createFileRoute("/franchise-apply")({
+  head: () => ({
+    meta: [
+      { title: "Apply for MY EV SERVICE Franchise | Check PIN Availability" },
+      {
+        name: "description",
+        content:
+          "Apply for a MY EV SERVICE franchise in India. Enter your PIN code, choose your hub format (Executive Hub or Experience Centre), and secure your territory.",
+      },
+      { name: "keywords", content: "Apply for EV franchise, EV service franchise application, MY EV SERVICE franchise PIN check, EV workshop setup" },
+    ],
+  }),
   validateSearch: (search: Record<string, unknown>) => {
     return {
       city: typeof search.city === "string" ? search.city : "Pune",

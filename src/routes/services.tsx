@@ -41,6 +41,20 @@ export const Route = createFileRoute("/services")({
       id: (search.id as string) || undefined,
     };
   },
+  head: () => ({
+    meta: [
+      { title: "EV Service & Repair for 2W, 3W & 4W | MY EV SERVICE" },
+      {
+        name: "description",
+        content:
+          "EV servicing, diagnostics and repair for electric scooters, autos and cars. Upfront prices, genuine parts and a digital report. Book with MY EV SERVICE.",
+      },
+      { name: "keywords", content: "EV Service Centre India, EV repair service, EV maintenance services, electric vehicle service centre, EV diagnostics service" },
+      { property: "og:title", content: "EV Service & Repair for 2W, 3W & 4W | MY EV SERVICE" },
+      { property: "og:description", content: "68 EV services across battery, motor, charging, brakes and electronics. Transparent upfront prices." },
+      { property: "og:image", content: "/assets/images/ev-service-repair-india.jpg" },
+    ],
+  }),
   component: ServicesPage,
 });
 
@@ -529,13 +543,14 @@ function ServicesPage() {
             className="max-w-4xl mx-auto text-center relative z-10 px-6 space-y-4 pointer-events-auto"
           >
             <span className="hero-sub-reveal text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
-              • Certified Diagnostic Hubs Across India
+              • Multi-Brand EV Service Network · Pune
             </span>
-            <h1 className="hero-title-reveal text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08]">
-              Expert <span className="text-[#00D084]">EV Services</span>
+            <h1 className="hero-title-reveal text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08]">
+              EV Servicing &amp; Repair for <br className="hidden sm:block" />
+              <span className="text-[#00D084]">2W, 3W &amp; 4W</span> Electric Vehicles
             </h1>
-            <p className="hero-sub-reveal text-base sm:text-lg md:text-xl text-[#c2d1c7] font-normal max-w-2xl mx-auto">
-              Professional diagnostics and repairs for Electric Scooters, Bikes & Autos
+            <p className="hero-sub-reveal text-sm sm:text-base md:text-lg text-[#c2d1c7] font-light max-w-2xl mx-auto leading-relaxed">
+              68 EV services across battery, motor, charging, brakes and electronics. You see prices upfront, every job is logged on a digital job card, and you get a report at the end.
             </p>
             <div className="hero-btn-reveal pt-2">
               <a

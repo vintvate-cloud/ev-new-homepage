@@ -41,6 +41,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/investors")({
+  head: () => ({
+    meta: [
+      { title: "Investors | MY EV SERVICE & Autobot OS" },
+      {
+        name: "description",
+        content: "The Operating System for India's EV Services Economy. Learn about the investment opportunity, scalable FOCO unit economics, and Autobot OS technology.",
+      },
+      { property: "og:title", content: "Investors | MY EV SERVICE & Autobot OS" },
+      { property: "og:description", content: "The Operating System for India's EV Services Economy." },
+    ],
+  }),
   component: InvestorRelationsPage,
 });
 

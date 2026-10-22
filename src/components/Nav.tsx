@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
+import Lenis from "lenis";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -12,6 +13,7 @@ import {
   User,
   X,
   Zap,
+  Phone,
 } from "lucide-react";
 import hero from "@/assets/ev-scooter-hero.png";
 import tech from "@/assets/tech.jpg";
@@ -31,14 +33,21 @@ const PRIMARY_NAV = [
 ];
 
 const MORE_NAV = [
-  { label: "Media & PR", href: "/media", desc: "Press releases & media coverage" },
-  { label: "Awards & Honors", href: "/awards", desc: "Industry trophies & excellence awards" },
-  { label: "EV Accessories Store", href: "/store", desc: "Certified EV gear, chargers & parts" },
-  { label: "Webinars & Live", href: "/webinars", desc: "Technical EV workshops & live Q&A" },
-  { label: "Events & Meets", href: "/events", desc: "EV industry summits & partner meets" },
-  { label: "EV Industry News", href: "/news", desc: "Latest aftermarket EV updates" },
-  { label: "Blog & Insights", href: "/blog", desc: "EV maintenance guides & tech tips" },
+  { label: "Fleet Solutions (B2B)", href: "/fleet", desc: "Fleet uptime, depot teams & scheduled AMC" },
+  { label: "OEM Solutions", href: "/oem", desc: "After-sales partner for EV brands & dealers" },
+  { label: "Ecosystem Platform", href: "/ecosystem", desc: "Autobot OS multi-brand infrastructure network" },
+  { label: "AI Diagnostics Tool", href: "/ai-tool", desc: "AI troubleshooting & predictive fault scanner" },
+  { label: "Become Our Partner", href: "/become-our-partner", desc: "Franchise & charging ecosystem partnerships" },
+  { label: "EV Spare Parts", href: "/spare-parts", desc: "Certified batteries, chargers & controllers" },
+  { label: "Service Centre Network", href: "/service-centre", desc: "Browse all network hubs across cities" },
+  { label: "Service Centre Near Me", href: "/service-centre-near-me", desc: "Find nearest service point by PIN/GPS" },
+  { label: "EV Blog & Insights", href: "/blog", desc: "EV maintenance guides & tech tips" },
+  { label: "News & Updates", href: "/news-updates", desc: "Latest EV market trends & announcements" },
+  { label: "Webinars & Workshops", href: "/webinars", desc: "Technical EV workshops & live Q&A" },
+  { label: "Doorstep EV Service", href: "/doorstep-ev-service", desc: "Certified EV technicians arrive at your home or office" },
+  { label: "24/7 Roadside Assistance", href: "/roadside-assistance", desc: "Emergency mobile rescue, battery boost & flatbed towing" },
   { label: "AI Track Assistant", href: "/track", desc: "Automated status & diagnostic tracking" },
+  { label: "Media & PR", href: "/media", desc: "Press releases & media kit" },
 ];
 
 export function Nav({
@@ -63,8 +72,36 @@ export function Nav({
   const pillRef = useRef<HTMLSpanElement>(null);
   const leaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const moreLeaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const moreScrollRef = useRef<HTMLDivElement>(null);
+  const moreContentRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
   const { siteTheme, setSiteTheme, toggleTheme } = useTheme();
+
+  // Lenis Smooth Scroll for Ecosystem Resources "More" dropdown (No Visible Scrollbar)
+  useEffect(() => {
+    if (!moreDropdownOpen || !moreScrollRef.current || !moreContentRef.current) return;
+
+    const dropdownLenis = new Lenis({
+      wrapper: moreScrollRef.current,
+      content: moreContentRef.current,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: true,
+    });
+
+    let rafId: number;
+    function update(time: number) {
+      dropdownLenis.raf(time);
+      rafId = requestAnimationFrame(update);
+    }
+    rafId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      dropdownLenis.destroy();
+    };
+  }, [moreDropdownOpen]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -134,7 +171,7 @@ export function Nav({
         { title: "Express Garage Tier", sub: "₹5-8 Lakhs • 2 Bays", href: "/franchise" },
         { title: "Standard Centre Tier", sub: "₹12-18 Lakhs • 4 Bays", href: "/franchise" },
         { title: "Master Regional Hub", sub: "₹25-35 Lakhs • 8 Bays", href: "/franchise" },
-        { title: "Apply Online", sub: "Partner Application Form", href: "/franchise" },
+        { title: "Apply Online", sub: "Partner Application Form", href: "/franchise-apply" },
       ],
     },
     1: {
@@ -155,11 +192,51 @@ export function Nav({
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
         transition={{ duration: hidden ? 0.4 : 0.15, ease: "easeOut" }}
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "py-1" : "py-2"}`}
+        className="fixed inset-x-0 top-0 z-50 transition-all duration-500"
       >
+        {/* ── Top Announcement Strip (PDF Page 7 & Page 9 S1 · HOME-001) ── */}
+        <div
+          className={`w-full bg-[#0D5C2E] text-white border-b border-[#00D084]/25 transition-all duration-300 overflow-hidden ${
+            scrolled ? "max-h-0 opacity-0 py-0" : "max-h-12 opacity-100 py-1.5 px-3 sm:px-6"
+          }`}
+        >
+          <div className="max-w-[1400px] mx-auto flex items-center justify-between text-[11px] sm:text-xs">
+            <div className="flex items-center gap-2 sm:gap-3 truncate">
+              <span className="px-2 py-0.5 rounded bg-[#F5A623] text-black font-mono font-black text-[9px] sm:text-[10px] uppercase tracking-wider shrink-0 shadow-sm">
+                NOW IN PUNE
+              </span>
+              <span className="text-white/95 font-medium truncate hidden sm:inline">
+                Multi-brand EV service for scooters, bikes and e-autos
+              </span>
+              <span className="text-white/95 font-medium truncate sm:hidden">
+                Multi-brand EV service
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3 sm:gap-4 shrink-0 font-medium text-[10.5px] sm:text-xs">
+              <a
+                href="tel:+919582390001"
+                className="inline-flex items-center gap-1.5 text-white hover:text-[#00D084] transition-colors"
+              >
+                <Phone className="w-3 h-3 text-[#00D084] shrink-0" />
+                <span className="hidden md:inline">Roadside help:</span>
+                <span className="font-mono font-bold">+91 95823 90001</span>
+              </a>
+              <span className="text-white/30 hidden xs:inline">•</span>
+              <Link
+                to="/franchise"
+                className="text-[#F5A623] hover:text-white font-semibold transition-colors inline-flex items-center gap-1"
+              >
+                <span>Become a franchise partner</span>
+                <span className="font-bold">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
         <div
           className={`mx-auto flex max-w-[1400px] items-center gap-2 sm:gap-3 transition-all duration-500 ${
-            scrolled ? "px-2.5 sm:px-4 md:px-8 mt-1" : "px-2.5 sm:px-4 md:px-8 mt-2"
+            scrolled ? "px-2.5 sm:px-4 md:px-8 mt-1" : "px-2.5 sm:px-4 md:px-8 mt-1.5"
           }`}
         >
           {/* Logo Outside Navbar Border */}
@@ -263,7 +340,8 @@ export function Nav({
                         style={{
                           backgroundColor: siteTheme === "light" ? "#ffffff" : "#080c0a",
                         }}
-                        className={`absolute top-[calc(100%+12px)] right-0 w-72 origin-top-right z-[100] rounded-2xl p-3 shadow-[0_25px_60px_rgba(0,0,0,0.3)] ${
+                        data-lenis-prevent="true"
+                        className={`absolute top-[calc(100%+12px)] right-0 w-80 max-h-[75vh] flex flex-col origin-top-right z-[100] rounded-2xl p-3 shadow-[0_25px_60px_rgba(0,0,0,0.3)] ${
                           siteTheme === "light"
                             ? "border border-slate-200 text-slate-900"
                             : "border border-white/15 text-white"
@@ -280,7 +358,8 @@ export function Nav({
                             }`}
                         />
 
-                        <div className={`px-3 py-2 border-b mb-1.5 flex items-center justify-between ${
+                        {/* Pinned Header */}
+                        <div className={`px-3 py-2 border-b mb-1.5 flex items-center justify-between shrink-0 ${
                           siteTheme === "light" ? "border-slate-100" : "border-white/10"
                         }`}>
                           <span className="text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-wider">
@@ -291,36 +370,46 @@ export function Nav({
                           }`}>{MORE_NAV.length} Modules</span>
                         </div>
 
-                        <div className="space-y-1">
-                          {MORE_NAV.map((item) => (
-                            <Link
-                              key={item.label}
-                              to={item.href}
-                              onClick={() => setMoreDropdownOpen(false)}
-                              className={`group flex items-center justify-between rounded-xl px-3 py-2.5 transition-all ${siteTheme === "light"
-                                  ? "hover:bg-slate-100/90 text-slate-900"
-                                  : "hover:bg-white/10 text-white"
-                                }`}
-                            >
-                              <div>
-                                <span className="block text-xs font-bold leading-tight group-hover:text-[#00D084] transition-colors">
-                                  {item.label}
-                                </span>
-                                <span className={`block text-[10px] transition-colors mt-0.5 ${
+                        {/* Scrollable Lenis Wrapper (No Visible Scrollbar) */}
+                        <div
+                          ref={moreScrollRef}
+                          data-lenis-prevent="true"
+                          data-lenis-prevent-wheel="true"
+                          data-lenis-prevent-touch="true"
+                          className="flex-1 overflow-y-auto overscroll-contain pr-1 no-scrollbar [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
+                          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                        >
+                          <div ref={moreContentRef} className="space-y-1 py-0.5">
+                            {MORE_NAV.map((item) => (
+                              <Link
+                                key={item.label}
+                                to={item.href}
+                                onClick={() => setMoreDropdownOpen(false)}
+                                className={`group flex items-center justify-between rounded-xl px-3 py-2.5 transition-all ${siteTheme === "light"
+                                    ? "hover:bg-slate-100/90 text-slate-900"
+                                    : "hover:bg-white/10 text-white"
+                                  }`}
+                              >
+                                <div>
+                                  <span className="block text-xs font-bold leading-tight group-hover:text-[#00D084] transition-colors">
+                                    {item.label}
+                                  </span>
+                                  <span className={`block text-[10px] transition-colors mt-0.5 ${
+                                    siteTheme === "light"
+                                      ? "text-slate-600 group-hover:text-slate-900 font-medium"
+                                      : "text-white/50 group-hover:text-white/80"
+                                  }`}>
+                                    {item.desc}
+                                  </span>
+                                </div>
+                                <ArrowUpRight className={`w-3.5 h-3.5 transition-all shrink-0 ml-2 ${
                                   siteTheme === "light"
-                                    ? "text-slate-600 group-hover:text-slate-900 font-medium"
-                                    : "text-white/50 group-hover:text-white/80"
-                                }`}>
-                                  {item.desc}
-                                </span>
-                              </div>
-                              <ArrowUpRight className={`w-3.5 h-3.5 transition-all shrink-0 ml-2 ${
-                                siteTheme === "light"
-                                  ? "text-slate-400 group-hover:text-[#00D084]"
-                                  : "text-white/30 group-hover:text-[#00D084]"
-                              } group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
-                            </Link>
-                          ))}
+                                    ? "text-slate-400 group-hover:text-[#00D084]"
+                                    : "text-white/30 group-hover:text-[#00D084]"
+                                } group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
+                              </Link>
+                            ))}
+                          </div>
                         </div>
                       </motion.div>
                     )}
@@ -568,7 +657,10 @@ export function Nav({
             <X className="h-5 w-5" />
           </button>
         </div>
-        <div className="flex flex-col gap-1 px-6 pt-6 overflow-y-auto max-h-[82vh]">
+        <div
+          className="flex flex-col gap-1 px-6 pt-6 overflow-y-auto max-h-[82vh] no-scrollbar [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
           {open &&
             [...PRIMARY_NAV, ...MORE_NAV].map((n, i) => (
               <motion.div

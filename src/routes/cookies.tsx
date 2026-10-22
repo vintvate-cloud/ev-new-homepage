@@ -19,6 +19,17 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/cookies")({
+  head: () => ({
+    meta: [
+      { title: "Cookie Policy | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Cookie Policy and tracking preferences for MY EV SERVICE website and digital platforms.",
+      },
+      { property: "og:title", content: "Cookie Policy | MY EV SERVICE" },
+      { property: "og:description", content: "Cookie Policy for MY EV SERVICE." },
+    ],
+  }),
   component: CookiePolicyPage,
 });
 

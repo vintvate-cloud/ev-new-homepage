@@ -20,6 +20,15 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/terms")({
+  head: () => ({
+    meta: [
+      { title: "Terms of Service & User Agreement | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Review the terms and conditions governing the use of MY EV SERVICE platform, service bookings, warranties, and spare parts procurement.",
+      },
+    ],
+  }),
   component: TermsPage,
 });
 

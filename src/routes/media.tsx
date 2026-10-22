@@ -14,6 +14,17 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const Route = createFileRoute("/media")({
+  head: () => ({
+    meta: [
+      { title: "Press & Media Kit | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Press & Media: Official MY EV SERVICE brand assets, executive interviews, press releases, and Pune EV Map industry insights.",
+      },
+      { property: "og:title", content: "Press & Media Kit | MY EV SERVICE Brand Assets" },
+      { property: "og:description", content: "Official press kit and media assets from MY EV SERVICE." },
+    ],
+  }),
   component: MediaPage,
 });
 

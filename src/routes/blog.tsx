@@ -26,6 +26,15 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/blog")({
+  head: () => ({
+    meta: [
+      { title: "EV Insights, Maintenance Guides & Industry News | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Explore expert EV maintenance guides, battery care diagnostics, and electric vehicle service knowledge from certified technicians at MY EV SERVICE.",
+      },
+    ],
+  }),
   component: BlogPage,
 });
 
@@ -819,6 +828,12 @@ function BlogPage() {
             
             {/* Category Filter Pills & Search Input */}
             <div className="space-y-4 blog-archive-header">
+              <div className="mb-2">
+                <span className="text-[10px] font-mono font-bold text-[#00D084] tracking-[0.2em] uppercase">KNOWLEDGE BASE & GUIDES</span>
+                <h1 className={`text-2xl sm:text-3xl font-extrabold mt-1 ${isLight ? "text-[#1a2320]" : "text-white"}`}>
+                  Electric Vehicle Insights & EV Service Knowledge
+                </h1>
+              </div>
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap items-center gap-2">
                   {CATEGORIES.map((cat) => (

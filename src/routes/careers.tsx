@@ -40,6 +40,15 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/careers")({
+  head: () => ({
+    meta: [
+      { title: "EV Technician Jobs & Careers in Pune | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Join India's leading multi-brand EV service network. High-growth EV technician jobs, service manager roles, and engineering careers in Pune & Maharashtra.",
+      },
+    ],
+  }),
   component: CareersPage,
 });
 

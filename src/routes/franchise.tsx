@@ -61,6 +61,20 @@ export const Route = createFileRoute("/franchise")({
       pincode: typeof search?.pincode === "string" ? search.pincode : undefined,
     };
   },
+  head: () => ({
+    meta: [
+      { title: "EV Service Franchise in India | MY EV SERVICE" },
+      {
+        name: "description",
+        content:
+          "Start a multi-brand EV service centre with MY EV SERVICE. FOCO model from ₹7.5L, Autobot OS, trained technicians and parts supply. Live in 90 days.",
+      },
+      { name: "keywords", content: "EV Service Franchise India, EV service centre franchise, start EV service business, EV repair franchise, electric vehicle franchise India" },
+      { property: "og:title", content: "Start Your EV Service Centre with MY EV SERVICE Franchise" },
+      { property: "og:description", content: "One PIN Code = One EV Business. Own a multi-brand EV service centre on the FOCO model. Live in 90 days." },
+      { property: "og:image", content: "/assets/images/ev-service-franchise-india.jpg" },
+    ],
+  }),
   component: FranchisePage,
 });
 
@@ -523,14 +537,14 @@ function FranchisePage() {
             {/* Left Column: Title & Text */}
             <div className="lg:col-span-7 space-y-6 text-left">
               <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-[1.10]">
-                Launch Your Own <br />
+                Start Your EV Service Centre with <br />
                 <span className="text-[#00D084] font-black">
-                  EV Service Franchise
+                  MY EV SERVICE Franchise
                 </span>
               </h1>
 
-              <p className="hero-desc text-sm sm:text-base text-white font-serif font-black leading-relaxed max-w-xl">
-                Launch your own EV service business powered by Autobot OS, India's first AI-powered EV service automation platform. Become part of the fastest-growing EV ecosystem and build a future-ready, high-profit business in 90 days.
+              <p className="hero-desc text-sm sm:text-base text-white/90 font-serif font-bold leading-relaxed max-w-xl">
+                One PIN Code = One EV Business. Own a multi-brand EV service centre on the FOCO model. You invest and own it; we run operations, technology, technicians and parts. Live in 90 days.
               </p>
 
               <div className="hero-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-2">

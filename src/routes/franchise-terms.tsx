@@ -24,6 +24,17 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/franchise-terms")({
+  head: () => ({
+    meta: [
+      { title: "Franchise Partner Terms & Conditions | MY EV SERVICE" },
+      {
+        name: "description",
+        content: "Franchise Partner Terms & Conditions for MY EV SERVICE FOCO franchise network, revenue sharing, territory protection, and operational SLA standards.",
+      },
+      { property: "og:title", content: "Franchise Partner Terms & Conditions | MY EV SERVICE" },
+      { property: "og:description", content: "Franchise Partner Terms & Conditions for MY EV SERVICE." },
+    ],
+  }),
   component: FranchiseTermsPage,
 });
 
