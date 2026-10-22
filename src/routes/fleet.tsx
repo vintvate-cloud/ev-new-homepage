@@ -24,6 +24,7 @@ import {
   Check,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
   Download,
   MessageSquare,
   Truck,
@@ -31,7 +32,9 @@ import {
   Bike,
   Activity,
   AlertCircle,
+  Send,
 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/fleet")({
@@ -54,9 +57,19 @@ export const Route = createFileRoute("/fleet")({
 
 export const FLEET_HERO_BG = "/ev-master-workshop-hero.png";
 
+export const FLEET_NEEDS_OPTIONS = [
+  "Scheduled AMC",
+  "Free Fleet Health Audit",
+  "Breakdown & Roadside",
+  "Battery Diagnostics",
+  "Depot Service Team",
+  "Parts at Contract Rates",
+];
+
 export function FleetSolutionsPage() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [formStep, setFormStep] = useState<"main" | "needs">("main");
   const [form, setForm] = useState({
     company: "",
     name: "",
@@ -175,10 +188,10 @@ export function FleetSolutionsPage() {
       return;
     }
     if (!form.consent) {
-      toast.error("Please agree to the privacy policy to proceed.");
+      toast.error("Please agree to the DPDP Act processing consent to proceed.");
       return;
     }
-    toast.success("Thank you! Our fleet operations team will contact you within one business day.");
+    toast.success("Thank you! A fleet specialist will reply within one working day.");
     setForm({
       company: "",
       name: "",
@@ -190,6 +203,17 @@ export function FleetSolutionsPage() {
       vehicleTypes: [],
       consent: false,
     });
+    setFormStep("main");
+  };
+
+  const scrollToForm = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    const el = document.getElementById("enquiry");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const FAQS = [
@@ -243,35 +267,323 @@ export function FleetSolutionsPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
 
+          {/* Hero Content Container (Text & Form) */}
           <div
             ref={heroTextRef}
-            className="max-w-4xl mx-auto text-center relative z-10 px-6 space-y-4 pointer-events-auto"
+            className="absolute inset-0 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center px-6 md:px-12 pt-4 sm:pt-6 lg:pt-0 z-10 pointer-events-auto transition-all overflow-y-auto lg:overflow-visible"
           >
-            <span className="hero-sub-reveal text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
-              • EV Fleet Maintenance &amp; AMC · Pune &amp; Maharashtra
-            </span>
-            <h1 className="hero-title-reveal text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08]">
-              EV Fleet Maintenance Built for <br className="hidden sm:block" />
-              <span className="text-[#00D084]">Uptime, Speed &amp; Scale</span>
-            </h1>
-            <p className="hero-sub-reveal text-sm sm:text-base md:text-lg text-[#c2d1c7] font-light max-w-2xl mx-auto leading-relaxed">
-              Multi-brand electric 2W, 3W and cargo fleet maintenance powered by Autobot OS. Guaranteed SLAs, depot mobile service teams, predictive battery audits, and one monthly GST invoice.
-            </p>
-            <div className="hero-btn-reveal pt-3 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="#enquiry"
-                className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
-              >
-                <CalendarCheck className="w-4 h-4 shrink-0" />
-                <span>BOOK FREE FLEET AUDIT</span>
-                <ArrowRight className="w-4 h-4 shrink-0" />
-              </a>
-              <a
-                href="#fleet-solutions"
-                className="px-7 py-4 rounded-full border border-white/20 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer"
-              >
-                <span>EXPLORE AMC PLANS</span>
-              </a>
+            {/* Left Column: Title & Text */}
+            <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-left">
+              <span className="hero-sub-reveal text-xs font-mono font-bold uppercase tracking-widest text-[#00D084] inline-block">
+                • EV Fleet Maintenance &amp; AMC · Pune &amp; Maharashtra
+              </span>
+              <h1 className="hero-title-reveal text-3xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight text-white leading-[1.08]">
+                EV Fleet Maintenance Built for <br className="hidden sm:block" />
+                <span className="text-[#00D084]">Uptime, Speed &amp; Scale</span>
+              </h1>
+              <p className="hero-sub-reveal text-xs sm:text-sm md:text-base text-[#c2d1c7] font-light max-w-xl leading-relaxed">
+                Multi-brand electric 2W, 3W and cargo fleet maintenance powered by Autobot OS. Guaranteed SLAs, depot mobile service teams, predictive battery audits, and one monthly GST invoice.
+              </p>
+              <div className="hero-btn-reveal pt-2 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
+                <button
+                  type="button"
+                  onClick={scrollToForm}
+                  className="whitespace-nowrap inline-flex items-center justify-center shrink-0 gap-2 px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
+                >
+                  <CalendarCheck className="w-4 h-4 shrink-0" />
+                  <span>BOOK FREE FLEET AUDIT</span>
+                  <ArrowRight className="w-4 h-4 shrink-0" />
+                </button>
+                <a
+                  href="#fleet-solutions"
+                  className="px-6 py-3.5 rounded-full border border-white/20 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>EXPLORE AMC PLANS</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: Premium Glass Form Card */}
+            <div
+              id="enquiry"
+              className="hero-form lg:col-span-5 bg-[#030604]/95 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 relative border border-white/20 shadow-2xl overflow-hidden text-left min-h-[480px] flex flex-col justify-between"
+            >
+              <AnimatePresence mode="wait">
+                {formStep === "main" ? (
+                  <motion.div
+                    key="step-main"
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.22, ease: "easeOut" }}
+                    className="relative z-10 w-full"
+                  >
+                    <div className="mb-3 text-left">
+                      <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-md">
+                        Get a Fleet Proposal
+                      </h3>
+                      <p className="text-xs text-white/70 font-medium mt-1">
+                        A fleet specialist replies within one working day.
+                      </p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-2.5 text-left">
+                      {/* Company Name */}
+                      <div>
+                        <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
+                          COMPANY NAME *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Zepto, Zomato, Porter, Delivery Co."
+                          value={form.company}
+                          onChange={(e) => setForm({ ...form, company: e.target.value })}
+                          className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                        />
+                      </div>
+
+                      {/* Your Name & Mobile */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div>
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
+                            YOUR NAME *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="Full name"
+                            value={form.name}
+                            onChange={(e) => setForm({ ...form, name: e.target.value })}
+                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
+                            MOBILE *
+                          </label>
+                          <input
+                            type="tel"
+                            required
+                            placeholder="+91 95823 90001"
+                            value={form.mobile}
+                            onChange={(e) => setForm({ ...form, mobile: e.target.value })}
+                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Work Email & City */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div>
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
+                            WORK EMAIL
+                          </label>
+                          <input
+                            type="email"
+                            placeholder="name@company.com"
+                            value={form.email}
+                            onChange={(e) => setForm({ ...form, email: e.target.value })}
+                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
+                            CITY
+                          </label>
+                          <select
+                            value={form.city}
+                            onChange={(e) => setForm({ ...form, city: e.target.value })}
+                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all border border-white/15 cursor-pointer"
+                          >
+                            <option value="Pune" className="bg-[#040906] text-white">Pune</option>
+                            <option value="PCMC" className="bg-[#040906] text-white">PCMC</option>
+                            <option value="Mumbai" className="bg-[#040906] text-white">Mumbai</option>
+                            <option value="Bengaluru" className="bg-[#040906] text-white">Bengaluru</option>
+                            <option value="Delhi NCR" className="bg-[#040906] text-white">Delhi NCR</option>
+                            <option value="Hyderabad" className="bg-[#040906] text-white">Hyderabad</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Fleet Size Pill Buttons */}
+                      <div>
+                        <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
+                          FLEET SIZE
+                        </label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {[
+                            { id: "10-25", label: "10-25" },
+                            { id: "26-100", label: "26-100" },
+                            { id: "100+", label: "100+" },
+                          ].map((pill) => {
+                            const isSelected = form.fleetSize === pill.id;
+                            return (
+                              <button
+                                key={pill.id}
+                                type="button"
+                                onClick={() => setForm({ ...form, fleetSize: pill.id })}
+                                className={`py-2 px-3 rounded-full text-xs font-bold transition-all text-center cursor-pointer border ${
+                                  isSelected
+                                    ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_15px_rgba(0,208,132,0.35)]"
+                                    : "bg-[#0d1410] text-white/80 border-white/15 hover:border-white/35 hover:bg-[#131d17]"
+                                }`}
+                              >
+                                {pill.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* WHAT DO YOU NEED? - Interactive Flow Trigger */}
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block">
+                            WHAT DO YOU NEED?
+                          </label>
+                          {form.needs.length > 0 && (
+                            <span className="text-[10px] text-[#00D084] font-bold">
+                              {form.needs.length} selected
+                            </span>
+                          )}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => setFormStep("needs")}
+                          className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 border border-white/15 hover:border-[#00D084]/60 rounded-xl px-3.5 py-2.5 text-xs text-left transition-all cursor-pointer flex items-center justify-between group"
+                        >
+                          <div className="flex items-center gap-1.5 overflow-hidden pr-2">
+                            {form.needs.length === 0 ? (
+                              <span className="text-white/40">
+                                Click to select services (AMC, Battery, etc.)...
+                              </span>
+                            ) : (
+                              <div className="flex flex-wrap gap-1 max-h-12 overflow-hidden">
+                                {form.needs.map((item) => (
+                                  <span
+                                    key={item}
+                                    className="bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] text-[10px] px-2 py-0.5 rounded-full font-medium shrink-0"
+                                  >
+                                    {item}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1 text-[#00D084] font-bold text-xs shrink-0 group-hover:translate-x-0.5 transition-transform">
+                            <span>{form.needs.length === 0 ? "Select" : "Edit"}</span>
+                            <ChevronRight className="w-4 h-4" />
+                          </div>
+                        </button>
+                      </div>
+
+                      {/* DPDP Act Consent Checkbox */}
+                      <div className="pt-0.5">
+                        <label className="flex items-start gap-2 cursor-pointer text-[10px] sm:text-[10.5px] text-white/75 select-none leading-tight">
+                          <input
+                            type="checkbox"
+                            checked={form.consent}
+                            onChange={(e) => setForm({ ...form, consent: e.target.checked })}
+                            className="mt-0.5 accent-[#00D084] rounded"
+                          />
+                          <span>
+                            I agree to the processing of contact information under the DPDP Act for receiving fleet service estimates.
+                          </span>
+                        </label>
+                      </div>
+
+                      {/* Submit Button */}
+                      <button
+                        type="submit"
+                        className="w-full py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-1 shadow-[0_0_25px_rgba(0,208,132,0.4)]"
+                      >
+                        <span>REQUEST FLEET PROPOSAL</span>
+                      </button>
+                    </form>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="step-needs"
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 16 }}
+                    transition={{ duration: 0.22, ease: "easeOut" }}
+                    className="relative z-10 flex flex-col justify-between w-full h-full min-h-[440px]"
+                  >
+                    <div>
+                      {/* Back Navigation Bar */}
+                      <div className="flex items-center justify-between pb-2.5 border-b border-white/10 mb-3">
+                        <button
+                          type="button"
+                          onClick={() => setFormStep("main")}
+                          className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white transition-colors cursor-pointer py-1 px-2 -ml-2 rounded-lg hover:bg-white/5"
+                        >
+                          <ChevronLeft className="w-4 h-4 text-[#00D084]" />
+                          <span>Back to Form</span>
+                        </button>
+                        <span className="text-[10.5px] font-mono text-[#00D084] uppercase tracking-wider font-bold">
+                          {form.needs.length} Selected
+                        </span>
+                      </div>
+
+                      <div className="text-left mb-3">
+                        <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                          What do you need?
+                        </h3>
+                        <p className="text-xs text-white/70 font-medium mt-0.5">
+                          Select the services applicable to your fleet operations.
+                        </p>
+                      </div>
+
+                      {/* 6 options from Image 1 in 2-column layout */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                        {FLEET_NEEDS_OPTIONS.map((item) => {
+                          const isSelected = form.needs.includes(item);
+                          return (
+                            <button
+                              key={item}
+                              type="button"
+                              onClick={() => handleNeedToggle(item)}
+                              className={`flex items-center gap-2.5 p-3 rounded-2xl border text-left transition-all cursor-pointer ${
+                                isSelected
+                                  ? "bg-[#00D084]/15 border-[#00D084] text-white shadow-[0_0_15px_rgba(0,208,132,0.2)]"
+                                  : "bg-[#0a0f0d]/90 border-white/15 text-white/80 hover:border-white/35 hover:bg-[#121a15]"
+                              }`}
+                            >
+                              <div
+                                className={`w-4 h-4 rounded-md flex items-center justify-center shrink-0 border transition-all ${
+                                  isSelected
+                                    ? "bg-[#00D084] border-[#00D084] text-black"
+                                    : "border-white/30 bg-transparent"
+                                }`}
+                              >
+                                {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                              </div>
+                              <span className="text-xs font-semibold leading-tight">
+                                {item}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Next / Return Button */}
+                    <div className="pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setFormStep("main")}
+                        className="w-full py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(0,208,132,0.4)]"
+                      >
+                        <span>Next • Back to Proposal</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
