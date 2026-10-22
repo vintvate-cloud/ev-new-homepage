@@ -196,38 +196,56 @@ export function Nav({
       >
         {/* ── Top Announcement Strip (PDF Page 7 & Page 9 S1 · HOME-001) ── */}
         <div
-          className={`w-full bg-[#0D5C2E] text-white border-b border-[#00D084]/25 transition-all duration-300 overflow-hidden ${
+          className={`top-announcement-strip w-full bg-[#0D5C2E] !text-white border-b border-[#00D084]/25 transition-all duration-300 overflow-hidden ${
             scrolled ? "max-h-0 opacity-0 py-0" : "max-h-12 opacity-100 py-1.5 px-3 sm:px-6"
           }`}
+          style={{ backgroundColor: "#0D5C2E", color: "#ffffff" }}
         >
-          <div className="max-w-[1400px] mx-auto flex items-center justify-between text-[11px] sm:text-xs">
+          <div className="max-w-[1400px] mx-auto flex items-center justify-between text-[11px] sm:text-xs !text-white">
             <div className="flex items-center gap-2 sm:gap-3 truncate">
-              <span className="px-2 py-0.5 rounded bg-[#F5A623] text-black font-mono font-black text-[9px] sm:text-[10px] uppercase tracking-wider shrink-0 shadow-sm">
+              <span
+                className="badge-pune px-2 py-0.5 rounded bg-[#F5A623] !text-black font-mono font-black text-[9px] sm:text-[10px] uppercase tracking-wider shrink-0 shadow-sm"
+                style={{ backgroundColor: "#F5A623", color: "#000000" }}
+              >
                 NOW IN PUNE
               </span>
-              <span className="text-white/95 font-medium truncate hidden sm:inline">
+              <span
+                className="keep-white !text-white/95 font-medium truncate hidden sm:inline"
+                style={{ color: "rgba(255, 255, 255, 0.95)" }}
+              >
                 Multi-brand EV service for scooters, bikes and e-autos
               </span>
-              <span className="text-white/95 font-medium truncate sm:hidden">
+              <span
+                className="keep-white !text-white/95 font-medium truncate sm:hidden"
+                style={{ color: "rgba(255, 255, 255, 0.95)" }}
+              >
                 Multi-brand EV service
               </span>
             </div>
 
-            <div className="flex items-center gap-3 sm:gap-4 shrink-0 font-medium text-[10.5px] sm:text-xs">
+            <div className="flex items-center gap-3 sm:gap-4 shrink-0 font-medium text-[10.5px] sm:text-xs !text-white">
               <a
                 href="tel:+919582390001"
-                className="inline-flex items-center gap-1.5 text-white hover:text-[#00D084] transition-colors"
+                className="keep-white inline-flex items-center gap-1.5 !text-white hover:!text-[#00D084] transition-colors"
+                style={{ color: "#ffffff" }}
               >
                 <Phone className="w-3 h-3 text-[#00D084] shrink-0" />
-                <span className="hidden md:inline">Roadside help:</span>
-                <span className="font-mono font-bold">+91 95823 90001</span>
+                <span className="hidden md:inline keep-white !text-white/95" style={{ color: "rgba(255, 255, 255, 0.95)" }}>
+                  Roadside help:
+                </span>
+                <span className="font-mono font-bold keep-white !text-white" style={{ color: "#ffffff" }}>
+                  +91 95823 90001
+                </span>
               </a>
-              <span className="text-white/30 hidden xs:inline">•</span>
+              <span className="keep-white text-white/30 hidden xs:inline" style={{ color: "rgba(255, 255, 255, 0.3)" }}>
+                •
+              </span>
               <Link
                 to="/franchise"
-                className="text-[#F5A623] hover:text-white font-semibold transition-colors inline-flex items-center gap-1"
+                className="partner-link !text-[#F5A623] hover:!text-white font-semibold transition-colors inline-flex items-center gap-1"
+                style={{ color: "#F5A623" }}
               >
-                <span>Become a franchise partner</span>
+                <span className="partner-link-text">Become a franchise partner</span>
                 <span className="font-bold">→</span>
               </Link>
             </div>

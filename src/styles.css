@@ -2400,4 +2400,69 @@ html.theme-light #ev-services [class*="via-black"] {
 .no-scrollbar {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
+}
+
+/* ==========================================================================
+   Top Announcement Strip Theme Lock (Keep identical in dark & light themes)
+   ========================================================================== */
+.top-announcement-strip,
+html.theme-light .top-announcement-strip {
+  background-color: #0D5C2E !important;
+  color: #ffffff !important;
+  border-bottom-color: rgba(0, 208, 132, 0.25) !important;
+}
+
+.top-announcement-strip span,
+html.theme-light .top-announcement-strip span,
+.top-announcement-strip div,
+html.theme-light .top-announcement-strip div {
+  color: #ffffff !important;
+}
+
+.top-announcement-strip .text-white,
+html.theme-light .top-announcement-strip .text-white,
+.top-announcement-strip [class*="text-white/95"],
+html.theme-light .top-announcement-strip [class*="text-white/95"],
+.top-announcement-strip .keep-white,
+html.theme-light .top-announcement-strip .keep-white {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.top-announcement-strip [class*="text-white/30"],
+html.theme-light .top-announcement-strip [class*="text-white/30"] {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.top-announcement-strip a,
+html.theme-light .top-announcement-strip a {
+  color: #ffffff !important;
+}
+
+.top-announcement-strip a:hover,
+html.theme-light .top-announcement-strip a:hover {
+  color: #00D084 !important;
+}
+
+.top-announcement-strip .partner-link,
+html.theme-light .top-announcement-strip .partner-link,
+.top-announcement-strip .partner-link span,
+html.theme-light .top-announcement-strip .partner-link span,
+.top-announcement-strip [class*="text-[#F5A623]"],
+html.theme-light .top-announcement-strip [class*="text-[#F5A623]"] {
+  color: #F5A623 !important;
+}
+
+.top-announcement-strip .partner-link:hover,
+html.theme-light .top-announcement-strip .partner-link:hover,
+.top-announcement-strip .partner-link:hover span,
+html.theme-light .top-announcement-strip .partner-link:hover span {
+  color: #ffffff !important;
+}
+
+.top-announcement-strip .badge-pune,
+html.theme-light .top-announcement-strip .badge-pune,
+.top-announcement-strip [class*="bg-[#F5A623]"],
+html.theme-light .top-announcement-strip [class*="bg-[#F5A623]"] {
+  background-color: #F5A623 !important;
+  color: #000000 !important;
 }
