@@ -2690,4 +2690,74 @@ html.theme-light .oem-desk-card h4 {
 html.theme-light .fleet-helpline-card p,
 html.theme-light .oem-desk-card p {
   color: #334155 !important;
-}
+}
+
+
+/* 7. Franchise Opportunity Banner (Deep Emerald & Night Lock) */
+html.theme-light .franchise-cta-banner,
+html.theme-light [class*="bg-[#071915]"],
+html.theme-light div.keep-white {
+  background-color: #071915 !important;
+}
+
+html.theme-light .franchise-cta-banner h2,
+html.theme-light [class*="bg-[#071915]"] h2,
+html.theme-light div.keep-white h2,
+html.theme-light .franchise-cta-banner [class*="text-white"],
+html.theme-light [class*="bg-[#071915]"] [class*="text-white"],
+html.theme-light div.keep-white [class*="text-white"] {
+  color: #ffffff !important;
+}
+
+html.theme-light .franchise-cta-banner p,
+html.theme-light [class*="bg-[#071915]"] p,
+html.theme-light div.keep-white p {
+  color: #c2dfd6 !important;
+}
+
+html.theme-light .franchise-cta-banner span:not([class*="text-[#00D084]"]),
+html.theme-light [class*="bg-[#071915]"] span:not([class*="text-[#00D084]"]),
+html.theme-light div.keep-white span:not([class*="text-[#00D084]"]) {
+  color: #ffffff !important;
+}
+
+html.theme-light .franchise-cta-banner span[class*="text-[#00D084]"],
+html.theme-light [class*="bg-[#071915]"] span[class*="text-[#00D084]"],
+html.theme-light div.keep-white span[class*="text-[#00D084]"] {
+  color: #00D084 !important;
+}
+
+
+/* 7. Franchise Opportunity Banner (Deep Emerald & Night Lock) */
+html.theme-light .franchise-cta-banner,
+html.theme-light [class*="bg-[#071915]"],
+html.theme-light div.keep-white {
+  background-color: #071915 !important;
+}
+
+html.theme-light .franchise-cta-banner h2,
+html.theme-light [class*="bg-[#071915]"] h2,
+html.theme-light div.keep-white h2,
+html.theme-light .franchise-cta-banner [class*="text-white"],
+html.theme-light [class*="bg-[#071915]"] [class*="text-white"],
+html.theme-light div.keep-white [class*="text-white"] {
+  color: #ffffff !important;
+}
+
+html.theme-light .franchise-cta-banner p,
+html.theme-light [class*="bg-[#071915]"] p,
+html.theme-light div.keep-white p {
+  color: #c2dfd6 !important;
+}
+
+html.theme-light .franchise-cta-banner span:not([class*="text-[#00D084]"]),
+html.theme-light [class*="bg-[#071915]"] span:not([class*="text-[#00D084]"]),
+html.theme-light div.keep-white span:not([class*="text-[#00D084]"]) {
+  color: #ffffff !important;
+}
+
+html.theme-light .franchise-cta-banner span[class*="text-[#00D084]"],
+html.theme-light [class*="bg-[#071915]"] span[class*="text-[#00D084]"],
+html.theme-light div.keep-white span[class*="text-[#00D084]"] {
+  color: #00D084 !important;
+}

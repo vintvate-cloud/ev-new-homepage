@@ -1689,25 +1689,25 @@ function FindServicesPage() {
               variants={scaleIn}
               className="py-12 px-6 max-w-7xl mx-auto font-sans"
             >
-              <div className="relative rounded-[32px] overflow-hidden border border-[#00D084]/40 bg-[#071915] min-h-[300px] flex flex-col lg:flex-row items-center justify-between p-8 sm:p-10 lg:p-12 shadow-2xl keep-white">
+              <div className="franchise-cta-banner dark-card-locked keep-white relative rounded-[32px] overflow-hidden border border-[#00D084]/40 bg-[#071915] min-h-[300px] flex flex-col lg:flex-row items-center justify-between p-8 sm:p-10 lg:p-12 shadow-2xl">
                 <div className="absolute inset-y-0 right-0 w-full lg:w-[55%] bg-cover bg-right bg-no-repeat pointer-events-none opacity-90"
                   style={{ backgroundImage: "url('/franchise-bg.png')" }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-[#071915] via-[#071915]/80 to-transparent" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#071915]/60 via-transparent to-transparent lg:hidden" />
                 </div>
                 <div className="relative z-10 max-w-2xl space-y-4">
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">Start Your Own EV Service Center</h2>
-                  <p className="text-sm sm:text-base text-[#80a196] font-normal leading-relaxed">Join India's fastest growing EV service network.</p>
-                  <div className="flex flex-wrap items-center gap-5 text-xs text-[#a0c5ba] font-medium pt-2 pb-2">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white !text-white tracking-tight">Start Your Own EV Service Center</h2>
+                  <p className="text-sm sm:text-base text-[#a0c5ba] !text-[#c2dfd6] font-normal leading-relaxed">Join India's fastest growing EV service network.</p>
+                  <div className="flex flex-wrap items-center gap-5 text-xs text-[#a0c5ba] !text-[#c2dfd6] font-medium pt-2 pb-2">
                     {[["💵", "Low Investment"], ["📈", "High Returns"], ["🎓", "Complete Training & Support"]].map(([emoji, label], i) => (
                       <div key={i} className="flex items-center gap-1.5">
-                        <span className="text-[#00D084]">{emoji}</span><span>{label}</span>
+                        <span className="text-[#00D084]">{emoji}</span><span className="text-white !text-white">{label}</span>
                       </div>
                     ))}
                   </div>
                   <motion.div whileHover={{ x: 3 }}>
                     <Link to="/franchise"
-                      className="mt-4 px-7 py-3.5 rounded-full bg-[#05110d] text-[#00D084] text-sm font-bold border border-[#00D084]/20 hover:bg-[#00D084] hover:text-[#020403] transition-all flex items-center gap-2 w-fit cursor-pointer group shadow-lg">
+                      className="mt-4 px-7 py-3.5 rounded-full bg-[#00D084] text-[#020403] text-sm font-black border border-[#00D084]/40 hover:bg-[#00e08f] transition-all flex items-center gap-2 w-fit cursor-pointer group shadow-lg">
                       <span>Become a Franchise Partner</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Link>
