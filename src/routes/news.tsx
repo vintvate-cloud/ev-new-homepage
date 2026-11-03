@@ -364,6 +364,11 @@ function EVNewsPage() {
             className="w-full h-full object-cover object-center opacity-100 pointer-events-none transition-all duration-700 animate-in fade-in duration-500"
           />
 
+          {/* Subtle blur & darkening layer for optimal text readability */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
+
           {/* Hero Content Container */}
           <div
             ref={heroTextRef}

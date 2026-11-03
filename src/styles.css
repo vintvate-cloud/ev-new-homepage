@@ -618,6 +618,23 @@ html.theme-light [class*="bg-[#131815]"]:not(.fixed):not([class*="inset-0"]):not
 html.theme-light [class*="bg-[#101015]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#141b17]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#1a1408]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07110B]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07110b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07100b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0b1610]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0f1712]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060a08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050B08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050b08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030805]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#05110d]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#060c08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#070d0a]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0d1310]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0f1411]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#101412]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#111613]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#121914]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
 html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
 html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
@@ -698,6 +715,16 @@ html.theme-light [class*="bg-[#0e120f]"]:not(.fixed):not([class*="inset-0"]):not
 html.theme-light [class*="bg-[#131815]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#101015]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#0a0a0f]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07110B]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07110b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#07100b]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0b1610]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#0f1712]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050B08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#050b08]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#030805]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#111613]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
+html.theme-light [class*="bg-[#121914]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-black/"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light .bg-card {
   background-color: #ffffff !important;
@@ -2465,4 +2492,202 @@ html.theme-light .top-announcement-strip .badge-pune,
 html.theme-light .top-announcement-strip [class*="bg-[#F5A623]"] {
   background-color: #F5A623 !important;
   color: #000000 !important;
+}
+
+/* ==========================================================================
+   Ecosystem & AI Tool Light Theme High-Contrast Adaptations
+   ========================================================================== */
+
+/* 1. Ecosystem Hub-and-Spoke Diagram */
+html.theme-light .ecosystem-hub-container,
+html.theme-light [class*="bg-[#07110B]"]:not(.page-hero):not(.page-hero *) {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 208, 132, 0.25) !important;
+  color: #09090b !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.theme-light .ecosystem-hub-container span[class*="text-[#00D084]"] {
+  color: #059669 !important;
+  font-weight: 800 !important;
+}
+
+html.theme-light .ecosystem-hub-col-title {
+  color: #059669 !important;
+  font-weight: 700 !important;
+}
+
+/* Ecosystem Child Nodes ("EV Owners", "Fleet Operators", "Certified Technicians", etc.) */
+html.theme-light .ecosystem-hub-node,
+html.theme-light [class*="bg-[#0b1610]"]:not(.page-hero *) {
+  background-color: #f4f8f5 !important;
+  border-color: rgba(0, 208, 132, 0.22) !important;
+  color: #09090b !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+}
+
+html.theme-light .ecosystem-hub-node .text-white,
+html.theme-light [class*="bg-[#0b1610]"] .text-white {
+  color: #09090b !important;
+  font-weight: 700 !important;
+}
+
+html.theme-light .ecosystem-hub-node [class*="text-white/60"],
+html.theme-light [class*="bg-[#0b1610]"] [class*="text-white/60"] {
+  color: #475569 !important;
+  font-weight: 500 !important;
+}
+
+/* Autobot OS Center Card in Hub-and-Spoke */
+html.theme-light .ecosystem-center-card,
+html.theme-light [class*="from-[#0D5C2E]/40"][class*="to-[#07110B]"] {
+  background: linear-gradient(180deg, #ecfdf5 0%, #f0fdf4 100%) !important;
+  border-color: #00D084 !important;
+  box-shadow: 0 10px 30px rgba(0, 208, 132, 0.18) !important;
+}
+
+html.theme-light .ecosystem-center-card h3,
+html.theme-light [class*="from-[#0D5C2E]/40"][class*="to-[#07110B]"] h3 {
+  color: #09090b !important;
+}
+
+html.theme-light .ecosystem-center-card span[class*="text-[#F5A623]"],
+html.theme-light [class*="from-[#0D5C2E]/40"][class*="to-[#07110B]"] span[class*="text-[#F5A623]"] {
+  color: #d97706 !important;
+  font-weight: 700 !important;
+}
+
+html.theme-light .ecosystem-center-card span[class*="bg-white/10"],
+html.theme-light [class*="from-[#0D5C2E]/40"][class*="to-[#07110B]"] span[class*="bg-white/10"] {
+  background-color: #ffffff !important;
+  color: #065f46 !important;
+  border: 1px solid rgba(0, 208, 132, 0.35) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 2. The Market Gap Section */
+html.theme-light .ecosystem-market-gap {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.theme-light .ecosystem-market-gap h3 {
+  color: #09090b !important;
+}
+
+html.theme-light .ecosystem-market-gap p {
+  color: #334155 !important;
+}
+
+html.theme-light .ecosystem-market-gap [class*="bg-white/5"] {
+  background-color: #f4f8f5 !important;
+  border-color: rgba(0, 208, 132, 0.25) !important;
+}
+
+html.theme-light .ecosystem-market-gap [class*="text-[#00D084]"] {
+  color: #059669 !important;
+}
+
+html.theme-light .ecosystem-market-gap [class*="text-[#F5A623]"] {
+  color: #d97706 !important;
+}
+
+html.theme-light .ecosystem-market-gap span[class*="text-white/50"] {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+/* 3. AI Tool Interactive Diagnostic Simulator (#try) */
+html.theme-light .ai-diagnostic-simulator,
+html.theme-light #try [class*="bg-[#07110B]"] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 208, 132, 0.3) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.theme-light .ai-diagnostic-simulator span[class*="text-white"],
+html.theme-light #try span[class*="text-white"] {
+  color: #09090b !important;
+  font-weight: 800 !important;
+}
+
+html.theme-light .ai-diagnostic-simulator span[class*="text-white/40"],
+html.theme-light #try span[class*="text-white/40"] {
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+html.theme-light .ai-diagnostic-simulator label,
+html.theme-light #try label {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html.theme-light .ai-diagnostic-simulator select,
+html.theme-light .ai-diagnostic-simulator input,
+html.theme-light #try select,
+html.theme-light #try input {
+  background-color: #f8faf9 !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #09090b !important;
+}
+
+/* 4. AI Tool S6 Platform Integration Section (Screenshot 2 fix) */
+html.theme-light .ai-platform-integration,
+html.theme-light section[class*="bg-[#07110B]"] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.theme-light .ai-platform-integration h2,
+html.theme-light section[class*="bg-[#07110B]"] h2 {
+  color: #09090b !important;
+  font-weight: 800 !important;
+}
+
+html.theme-light .ai-platform-integration p,
+html.theme-light section[class*="bg-[#07110B]"] p {
+  color: #334155 !important;
+}
+
+html.theme-light .ai-platform-integration [class*="bg-white/5"],
+html.theme-light section[class*="bg-[#07110B]"] [class*="bg-white/5"] {
+  background-color: #f8faf9 !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #475569 !important;
+}
+
+/* 5. Deep Green CTA Banners (White Text Lock) */
+html.theme-light section[class*="bg-[#0D5C2E]"],
+html.theme-light section[class*="bg-[#0D5C2E]"] h2,
+html.theme-light section[class*="bg-[#0D5C2E]"] p,
+html.theme-light section[class*="bg-[#0D5C2E]"] button,
+html.theme-light section[class*="bg-[#0D5C2E]"] [class*="text-white"],
+html.theme-light section[class*="bg-[#0D5C2E]"] [class*="text-white/"] {
+  color: #ffffff !important;
+}
+
+html.theme-light section[class*="bg-[#0D5C2E]"] a[class*="text-[#020403]"],
+html.theme-light section[class*="bg-[#0D5C2E]"] a.bg-white {
+  background-color: #ffffff !important;
+  color: #020403 !important;
+}
+
+/* 6. Fleet & OEM Helpline / Desk Cards */
+html.theme-light .fleet-helpline-card,
+html.theme-light .oem-desk-card {
+  background: #f4f8f5 !important;
+  border-color: rgba(0, 208, 132, 0.35) !important;
+}
+
+html.theme-light .fleet-helpline-card h4,
+html.theme-light .oem-desk-card h4 {
+  color: #09090b !important;
+}
+
+html.theme-light .fleet-helpline-card p,
+html.theme-light .oem-desk-card p {
+  color: #334155 !important;
 }

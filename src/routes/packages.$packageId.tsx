@@ -101,6 +101,10 @@ function PackageDetails() {
             alt={pkg.title} 
             className="w-full h-[120%] object-cover opacity-100"
           />
+          {/* Subtle blur & darkening layer for optimal text readability */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
         </div>
 
         <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 pb-20">

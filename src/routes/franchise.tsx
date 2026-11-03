@@ -528,6 +528,10 @@ function FranchisePage() {
             alt="EV Master Service Workshop Hero"
             className="hero-bg-img w-full h-full object-cover object-center opacity-100 pointer-events-none"
           />
+          {/* Subtle blur & darkening layer for optimal text readability */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
 
           {/* Hero Content Container (Text & Form - text slowly fades out on scroll) */}
           <div

@@ -552,7 +552,10 @@ export function OEMSolutionsPage() {
               backgroundImage: `url('${OEM_HERO_BG}')`,
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
+          {/* Subtle blur & darkening layer for optimal text readability */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
 
           {/* Hero Content Container (Text & Form) */}
           <div

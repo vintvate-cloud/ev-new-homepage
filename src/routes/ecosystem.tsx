@@ -149,7 +149,10 @@ export function EcosystemPage() {
               backgroundImage: `url('${ECOSYSTEM_HERO_BG}')`,
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
+          {/* Subtle blur & darkening layer for optimal text readability */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/60 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.2)_70%,transparent_100%)] pointer-events-none" />
 
           <div
             ref={heroTextRef}
@@ -202,7 +205,7 @@ export function EcosystemPage() {
 
             {/* S1: Hub-and-Spoke Interactive Diagram (ECO-003) */}
             <section className="pt-6 pb-12 max-w-5xl mx-auto px-6">
-            <div className="p-8 sm:p-12 rounded-[32px] bg-[#07110B] border border-white/15 shadow-2xl relative overflow-hidden">
+            <div className="ecosystem-hub-container p-8 sm:p-12 rounded-[32px] bg-[#07110B] border border-white/15 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,208,132,0.1),transparent_70%)] pointer-events-none" />
               
               <div className="text-[10px] font-mono text-[#00D084] uppercase tracking-widest mb-6 font-bold">
@@ -212,13 +215,13 @@ export function EcosystemPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
                 {/* Left: Who We Serve */}
                 <div className="space-y-3 text-left">
-                  <div className="text-xs font-mono text-white/40 uppercase tracking-wider mb-2">Who We Serve</div>
+                  <div className="ecosystem-hub-col-title text-xs font-mono text-white/50 uppercase tracking-wider mb-2 font-bold">Who We Serve</div>
                   {[
                     { title: "EV Owners", desc: "Book, track & get battery reports on phone" },
                     { title: "Fleet Operators", desc: "Uptime telemetry, scheduled AMC, single invoice" },
                     { title: "EV Brands (OEMs)", desc: "Warranty jobs, PDI & field failure API data" },
                   ].map((node) => (
-                    <div key={node.title} className="p-4 rounded-2xl bg-[#0b1610] border border-white/10">
+                    <div key={node.title} className="ecosystem-hub-node p-4 rounded-2xl bg-[#0b1610] border border-white/10">
                       <div className="text-sm font-bold text-white mb-0.5">{node.title}</div>
                       <div className="text-[11px] text-white/60 leading-tight">{node.desc}</div>
                     </div>
@@ -226,7 +229,7 @@ export function EcosystemPage() {
                 </div>
 
                 {/* Center: Autobot OS Core */}
-                <div className="p-6 rounded-3xl bg-gradient-to-b from-[#0D5C2E]/40 to-[#07110B] border-2 border-[#00D084] shadow-[0_0_40px_rgba(0,208,132,0.2)] text-center relative">
+                <div className="ecosystem-center-card p-6 rounded-3xl bg-gradient-to-b from-[#0D5C2E]/40 to-[#07110B] border-2 border-[#00D084] shadow-[0_0_40px_rgba(0,208,132,0.2)] text-center relative">
                   <div className="w-12 h-12 rounded-2xl bg-[#00D084] text-black mx-auto mb-3 flex items-center justify-center font-black">
                     <Cpu className="w-6 h-6" />
                   </div>
@@ -243,13 +246,13 @@ export function EcosystemPage() {
 
                 {/* Right: Who Delivers */}
                 <div className="space-y-3 text-right md:text-left">
-                  <div className="text-xs font-mono text-white/40 uppercase tracking-wider mb-2">Who Delivers</div>
+                  <div className="ecosystem-hub-col-title text-xs font-mono text-white/50 uppercase tracking-wider mb-2 font-bold">Who Delivers</div>
                   {[
                     { title: "Certified Technicians", desc: "HV safety certified via Autobot Academy" },
                     { title: "Centres & Hubs", desc: "Garage, Centre & Hub formats with set tooling" },
                     { title: "EV Spare Hub", desc: "Centralized inventory tracked to every bay" },
                   ].map((node) => (
-                    <div key={node.title} className="p-4 rounded-2xl bg-[#0b1610] border border-white/10">
+                    <div key={node.title} className="ecosystem-hub-node p-4 rounded-2xl bg-[#0b1610] border border-white/10">
                       <div className="text-sm font-bold text-white mb-0.5">{node.title}</div>
                       <div className="text-[11px] text-white/60 leading-tight">{node.desc}</div>
                     </div>
@@ -263,7 +266,7 @@ export function EcosystemPage() {
       <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2 font-bold">
               Our Blueprint
             </div>
             <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-6">
@@ -281,7 +284,7 @@ export function EcosystemPage() {
             </div>
           </div>
 
-          <div className="p-8 rounded-3xl bg-[#07110B] border border-white/10 space-y-6">
+          <div className="ecosystem-market-gap p-8 rounded-3xl bg-[#07110B] border border-white/10 space-y-6">
             <span className="text-[11px] font-mono text-[#F5A623] uppercase font-bold tracking-widest block">The Market Gap</span>
             <h3 className="text-2xl font-bold text-white leading-tight">
               Rapid EV Adoption but Limited Service Infrastructure

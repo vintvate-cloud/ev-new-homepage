@@ -166,7 +166,10 @@ export function RoadsideAssistancePage() {
           alt="EV Roadside Assistance Pune"
           className="w-full h-full object-cover object-center scale-105 opacity-90 transition-all duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020403]/85 via-[#020403]/65 to-[#030504]" />
+        {/* Subtle blur & darkening layer for optimal text readability */}
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.2)_70%,transparent_100%)] pointer-events-none" />
 
         <div
           ref={heroTextRef}

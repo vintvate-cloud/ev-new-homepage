@@ -402,8 +402,10 @@ function AwardsPage() {
             className="w-full h-full object-cover object-center opacity-70 pointer-events-none"
           />
 
-          {/* Glowing Radial Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-black/40 to-black/60 pointer-events-none" />
+          {/* Subtle blur & darkening layer for optimal text readability */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/60 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.2)_70%,transparent_100%)] pointer-events-none" />
 
           {/* Hero Content Container (Text slowly fades out & scales as cards rise over it) */}
           <div

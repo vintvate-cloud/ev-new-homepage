@@ -208,7 +208,10 @@ export function AIToolPage() {
               backgroundImage: `url('${AI_HERO_BG}')`,
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
+          {/* Subtle blur & darkening layer for optimal text readability */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/60 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.2)_70%,transparent_100%)] pointer-events-none" />
 
           <div
             ref={heroTextRef}
@@ -261,7 +264,7 @@ export function AIToolPage() {
 
             {/* S1.5: Interactive Diagnostic Simulator Widget (#try) */}
             <section id="try" className="py-8 px-6 max-w-6xl mx-auto">
-        <div className="rounded-[32px] bg-[#07110B] border-2 border-white/15 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+        <div className="ai-diagnostic-simulator rounded-[32px] bg-[#07110B] border-2 border-white/15 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#00D084]/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
@@ -428,7 +431,7 @@ export function AIToolPage() {
       </section>
 
       {/* S6: Platform Integration & Safety Disclaimer */}
-      <section className="py-16 px-6 bg-[#07110B] border-t border-white/10 text-center">
+      <section className="ai-platform-integration py-16 px-6 bg-[#07110B] border-t border-white/10 text-center">
         <div className="max-w-3xl mx-auto space-y-4">
           <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-widest font-bold">
             Autobot OS Integration
