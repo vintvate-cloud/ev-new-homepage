@@ -170,7 +170,7 @@ export function EcosystemPage() {
             </p>
             <div className="hero-btn-reveal pt-3 flex flex-wrap items-center justify-center gap-4">
               <Link
-                to="/become-our-partner"
+                to="/franchise"
                 className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
               >
                 <span>JOIN THE ECOSYSTEM</span>
@@ -380,13 +380,13 @@ export function EcosystemPage() {
               title: "EV Service Centres & Garages",
               desc: "Convert or upgrade your existing two-wheeler workshop into a branded, high-tech EV hub.",
               action: "Convert Centre",
-              href: "/become-our-partner",
+              href: "/franchise",
             },
             {
               title: "EV Charging Infrastructure Providers",
               desc: "Co-locate chargers at our hubs, or add certified vehicle service to your existing charge-points.",
               action: "Co-locate Charging",
-              href: "/become-our-partner",
+              href: "/franchise",
             },
             {
               title: "Fleet Operators & Logistics",
@@ -398,7 +398,7 @@ export function EcosystemPage() {
               title: "EV Spare Parts Suppliers",
               desc: "Supply into EV Spare Hub and reach hundreds of service bays across India.",
               action: "Supply Parts",
-              href: "/become-our-partner",
+              href: "/spare-parts",
             },
           ].map((item) => (
             <div key={item.title} className="p-6 rounded-2xl bg-[#080d0a] border border-white/10 flex flex-col justify-between">
@@ -429,7 +429,7 @@ export function EcosystemPage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link
-              to="/become-our-partner"
+              to="/franchise"
               className="px-8 py-4 rounded-full bg-white text-[#020403] font-black text-xs uppercase tracking-widest hover:bg-white/90 shadow-2xl transition-all"
             >
               Become an Ecosystem Partner

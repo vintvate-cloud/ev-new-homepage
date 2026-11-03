@@ -247,9 +247,6 @@ export function Footer() {
                 <Link to="/oem" className="hover:text-[#00D084] transition-colors">OEM Solutions</Link>
               </li>
               <li>
-                <Link to="/become-our-partner" className="hover:text-[#00D084] transition-colors">Become Our Partner</Link>
-              </li>
-              <li>
                 <Link to="/careers" className="hover:text-[#00D084] transition-colors">Careers</Link>
               </li>
               <li>
