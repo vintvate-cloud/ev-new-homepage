@@ -91,7 +91,7 @@ function FranchiseApplyPage() {
         {/* Back navigation */}
         <div className="mb-8">
           <Link
-            to="/find-services"
+            to="/service-center-near-me"
             className="inline-flex items-center gap-2 text-white/70 hover:text-[#00D084] transition-colors text-xs font-mono font-bold uppercase tracking-wider bg-white/5 px-4 py-2 rounded-full border border-white/10"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -143,7 +143,7 @@ function FranchiseApplyPage() {
 
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                to="/find-services"
+                to="/service-center-near-me"
                 className="px-6 py-3 rounded-full bg-[#00D084] text-black font-black uppercase text-xs tracking-wider hover:bg-[#00e08f] transition-all"
               >
                 Back to Cities

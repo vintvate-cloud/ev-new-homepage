@@ -38,7 +38,7 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
   const navItems = [
     { label: "Franchise", href: "/#warehouse", hasDropdown: true },
     { label: "Careers", href: "/careers", hasDropdown: false },
-    { label: "Find Service", href: "/find-services", hasDropdown: false },
+    { label: "Find Service", href: "/service-center-near-me", hasDropdown: false },
     { label: "Webinars", href: "/#webinars", hasDropdown: false },
     { label: "Events", href: "/#events", hasDropdown: false },
     { label: "EV News", href: "/#news", hasDropdown: false },

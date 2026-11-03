@@ -441,7 +441,7 @@ function AboutPage() {
                   {/* Action CTA Button */}
                   <div className="pt-4">
                     <Link
-                      to="/find-services"
+                      to="/service-center-near-me"
                       className="inline-flex px-8 py-3.5 rounded-full bg-white/10 hover:bg-[#00D084] text-white hover:text-black border border-white/20 hover:border-[#00D084] text-xs font-extrabold uppercase tracking-wider transition-all duration-300 shadow-lg hover:scale-105 cursor-pointer items-center gap-2 group"
                     >
                       Get Started <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

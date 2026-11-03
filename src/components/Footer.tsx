@@ -217,11 +217,6 @@ export function Footer() {
                   Service Centre Network
                 </Link>
               </li>
-              <li>
-                <Link to="/service-centre-near-me" className="hover:text-[#00D084] transition-colors">
-                  Service Centre Near Me
-                </Link>
-              </li>
             </ul>
           </StaggerItem>
 

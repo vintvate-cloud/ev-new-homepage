@@ -100,7 +100,7 @@ function CityPageComponent() {
 
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
             <Link
-              to="/find-services"
+              to="/service-center-near-me"
               className="px-6 py-3.5 rounded-xl bg-[#00D084] text-[#020403] font-black uppercase text-xs tracking-wider hover:bg-[#00e08f] transition-all shadow-[0_0_20px_rgba(0,208,132,0.4)]"
             >
               Browse Active Cities →

@@ -552,7 +552,7 @@ function ContactPage() {
               Explore Parts
             </Link>
             <Link
-              to="/find-services"
+              to="/service-center-near-me"
               className="px-8 py-4 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-all cursor-pointer"
             >
               Find Centers Near You

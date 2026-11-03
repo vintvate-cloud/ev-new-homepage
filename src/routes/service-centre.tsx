@@ -301,7 +301,7 @@ export function ServiceCentreNetworkPage() {
             </p>
             <div className="hero-btn-reveal pt-3 flex flex-wrap items-center justify-center gap-4">
               <Link
-                to="/service-centre-near-me"
+                to="/service-center-near-me"
                 className="whitespace-nowrap inline-flex items-center shrink-0 gap-2 px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shadow-[0_0_25px_rgba(0,208,132,0.4)] cursor-pointer hover:scale-105"
               >
                 <Navigation className="w-4 h-4 shrink-0" />

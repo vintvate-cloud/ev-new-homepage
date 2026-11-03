@@ -751,7 +751,8 @@ export function ServiceCentresPage() {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 15 }}
-                    className="absolute inset-0 bg-[#030d07]/98 z-30 p-6 sm:p-7 flex flex-col justify-between rounded-[32px]"
+                    style={{ backgroundColor: "#040e08" }}
+                    className="absolute inset-0 z-40 p-6 sm:p-7 flex flex-col justify-between rounded-[32px] bg-[#040e08] shadow-2xl overflow-hidden"
                   >
                     {/* CITY STEP */}
                     {inlineStep === "city" && (
@@ -991,16 +992,17 @@ export function ServiceCentresPage() {
               </AnimatePresence>
 
               {/* Main Form Fields when step drawer is closed */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <h3 className="text-lg sm:text-xl font-black text-white uppercase tracking-wider flex items-center gap-2">
-                  Find Your Service Centre
-                </h3>
-                <span className="text-[10px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/30 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" /> INSTANT SEARCH
-                </span>
-              </div>
+              <div className={`space-y-5 transition-opacity duration-200 ${inlineBookingOpen ? "opacity-0 invisible pointer-events-none" : "opacity-100"}`}>
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <h3 className="text-lg sm:text-xl font-black text-white uppercase tracking-wider flex items-center gap-2">
+                    Find Your Service Centre
+                  </h3>
+                  <span className="text-[10px] font-mono font-bold text-[#00D084] bg-[#00D084]/15 px-2.5 py-1 rounded-full border border-[#00D084]/30 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" /> INSTANT SEARCH
+                  </span>
+                </div>
 
-              <form onSubmit={handleQuickBookingSubmit} className="space-y-4 text-left relative z-10">
+                <form onSubmit={handleQuickBookingSubmit} className="space-y-4 text-left relative z-10">
                 {/* Select City Field */}
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
@@ -1119,6 +1121,7 @@ export function ServiceCentresPage() {
                   </a>
                 </div>
               </form>
+              </div>
             </div>
           </div>
         </div>

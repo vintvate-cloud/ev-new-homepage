@@ -976,7 +976,7 @@ function CityPreBookingPage() {
 
               <div className="md:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <Link
-                  to="/find-services"
+                  to="/service-center-near-me"
                   className="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-center flex flex-col justify-center items-center gap-2 text-xs font-bold text-white uppercase hover:text-[#00D084] transition-all cursor-pointer"
                 >
                   <Zap className="w-5 h-5 text-[#00D084]" />
@@ -990,7 +990,7 @@ function CityPreBookingPage() {
                   Explore Parts
                 </Link>
                 <Link
-                  to="/find-services"
+                  to="/service-center-near-me"
                   className="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-center flex flex-col justify-center items-center gap-2 text-xs font-bold text-white uppercase hover:text-[#00D084] transition-all cursor-pointer"
                 >
                   <MapPin className="w-5 h-5 text-[#00D084]" />

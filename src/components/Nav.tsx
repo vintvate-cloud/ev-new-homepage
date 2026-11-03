@@ -29,7 +29,7 @@ const PRIMARY_NAV = [
   { label: "Franchise", href: "/franchise", menuIdx: 0 },
   { label: "Services", href: "/services", menuIdx: 1 },
   { label: "Careers", href: "/careers", menuIdx: null },
-  { label: "Find Service", href: "/find-services", menuIdx: null },
+  { label: "Find Service", href: "/service-center-near-me", menuIdx: null },
 ];
 
 const MORE_NAV = [
@@ -39,7 +39,6 @@ const MORE_NAV = [
   { label: "AI Diagnostics Tool", href: "/ai-tool", desc: "AI troubleshooting & predictive fault scanner" },
   { label: "EV Spare Parts", href: "/spare-parts", desc: "Certified batteries, chargers & controllers" },
   { label: "Service Centre Network", href: "/service-centre", desc: "Browse all network hubs across cities" },
-  { label: "Service Centre Near Me", href: "/service-centre-near-me", desc: "Find nearest service point by PIN/GPS" },
   { label: "EV Blog & Insights", href: "/blog", desc: "EV maintenance guides & tech tips" },
   { label: "News & Updates", href: "/news-updates", desc: "Latest EV market trends & announcements" },
   { label: "Webinars & Workshops", href: "/webinars", desc: "Technical EV workshops & live Q&A" },

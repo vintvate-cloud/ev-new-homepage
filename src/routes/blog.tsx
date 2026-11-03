@@ -1050,7 +1050,7 @@ function BlogPage() {
                     Diagnostics + report built for EV reliability.
                   </p>
                   <Link
-                    to="/find-services"
+                    to="/service-center-near-me"
                     className="text-[#00D084] font-sans font-bold text-[11px] hover:underline inline-flex items-center gap-1 pt-1"
                   >
                     Book Diagnostic <ArrowRight className="w-3 h-3" />
@@ -1106,7 +1106,7 @@ function BlogPage() {
           </div>
 
           <Link
-            to="/find-services"
+            to="/service-center-near-me"
             className="px-8 py-4 rounded-full bg-[#00D084] text-[#020403] text-xs font-sans font-black uppercase tracking-widest hover:bg-[#00e08f] transition-all shrink-0 cursor-pointer shadow-md"
           >
             Explore Service Network
