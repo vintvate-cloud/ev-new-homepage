@@ -151,6 +151,300 @@ export function OEMSolutionsPage() {
           }
         );
       }
+
+      // --- SCROLL ANIMATIONS SUITE ---
+
+      // 1. Overview Metric Tiles Stagger
+      gsap.fromTo(
+        ".oem-metric-card",
+        { opacity: 0, y: 40, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-overview-trigger",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // Desk Callout
+      gsap.fromTo(
+        ".oem-desk-card",
+        { opacity: 0, y: 30, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-desk-card",
+            start: "top 90%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 2. Segment Chips Band
+      gsap.fromTo(
+        ".oem-chip-item",
+        { opacity: 0, scale: 0.85, y: 15 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.06,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-chips-trigger",
+            start: "top 90%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 3. After-Sales Gap Comparison Section
+      gsap.fromTo(
+        ".oem-gap-header",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-gap-trigger",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".oem-gap-table",
+        { opacity: 0, y: 50, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-gap-table",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 4. OEM Solutions Grid (9 cards)
+      gsap.fromTo(
+        ".oem-services-header",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-services-trigger",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".oem-service-card",
+        { opacity: 0, y: 45, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.75,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-services-grid",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 5. Autobot OS Section
+      gsap.fromTo(
+        ".oem-autobot-header",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#autobot-os",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".oem-autobot-step",
+        { opacity: 0, y: 30, scale: 0.92 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-autobot-steps",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".oem-autobot-mod",
+        { opacity: 0, y: 40, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-autobot-mods",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 6. Engagement Models (4 cards)
+      gsap.fromTo(
+        ".oem-models-header",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#models",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".oem-model-card",
+        { opacity: 0, y: 45, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-models-grid",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 7. Speed & Scale Comparison Section
+      gsap.fromTo(
+        ".oem-scale-header",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-scale-trigger",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".oem-scale-table",
+        { opacity: 0, y: 50, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-scale-table",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 8. FAQs Section
+      gsap.fromTo(
+        ".oem-faqs-header",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#faqs",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".oem-faq-item",
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-faqs-list",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 9. Closing CTA Banner
+      gsap.fromTo(
+        ".oem-cta-banner",
+        { scale: 0.94, opacity: 0, y: 40 },
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".oem-cta-banner",
+            start: "top 90%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
     });
 
     const refreshTimer = setTimeout(() => {
@@ -162,6 +456,10 @@ export function OEMSolutionsPage() {
       ctx.revert();
     };
   }, []);
+
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, [openFaq]);
 
   const handleTypeToggle = (item: string) => {
     setForm((prev) => ({
@@ -198,11 +496,10 @@ export function OEMSolutionsPage() {
   };
 
   const scrollToForm = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     const el = document.getElementById("enquiry");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -635,211 +932,49 @@ export function OEMSolutionsPage() {
               </div>
             </section>
 
-            {/* S2: Top Overview & Form Section */}
-            <section id="services" className="relative px-6 py-12 md:py-16 overflow-hidden">
-              <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
-                
-                {/* Left Column: 4 Key Highlight Tiles */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">01</div>
-                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">No New Capex</span>
-                      <span className="text-sm font-semibold text-white block leading-snug">Instant service capacity without building or financing your own retail centres</span>
-                    </div>
-                    <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">02</div>
-                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Your Exact SOPs</span>
-                      <span className="text-sm font-semibold text-white block leading-snug">Warranty, recall and PDI jobs executed to your exact manufacturer specifications</span>
-                    </div>
-                    <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">03</div>
-                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Real-Time Field Data</span>
-                      <span className="text-sm font-semibold text-white block leading-snug">Every repair, fault code and part failure reported back to your engineering team via API</span>
-                    </div>
-                    <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">04</div>
-                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">City-Ready Scale</span>
-                      <span className="text-sm font-semibold text-white block leading-snug">A proven launch playbook ensuring readiness wherever your distributors sell</span>
-                    </div>
+            {/* S2: Top Overview / Key Highlights */}
+            <section id="services" className="oem-overview-trigger relative px-6 py-12 md:py-16 overflow-hidden">
+              <div className="max-w-7xl mx-auto space-y-6 relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
+                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">01</div>
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">No New Capex</span>
+                    <span className="text-sm font-semibold text-white block leading-snug">Instant service capacity without building or financing your own retail centres</span>
                   </div>
-
-                  <div className="p-5 rounded-2xl bg-gradient-to-r from-[#0D5C2E]/20 to-[#07110B] border border-[#00D084]/30 flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                      <h4 className="text-base font-bold text-white">Direct OEM Partnerships Desk</h4>
-                      <p className="text-xs text-white/60">Speak directly with our automotive VP of Partnerships</p>
-                    </div>
-                    <a
-                      href="mailto:info@myevservice.in?subject=OEM%20Partnership"
-                      className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-mono text-[#00D084] flex items-center gap-2 transition-all"
-                    >
-                      <Mail className="w-3.5 h-3.5" /> Email info@myevservice.in
-                    </a>
+                  <div className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
+                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">02</div>
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Your Exact SOPs</span>
+                    <span className="text-sm font-semibold text-white block leading-snug">Warranty, recall and PDI jobs executed to your exact manufacturer specifications</span>
+                  </div>
+                  <div className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
+                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">03</div>
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Real-Time Field Data</span>
+                    <span className="text-sm font-semibold text-white block leading-snug">Every repair, fault code and part failure reported back to your engineering team via API</span>
+                  </div>
+                  <div className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
+                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">04</div>
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">City-Ready Scale</span>
+                    <span className="text-sm font-semibold text-white block leading-snug">A proven launch playbook ensuring readiness wherever your distributors sell</span>
                   </div>
                 </div>
 
-                {/* Right Column: Hero Form (OEM-008) */}
-                <div id="enquiry" className="lg:col-span-5 bg-[#0a0f0c] border-2 border-white/15 rounded-[28px] p-6 sm:p-8 shadow-2xl relative">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#F5A623] rounded-t-[26px]" />
-            <h2 className="text-2xl font-bold text-white tracking-tight mb-1">Plan Your After-Sales Network</h2>
-            <p className="text-xs text-white/60 mb-6 font-light">Our OEM team replies within one working day.</p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Company / Brand Name *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. EV Manufacturer, Dealer Group"
-                  value={form.company}
-                  onChange={(e) => setForm({ ...form, company: e.target.value })}
-                  className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Your Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Full name"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Designation</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. VP After-Sales, Head Service"
-                    value={form.designation}
-                    onChange={(e) => setForm({ ...form, designation: e.target.value })}
-                    className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                  />
+                <div className="oem-desk-card p-5 rounded-2xl bg-gradient-to-r from-[#0D5C2E]/20 to-[#07110B] border border-[#00D084]/30 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <h4 className="text-base font-bold text-white">Direct OEM Partnerships Desk</h4>
+                    <p className="text-xs text-white/60">Speak directly with our automotive VP of Partnerships</p>
+                  </div>
+                  <a
+                    href="mailto:info@myevservice.in?subject=OEM%20Partnership"
+                    className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-mono text-[#00D084] flex items-center gap-2 transition-all"
+                  >
+                    <Mail className="w-3.5 h-3.5" /> Email info@myevservice.in
+                  </a>
                 </div>
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Work Email</label>
-                  <input
-                    type="email"
-                    placeholder="name@oem.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Mobile *</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="+91 95823 90001"
-                    value={form.mobile}
-                    onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                    className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase text-white/70 block mb-1.5">Vehicle Category</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {["Electric 2W", "Electric 3W (L3/L5)", "Both"].map((cat) => (
-                    <button
-                      type="button"
-                      key={cat}
-                      onClick={() => setForm({ ...form, vehicleCategory: cat })}
-                      className={`py-2 text-[11px] font-mono font-bold rounded-xl border transition-all ${
-                        form.vehicleCategory === cat
-                          ? "bg-[#00D084] text-black border-[#00D084]"
-                          : "bg-white/5 text-white/70 border-white/10 hover:border-white/30"
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase text-white/70 block mb-1.5">Partnership Type</label>
-                <div className="grid grid-cols-2 gap-2 text-[11px]">
-                  {[
-                    "After-Sales Service Network",
-                    "Warranty, Recall & PDI",
-                    "New City Launch Readiness",
-                    "Parts Distribution Logistics",
-                    "Technician Training & Cert",
-                    "Battery Refurbishment",
-                  ].map((item) => (
-                    <label
-                      key={item}
-                      onClick={() => handleTypeToggle(item)}
-                      className={`flex items-center gap-2 p-2 rounded-xl border cursor-pointer select-none transition-all ${
-                        form.partnershipType.includes(item)
-                          ? "bg-[#00D084]/15 border-[#00D084] text-white"
-                          : "bg-white/5 border-white/10 text-white/60 hover:text-white"
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={form.partnershipType.includes(item)}
-                        onChange={() => {}}
-                        className="sr-only"
-                      />
-                      <div className={`w-3.5 h-3.5 rounded flex items-center justify-center shrink-0 border ${
-                        form.partnershipType.includes(item) ? "bg-[#00D084] border-[#00D084] text-black" : "border-white/30"
-                      }`}>
-                        {form.partnershipType.includes(item) && <Check className="w-3 h-3 stroke-[3]" />}
-                      </div>
-                      <span className="leading-tight">{item}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Target Cities</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Pune, Mumbai, Bangalore, Delhi NCR"
-                  value={form.targetCities}
-                  onChange={(e) => setForm({ ...form, targetCities: e.target.value })}
-                  className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-
-              <div className="pt-2">
-                <label className="flex items-start gap-2.5 text-[11px] text-white/60 leading-tight cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={form.consent}
-                    onChange={(e) => setForm({ ...form, consent: e.target.checked })}
-                    className="mt-0.5 rounded border-white/30 bg-white/5 text-[#00D084] focus:ring-0"
-                  />
-                  <span>
-                    I agree to the processing of enterprise details under the DPDP Act for evaluating service network partnerships.
-                  </span>
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-full bg-[#00D084] text-black font-black text-xs uppercase tracking-widest hover:bg-[#00e08f] shadow-[0_0_20px_rgba(0,208,132,0.3)] transition-all cursor-pointer mt-2"
-              >
-                Request Partnership Call
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
+            </section>
 
       {/* S3: Built For Band */}
-      <section className="py-6 border-y border-white/10 bg-[#060a08]">
+      <section className="oem-chips-trigger py-6 border-y border-white/10 bg-[#060a08]">
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-3 text-xs">
           <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-wider font-bold">Built For:</span>
           {[
@@ -850,7 +985,7 @@ export function OEMSolutionsPage() {
             "Battery & Component Makers",
             "Leasing & Financing Companies",
           ].map((seg) => (
-            <span key={seg} className="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium">
+            <span key={seg} className="oem-chip-item px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium">
               {seg}
             </span>
           ))}
@@ -858,8 +993,8 @@ export function OEMSolutionsPage() {
       </section>
 
       {/* S4: The After-Sales Gap Comparison Table */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+      <section className="oem-gap-trigger py-20 px-6 max-w-7xl mx-auto">
+        <div className="oem-gap-header text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             The After-Sales Gap
           </div>
@@ -871,7 +1006,7 @@ export function OEMSolutionsPage() {
           </p>
         </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
+        <div className="oem-gap-table overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
           <table className="w-full text-left text-xs min-w-[700px]">
             <thead className="bg-white/5 border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
               <tr>
@@ -917,8 +1052,8 @@ export function OEMSolutionsPage() {
       </section>
 
       {/* S5: OEM Solutions Grid */}
-      <section id="services" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+      <section id="services" className="oem-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
+        <div className="oem-services-header text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             OEM Solutions
           </div>
@@ -930,7 +1065,7 @@ export function OEMSolutionsPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="oem-services-grid grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
               step: "01",
@@ -991,7 +1126,7 @@ export function OEMSolutionsPage() {
             return (
               <div
                 key={card.step}
-                className="p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
+                className="oem-service-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -1010,7 +1145,7 @@ export function OEMSolutionsPage() {
       {/* S6: Autobot OS for OEMs */}
       <section id="autobot-os" className="py-20 px-6 bg-[#040805] border-t border-white/10">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="oem-autobot-header text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
               Technology // Autobot OS for OEMs
             </div>
@@ -1023,7 +1158,7 @@ export function OEMSolutionsPage() {
           </div>
 
           {/* 6-Step SOP Automation Flow */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-16">
+          <div className="oem-autobot-steps grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-16">
             {[
               { num: "01", title: "Load SOPs", desc: "Your procedures, labour times & parts lists." },
               { num: "02", title: "Book", desc: "Customer, dealer or recall bookings routed." },
@@ -1032,7 +1167,7 @@ export function OEMSolutionsPage() {
               { num: "05", title: "Repair", desc: "Guided digital job card with scanned parts." },
               { num: "06", title: "Report", desc: "Live failure trends & quality data exported." },
             ].map((step) => (
-              <div key={step.num} className="p-4 rounded-2xl bg-[#080d0a] border border-white/10">
+              <div key={step.num} className="oem-autobot-step p-4 rounded-2xl bg-[#080d0a] border border-white/10">
                 <span className="text-[10px] font-mono text-[#00D084] font-bold block mb-1">{step.num}</span>
                 <span className="text-sm font-bold text-white block mb-1">{step.title}</span>
                 <span className="text-[11px] text-white/60 block leading-tight">{step.desc}</span>
@@ -1041,7 +1176,7 @@ export function OEMSolutionsPage() {
           </div>
 
           {/* 6 Modules Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="oem-autobot-mods grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 tag: "Brand SOP Library",
@@ -1074,7 +1209,7 @@ export function OEMSolutionsPage() {
                 desc: "Role-based access controls, strict NDAs and dedicated enterprise multi-tenant security.",
               },
             ].map((mod) => (
-              <div key={mod.title} className="p-6 rounded-2xl bg-[#080d0a] border border-white/10">
+              <div key={mod.title} className="oem-autobot-mod p-6 rounded-2xl bg-[#080d0a] border border-white/10">
                 <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">{mod.tag}</span>
                 <h3 className="text-base font-bold text-white mb-2">{mod.title}</h3>
                 <p className="text-xs text-white/60 leading-relaxed">{mod.desc}</p>
@@ -1086,7 +1221,7 @@ export function OEMSolutionsPage() {
 
       {/* S7: Engagement Models Table */}
       <section id="models" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="oem-models-header text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Engagement Models
           </div>
@@ -1098,7 +1233,7 @@ export function OEMSolutionsPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="oem-models-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             {
               model: "Service Partner",
@@ -1125,7 +1260,7 @@ export function OEMSolutionsPage() {
               commercials: "Per cohort / batch",
             },
           ].map((item) => (
-            <div key={item.model} className="p-6 rounded-2xl bg-[#080d0a] border border-white/10 flex flex-col justify-between">
+            <div key={item.model} className="oem-model-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 flex flex-col justify-between">
               <div>
                 <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">Model</span>
                 <h3 className="text-lg font-bold text-white mb-3">{item.model}</h3>
@@ -1147,8 +1282,8 @@ export function OEMSolutionsPage() {
       </section>
 
       {/* S8: Speed & Scale Comparison */}
-      <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+      <section className="oem-scale-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
+        <div className="oem-scale-header text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Speed and Scale
           </div>
@@ -1160,7 +1295,7 @@ export function OEMSolutionsPage() {
           </p>
         </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
+        <div className="oem-scale-table overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
           <table className="w-full text-left text-xs min-w-[700px]">
             <thead className="bg-white/5 border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
               <tr>
@@ -1214,12 +1349,12 @@ export function OEMSolutionsPage() {
 
       {/* S14: FAQ Accordion */}
       <section id="faqs" className="py-20 px-6 max-w-4xl mx-auto border-t border-white/10">
-        <div className="text-center mb-12">
+        <div className="oem-faqs-header text-center mb-12">
           <h2 className="text-3xl font-black text-white tracking-tight">OEM Partnership FAQs</h2>
         </div>
-        <div className="space-y-3">
+        <div className="oem-faqs-list space-y-3">
           {FAQS.map((faq, idx) => (
-            <div key={faq.q} className="rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden">
+            <div key={faq.q} className="oem-faq-item rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden">
               <button
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                 className="w-full p-5 text-left text-sm font-bold text-white flex items-center justify-between gap-4"
@@ -1238,7 +1373,7 @@ export function OEMSolutionsPage() {
       </section>
 
       {/* S15: Closing CTA Band */}
-      <section className="py-16 px-6 bg-[#0D5C2E] text-white">
+      <section className="oem-cta-banner py-16 px-6 bg-[#0D5C2E] text-white">
         <div className="max-w-5xl mx-auto text-center space-y-6">
           <span className="text-[11px] font-mono uppercase tracking-widest text-white/80 font-bold block">
             FOR EV BRANDS AND DEALER GROUPS

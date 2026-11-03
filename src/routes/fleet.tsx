@@ -151,6 +151,266 @@ export function FleetSolutionsPage() {
           }
         );
       }
+
+      // --- SCROLL ANIMATIONS SUITE ---
+
+      // 1. Overview Metric Tiles Stagger
+      gsap.fromTo(
+        ".fleet-metric-card",
+        { opacity: 0, y: 40, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".fleet-overview-trigger",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // Helpline Callout
+      gsap.fromTo(
+        ".fleet-helpline-card",
+        { opacity: 0, y: 30, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".fleet-helpline-card",
+            start: "top 90%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 2. Segment Chips Band Stagger
+      gsap.fromTo(
+        ".fleet-chip-item",
+        { opacity: 0, scale: 0.85, y: 15 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.06,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".fleet-chips-trigger",
+            start: "top 90%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 3. Problem vs Solution Section
+      gsap.fromTo(
+        ".fleet-problem-header",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".fleet-problem-trigger",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".fleet-problem-table",
+        { opacity: 0, y: 50, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".fleet-problem-table",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 4. Fleet Solutions Grid (8 cards)
+      gsap.fromTo(
+        ".fleet-services-header",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".fleet-services-trigger",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".fleet-service-card",
+        { opacity: 0, y: 45, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.75,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".fleet-services-grid",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 5. Autobot OS Section
+      gsap.fromTo(
+        ".autobot-header-reveal",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#autobot-os",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".autobot-step-pill",
+        { opacity: 0, y: 30, scale: 0.92 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".autobot-steps-grid",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".autobot-mod-card",
+        { opacity: 0, y: 40, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".autobot-mods-grid",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 6. AMC Plans Section
+      gsap.fromTo(
+        ".plans-header-reveal",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#plans",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".plans-table-reveal",
+        { opacity: 0, y: 45, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".plans-table-reveal",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 7. FAQs Section
+      gsap.fromTo(
+        ".faqs-header-reveal",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#faqs",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+      gsap.fromTo(
+        ".faq-item-reveal",
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".faqs-list-container",
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // 8. Closing CTA Banner
+      gsap.fromTo(
+        ".fleet-cta-banner",
+        { scale: 0.94, opacity: 0, y: 40 },
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".fleet-cta-banner",
+            start: "top 90%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
     });
 
     const refreshTimer = setTimeout(() => {
@@ -162,6 +422,10 @@ export function FleetSolutionsPage() {
       ctx.revert();
     };
   }, []);
+
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, [openFaq]);
 
   const handleNeedToggle = (item: string) => {
     setForm((prev) => ({
@@ -208,11 +472,10 @@ export function FleetSolutionsPage() {
 
   const scrollToForm = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     const el = document.getElementById("enquiry");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -636,202 +899,49 @@ export function FleetSolutionsPage() {
               </div>
             </section>
 
-            {/* S2: Top Overview & Proposal Form Section */}
-            <section id="fleet-solutions" className="relative px-6 py-12 md:py-16 overflow-hidden">
-              <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
-                
-                {/* Left Column: 4 Key Metric Highlight Tiles */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">01</div>
-                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Multi-Brand SLA</span>
-                      <span className="text-sm font-semibold text-white block leading-snug">E-2W, e-autos &amp; cargo 3W managed on one single unified contract</span>
-                    </div>
-                    <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">02</div>
-                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Predictive Care</span>
-                      <span className="text-sm font-semibold text-white block leading-snug">Monthly CAN-bus battery health audit &amp; cell balancing on every vehicle</span>
-                    </div>
-                    <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">03</div>
-                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Where You Are</span>
-                      <span className="text-sm font-semibold text-white block leading-snug">Priority bays, depot shift visits and rapid doorstep mobile service teams</span>
-                    </div>
-                    <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">04</div>
-                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">100% Visibility</span>
-                      <span className="text-sm font-semibold text-white block leading-snug">One live fleet dashboard and one consolidated monthly GST invoice</span>
-                    </div>
+            {/* S2: Top Overview / Key Highlights */}
+            <section id="fleet-solutions" className="fleet-overview-trigger relative px-6 py-12 md:py-16 overflow-hidden">
+              <div className="max-w-7xl mx-auto space-y-6 relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
+                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">01</div>
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Multi-Brand SLA</span>
+                    <span className="text-sm font-semibold text-white block leading-snug">E-2W, e-autos &amp; cargo 3W managed on one single unified contract</span>
                   </div>
-
-                  <div className="p-5 rounded-2xl bg-gradient-to-r from-[#0D5C2E]/20 to-[#07110B] border border-[#00D084]/30 flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                      <h4 className="text-base font-bold text-white">Need an immediate SLA audit?</h4>
-                      <p className="text-xs text-white/60">Direct helpline for logistics and fleet dispatch managers</p>
-                    </div>
-                    <a
-                      href="tel:+919582390001"
-                      className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-mono text-[#00D084] flex items-center gap-2 transition-all"
-                    >
-                      <Phone className="w-3.5 h-3.5" /> +91 95823 90001
-                    </a>
+                  <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
+                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">02</div>
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Predictive Care</span>
+                    <span className="text-sm font-semibold text-white block leading-snug">Monthly CAN-bus battery health audit &amp; cell balancing on every vehicle</span>
+                  </div>
+                  <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
+                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">03</div>
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Where You Are</span>
+                    <span className="text-sm font-semibold text-white block leading-snug">Priority bays, depot shift visits and rapid doorstep mobile service teams</span>
+                  </div>
+                  <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
+                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">04</div>
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">100% Visibility</span>
+                    <span className="text-sm font-semibold text-white block leading-snug">One live fleet dashboard and one consolidated monthly GST invoice</span>
                   </div>
                 </div>
 
-                {/* Right Column: Hero Inquiry Form (FLEET-008) */}
-                <div id="enquiry" className="lg:col-span-5 bg-[#0a0f0c] border-2 border-white/15 rounded-[28px] p-6 sm:p-8 shadow-2xl relative">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#F5A623] rounded-t-[26px]" />
-            <h2 className="text-2xl font-bold text-white tracking-tight mb-1">Get a Fleet Proposal</h2>
-            <p className="text-xs text-white/60 mb-6 font-light">A fleet specialist replies within one working day.</p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Company Name *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Zepto, Zomato, Porter, Delivery Co."
-                  value={form.company}
-                  onChange={(e) => setForm({ ...form, company: e.target.value })}
-                  className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Your Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Full name"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Mobile *</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="+91 95823 90001"
-                    value={form.mobile}
-                    onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                    className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">Work Email</label>
-                  <input
-                    type="email"
-                    placeholder="name@company.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-[#121914] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-mono uppercase text-white/70 block mb-1">City</label>
-                  <select
-                    value={form.city}
-                    onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    className="w-full bg-[#121914] border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                <div className="fleet-helpline-card p-5 rounded-2xl bg-gradient-to-r from-[#0D5C2E]/20 to-[#07110B] border border-[#00D084]/30 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <h4 className="text-base font-bold text-white">Need an immediate SLA audit?</h4>
+                    <p className="text-xs text-white/60">Direct helpline for logistics and fleet dispatch managers</p>
+                  </div>
+                  <a
+                    href="tel:+919582390001"
+                    className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-mono text-[#00D084] flex items-center gap-2 transition-all"
                   >
-                    <option value="Pune">Pune</option>
-                    <option value="Pimpri-Chinchwad">Pimpri-Chinchwad</option>
-                    <option value="Other">Other (Expanding Soon)</option>
-                  </select>
+                    <Phone className="w-3.5 h-3.5" /> +91 95823 90001
+                  </a>
                 </div>
               </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase text-white/70 block mb-1.5">Fleet Size</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {["10-25", "26-100", "100+"].map((size) => (
-                    <button
-                      type="button"
-                      key={size}
-                      onClick={() => setForm({ ...form, fleetSize: size })}
-                      className={`py-2 text-xs font-mono font-bold rounded-xl border transition-all ${
-                        form.fleetSize === size
-                          ? "bg-[#00D084] text-black border-[#00D084]"
-                          : "bg-white/5 text-white/70 border-white/10 hover:border-white/30"
-                      }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase text-white/70 block mb-1.5">What do you need?</label>
-                <div className="grid grid-cols-2 gap-2 text-[11px]">
-                  {[
-                    "Scheduled AMC",
-                    "Free Fleet Health Audit",
-                    "Breakdown & Roadside",
-                    "Battery Diagnostics",
-                    "Depot Service Team",
-                    "Parts at Contract Rates",
-                  ].map((item) => (
-                    <label
-                      key={item}
-                      onClick={() => handleNeedToggle(item)}
-                      className={`flex items-center gap-2 p-2 rounded-xl border cursor-pointer select-none transition-all ${
-                        form.needs.includes(item)
-                          ? "bg-[#00D084]/15 border-[#00D084] text-white"
-                          : "bg-white/5 border-white/10 text-white/60 hover:text-white"
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={form.needs.includes(item)}
-                        onChange={() => {}}
-                        className="sr-only"
-                      />
-                      <div className={`w-3.5 h-3.5 rounded flex items-center justify-center shrink-0 border ${
-                        form.needs.includes(item) ? "bg-[#00D084] border-[#00D084] text-black" : "border-white/30"
-                      }`}>
-                        {form.needs.includes(item) && <Check className="w-3 h-3 stroke-[3]" />}
-                      </div>
-                      <span className="leading-tight">{item}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <label className="flex items-start gap-2.5 text-[11px] text-white/60 leading-tight cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={form.consent}
-                    onChange={(e) => setForm({ ...form, consent: e.target.checked })}
-                    className="mt-0.5 rounded border-white/30 bg-white/5 text-[#00D084] focus:ring-0"
-                  />
-                  <span>
-                    I agree to the processing of contact information under the DPDP Act for receiving fleet service estimates.
-                  </span>
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-full bg-[#00D084] text-black font-black text-xs uppercase tracking-widest hover:bg-[#00e08f] shadow-[0_0_20px_rgba(0,208,132,0.3)] transition-all cursor-pointer mt-2"
-              >
-                Request Fleet Proposal
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
+            </section>
 
       {/* S3: Built For (Segment Chips Band) */}
-      <section className="py-6 border-y border-white/10 bg-[#060a08]">
+      <section className="fleet-chips-trigger py-6 border-y border-white/10 bg-[#060a08]">
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-3 text-xs">
           <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-wider font-bold">Built For:</span>
           {[
@@ -842,7 +952,7 @@ export function FleetSolutionsPage() {
             "EV Rental & Subscription",
             "Corporate & Campus Mobility",
           ].map((seg) => (
-            <span key={seg} className="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium">
+            <span key={seg} className="fleet-chip-item px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium">
               {seg}
             </span>
           ))}
@@ -850,8 +960,8 @@ export function FleetSolutionsPage() {
       </section>
 
       {/* S4: Problem vs Solution Table */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+      <section className="fleet-problem-trigger py-20 px-6 max-w-7xl mx-auto">
+        <div className="fleet-problem-header text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             The Problem We Solve
           </div>
@@ -863,7 +973,7 @@ export function FleetSolutionsPage() {
           </p>
         </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
+        <div className="fleet-problem-table overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
           <table className="w-full text-left text-xs min-w-[700px]">
             <thead className="bg-white/5 border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
               <tr>
@@ -909,8 +1019,8 @@ export function FleetSolutionsPage() {
       </section>
 
       {/* S5: Fleet Solutions Grid */}
-      <section id="services" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+      <section id="services" className="fleet-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
+        <div className="fleet-services-header text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Fleet Solutions
           </div>
@@ -922,7 +1032,7 @@ export function FleetSolutionsPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="fleet-services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             {
               step: "01",
@@ -977,7 +1087,7 @@ export function FleetSolutionsPage() {
             return (
               <div
                 key={card.step}
-                className="p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
+                className="fleet-service-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -996,7 +1106,7 @@ export function FleetSolutionsPage() {
       {/* S6: Autobot OS for Fleets */}
       <section id="autobot-os" className="py-20 px-6 bg-[#040805] border-t border-white/10">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="autobot-header-reveal text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
               Technology // Autobot OS
             </div>
@@ -1009,7 +1119,7 @@ export function FleetSolutionsPage() {
           </div>
 
           {/* 6-Step Automation Flow */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-16">
+          <div className="autobot-steps-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-16">
             {[
               { num: "01", title: "Detect", desc: "AI reads battery & fault data, flags risk." },
               { num: "02", title: "Schedule", desc: "Slots booked around shift downtime." },
@@ -1018,7 +1128,7 @@ export function FleetSolutionsPage() {
               { num: "05", title: "Verify", desc: "Post-repair test & sign-off before handover." },
               { num: "06", title: "Report", desc: "Dashboard, invoice & insights update live." },
             ].map((step) => (
-              <div key={step.num} className="p-4 rounded-2xl bg-[#080d0a] border border-white/10">
+              <div key={step.num} className="autobot-step-pill p-4 rounded-2xl bg-[#080d0a] border border-white/10">
                 <span className="text-[10px] font-mono text-[#00D084] font-bold block mb-1">{step.num}</span>
                 <span className="text-sm font-bold text-white block mb-1">{step.title}</span>
                 <span className="text-[11px] text-white/60 block leading-tight">{step.desc}</span>
@@ -1027,7 +1137,7 @@ export function FleetSolutionsPage() {
           </div>
 
           {/* 6 Modules Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="autobot-mods-grid grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 tag: "AI Diagnostics",
@@ -1060,7 +1170,7 @@ export function FleetSolutionsPage() {
                 desc: "Connects with telematics, ERP and rider apps. Exports for finance.",
               },
             ].map((mod) => (
-              <div key={mod.title} className="p-6 rounded-2xl bg-[#080d0a] border border-white/10">
+              <div key={mod.title} className="autobot-mod-card p-6 rounded-2xl bg-[#080d0a] border border-white/10">
                 <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">{mod.tag}</span>
                 <h3 className="text-base font-bold text-white mb-2">{mod.title}</h3>
                 <p className="text-xs text-white/60 leading-relaxed">{mod.desc}</p>
@@ -1072,7 +1182,7 @@ export function FleetSolutionsPage() {
 
       {/* S7: Fleet AMC Plans Table */}
       <section id="plans" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="plans-header-reveal text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Fleet AMC Plans
           </div>
@@ -1084,7 +1194,7 @@ export function FleetSolutionsPage() {
           </p>
         </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
+        <div className="plans-table-reveal overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
           <table className="w-full text-left text-xs min-w-[700px]">
             <thead className="bg-white/5 border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
               <tr>
@@ -1162,12 +1272,12 @@ export function FleetSolutionsPage() {
 
       {/* S14: FAQ Accordion */}
       <section id="faqs" className="py-20 px-6 max-w-4xl mx-auto border-t border-white/10">
-        <div className="text-center mb-12">
+        <div className="faqs-header-reveal text-center mb-12">
           <h2 className="text-3xl font-black text-white tracking-tight">EV Fleet Maintenance FAQs</h2>
         </div>
-        <div className="space-y-3">
+        <div className="faqs-list-container space-y-3">
           {FAQS.map((faq, idx) => (
-            <div key={faq.q} className="rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden">
+            <div key={faq.q} className="faq-item-reveal rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden">
               <button
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                 className="w-full p-5 text-left text-sm font-bold text-white flex items-center justify-between gap-4"
@@ -1186,7 +1296,7 @@ export function FleetSolutionsPage() {
       </section>
 
       {/* S15: Closing CTA Band */}
-      <section className="py-16 px-6 bg-[#0D5C2E] text-white">
+      <section className="fleet-cta-banner py-16 px-6 bg-[#0D5C2E] text-white">
         <div className="max-w-5xl mx-auto text-center space-y-6">
           <span className="text-[11px] font-mono uppercase tracking-widest text-white/80 font-bold block">
             FREE FOR FLEETS OF 10+
