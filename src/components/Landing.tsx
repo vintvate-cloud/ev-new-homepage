@@ -3050,7 +3050,20 @@ function EVServices() {
           animation-delay: 1.2s;
         }
 
-        /* Section Background & Header for Light Theme */
+        /* Section Background & Header for Dark & Light Themes */
+        #ev-services .section-header-title,
+        #ev-services .section-header-title span,
+        #ev-services h2.section-header-title {
+          color: #ffffff !important;
+        }
+        #ev-services .section-header-desc {
+          color: rgba(255, 255, 255, 0.75) !important;
+        }
+        #ev-services .section-header-btn {
+          background-color: #0a0f0c !important;
+          border-color: rgba(255, 255, 255, 0.15) !important;
+          color: #ffffff !important;
+        }
         #ev-services {
           background-color: #020403;
         }
@@ -3193,18 +3206,18 @@ function EVServices() {
         {/* Section Header with Big Typography */}
         <GSAPText className="flex flex-col md:flex-row md:items-end justify-between gap-8 irregular-grid-item" stagger={0.12}>
           <div>
-            <h2 className="section-header-title text-5xl md:text-8xl font-black text-slate-900 dark:text-white leading-none tracking-tight">
+            <h2 className="section-header-title text-5xl md:text-8xl font-black text-white dark:text-white leading-none tracking-tight">
               EXPERT<br />
               <span className="font-sans font-normal">EV SERVICES</span>
             </h2>
           </div>
           <div className="max-w-md">
-            <p className="section-header-desc text-slate-600 dark:text-white/70 text-lg leading-relaxed mb-6">
+            <p className="section-header-desc text-white/75 dark:text-white/75 text-lg leading-relaxed mb-6">
               Professional diagnostics and repairs for Electric Scooters, Bikes & Autos. Engineered for scale, speed, and maximum vehicle uptime.
             </p>
             <Link
               to="/services"
-              className="section-header-btn group inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-[#0a0f0c] px-6 py-3.5 text-sm font-medium text-slate-900 dark:text-white transition-all hover:border-[#00D084]/40 hover:bg-[#00D084]/5 cursor-pointer"
+              className="section-header-btn group inline-flex items-center gap-2 rounded-full border border-white/15 dark:border-white/10 bg-[#0a0f0c] px-6 py-3.5 text-sm font-medium text-white transition-all hover:border-[#00D084]/40 hover:bg-[#00D084]/5 cursor-pointer"
             >
               View all 68 services
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 text-[#00D084]" />
@@ -6010,16 +6023,16 @@ function EcosystemOfferings() {
                     className="flex items-center gap-2 rounded-full px-4.5 py-1.5 text-[10px] font-mono tracking-wider uppercase"
                   >
                     <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ backgroundColor: card.accent }} />
-                    <span className="text-slate-700 dark:text-white/80 font-semibold">{card.badge}</span>
+                    <span className="text-white/80 dark:text-white/80 font-semibold">{card.badge}</span>
                   </div>
                 </div>
 
                 {/* Main Content Area */}
                 <div className={`flex flex-col gap-4 relative z-10 ${isLeft ? "max-w-[85%] text-left items-start" : "max-w-[85%] ml-auto text-right items-end"}`}>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-none">
+                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white dark:text-white leading-none">
                     {card.title}
                   </h3>
-                  <p className="text-xs md:text-sm text-slate-600 dark:text-white/60 leading-relaxed font-normal">
+                  <p className="text-xs md:text-sm text-white/70 dark:text-white/70 leading-relaxed font-normal">
                     {card.desc}
                   </p>
                 </div>

@@ -5,6 +5,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { BookingModal } from "../components/BookingModal";
+import { FleetVehicleMarquee } from "../components/fleet/FleetVehicleMarquee";
+import { FleetVisualShowcase } from "../components/fleet/FleetVisualShowcase";
+import { FleetRoiCalculator } from "../components/fleet/FleetRoiCalculator";
 import {
   ShieldCheck,
   Building2,
@@ -905,6 +908,26 @@ export function FleetSolutionsPage() {
             {/* S2: Top Overview / Key Highlights */}
             <section id="fleet-solutions" className="fleet-overview-trigger relative px-6 py-12 md:py-16 overflow-hidden">
               <div className="max-w-7xl mx-auto space-y-6 relative z-10">
+                {/* Live Operations Telemetry Status Strip */}
+                <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#08120b] border border-[#00D084]/25 shadow-lg font-mono text-[11px]">
+                  <div className="flex items-center gap-2 text-white/90">
+                    <span className="w-2 h-2 rounded-full bg-[#00D084] animate-ping" />
+                    <span className="font-bold text-[#00D084]">FLEET STATUS: ACTIVE</span>
+                    <span className="text-white/40 hidden sm:inline">• 1,420+ Commercial Assets Monitored</span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-4 text-xs">
+                    <span className="text-white/70">
+                      Uptime SLA: <strong className="text-[#00D084]">99.4%</strong>
+                    </span>
+                    <span className="text-white/70">
+                      First Response: <strong className="text-[#F5A623]">&lt; 45 Mins</strong>
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] text-[10px] font-bold">
+                      BMS AUTO-BALANCED
+                    </span>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
                     <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">01</div>
@@ -943,32 +966,40 @@ export function FleetSolutionsPage() {
               </div>
             </section>
 
-      {/* S3: Built For (Segment Chips Band) */}
-      <section className="fleet-chips-trigger py-6 border-y border-white/10 bg-[#060a08]">
-        <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-3 text-xs">
-          <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-wider font-bold">Built For:</span>
-          {[
-            "Quick-Commerce & Food Delivery",
-            "E-Commerce Last Mile",
-            "E-Auto Operators",
-            "Cargo 3W Fleets",
-            "EV Rental & Subscription",
-            "Corporate & Campus Mobility",
-          ].map((seg) => (
-            <span key={seg} className="fleet-chip-item px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium">
-              {seg}
+      {/* S3: Commercial Fleet Marquee & Segment Capabilities */}
+      <section className="fleet-chips-trigger">
+        <FleetVehicleMarquee />
+        <div className="py-4 border-b border-white/10 bg-[#060a08]/80 backdrop-blur-md">
+          <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
+            <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-wider font-bold">
+              Built For:
             </span>
-          ))}
+            {[
+              "Quick-Commerce & Food Delivery",
+              "E-Commerce Last Mile",
+              "E-Auto Operators",
+              "Cargo 3W Fleets",
+              "EV Rental & Subscription",
+              "Corporate & Campus Mobility",
+            ].map((seg) => (
+              <span
+                key={seg}
+                className="fleet-chip-item px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium text-[11px] hover:border-[#00D084]/40 hover:text-white transition-colors"
+              >
+                {seg}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* S4: Problem vs Solution Table */}
+      {/* S4: Problem vs Solution Visual Command Center */}
       <section className="fleet-problem-trigger py-20 px-6 max-w-7xl mx-auto">
-        <div className="fleet-problem-header text-center max-w-3xl mx-auto mb-12">
+        <div className="fleet-problem-header text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             The Problem We Solve
           </div>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
             Where EV fleets lose money, and how we fix it
           </h2>
           <p className="text-sm text-white/60 mt-3 font-light">
@@ -976,48 +1007,118 @@ export function FleetSolutionsPage() {
           </p>
         </div>
 
-        <div className="fleet-problem-table overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
-          <table className="w-full text-left text-xs min-w-[700px]">
-            <thead className="bg-white/5 border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
-              <tr>
-                <th className="p-4 w-1/4">Problem</th>
-                <th className="p-4 w-1/3">What It Costs You</th>
-                <th className="p-4 w-5/12 bg-[#0D5C2E]/20 text-[#00D084]">The MY EV SERVICE Fix</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-white/80">
-              <tr>
-                <td className="p-4 font-bold text-white">Unplanned breakdowns</td>
-                <td className="p-4 text-white/60">Vehicles off the road mid-shift; riders lose earnings and you lose orders.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Scheduled preventive service plus priority breakdown response inside service zones.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Silent battery fade</td>
-                <td className="p-4 text-white/60">Shorter range, fewer trips per charge, early pack replacement.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Monthly cell-level battery audit, cell balancing and state-of-health tracking per vehicle.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Brand-locked service</td>
-                <td className="p-4 text-white/60">Mixed fleets need several service centres, each with its own queue.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">One multi-brand network for every 2W and 3W in your fleet.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">No service data</td>
-                <td className="p-4 text-white/60">Paper job cards; no view of cost per vehicle or repeat faults.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Digital job cards and a live fleet dashboard in Autobot OS.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Slow parts</td>
-                <td className="p-4 text-white/60">Vehicles wait days for a controller, charger or tyre.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Parts stocked through EV Spare Hub at contract rates.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Invoice chaos</td>
-                <td className="p-4 text-white/60">Dozens of small bills to reconcile every month.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">One consolidated GST invoice and spend report each month.</td>
-              </tr>
-            </tbody>
-          </table>
+        {/* Visual Split: Workshop Fleet Operations & Exact Problem Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* Left Column: Visual Operational Showcase Card */}
+          <div className="lg:col-span-5 rounded-3xl overflow-hidden bg-[#07110b] border border-white/15 relative min-h-[460px] flex flex-col justify-between p-6 sm:p-8 shadow-2xl">
+            <img
+              src="/hero/doorstep_repairs.png"
+              alt="EV Fleet Mobile Service Unit"
+              className="absolute inset-0 w-full h-full object-cover filter brightness-[0.45] contrast-[1.1] scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#040805] via-[#040805]/50 to-transparent pointer-events-none" />
+
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-[#00D084]/40 text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-wider">
+                ● DEPOT MOBILE SERVICE VAN
+              </span>
+              <span className="text-xs font-mono text-white/60 bg-black/60 px-2.5 py-0.5 rounded-lg border border-white/10">
+                ACTIVE SHIFT BUFFER
+              </span>
+            </div>
+
+            <div className="relative z-10 space-y-4">
+              <div className="p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/10 space-y-2">
+                <span className="text-[10px] font-mono text-[#00D084] font-bold uppercase block">
+                  Zero Delivery Interruptions
+                </span>
+                <p className="text-xs text-white/80 leading-relaxed font-light">
+                  Our certified mobile vans service delivery scooters and cargo autos between shifts directly at your dark stores and charging hubs.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-white/[0.05] border border-white/10 text-center">
+                  <span className="text-xl font-black text-white font-mono block">&lt; 45 Mins</span>
+                  <span className="text-[10px] text-white/50 uppercase font-mono">Mean Response SLA</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/[0.05] border border-white/10 text-center">
+                  <span className="text-xl font-black text-[#00D084] font-mono block">99.4%</span>
+                  <span className="text-[10px] text-white/50 uppercase font-mono">Guaranteed Uptime</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: 6 Exact Problem vs Solution Cards */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                problem: "Unplanned breakdowns",
+                cost: "Vehicles off the road mid-shift; riders lose earnings and you lose orders.",
+                fix: "Scheduled preventive service plus priority breakdown response inside service zones.",
+                badge: "Uptime SLA",
+              },
+              {
+                problem: "Silent battery fade",
+                cost: "Shorter range, fewer trips per charge, early pack replacement.",
+                fix: "Monthly cell-level battery audit, cell balancing and state-of-health tracking per vehicle.",
+                badge: "Battery Health",
+              },
+              {
+                problem: "Brand-locked service",
+                cost: "Mixed fleets need several service centres, each with its own queue.",
+                fix: "One multi-brand network for every 2W and 3W in your fleet.",
+                badge: "Multi-Brand",
+              },
+              {
+                problem: "No service data",
+                cost: "Paper job cards; no view of cost per vehicle or repeat faults.",
+                fix: "Digital job cards and a live fleet dashboard in Autobot OS.",
+                badge: "Digital Records",
+              },
+              {
+                problem: "Slow parts",
+                cost: "Vehicles wait days for a controller, charger or tyre.",
+                fix: "Parts stocked through EV Spare Hub at contract rates.",
+                badge: "Contract Rates",
+              },
+              {
+                problem: "Invoice chaos",
+                cost: "Dozens of small bills to reconcile every month.",
+                fix: "One consolidated GST invoice and spend report each month.",
+                badge: "Single GST Bill",
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-mono text-white/40 uppercase font-bold">Problem 0{idx + 1}</span>
+                    <span className="px-2 py-0.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] font-mono text-[9px] font-bold">
+                      {item.badge}
+                    </span>
+                  </div>
+                  <h4 className="text-sm font-bold text-white mb-1 group-hover:text-[#00D084] transition-colors">
+                    {item.problem}
+                  </h4>
+                  <p className="text-xs text-white/50 leading-relaxed font-light mb-3">
+                    {item.cost}
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-white/10">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
+                    <span className="text-xs text-white/90 font-medium leading-snug">
+                      {item.fix}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1025,7 +1126,7 @@ export function FleetSolutionsPage() {
       <section id="services" className="fleet-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
         <div className="fleet-services-header text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
-            Fleet Solutions
+            Fleet Solutions Suite
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
             Everything an EV fleet needs, from one EV specialist
@@ -1035,81 +1136,14 @@ export function FleetSolutionsPage() {
           </p>
         </div>
 
-        <div className="fleet-services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              step: "01",
-              title: "Preventive maintenance AMC",
-              desc: "Scheduled servicing to a fixed EV checklist: brakes, tyres, suspension, connectors, firmware.",
-              icon: Wrench,
-            },
-            {
-              step: "02",
-              title: "Predictive battery health",
-              desc: "Monthly cell-level scans, balancing and SoH trends that flag weak packs before they fail.",
-              icon: Activity,
-            },
-            {
-              step: "03",
-              title: "Breakdown & roadside response",
-              desc: "Priority dispatch for fleet vehicles, with towing to the nearest hub when needed.",
-              icon: Truck,
-            },
-            {
-              step: "04",
-              title: "Depot and doorstep service",
-              desc: "Technician teams at your depot or rider hubs, so vehicles are serviced between shifts.",
-              icon: Building2,
-            },
-            {
-              step: "05",
-              title: "Motor, controller & charger repair",
-              desc: "EV-grade diagnostics and repair for powertrain and charging faults, across brands.",
-              icon: Zap,
-            },
-            {
-              step: "06",
-              title: "Parts at contract rates",
-              desc: "Batteries, chargers, controllers, tyres and brake parts supplied through EV Spare Hub.",
-              icon: Cpu,
-            },
-            {
-              step: "07",
-              title: "Battery lifecycle management",
-              desc: "Repair, refurbishment and replacement planning, with certified end-of-life handling.",
-              icon: Layers,
-            },
-            {
-              step: "08",
-              title: "Rider care training",
-              desc: "Short practical sessions for riders on charging habits and daily checks that cut avoidable faults.",
-              icon: ShieldCheck,
-            },
-          ].map((card) => {
-            const Icon = card.icon;
-            return (
-              <div
-                key={card.step}
-                className="fleet-service-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-mono font-bold text-[#00D084]">{card.step}</span>
-                    <Icon className="w-5 h-5 text-white/40 group-hover:text-[#00D084] transition-colors" />
-                  </div>
-                  <h3 className="text-base font-bold text-white mb-2 leading-snug">{card.title}</h3>
-                  <p className="text-xs text-white/60 leading-relaxed font-light">{card.desc}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {/* Cinematic Visual Stage Showcase & Modular Capabilities */}
+        <FleetVisualShowcase />
       </section>
 
       {/* S6: Autobot OS for Fleets */}
       <section id="autobot-os" className="py-20 px-6 bg-[#040805] border-t border-white/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="autobot-header-reveal text-center max-w-3xl mx-auto mb-16">
+        <div className="max-w-7xl mx-auto space-y-16">
+          <div className="autobot-header-reveal text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
               Technology // Autobot OS
             </div>
@@ -1122,7 +1156,7 @@ export function FleetSolutionsPage() {
           </div>
 
           {/* 6-Step Automation Flow */}
-          <div className="autobot-steps-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-16">
+          <div className="autobot-steps-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {[
               { num: "01", title: "Detect", desc: "AI reads battery & fault data, flags risk." },
               { num: "02", title: "Schedule", desc: "Slots booked around shift downtime." },
@@ -1131,7 +1165,7 @@ export function FleetSolutionsPage() {
               { num: "05", title: "Verify", desc: "Post-repair test & sign-off before handover." },
               { num: "06", title: "Report", desc: "Dashboard, invoice & insights update live." },
             ].map((step) => (
-              <div key={step.num} className="autobot-step-pill p-4 rounded-2xl bg-[#080d0a] border border-white/10">
+              <div key={step.num} className="autobot-step-pill p-4 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-colors">
                 <span className="text-[10px] font-mono text-[#00D084] font-bold block mb-1">{step.num}</span>
                 <span className="text-sm font-bold text-white block mb-1">{step.title}</span>
                 <span className="text-[11px] text-white/60 block leading-tight">{step.desc}</span>
@@ -1140,7 +1174,7 @@ export function FleetSolutionsPage() {
           </div>
 
           {/* 6 Modules Grid */}
-          <div className="autobot-mods-grid grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="autobot-mods-grid grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
             {[
               {
                 tag: "AI Diagnostics",
@@ -1173,7 +1207,7 @@ export function FleetSolutionsPage() {
                 desc: "Connects with telematics, ERP and rider apps. Exports for finance.",
               },
             ].map((mod) => (
-              <div key={mod.title} className="autobot-mod-card p-6 rounded-2xl bg-[#080d0a] border border-white/10">
+              <div key={mod.title} className="autobot-mod-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/30 transition-all">
                 <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">{mod.tag}</span>
                 <h3 className="text-base font-bold text-white mb-2">{mod.title}</h3>
                 <p className="text-xs text-white/60 leading-relaxed">{mod.desc}</p>
@@ -1183,9 +1217,9 @@ export function FleetSolutionsPage() {
         </div>
       </section>
 
-      {/* S7: Fleet AMC Plans Table */}
-      <section id="plans" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="plans-header-reveal text-center max-w-3xl mx-auto mb-16">
+      {/* S7: Fleet AMC Plans & ROI Calculator */}
+      <section id="plans" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10 space-y-16">
+        <div className="plans-header-reveal text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Fleet AMC Plans
           </div>
@@ -1197,80 +1231,8 @@ export function FleetSolutionsPage() {
           </p>
         </div>
 
-        <div className="plans-table-reveal overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
-          <table className="w-full text-left text-xs min-w-[700px]">
-            <thead className="bg-white/5 border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
-              <tr>
-                <th className="p-4 w-1/4">Feature</th>
-                <th className="p-4 text-center">Fleet Essential (10–25)</th>
-                <th className="p-4 text-center bg-[#0D5C2E]/20 text-[#00D084]">Fleet Pro (26–100)</th>
-                <th className="p-4 text-center">Fleet Enterprise (100+)</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-white/80">
-              <tr>
-                <td className="p-4 font-bold text-white">Monthly preventive service</td>
-                <td className="p-4 text-center text-[#00D084]">✓</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓</td>
-                <td className="p-4 text-center text-[#00D084]">✓</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Battery health audit</td>
-                <td className="p-4 text-center text-white/60">Quarterly</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">Monthly</td>
-                <td className="p-4 text-center text-white font-semibold">Monthly + Live Alerts</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Priority service bay</td>
-                <td className="p-4 text-center text-white/30">—</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓</td>
-                <td className="p-4 text-center text-[#00D084]">✓</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Breakdown response</td>
-                <td className="p-4 text-center text-white/60">Standard</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">Priority</td>
-                <td className="p-4 text-center text-white font-semibold">Custom SLA</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Depot service team</td>
-                <td className="p-4 text-center text-white/30">—</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-white/80">On Request</td>
-                <td className="p-4 text-center text-[#00D084] font-bold">✓ Dedicated</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Dedicated account manager</td>
-                <td className="p-4 text-center text-white/30">—</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓</td>
-                <td className="p-4 text-center text-[#00D084]">✓</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Fleet dashboard</td>
-                <td className="p-4 text-center text-[#00D084]">✓</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓</td>
-                <td className="p-4 text-center text-[#00D084]">✓ + API Integration</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Parts at contract rates</td>
-                <td className="p-4 text-center text-[#00D084]">✓</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓</td>
-                <td className="p-4 text-center text-[#00D084]">✓</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Monthly business review</td>
-                <td className="p-4 text-center text-white/30">—</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-white/80">Quarterly</td>
-                <td className="p-4 text-center text-white font-semibold">Monthly</td>
-              </tr>
-              <tr className="bg-white/5 font-mono">
-                <td className="p-4 font-bold text-white">Pricing</td>
-                <td className="p-4 text-center text-white">Custom per vehicle</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/20 text-[#00D084] font-bold">Recommended for scale</td>
-                <td className="p-4 text-center text-white">Custom SLA &amp; Volume</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {/* Interactive Fleet ROI Calculator & Visual Tier Cards Deck */}
+        <FleetRoiCalculator />
       </section>
 
       {/* S14: FAQ Accordion */}

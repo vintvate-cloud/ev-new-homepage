@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { BookingModal } from "../components/BookingModal";
+import { EcosystemHubVisualizer } from "../components/ecosystem/EcosystemHubVisualizer";
 import {
   ShieldCheck,
   Building2,
@@ -119,6 +120,24 @@ export function EcosystemPage() {
           }
         );
       }
+
+      gsap.utils.toArray<HTMLElement>(".ecosystem-reveal").forEach((elem) => {
+        gsap.fromTo(
+          elem,
+          { opacity: 0, y: 35 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: elem,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
     });
 
     const refreshTimer = setTimeout(() => {
@@ -159,7 +178,7 @@ export function EcosystemPage() {
             className="max-w-4xl mx-auto text-center relative z-10 px-6 space-y-4 pointer-events-auto"
           >
             <span className="hero-sub-reveal text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
-              • Technology Platform · Autobot OS
+              Ã¢â‚¬Â¢ Technology Platform Ã‚Â· Autobot OS
             </span>
             <h1 className="hero-title-reveal text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08]">
               India's First Integrated <br className="hidden sm:block" />
@@ -198,163 +217,183 @@ export function EcosystemPage() {
             <div className="pb-3 px-6 max-w-7xl mx-auto">
               <nav aria-label="breadcrumb" className="text-xs font-mono text-white/50 flex items-center gap-2">
                 <Link to="/" className="hover:text-[#00D084] transition-colors">Home</Link>
-                <span>›</span>
+                <span>Ã¢â‚¬Âº</span>
                 <span className="text-[#00D084]">Ecosystem</span>
               </nav>
             </div>
 
-            {/* S1: Hub-and-Spoke Interactive Diagram (ECO-003) */}
-            <section className="pt-6 pb-12 max-w-5xl mx-auto px-6">
-            <div className="ecosystem-hub-container p-8 sm:p-12 rounded-[32px] bg-[#07110B] border border-white/15 shadow-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,208,132,0.1),transparent_70%)] pointer-events-none" />
-              
-              <div className="text-[10px] font-mono text-[#00D084] uppercase tracking-widest mb-6 font-bold">
-                The Operating System for India's EV Aftermarket Economy
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                {/* Left: Who We Serve */}
-                <div className="space-y-3 text-left">
-                  <div className="ecosystem-hub-col-title text-xs font-mono text-white/50 uppercase tracking-wider mb-2 font-bold">Who We Serve</div>
-                  {[
-                    { title: "EV Owners", desc: "Book, track & get battery reports on phone" },
-                    { title: "Fleet Operators", desc: "Uptime telemetry, scheduled AMC, single invoice" },
-                    { title: "EV Brands (OEMs)", desc: "Warranty jobs, PDI & field failure API data" },
-                  ].map((node) => (
-                    <div key={node.title} className="ecosystem-hub-node p-4 rounded-2xl bg-[#0b1610] border border-white/10">
-                      <div className="text-sm font-bold text-white mb-0.5">{node.title}</div>
-                      <div className="text-[11px] text-white/60 leading-tight">{node.desc}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Center: Autobot OS Core */}
-                <div className="ecosystem-center-card p-6 rounded-3xl bg-gradient-to-b from-[#0D5C2E]/40 to-[#07110B] border-2 border-[#00D084] shadow-[0_0_40px_rgba(0,208,132,0.2)] text-center relative">
-                  <div className="w-12 h-12 rounded-2xl bg-[#00D084] text-black mx-auto mb-3 flex items-center justify-center font-black">
-                    <Cpu className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-black text-white mb-1">Autobot OS</h3>
-                  <span className="text-[10px] font-mono font-bold text-[#F5A623] uppercase block mb-3">Core AI + Automation</span>
-                  <div className="flex flex-wrap justify-center gap-1.5 text-[9px] font-mono text-white/80">
-                    <span className="px-2 py-0.5 rounded bg-white/10">AI Diagnostics</span>
-                    <span className="px-2 py-0.5 rounded bg-white/10">Auto-Scheduling</span>
-                    <span className="px-2 py-0.5 rounded bg-white/10">QR Parts</span>
-                    <span className="px-2 py-0.5 rounded bg-white/10">SLA Monitor</span>
-                    <span className="px-2 py-0.5 rounded bg-white/10">GST Billing</span>
-                  </div>
-                </div>
-
-                {/* Right: Who Delivers */}
-                <div className="space-y-3 text-right md:text-left">
-                  <div className="ecosystem-hub-col-title text-xs font-mono text-white/50 uppercase tracking-wider mb-2 font-bold">Who Delivers</div>
-                  {[
-                    { title: "Certified Technicians", desc: "HV safety certified via Autobot Academy" },
-                    { title: "Centres & Hubs", desc: "Garage, Centre & Hub formats with set tooling" },
-                    { title: "EV Spare Hub", desc: "Centralized inventory tracked to every bay" },
-                  ].map((node) => (
-                    <div key={node.title} className="ecosystem-hub-node p-4 rounded-2xl bg-[#0b1610] border border-white/10">
-                      <div className="text-sm font-bold text-white mb-0.5">{node.title}</div>
-                      <div className="text-[11px] text-white/60 leading-tight">{node.desc}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
+            {/* S1: Hub-and-Spoke Interactive Architecture & Autobot OS Engine */}
+            <section className="pt-4 pb-16 max-w-7xl mx-auto px-6">
+              <EcosystemHubVisualizer />
+            </section>
 
       {/* S2: What is the Ecosystem? */}
-      <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2 font-bold">
-              Our Blueprint
+      <section className="ecosystem-reveal py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-6 space-y-6 text-left">
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
+              Our Architecture Blueprint
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-6">
-              What is the MY EV Service Ecosystem?
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+              India's First EV Service <br />
+              <span className="text-[#00D084]">Super Market (SSM)</span>
             </h2>
-            <div className="space-y-6 text-sm text-white/70 font-light leading-relaxed">
-              <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10">
-                <h3 className="text-base font-bold text-white mb-1.5">India's First EV Service Super Market (SSM)</h3>
-                <p>Everything an EV needs after purchase, under one trusted brand: diagnostics, repairs, preventive maintenance, parts, accessories and battery care.</p>
+            <p className="text-sm sm:text-base text-white/70 font-light leading-relaxed">
+              Everything an electric vehicle needs after rolling out of the showroom: diagnostics, repairs, preventive maintenance, battery balancing, genuine parts, and charging â€” unified on one platform.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="p-5 rounded-2xl bg-[#08120b] border border-white/10 hover:border-[#00D084]/40 transition-all">
+                <span className="text-xs font-mono font-bold text-[#00D084] uppercase block mb-1">01 // SSM Model</span>
+                <h4 className="text-sm font-bold text-white mb-1">Multi-Brand Super Market</h4>
+                <p className="text-xs text-white/60 font-light leading-relaxed">
+                  Single destination for 2W & 3W EVs across Ola, Ather, TVS, Bajaj, Mahindra, and fleet commercial makes.
+                </p>
               </div>
-              <div className="p-5 rounded-2xl bg-[#080d0a] border border-white/10">
-                <h3 className="text-base font-bold text-white mb-1.5">A Unified Platform for Owners, Businesses and Providers</h3>
-                <p>Owners book and track, centres operate, suppliers fulfil and fleets manage, all interconnected through real-time Autobot OS data channels.</p>
+              <div className="p-5 rounded-2xl bg-[#08120b] border border-white/10 hover:border-[#00D084]/40 transition-all">
+                <span className="text-xs font-mono font-bold text-[#F5A623] uppercase block mb-1">02 // Cloud Sync</span>
+                <h4 className="text-sm font-bold text-white mb-1">Real-Time Autobot OS Data</h4>
+                <p className="text-xs text-white/60 font-light leading-relaxed">
+                  Owners track on mobile, centres execute in digital bays, and fleets review unified invoices.
+                </p>
               </div>
+            </div>
+
+            {/* Market Gap Stat Ribbon */}
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-between text-xs font-mono">
+              <span className="text-white/60">PUNE RTO EV GROWTH:</span>
+              <span className="text-white font-bold">12,737 ? 37,808 EVs (~3Ã— YoY)</span>
+              <span className="text-[#00D084] font-bold">HIGH DEMAND</span>
             </div>
           </div>
 
-          <div className="ecosystem-market-gap p-8 rounded-3xl bg-[#07110B] border border-white/10 space-y-6">
-            <span className="text-[11px] font-mono text-[#F5A623] uppercase font-bold tracking-widest block">The Market Gap</span>
-            <h3 className="text-2xl font-bold text-white leading-tight">
-              Rapid EV Adoption but Limited Service Infrastructure
-            </h3>
-            <p className="text-xs text-white/70 leading-relaxed font-light">
-              In Pune alone, EV registrations rose from 12,737 in FY 2024–25 to 37,808 in FY 2025–26 (Pune RTO). Brand centres serve single makes with long queues, while traditional roadside mechanics lack high-voltage diagnostic tools.
-            </p>
-            <div className="grid grid-cols-2 gap-4 pt-2 font-mono">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-2xl font-black text-[#00D084] block">37,808</span>
-                <span className="text-[10px] text-white/50 uppercase">Pune RTO EVs (FY 25–26)</span>
+          {/* Right: High-Resolution Photographic Editorial Frame */}
+          <div className="lg:col-span-6">
+            <div className="relative rounded-3xl overflow-hidden border border-white/15 group shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+              <img 
+                src="/ecosystem/edge.jpg" 
+                alt="CAN-bus Battery Diagnostic Lab" 
+                className="w-full aspect-[4/3] object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none" />
+              
+              {/* Floating Top Badge */}
+              <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 text-[10px] font-mono text-white/90">
+                <span className="w-2 h-2 rounded-full bg-[#00D084] animate-ping" />
+                <span>CAN-BUS DIAGNOSTIC FACILITY</span>
               </div>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-2xl font-black text-[#F5A623] block">~3×</span>
-                <span className="text-[10px] text-white/50 uppercase">Year-over-Year Growth</span>
+
+              {/* Bottom Info Bar */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                <div className="text-left">
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-[#00D084] font-bold">Standardized Facility</div>
+                  <div className="text-sm font-bold text-white">Flagship Master Workshop Bay</div>
+                </div>
+                <span className="text-[10px] font-mono font-bold text-black bg-[#00D084] px-3 py-1.5 rounded-xl shadow-md">
+                  ? 36-PT SAFETY VERIFIED
+                </span>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* S5: 5 Key Components */}
-      <section className="py-20 px-6 bg-[#040805] border-t border-white/10">
+      {/* S5: 5 Key Components with Real Cinematic Imagery */}
+      <section className="ecosystem-reveal py-20 px-6 bg-[#030704] border-t border-white/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
-              Core Pillars
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-3">
+              Core Physical & Digital Infrastructure
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-              Key Components of the MY EV Service Ecosystem
+              5 Pillars Powering the Ecosystem
             </h2>
+            <p className="text-xs sm:text-sm text-white/60 font-light mt-2 max-w-xl mx-auto">
+              Every pillar is digitally connected to Autobot OS, guaranteeing consistent engineering standards nationwide.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
             {[
               {
                 title: "EV Service Centres Network",
-                desc: "Franchise-owned Garages, Centres and Hubs built to one engineering standard.",
+                desc: "Certified Garages, Centres and Master Hubs equipped with HV lifts, scanners, and safety gear.",
                 icon: Building2,
+                image: "/ev-master-workshop-hero.png",
+                stat: "240+ Bays",
+                tag: "1000V SAFETY",
               },
               {
                 title: "EV Charging Infrastructure",
-                desc: "Fast charging at hubs for walk-in customers and delivery fleets.",
+                desc: "Fast DC charging co-located at hubs for quick top-ups, walk-ins, and delivery fleets.",
                 icon: BatteryCharging,
+                image: "/ai-gallery/ev_charging_hub.png",
+                stat: "180+ Guns",
+                tag: "60-120kW DC",
               },
               {
                 title: "EV Spare Parts Supply Chain",
-                desc: "Central sourcing and compatibility verification with fast dispatch to centres.",
+                desc: "Centralized sourcing warehouse with RFID inventory tracking and express 2-hour bay delivery.",
                 icon: Store,
+                image: "/franchise-banner-building.png",
+                stat: "12,500+ SKUs",
+                tag: "RFID TRACKED",
               },
               {
                 title: "Battery Lifecycle Services",
-                desc: "Health checks, cell balancing, module repair and certified second-life reuse.",
+                desc: "SoH diagnostics, cell balancing, module rebuilds, and certified second-life repurposing.",
                 icon: Activity,
+                image: "/gallery/battery-lab.png",
+                stat: "14,820+ Packs",
+                tag: "CAN-BUS AI",
               },
               {
-                title: "Fleet Maintenance & Mobility",
-                desc: "Annual contracts, predictive audits and priority bays for EV commercial fleets.",
+                title: "Fleet Mobility Command",
+                desc: "Predictive maintenance AMCs, overnight charging routines, and dedicated priority bays for fleets.",
                 icon: Truck,
+                image: "/ai-gallery/ev_workshop_bay.png",
+                stat: "8,200+ EVs",
+                tag: "98.5% UPTIME",
               },
             ].map((col) => {
               const Icon = col.icon;
               return (
-                <div key={col.title} className="p-6 rounded-2xl bg-[#080d0a] border border-white/10 flex flex-col justify-between">
-                  <div>
-                    <div className="w-10 h-10 rounded-xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] mb-4">
+                <div 
+                  key={col.title} 
+                  className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-[#00D084]/50 transition-all duration-500 shadow-xl flex flex-col justify-between min-h-[380px] p-6 text-left"
+                >
+                  {/* Real Background Image with Dark Cinematic Gradient */}
+                  <div className="absolute inset-0 pointer-events-none z-0">
+                    <img 
+                      src={col.image} 
+                      alt={col.title} 
+                      className="w-full h-full object-cover filter brightness-[0.4] group-hover:brightness-[0.5] group-hover:scale-110 transition-all duration-700 ease-out" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/80 to-transparent" />
+                  </div>
+                  
+                  {/* Top Bar with Icon and Tag */}
+                  <div className="relative z-10 flex items-center justify-between mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-black/60 backdrop-blur-md border border-white/15 flex items-center justify-center text-[#00D084] group-hover:bg-[#00D084] group-hover:text-black transition-all shadow-md">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-sm font-bold text-white mb-2 leading-snug">{col.title}</h3>
-                    <p className="text-xs text-white/60 leading-relaxed font-light">{col.desc}</p>
+                    <span className="text-[9px] font-mono font-bold text-white/70 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 group-hover:border-[#00D084]/40 group-hover:text-[#00D084] transition-all">
+                      {col.tag}
+                    </span>
+                  </div>
+
+                  {/* Text Content */}
+                  <div className="relative z-10 mt-auto">
+                    <h3 className="text-base font-bold text-white mb-2 leading-snug group-hover:text-[#00D084] transition-colors">
+                      {col.title}
+                    </h3>
+                    <p className="text-xs text-white/70 leading-relaxed font-light mb-4">
+                      {col.desc}
+                    </p>
+                    <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                      <span className="text-white/40 uppercase">Scale:</span>
+                      <strong className="text-[#00D084] font-bold">{col.stat}</strong>
+                    </div>
                   </div>
                 </div>
               );
@@ -362,7 +401,6 @@ export function EcosystemPage() {
           </div>
         </div>
       </section>
-
       {/* S7: Who Can Join */}
       <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -381,40 +419,63 @@ export function EcosystemPage() {
               desc: "Convert or upgrade your existing two-wheeler workshop into a branded, high-tech EV hub.",
               action: "Convert Centre",
               href: "/franchise",
+              icon: Building2,
+              stat: "Avg Ã¢â€šÂ¹1.8L - Ã¢â€šÂ¹4.5L/mo net",
             },
             {
               title: "EV Charging Infrastructure Providers",
               desc: "Co-locate chargers at our hubs, or add certified vehicle service to your existing charge-points.",
               action: "Co-locate Charging",
               href: "/franchise",
+              icon: BatteryCharging,
+              stat: "Direct walk-in footfall",
             },
             {
               title: "Fleet Operators & Logistics",
               desc: "Plug your commercial fleet directly into our scheduled preventive maintenance network.",
               action: "Connect Fleet",
               href: "/fleet",
+              icon: Truck,
+              stat: "98.5% Uptime SLA",
             },
             {
               title: "EV Spare Parts Suppliers",
               desc: "Supply into EV Spare Hub and reach hundreds of service bays across India.",
               action: "Supply Parts",
               href: "/store",
+              icon: Store,
+              stat: "68+ Hub network reach",
             },
-          ].map((item) => (
-            <div key={item.title} className="p-6 rounded-2xl bg-[#080d0a] border border-white/10 flex flex-col justify-between">
-              <div>
-                <h3 className="text-base font-bold text-white mb-2">{item.title}</h3>
-                <p className="text-xs text-white/60 leading-relaxed font-light mb-6">{item.desc}</p>
-              </div>
-              <Link
-                to={item.href}
-                className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00D084] hover:text-white transition-colors"
+          ].map((item) => {
+            const Icon = item.icon;
+            return (
+              <div 
+                key={item.title} 
+                className="group p-6 rounded-2xl bg-[#080d0a] hover:bg-[#0c1810] border border-white/10 hover:border-[#00D084]/40 hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-lg relative overflow-hidden text-left"
               >
-                <span>{item.action}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          ))}
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#00D084]/5 rounded-full blur-xl group-hover:bg-[#00D084]/15 transition-all pointer-events-none" />
+                
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] group-hover:bg-[#00D084] group-hover:text-black transition-all mb-4">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-base font-bold text-white mb-2 group-hover:text-[#00D084] transition-colors">{item.title}</h3>
+                  <p className="text-xs text-white/60 leading-relaxed font-light mb-4">{item.desc}</p>
+                </div>
+
+                <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-[#00D084]">{item.stat}</span>
+                  <Link
+                    to={item.href}
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00D084] group-hover:text-white transition-colors cursor-pointer"
+                  >
+                    <span>{item.action}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 

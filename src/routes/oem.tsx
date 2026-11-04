@@ -5,6 +5,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { BookingModal } from "../components/BookingModal";
+import { OEMBrandMarquee } from "../components/oem/OEMBrandMarquee";
+import { OEMVisualStages } from "../components/oem/OEMVisualStages";
+import { OEMNetworkSimulator } from "../components/oem/OEMNetworkSimulator";
 import {
   ShieldCheck,
   Building2,
@@ -708,11 +711,10 @@ export function OEMSolutionsPage() {
                                 key={pill.id}
                                 type="button"
                                 onClick={() => setForm({ ...form, vehicleCategory: pill.id })}
-                                className={`py-2 px-2.5 rounded-full text-xs font-bold transition-all text-center cursor-pointer border ${
-                                  isSelected
+                                className={`py-2 px-2.5 rounded-full text-xs font-bold transition-all text-center cursor-pointer border ${isSelected
                                     ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_15px_rgba(0,208,132,0.35)]"
                                     : "bg-[#0d1410] text-white/80 border-white/15 hover:border-white/35 hover:bg-[#131d17]"
-                                }`}
+                                  }`}
                               >
                                 {pill.label}
                               </button>
@@ -845,18 +847,16 @@ export function OEMSolutionsPage() {
                               key={item}
                               type="button"
                               onClick={() => handleTypeToggle(item)}
-                              className={`flex items-center gap-2.5 p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                                isSelected
+                              className={`flex items-center gap-2.5 p-3 rounded-2xl border text-left transition-all cursor-pointer ${isSelected
                                   ? "bg-[#00D084]/15 border-[#00D084] text-white shadow-[0_0_15px_rgba(0,208,132,0.2)]"
                                   : "bg-[#0a0f0d]/90 border-white/15 text-white/80 hover:border-white/35 hover:bg-[#121a15]"
-                              }`}
+                                }`}
                             >
                               <div
-                                className={`w-4 h-4 rounded-md flex items-center justify-center shrink-0 border transition-all ${
-                                  isSelected
+                                className={`w-4 h-4 rounded-md flex items-center justify-center shrink-0 border transition-all ${isSelected
                                     ? "bg-[#00D084] border-[#00D084] text-black"
                                     : "border-white/30 bg-transparent"
-                                }`}
+                                  }`}
                               >
                                 {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                               </div>
@@ -976,433 +976,551 @@ export function OEMSolutionsPage() {
               </div>
             </section>
 
-      {/* S3: Built For Band */}
-      <section className="oem-chips-trigger py-6 border-y border-white/10 bg-[#060a08]">
-        <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-3 text-xs">
-          <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-wider font-bold">Built For:</span>
-          {[
-            "Electric 2W Manufacturers",
-            "3W / L5 Cargo Makers",
-            "New & Import EV Brands",
-            "Automotive Dealer Groups",
-            "Battery & Component Makers",
-            "Leasing & Financing Companies",
-          ].map((seg) => (
-            <span key={seg} className="oem-chip-item px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium">
-              {seg}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* S4: The After-Sales Gap Comparison Table */}
-      <section className="oem-gap-trigger py-20 px-6 max-w-7xl mx-auto">
-        <div className="oem-gap-header text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
-            The After-Sales Gap
-          </div>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-            EV sales are moving faster than service networks
-          </h2>
-          <p className="text-sm text-white/60 mt-3 font-light">
-            In Pune alone, EV registrations nearly tripled in FY 2025–26 to 37,808 vehicles. For an EV brand, poor after-sales in one city shows up as lost sales in the next. These are the problems we take off your plate.
-          </p>
-        </div>
-
-        <div className="oem-gap-table overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
-          <table className="w-full text-left text-xs min-w-[700px]">
-            <thead className="bg-white/5 border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
-              <tr>
-                <th className="p-4 w-1/4">Problem</th>
-                <th className="p-4 w-1/3">Impact on Your Brand</th>
-                <th className="p-4 w-5/12 bg-[#0D5C2E]/20 text-[#00D084]">The MY EV SERVICE Fix</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-white/80">
-              <tr>
-                <td className="p-4 font-bold text-white">Sales outpace service</td>
-                <td className="p-4 text-white/60">Customers in new cities wait days for basic repairs; online reviews suffer.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Ready service capacity in our network, trained on your vehicle platform.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Capex-heavy service centres</td>
-                <td className="p-4 text-white/60">Company-owned centres tie up capital and take 6+ months to open.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Network-as-a-service: pay only for the capacity you use, scale per city.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Uneven dealer service</td>
-                <td className="p-4 text-white/60">Quality varies widely based on each independent dealer's tooling &amp; skills.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Standardized workshops, certified EV tooling and Autobot Academy training.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Blind spots in field data</td>
-                <td className="p-4 text-white/60">Repeat faults reach R&amp;D engineering too late, or never at all.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Every single job, fault code and replacement part logged and shared via API.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Slow parts in new markets</td>
-                <td className="p-4 text-white/60">Vehicles sit idle waiting for consignments to arrive.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Parts warehousing and serial-level traceability through EV Spare Hub.</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Warranty claim leakage</td>
-                <td className="p-4 text-white/60">Weak telemetry evidence and inconsistent diagnostic logs drive up claim costs.</td>
-                <td className="p-4 bg-[#0D5C2E]/10 text-[#00D084] font-medium">Photo, data and fault-code evidence attached to every single warranty claim.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* S5: OEM Solutions Grid */}
-      <section id="services" className="oem-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="oem-services-header text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
-            OEM Solutions
-          </div>
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-            A complete after-sales layer for your EV brand
-          </h2>
-          <p className="text-sm text-white/60 mt-3 font-light">
-            Take one service or the full stack. Every service runs to your SOPs and reports into your systems.
-          </p>
-        </div>
-
-        <div className="oem-services-grid grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              step: "01",
-              title: "After-sales service partner",
-              desc: "Your customers' vehicles serviced at MY EV SERVICE centres, to your exact procedures and labour times.",
-              icon: Building2,
-            },
-            {
-              step: "02",
-              title: "Warranty and goodwill jobs",
-              desc: "Diagnosis, repair and claim submission with full diagnostic evidence, approved through your workflow.",
-              icon: ShieldCheck,
-            },
-            {
-              step: "03",
-              title: "Recalls and field campaigns",
-              desc: "Customer outreach, batch scheduling and completion tracking for voluntary or regulatory service campaigns.",
-              icon: AlertCircle,
-            },
-            {
-              step: "04",
-              title: "PDI and dealer support",
-              desc: "Pre-delivery inspection, battery state-of-health baseline and technical backup for your dealer network.",
-              icon: CheckCircle2,
-            },
-            {
-              step: "05",
-              title: "Parts distribution",
-              desc: "Stocking, regional logistics and serial-level barcode traceability of your OEM parts through EV Spare Hub.",
-              icon: Cpu,
-            },
-            {
-              step: "06",
-              title: "Technician training",
-              desc: "Autobot Academy certification, with customized modules built specifically for your vehicle platform.",
-              icon: Award,
-            },
-            {
-              step: "07",
-              title: "Battery diagnostics & refurb",
-              desc: "Cell-level testing, module balancing, pack repair, warranty verification and second-life assessment.",
-              icon: Activity,
-            },
-            {
-              step: "08",
-              title: "Roadside assistance",
-              desc: "Rapid breakdown support and flatbed towing for your customers across our active urban service zones.",
-              icon: Wrench,
-            },
-            {
-              step: "09",
-              title: "Market-entry service setup",
-              desc: "Centres, parts buffer, RSA and certified technicians fully operational before you launch vehicle deliveries in a new city.",
-              icon: Sparkles,
-            },
-          ].map((card) => {
-            const Icon = card.icon;
-            return (
-              <div
-                key={card.step}
-                className="oem-service-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-mono font-bold text-[#00D084]">{card.step}</span>
-                    <Icon className="w-5 h-5 text-white/40 group-hover:text-[#00D084] transition-colors" />
-                  </div>
-                  <h3 className="text-base font-bold text-white mb-2 leading-snug">{card.title}</h3>
-                  <p className="text-xs text-white/60 leading-relaxed font-light">{card.desc}</p>
+            {/* S3: Infinite OEM Brand Marquee & Tested Platforms */}
+            <section className="oem-chips-trigger">
+              <OEMBrandMarquee />
+              <div className="py-4 border-b border-white/10 bg-[#060a08]/80 backdrop-blur-md">
+                <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
+                  <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-wider font-bold">
+                    Turn-Key Infrastructure For:
+                  </span>
+                  {[
+                    "Electric 2W Manufacturers",
+                    "3W / L5 Cargo Makers",
+                    "New & Import EV Brands",
+                    "Automotive Dealer Groups",
+                    "Battery & Component Makers",
+                    "Leasing & Commercial Fleets",
+                  ].map((seg) => (
+                    <span
+                      key={seg}
+                      className="oem-chip-item px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium text-[11px] hover:border-[#00D084]/40 hover:text-white transition-colors"
+                    >
+                      {seg}
+                    </span>
+                  ))}
                 </div>
               </div>
-            );
-          })}
-        </div>
-      </section>
+            </section>
 
-      {/* S6: Autobot OS for OEMs */}
-      <section id="autobot-os" className="py-20 px-6 bg-[#040805] border-t border-white/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="oem-autobot-header text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
-              Technology // Autobot OS for OEMs
-            </div>
-            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-              An AI-powered service platform your team can see into
-            </h2>
-            <p className="text-sm text-white/60 mt-3 font-light">
-              Autobot OS runs every job from booking to warranty claim. It automates scheduling, dispatch, parts and reporting, so service is consistent in every city, giving your quality teams full field visibility.
-            </p>
-          </div>
-
-          {/* 6-Step SOP Automation Flow */}
-          <div className="oem-autobot-steps grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-16">
-            {[
-              { num: "01", title: "Load SOPs", desc: "Your procedures, labour times & parts lists." },
-              { num: "02", title: "Book", desc: "Customer, dealer or recall bookings routed." },
-              { num: "03", title: "Diagnose", desc: "AI-guided fault finding on your platform." },
-              { num: "04", title: "Approve", desc: "Warranty evidence sent for your sign-off." },
-              { num: "05", title: "Repair", desc: "Guided digital job card with scanned parts." },
-              { num: "06", title: "Report", desc: "Live failure trends & quality data exported." },
-            ].map((step) => (
-              <div key={step.num} className="oem-autobot-step p-4 rounded-2xl bg-[#080d0a] border border-white/10">
-                <span className="text-[10px] font-mono text-[#00D084] font-bold block mb-1">{step.num}</span>
-                <span className="text-sm font-bold text-white block mb-1">{step.title}</span>
-                <span className="text-[11px] text-white/60 block leading-tight">{step.desc}</span>
+            {/* S4: The After-Sales Gap Comparison */}
+            <section className="oem-gap-trigger py-20 px-6 max-w-7xl mx-auto">
+              <div className="oem-gap-header text-center max-w-3xl mx-auto mb-16">
+                <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
+                  The After-Sales Bottleneck
+                </div>
+                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+                  EV sales are moving faster than service networks
+                </h2>
+                <p className="text-sm text-white/60 mt-3 font-light">
+                  In Pune alone, EV registrations nearly tripled in FY 2025–26 to 37,808 vehicles. For an EV brand, poor after-sales in one city shows up as lost sales in the next. Here is how MY EV SERVICE solves the gap.
+                </p>
               </div>
-            ))}
-          </div>
 
-          {/* 6 Modules Grid */}
-          <div className="oem-autobot-mods grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                tag: "Brand SOP Library",
-                title: "Your process, every centre",
-                desc: "Procedures and labour times enforced step by step on the technician's digital job card.",
-              },
-              {
-                tag: "Warranty Workflow",
-                title: "Evidence-first claims",
-                desc: "High-resolution photos, BMS logs, and diagnostic trouble codes attached to every claim.",
-              },
-              {
-                tag: "Field Analytics",
-                title: "Failure trends by model",
-                desc: "Identify repeat batch faults, parts wear rate and mean time-to-repair by model variant.",
-              },
-              {
-                tag: "Traceability",
-                title: "Serial-level parts",
-                desc: "Every warranty component scanned from central warehouse to vehicle bay.",
-              },
-              {
-                tag: "DMS Integration",
-                title: "API to your DMS / ERP",
-                desc: "Jobs, claims, customer profiles and vehicle telemetry flow seamlessly into your core ERP.",
-              },
-              {
-                tag: "Data Governance",
-                title: "Your data stays yours",
-                desc: "Role-based access controls, strict NDAs and dedicated enterprise multi-tenant security.",
-              },
-            ].map((mod) => (
-              <div key={mod.title} className="oem-autobot-mod p-6 rounded-2xl bg-[#080d0a] border border-white/10">
-                <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">{mod.tag}</span>
-                <h3 className="text-base font-bold text-white mb-2">{mod.title}</h3>
-                <p className="text-xs text-white/60 leading-relaxed">{mod.desc}</p>
+              {/* Visual Split: Workshop Imagery & Interactive Gap Matrix */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                {/* Left Column: Visual Operational Showcase Card */}
+                <div className="lg:col-span-5 rounded-3xl overflow-hidden bg-[#07110b] border border-white/15 relative min-h-[460px] flex flex-col justify-between p-6 sm:p-8 shadow-2xl">
+                  <img
+                    src="/gallery/hydraulic-lift.png"
+                    alt="EV Service Multi-Bay Workshop"
+                    className="absolute inset-0 w-full h-full object-cover filter brightness-[0.4] contrast-[1.1] scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#040805] via-[#040805]/50 to-transparent pointer-events-none" />
+
+                  <div className="relative z-10 flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-[#00D084]/40 text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-wider">
+                      ● MULTI-BAY 1000V HV SYSTEM
+                    </span>
+                    <span className="text-xs font-mono text-white/60 bg-black/60 px-2.5 py-0.5 rounded-lg border border-white/10">
+                      ZERO CAPEX
+                    </span>
+                  </div>
+
+                  <div className="relative z-10 space-y-4">
+                    <div className="p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/10 space-y-2">
+                      <span className="text-[10px] font-mono text-[#00D084] font-bold uppercase block">
+                        The Scale Bottleneck
+                      </span>
+                      <p className="text-xs text-white/80 leading-relaxed font-light">
+                        Building proprietary centres costs ₹2.5 Cr+ per location and takes 6–9 months. MY EV SERVICE gives you instant capacity in 14 days under your exact brand SOPs.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 pt-2">
+                      <div className="p-3 rounded-xl bg-white/[0.05] border border-white/10 text-center">
+                        <span className="text-xl font-black text-white font-mono block">14 Days</span>
+                        <span className="text-[10px] text-white/50 uppercase font-mono">City Go-Live</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-white/[0.05] border border-white/10 text-center">
+                        <span className="text-xl font-black text-[#00D084] font-mono block">&lt; 4 Hours</span>
+                        <span className="text-[10px] text-white/50 uppercase font-mono">Mean Turnaround</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: 6 Friction vs Fix Cards */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    {
+                      problem: "Sales outpace service",
+                      impact: "Long customer wait times damaging customer NPS.",
+                      fix: "Turn-key service capacity pre-trained on your platform.",
+                      badge: "Immediate Scale",
+                    },
+                    {
+                      problem: "Capex-heavy centres",
+                      impact: "Capital tied down with 6+ months retail lease delays.",
+                      fix: "Network-as-a-Service: pay only for bays used per city.",
+                      badge: "Zero Capex",
+                    },
+                    {
+                      problem: "Uneven dealer quality",
+                      impact: "Inconsistent repairs across non-standardized dealers.",
+                      fix: "Standardized 1000V EV tooling & Autobot Academy cert.",
+                      badge: "Standard SOPs",
+                    },
+                    {
+                      problem: "Data blind spots",
+                      impact: "Repeat faults reach engineering teams months too late.",
+                      fix: "Every DTC code & repair logged and streamed via API.",
+                      badge: "Live Telemetry",
+                    },
+                    {
+                      problem: "Parts distribution delays",
+                      impact: "Vehicles sit idle for days waiting for spare shipments.",
+                      fix: "Regional parts buffer with RFID & 2-hr local delivery.",
+                      badge: "2-Hr Logistics",
+                    },
+                    {
+                      problem: "Warranty leakage",
+                      impact: "Weak evidence drives up warranty disputes & audit costs.",
+                      fix: "Digital job card with photo, BMS logs and sensor proof.",
+                      badge: "100% Verified",
+                    },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[10px] font-mono text-white/40 uppercase font-bold">Challenge {idx + 1}</span>
+                          <span className="px-2 py-0.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] font-mono text-[9px] font-bold">
+                            {item.badge}
+                          </span>
+                        </div>
+                        <h4 className="text-sm font-bold text-white mb-1 group-hover:text-[#00D084] transition-colors">
+                          {item.problem}
+                        </h4>
+                        <p className="text-xs text-white/50 leading-relaxed font-light mb-3">
+                          {item.impact}
+                        </p>
+                      </div>
+                      <div className="pt-3 border-t border-white/10">
+                        <div className="flex items-start gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
+                          <span className="text-xs text-white/90 font-medium leading-snug">
+                            {item.fix}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </section>
 
-      {/* S7: Engagement Models Table */}
-      <section id="models" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="oem-models-header text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
-            Engagement Models
-          </div>
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-            Four ways to work with us
-          </h2>
-          <p className="text-sm text-white/60 mt-3 font-light">
-            Start small in one city, then scale. Commercials are agreed per city and volume tier.
-          </p>
-        </div>
+            {/* S5: OEM Solutions Interactive Stages */}
+            <section id="services" className="oem-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
+              <div className="oem-services-header text-center max-w-3xl mx-auto mb-16">
+                <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
+                  OEM Solutions Suite
+                </div>
+                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+                  A complete after-sales layer for your EV brand
+                </h2>
+                <p className="text-sm text-white/60 mt-3 font-light">
+                  Take one capability or activate the full stack. Every workflow runs to your exact manufacturer SOPs with real-time digital accountability.
+                </p>
+              </div>
 
-        <div className="oem-models-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              model: "Service Partner",
-              what: "Service your customers' vehicles at our multi-brand centres under your SOPs.",
-              bestFor: "Brands with growing volume in a city",
-              commercials: "Per-job labour rates + parts",
-            },
-            {
-              model: "Network-as-a-Service",
-              what: "Dedicated bays and certified technicians reserved for your brand in chosen cities.",
-              bestFor: "Brands scaling sales fast",
-              commercials: "Monthly capacity fee + per job",
-            },
-            {
-              model: "Market-Entry Package",
-              what: "Service readiness before a new city launch: centres, parts buffer, RSA and trained technicians.",
-              bestFor: "New and import EV brands",
-              commercials: "Project fee per city",
-            },
-            {
-              model: "Training & Certification",
-              what: "Autobot Academy trains and certifies your internal or dealer technicians on high-voltage systems.",
-              bestFor: "Dealer networks & OEMs",
-              commercials: "Per cohort / batch",
-            },
-          ].map((item) => (
-            <div key={item.model} className="oem-model-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 flex flex-col justify-between">
-              <div>
-                <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">Model</span>
-                <h3 className="text-lg font-bold text-white mb-3">{item.model}</h3>
-                <p className="text-xs text-white/70 leading-relaxed mb-4">{item.what}</p>
-                <div className="pt-3 border-t border-white/10 space-y-1.5 text-xs">
+              {/* Cinematic Visual Stage Switcher Component */}
+              <OEMVisualStages />
+
+              {/* Specialized Capability Badges */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-12 pt-12 border-t border-white/10">
+                {[
+                  { tag: "Recalls & OTA", label: "Field Campaigns", icon: AlertCircle },
+                  { tag: "36-Pt Audit", label: "Dealer PDI Support", icon: CheckCircle2 },
+                  { tag: "Battery Lab", label: "Pack & Module Rebuild", icon: Activity },
+                  { tag: "Urban RSA", label: "2-Hr Flatbed Dispatch", icon: Wrench },
+                  { tag: "Autobot Academy", label: "Tech Certification", icon: Award },
+                  { tag: "Enterprise API", label: "DMS Cloud Sync", icon: Cpu },
+                ].map((item, i) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={i}
+                      className="p-3.5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all text-center flex flex-col items-center justify-center group"
+                    >
+                      <Icon className="w-5 h-5 text-white/40 group-hover:text-[#00D084] transition-colors mb-2" />
+                      <span className="text-[10px] font-mono text-[#00D084] uppercase block font-bold mb-0.5">
+                        {item.tag}
+                      </span>
+                      <span className="text-xs font-bold text-white leading-tight">
+                        {item.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* S6: Autobot OS for OEMs */}
+            <section id="autobot-os" className="py-20 px-6 bg-[#040805] border-t border-white/10">
+              <div className="max-w-7xl mx-auto space-y-16">
+                <div className="oem-autobot-header text-center max-w-3xl mx-auto">
+                  <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
+                    Technology // Autobot OS for OEMs
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+                    An AI-powered service platform your team can see into
+                  </h2>
+                  <p className="text-sm text-white/60 mt-3 font-light">
+                    Autobot OS runs every job from booking to warranty claim. It automates scheduling, dispatch, parts and reporting, giving your engineering and quality teams real-time field visibility.
+                  </p>
+                </div>
+
+                {/* 6-Step SOP Automation Flow */}
+                <div className="oem-autobot-steps grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {[
+                    { num: "01", title: "Load SOPs", desc: "Your procedures, labour times & parts lists." },
+                    { num: "02", title: "Book", desc: "Customer, dealer or recall bookings routed." },
+                    { num: "03", title: "Diagnose", desc: "AI-guided fault finding on your platform." },
+                    { num: "04", title: "Approve", desc: "Warranty evidence sent for your sign-off." },
+                    { num: "05", title: "Repair", desc: "Guided digital job card with scanned parts." },
+                    { num: "06", title: "Report", desc: "Live failure trends & quality data exported." },
+                  ].map((step) => (
+                    <div key={step.num} className="oem-autobot-step p-4 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-colors">
+                      <span className="text-[10px] font-mono text-[#00D084] font-bold block mb-1">{step.num}</span>
+                      <span className="text-sm font-bold text-white block mb-1">{step.title}</span>
+                      <span className="text-[11px] text-white/60 block leading-tight">{step.desc}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 6 Modules Grid */}
+                <div className="oem-autobot-mods grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                  {[
+                    {
+                      tag: "Brand SOP Library",
+                      title: "Your process, every centre",
+                      desc: "Procedures and labour times enforced step by step on the technician's digital job card.",
+                    },
+                    {
+                      tag: "Warranty Workflow",
+                      title: "Evidence-first claims",
+                      desc: "High-resolution photos, BMS logs, and diagnostic trouble codes attached to every claim.",
+                    },
+                    {
+                      tag: "Field Analytics",
+                      title: "Failure trends by model",
+                      desc: "Identify repeat batch faults, parts wear rate and mean time-to-repair by model variant.",
+                    },
+                    {
+                      tag: "Traceability",
+                      title: "Serial-level parts",
+                      desc: "Every warranty component scanned from central warehouse to vehicle bay.",
+                    },
+                    {
+                      tag: "DMS Integration",
+                      title: "API to your DMS / ERP",
+                      desc: "Jobs, claims, customer profiles and vehicle telemetry flow seamlessly into your core ERP.",
+                    },
+                    {
+                      tag: "Data Governance",
+                      title: "Your data stays yours",
+                      desc: "Role-based access controls, strict NDAs and dedicated enterprise multi-tenant security.",
+                    },
+                  ].map((mod) => (
+                    <div key={mod.title} className="oem-autobot-mod p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/30 transition-all">
+                      <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">{mod.tag}</span>
+                      <h3 className="text-base font-bold text-white mb-2">{mod.title}</h3>
+                      <p className="text-xs text-white/60 leading-relaxed">{mod.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* S7: Engagement Models & Network Simulator */}
+            <section id="models" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10 space-y-16">
+              <div className="oem-models-header text-center max-w-3xl mx-auto">
+                <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
+                  Network Planning &amp; Models
+                </div>
+                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+                  Flexible models engineered for scale
+                </h2>
+                <p className="text-sm text-white/60 mt-3 font-light">
+                  Simulate your network requirement, then choose the commercial model that fits your growth targets.
+                </p>
+              </div>
+
+              {/* Interactive Network Simulator */}
+              <OEMNetworkSimulator />
+
+              {/* 4 Commercial Engagement Models */}
+              <div className="oem-models-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
+                {[
+                  {
+                    model: "Service Partner",
+                    what: "Service your customers' vehicles at our multi-brand centres under your SOPs.",
+                    bestFor: "Brands with growing volume in a city",
+                    commercials: "Per-job labour rates + parts",
+                  },
+                  {
+                    model: "Network-as-a-Service",
+                    what: "Dedicated bays and certified technicians reserved for your brand in chosen cities.",
+                    bestFor: "Brands scaling sales fast",
+                    commercials: "Monthly capacity fee + per job",
+                  },
+                  {
+                    model: "Market-Entry Package",
+                    what: "Service readiness before a new city launch: centres, parts buffer, RSA and trained technicians.",
+                    bestFor: "New and import EV brands",
+                    commercials: "Project fee per city",
+                  },
+                  {
+                    model: "Training & Certification",
+                    what: "Autobot Academy trains and certifies your internal or dealer technicians on high-voltage systems.",
+                    bestFor: "Dealer networks & OEMs",
+                    commercials: "Per cohort / batch",
+                  },
+                ].map((item) => (
+                  <div key={item.model} className="oem-model-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group">
+                    <div>
+                      <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">Model</span>
+                      <h3 className="text-lg font-bold text-white mb-3 group-hover:text-[#00D084] transition-colors">{item.model}</h3>
+                      <p className="text-xs text-white/70 leading-relaxed mb-4">{item.what}</p>
+                      <div className="pt-3 border-t border-white/10 space-y-1.5 text-xs">
+                        <div>
+                          <span className="text-white/40 block text-[10px] uppercase font-mono">Best For:</span>
+                          <span className="text-white font-medium">{item.bestFor}</span>
+                        </div>
+                        <div className="pt-1">
+                          <span className="text-white/40 block text-[10px] uppercase font-mono">Commercials:</span>
+                          <span className="text-[#00D084] font-mono font-semibold">{item.commercials}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* S8: Speed & Scale Comparison Visual Matrix */}
+            <section className="oem-scale-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
+              <div className="oem-scale-header text-center max-w-3xl mx-auto mb-16">
+                <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
+                  Strategic Architecture Showdown
+                </div>
+                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+                  Cover more cities, faster, with less capital
+                </h2>
+                <p className="text-sm text-white/60 mt-3 font-light">
+                  Compare proprietary dealer networks vs. our agile, on-demand certified service infrastructure.
+                </p>
+              </div>
+
+              {/* 3-Column Comparative Visual Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+
+                {/* Card 1: Proprietary OEM Centres */}
+                <div className="rounded-3xl bg-[#080d0a] border border-white/10 p-6 sm:p-8 flex flex-col justify-between">
                   <div>
-                    <span className="text-white/40 block text-[10px] uppercase font-mono">Best For:</span>
-                    <span className="text-white font-medium">{item.bestFor}</span>
+                    <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest font-bold block mb-2">
+                      MODEL 01 // CAPEX INTENSIVE
+                    </span>
+                    <h3 className="text-xl font-bold text-white mb-2">Own Company Centres</h3>
+                    <p className="text-xs text-white/50 leading-relaxed font-light mb-6">
+                      High initial investment and slow multi-city footprint expansion.
+                    </p>
+
+                    <div className="space-y-4 pt-4 border-t border-white/10 text-xs">
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">Upfront Capex</span>
+                        <span className="text-red-400 font-bold">₹2.5 Cr+ per Centre</span>
+                      </div>
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">New City Launch</span>
+                        <span className="text-white/80">6–9 Months Setup Delay</span>
+                      </div>
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">Consistency</span>
+                        <span className="text-white/80">High, but slow scaling</span>
+                      </div>
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">Technician Staffing</span>
+                        <span className="text-white/80">Direct Payroll &amp; Benefits</span>
+                      </div>
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">Cost Elasticity</span>
+                        <span className="text-red-400">Fixed High Overhead</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="pt-1">
-                    <span className="text-white/40 block text-[10px] uppercase font-mono">Commercials:</span>
-                    <span className="text-[#00D084] font-mono font-semibold">{item.commercials}</span>
+                  <div className="mt-8 pt-4 border-t border-white/5 text-center">
+                    <span className="text-[11px] font-mono text-white/40 uppercase">High Risk // Low Agility</span>
                   </div>
+                </div>
+
+                {/* Card 2: Dealer-Only Service */}
+                <div className="rounded-3xl bg-[#080d0a] border border-white/10 p-6 sm:p-8 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest font-bold block mb-2">
+                      MODEL 02 // FRAGMENTED
+                    </span>
+                    <h3 className="text-xl font-bold text-white mb-2">Dealer-Only Service</h3>
+                    <p className="text-xs text-white/50 leading-relaxed font-light mb-6">
+                      Unpredictable customer experience and lack of unified telemetry data.
+                    </p>
+
+                    <div className="space-y-4 pt-4 border-t border-white/10 text-xs">
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">Upfront Capex</span>
+                        <span className="text-white/80">Dealer-Funded (Uneven)</span>
+                      </div>
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">New City Launch</span>
+                        <span className="text-white/80">Dependent on Dealership signing</span>
+                      </div>
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">Consistency</span>
+                        <span className="text-yellow-400">Varies widely by dealer</span>
+                      </div>
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">Tooling &amp; Safety</span>
+                        <span className="text-yellow-400">Non-standard HV tools</span>
+                      </div>
+                      <div>
+                        <span className="text-white/40 block text-[10px] uppercase font-mono">Field Data to R&amp;D</span>
+                        <span className="text-red-400">Fragmented or Lost</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-8 pt-4 border-t border-white/5 text-center">
+                    <span className="text-[11px] font-mono text-yellow-400/80 uppercase">Brand NPS Risk</span>
+                  </div>
+                </div>
+
+                {/* Card 3: MY EV SERVICE Network (Featured / Hero) */}
+                <div className="rounded-3xl bg-gradient-to-b from-[#0D5C2E]/40 via-[#07130b] to-[#040805] border-2 border-[#00D084] p-6 sm:p-8 flex flex-col justify-between shadow-[0_0_40px_rgba(0,208,132,0.15)] relative">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#00D084] text-black font-black text-[10px] uppercase tracking-widest shadow-lg">
+                    ★ RECOMMENDED FOR SCALE
+                  </div>
+
+                  <div>
+                    <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-widest font-bold block mb-2 pt-2">
+                      MODEL 03 // CLOUD &amp; NETWORK-AS-A-SERVICE
+                    </span>
+                    <h3 className="text-xl font-bold text-white mb-2">MY EV SERVICE Platform</h3>
+                    <p className="text-xs text-white/70 leading-relaxed font-light mb-6">
+                      Turn-key multi-city service capacity with unified Autobot OS telemetry.
+                    </p>
+
+                    <div className="space-y-4 pt-4 border-t border-[#00D084]/20 text-xs">
+                      <div>
+                        <span className="text-white/50 block text-[10px] uppercase font-mono">Upfront Capex</span>
+                        <span className="text-[#00D084] font-black text-sm">₹0 for Capacity</span>
+                      </div>
+                      <div>
+                        <span className="text-white/50 block text-[10px] uppercase font-mono">New City Launch</span>
+                        <span className="text-white font-bold">14 Days Go-Live SLA</span>
+                      </div>
+                      <div>
+                        <span className="text-white/50 block text-[10px] uppercase font-mono">Consistency</span>
+                        <span className="text-white font-bold">100% Brand SOP Enforcement</span>
+                      </div>
+                      <div>
+                        <span className="text-white/50 block text-[10px] uppercase font-mono">Technician Staffing</span>
+                        <span className="text-[#00D084] font-bold">Autobot Academy Certified</span>
+                      </div>
+                      <div>
+                        <span className="text-white/50 block text-[10px] uppercase font-mono">Field Data &amp; Claims</span>
+                        <span className="text-[#00D084] font-bold">Live API + CAN Logs Ingested</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-4 border-t border-[#00D084]/20">
+                    <a
+                      href="#enquiry"
+                      className="w-full py-3 rounded-xl bg-[#00D084] hover:bg-[#00e08f] text-black font-bold text-xs uppercase tracking-wider text-center block transition-all shadow-md"
+                    >
+                      Activate Partner Capacity
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            {/* S14: FAQ Accordion */}
+            <section id="faqs" className="py-20 px-6 max-w-4xl mx-auto border-t border-white/10">
+              <div className="oem-faqs-header text-center mb-12">
+                <h2 className="text-3xl font-black text-white tracking-tight">OEM Partnership FAQs</h2>
+              </div>
+              <div className="oem-faqs-list space-y-3">
+                {FAQS.map((faq, idx) => (
+                  <div key={faq.q} className="oem-faq-item rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden">
+                    <button
+                      onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                      className="w-full p-5 text-left text-sm font-bold text-white flex items-center justify-between gap-4"
+                    >
+                      <span>{faq.q}</span>
+                      <ChevronDown className={`w-4 h-4 text-[#00D084] transition-transform ${openFaq === idx ? "rotate-180" : ""}`} />
+                    </button>
+                    {openFaq === idx && (
+                      <div className="px-5 pb-5 text-xs text-white/70 leading-relaxed font-light border-t border-white/5 pt-3">
+                        {faq.a}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* S15: Closing CTA Band */}
+            <section className="oem-cta-banner py-16 px-6 bg-[#0D5C2E] text-white">
+              <div className="max-w-5xl mx-auto text-center space-y-6">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-white/80 font-bold block">
+                  FOR EV BRANDS AND DEALER GROUPS
+                </span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+                  Let's plan your after-sales network
+                </h2>
+                <p className="text-sm sm:text-base text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
+                  Tell us your target cities and expected volumes. We'll return with a detailed service capacity plan and SLA framework.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+                  <a
+                    href="#enquiry"
+                    className="px-8 py-4 rounded-full bg-white text-[#020403] font-black text-xs uppercase tracking-widest hover:bg-white/90 shadow-2xl transition-all"
+                  >
+                    Request a Partnership Call
+                  </a>
+                  <a
+                    href="mailto:info@myevservice.in?subject=OEM%20Partnership"
+                    className="px-8 py-4 rounded-full border border-white/30 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2"
+                  >
+                    <Mail className="w-3.5 h-3.5" /> Email info@myevservice.in
+                  </a>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* S8: Speed & Scale Comparison */}
-      <section className="oem-scale-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="oem-scale-header text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
-            Speed and Scale
-          </div>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-            Cover more cities, faster, with less capital
-          </h2>
-          <p className="text-sm text-white/60 mt-3 font-light">
-            How a partner network compares with building your own proprietary service footprint.
-          </p>
-        </div>
-
-        <div className="oem-scale-table overflow-x-auto rounded-2xl border border-white/10 bg-[#080d0a]">
-          <table className="w-full text-left text-xs min-w-[700px]">
-            <thead className="bg-white/5 border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
-              <tr>
-                <th className="p-4 w-1/4">What Matters</th>
-                <th className="p-4 text-center">Own Service Centres</th>
-                <th className="p-4 text-center">Dealer-Only Service</th>
-                <th className="p-4 text-center bg-[#0D5C2E]/20 text-[#00D084]">MY EV SERVICE Network</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-white/80">
-              <tr>
-                <td className="p-4 font-bold text-white">Upfront Capital</td>
-                <td className="p-4 text-center text-white/60">High (Capex)</td>
-                <td className="p-4 text-center text-white/60">Dealer-Funded</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">None for capacity</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Time to cover a new city</td>
-                <td className="p-4 text-center text-white/60">6–9 Months</td>
-                <td className="p-4 text-center text-white/60">Depends on Dealer</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">Playbook-led, per plan</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Consistency across cities</td>
-                <td className="p-4 text-center text-[#00D084]">✓ High</td>
-                <td className="p-4 text-center text-white/60">Varies widely</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓ Standard SOPs &amp; tooling</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">EV-specialist technicians</td>
-                <td className="p-4 text-center text-[#00D084]">✓ Yes</td>
-                <td className="p-4 text-center text-white/60">Varies</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓ Autobot Academy certified</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Field data back to engineering</td>
-                <td className="p-4 text-center text-white/70">Own systems</td>
-                <td className="p-4 text-center text-white/40">Limited</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓ Live API &amp; dashboards</td>
-              </tr>
-              <tr>
-                <td className="p-4 font-bold text-white">Scales up or down with sales</td>
-                <td className="p-4 text-center text-white/60">Fixed high cost</td>
-                <td className="p-4 text-center text-white/60">Partly</td>
-                <td className="p-4 text-center bg-[#0D5C2E]/10 text-[#00D084] font-bold">✓ Pay for capacity used</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* S14: FAQ Accordion */}
-      <section id="faqs" className="py-20 px-6 max-w-4xl mx-auto border-t border-white/10">
-        <div className="oem-faqs-header text-center mb-12">
-          <h2 className="text-3xl font-black text-white tracking-tight">OEM Partnership FAQs</h2>
-        </div>
-        <div className="oem-faqs-list space-y-3">
-          {FAQS.map((faq, idx) => (
-            <div key={faq.q} className="oem-faq-item rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden">
-              <button
-                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                className="w-full p-5 text-left text-sm font-bold text-white flex items-center justify-between gap-4"
-              >
-                <span>{faq.q}</span>
-                <ChevronDown className={`w-4 h-4 text-[#00D084] transition-transform ${openFaq === idx ? "rotate-180" : ""}`} />
-              </button>
-              {openFaq === idx && (
-                <div className="px-5 pb-5 text-xs text-white/70 leading-relaxed font-light border-t border-white/5 pt-3">
-                  {faq.a}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* S15: Closing CTA Band */}
-      <section className="oem-cta-banner py-16 px-6 bg-[#0D5C2E] text-white">
-        <div className="max-w-5xl mx-auto text-center space-y-6">
-          <span className="text-[11px] font-mono uppercase tracking-widest text-white/80 font-bold block">
-            FOR EV BRANDS AND DEALER GROUPS
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
-            Let's plan your after-sales network
-          </h2>
-          <p className="text-sm sm:text-base text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
-            Tell us your target cities and expected volumes. We'll return with a detailed service capacity plan and SLA framework.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <a
-              href="#enquiry"
-              className="px-8 py-4 rounded-full bg-white text-[#020403] font-black text-xs uppercase tracking-widest hover:bg-white/90 shadow-2xl transition-all"
-            >
-              Request a Partnership Call
-            </a>
-            <a
-              href="mailto:info@myevservice.in?subject=OEM%20Partnership"
-              className="px-8 py-4 rounded-full border border-white/30 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2"
-            >
-              <Mail className="w-3.5 h-3.5" /> Email info@myevservice.in
-            </a>
-          </div>
-        </div>
-      </section>
+            </section>
           </div>
         </div>
       </div>

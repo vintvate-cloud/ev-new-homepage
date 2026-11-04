@@ -129,8 +129,10 @@ function RootShell({ children }: { children: ReactNode }) {
                   var pref = localStorage.getItem("theme-preference");
                   if (pref === "light") {
                     document.documentElement.classList.add("theme-light");
-                  } else if (pref === "dark") {
+                    document.documentElement.classList.remove("dark");
+                  } else {
                     document.documentElement.classList.remove("theme-light");
+                    document.documentElement.classList.add("dark");
                   }
                 } catch(e) {}
               })();

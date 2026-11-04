@@ -33,13 +33,22 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (saved === "dark") {
       setSiteThemeState("dark");
       document.documentElement.classList.remove("theme-light");
+      document.documentElement.classList.add("dark");
     } else if (saved === "light") {
       setSiteThemeState("light");
       document.documentElement.classList.add("theme-light");
+      document.documentElement.classList.remove("dark");
     } else {
       const isDocLight = document.documentElement.classList.contains("theme-light");
       const currentTheme = isDocLight ? "light" : "dark";
       setSiteThemeState(currentTheme);
+      if (currentTheme === "dark") {
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("theme-light");
+      } else {
+        document.documentElement.classList.add("theme-light");
+        document.documentElement.classList.remove("dark");
+      }
     }
   }, []);
 
@@ -49,8 +58,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem("theme-preference", newTheme);
       if (newTheme === "light") {
         document.documentElement.classList.add("theme-light");
+      document.documentElement.classList.remove("dark");
       } else {
         document.documentElement.classList.remove("theme-light");
+      document.documentElement.classList.add("dark");
       }
     }
   };
