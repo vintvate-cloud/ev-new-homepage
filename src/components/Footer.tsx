@@ -193,7 +193,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/spare-parts" className="hover:text-[#00D084] transition-colors">
+                <Link to="/store" className="hover:text-[#00D084] transition-colors">
                   EV Spare Parts
                 </Link>
               </li>

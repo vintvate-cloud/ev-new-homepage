@@ -37,7 +37,7 @@ const MORE_NAV = [
   { label: "OEM Solutions", href: "/oem", desc: "After-sales partner for EV brands & dealers" },
   { label: "Ecosystem Platform", href: "/ecosystem", desc: "Autobot OS multi-brand infrastructure network" },
   { label: "AI Diagnostics Tool", href: "/ai-tool", desc: "AI troubleshooting & predictive fault scanner" },
-  { label: "EV Spare Parts", href: "/spare-parts", desc: "Certified batteries, chargers & controllers" },
+  { label: "EV Spare Parts", href: "/store", desc: "Certified batteries, chargers & controllers" },
   { label: "Service Centre Network", href: "/service-centre", desc: "Browse all network hubs across cities" },
   { label: "EV Blog & Insights", href: "/blog", desc: "EV maintenance guides & tech tips" },
   { label: "News & Updates", href: "/news-updates", desc: "Latest EV market trends & announcements" },

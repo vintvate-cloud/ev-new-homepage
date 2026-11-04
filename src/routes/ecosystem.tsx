@@ -398,7 +398,7 @@ export function EcosystemPage() {
               title: "EV Spare Parts Suppliers",
               desc: "Supply into EV Spare Hub and reach hundreds of service bays across India.",
               action: "Supply Parts",
-              href: "/spare-parts",
+              href: "/store",
             },
           ].map((item) => (
             <div key={item.title} className="p-6 rounded-2xl bg-[#080d0a] border border-white/10 flex flex-col justify-between">

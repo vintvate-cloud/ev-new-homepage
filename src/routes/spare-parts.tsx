@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -28,6 +28,9 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/spare-parts")({
+  beforeLoad: () => {
+    throw redirect({ to: "/store" });
+  },
   head: () => ({
     meta: [
       { title: "EV Spare Parts Online India | MY EV SERVICE" },
