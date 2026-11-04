@@ -29,6 +29,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { toast } from "sonner";
 import { BookingModal } from "../components/BookingModal";
 import Lenis from "lenis";
+import { useTheme } from "../context/ThemeContext";
 
 type StoreSearch = {
   category?: string;
@@ -66,6 +67,32 @@ function StorePage() {
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"popular" | "price-low" | "price-high" | "rating">("popular");
+  const { siteTheme: contextTheme } = useTheme();
+  const [siteTheme, setSiteTheme] = useState<"light" | "dark">(() => {
+    if (typeof document !== "undefined" && document.documentElement.classList.contains("theme-light")) {
+      return "light";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    if (contextTheme) {
+      setSiteTheme(contextTheme);
+    }
+  }, [contextTheme]);
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const isLightMode = document.documentElement.classList.contains("theme-light");
+      setSiteTheme(isLightMode ? "light" : "dark");
+    };
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  const isLight = siteTheme === "light";
 
   // Sync search parameters from route (category, search, product modal)
   useEffect(() => {
@@ -291,10 +318,11 @@ function StorePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020503] text-white selection:bg-[#00D084] selection:text-black font-sans relative overflow-x-hidden">
+    <div className={`min-h-screen ${isLight ? "bg-[#f8faf9] text-[#1a2320]" : "bg-[#020503] text-white"} selection:bg-[#00D084] selection:text-black font-sans relative overflow-x-hidden transition-colors duration-300`}>
       
       {/* Navigation Header */}
       <Nav
+        theme={isLight ? "warm" : "dark"}
         onOpenBooking={() => setBookingModalOpen(true)}
         cartCount={totalCartCount}
         onOpenCart={() => setCartDrawerOpen(true)}
@@ -341,7 +369,9 @@ function StorePage() {
            ========================================================================= */}
         <div
           ref={cardsOverlayRef}
-          className="relative z-10 bg-[#020503] text-white min-h-screen mt-[calc(100vh-80px)] rounded-t-[40px] border-t border-white/15 shadow-2xl transition-colors duration-500"
+          className={`relative z-10 min-h-screen mt-[calc(100vh-80px)] rounded-t-[40px] border-t shadow-2xl transition-colors duration-500 store-cards-overlay ${
+            isLight ? "bg-[#f8faf9] text-[#1a2320] border-slate-200" : "bg-[#020503] text-white border-white/15"
+          }`}
         >
           
           {/* =========================================================================
@@ -366,6 +396,8 @@ function StorePage() {
                     className={`shrink-0 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer border ${
                       isActive
                         ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-[0_0_20px_rgba(0,208,132,0.35)] scale-105"
+                        : isLight
+                        ? "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:text-slate-900 shadow-sm"
                         : "bg-[#080d0a] text-white/70 border-white/10 hover:border-white/25 hover:text-white"
                     }`}
                   >
@@ -381,21 +413,27 @@ function StorePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#070c09] border border-white/10 rounded-2xl p-4 md:px-6 shadow-xl mb-8"
+              className={`flex flex-col md:flex-row items-center justify-between gap-4 border rounded-2xl p-4 md:px-6 shadow-xl mb-8 ${
+                isLight ? "bg-white border-slate-200" : "bg-[#070c09] border-white/10"
+              }`}
             >
               <div className="relative w-full md:w-96">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 ${isLight ? "text-slate-400" : "text-white/40"}`} />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search helmets, chargers, specs..."
-                  className="w-full bg-[#020503] border border-white/15 rounded-xl pl-11 pr-4 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00D084]"
+                  className={`w-full border rounded-xl pl-11 pr-4 py-2.5 text-xs focus:outline-none focus:border-[#00D084] ${
+                    isLight
+                      ? "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400"
+                      : "bg-[#020503] border-white/15 text-white placeholder-white/40"
+                  }`}
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+                    className={`absolute right-3 top-1/2 -translate-y-1/2 ${isLight ? "text-slate-400 hover:text-slate-700" : "text-white/40 hover:text-white"}`}
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -403,13 +441,17 @@ function StorePage() {
               </div>
 
               <div className="flex items-center gap-4 w-full md:w-auto justify-between">
-                <div className="flex items-center gap-2 text-xs text-white/60">
+                <div className={`flex items-center gap-2 text-xs ${isLight ? "text-slate-600" : "text-white/60"}`}>
                   <ArrowUpDown className="w-3.5 h-3.5 text-[#00D084]" />
                   <span className="font-mono">Sort:</span>
                   <select
                     value={sortBy}
                     onChange={(e: any) => setSortBy(e.target.value)}
-                    className="bg-[#020503] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                    className={`border rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-[#00D084] ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200 text-slate-900"
+                        : "bg-[#020503] border-white/15 text-white"
+                    }`}
                   >
                     <option value="popular">Bestsellers First</option>
                     <option value="price-low">Price: Low to High</option>
@@ -420,7 +462,11 @@ function StorePage() {
 
                 <button
                   onClick={() => setCartDrawerOpen(true)}
-                  className="px-4 py-2 rounded-xl bg-[#00D084]/15 border border-[#00D084]/40 text-[#00D084] text-xs font-bold font-mono flex items-center gap-2 hover:bg-[#00D084] hover:text-black transition-all cursor-pointer"
+                  className={`px-4 py-2 rounded-xl text-xs font-bold font-mono flex items-center gap-2 transition-all cursor-pointer ${
+                    isLight
+                      ? "bg-emerald-50 border border-emerald-200 text-emerald-700 hover:bg-[#00D084] hover:text-black"
+                      : "bg-[#00D084]/15 border border-[#00D084]/40 text-[#00D084] hover:bg-[#00D084] hover:text-black"
+                  }`}
                 >
                   <ShoppingCart className="w-4 h-4" /> Cart ({totalCartCount})
                 </button>
@@ -442,7 +488,9 @@ function StorePage() {
                   className="flex flex-col justify-between group relative"
                 >
                   {/* Top Image Container */}
-                  <div className="relative h-60 w-full rounded-[28px] overflow-hidden bg-slate-900 mb-4 border border-white/10 group-hover:border-[#00D084]/40 transition-colors">
+                  <div className={`relative h-60 w-full rounded-[28px] overflow-hidden mb-4 border transition-colors ${
+                    isLight ? "bg-slate-100 border-slate-200 group-hover:border-[#00D084]" : "bg-slate-900 border-white/10 group-hover:border-[#00D084]/40"
+                  }`}>
                     <img
                       src={prd.image}
                       alt={prd.name}
@@ -474,32 +522,38 @@ function StorePage() {
                   {/* Body Content */}
                   <div className="flex-1 flex flex-col justify-between space-y-3 px-1">
                     <div>
-                      <div className="flex items-center justify-between text-[11px] font-mono text-[#00D084] mb-1.5">
-                        <span className="truncate max-w-[150px]">{prd.category}</span>
-                        <div className="flex items-center gap-1 text-amber-400 shrink-0">
-                          <Star className="w-3.5 h-3.5 fill-amber-400" />
+                      <div className="flex items-center justify-between text-[11px] font-mono mb-1.5">
+                        <span className={`truncate max-w-[150px] font-bold ${isLight ? "text-emerald-700" : "text-[#00D084]"}`}>{prd.category}</span>
+                        <div className="flex items-center gap-1 text-amber-500 shrink-0">
+                          <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                           <span className="font-bold">{prd.rating}</span>
                         </div>
                       </div>
 
                       <h3
                         onClick={() => setSelectedProduct(prd)}
-                        className="text-base font-bold text-white group-hover:text-[#00D084] transition-colors leading-snug cursor-pointer mb-2 line-clamp-1"
+                        className={`text-base font-bold transition-colors leading-snug cursor-pointer mb-2 line-clamp-1 ${
+                          isLight ? "text-slate-900 group-hover:text-emerald-700" : "text-white group-hover:text-[#00D084]"
+                        }`}
                       >
                         {prd.name}
                       </h3>
 
-                      <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2 mb-4">
+                      <p className={`text-xs font-light leading-relaxed line-clamp-2 mb-4 ${
+                        isLight ? "text-slate-600" : "text-white/60"
+                      }`}>
                         {prd.desc}
                       </p>
                     </div>
 
                     {/* Rates Row */}
-                    <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono mb-1">
-                      <span className="text-white/50">Rates (Store):</span>
+                    <div className={`pt-3 border-t flex items-center justify-between text-xs font-mono mb-1 ${
+                      isLight ? "border-slate-200 text-slate-500" : "border-white/10 text-white/50"
+                    }`}>
+                      <span>Rates (Store):</span>
                       <div className="flex items-baseline gap-1.5">
                         <span className="text-base font-bold text-[#00D084]">{prd.price}</span>
-                        <span className="text-[10px] text-white/40 line-through">{prd.oldPrice}</span>
+                        <span className={`text-[10px] line-through ${isLight ? "text-slate-400" : "text-white/40"}`}>{prd.oldPrice}</span>
                       </div>
                     </div>
 
@@ -507,7 +561,11 @@ function StorePage() {
                     <div className="flex items-center gap-2.5 pt-1">
                       <button
                         onClick={() => setSelectedProduct(prd)}
-                        className="flex-1 py-2.5 rounded-full border border-[#00D084]/40 text-[#00D084] text-[11px] font-bold uppercase tracking-wider hover:bg-[#00D084]/15 hover:border-[#00D084] transition-all cursor-pointer flex items-center justify-center"
+                        className={`flex-1 py-2.5 rounded-full border text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center ${
+                          isLight
+                            ? "border-emerald-600/40 text-emerald-700 hover:bg-emerald-50 hover:border-emerald-600"
+                            : "border-[#00D084]/40 text-[#00D084] hover:bg-[#00D084]/15 hover:border-[#00D084]"
+                        }`}
                       >
                         DETAILS
                       </button>
@@ -543,28 +601,34 @@ function StorePage() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="bg-[#070c09] border-l border-white/15 w-full max-w-md h-full flex flex-col justify-between shadow-2xl p-6 relative text-white"
+              className={`border-l w-full max-w-md h-full flex flex-col justify-between shadow-2xl p-6 relative transition-colors ${
+                isLight ? "bg-white border-slate-200 text-slate-900" : "bg-[#070c09] border-white/15 text-white"
+              }`}
             >
               {/* Drawer Header */}
               <div>
-                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div className={`flex items-center justify-between pb-4 border-b ${isLight ? "border-slate-200" : "border-white/10"}`}>
                   <div className="flex items-center gap-2">
                     <ShoppingCart className="w-5 h-5 text-[#00D084]" />
-                    <h3 className="text-xl font-bold text-white">Your Shopping Cart</h3>
+                    <h3 className={`text-xl font-bold ${isLight ? "text-slate-900" : "text-white"}`}>Your Shopping Cart</h3>
                     <span className="text-xs font-mono bg-[#00D084]/15 text-[#00D084] border border-[#00D084]/30 px-2.5 py-0.5 rounded-full">
                       {totalCartCount} Items
                     </span>
                   </div>
                   <button
                     onClick={() => setCartDrawerOpen(false)}
-                    className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
+                    className={`p-2 rounded-full transition-colors cursor-pointer ${
+                      isLight ? "bg-slate-100 hover:bg-slate-200 text-slate-600" : "bg-white/5 hover:bg-white/10 text-white/70 hover:text-white"
+                    }`}
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
                 {/* Free Shipping Progress Indicator */}
-                <div className="py-3 px-4 my-4 rounded-xl bg-white/5 border border-white/5 text-xs text-white/80 flex items-center gap-2">
+                <div className={`py-3 px-4 my-4 rounded-xl border text-xs flex items-center gap-2 ${
+                  isLight ? "bg-slate-50 border-slate-200 text-slate-700" : "bg-white/5 border-white/5 text-white/80"
+                }`}>
                   <Truck className="w-4 h-4 text-[#00D084] shrink-0" />
                   <span>
                     {cartSubtotal >= 2000
@@ -577,7 +641,7 @@ function StorePage() {
               {/* Cart Items List */}
               <div className="flex-1 overflow-y-auto space-y-4 pr-1 my-2">
                 {cartItems.length === 0 ? (
-                  <div className="py-16 text-center text-white/50 space-y-3">
+                  <div className={`py-16 text-center space-y-3 ${isLight ? "text-slate-400" : "text-white/50"}`}>
                     <Package className="w-12 h-12 text-[#00D084]/30 mx-auto" />
                     <p className="text-sm font-medium">Your cart is currently empty.</p>
                     <button
@@ -591,16 +655,18 @@ function StorePage() {
                   cartItems.map((item) => (
                     <div
                       key={item.product.id}
-                      className="flex gap-4 p-3 bg-white/5 border border-white/5 rounded-2xl items-center"
+                      className={`flex gap-4 p-3 border rounded-2xl items-center ${
+                        isLight ? "bg-slate-50 border-slate-200" : "bg-white/5 border-white/5"
+                      }`}
                     >
                       <img
                         src={item.product.image}
                         alt={item.product.name}
-                        className="w-16 h-16 rounded-xl object-cover bg-slate-900 shrink-0"
+                        className={`w-16 h-16 rounded-xl object-cover shrink-0 ${isLight ? "bg-slate-200" : "bg-slate-900"}`}
                       />
 
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-xs font-bold text-white truncate">
+                        <h4 className={`text-xs font-bold truncate ${isLight ? "text-slate-900" : "text-white"}`}>
                           {item.product.name}
                         </h4>
                         <span className="text-[11px] font-mono text-[#00D084] block font-bold">
@@ -609,19 +675,21 @@ function StorePage() {
 
                         {/* Quantity Controls */}
                         <div className="flex items-center gap-3 mt-2">
-                          <div className="flex items-center border border-white/20 rounded-lg bg-black/40">
+                          <div className={`flex items-center border rounded-lg ${
+                            isLight ? "border-slate-300 bg-white" : "border-white/20 bg-black/40"
+                          }`}>
                             <button
                               onClick={() => handleUpdateQuantity(item.product.id, -1)}
-                              className="px-2 py-1 text-white/70 hover:text-white"
+                              className={`px-2 py-1 ${isLight ? "text-slate-600 hover:text-slate-900" : "text-white/70 hover:text-white"}`}
                             >
                               <Minus className="w-3 h-3" />
                             </button>
-                            <span className="px-2 text-xs font-mono font-bold">
+                            <span className={`px-2 text-xs font-mono font-bold ${isLight ? "text-slate-900" : "text-white"}`}>
                               {item.quantity}
                             </span>
                             <button
                               onClick={() => handleUpdateQuantity(item.product.id, 1)}
-                              className="px-2 py-1 text-white/70 hover:text-white"
+                              className={`px-2 py-1 ${isLight ? "text-slate-600 hover:text-slate-900" : "text-white/70 hover:text-white"}`}
                             >
                               <Plus className="w-3 h-3" />
                             </button>
@@ -629,7 +697,7 @@ function StorePage() {
 
                           <button
                             onClick={() => handleRemoveFromCart(item.product.id)}
-                            className="text-red-400 hover:text-red-300 p-1"
+                            className="text-red-400 hover:text-red-500 p-1"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -642,7 +710,7 @@ function StorePage() {
 
               {/* Drawer Footer & Checkout */}
               {cartItems.length > 0 && (
-                <div className="pt-4 border-t border-white/10 space-y-4">
+                <div className={`pt-4 border-t space-y-4 ${isLight ? "border-slate-200" : "border-white/10"}`}>
                   {/* Promo Input */}
                   <form onSubmit={handleApplyPromo} className="flex gap-2">
                     <input
@@ -650,11 +718,19 @@ function StorePage() {
                       placeholder="Promo Code (MYEV10)"
                       value={promoInput}
                       onChange={(e) => setPromoInput(e.target.value)}
-                      className="flex-1 bg-[#020503] border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00D084] uppercase font-mono"
+                      className={`flex-1 border rounded-xl px-3 py-2 text-xs uppercase font-mono ${
+                        isLight
+                          ? "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-[#00D084]"
+                          : "bg-[#020503] border-white/15 text-white placeholder-white/40 focus:border-[#00D084]"
+                      }`}
                     />
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl border border-white/10"
+                      className={`px-4 py-2 text-xs font-bold rounded-xl border ${
+                        isLight
+                          ? "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-200"
+                          : "bg-white/10 hover:bg-white/20 text-white border-white/10"
+                      }`}
                     >
                       Apply
                     </button>
@@ -662,24 +738,26 @@ function StorePage() {
 
                   {/* Summary Rows */}
                   <div className="space-y-2 text-xs font-mono">
-                    <div className="flex justify-between text-white/60">
+                    <div className={`flex justify-between ${isLight ? "text-slate-600" : "text-white/60"}`}>
                       <span>Subtotal:</span>
-                      <span>₹{cartSubtotal.toLocaleString()}</span>
+                      <span className={isLight ? "text-slate-900 font-bold" : "text-white"}>₹{cartSubtotal.toLocaleString()}</span>
                     </div>
 
                     {appliedDiscount > 0 && (
-                      <div className="flex justify-between text-[#00D084]">
+                      <div className="flex justify-between text-[#00D084] font-bold">
                         <span>Discount ({appliedPromoCode}):</span>
                         <span>-₹{appliedDiscount.toLocaleString()}</span>
                       </div>
                     )}
 
-                    <div className="flex justify-between text-white/60">
+                    <div className={`flex justify-between ${isLight ? "text-slate-600" : "text-white/60"}`}>
                       <span>Shipping:</span>
                       <span className="text-[#00D084] font-bold">FREE</span>
                     </div>
 
-                    <div className="flex justify-between text-sm font-bold text-white pt-2 border-t border-white/10">
+                    <div className={`flex justify-between text-sm font-bold pt-2 border-t ${
+                      isLight ? "border-slate-200 text-slate-900" : "border-white/10 text-white"
+                    }`}>
                       <span>Total Amount:</span>
                       <span className="text-[#00D084]">₹{cartFinalTotal.toLocaleString()}</span>
                     </div>
@@ -722,12 +800,16 @@ function StorePage() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
-              className="fixed bottom-0 left-0 right-0 z-50 bg-[#070c09] border-t border-x border-white/20 rounded-t-[36px] max-h-[85vh] h-[85vh] w-full p-6 md:p-10 shadow-2xl text-white overflow-hidden"
+              className={`fixed bottom-0 left-0 right-0 z-50 border-t border-x rounded-t-[36px] max-h-[85vh] h-[85vh] w-full p-6 md:p-10 shadow-2xl overflow-hidden transition-colors store-quickview-sheet ${
+                isLight ? "bg-white border-slate-200 text-slate-900" : "bg-[#070c09] border-white/20 text-white"
+              }`}
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedProduct(null)}
-                className="absolute top-6 right-6 z-20 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors cursor-pointer"
+                className={`absolute top-6 right-6 z-20 p-3 rounded-full transition-colors cursor-pointer ${
+                  isLight ? "bg-slate-100 hover:bg-slate-200 text-slate-700" : "bg-white/10 hover:bg-white/20 text-white/70 hover:text-white"
+                }`}
               >
                 <X className="w-5 h-5" />
               </button>
@@ -736,7 +818,9 @@ function StorePage() {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-stretch max-w-7xl mx-auto w-full pt-2 overflow-hidden">
                 
                 {/* LEFT COLUMN: FIXED IMAGE (Non-scrollable) */}
-                <div className="lg:col-span-5 h-56 lg:h-full relative rounded-2xl overflow-hidden bg-slate-900 border border-white/10 shadow-xl shrink-0">
+                <div className={`lg:col-span-5 h-56 lg:h-full relative rounded-2xl overflow-hidden border shadow-xl shrink-0 ${
+                  isLight ? "bg-slate-100 border-slate-200" : "bg-slate-900 border-white/10"
+                }`}>
                   <img
                     src={selectedProduct.image}
                     alt={selectedProduct.name}
@@ -763,27 +847,31 @@ function StorePage() {
                         {selectedProduct.category}
                       </span>
 
-                      <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mt-4 mb-2 leading-snug">
+                      <h2 className={`text-2xl sm:text-4xl font-bold tracking-tight mt-4 mb-2 leading-snug ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}>
                         {selectedProduct.name}
                       </h2>
 
-                      <div className="flex items-center gap-3 text-xs font-mono text-amber-400 pb-2">
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 fill-amber-400" />
+                      <div className="flex items-center gap-3 text-xs font-mono pb-2">
+                        <div className="flex items-center gap-1 text-amber-500">
+                          <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
                           <span className="font-bold">{selectedProduct.rating}</span>
                         </div>
-                        <span className="text-white/40">•</span>
-                        <span className="text-white/60">{selectedProduct.reviewsCount} verified customer reviews</span>
+                        <span className={isLight ? "text-slate-400" : "text-white/40"}>•</span>
+                        <span className={isLight ? "text-slate-600 font-medium" : "text-white/60"}>{selectedProduct.reviewsCount} verified customer reviews</span>
                       </div>
                     </div>
 
                     {/* Price Banner */}
-                    <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between font-mono">
+                    <div className={`p-4 rounded-xl border flex items-center justify-between font-mono ${
+                      isLight ? "bg-slate-50 border-slate-200" : "bg-white/5 border-white/10"
+                    }`}>
                       <div>
-                        <span className="text-[10px] text-white/40 uppercase block">Total Price</span>
+                        <span className={`text-[10px] uppercase block font-semibold ${isLight ? "text-slate-500" : "text-white/40"}`}>Total Price</span>
                         <div className="flex items-baseline gap-2">
                           <span className="text-2xl font-black text-[#00D084]">{selectedProduct.price}</span>
-                          <span className="text-xs text-white/40 line-through">{selectedProduct.oldPrice}</span>
+                          <span className={`text-xs line-through ${isLight ? "text-slate-400" : "text-white/40"}`}>{selectedProduct.oldPrice}</span>
                         </div>
                       </div>
                       <span className="px-3 py-1 bg-[#00D084]/20 border border-[#00D084]/40 text-[#00D084] rounded-lg text-xs font-bold">
@@ -796,7 +884,9 @@ function StorePage() {
                       <h4 className="text-xs font-mono uppercase font-bold text-[#00D084] mb-2">
                         Product Overview
                       </h4>
-                      <p className="text-xs sm:text-sm text-white/80 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5">
+                      <p className={`text-xs sm:text-sm leading-relaxed p-4 rounded-xl border ${
+                        isLight ? "bg-slate-50 border-slate-200 text-slate-700" : "bg-white/5 border-white/5 text-white/80"
+                      }`}>
                         {selectedProduct.desc}
                       </p>
                     </div>
@@ -807,13 +897,17 @@ function StorePage() {
                         Vehicle Compatibility & Warranty
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
-                        <div className="p-3.5 bg-white/5 rounded-xl border border-white/10">
-                          <span className="text-white/40 text-[10px] uppercase block mb-1">Compatibility</span>
-                          <span className="text-white font-medium">{selectedProduct.compatibility}</span>
+                        <div className={`p-3.5 rounded-xl border ${
+                          isLight ? "bg-slate-50 border-slate-200" : "bg-white/5 border-white/10"
+                        }`}>
+                          <span className={`text-[10px] uppercase block mb-1 font-semibold ${isLight ? "text-slate-500" : "text-white/40"}`}>Compatibility</span>
+                          <span className={`font-semibold ${isLight ? "text-slate-900" : "text-white"}`}>{selectedProduct.compatibility}</span>
                         </div>
-                        <div className="p-3.5 bg-white/5 rounded-xl border border-white/10">
-                          <span className="text-white/40 text-[10px] uppercase block mb-1">Warranty</span>
-                          <span className="text-white font-medium">{selectedProduct.warranty}</span>
+                        <div className={`p-3.5 rounded-xl border ${
+                          isLight ? "bg-slate-50 border-slate-200" : "bg-white/5 border-white/10"
+                        }`}>
+                          <span className={`text-[10px] uppercase block mb-1 font-semibold ${isLight ? "text-slate-500" : "text-white/40"}`}>Warranty</span>
+                          <span className={`font-semibold ${isLight ? "text-slate-900" : "text-white"}`}>{selectedProduct.warranty}</span>
                         </div>
                       </div>
                     </div>
@@ -823,21 +917,31 @@ function StorePage() {
                       <h4 className="text-xs font-mono uppercase font-bold text-[#00D084] mb-2">
                         Key Specifications
                       </h4>
-                      <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-2 font-mono text-xs">
+                      <div className={`rounded-xl p-4 space-y-2 font-mono text-xs border ${
+                        isLight ? "bg-slate-50 border-slate-200" : "bg-white/5 border-white/10"
+                      }`}>
                         {selectedProduct.specs.map((sp, idx) => (
-                          <div key={idx} className="flex justify-between border-b border-white/5 pb-2 last:border-b-0 last:pb-0">
-                            <span className="text-white/50">{sp.label}:</span>
-                            <span className="text-white font-bold">{sp.value}</span>
+                          <div key={idx} className={`flex justify-between pb-2 last:border-b-0 last:pb-0 border-b ${
+                            isLight ? "border-slate-200" : "border-white/5"
+                          }`}>
+                            <span className={isLight ? "text-slate-500 font-medium" : "text-white/50"}>{sp.label}:</span>
+                            <span className={`font-bold ${isLight ? "text-slate-900" : "text-white"}`}>{sp.value}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
                     {/* Bottom Action Buttons */}
-                    <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-4">
+                    <div className={`pt-6 border-t flex items-center justify-between gap-4 ${
+                      isLight ? "border-slate-200" : "border-white/10"
+                    }`}>
                       <button
                         onClick={() => setSelectedProduct(null)}
-                        className="px-6 py-3.5 rounded-full border border-white/20 text-xs font-bold text-white hover:bg-white/10 transition-all cursor-pointer"
+                        className={`px-6 py-3.5 rounded-full border text-xs font-bold transition-all cursor-pointer ${
+                          isLight
+                            ? "border-slate-300 text-slate-800 hover:bg-slate-100"
+                            : "border-white/20 text-white hover:bg-white/10"
+                        }`}
                       >
                         Close Details
                       </button>
@@ -871,14 +975,18 @@ function StorePage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#070c09] border border-white/20 rounded-[36px] max-w-lg w-full p-6 md:p-8 relative overflow-hidden shadow-2xl text-white"
+              className={`border rounded-[36px] max-w-lg w-full p-6 md:p-8 relative overflow-hidden shadow-2xl transition-colors store-checkout-modal ${
+                isLight ? "bg-white border-slate-200 text-slate-900" : "bg-[#070c09] border-white/20 text-white"
+              }`}
             >
               <button
                 onClick={() => {
                   setCheckoutModalOpen(false);
                   setCheckoutStep("details");
                 }}
-                className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white"
+                className={`absolute top-5 right-5 p-2 rounded-full transition-colors cursor-pointer ${
+                  isLight ? "bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900" : "bg-white/10 hover:bg-white/20 text-white/70 hover:text-white"
+                }`}
               >
                 <X className="w-5 h-5" />
               </button>
@@ -889,66 +997,86 @@ function StorePage() {
                     <span className="text-[10px] font-mono uppercase text-[#00D084] font-bold tracking-widest">
                       Step 1 of 2 • Dispatch Details
                     </span>
-                    <h3 className="text-2xl font-bold text-white mt-1">Complete Your Order</h3>
-                    <p className="text-xs text-white/60">Total Payable: ₹{cartFinalTotal.toLocaleString()}</p>
+                    <h3 className={`text-2xl font-bold mt-1 ${isLight ? "text-slate-900" : "text-white"}`}>Complete Your Order</h3>
+                    <p className={`text-xs ${isLight ? "text-slate-600" : "text-white/60"}`}>Total Payable: ₹{cartFinalTotal.toLocaleString()}</p>
                   </div>
 
                   <form onSubmit={handleCheckoutSubmit} className="space-y-3.5">
                     <div>
-                      <label className="text-[10px] font-mono text-white/50 uppercase block mb-1">Full Name *</label>
+                      <label className={`text-[10px] font-mono uppercase block mb-1 font-semibold ${isLight ? "text-slate-600" : "text-white/50"}`}>Full Name *</label>
                       <input
                         type="text"
                         required
                         placeholder="Enter full name"
                         value={checkoutForm.name}
                         onChange={(e) => setCheckoutForm({ ...checkoutForm, name: e.target.value })}
-                        className="w-full bg-[#020503] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                        className={`w-full border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#00D084] ${
+                          isLight
+                            ? "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400"
+                            : "bg-[#020503] border-white/15 text-white focus:border-[#00D084]"
+                        }`}
                       />
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-[10px] font-mono text-white/50 uppercase block mb-1">Mobile Number *</label>
+                        <label className={`text-[10px] font-mono uppercase block mb-1 font-semibold ${isLight ? "text-slate-600" : "text-white/50"}`}>Mobile Number *</label>
                         <input
                           type="tel"
                           required
                           placeholder="+91 95823 90001"
                           value={checkoutForm.phone}
                           onChange={(e) => setCheckoutForm({ ...checkoutForm, phone: e.target.value })}
-                          className="w-full bg-[#020503] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                          className={`w-full border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#00D084] ${
+                            isLight
+                              ? "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400"
+                              : "bg-[#020503] border-white/15 text-white focus:border-[#00D084]"
+                          }`}
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-mono text-white/50 uppercase block mb-1">City *</label>
+                        <label className={`text-[10px] font-mono uppercase block mb-1 font-semibold ${isLight ? "text-slate-600" : "text-white/50"}`}>City *</label>
                         <input
                           type="text"
                           required
                           placeholder="e.g. Pune, Delhi"
                           value={checkoutForm.city}
                           onChange={(e) => setCheckoutForm({ ...checkoutForm, city: e.target.value })}
-                          className="w-full bg-[#020503] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                          className={`w-full border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#00D084] ${
+                            isLight
+                              ? "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400"
+                              : "bg-[#020503] border-white/15 text-white focus:border-[#00D084]"
+                          }`}
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-[10px] font-mono text-white/50 uppercase block mb-1">Delivery Address *</label>
+                      <label className={`text-[10px] font-mono uppercase block mb-1 font-semibold ${isLight ? "text-slate-600" : "text-white/50"}`}>Delivery Address *</label>
                       <textarea
                         rows={2}
                         required
                         placeholder="Street, Building, Flat No..."
                         value={checkoutForm.address}
                         onChange={(e) => setCheckoutForm({ ...checkoutForm, address: e.target.value })}
-                        className="w-full bg-[#020503] border border-white/15 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                        className={`w-full border rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-[#00D084] ${
+                          isLight
+                            ? "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400"
+                            : "bg-[#020503] border-white/15 text-white focus:border-[#00D084]"
+                        }`}
                       />
                     </div>
 
                     <div>
-                      <label className="text-[10px] font-mono text-white/50 uppercase block mb-1">Payment Method</label>
+                      <label className={`text-[10px] font-mono uppercase block mb-1 font-semibold ${isLight ? "text-slate-600" : "text-white/50"}`}>Payment Method</label>
                       <select
                         value={checkoutForm.paymentMethod}
                         onChange={(e) => setCheckoutForm({ ...checkoutForm, paymentMethod: e.target.value })}
-                        className="w-full bg-[#020503] border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00D084]"
+                        className={`w-full border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#00D084] ${
+                          isLight
+                            ? "bg-slate-50 border-slate-200 text-slate-900"
+                            : "bg-[#020503] border-white/15 text-white focus:border-[#00D084]"
+                        }`}
                       >
                         <option value="upi">UPI / GPay / PhonePe (Instant Discount)</option>
                         <option value="card">Credit / Debit Card</option>
@@ -970,24 +1098,26 @@ function StorePage() {
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
 
-                  <h3 className="text-2xl font-bold text-white">Order Confirmed!</h3>
+                  <h3 className={`text-2xl font-bold ${isLight ? "text-slate-900" : "text-white"}`}>Order Confirmed!</h3>
 
-                  <p className="text-xs text-white/70 leading-relaxed max-w-sm mx-auto">
-                    Thank you, <span className="font-bold text-white">{checkoutForm.name}</span>. Your order has been dispatched from our central hub.
+                  <p className={`text-xs leading-relaxed max-w-sm mx-auto ${isLight ? "text-slate-600" : "text-white/70"}`}>
+                    Thank you, <span className={`font-bold ${isLight ? "text-slate-900" : "text-white"}`}>{checkoutForm.name}</span>. Your order has been dispatched from our central hub.
                   </p>
 
-                  <div className="p-4 bg-white/5 rounded-2xl border border-white/10 text-xs font-mono space-y-1.5 text-left max-w-xs mx-auto">
-                    <div className="flex justify-between text-white/60">
+                  <div className={`p-4 rounded-2xl border text-xs font-mono space-y-1.5 text-left max-w-xs mx-auto ${
+                    isLight ? "bg-slate-50 border-slate-200" : "bg-white/5 border-white/10"
+                  }`}>
+                    <div className={`flex justify-between ${isLight ? "text-slate-500" : "text-white/60"}`}>
                       <span>Order ID:</span>
                       <span className="text-[#00D084]">#EV-884920</span>
                     </div>
-                    <div className="flex justify-between text-white/60">
+                    <div className={`flex justify-between ${isLight ? "text-slate-500" : "text-white/60"}`}>
                       <span>Est. Delivery:</span>
-                      <span className="text-white">2-3 Business Days</span>
+                      <span className={isLight ? "text-slate-900 font-bold" : "text-white"}>2-3 Business Days</span>
                     </div>
-                    <div className="flex justify-between text-white/60">
+                    <div className={`flex justify-between ${isLight ? "text-slate-500" : "text-white/60"}`}>
                       <span>Payment:</span>
-                      <span className="text-white uppercase">{checkoutForm.paymentMethod}</span>
+                      <span className={`uppercase font-bold ${isLight ? "text-slate-900" : "text-white"}`}>{checkoutForm.paymentMethod}</span>
                     </div>
                   </div>
 

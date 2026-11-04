@@ -36,7 +36,6 @@ const MORE_NAV = [
   { label: "Fleet Solutions (B2B)", href: "/fleet", desc: "Fleet uptime, depot teams & scheduled AMC" },
   { label: "OEM Solutions", href: "/oem", desc: "After-sales partner for EV brands & dealers" },
   { label: "Ecosystem Platform", href: "/ecosystem", desc: "Autobot OS multi-brand infrastructure network" },
-  { label: "AI Diagnostics Tool", href: "/ai-tool", desc: "AI troubleshooting & predictive fault scanner" },
   { label: "EV Spare Parts", href: "/store", desc: "Certified batteries, chargers & controllers" },
   { label: "Service Centre Network", href: "/service-centre", desc: "Browse all network hubs across cities" },
   { label: "EV Blog & Insights", href: "/blog", desc: "EV maintenance guides & tech tips" },
@@ -44,7 +43,6 @@ const MORE_NAV = [
   { label: "Webinars & Workshops", href: "/webinars", desc: "Technical EV workshops & live Q&A" },
   { label: "Doorstep EV Service", href: "/doorstep-ev-service", desc: "Certified EV technicians arrive at your home or office" },
   { label: "24/7 Roadside Assistance", href: "/roadside-assistance", desc: "Emergency mobile rescue, battery boost & flatbed towing" },
-  { label: "AI Track Assistant", href: "/track", desc: "Automated status & diagnostic tracking" },
   { label: "Media & PR", href: "/media", desc: "Press releases & media kit" },
 ];
 

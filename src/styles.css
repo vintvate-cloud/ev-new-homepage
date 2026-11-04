@@ -2727,37 +2727,44 @@ html.theme-light div.keep-white span[class*="text-[#00D084]"] {
   color: #00D084 !important;
 }
 
-
-/* 7. Franchise Opportunity Banner (Deep Emerald & Night Lock) */
-html.theme-light .franchise-cta-banner,
-html.theme-light [class*="bg-[#071915]"],
-html.theme-light div.keep-white {
-  background-color: #071915 !important;
+/* =========================================================================
+   STORE & STORE MODALS LIGHT MODE OVERRIDES
+   ========================================================================= */
+html.theme-light .store-quickview-sheet {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
 }
 
-html.theme-light .franchise-cta-banner h2,
-html.theme-light [class*="bg-[#071915]"] h2,
-html.theme-light div.keep-white h2,
-html.theme-light .franchise-cta-banner [class*="text-white"],
-html.theme-light [class*="bg-[#071915]"] [class*="text-white"],
-html.theme-light div.keep-white [class*="text-white"] {
-  color: #ffffff !important;
+html.theme-light .store-quickview-sheet h2 {
+  color: #0f172a !important;
 }
 
-html.theme-light .franchise-cta-banner p,
-html.theme-light [class*="bg-[#071915]"] p,
-html.theme-light div.keep-white p {
-  color: #c2dfd6 !important;
+html.theme-light .store-quickview-sheet p {
+  color: #334155 !important;
 }
 
-html.theme-light .franchise-cta-banner span:not([class*="text-[#00D084]"]),
-html.theme-light [class*="bg-[#071915]"] span:not([class*="text-[#00D084]"]),
-html.theme-light div.keep-white span:not([class*="text-[#00D084]"]) {
-  color: #ffffff !important;
+html.theme-light .store-checkout-modal {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
 }
 
-html.theme-light .franchise-cta-banner span[class*="text-[#00D084]"],
-html.theme-light [class*="bg-[#071915]"] span[class*="text-[#00D084]"],
-html.theme-light div.keep-white span[class*="text-[#00D084]"] {
-  color: #00D084 !important;
+html.theme-light .store-checkout-modal h3 {
+  color: #0f172a !important;
 }
+
+html.theme-light .store-checkout-modal input,
+html.theme-light .store-checkout-modal textarea,
+html.theme-light .store-checkout-modal select {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.theme-light .store-cards-overlay {
+  background-color: #f8faf9 !important;
+  color: #1a2320 !important;
+  border-color: #e2e8f0 !important;
+}
+
