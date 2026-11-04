@@ -529,10 +529,11 @@ function HeroFleetEnquiryForm() {
                 key={size}
                 type="button"
                 onClick={() => setFleetSize(size)}
-                className={`py-1.5 px-2 rounded-lg text-[10.5px] font-semibold border transition-all ${fleetSize === size
+                className={`py-1.5 px-2 rounded-lg text-[10.5px] font-semibold border transition-all ${
+                  fleetSize === size
                     ? "bg-[#00D084]/20 border-[#00D084] text-[#00D084] shadow-[0_0_10px_rgba(0,208,132,0.2)]"
                     : "bg-[#0e1310] border-white/10 text-white/70 hover:border-white/20"
-                  }`}
+                }`}
               >
                 {size} units
               </button>
@@ -674,10 +675,11 @@ function HeroOemEnquiryForm() {
                 key={cat}
                 type="button"
                 onClick={() => setPlatform(cat)}
-                className={`py-1.5 px-2 rounded-lg text-[10.5px] font-semibold border transition-all ${platform === cat
+                className={`py-1.5 px-2 rounded-lg text-[10.5px] font-semibold border transition-all ${
+                  platform === cat
                     ? "bg-[#00D084]/20 border-[#00D084] text-[#00D084] shadow-[0_0_10px_rgba(0,208,132,0.2)]"
                     : "bg-[#0e1310] border-white/10 text-white/70 hover:border-white/20"
-                  }`}
+                }`}
               >
                 {cat === "2W" ? "Electric 2W" : cat === "3W" ? "Cargo 3W" : "2W + 3W"}
               </button>
@@ -1127,13 +1129,13 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                       {/* Background studio radial lighting */}
                       <div className="absolute inset-0 bg-radial from-[#00D084]/15 via-transparent to-transparent pointer-events-none" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent pointer-events-none z-[1]" />
-
+                      
                       <img
                         src={activeTypewriterItem.img}
                         alt={activeTypewriterItem.word}
                         className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)] animate-float relative z-[1]"
                       />
-
+                      
                       <div className="absolute bottom-2.5 left-2.5 right-2.5 z-[2] flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10">
                         <div className="flex items-center gap-1.5">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse" />
