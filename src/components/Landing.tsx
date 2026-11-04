@@ -80,6 +80,8 @@ import evScooterHero from "@/assets/ev-scooter-hero.png";
 import evScooterSmall from "@/assets/ev-scooter-small.png";
 import evMotorcycleHero from "@/assets/ev-motorcycle-hero.png";
 import evThreewheelerHero from "@/assets/ev-threewheeler-hero.png";
+import evScooterHero2 from "@/assets/ev-scooter-hero2.png";
+import { toast } from "sonner";
 import { Ecosystem } from "./Ecosystem";
 
 if (typeof window !== "undefined") {
@@ -100,22 +102,8 @@ import { Nav } from "./Nav";
 /* ---------------- Hero ---------------- */
 const HERO_SLIDES = [
   {
-    id: "scooter",
-    heading: "THE PREMIER EV SERVICE ECOSYSTEM",
-    cardTitle: "VOLTRIDE X1",
-    cardDesc: "VoltRide X1 is a stylish commuter choice.",
-    cardImg: evScooterSmall,
-    bottomTitle: "SMART MOBILITY FOR EVERYONE",
-    bottomDesc: "Enjoy smooth rides, easy charging, and modern design made to simplify short trips across the city.",
-    bigImg: evScooterSmall,
-    bigImgStyle: {
-      width: "clamp(480px, 50%, 980px)",
-      bottom: "-90px",
-      right: "5%",
-    },
-    ghostText: "EASY BOOKING IN SECONDS",
-    statsValue: "125+",
-    statsLabel: "happy riders every day",
+    id: "consumer",
+    titlePrefix: "INDIA'S MULTI-BRAND EV SERVICE NETWORK",
     gradStart: "#00D084",
     gradEnd: "#00B574",
     riders: [
@@ -123,74 +111,28 @@ const HERO_SLIDES = [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80",
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80"
     ],
-    commands: [
-      { cmd: "CMD_01", label: "BOOK SERVICE", icon: "zap", href: "#ev-services" },
-      { cmd: "CMD_02", label: "FIND CENTRE", icon: "map-pin", href: "#nearest-center" },
-      { cmd: "CMD_03", label: "REQUEST RSA", icon: "phone-call", href: "#request-rsa", isRsa: true },
-      { cmd: "CMD_04", label: "FRANCHISE", icon: "store", href: "#join-franchise" },
-    ]
   },
   {
-    id: "motorcycle",
-    heading: "PERFORMANCE MOTORCYCLE TUNING CYCLE",
-    cardTitle: "APEX RAPTOR",
-    cardDesc: "Raptor series for high-velocity sports dynamics.",
-    cardImg: evMotorcycleHero,
-    bottomTitle: "UNLEASH HYPER SPORT PERFORMANCE",
-    bottomDesc: "Calibrate throttle response, monitor high-speed dyno telemetry, and diagnostics to OEM standards.",
-    bigImg: evMotorcycleHero,
-    bigImgStyle: {
-      width: "clamp(420px, 46%, 860px)",
-      bottom: "20px",
-      right: "7%",
-    },
-    ghostText: "DYNO TUNED FOR TRACKS",
-    statsValue: "340+",
-    statsLabel: "track tests this week",
-    gradStart: "#059669",
-    gradEnd: "#047857",
+    id: "fleet",
+    titlePrefix: "COMMERCIAL EV FLEET MAINTENANCE & AMC",
+    gradStart: "#0D5C2E",
+    gradEnd: "#07110B",
     riders: [
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80",
       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&h=100&q=80",
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100&q=80"
     ],
-    commands: [
-      { cmd: "TUNE_01", label: "DYNO RUN", icon: "activity", href: "#ev-services" },
-      { cmd: "TUNE_02", label: "ECU FLASH", icon: "cpu", href: "#ev-services" },
-      { cmd: "TUNE_03", label: "SUSPENSION", icon: "wrench", href: "#ev-services" },
-      { cmd: "TUNE_04", label: "DIAGNOSTICS", icon: "crosshair", href: "#ev-services" },
-    ]
   },
   {
-    id: "cargo",
-    heading: "COMMERCIAL 3-WHEELER FLIGHT SYSTEMS",
-    cardTitle: "CARGOPRO 3",
-    cardDesc: "Commercial heavy-load cargo chassis.",
-    cardImg: evThreewheelerHero,
-    bottomTitle: "MAXIMIZE COMMERCIAL FLEET UPTIME",
-    bottomDesc: "Engineered for robust urban cargo delivery logistics with 12-point battery swapping thermal diagnostics.",
-    bigImg: evThreewheelerHero,
-    bigImgStyle: {
-      width: "clamp(440px, 48%, 920px)",
-      bottom: "-10px",
-      right: "6%",
-    },
-    ghostText: "99.8% UPTIME GUARANTEE",
-    statsValue: "1,200+",
-    statsLabel: "fleets managed daily",
-    gradStart: "#10b981",
-    gradEnd: "#059669",
+    id: "oem",
+    titlePrefix: "TURN-KEY EV AFTER-SALES FOR OEMS & DEALERS",
+    gradStart: "#059669",
+    gradEnd: "#044E32",
     riders: [
       "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=100&h=100&q=80",
       "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=100&h=100&q=80",
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&h=100&q=80"
     ],
-    commands: [
-      { cmd: "FLT_01", label: "BATTERY SWAP", icon: "zap", href: "#ev-services" },
-      { cmd: "FLT_02", label: "LOAD SCAN", icon: "gauge", href: "#ev-services" },
-      { cmd: "FLT_03", label: "HUB ROUTER", icon: "map", href: "#ev-services" },
-      { cmd: "FLT_04", label: "FLEET CONNECT", icon: "globe", href: "#ev-services" },
-    ]
   }
 ];
 
@@ -478,7 +420,310 @@ function HeroGetStartedForm() {
   );
 }
 
-const HERO_TYPEWRITER_ITEMS = [
+/* ---------------- Minimal Fleet Enquiry Form (Slide 2) ---------------- */
+function HeroFleetEnquiryForm() {
+  const [companyName, setCompanyName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [fleetSize, setFleetSize] = useState<"10-25" | "26-100" | "100+">("10-25");
+  const [city, setCity] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!phone) {
+      toast.error("Please enter a contact phone number");
+      return;
+    }
+    setIsSubmitted(true);
+    toast.success("Fleet audit request received! Our commercial team will call you shortly.");
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="w-full bg-[#070908]/95 border border-[#00D084]/40 rounded-[24px] p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans text-center space-y-4">
+        <div className="w-12 h-12 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center mx-auto text-[#00D084]">
+          <CheckCircle2 className="w-6 h-6 text-[#00D084]" />
+        </div>
+        <div className="space-y-1">
+          <h4 className="text-base font-bold text-white uppercase tracking-tight">Audit Request Submitted</h4>
+          <p className="text-xs text-white/70">
+            Thank you, <span className="text-[#00D084] font-semibold">{companyName || "Partner"}</span>. A fleet maintenance engineer will contact you within 1 business day.
+          </p>
+        </div>
+        <div className="pt-2">
+          <Link
+            to="/fleet"
+            className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white transition-all"
+          >
+            <span>Explore Fleet Solutions</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#00D084]" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none">
+      {/* Background ambient lighting */}
+      <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#00D084]/10 rounded-full blur-2xl pointer-events-none" />
+
+      {/* Header Badge & Title */}
+      <div className="mb-3">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 backdrop-blur-md mb-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+          <span className="text-[9px] font-mono font-bold tracking-widest text-[#00D084] uppercase">
+            COMMERCIAL FLEETS // 10+ VEHICLES
+          </span>
+        </div>
+        <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white leading-tight">
+          Request Fleet Proposal
+        </h3>
+        <p className="text-[10.5px] text-white/50 font-light mt-0.5">
+          Dedicated inter-shift maintenance & 99.4% guaranteed uptime
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-2.5">
+        <div>
+          <label className="block text-[10px] font-mono text-white/60 uppercase mb-1">Company / Fleet Name</label>
+          <input
+            type="text"
+            required
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            placeholder="e.g. Zepto Hub, Porter Cargo, Logistics Co."
+            className="w-full bg-[#0e1310] border border-white/10 focus:border-[#00D084] rounded-xl px-3 py-2 text-xs text-white placeholder-white/30 outline-none transition-colors"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <label className="block text-[10px] font-mono text-white/60 uppercase mb-1">WhatsApp / Phone</label>
+            <input
+              type="tel"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="+91 98765 43210"
+              className="w-full bg-[#0e1310] border border-white/10 focus:border-[#00D084] rounded-xl px-3 py-2 text-xs text-white placeholder-white/30 outline-none transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-[10px] font-mono text-white/60 uppercase mb-1">City / Region</label>
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="e.g. Delhi NCR, Pune"
+              className="w-full bg-[#0e1310] border border-white/10 focus:border-[#00D084] rounded-xl px-3 py-2 text-xs text-white placeholder-white/30 outline-none transition-colors"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-[10px] font-mono text-white/60 uppercase mb-1">Active Fleet Size</label>
+          <div className="grid grid-cols-3 gap-1.5">
+            {(["10-25", "26-100", "100+"] as const).map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => setFleetSize(size)}
+                className={`py-1.5 px-2 rounded-lg text-[10.5px] font-semibold border transition-all ${fleetSize === size
+                    ? "bg-[#00D084]/20 border-[#00D084] text-[#00D084] shadow-[0_0_10px_rgba(0,208,132,0.2)]"
+                    : "bg-[#0e1310] border-white/10 text-white/70 hover:border-white/20"
+                  }`}
+              >
+                {size} units
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="pt-1">
+          <button
+            type="submit"
+            className="w-full bg-[#00D084] hover:bg-[#00e894] text-black font-extrabold uppercase tracking-wider text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.3)] hover:scale-[1.01] cursor-pointer"
+          >
+            <span>Request Free Fleet Audit</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+
+        <div className="flex items-center justify-between text-[9px] font-mono text-white/40 pt-1 border-t border-white/5">
+          <span className="flex items-center gap-1">
+            <ShieldCheck className="h-3 w-3 text-[#00D084]" />
+            99.4% Uptime SLA
+          </span>
+          <Link to="/fleet" className="text-[#00D084] hover:underline flex items-center gap-0.5">
+            Fleet Specs <ArrowUpRight className="h-2.5 w-2.5" />
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+/* ---------------- Minimal OEM Partnership Form (Slide 3) ---------------- */
+function HeroOemEnquiryForm() {
+  const [brandName, setBrandName] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [email, setEmail] = useState("");
+  const [platform, setPlatform] = useState<"2W" | "3W" | "Both">("2W");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("Please enter your work email or phone number");
+      return;
+    }
+    setIsSubmitted(true);
+    toast.success("OEM partnership request submitted! Our enterprise director will connect shortly.");
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="w-full bg-[#070908]/95 border border-[#00D084]/40 rounded-[24px] p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans text-center space-y-4">
+        <div className="w-12 h-12 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center mx-auto text-[#00D084]">
+          <CheckCircle2 className="w-6 h-6 text-[#00D084]" />
+        </div>
+        <div className="space-y-1">
+          <h4 className="text-base font-bold text-white uppercase tracking-tight">Partnership Request Received</h4>
+          <p className="text-xs text-white/70">
+            Thank you, <span className="text-[#00D084] font-semibold">{contactName || brandName || "OEM Partner"}</span>. Our enterprise partnerships director will reach out within 24 hours.
+          </p>
+        </div>
+        <div className="pt-2">
+          <Link
+            to="/oem"
+            className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white transition-all"
+          >
+            <span>Explore OEM Solutions</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#00D084]" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none">
+      {/* Background ambient lighting */}
+      <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#00D084]/10 rounded-full blur-2xl pointer-events-none" />
+
+      {/* Header Badge & Title */}
+      <div className="mb-3">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 backdrop-blur-md mb-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] shadow-[0_0_8px_#00D084] animate-pulse" />
+          <span className="text-[9px] font-mono font-bold tracking-widest text-[#00D084] uppercase">
+            OEM AFTER-SALES // ZERO CAPEX
+          </span>
+        </div>
+        <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white leading-tight">
+          Plan Your Service Network
+        </h3>
+        <p className="text-[10.5px] text-white/50 font-light mt-0.5">
+          14-day new city launch, authorized warranty & parts fulfillment
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-2.5">
+        <div>
+          <label className="block text-[10px] font-mono text-white/60 uppercase mb-1">OEM Brand / Manufacturer</label>
+          <input
+            type="text"
+            required
+            value={brandName}
+            onChange={(e) => setBrandName(e.target.value)}
+            placeholder="e.g. Ather, Ola, Revolt, Commercial OEM"
+            className="w-full bg-[#0e1310] border border-white/10 focus:border-[#00D084] rounded-xl px-3 py-2 text-xs text-white placeholder-white/30 outline-none transition-colors"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <label className="block text-[10px] font-mono text-white/60 uppercase mb-1">Contact Person</label>
+            <input
+              type="text"
+              required
+              value={contactName}
+              onChange={(e) => setContactName(e.target.value)}
+              placeholder="Head of Service / CX"
+              className="w-full bg-[#0e1310] border border-white/10 focus:border-[#00D084] rounded-xl px-3 py-2 text-xs text-white placeholder-white/30 outline-none transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-[10px] font-mono text-white/60 uppercase mb-1">Work Email / Phone</label>
+            <input
+              type="text"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="name@oem-brand.com"
+              className="w-full bg-[#0e1310] border border-white/10 focus:border-[#00D084] rounded-xl px-3 py-2 text-xs text-white placeholder-white/30 outline-none transition-colors"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-[10px] font-mono text-white/60 uppercase mb-1">Vehicle Category</label>
+          <div className="grid grid-cols-3 gap-1.5">
+            {(["2W", "3W", "Both"] as const).map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setPlatform(cat)}
+                className={`py-1.5 px-2 rounded-lg text-[10.5px] font-semibold border transition-all ${platform === cat
+                    ? "bg-[#00D084]/20 border-[#00D084] text-[#00D084] shadow-[0_0_10px_rgba(0,208,132,0.2)]"
+                    : "bg-[#0e1310] border-white/10 text-white/70 hover:border-white/20"
+                  }`}
+              >
+                {cat === "2W" ? "Electric 2W" : cat === "3W" ? "Cargo 3W" : "2W + 3W"}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="pt-1">
+          <button
+            type="submit"
+            className="w-full bg-[#00D084] hover:bg-[#00e894] text-black font-extrabold uppercase tracking-wider text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.3)] hover:scale-[1.01] cursor-pointer"
+          >
+            <span>Request Partnership Call</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+
+        <div className="flex items-center justify-between text-[9px] font-mono text-white/40 pt-1 border-t border-white/5">
+          <span className="flex items-center gap-1">
+            <Cpu className="h-3 w-3 text-[#00D084]" />
+            DMS API Ready
+          </span>
+          <Link to="/oem" className="text-[#00D084] hover:underline flex items-center gap-0.5">
+            OEM Program <ArrowUpRight className="h-2.5 w-2.5" />
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+/* ---------------- Typewriter Definitions ---------------- */
+type TypewriterItem = {
+  word: string;
+  img: string;
+  statValue: string;
+  statLabel: string;
+  ghostText: string;
+  style: {
+    width: string;
+    bottom: string;
+    right: string;
+  };
+};
+
+const HERO_TYPEWRITER_ITEMS: TypewriterItem[] = [
   {
     word: "DOORSTEP REPAIRS",
     img: "/hero/doorstep_repairs.png",
@@ -493,7 +738,7 @@ const HERO_TYPEWRITER_ITEMS = [
   },
   {
     word: "GENUINE PARTS",
-    img: "/hero/genuine_parts.png",
+    img: "/hero/genuine_parts_transparent.png",
     statValue: "100%",
     statLabel: "OEM verified spare components",
     ghostText: "OEM GENUINE SPARE PARTS",
@@ -553,6 +798,138 @@ const HERO_TYPEWRITER_ITEMS = [
   },
 ];
 
+const FLEET_TYPEWRITER_ITEMS: TypewriterItem[] = [
+  {
+    word: "PREVENTIVE AMC",
+    img: "/hero/fleet_commercial_cargo.png",
+    statValue: "99.4%",
+    statLabel: "guaranteed fleet uptime SLA",
+    ghostText: "COMMERCIAL CARGO FLEET CARE",
+    style: {
+      width: "clamp(460px, 50%, 920px)",
+      bottom: "-15px",
+      right: "5%",
+    },
+  },
+  {
+    word: "DEPOT MOBILE VANS",
+    img: "/hero/fleet_depot_van.png",
+    statValue: "< 35-MIN",
+    statLabel: "inter-shift servicing window",
+    ghostText: "MOBILE ON-SITE DEPOT WORKSHOPS",
+    style: {
+      width: "clamp(450px, 48%, 900px)",
+      bottom: "-15px",
+      right: "5%",
+    },
+  },
+  {
+    word: "BATTERY AUDITS",
+    img: "/hero/ai_diagnostics.png",
+    statValue: "< 15mV",
+    statLabel: "cell balancing precision",
+    ghostText: "CAN-BUS BATTERY CELL BALANCING",
+    style: {
+      width: "clamp(380px, 42%, 780px)",
+      bottom: "25px",
+      right: "8%",
+    },
+  },
+  {
+    word: "PRIORITY FLEET RSA",
+    img: "/hero/rsa_service.png",
+    statValue: "< 45-MIN",
+    statLabel: "emergency fleet towing & rescue",
+    ghostText: "PRIORITY 24/7 BREAKDOWN RESCUE",
+    style: {
+      width: "clamp(440px, 48%, 880px)",
+      bottom: "-10px",
+      right: "5%",
+    },
+  },
+  {
+    word: "CONTRACT PARTS",
+    img: "/hero/genuine_parts_transparent.png",
+    statValue: "12,500+",
+    statLabel: "contract-rate spare components",
+    ghostText: "WHOLESALE EV SPARE HUB SKUS",
+    style: {
+      width: "clamp(420px, 46%, 840px)",
+      bottom: "0px",
+      right: "6%",
+    },
+  },
+];
+
+const OEM_TYPEWRITER_ITEMS: TypewriterItem[] = [
+  {
+    word: "14-DAY CITY LAUNCH",
+    img: "/hero/oem_ev_prototype.png",
+    statValue: "14-DAYS",
+    statLabel: "turn-key city launch velocity",
+    ghostText: "RAPID MARKET-ENTRY READINESS",
+    style: {
+      width: "clamp(460px, 50%, 920px)",
+      bottom: "-15px",
+      right: "5%",
+    },
+  },
+  {
+    word: "WARRANTY & RECALLS",
+    img: "/hero/oem_diagnostic_scanner.png",
+    statValue: "SAME-DAY",
+    statLabel: "digital claim approval SLA",
+    ghostText: "EVIDENCE-FIRST WARRANTY CLAIMS",
+    style: {
+      width: "clamp(420px, 45%, 820px)",
+      bottom: "10px",
+      right: "7%",
+    },
+  },
+  {
+    word: "HIGH VOLTAGE LABS",
+    img: "/tools/battery-analyzer.png",
+    statValue: "99.4%",
+    statLabel: "BMS diagnostic accuracy",
+    ghostText: "1000V PACK TEARDOWN & REBUILD",
+    style: {
+      width: "clamp(390px, 43%, 800px)",
+      bottom: "20px",
+      right: "7%",
+    },
+  },
+  {
+    word: "CERTIFIED TECHS",
+    img: "/hero/certified_techs.png",
+    statValue: "100%",
+    statLabel: "brand SOP compliance",
+    ghostText: "AUTOBOT ACADEMY TRAINED",
+    style: {
+      width: "clamp(400px, 44%, 800px)",
+      bottom: "20px",
+      right: "7%",
+    },
+  },
+  {
+    word: "SPARE PARTS DEPOTS",
+    img: "/hero/genuine_parts_transparent.png",
+    statValue: "2-HOUR",
+    statLabel: "intra-city parts delivery SLA",
+    ghostText: "RFID SERIAL BARCODE TRACEABILITY",
+    style: {
+      width: "clamp(420px, 46%, 840px)",
+      bottom: "0px",
+      right: "6%",
+    },
+  },
+];
+
+function getSlideTypewriterItems(slideIndex: number): TypewriterItem[] {
+  if (slideIndex === 1) return FLEET_TYPEWRITER_ITEMS;
+  if (slideIndex === 2) return OEM_TYPEWRITER_ITEMS;
+  return HERO_TYPEWRITER_ITEMS;
+}
+
 function HeroTypewriter({
   items = HERO_TYPEWRITER_ITEMS,
   onIndexChange,
@@ -560,7 +937,7 @@ function HeroTypewriter({
   deletingSpeed = 40,
   pauseDuration = 2200,
 }: {
-  items?: typeof HERO_TYPEWRITER_ITEMS;
+  items?: TypewriterItem[];
   onIndexChange?: (index: number) => void;
   typingSpeed?: number;
   deletingSpeed?: number;
@@ -571,6 +948,7 @@ function HeroTypewriter({
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    if (!items || items.length === 0) return;
     const targetWord = items[wordIndex % items.length].word;
 
     let timer: NodeJS.Timeout;
@@ -608,9 +986,11 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [activeTypewriterIdx, setActiveTypewriterIdx] = useState(0);
+  const [typewriterIndices, setTypewriterIndices] = useState<Record<number, number>>({ 0: 0, 1: 0, 2: 0 });
 
-  const activeTypewriterItem = HERO_TYPEWRITER_ITEMS[activeTypewriterIdx] || HERO_TYPEWRITER_ITEMS[0];
+  const handleTypewriterIndexChange = (slideIndex: number, itemIdx: number) => {
+    setTypewriterIndices((prev) => ({ ...prev, [slideIndex]: itemIdx }));
+  };
 
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
@@ -650,6 +1030,9 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
       >
         {HERO_SLIDES.map((slide, index) => {
           const isCurrent = index === activeSlide;
+          const typewriterItems = getSlideTypewriterItems(index);
+          const activeItemIdx = typewriterIndices[index] ?? 0;
+          const activeTypewriterItem = typewriterItems[activeItemIdx] || typewriterItems[0];
 
           return (
             <div
@@ -703,27 +1086,28 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
 
               {/* HEADING */}
               <div
-                className="w-full text-center px-3 sm:px-4 relative z-10"
+                className="w-full text-center px-4 sm:px-6 relative z-10 max-w-5xl mx-auto"
                 style={{
-                  paddingTop: "clamp(100px, 12vh, 140px)",
+                  paddingTop: "clamp(90px, 11vh, 130px)",
                 }}
               >
                 <h1
-                  className="m-0 p-0 leading-tight sm:leading-none transition-colors duration-300 flex justify-center items-center flex-wrap sm:flex-nowrap gap-x-2 sm:gap-x-3 gap-y-1 text-center w-full max-w-full overflow-hidden select-none"
+                  className="m-0 p-0 leading-tight transition-colors duration-300 flex justify-center items-center flex-wrap gap-x-2 sm:gap-x-3 gap-y-1.5 text-center select-none"
                   style={{
                     color: "var(--foreground)",
-                    fontSize: "clamp(0.72rem, 3.0vw, 3.8rem)",
+                    fontSize: "clamp(1.1rem, 2.2vw, 2.65rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.02em",
                     fontFamily: "var(--font-sans)",
                   }}
                 >
-                  <span className="text-white font-extrabold uppercase whitespace-nowrap">
-                    INDIA'S MULTI-BRAND EV SERVICE NETWORK
+                  <span className="text-white font-extrabold uppercase tracking-tight">
+                    {slide.titlePrefix}
                   </span>
                   <HeroTypewriter
-                    items={HERO_TYPEWRITER_ITEMS}
-                    onIndexChange={(idx) => setActiveTypewriterIdx(idx)}
+                    key={`typewriter-${slide.id}`}
+                    items={typewriterItems}
+                    onIndexChange={(idx) => handleTypewriterIndexChange(index, idx)}
                   />
                 </h1>
               </div>
@@ -733,7 +1117,7 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                 <AnimatePresence mode="wait">
                   {isCurrent && (
                     <motion.div
-                      key={`mobile-typewriter-img-${activeTypewriterItem.word}`}
+                      key={`mobile-typewriter-img-${slide.id}-${activeTypewriterItem.word}`}
                       initial={{ opacity: 0, y: 15, scale: 0.94 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -15, scale: 0.94 }}
@@ -743,13 +1127,13 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                       {/* Background studio radial lighting */}
                       <div className="absolute inset-0 bg-radial from-[#00D084]/15 via-transparent to-transparent pointer-events-none" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent pointer-events-none z-[1]" />
-                      
+
                       <img
                         src={activeTypewriterItem.img}
                         alt={activeTypewriterItem.word}
                         className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)] animate-float relative z-[1]"
                       />
-                      
+
                       <div className="absolute bottom-2.5 left-2.5 right-2.5 z-[2] flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10">
                         <div className="flex items-center gap-1.5">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse" />
@@ -772,14 +1156,14 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                 <AnimatePresence mode="wait">
                   {isCurrent && (
                     <motion.img
-                      key={`typewriter-img-${activeTypewriterItem.word}`}
+                      key={`typewriter-img-${slide.id}-${activeTypewriterItem.word}`}
                       initial={{ x: 100, opacity: 0, scale: 0.9 }}
                       animate={{ x: 0, opacity: 1, scale: 1 }}
                       exit={{ x: -100, opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                       src={activeTypewriterItem.img}
                       alt={activeTypewriterItem.word}
-                      className="pointer-events-none select-none block absolute z-[2] animate-float"
+                      className="pointer-events-none select-none block absolute z-[2] animate-float drop-shadow-[0_20px_45px_rgba(0,0,0,0.8)]"
                       style={{
                         ...activeTypewriterItem.style,
                         objectFit: "contain",
@@ -795,7 +1179,7 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                 >
                   <div className="flex -space-x-3">
                     {slide.riders.map((imgUrl, i) => (
-                      <img key={i} className="inline-block h-9 w-9 rounded-full ring-2 ring-card object-cover" src={imgUrl} alt={`Rider ${i + 1}`} />
+                      <img key={i} className="inline-block h-9 w-9 rounded-full ring-2 ring-card object-cover" src={imgUrl} alt={`Partner ${i + 1}`} />
                     ))}
                   </div>
                   <div className="flex flex-col text-left">
@@ -810,55 +1194,194 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
         })}
       </div>
 
-      {/* FIXED & STATIONARY GET STARTED MULTI-STEP FORM */}
+      {/* FIXED & STATIONARY GET STARTED / FLEET / OEM FORM */}
       <div
         className="absolute z-30 pointer-events-auto left-5 right-5 md:left-[6.5%] top-[170px] md:top-[210px] w-auto md:w-[32%] max-w-[400px]"
       >
-        <HeroGetStartedForm />
+        <AnimatePresence mode="wait">
+          {activeSlide === 0 && (
+            <motion.div
+              key="hero-form-consumer"
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
+              <HeroGetStartedForm />
+            </motion.div>
+          )}
+          {activeSlide === 1 && (
+            <motion.div
+              key="hero-form-fleet"
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
+              <HeroFleetEnquiryForm />
+            </motion.div>
+          )}
+          {activeSlide === 2 && (
+            <motion.div
+              key="hero-form-oem"
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
+              <HeroOemEnquiryForm />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* QUICK ACTION BUTTONS */}
       <div className="absolute z-30 bottom-24 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 flex flex-col items-center gap-3 pointer-events-auto font-sans">
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          {/* Book EV Service */}
-          <button
-            onClick={() => onOpenBooking ? onOpenBooking() : (window.location.href = "/services")}
-            className="bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:scale-105 cursor-pointer"
-          >
-            <Zap className="h-4 w-4 fill-[#020403] text-[#020403]" />
-            <span>Book EV Service</span>
-            <ArrowRight className="h-4 w-4 text-[#020403]" />
-          </button>
+        <AnimatePresence mode="wait">
+          {activeSlide === 0 && (
+            <motion.div
+              key="qa-consumer"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="flex flex-col items-center gap-3 w-full"
+            >
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                <button
+                  onClick={() => onOpenBooking ? onOpenBooking() : (window.location.href = "/services")}
+                  className="bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:scale-105 cursor-pointer"
+                >
+                  <Zap className="h-4 w-4 fill-[#020403] text-[#020403]" />
+                  <span>Book EV Service</span>
+                  <ArrowRight className="h-4 w-4 text-[#020403]" />
+                </button>
 
-          {/* Find Nearest Centre */}
-          <Link
-            to="/service-centres"
-            className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
-          >
-            <MapPin className="h-4 w-4 text-white keep-white shrink-0" />
-            <span className="text-white keep-white whitespace-nowrap">Find Nearest Centre</span>
-          </Link>
-        </div>
+                <Link
+                  to="/service-centres"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <MapPin className="h-4 w-4 text-white keep-white shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">Find Nearest Centre</span>
+                </Link>
+              </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          {/* Request RSA */}
-          <a
-            href="tel:+919582390001"
-            className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-red-500/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
-          >
-            <PhoneCall className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
-            <span className="text-white keep-white whitespace-nowrap">Request RSA</span>
-          </a>
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                <a
+                  href="tel:+919582390001"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-red-500/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <PhoneCall className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">Request RSA</span>
+                </a>
 
-          {/* Join Franchise Network */}
-          <Link
-            to="/franchise"
-            className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
-          >
-            <Store className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
-            <span className="text-white keep-white whitespace-nowrap">Join Franchise Network</span>
-          </Link>
-        </div>
+                <Link
+                  to="/franchise"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <Store className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">Join Franchise Network</span>
+                </Link>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSlide === 1 && (
+            <motion.div
+              key="qa-fleet"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="flex flex-col items-center gap-3 w-full"
+            >
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                <Link
+                  to="/fleet"
+                  className="bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:scale-105 cursor-pointer"
+                >
+                  <Truck className="h-4 w-4 fill-[#020403] text-[#020403]" />
+                  <span>Explore Fleet Solutions</span>
+                  <ArrowRight className="h-4 w-4 text-[#020403]" />
+                </Link>
+
+                <a
+                  href="tel:+919582390001"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <PhoneCall className="h-4 w-4 text-[#00D084] shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">Call Commercial Desk</span>
+                </a>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                <Link
+                  to="/service-centres"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <MapPin className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">Regional EV Hubs</span>
+                </Link>
+
+                <Link
+                  to="/franchise"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <Store className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">Depot Partner Network</span>
+                </Link>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSlide === 2 && (
+            <motion.div
+              key="qa-oem"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="flex flex-col items-center gap-3 w-full"
+            >
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                <Link
+                  to="/oem"
+                  className="bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.25)] hover:scale-105 cursor-pointer"
+                >
+                  <Cpu className="h-4 w-4 text-[#020403]" />
+                  <span>Explore OEM Network</span>
+                  <ArrowRight className="h-4 w-4 text-[#020403]" />
+                </Link>
+
+                <a
+                  href="tel:+919582390001"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <PhoneCall className="h-4 w-4 text-[#00D084] shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">OEM Partnership Desk</span>
+                </a>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                <Link
+                  to="/service-centres"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <MapPin className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">Multi-City Coverage</span>
+                </Link>
+
+                <Link
+                  to="/franchise"
+                  className="hero-action-pill keep-dark-card keep-white bg-[#050806]/85 hover:bg-white/5 text-white border border-white/10 hover:border-[#00D084]/40 font-bold text-xs sm:text-sm px-4.5 py-2.5 sm:px-5 sm:py-3 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                >
+                  <Store className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                  <span className="text-white keep-white whitespace-nowrap">Authorised Franchise</span>
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Navigation Dot Indicators */}
