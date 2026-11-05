@@ -643,7 +643,7 @@ html.theme-light [class*="bg-slate-900"]:not(.fixed):not([class*="inset-0"]):not
 html.theme-light [class*="bg-zinc-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
 html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
 html.theme-light [class*="bg-[#080c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
-html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box) {
+html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box):not(.hero-form *):not(.fleet-size-pill) {
   background-color: #ffffff !important;
   color: #09090b !important;
 }
@@ -867,7 +867,7 @@ html.theme-light [class*="drop-shadow-"] {
 }
 
 /* Specific light green background for active selection states in light mode */
-html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]) {
+html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero *):not(.hero-form *):not(.fleet-size-pill) {
   background-color: #ffffff !important;
   border-color: rgba(0, 208, 132, 0.3) !important;
   color: #09090b !important;
@@ -1081,6 +1081,37 @@ html.theme-light [class*="fixed top-20"] [class*="bg-[#0b0f0c]"] {
   border-color: rgba(255, 255, 255, 0.20) !important;
   color: #ffffff !important;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Fleet Size Pill Buttons inside hero proposal form */
+.hero-form .fleet-size-pill,
+html.theme-light .hero-form .fleet-size-pill,
+html.theme-light .page-hero .fleet-size-pill {
+  transition: all 0.2s ease !important;
+}
+
+.hero-form .fleet-size-pill:not(.is-selected),
+html.theme-light .hero-form .fleet-size-pill:not(.is-selected),
+html.theme-light .page-hero .fleet-size-pill:not(.is-selected) {
+  background-color: rgba(13, 20, 16, 0.95) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.hero-form .fleet-size-pill:not(.is-selected):hover,
+html.theme-light .hero-form .fleet-size-pill:not(.is-selected):hover,
+html.theme-light .page-hero .fleet-size-pill:not(.is-selected):hover {
+  background-color: rgba(19, 29, 23, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  color: #ffffff !important;
+}
+
+.hero-form .fleet-size-pill.is-selected,
+html.theme-light .hero-form .fleet-size-pill.is-selected,
+html.theme-light .page-hero .fleet-size-pill.is-selected {
+  background-color: #00D084 !important;
+  color: #020403 !important;
+  border-color: #00D084 !important;
 }
 
 /* 3. Hero Form Inputs, Selects, and Textareas */

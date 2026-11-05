@@ -544,11 +544,24 @@ export function FleetSolutionsPage() {
                                 key={pill.id}
                                 type="button"
                                 onClick={() => setForm({ ...form, fleetSize: pill.id })}
-                                className={`py-2 px-3 rounded-full text-xs font-bold transition-all text-center cursor-pointer border ${
+                                className={`fleet-size-pill py-2 px-3 rounded-full text-xs font-bold transition-all text-center cursor-pointer border ${
                                   isSelected
-                                    ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_15px_rgba(0,208,132,0.35)]"
-                                    : "bg-[#0d1410] text-white/80 border-white/15 hover:border-white/35 hover:bg-[#131d17]"
+                                    ? "is-selected bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_15px_rgba(0,208,132,0.35)]"
+                                    : "bg-[#0d1410] text-white border-white/20 hover:border-white/40 hover:bg-[#131d17]"
                                 }`}
+                                style={
+                                  isSelected
+                                    ? {
+                                        backgroundColor: "#00D084",
+                                        color: "#020403",
+                                        borderColor: "#00D084",
+                                      }
+                                    : {
+                                        backgroundColor: "rgba(13, 20, 16, 0.95)",
+                                        color: "#ffffff",
+                                        borderColor: "rgba(255, 255, 255, 0.22)",
+                                      }
+                                }
                               >
                                 {pill.label}
                               </button>
