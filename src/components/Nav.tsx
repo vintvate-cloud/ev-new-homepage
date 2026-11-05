@@ -72,6 +72,7 @@ export function Nav({
   const moreContentRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
   const { siteTheme, setSiteTheme, toggleTheme } = useTheme();
+  const isLightMode = siteTheme === "light" || theme === "warm";
 
   // Lenis Smooth Scroll for Ecosystem Resources "More" dropdown (No Visible Scrollbar)
   useEffect(() => {
@@ -267,9 +268,9 @@ export function Nav({
               }`}
             >
               <img
-                src="/logo-myevservice.jpg"
+                src={isLightMode ? "/logo.jpeg" : "/logo-myevservice.jpg"}
                 alt="My EV Service Logo"
-                className="w-full h-full object-contain rounded-xl shadow-md"
+                className="w-full h-full object-contain rounded-xl shadow-md border border-[var(--nav-logo-border)]"
               />
             </div>
           </Link>
@@ -655,9 +656,9 @@ export function Nav({
         <div className="flex items-center justify-between px-6 py-5">
           <div className="flex items-center gap-3">
             <img
-              src="/logo-myevservice.jpg"
+              src={isLightMode ? "/logo.jpeg" : "/logo-myevservice.jpg"}
               alt="My EV Service Logo"
-              className="h-10 w-auto rounded-xl object-contain shadow-sm"
+              className="h-10 w-auto rounded-xl object-contain shadow-sm border border-[var(--nav-logo-border)]"
             />
             <span className="text-[15px] font-bold tracking-[0.15em] text-foreground uppercase">
               MY EV SERVICE

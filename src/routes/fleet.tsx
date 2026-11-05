@@ -9,6 +9,7 @@ import { FleetVehicleMarquee } from "../components/fleet/FleetVehicleMarquee";
 import { FleetVisualShowcase } from "../components/fleet/FleetVisualShowcase";
 import { FleetRoiCalculator } from "../components/fleet/FleetRoiCalculator";
 import {
+  X,
   ShieldCheck,
   Building2,
   CalendarCheck,
@@ -69,8 +70,117 @@ export const FLEET_NEEDS_OPTIONS = [
   "Parts at Contract Rates",
 ];
 
+export interface DetailedFleetPlan {
+  type: string;
+  name: string;
+  subtitle: string;
+  badge?: string;
+  investment: string;
+  originalInvestment?: string;
+  foundingOffer?: string;
+  area: string;
+  bays: string;
+  vehicles: string;
+  includes: string[];
+  osSavings: string;
+  bestFor: string;
+  popular?: boolean;
+}
+
+export const DETAILED_FLEET_PLANS: DetailedFleetPlan[] = [
+  {
+    type: "essential",
+    name: "Fleet Essential",
+    subtitle: "Starter • Entry-level EV fleet care",
+    investment: "Custom / Veh",
+    originalInvestment: "₹1,299 / Veh + GST",
+    foundingOffer: "Free 32-Pt Onboarding Health Audit",
+    area: "10–25 Vehicles",
+    bays: "Monthly Cycle",
+    vehicles: "EV 2-Wheelers",
+    includes: [
+      "Monthly scheduled multi-point preventive service",
+      "Quarterly CAN-bus battery health and cell balancing audit",
+      "Standard roadside breakdown response and flatbed towing",
+      "Autobot OS live fleet telemetry and fault dashboard access",
+      "OEM-certified genuine spare components at contract rates",
+      "Digital job cards with high-res photo proof and technician logs",
+      "Dedicated service scheduling window during non-peak hours",
+      "Consolidated single monthly GST invoicing and MIS reports",
+    ],
+    osSavings: "₹28,500/mo saved in avoided downtime",
+    bestFor: "Growing delivery fleets, quick-commerce dark stores, courier & local logistics hubs (10–25 vehicles)",
+  },
+  {
+    type: "pro",
+    name: "Fleet Pro",
+    subtitle: "Popular • Full-service fleet maintenance",
+    badge: "MOST POPULAR",
+    investment: "Custom / Veh",
+    originalInvestment: "₹1,899 / Veh + GST",
+    foundingOffer: "Save up to 35% on breakdown costs",
+    area: "26–100 Vehicles",
+    bays: "Bi-Weekly / Monthly",
+    vehicles: "EV 2W + 3W Cargo",
+    includes: [
+      "Scheduled bi-weekly / monthly preventive maintenance",
+      "Monthly CAN-bus battery health and cell balancing audit",
+      "Priority service bay reservation across all network hubs",
+      "Sub-45 min emergency priority roadside breakdown response",
+      "Mobile depot service vans dispatched on request for inter-shift jobs",
+      "Dedicated enterprise fleet account manager and senior engineer",
+      "Autobot OS telemetry integration and automated failure prediction alerts",
+      "Wholesale genuine parts buffer with 2-hour intra-city dispatch",
+      "Quarterly executive fleet reliability & uptime SLA reviews",
+    ],
+    osSavings: "₹72,000/mo saved in avoided downtime",
+    bestFor: "Mid-to-large cargo fleets, e-commerce distribution networks & commercial 2W/3W operations (26–100 vehicles)",
+    popular: true,
+  },
+  {
+    type: "enterprise",
+    name: "Fleet Enterprise",
+    subtitle: "Premium • Regional depot & custom SLAs",
+    badge: "REGIONAL ANCHOR",
+    investment: "Custom SLA",
+    originalInvestment: "Custom Enterprise Quote",
+    foundingOffer: "Contractual 99.6% Uptime Guarantee",
+    area: "100+ Vehicles",
+    bays: "On-Site Depot Team",
+    vehicles: "Full Commercial Fleet",
+    includes: [
+      "Dedicated on-site depot technician team stationed at your hub",
+      "Inter-shift rapid servicing window (<35 mins turn-around per vehicle)",
+      "Contractually guaranteed 99.6% fleet uptime SLA with penalty clauses",
+      "Continuous live CAN-bus telemetry streaming and critical thermal alerts",
+      "Sub-30 min priority mobile rescue and towing SLA guarantee",
+      "Direct ERP, DMS, and transport management system API sync",
+      "On-site critical spare parts consignment buffer maintained by Autobot",
+      "Monthly strategic executive reviews and battery degradation analytics",
+      "Dedicated master technicians certified by Autobot Academy",
+    ],
+    osSavings: "₹1,60,000/mo saved in avoided downtime",
+    bestFor: "Large commercial fleets, 3PL logistics giants, corporate delivery operators & leasing companies (100+ vehicles)",
+  },
+];
+
 export function FleetSolutionsPage() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [detailsModalPlan, setDetailsModalPlan] = useState<DetailedFleetPlan | null>(null);
+
+  const handleSelectPlan = (plan: DetailedFleetPlan) => {
+    let size: "10-25" | "26-100" | "100+" = "10-25";
+    if (plan.type === "pro") size = "26-100";
+    if (plan.type === "enterprise") size = "100+";
+    setForm((prev) => ({
+      ...prev,
+      fleetSize: size,
+      needs: prev.needs.includes(plan.name) ? prev.needs : [...prev.needs, plan.name],
+    }));
+    setDetailsModalPlan(null);
+    scrollToForm();
+    toast.success(`Selected ${plan.name}! Please complete the audit request form.`);
+  };
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [formStep, setFormStep] = useState<"main" | "needs">("main");
   const [form, setForm] = useState({
@@ -1080,20 +1190,103 @@ export function FleetSolutionsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.6 }}
-          className="plans-header-reveal text-center max-w-3xl mx-auto"
+          className="plans-header-reveal text-center max-w-3xl mx-auto mb-16"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#00D084] block mb-2">
             Fleet AMC Plans
-          </div>
+          </span>
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-            Predictable cost per vehicle, per month
+            Choose the Plan That Fits Your Vision
           </h2>
           <p className="text-sm text-white/60 mt-3 font-light">
-            Three plans, priced per vehicle per month. Every plan is tailored after a free fleet audit.
+            Predictable cost per vehicle, per month. Click any plan to view detailed inclusions, SLA metrics, and operational specs.
           </p>
         </motion.div>
 
-        {/* Interactive Fleet ROI Calculator & Visual Tier Cards Deck */}
+        {/* 3 Model Cards Matching Franchise UI Screenshot */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 [perspective:1200px]">
+          {DETAILED_FLEET_PLANS.map((plan) => (
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              key={plan.type}
+              onClick={() => setDetailsModalPlan(plan)}
+              className={`bg-gradient-to-b from-white/[0.03] to-white/[0.002] border backdrop-blur-xl rounded-[32px] p-8 flex flex-col justify-between transition-all duration-300 relative cursor-pointer ${
+                plan.popular
+                  ? "border-[#00D084]/50 shadow-[0_0_35px_rgba(0,208,132,0.22)]"
+                  : "border-white/10 hover:border-white/20"
+              }`}
+            >
+              {plan.badge && (
+                <div className="absolute top-4 right-4 bg-[#00D084] text-[#020403] text-[9px] font-mono font-extrabold uppercase tracking-wider px-3 py-1 rounded-full">
+                  {plan.badge}
+                </div>
+              )}
+
+              <div className="flex-grow flex flex-col justify-between">
+                <div className="space-y-4">
+                  {/* Header */}
+                  <div className="text-left">
+                    <span className="text-xs font-bold text-[#00D084]/80 block uppercase tracking-wider mb-1">
+                      {plan.name.toUpperCase()}
+                    </span>
+                    <span className="text-3xl sm:text-4xl font-extrabold text-white block tracking-tight">
+                      {plan.investment}
+                    </span>
+                    {plan.originalInvestment && (
+                      <span className="text-xs text-white/40 line-through block mt-0.5">
+                        Standard: {plan.originalInvestment}
+                      </span>
+                    )}
+                    {plan.foundingOffer && (
+                      <span className="text-xs font-bold text-[#00D084] block mt-1">
+                        {plan.foundingOffer}
+                      </span>
+                    )}
+                    <p className="text-xs text-white/60 leading-relaxed mt-3 mb-0">
+                      {plan.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Separator line */}
+                  <div className="h-[1px] bg-white/10 my-4" />
+
+                  {/* Required Details HUD */}
+                  <div className="space-y-2.5 text-xs text-white/70">
+                    <div className="flex justify-between">
+                      <span className="text-white/40 uppercase tracking-wider font-mono">Fleet Size:</span>
+                      <span className="text-white font-bold">{plan.area}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/40 uppercase tracking-wider font-mono">Service Bays:</span>
+                      <span className="text-white font-bold">{plan.bays}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/40 uppercase tracking-wider font-mono">Vehicle Focus:</span>
+                      <span className="text-white font-bold">{plan.vehicles}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 flex flex-col gap-4">
+                  <div className="flex justify-center w-full">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectPlan(plan);
+                      }}
+                      className="w-full bg-white text-black font-extrabold text-xs py-3 px-8 rounded-full hover:bg-white/90 transition-all shadow-md cursor-pointer text-center uppercase tracking-wider"
+                    >
+                      Apply for {plan.name}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Interactive Fleet ROI Calculator & Live Simulator */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1186,6 +1379,151 @@ export function FleetSolutionsPage() {
           </div>
         </div>
       </div>
+
+      {/* Fleet Plan Details Pop-Up Modal */}
+      <AnimatePresence>
+        {detailsModalPlan && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            onClick={() => setDetailsModalPlan(null)}
+          >
+            <motion.div
+              initial={{ y: "100vh", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100vh", opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 180 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl bg-gradient-to-b from-[#07120a] to-[#040805] border border-[#00D084]/40 rounded-3xl p-6 sm:p-8 shadow-[0_0_50px_rgba(0,208,132,0.15)] font-sans md:overflow-visible overflow-y-auto max-h-[95vh] z-10"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setDetailsModalPlan(null)}
+                className="absolute top-4 right-4 sm:top-6 sm:right-6 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer z-20"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Glowing Accent Ring in background */}
+              <div className="absolute -top-20 -left-20 w-48 h-48 bg-[#00D084]/10 rounded-full blur-[60px] pointer-events-none" />
+              <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-blue-900/10 rounded-full blur-[60px] pointer-events-none" />
+
+              {/* Modal Content - 2 Columns on desktop */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 relative z-10 text-left">
+                {/* Left Column: Info & Stats */}
+                <div className="space-y-4">
+                  {/* Header */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-bold text-[#00D084] uppercase tracking-widest bg-[#00D084]/10 px-3 py-0.5 rounded-full border border-[#00D084]/20 font-sans">
+                        {detailsModalPlan.type.toUpperCase()} PLAN
+                      </span>
+                      {detailsModalPlan.badge && (
+                        <span className="text-[9px] font-bold text-black bg-[#00D084] px-2 py-0.5 rounded-full uppercase tracking-wider font-sans">
+                          {detailsModalPlan.badge}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                      {detailsModalPlan.name}
+                    </h3>
+                    <p className="text-xs text-white/60 leading-relaxed font-light">
+                      {detailsModalPlan.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Main Stats Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-black/40 border border-white/10 rounded-2xl p-3 sm:p-4 text-xs">
+                    <div className="space-y-0.5">
+                      <span className="text-[9px] text-white/40 uppercase tracking-wider block font-sans">Pricing</span>
+                      <span className="text-sm font-bold text-white block truncate">{detailsModalPlan.investment}</span>
+                      {detailsModalPlan.originalInvestment && (
+                        <span className="text-[9px] text-white/30 line-through block truncate">{detailsModalPlan.originalInvestment}</span>
+                      )}
+                    </div>
+                    <div className="space-y-0.5 border-l border-white/10 pl-3">
+                      <span className="text-[9px] text-white/40 uppercase tracking-wider block font-sans">Fleet Scale</span>
+                      <span className="text-sm font-bold text-[#00D084] block truncate">{detailsModalPlan.area}</span>
+                      <span className="text-[9px] text-white/50 block">Commercial units</span>
+                    </div>
+                    <div className="space-y-0.5 border-l border-white/10 pl-3">
+                      <span className="text-[9px] text-white/40 uppercase tracking-wider block font-sans">Cadence</span>
+                      <span className="text-sm font-bold text-white block truncate">{detailsModalPlan.bays}</span>
+                      <span className="text-[9px] text-white/50 block truncate font-sans">{detailsModalPlan.vehicles}</span>
+                    </div>
+                  </div>
+
+                  {/* Offer Details if present */}
+                  {detailsModalPlan.foundingOffer && (
+                    <div className="bg-[#00D084]/10 border border-[#00D084]/20 rounded-2xl p-3 sm:p-4 flex items-start gap-2.5">
+                      <Sparkles className="w-4 h-4 text-[#00D084] shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="text-[11px] font-bold text-[#00D084] uppercase tracking-wider">Plan Benefit</h4>
+                        <p className="text-[10px] sm:text-[11px] text-white/90 mt-0.5 font-light leading-relaxed">
+                          {detailsModalPlan.foundingOffer}. Plus, enjoy Autobot OS telemetry sync and consolidated monthly invoicing.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* More Details / Additional Setup Services */}
+                  <div className="bg-black/50 border border-white/5 rounded-2xl p-3 sm:p-4 space-y-3 text-[11px] text-white/80">
+                    <div className="flex justify-between items-start gap-3">
+                      <div>
+                        <span className="font-bold text-white block text-[11px]">Autobot OS Fleet Integration</span>
+                        <span className="text-white/50 block mt-0.5 text-[10px] leading-snug">Automated breakdown dispatch, telemetry health tracking & predictive parts logistics.</span>
+                      </div>
+                      <span className="text-[#00D084] font-bold shrink-0 text-[11px] font-sans">{detailsModalPlan.osSavings}</span>
+                    </div>
+                    <div className="h-[1px] bg-white/5" />
+                    <div>
+                      <span className="font-bold text-white block text-[11px]">Best Fit & Operator Profile</span>
+                      <span className="text-white/50 block mt-0.5 text-[10px] leading-snug">{detailsModalPlan.bestFor}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Inclusions & CTA */}
+                <div className="flex flex-col justify-between space-y-4">
+                  {/* Package Highlights */}
+                  <div className="space-y-2.5">
+                    <h4 className="text-[11px] font-bold text-white/70 uppercase tracking-widest flex items-center gap-2 font-sans">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#00D084]" />
+                      Included in Fleet AMC Coverage
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] sm:text-[11px]">
+                      {detailsModalPlan.includes.map((inc, i) => (
+                        <div key={i} className="flex items-start gap-2 bg-white/[0.02] border border-white/5 hover:border-[#00D084]/30 rounded-xl p-2 sm:p-2.5 text-white/90 transition-all leading-snug">
+                          <Check className="w-3.5 h-3.5 text-[#00D084] shrink-0 mt-0.5" />
+                          <span>{inc}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Call to Actions */}
+                  <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-white/10">
+                    <button
+                      onClick={() => handleSelectPlan(detailsModalPlan)}
+                      className="w-full sm:w-auto flex-1 py-3 px-6 rounded-xl bg-[#00D084] text-[#020403] text-xs font-bold uppercase tracking-wider hover:bg-[#00e08f] transition-all cursor-pointer text-center"
+                    >
+                      Apply for {detailsModalPlan.name}
+                    </button>
+                    <button
+                      onClick={() => setDetailsModalPlan(null)}
+                      className="w-full sm:w-auto py-3 px-6 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-wider text-white transition-all cursor-pointer text-center"
+                    >
+                      Close Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
       <BookingModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} />
