@@ -142,7 +142,7 @@ export function EcosystemSupermarketSection({ onOpenBooking }: EcosystemSupermar
           {/* Triad Brand Glyphs: Minimal Monochrome / Emerald Accents */}
           <div className="flex items-center gap-3 pt-1">
             {/* 1. Clover Glyph */}
-            <div
+            <div 
               className="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center p-2.5 text-[#00D084] hover:border-[#00D084]/40 hover:bg-[#00D084]/10 transition-all duration-300"
               title="Telemetry & Diagnostics"
             >
@@ -153,7 +153,7 @@ export function EcosystemSupermarketSection({ onOpenBooking }: EcosystemSupermar
             </div>
 
             {/* 2. Segmented Capsule Glyph */}
-            <div
+            <div 
               className="w-14 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center p-2.5 text-[#00D084] hover:border-[#00D084]/40 hover:bg-[#00D084]/10 transition-all duration-300"
               title="High Voltage Battery Intelligence"
             >
@@ -165,7 +165,7 @@ export function EcosystemSupermarketSection({ onOpenBooking }: EcosystemSupermar
             </div>
 
             {/* 3. 4-Circle Cluster Glyph */}
-            <div
+            <div 
               className="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center p-2.5 text-[#00D084] hover:border-[#00D084]/40 hover:bg-[#00D084]/10 transition-all duration-300"
               title="Parts & Hypercharging Grid"
             >
@@ -348,11 +348,11 @@ export function EcosystemSupermarketSection({ onOpenBooking }: EcosystemSupermar
           INTERACTIVE DETAIL MODAL (Tapping a card displays crisp SSM capability)
          ========================================================================= */}
       {activeCard && (
-        <div
+        <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-300"
           onClick={() => setActiveCard(null)}
         >
-          <div
+          <div 
             className="relative w-full max-w-lg rounded-3xl bg-[#09110B] border border-white/20 text-white p-6 sm:p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
@@ -365,7 +365,7 @@ export function EcosystemSupermarketSection({ onOpenBooking }: EcosystemSupermar
                   {activeCard.titleLine1} {activeCard.titleLine2}
                 </h3>
               </div>
-              <button
+              <button 
                 onClick={() => setActiveCard(null)}
                 className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold text-white hover:bg-white/20 transition-colors cursor-pointer"
                 aria-label="Close"
