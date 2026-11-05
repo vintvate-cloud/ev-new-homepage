@@ -155,299 +155,7 @@ export function OEMSolutionsPage() {
         );
       }
 
-      // --- SCROLL ANIMATIONS SUITE ---
-
-      // 1. Overview Metric Tiles Stagger
-      gsap.fromTo(
-        ".oem-metric-card",
-        { opacity: 0, y: 40, scale: 0.96 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-overview-trigger",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // Desk Callout
-      gsap.fromTo(
-        ".oem-desk-card",
-        { opacity: 0, y: 30, scale: 0.98 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.85,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-desk-card",
-            start: "top 90%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 2. Segment Chips Band
-      gsap.fromTo(
-        ".oem-chip-item",
-        { opacity: 0, scale: 0.85, y: 15 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.06,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-chips-trigger",
-            start: "top 90%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 3. After-Sales Gap Comparison Section
-      gsap.fromTo(
-        ".oem-gap-header",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-gap-trigger",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".oem-gap-table",
-        { opacity: 0, y: 50, scale: 0.98 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-gap-table",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 4. OEM Solutions Grid (9 cards)
-      gsap.fromTo(
-        ".oem-services-header",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-services-trigger",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".oem-service-card",
-        { opacity: 0, y: 45, scale: 0.95 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.75,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-services-grid",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 5. Autobot OS Section
-      gsap.fromTo(
-        ".oem-autobot-header",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: "#autobot-os",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".oem-autobot-step",
-        { opacity: 0, y: 30, scale: 0.92 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-autobot-steps",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".oem-autobot-mod",
-        { opacity: 0, y: 40, scale: 0.96 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.75,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-autobot-mods",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 6. Engagement Models (4 cards)
-      gsap.fromTo(
-        ".oem-models-header",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: "#models",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".oem-model-card",
-        { opacity: 0, y: 45, scale: 0.96 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-models-grid",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 7. Speed & Scale Comparison Section
-      gsap.fromTo(
-        ".oem-scale-header",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-scale-trigger",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".oem-scale-table",
-        { opacity: 0, y: 50, scale: 0.98 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-scale-table",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 8. FAQs Section
-      gsap.fromTo(
-        ".oem-faqs-header",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: "#faqs",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".oem-faq-item",
-        { opacity: 0, y: 25 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-faqs-list",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 9. Closing CTA Banner
-      gsap.fromTo(
-        ".oem-cta-banner",
-        { scale: 0.94, opacity: 0, y: 40 },
-        {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".oem-cta-banner",
-            start: "top 90%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
+      // Scroll animations are powered smoothly via Framer Motion whileInView across all sections
     });
 
     const refreshTimer = setTimeout(() => {
@@ -908,7 +616,13 @@ export function OEMSolutionsPage() {
             </div>
 
             {/* S1: Dedicated B2B Header Bar */}
-            <section className="bg-[#080d0a]/90 border-y border-white/10 py-3 px-6 sticky top-20 z-30 backdrop-blur-md">
+            <motion.section
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5 }}
+              className="bg-[#080d0a]/90 border-y border-white/10 py-3 px-6 sticky top-20 z-30 backdrop-blur-md"
+            >
               <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
                 <div className="flex items-center gap-3">
                   <span className="font-black text-white uppercase tracking-wider">MY EV SERVICE</span>
@@ -936,35 +650,48 @@ export function OEMSolutionsPage() {
                   </a>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
             {/* S2: Top Overview / Key Highlights */}
-            <section id="services" className="oem-overview-trigger relative px-6 py-12 md:py-16 overflow-hidden">
+            <motion.section
+              id="services"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.7 }}
+              className="oem-overview-trigger relative px-6 py-12 md:py-16 overflow-hidden"
+            >
               <div className="max-w-7xl mx-auto space-y-6 relative z-10">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">01</div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">No New Capex</span>
-                    <span className="text-sm font-semibold text-white block leading-snug">Instant service capacity without building or financing your own retail centres</span>
-                  </div>
-                  <div className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">02</div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Your Exact SOPs</span>
-                    <span className="text-sm font-semibold text-white block leading-snug">Warranty, recall and PDI jobs executed to your exact manufacturer specifications</span>
-                  </div>
-                  <div className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">03</div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Real-Time Field Data</span>
-                    <span className="text-sm font-semibold text-white block leading-snug">Every repair, fault code and part failure reported back to your engineering team via API</span>
-                  </div>
-                  <div className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">04</div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">City-Ready Scale</span>
-                    <span className="text-sm font-semibold text-white block leading-snug">A proven launch playbook ensuring readiness wherever your distributors sell</span>
-                  </div>
+                  {[
+                    { num: "01", title: "No New Capex", desc: "Instant service capacity without building or financing your own retail centres" },
+                    { num: "02", title: "Your Exact SOPs", desc: "Warranty, recall and PDI jobs executed to your exact manufacturer specifications" },
+                    { num: "03", title: "Real-Time Field Data", desc: "Every repair, fault code and part failure reported back to your engineering team via API" },
+                    { num: "04", title: "City-Ready Scale", desc: "A proven launch playbook ensuring readiness wherever your distributors sell" },
+                  ].map((m, idx) => (
+                    <motion.div
+                      key={m.num}
+                      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      viewport={{ once: false, amount: 0.2 }}
+                      transition={{ duration: 0.5, delay: idx * 0.08 }}
+                      whileHover={{ y: -4 }}
+                      className="oem-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg"
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">{m.num}</div>
+                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">{m.title}</span>
+                      <span className="text-sm font-semibold text-white block leading-snug">{m.desc}</span>
+                    </motion.div>
+                  ))}
                 </div>
 
-                <div className="oem-desk-card p-5 rounded-2xl bg-gradient-to-r from-[#0D5C2E]/20 to-[#07110B] border border-[#00D084]/30 flex flex-wrap items-center justify-between gap-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: 0.25 }}
+                  className="oem-desk-card p-5 rounded-2xl bg-gradient-to-r from-[#0D5C2E]/20 to-[#07110B] border border-[#00D084]/30 flex flex-wrap items-center justify-between gap-4"
+                >
                   <div>
                     <h4 className="text-base font-bold text-white">Direct OEM Partnerships Desk</h4>
                     <p className="text-xs text-white/60">Speak directly with our automotive VP of Partnerships</p>
@@ -975,12 +702,18 @@ export function OEMSolutionsPage() {
                   >
                     <Mail className="w-3.5 h-3.5" /> Email info@myevservice.in
                   </a>
-                </div>
+                </motion.div>
               </div>
-            </section>
+            </motion.section>
 
       {/* S3: Infinite OEM Brand Marquee & Tested Platforms */}
-      <section className="oem-chips-trigger">
+      <motion.section
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.6 }}
+        className="oem-chips-trigger"
+      >
         <OEMBrandMarquee />
         <div className="py-4 border-b border-white/10 bg-[#060a08]/80 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
@@ -994,21 +727,37 @@ export function OEMSolutionsPage() {
               "Automotive Dealer Groups",
               "Battery & Component Makers",
               "Leasing & Commercial Fleets",
-            ].map((seg) => (
-              <span
+            ].map((seg, idx) => (
+              <motion.span
                 key={seg}
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
                 className="oem-chip-item px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium text-[11px] hover:border-[#00D084]/40 hover:text-white transition-colors"
               >
                 {seg}
-              </span>
+              </motion.span>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* S4: The After-Sales Gap Comparison */}
-      <section className="oem-gap-trigger py-20 px-6 max-w-7xl mx-auto">
-        <div className="oem-gap-header text-center max-w-3xl mx-auto mb-16">
+      <motion.section
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.7 }}
+        className="oem-gap-trigger py-20 px-6 max-w-7xl mx-auto"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="oem-gap-header text-center max-w-3xl mx-auto mb-16"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             The After-Sales Bottleneck
           </div>
@@ -1018,12 +767,18 @@ export function OEMSolutionsPage() {
           <p className="text-sm text-white/60 mt-3 font-light">
             In Pune alone, EV registrations nearly tripled in FY 2025–26 to 37,808 vehicles. For an EV brand, poor after-sales in one city shows up as lost sales in the next. Here is how MY EV SERVICE solves the gap.
           </p>
-        </div>
+        </motion.div>
 
         {/* Visual Split: Workshop Imagery & Interactive Gap Matrix */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left Column: Visual Operational Showcase Card */}
-          <div className="lg:col-span-5 rounded-3xl overflow-hidden bg-[#07110b] border border-white/15 relative min-h-[460px] flex flex-col justify-between p-6 sm:p-8 shadow-2xl">
+          <motion.div
+            initial={{ opacity: 0, x: -35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-5 rounded-3xl overflow-hidden bg-[#07110b] border border-white/15 relative min-h-[460px] flex flex-col justify-between p-6 sm:p-8 shadow-2xl"
+          >
             <img
               src="/gallery/hydraulic-lift.png"
               alt="EV Service Multi-Bay Workshop"
@@ -1061,7 +816,7 @@ export function OEMSolutionsPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: 6 Friction vs Fix Cards */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1103,8 +858,13 @@ export function OEMSolutionsPage() {
                 badge: "100% Verified",
               },
             ].map((item, idx) => (
-              <div
+              <motion.div
                 key={idx}
+                initial={{ opacity: 0, y: 25, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                whileHover={{ y: -4 }}
                 className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
               >
                 <div>
@@ -1129,15 +889,28 @@ export function OEMSolutionsPage() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* S5: OEM Solutions Interactive Stages */}
-      <section id="services" className="oem-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="oem-services-header text-center max-w-3xl mx-auto mb-16">
+      <motion.section
+        id="services"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.7 }}
+        className="oem-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="oem-services-header text-center max-w-3xl mx-auto mb-16"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             OEM Solutions Suite
           </div>
@@ -1147,10 +920,17 @@ export function OEMSolutionsPage() {
           <p className="text-sm text-white/60 mt-3 font-light">
             Take one capability or activate the full stack. Every workflow runs to your exact manufacturer SOPs with real-time digital accountability.
           </p>
-        </div>
+        </motion.div>
 
         {/* Cinematic Visual Stage Switcher Component */}
-        <OEMVisualStages />
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.7 }}
+        >
+          <OEMVisualStages />
+        </motion.div>
 
         {/* Specialized Capability Badges */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-12 pt-12 border-t border-white/10">
@@ -1164,8 +944,13 @@ export function OEMSolutionsPage() {
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <div
+              <motion.div
                 key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.45, delay: i * 0.06 }}
+                whileHover={{ y: -4 }}
                 className="p-3.5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all text-center flex flex-col items-center justify-center group"
               >
                 <Icon className="w-5 h-5 text-white/40 group-hover:text-[#00D084] transition-colors mb-2" />
@@ -1175,16 +960,29 @@ export function OEMSolutionsPage() {
                 <span className="text-xs font-bold text-white leading-tight">
                   {item.label}
                 </span>
-              </div>
+              </motion.div>
             );
           })}
         </div>
-      </section>
+      </motion.section>
 
       {/* S6: Autobot OS for OEMs */}
-      <section id="autobot-os" className="py-20 px-6 bg-[#040805] border-t border-white/10">
+      <motion.section
+        id="autobot-os"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.7 }}
+        className="py-20 px-6 bg-[#040805] border-t border-white/10"
+      >
         <div className="max-w-7xl mx-auto space-y-16">
-          <div className="oem-autobot-header text-center max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="oem-autobot-header text-center max-w-3xl mx-auto"
+          >
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
               Technology // Autobot OS for OEMs
             </div>
@@ -1194,7 +992,7 @@ export function OEMSolutionsPage() {
             <p className="text-sm text-white/60 mt-3 font-light">
               Autobot OS runs every job from booking to warranty claim. It automates scheduling, dispatch, parts and reporting, giving your engineering and quality teams real-time field visibility.
             </p>
-          </div>
+          </motion.div>
 
           {/* 6-Step SOP Automation Flow */}
           <div className="oem-autobot-steps grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -1205,12 +1003,20 @@ export function OEMSolutionsPage() {
               { num: "04", title: "Approve", desc: "Warranty evidence sent for your sign-off." },
               { num: "05", title: "Repair", desc: "Guided digital job card with scanned parts." },
               { num: "06", title: "Report", desc: "Live failure trends & quality data exported." },
-            ].map((step) => (
-              <div key={step.num} className="oem-autobot-step p-4 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-colors">
+            ].map((step, idx) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 25, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.45, delay: idx * 0.07 }}
+                whileHover={{ y: -3 }}
+                className="oem-autobot-step p-4 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-colors"
+              >
                 <span className="text-[10px] font-mono text-[#00D084] font-bold block mb-1">{step.num}</span>
                 <span className="text-sm font-bold text-white block mb-1">{step.title}</span>
                 <span className="text-[11px] text-white/60 block leading-tight">{step.desc}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -1247,20 +1053,41 @@ export function OEMSolutionsPage() {
                 title: "Your data stays yours",
                 desc: "Role-based access controls, strict NDAs and dedicated enterprise multi-tenant security.",
               },
-            ].map((mod) => (
-              <div key={mod.title} className="oem-autobot-mod p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/30 transition-all">
+            ].map((mod, idx) => (
+              <motion.div
+                key={mod.title}
+                initial={{ opacity: 0, y: 30, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                whileHover={{ y: -4 }}
+                className="oem-autobot-mod p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/30 transition-all"
+              >
                 <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">{mod.tag}</span>
                 <h3 className="text-base font-bold text-white mb-2">{mod.title}</h3>
                 <p className="text-xs text-white/60 leading-relaxed">{mod.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* S7: Engagement Models & Network Simulator */}
-      <section id="models" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10 space-y-16">
-        <div className="oem-models-header text-center max-w-3xl mx-auto">
+      <motion.section
+        id="models"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.7 }}
+        className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10 space-y-16"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="oem-models-header text-center max-w-3xl mx-auto"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Network Planning &amp; Models
           </div>
@@ -1270,10 +1097,17 @@ export function OEMSolutionsPage() {
           <p className="text-sm text-white/60 mt-3 font-light">
             Simulate your network requirement, then choose the commercial model that fits your growth targets.
           </p>
-        </div>
+        </motion.div>
 
         {/* Interactive Network Simulator */}
-        <OEMNetworkSimulator />
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.7 }}
+        >
+          <OEMNetworkSimulator />
+        </motion.div>
 
         {/* 4 Commercial Engagement Models */}
         <div className="oem-models-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
@@ -1302,8 +1136,16 @@ export function OEMSolutionsPage() {
               bestFor: "Dealer networks & OEMs",
               commercials: "Per cohort / batch",
             },
-          ].map((item) => (
-            <div key={item.model} className="oem-model-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group">
+          ].map((item, idx) => (
+            <motion.div
+              key={item.model}
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: idx * 0.09 }}
+              whileHover={{ y: -5 }}
+              className="oem-model-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
+            >
               <div>
                 <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">Model</span>
                 <h3 className="text-lg font-bold text-white mb-3 group-hover:text-[#00D084] transition-colors">{item.model}</h3>
@@ -1319,14 +1161,26 @@ export function OEMSolutionsPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* S8: Speed & Scale Comparison Visual Matrix */}
-      <section className="oem-scale-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="oem-scale-header text-center max-w-3xl mx-auto mb-16">
+      <motion.section
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.7 }}
+        className="oem-scale-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="oem-scale-header text-center max-w-3xl mx-auto mb-16"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Strategic Architecture Showdown
           </div>
@@ -1336,13 +1190,20 @@ export function OEMSolutionsPage() {
           <p className="text-sm text-white/60 mt-3 font-light">
             Compare proprietary dealer networks vs. our agile, on-demand certified service infrastructure.
           </p>
-        </div>
+        </motion.div>
 
         {/* 3-Column Comparative Visual Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           
           {/* Card 1: Proprietary OEM Centres */}
-          <div className="rounded-3xl bg-[#080d0a] border border-white/10 p-6 sm:p-8 flex flex-col justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0 }}
+            whileHover={{ y: -4 }}
+            className="rounded-3xl bg-[#080d0a] border border-white/10 p-6 sm:p-8 flex flex-col justify-between"
+          >
             <div>
               <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest font-bold block mb-2">
                 MODEL 01 // CAPEX INTENSIVE
@@ -1378,10 +1239,17 @@ export function OEMSolutionsPage() {
             <div className="mt-8 pt-4 border-t border-white/5 text-center">
               <span className="text-[11px] font-mono text-white/40 uppercase">High Risk // Low Agility</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 2: Dealer-Only Service */}
-          <div className="rounded-3xl bg-[#080d0a] border border-white/10 p-6 sm:p-8 flex flex-col justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.1 }}
+            whileHover={{ y: -4 }}
+            className="rounded-3xl bg-[#080d0a] border border-white/10 p-6 sm:p-8 flex flex-col justify-between"
+          >
             <div>
               <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest font-bold block mb-2">
                 MODEL 02 // FRAGMENTED
@@ -1417,10 +1285,17 @@ export function OEMSolutionsPage() {
             <div className="mt-8 pt-4 border-t border-white/5 text-center">
               <span className="text-[11px] font-mono text-yellow-400/80 uppercase">Brand NPS Risk</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 3: MY EV SERVICE Network (Featured / Hero) */}
-          <div className="rounded-3xl bg-gradient-to-b from-[#0D5C2E]/40 via-[#07130b] to-[#040805] border-2 border-[#00D084] p-6 sm:p-8 flex flex-col justify-between shadow-[0_0_40px_rgba(0,208,132,0.15)] relative">
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.2 }}
+            whileHover={{ y: -5 }}
+            className="rounded-3xl bg-gradient-to-b from-[#0D5C2E]/40 via-[#07130b] to-[#040805] border-2 border-[#00D084] p-6 sm:p-8 flex flex-col justify-between shadow-[0_0_40px_rgba(0,208,132,0.15)] relative"
+          >
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#00D084] text-black font-black text-[10px] uppercase tracking-widest shadow-lg">
               ★ RECOMMENDED FOR SCALE
             </div>
@@ -1466,19 +1341,39 @@ export function OEMSolutionsPage() {
                 Activate Partner Capacity
               </a>
             </div>
-          </div>
+          </motion.div>
 
         </div>
-      </section>
+      </motion.section>
 
       {/* S14: FAQ Accordion */}
-      <section id="faqs" className="py-20 px-6 max-w-4xl mx-auto border-t border-white/10">
-        <div className="oem-faqs-header text-center mb-12">
+      <motion.section
+        id="faqs"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.7 }}
+        className="py-20 px-6 max-w-4xl mx-auto border-t border-white/10"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="oem-faqs-header text-center mb-12"
+        >
           <h2 className="text-3xl font-black text-white tracking-tight">OEM Partnership FAQs</h2>
-        </div>
+        </motion.div>
         <div className="oem-faqs-list space-y-3">
           {FAQS.map((faq, idx) => (
-            <div key={faq.q} className="oem-faq-item rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden">
+            <motion.div
+              key={faq.q}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: idx * 0.06 }}
+              className="oem-faq-item rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden"
+            >
               <button
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                 className="w-full p-5 text-left text-sm font-bold text-white flex items-center justify-between gap-4"
@@ -1491,13 +1386,19 @@ export function OEMSolutionsPage() {
                   {faq.a}
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* S15: Closing CTA Band */}
-      <section className="oem-cta-banner py-16 px-6 bg-[#0D5C2E] text-white">
+      <motion.section
+        initial={{ opacity: 0, scale: 0.95, y: 40 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8 }}
+        className="oem-cta-banner py-16 px-6 bg-[#0D5C2E] text-white"
+      >
         <div className="max-w-5xl mx-auto text-center space-y-6">
           <span className="text-[11px] font-mono uppercase tracking-widest text-white/80 font-bold block">
             FOR EV BRANDS AND DEALER GROUPS
@@ -1523,7 +1424,7 @@ export function OEMSolutionsPage() {
             </a>
           </div>
         </div>
-      </section>
+      </motion.section>
           </div>
         </div>
       </div>

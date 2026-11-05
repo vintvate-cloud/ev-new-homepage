@@ -1088,16 +1088,16 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
 
               {/* HEADING */}
               <div
-                className="w-full text-center px-4 sm:px-6 relative z-10 max-w-7xl mx-auto"
+                className="w-full text-center px-4 sm:px-6 relative z-10 max-w-7xl mx-auto pointer-events-none"
                 style={{
-                  paddingTop: "clamp(120px, 15vh, 160px)",
+                  paddingTop: "clamp(145px, 18vh, 185px)",
                 }}
               >
                 <h1
                   className="m-0 p-0 leading-tight transition-colors duration-300 flex justify-center items-center flex-nowrap whitespace-nowrap gap-x-2 sm:gap-x-3 text-center select-none"
                   style={{
                     color: "var(--foreground)",
-                    fontSize: "clamp(0.68rem, 1.65vw, 1.85rem)",
+                    fontSize: "clamp(0.62rem, 1.45vw, 1.7rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.02em",
                     fontFamily: "var(--font-sans)",
@@ -2091,13 +2091,23 @@ function GenuineSpareParts() {
       <div className="mx-auto max-w-7xl px-6 relative z-10">
 
         {/* Section Header */}
-        <GSAPHeader
-          badge="E-Commerce Catalogue"
-          title="Genuine"
-          highlight="Spare Parts"
-          subtitle="Order 100% certified OEM-standard electric components directly from our service hubs. Guaranteed compatibility, full warranty coverage, and next-day dispatch."
-          className="max-w-2xl mb-16 text-left"
-        />
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <GSAPHeader
+            badge="E-Commerce Catalogue"
+            title="Genuine"
+            highlight="Spare Parts"
+            subtitle="Order 100% certified OEM-standard electric components directly from our service hubs. Guaranteed compatibility, full warranty coverage, and next-day dispatch."
+            className="max-w-2xl text-left mb-0"
+          />
+
+          <Link
+            to="/store"
+            className="self-start md:self-end shrink-0 inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#00D084]/15 hover:bg-[#00D084] text-[#00D084] hover:text-[#020403] border border-[#00D084]/40 hover:border-[#00D084] font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-[0_0_25px_rgba(0,208,132,0.4)] group cursor-pointer"
+          >
+            <span>View More in Store</span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        </div>
 
         {/* Dashboard layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -2234,6 +2244,26 @@ function GenuineSpareParts() {
             })}
           </StaggerContainer>
 
+        </div>
+
+        {/* Bottom View More Banner */}
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
+          <div className="flex items-center gap-4 text-left">
+            <div className="w-12 h-12 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] shrink-0">
+              <Store className="w-6 h-6" />
+            </div>
+            <div>
+              <h4 className="text-base font-bold text-white keep-white">Looking for More Genuine EV Spare Parts & Accessories?</h4>
+              <p className="text-xs text-white/70 keep-white mt-0.5">Explore our full store catalog with smart chargers, LiFePO4 batteries, controllers, and gear.</p>
+            </div>
+          </div>
+          <Link
+            to="/store"
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#00D084] hover:bg-[#00e08f] text-[#020403] font-bold text-xs font-mono uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(0,208,132,0.3)] hover:scale-[1.02] cursor-pointer"
+          >
+            <span>View More in Store</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>

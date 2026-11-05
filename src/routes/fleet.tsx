@@ -155,265 +155,7 @@ export function FleetSolutionsPage() {
         );
       }
 
-      // --- SCROLL ANIMATIONS SUITE ---
-
-      // 1. Overview Metric Tiles Stagger
-      gsap.fromTo(
-        ".fleet-metric-card",
-        { opacity: 0, y: 40, scale: 0.96 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".fleet-overview-trigger",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // Helpline Callout
-      gsap.fromTo(
-        ".fleet-helpline-card",
-        { opacity: 0, y: 30, scale: 0.98 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.85,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".fleet-helpline-card",
-            start: "top 90%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 2. Segment Chips Band Stagger
-      gsap.fromTo(
-        ".fleet-chip-item",
-        { opacity: 0, scale: 0.85, y: 15 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.06,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".fleet-chips-trigger",
-            start: "top 90%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 3. Problem vs Solution Section
-      gsap.fromTo(
-        ".fleet-problem-header",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".fleet-problem-trigger",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".fleet-problem-table",
-        { opacity: 0, y: 50, scale: 0.98 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".fleet-problem-table",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 4. Fleet Solutions Grid (8 cards)
-      gsap.fromTo(
-        ".fleet-services-header",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".fleet-services-trigger",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".fleet-service-card",
-        { opacity: 0, y: 45, scale: 0.95 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.75,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".fleet-services-grid",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 5. Autobot OS Section
-      gsap.fromTo(
-        ".autobot-header-reveal",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: "#autobot-os",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".autobot-step-pill",
-        { opacity: 0, y: 30, scale: 0.92 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".autobot-steps-grid",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".autobot-mod-card",
-        { opacity: 0, y: 40, scale: 0.96 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.75,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".autobot-mods-grid",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 6. AMC Plans Section
-      gsap.fromTo(
-        ".plans-header-reveal",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: "#plans",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".plans-table-reveal",
-        { opacity: 0, y: 45, scale: 0.98 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.85,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".plans-table-reveal",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 7. FAQs Section
-      gsap.fromTo(
-        ".faqs-header-reveal",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: "#faqs",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-      gsap.fromTo(
-        ".faq-item-reveal",
-        { opacity: 0, y: 25 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".faqs-list-container",
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
-
-      // 8. Closing CTA Banner
-      gsap.fromTo(
-        ".fleet-cta-banner",
-        { scale: 0.94, opacity: 0, y: 40 },
-        {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".fleet-cta-banner",
-            start: "top 90%",
-            toggleActions: "play reverse play reverse",
-          },
-        }
-      );
+      // Scroll animations are powered smoothly via Framer Motion whileInView across all sections
     });
 
     const refreshTimer = setTimeout(() => {
@@ -875,7 +617,13 @@ export function FleetSolutionsPage() {
             </div>
 
             {/* S1: Dedicated B2B Header Bar */}
-            <section className="bg-[#080d0a]/90 border-y border-white/10 py-3 px-6 sticky top-20 z-30 backdrop-blur-md">
+            <motion.section
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-[#080d0a]/90 border-y border-white/10 py-3 px-6 sticky top-20 z-30 backdrop-blur-md"
+            >
               <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
                 <div className="flex items-center gap-3">
                   <span className="font-black text-white uppercase tracking-wider">MY EV SERVICE</span>
@@ -903,13 +651,26 @@ export function FleetSolutionsPage() {
                   </a>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
             {/* S2: Top Overview / Key Highlights */}
-            <section id="fleet-solutions" className="fleet-overview-trigger relative px-6 py-12 md:py-16 overflow-hidden">
+            <motion.section
+              id="fleet-solutions"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="fleet-overview-trigger relative px-6 py-12 md:py-16 overflow-hidden"
+            >
               <div className="max-w-7xl mx-auto space-y-6 relative z-10">
                 {/* Live Operations Telemetry Status Strip */}
-                <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#08120b] border border-[#00D084]/25 shadow-lg font-mono text-[11px]">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 0.55 }}
+                  className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#08120b] border border-[#00D084]/25 shadow-lg font-mono text-[11px]"
+                >
                   <div className="flex items-center gap-2 text-white/90">
                     <span className="w-2 h-2 rounded-full bg-[#00D084] animate-ping" />
                     <span className="font-bold text-[#00D084]">FLEET STATUS: ACTIVE</span>
@@ -926,32 +687,38 @@ export function FleetSolutionsPage() {
                       BMS AUTO-BALANCED
                     </span>
                   </div>
-                </div>
+                </motion.div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">01</div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Multi-Brand SLA</span>
-                    <span className="text-sm font-semibold text-white block leading-snug">E-2W, e-autos &amp; cargo 3W managed on one single unified contract</span>
-                  </div>
-                  <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">02</div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Predictive Care</span>
-                    <span className="text-sm font-semibold text-white block leading-snug">Monthly CAN-bus battery health audit &amp; cell balancing on every vehicle</span>
-                  </div>
-                  <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">03</div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">Where You Are</span>
-                    <span className="text-sm font-semibold text-white block leading-snug">Priority bays, depot shift visits and rapid doorstep mobile service teams</span>
-                  </div>
-                  <div className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg">
-                    <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">04</div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">100% Visibility</span>
-                    <span className="text-sm font-semibold text-white block leading-snug">One live fleet dashboard and one consolidated monthly GST invoice</span>
-                  </div>
+                  {[
+                    { num: "01", tag: "Multi-Brand SLA", desc: "E-2W, e-autos & cargo 3W managed on one single unified contract" },
+                    { num: "02", tag: "Predictive Care", desc: "Monthly CAN-bus battery health audit & cell balancing on every vehicle" },
+                    { num: "03", tag: "Where You Are", desc: "Priority bays, depot shift visits and rapid doorstep mobile service teams" },
+                    { num: "04", tag: "100% Visibility", desc: "One live fleet dashboard and one consolidated monthly GST invoice" }
+                  ].map((card, idx) => (
+                    <motion.div
+                      key={card.num}
+                      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      viewport={{ once: false, amount: 0.2 }}
+                      transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                      className="fleet-metric-card p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all shadow-lg"
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-[#00D084]/20 text-[#00D084] flex items-center justify-center font-bold text-xs mb-3">{card.num}</div>
+                      <span className="text-xs font-mono uppercase tracking-wider text-[#00D084] block mb-1 font-bold">{card.tag}</span>
+                      <span className="text-sm font-semibold text-white block leading-snug">{card.desc}</span>
+                    </motion.div>
+                  ))}
                 </div>
 
-                <div className="fleet-helpline-card p-5 rounded-2xl bg-gradient-to-r from-[#0D5C2E]/20 to-[#07110B] border border-[#00D084]/30 flex flex-wrap items-center justify-between gap-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: 0.25 }}
+                  className="fleet-helpline-card p-5 rounded-2xl bg-gradient-to-r from-[#0D5C2E]/20 to-[#07110B] border border-[#00D084]/30 flex flex-wrap items-center justify-between gap-4"
+                >
                   <div>
                     <h4 className="text-base font-bold text-white">Need an immediate SLA audit?</h4>
                     <p className="text-xs text-white/60">Direct helpline for logistics and fleet dispatch managers</p>
@@ -962,12 +729,18 @@ export function FleetSolutionsPage() {
                   >
                     <Phone className="w-3.5 h-3.5" /> +91 95823 90001
                   </a>
-                </div>
+                </motion.div>
               </div>
-            </section>
+            </motion.section>
 
       {/* S3: Commercial Fleet Marquee & Segment Capabilities */}
-      <section className="fleet-chips-trigger">
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.65 }}
+        className="fleet-chips-trigger"
+      >
         <FleetVehicleMarquee />
         <div className="py-4 border-b border-white/10 bg-[#060a08]/80 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
@@ -981,21 +754,37 @@ export function FleetSolutionsPage() {
               "Cargo 3W Fleets",
               "EV Rental & Subscription",
               "Corporate & Campus Mobility",
-            ].map((seg) => (
-              <span
+            ].map((seg, idx) => (
+              <motion.span
                 key={seg}
+                initial={{ opacity: 0, scale: 0.9, y: 15 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.45, delay: idx * 0.05 }}
                 className="fleet-chip-item px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium text-[11px] hover:border-[#00D084]/40 hover:text-white transition-colors"
               >
                 {seg}
-              </span>
+              </motion.span>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* S4: Problem vs Solution Visual Command Center */}
-      <section className="fleet-problem-trigger py-20 px-6 max-w-7xl mx-auto">
-        <div className="fleet-problem-header text-center max-w-3xl mx-auto mb-16">
+      <motion.section
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.12 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="fleet-problem-trigger py-20 px-6 max-w-7xl mx-auto"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="fleet-problem-header text-center max-w-3xl mx-auto mb-16"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             The Problem We Solve
           </div>
@@ -1005,12 +794,18 @@ export function FleetSolutionsPage() {
           <p className="text-sm text-white/60 mt-3 font-light">
             For a fleet, downtime costs more than the repair. Every idle vehicle is a day of lost trips, and most of it comes from problems that are predictable.
           </p>
-        </div>
+        </motion.div>
 
         {/* Visual Split: Workshop Fleet Operations & Exact Problem Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left Column: Visual Operational Showcase Card */}
-          <div className="lg:col-span-5 rounded-3xl overflow-hidden bg-[#07110b] border border-white/15 relative min-h-[460px] flex flex-col justify-between p-6 sm:p-8 shadow-2xl">
+          <motion.div
+            initial={{ opacity: 0, x: -35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 rounded-3xl overflow-hidden bg-[#07110b] border border-white/15 relative min-h-[460px] flex flex-col justify-between p-6 sm:p-8 shadow-2xl"
+          >
             <img
               src="/hero/doorstep_repairs.png"
               alt="EV Fleet Mobile Service Unit"
@@ -1048,7 +843,7 @@ export function FleetSolutionsPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: 6 Exact Problem vs Solution Cards */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1090,9 +885,14 @@ export function FleetSolutionsPage() {
                 badge: "Single GST Bill",
               },
             ].map((item, idx) => (
-              <div
+              <motion.div
                 key={idx}
-                className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group"
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.55, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="p-5 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-all flex flex-col justify-between group shadow-md"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -1116,15 +916,28 @@ export function FleetSolutionsPage() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* S5: Fleet Solutions Grid */}
-      <section id="services" className="fleet-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="fleet-services-header text-center max-w-3xl mx-auto mb-16">
+      <motion.section
+        id="services"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.12 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="fleet-services-trigger py-20 px-6 max-w-7xl mx-auto border-t border-white/10"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="fleet-services-header text-center max-w-3xl mx-auto mb-16"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Fleet Solutions Suite
           </div>
@@ -1134,16 +947,36 @@ export function FleetSolutionsPage() {
           <p className="text-sm text-white/60 mt-3 font-light">
             Pick the services you need, or bundle them into one annual maintenance contract.
           </p>
-        </div>
+        </motion.div>
 
         {/* Cinematic Visual Stage Showcase & Modular Capabilities */}
-        <FleetVisualShowcase />
-      </section>
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.75, delay: 0.1 }}
+        >
+          <FleetVisualShowcase />
+        </motion.div>
+      </motion.section>
 
       {/* S6: Autobot OS for Fleets */}
-      <section id="autobot-os" className="py-20 px-6 bg-[#040805] border-t border-white/10">
+      <motion.section
+        id="autobot-os"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.12 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="py-20 px-6 bg-[#040805] border-t border-white/10"
+      >
         <div className="max-w-7xl mx-auto space-y-16">
-          <div className="autobot-header-reveal text-center max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.6 }}
+            className="autobot-header-reveal text-center max-w-3xl mx-auto"
+          >
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
               Technology // Autobot OS
             </div>
@@ -1153,7 +986,7 @@ export function FleetSolutionsPage() {
             <p className="text-sm text-white/60 mt-3 font-light">
               Autobot OS automates the work that usually breaks fleet maintenance: scheduling, dispatch, job cards, parts and billing. AI flags problems early. Certified technicians verify every repair.
             </p>
-          </div>
+          </motion.div>
 
           {/* 6-Step Automation Flow */}
           <div className="autobot-steps-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -1164,12 +997,20 @@ export function FleetSolutionsPage() {
               { num: "04", title: "Repair", desc: "Guided digital job card with photo logs." },
               { num: "05", title: "Verify", desc: "Post-repair test & sign-off before handover." },
               { num: "06", title: "Report", desc: "Dashboard, invoice & insights update live." },
-            ].map((step) => (
-              <div key={step.num} className="autobot-step-pill p-4 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-colors">
+            ].map((step, idx) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 25, scale: 0.94 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="autobot-step-pill p-4 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-colors shadow-md"
+              >
                 <span className="text-[10px] font-mono text-[#00D084] font-bold block mb-1">{step.num}</span>
                 <span className="text-sm font-bold text-white block mb-1">{step.title}</span>
                 <span className="text-[11px] text-white/60 block leading-tight">{step.desc}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -1206,20 +1047,41 @@ export function FleetSolutionsPage() {
                 title: "Plugs into your stack",
                 desc: "Connects with telematics, ERP and rider apps. Exports for finance.",
               },
-            ].map((mod) => (
-              <div key={mod.title} className="autobot-mod-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/30 transition-all">
+            ].map((mod, idx) => (
+              <motion.div
+                key={mod.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="autobot-mod-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/30 transition-all shadow-md"
+              >
                 <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">{mod.tag}</span>
                 <h3 className="text-base font-bold text-white mb-2">{mod.title}</h3>
                 <p className="text-xs text-white/60 leading-relaxed">{mod.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* S7: Fleet AMC Plans & ROI Calculator */}
-      <section id="plans" className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10 space-y-16">
-        <div className="plans-header-reveal text-center max-w-3xl mx-auto">
+      <motion.section
+        id="plans"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.12 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10 space-y-16"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="plans-header-reveal text-center max-w-3xl mx-auto"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
             Fleet AMC Plans
           </div>
@@ -1229,20 +1091,47 @@ export function FleetSolutionsPage() {
           <p className="text-sm text-white/60 mt-3 font-light">
             Three plans, priced per vehicle per month. Every plan is tailored after a free fleet audit.
           </p>
-        </div>
+        </motion.div>
 
         {/* Interactive Fleet ROI Calculator & Visual Tier Cards Deck */}
-        <FleetRoiCalculator />
-      </section>
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.1 }}
+          transition={{ duration: 0.75, delay: 0.1 }}
+        >
+          <FleetRoiCalculator />
+        </motion.div>
+      </motion.section>
 
       {/* S14: FAQ Accordion */}
-      <section id="faqs" className="py-20 px-6 max-w-4xl mx-auto border-t border-white/10">
-        <div className="faqs-header-reveal text-center mb-12">
+      <motion.section
+        id="faqs"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="py-20 px-6 max-w-4xl mx-auto border-t border-white/10"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="faqs-header-reveal text-center mb-12"
+        >
           <h2 className="text-3xl font-black text-white tracking-tight">EV Fleet Maintenance FAQs</h2>
-        </div>
+        </motion.div>
         <div className="faqs-list-container space-y-3">
           {FAQS.map((faq, idx) => (
-            <div key={faq.q} className="faq-item-reveal rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden">
+            <motion.div
+              key={faq.q}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: idx * 0.06 }}
+              className="faq-item-reveal rounded-2xl border border-white/10 bg-[#080d0a] overflow-hidden"
+            >
               <button
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                 className="w-full p-5 text-left text-sm font-bold text-white flex items-center justify-between gap-4"
@@ -1255,13 +1144,19 @@ export function FleetSolutionsPage() {
                   {faq.a}
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* S15: Closing CTA Band */}
-      <section className="fleet-cta-banner py-16 px-6 bg-[#0D5C2E] text-white">
+      <motion.section
+        initial={{ opacity: 0, scale: 0.95, y: 40 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="fleet-cta-banner py-16 px-6 bg-[#0D5C2E] text-white"
+      >
         <div className="max-w-5xl mx-auto text-center space-y-6">
           <span className="text-[11px] font-mono uppercase tracking-widest text-white/80 font-bold block">
             FREE FOR FLEETS OF 10+
@@ -1287,7 +1182,7 @@ export function FleetSolutionsPage() {
             </a>
           </div>
         </div>
-      </section>
+      </motion.section>
           </div>
         </div>
       </div>
