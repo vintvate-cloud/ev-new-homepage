@@ -262,8 +262,8 @@ export function Nav({
             <div
               className={`transition-all duration-300 group-hover:scale-105 ${
                 scrolled
-                  ? "h-10 w-10 sm:h-11 sm:w-11"
-                  : "h-11 w-11 sm:h-13 sm:w-13 md:h-14 md:w-14"
+                  ? "h-11 w-11 sm:h-12 sm:w-12 md:h-[50px] md:w-[50px]"
+                  : "h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16"
               }`}
             >
               <img
@@ -292,7 +292,7 @@ export function Nav({
             <Link to="/" className="flex items-center shrink-0 group min-w-0">
               <span
                 id="nav-logo-text"
-                className="text-[12px] sm:text-[13.5px] md:text-[14px] font-black tracking-[0.14em] uppercase transition-colors truncate"
+                className="text-[12.5px] sm:text-[14px] md:text-[15px] font-black tracking-[0.14em] uppercase transition-colors truncate"
                 style={{ color: "var(--nav-text)" }}
               >
                 MY EV SERVICE
@@ -653,13 +653,13 @@ export function Nav({
         }}
       >
         <div className="flex items-center justify-between px-6 py-5">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3">
             <img
               src="/logo-myevservice.jpg"
               alt="My EV Service Logo"
-              className="h-9 w-auto rounded-lg object-contain"
+              className="h-10 w-auto rounded-xl object-contain shadow-sm"
             />
-            <span className="text-[14px] font-bold tracking-[0.15em] text-foreground uppercase">
+            <span className="text-[15px] font-bold tracking-[0.15em] text-foreground uppercase">
               MY EV SERVICE
             </span>
           </div>

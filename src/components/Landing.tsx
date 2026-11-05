@@ -1088,22 +1088,22 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
 
               {/* HEADING */}
               <div
-                className="w-full text-center px-4 sm:px-6 relative z-10 max-w-5xl mx-auto"
+                className="w-full text-center px-4 sm:px-6 relative z-10 max-w-7xl mx-auto"
                 style={{
-                  paddingTop: "clamp(90px, 11vh, 130px)",
+                  paddingTop: "clamp(120px, 15vh, 160px)",
                 }}
               >
                 <h1
-                  className="m-0 p-0 leading-tight transition-colors duration-300 flex justify-center items-center flex-wrap gap-x-2 sm:gap-x-3 gap-y-1.5 text-center select-none"
+                  className="m-0 p-0 leading-tight transition-colors duration-300 flex justify-center items-center flex-nowrap whitespace-nowrap gap-x-2 sm:gap-x-3 text-center select-none"
                   style={{
                     color: "var(--foreground)",
-                    fontSize: "clamp(1.1rem, 2.2vw, 2.65rem)",
+                    fontSize: "clamp(0.68rem, 1.65vw, 1.85rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.02em",
                     fontFamily: "var(--font-sans)",
                   }}
                 >
-                  <span className="text-white font-extrabold uppercase tracking-tight">
+                  <span className="text-white font-extrabold uppercase tracking-tight whitespace-nowrap shrink-0">
                     {slide.titlePrefix}
                   </span>
                   <HeroTypewriter

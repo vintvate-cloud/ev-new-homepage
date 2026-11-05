@@ -57,8 +57,8 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
             <div
               className={`transition-all duration-300 group-hover:scale-105 ${
                 scrolled
-                  ? "w-10 h-10 sm:w-11 sm:h-11"
-                  : "w-11 h-11 sm:w-13 sm:h-13 md:w-14 md:h-14"
+                  ? "w-11 h-11 sm:w-12 sm:h-12 md:w-[50px] md:h-[50px]"
+                  : "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
               }`}
             >
               <img
