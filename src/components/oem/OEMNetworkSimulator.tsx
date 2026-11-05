@@ -34,7 +34,7 @@ export function OEMNetworkSimulator() {
   }
 
   return (
-    <div className="w-full rounded-3xl bg-[#060e08] border border-white/15 p-6 sm:p-10 shadow-2xl relative overflow-hidden text-left">
+    <div className="oem-network-planner dark-card-locked w-full rounded-3xl bg-[#060e08] border border-white/15 p-6 sm:p-10 shadow-2xl relative overflow-hidden text-left">
       <div className="absolute top-0 right-0 w-80 h-80 bg-[#00D084]/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
@@ -44,16 +44,19 @@ export function OEMNetworkSimulator() {
             <Zap className="w-3.5 h-3.5" />
             Interactive Network Planner
           </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          <h3 className="text-2xl sm:text-3xl font-black text-white keep-white tracking-tight" style={{ color: "#ffffff" }}>
             Estimate Your After-Sales Launch Capacity
           </h3>
-          <p className="text-xs sm:text-sm text-white/60 font-light mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-white/60 keep-white font-light mt-1 max-w-xl" style={{ color: "rgba(255, 255, 255, 0.72)" }}>
             Simulate your service bay capacity, capex savings, and turnaround speed based on your expansion goals.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono text-white/50 bg-black/40 px-3 py-1.5 rounded-xl border border-white/10">
-          <span>SLA GUARANTEE: <strong>98.5% UPTIME</strong></span>
+        <div
+          className="flex items-center gap-2 text-xs font-mono text-white/50 bg-black/40 px-3 py-1.5 rounded-xl border border-white/10"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.6)", color: "rgba(255, 255, 255, 0.85)" }}
+        >
+          <span>SLA GUARANTEE: <strong className="text-[#00D084]" style={{ color: "#00D084" }}>98.5% UPTIME</strong></span>
         </div>
       </div>
 
@@ -63,9 +66,9 @@ export function OEMNetworkSimulator() {
         <div className="lg:col-span-5 space-y-6">
           {/* Step 1: Vehicle Segment */}
           <div>
-            <label className="text-[11px] font-mono text-white/50 uppercase tracking-wider block mb-2 font-bold">
+            <span className="text-[11px] font-mono text-white keep-white uppercase tracking-wider block mb-2 font-bold" style={{ color: "#ffffff" }}>
               1. Select Vehicle Platform
-            </label>
+            </span>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { id: "2W", label: "Electric 2W" },
@@ -75,11 +78,16 @@ export function OEMNetworkSimulator() {
                 <button
                   key={item.id}
                   onClick={() => setVehicleType(item.id as any)}
-                  className={`py-2.5 px-3 rounded-xl text-xs font-mono font-bold transition-all border cursor-pointer ${
+                  className={`py-2.5 px-3 rounded-xl text-xs font-mono font-bold transition-all border cursor-pointer keep-white ${
                     vehicleType === item.id
                       ? "bg-[#00D084] text-black border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.3)]"
-                      : "bg-white/5 text-white/70 border-white/10 hover:bg-white/10 hover:text-white"
+                      : "bg-white/5 text-white border-white/10 hover:bg-white/10 hover:text-white"
                   }`}
+                  style={
+                    vehicleType === item.id
+                      ? { backgroundColor: "#00D084", color: "#020403", borderColor: "#00D084" }
+                      : { backgroundColor: "rgba(255, 255, 255, 0.08)", color: "#ffffff", borderColor: "rgba(255, 255, 255, 0.15)" }
+                  }
                 >
                   {item.label}
                 </button>
@@ -89,9 +97,9 @@ export function OEMNetworkSimulator() {
 
           {/* Step 2: Footprint Scale */}
           <div>
-            <label className="text-[11px] font-mono text-white/50 uppercase tracking-wider block mb-2 font-bold">
+            <span className="text-[11px] font-mono text-white keep-white uppercase tracking-wider block mb-2 font-bold" style={{ color: "#ffffff" }}>
               2. Target Expansion Footprint
-            </label>
+            </span>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { id: "5_cities", label: "5 Cities" },
@@ -101,11 +109,16 @@ export function OEMNetworkSimulator() {
                 <button
                   key={item.id}
                   onClick={() => setScale(item.id as any)}
-                  className={`py-2.5 px-3 rounded-xl text-xs font-mono font-bold transition-all border cursor-pointer ${
+                  className={`py-2.5 px-3 rounded-xl text-xs font-mono font-bold transition-all border cursor-pointer keep-white ${
                     scale === item.id
                       ? "bg-[#00D084] text-black border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.3)]"
-                      : "bg-white/5 text-white/70 border-white/10 hover:bg-white/10 hover:text-white"
+                      : "bg-white/5 text-white border-white/10 hover:bg-white/10 hover:text-white"
                   }`}
+                  style={
+                    scale === item.id
+                      ? { backgroundColor: "#00D084", color: "#020403", borderColor: "#00D084" }
+                      : { backgroundColor: "rgba(255, 255, 255, 0.08)", color: "#ffffff", borderColor: "rgba(255, 255, 255, 0.15)" }
+                  }
                 >
                   {item.label}
                 </button>
@@ -113,7 +126,10 @@ export function OEMNetworkSimulator() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-white/60 font-light leading-relaxed">
+          <div
+            className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-white/60 font-light leading-relaxed"
+            style={{ color: "rgba(255, 255, 255, 0.65)" }}
+          >
             ↳ Network capacity is backed by Autobot Academy certified technicians, standardized 1000V HV tooling, and automated spare parts buffer.
           </div>
         </div>
@@ -121,49 +137,49 @@ export function OEMNetworkSimulator() {
         {/* Right: Live Simulated Metrics Output */}
         <div className="lg:col-span-7 grid grid-cols-2 gap-4">
           <div className="p-5 rounded-2xl bg-[#09150e] border border-[#00D084]/30 shadow-lg">
-            <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+            <span className="text-[10px] font-mono text-white/40 uppercase block mb-1" style={{ color: "rgba(255, 255, 255, 0.55)" }}>
               Active Service Capacity
             </span>
-            <div className="text-2xl sm:text-3xl font-black text-white font-mono mb-1">
+            <div className="text-2xl sm:text-3xl font-black text-white keep-white font-mono mb-1" style={{ color: "#ffffff" }}>
               {bays}
             </div>
-            <span className="text-[11px] text-[#00D084] font-mono font-medium">
+            <span className="text-[11px] text-[#00D084] font-mono font-medium" style={{ color: "#00D084" }}>
               Across {cities}
             </span>
           </div>
 
           <div className="p-5 rounded-2xl bg-[#09150e] border border-[#00D084]/30 shadow-lg">
-            <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+            <span className="text-[10px] font-mono text-white/40 uppercase block mb-1" style={{ color: "rgba(255, 255, 255, 0.55)" }}>
               Estimated Capex Saved
             </span>
-            <div className="text-2xl sm:text-3xl font-black text-[#00D084] font-mono mb-1">
+            <div className="text-2xl sm:text-3xl font-black text-[#00D084] font-mono mb-1" style={{ color: "#00D084" }}>
               {capexSaved}
             </div>
-            <span className="text-[11px] text-white/50 font-mono font-medium">
+            <span className="text-[11px] text-white/50 font-mono font-medium" style={{ color: "rgba(255, 255, 255, 0.6)" }}>
               Zero retail real estate lease
             </span>
           </div>
 
           <div className="p-5 rounded-2xl bg-[#09150e] border border-[#00D084]/30 shadow-lg">
-            <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+            <span className="text-[10px] font-mono text-white/40 uppercase block mb-1" style={{ color: "rgba(255, 255, 255, 0.55)" }}>
               Launch Readiness Velocity
             </span>
-            <div className="text-2xl sm:text-3xl font-black text-[#F5A623] font-mono mb-1">
+            <div className="text-2xl sm:text-3xl font-black text-[#F5A623] font-mono mb-1" style={{ color: "#F5A623" }}>
               {launchTime}
             </div>
-            <span className="text-[11px] text-white/50 font-mono font-medium">
+            <span className="text-[11px] text-white/50 font-mono font-medium" style={{ color: "rgba(255, 255, 255, 0.6)" }}>
               vs 6+ months company-owned
             </span>
           </div>
 
           <div className="p-5 rounded-2xl bg-[#09150e] border border-[#00D084]/30 shadow-lg">
-            <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+            <span className="text-[10px] font-mono text-white/40 uppercase block mb-1" style={{ color: "rgba(255, 255, 255, 0.55)" }}>
               First-Fix Turnaround SLA
             </span>
-            <div className="text-2xl sm:text-3xl font-black text-white font-mono mb-1">
+            <div className="text-2xl sm:text-3xl font-black text-white keep-white font-mono mb-1" style={{ color: "#ffffff" }}>
               {sla}
             </div>
-            <span className="text-[11px] text-[#00D084] font-mono font-medium">
+            <span className="text-[11px] text-[#00D084] font-mono font-medium" style={{ color: "#00D084" }}>
               AI-guided diagnostic accuracy
             </span>
           </div>

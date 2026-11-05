@@ -17,7 +17,7 @@ export function FleetRoiCalculator() {
   return (
     <div className="w-full space-y-10 text-left">
       {/* ── Interactive Fleet Simulator ── */}
-      <div className="rounded-3xl bg-[#060e08] border border-white/15 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+      <div className="fleet-roi-planner dark-card-locked rounded-3xl bg-[#060e08] border border-white/15 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#00D084]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-6 border-b border-white/10">
@@ -26,16 +26,19 @@ export function FleetRoiCalculator() {
               <Zap className="w-3.5 h-3.5" />
               Interactive Fleet AMC Planner
             </div>
-            <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h3 className="text-2xl sm:text-3xl font-black text-white keep-white tracking-tight" style={{ color: "#ffffff" }}>
               Estimate Your Fleet Uptime &amp; Savings
             </h3>
-            <p className="text-xs sm:text-sm text-white/60 font-light mt-1 max-w-xl">
+            <p className="text-xs sm:text-sm text-white/60 keep-white font-light mt-1 max-w-xl" style={{ color: "rgba(255, 255, 255, 0.72)" }}>
               Simulate operational savings and find the ideal maintenance tier based on your active vehicle count.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono text-white/70 bg-black/40 px-3.5 py-1.5 rounded-xl border border-white/10">
-            <span>RECOMMENDED: <strong className="text-[#00D084]">{recommendedTier}</strong></span>
+          <div
+            className="flex items-center gap-2 text-xs font-mono text-white/70 bg-black/40 px-3.5 py-1.5 rounded-xl border border-white/10"
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.6)", color: "rgba(255, 255, 255, 0.85)" }}
+          >
+            <span>RECOMMENDED: <strong className="text-[#00D084]" style={{ color: "#00D084" }}>{recommendedTier}</strong></span>
           </div>
         </div>
 
@@ -45,10 +48,10 @@ export function FleetRoiCalculator() {
           <div className="lg:col-span-5 space-y-6">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-[11px] font-mono text-white/50 uppercase tracking-wider font-bold">
+                <span className="text-[11px] font-mono text-white keep-white uppercase tracking-wider font-bold block" style={{ color: "#ffffff" }}>
                   Active Commercial Vehicles
-                </label>
-                <span className="text-lg font-black text-[#00D084] font-mono">
+                </span>
+                <span className="text-lg font-black text-[#00D084] font-mono" style={{ color: "#00D084" }}>
                   {fleetSize} Vehicles
                 </span>
               </div>
@@ -61,17 +64,17 @@ export function FleetRoiCalculator() {
                 onChange={(e) => setFleetSize(Number(e.target.value))}
                 className="w-full accent-[#00D084] cursor-pointer h-2 bg-white/10 rounded-lg"
               />
-              <div className="flex justify-between text-[10px] font-mono text-white/40 mt-1">
-                <span>10 Vehicles (Essential)</span>
-                <span>100 (Pro)</span>
-                <span>250+ (Enterprise)</span>
+              <div className="flex justify-between text-[10px] font-mono text-white/50 mt-1" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
+                <span className="keep-white" style={{ color: "rgba(255, 255, 255, 0.65)" }}>10 Vehicles (Essential)</span>
+                <span className="keep-white" style={{ color: "rgba(255, 255, 255, 0.65)" }}>100 (Pro)</span>
+                <span className="keep-white" style={{ color: "rgba(255, 255, 255, 0.65)" }}>250+ (Enterprise)</span>
               </div>
             </div>
 
             <div>
-              <label className="text-[11px] font-mono text-white/50 uppercase tracking-wider block mb-2 font-bold">
+              <span className="text-[11px] font-mono text-white keep-white uppercase tracking-wider block mb-2 font-bold" style={{ color: "#ffffff" }}>
                 Vehicle Fleet Composition
-              </label>
+              </span>
               <div className="grid grid-cols-3 gap-2">
                 {[
                   { id: "2W", label: "Electric 2W" },
@@ -81,11 +84,16 @@ export function FleetRoiCalculator() {
                   <button
                     key={item.id}
                     onClick={() => setVehicleType(item.id as any)}
-                    className={`py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all border cursor-pointer ${
+                    className={`py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all border cursor-pointer keep-white ${
                       vehicleType === item.id
                         ? "bg-[#00D084] text-black border-[#00D084] shadow-[0_0_15px_rgba(0,208,132,0.3)]"
-                        : "bg-white/5 text-white/70 border-white/10 hover:bg-white/10 hover:text-white"
+                        : "bg-white/5 text-white border-white/10 hover:bg-white/10 hover:text-white"
                     }`}
+                    style={
+                      vehicleType === item.id
+                        ? { backgroundColor: "#00D084", color: "#020403", borderColor: "#00D084" }
+                        : { backgroundColor: "rgba(255, 255, 255, 0.08)", color: "#ffffff", borderColor: "rgba(255, 255, 255, 0.15)" }
+                    }
                   >
                     {item.label}
                   </button>
@@ -93,7 +101,10 @@ export function FleetRoiCalculator() {
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-white/60 font-light leading-relaxed">
+            <div
+              className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-white/60 font-light leading-relaxed"
+              style={{ color: "rgba(255, 255, 255, 0.65)" }}
+            >
               ↳ Includes certified monthly CAN-bus cell balancing and digital audit reports directly in Autobot OS.
             </div>
           </div>
@@ -101,49 +112,49 @@ export function FleetRoiCalculator() {
           {/* Right: Calculated Metrics */}
           <div className="lg:col-span-7 grid grid-cols-2 gap-4">
             <div className="p-5 rounded-2xl bg-[#09150e] border border-[#00D084]/30 shadow-lg">
-              <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+              <span className="text-[10px] font-mono text-white/40 uppercase block mb-1" style={{ color: "rgba(255, 255, 255, 0.55)" }}>
                 Monthly Shift Hours Saved
               </span>
-              <div className="text-2xl sm:text-3xl font-black text-white font-mono mb-1">
+              <div className="text-2xl sm:text-3xl font-black text-white keep-white font-mono mb-1" style={{ color: "#ffffff" }}>
                 ~{downtimeSavedHours} Hrs
               </div>
-              <span className="text-[11px] text-[#00D084] font-mono font-medium">
+              <span className="text-[11px] text-[#00D084] font-mono font-medium" style={{ color: "#00D084" }}>
                 Prevented breakdown delays
               </span>
             </div>
 
             <div className="p-5 rounded-2xl bg-[#09150e] border border-[#00D084]/30 shadow-lg">
-              <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+              <span className="text-[10px] font-mono text-white/40 uppercase block mb-1" style={{ color: "rgba(255, 255, 255, 0.55)" }}>
                 Estimated Monthly Savings
               </span>
-              <div className="text-2xl sm:text-3xl font-black text-[#00D084] font-mono mb-1">
+              <div className="text-2xl sm:text-3xl font-black text-[#00D084] font-mono mb-1" style={{ color: "#00D084" }}>
                 ₹{costPrevented}
               </div>
-              <span className="text-[11px] text-white/50 font-mono font-medium">
+              <span className="text-[11px] text-white/50 font-mono font-medium" style={{ color: "rgba(255, 255, 255, 0.6)" }}>
                 In breakdown &amp; early wear costs
               </span>
             </div>
 
             <div className="p-5 rounded-2xl bg-[#09150e] border border-[#00D084]/30 shadow-lg">
-              <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+              <span className="text-[10px] font-mono text-white/40 uppercase block mb-1" style={{ color: "rgba(255, 255, 255, 0.55)" }}>
                 Battery Life Extended
               </span>
-              <div className="text-2xl sm:text-3xl font-black text-[#F5A623] font-mono mb-1">
+              <div className="text-2xl sm:text-3xl font-black text-[#F5A623] font-mono mb-1" style={{ color: "#F5A623" }}>
                 {batteryLifeExtendedMonths}
               </div>
-              <span className="text-[11px] text-white/50 font-mono font-medium">
+              <span className="text-[11px] text-white/50 font-mono font-medium" style={{ color: "rgba(255, 255, 255, 0.6)" }}>
                 Via regular cell balancing
               </span>
             </div>
 
             <div className="p-5 rounded-2xl bg-[#09150e] border border-[#00D084]/30 shadow-lg">
-              <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+              <span className="text-[10px] font-mono text-white/40 uppercase block mb-1" style={{ color: "rgba(255, 255, 255, 0.55)" }}>
                 Guaranteed Target SLA
               </span>
-              <div className="text-2xl sm:text-3xl font-black text-white font-mono mb-1">
+              <div className="text-2xl sm:text-3xl font-black text-white keep-white font-mono mb-1" style={{ color: "#ffffff" }}>
                 99.4% Uptime
               </div>
-              <span className="text-[11px] text-[#00D084] font-mono font-medium">
+              <span className="text-[11px] text-[#00D084] font-mono font-medium" style={{ color: "#00D084" }}>
                 Contractually backed
               </span>
             </div>

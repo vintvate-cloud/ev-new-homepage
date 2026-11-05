@@ -978,17 +978,17 @@ html.theme-light [class*="border-white/"]:not(.page-hero *):not(.dark-card-locke
 }
 
 /* Keep text elements crisp black/gray in light mode (excluding always-dark GenuineSpareParts cards and Subpage Hero Sections) */
-html.theme-light h1:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h2:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h3:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h4:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h5:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light h6:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
-html.theme-light label:not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light h1:not(.fleet-roi-planner *):not(.oem-network-planner *):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h2:not(.fleet-roi-planner *):not(.oem-network-planner *):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h3:not(.fleet-roi-planner *):not(.oem-network-planner *):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h4:not(.fleet-roi-planner *):not(.oem-network-planner *):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h5:not(.fleet-roi-planner *):not(.oem-network-planner *):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light h6:not(.fleet-roi-planner *):not(.oem-network-planner *):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *),
+html.theme-light label:not(.fleet-roi-planner *):not(.oem-network-planner *):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #09090b !important;
 }
 
-html.theme-light p:not(.keep-white):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
+html.theme-light p:not(.keep-white):not(.fleet-roi-planner *):not(.oem-network-planner *):not(.cad-hud-card *):not(.spare-part-card *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.page-hero *):not([class*="fixed top-20"] *):not([class*="fixed top-0"][class*="h-screen"] *):not(section[class*="pt-36"] *):not(section[class*="pt-32"] *) {
   color: #334155 !important;
 }
 
@@ -2914,5 +2914,91 @@ html.theme-light .fleet-plan-details-modal [class*="bg-white/[0.02]"] {
   border-color: rgba(0, 0, 0, 0.08) !important;
   color: #09090b !important;
 }
+
+/* =========================================================================
+   FLEET & OEM INTERACTIVE SIMULATORS (TEXT VISIBILITY IN LIGHT/WHITE THEME)
+   ========================================================================= */
+html.theme-light .fleet-roi-planner,
+html.theme-light .oem-network-planner {
+  background-color: #060e08 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+html.theme-light .fleet-roi-planner h3,
+html.theme-light .oem-network-planner h3 {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+html.theme-light .fleet-roi-planner p,
+html.theme-light .oem-network-planner p {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html.theme-light .fleet-roi-planner label,
+html.theme-light .oem-network-planner label,
+html.theme-light .fleet-roi-planner span:not([class*="text-[#00D084]"]):not([class*="text-[#F5A623]"]),
+html.theme-light .oem-network-planner span:not([class*="text-[#00D084]"]):not([class*="text-[#F5A623]"]) {
+  color: #ffffff !important;
+}
+
+html.theme-light .fleet-roi-planner [class*="bg-[#09150e]"],
+html.theme-light .oem-network-planner [class*="bg-[#09150e]"] {
+  background-color: #09150e !important;
+  border-color: rgba(0, 208, 132, 0.35) !important;
+}
+
+html.theme-light .fleet-roi-planner [class*="text-2xl"],
+html.theme-light .oem-network-planner [class*="text-2xl"],
+html.theme-light .fleet-roi-planner [class*="text-3xl"],
+html.theme-light .oem-network-planner [class*="text-3xl"] {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+html.theme-light .fleet-roi-planner [class*="text-[#00D084]"],
+html.theme-light .oem-network-planner [class*="text-[#00D084]"] {
+  color: #00D084 !important;
+}
+
+html.theme-light .fleet-roi-planner [class*="text-[#F5A623]"],
+html.theme-light .oem-network-planner [class*="text-[#F5A623]"] {
+  color: #F5A623 !important;
+}
+
+html.theme-light .fleet-roi-planner span[class*="text-white"],
+html.theme-light .oem-network-planner span[class*="text-white"],
+html.theme-light .fleet-roi-planner div[class*="text-white"],
+html.theme-light .oem-network-planner div[class*="text-white"] {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+html.theme-light .fleet-roi-planner strong[class*="text-[#00D084]"],
+html.theme-light .oem-network-planner strong[class*="text-[#00D084]"] {
+  color: #00D084 !important;
+}
+
+html.theme-light .fleet-roi-planner [class*="bg-black/40"],
+html.theme-light .oem-network-planner [class*="bg-black/40"] {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.theme-light .fleet-roi-planner button:not([class*="bg-[#00D084]"]),
+html.theme-light .oem-network-planner button:not([class*="bg-[#00D084]"]) {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.theme-light .fleet-roi-planner button[class*="bg-[#00D084]"],
+html.theme-light .oem-network-planner button[class*="bg-[#00D084]"] {
+  background-color: #00D084 !important;
+  color: #020403 !important;
+  border-color: #00D084 !important;
+}
+
 
 
