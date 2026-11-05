@@ -6,6 +6,7 @@ import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { BookingModal } from "../components/BookingModal";
 import { EcosystemHubVisualizer } from "../components/ecosystem/EcosystemHubVisualizer";
+import { EcosystemPartnersCarousel } from "../components/ecosystem/EcosystemPartnersCarousel";
 import {
   ShieldCheck,
   Building2,
@@ -178,7 +179,7 @@ export function EcosystemPage() {
             className="max-w-4xl mx-auto text-center relative z-10 px-6 space-y-4 pointer-events-auto"
           >
             <span className="hero-sub-reveal text-xs font-mono font-bold uppercase tracking-widest text-[#00D084]">
-              Ã¢â‚¬Â¢ Technology Platform Ã‚Â· Autobot OS
+              • Technology Platform · Autobot OS
             </span>
             <h1 className="hero-title-reveal text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08]">
               India's First Integrated <br className="hidden sm:block" />
@@ -217,7 +218,7 @@ export function EcosystemPage() {
             <div className="pb-3 px-6 max-w-7xl mx-auto">
               <nav aria-label="breadcrumb" className="text-xs font-mono text-white/50 flex items-center gap-2">
                 <Link to="/" className="hover:text-[#00D084] transition-colors">Home</Link>
-                <span>Ã¢â‚¬Âº</span>
+                <span>&rsaquo;</span>
                 <span className="text-[#00D084]">Ecosystem</span>
               </nav>
             </div>
@@ -240,7 +241,7 @@ export function EcosystemPage() {
               <span className="text-[#00D084]">Super Market (SSM)</span>
             </h2>
             <p className="text-sm sm:text-base text-white/70 font-light leading-relaxed">
-              Everything an electric vehicle needs after rolling out of the showroom: diagnostics, repairs, preventive maintenance, battery balancing, genuine parts, and charging â€” unified on one platform.
+              Everything an electric vehicle needs after rolling out of the showroom: diagnostics, repairs, preventive maintenance, battery balancing, genuine parts, and charging — unified on one platform.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -263,7 +264,7 @@ export function EcosystemPage() {
             {/* Market Gap Stat Ribbon */}
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-between text-xs font-mono">
               <span className="text-white/60">PUNE RTO EV GROWTH:</span>
-              <span className="text-white font-bold">12,737 ? 37,808 EVs (~3Ã— YoY)</span>
+              <span className="text-white font-bold">12,737 → 37,808 EVs (~3× YoY)</span>
               <span className="text-[#00D084] font-bold">HIGH DEMAND</span>
             </div>
           </div>
@@ -291,7 +292,7 @@ export function EcosystemPage() {
                   <div className="text-sm font-bold text-white">Flagship Master Workshop Bay</div>
                 </div>
                 <span className="text-[10px] font-mono font-bold text-black bg-[#00D084] px-3 py-1.5 rounded-xl shadow-md">
-                  ? 36-PT SAFETY VERIFIED
+                  ✓ 36-PT SAFETY VERIFIED
                 </span>
               </div>
             </div>
@@ -401,83 +402,8 @@ export function EcosystemPage() {
           </div>
         </div>
       </section>
-      {/* S7: Who Can Join */}
-      <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
-            Partnership Opportunities
-          </div>
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-            Who Can Join the MY EV Service Ecosystem?
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: "EV Service Centres & Garages",
-              desc: "Convert or upgrade your existing two-wheeler workshop into a branded, high-tech EV hub.",
-              action: "Convert Centre",
-              href: "/franchise",
-              icon: Building2,
-              stat: "Avg Ã¢â€šÂ¹1.8L - Ã¢â€šÂ¹4.5L/mo net",
-            },
-            {
-              title: "EV Charging Infrastructure Providers",
-              desc: "Co-locate chargers at our hubs, or add certified vehicle service to your existing charge-points.",
-              action: "Co-locate Charging",
-              href: "/franchise",
-              icon: BatteryCharging,
-              stat: "Direct walk-in footfall",
-            },
-            {
-              title: "Fleet Operators & Logistics",
-              desc: "Plug your commercial fleet directly into our scheduled preventive maintenance network.",
-              action: "Connect Fleet",
-              href: "/fleet",
-              icon: Truck,
-              stat: "98.5% Uptime SLA",
-            },
-            {
-              title: "EV Spare Parts Suppliers",
-              desc: "Supply into EV Spare Hub and reach hundreds of service bays across India.",
-              action: "Supply Parts",
-              href: "/store",
-              icon: Store,
-              stat: "68+ Hub network reach",
-            },
-          ].map((item) => {
-            const Icon = item.icon;
-            return (
-              <div 
-                key={item.title} 
-                className="group p-6 rounded-2xl bg-[#080d0a] hover:bg-[#0c1810] border border-white/10 hover:border-[#00D084]/40 hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between shadow-lg relative overflow-hidden text-left"
-              >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-[#00D084]/5 rounded-full blur-xl group-hover:bg-[#00D084]/15 transition-all pointer-events-none" />
-                
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] group-hover:bg-[#00D084] group-hover:text-black transition-all mb-4">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-base font-bold text-white mb-2 group-hover:text-[#00D084] transition-colors">{item.title}</h3>
-                  <p className="text-xs text-white/60 leading-relaxed font-light mb-4">{item.desc}</p>
-                </div>
-
-                <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-[#00D084]">{item.stat}</span>
-                  <Link
-                    to={item.href}
-                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00D084] group-hover:text-white transition-colors cursor-pointer"
-                  >
-                    <span>{item.action}</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      {/* S7: Who Can Join - Reference-style interactive carousel */}
+      <EcosystemPartnersCarousel />
 
       {/* S9: Closing CTA */}
       <section className="py-16 px-6 bg-[#0D5C2E] text-white">
