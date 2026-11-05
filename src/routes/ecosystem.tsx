@@ -7,6 +7,7 @@ import { Footer } from "../components/Footer";
 import { BookingModal } from "../components/BookingModal";
 import { EcosystemHubVisualizer } from "../components/ecosystem/EcosystemHubVisualizer";
 import { EcosystemPartnersCarousel } from "../components/ecosystem/EcosystemPartnersCarousel";
+import { EcosystemSupermarketSection } from "../components/ecosystem/EcosystemSupermarketSection";
 import {
   ShieldCheck,
   Building2,
@@ -228,77 +229,8 @@ export function EcosystemPage() {
               <EcosystemHubVisualizer />
             </section>
 
-      {/* S2: What is the Ecosystem? */}
-      <section className="ecosystem-reveal py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
-              Our Architecture Blueprint
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
-              India's First EV Service <br />
-              <span className="text-[#00D084]">Super Market (SSM)</span>
-            </h2>
-            <p className="text-sm sm:text-base text-white/70 font-light leading-relaxed">
-              Everything an electric vehicle needs after rolling out of the showroom: diagnostics, repairs, preventive maintenance, battery balancing, genuine parts, and charging — unified on one platform.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="p-5 rounded-2xl bg-[#08120b] border border-white/10 hover:border-[#00D084]/40 transition-all">
-                <span className="text-xs font-mono font-bold text-[#00D084] uppercase block mb-1">01 // SSM Model</span>
-                <h4 className="text-sm font-bold text-white mb-1">Multi-Brand Super Market</h4>
-                <p className="text-xs text-white/60 font-light leading-relaxed">
-                  Single destination for 2W & 3W EVs across Ola, Ather, TVS, Bajaj, Mahindra, and fleet commercial makes.
-                </p>
-              </div>
-              <div className="p-5 rounded-2xl bg-[#08120b] border border-white/10 hover:border-[#00D084]/40 transition-all">
-                <span className="text-xs font-mono font-bold text-[#F5A623] uppercase block mb-1">02 // Cloud Sync</span>
-                <h4 className="text-sm font-bold text-white mb-1">Real-Time Autobot OS Data</h4>
-                <p className="text-xs text-white/60 font-light leading-relaxed">
-                  Owners track on mobile, centres execute in digital bays, and fleets review unified invoices.
-                </p>
-              </div>
-            </div>
-
-            {/* Market Gap Stat Ribbon */}
-            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-between text-xs font-mono">
-              <span className="text-white/60">PUNE RTO EV GROWTH:</span>
-              <span className="text-white font-bold">12,737 → 37,808 EVs (~3× YoY)</span>
-              <span className="text-[#00D084] font-bold">HIGH DEMAND</span>
-            </div>
-          </div>
-
-          {/* Right: High-Resolution Photographic Editorial Frame */}
-          <div className="lg:col-span-6">
-            <div className="relative rounded-3xl overflow-hidden border border-white/15 group shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
-              <img 
-                src="/ecosystem/edge.jpg" 
-                alt="CAN-bus Battery Diagnostic Lab" 
-                className="w-full aspect-[4/3] object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none" />
-              
-              {/* Floating Top Badge */}
-              <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 text-[10px] font-mono text-white/90">
-                <span className="w-2 h-2 rounded-full bg-[#00D084] animate-ping" />
-                <span>CAN-BUS DIAGNOSTIC FACILITY</span>
-              </div>
-
-              {/* Bottom Info Bar */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                <div className="text-left">
-                  <div className="text-[10px] font-mono uppercase tracking-widest text-[#00D084] font-bold">Standardized Facility</div>
-                  <div className="text-sm font-bold text-white">Flagship Master Workshop Bay</div>
-                </div>
-                <span className="text-[10px] font-mono font-bold text-black bg-[#00D084] px-3 py-1.5 rounded-xl shadow-md">
-                  ✓ 36-PT SAFETY VERIFIED
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* S2: What is the Ecosystem? India's First EV Service Super Market (SSM) */}
+      <EcosystemSupermarketSection onOpenBooking={() => setBookingModalOpen(true)} />
       {/* S5: 5 Key Components with Real Cinematic Imagery */}
       <section className="ecosystem-reveal py-20 px-6 bg-[#030704] border-t border-white/10">
         <div className="max-w-7xl mx-auto">
