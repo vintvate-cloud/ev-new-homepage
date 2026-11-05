@@ -706,41 +706,15 @@ export function OEMSolutionsPage() {
               </div>
             </motion.section>
 
-      {/* S3: Infinite OEM Brand Marquee & Tested Platforms */}
+      {/* S3: Multi-Brand OEM Compatibility Matrix (Minimal & Aesthetic with Big Logos) */}
       <motion.section
         initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.15 }}
+        viewport={{ once: false, amount: 0.1 }}
         transition={{ duration: 0.6 }}
         className="oem-chips-trigger"
       >
         <OEMBrandMarquee />
-        <div className="py-4 border-b border-white/10 bg-[#060a08]/80 backdrop-blur-md">
-          <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
-            <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-wider font-bold">
-              Turn-Key Infrastructure For:
-            </span>
-            {[
-              "Electric 2W Manufacturers",
-              "3W / L5 Cargo Makers",
-              "New & Import EV Brands",
-              "Automotive Dealer Groups",
-              "Battery & Component Makers",
-              "Leasing & Commercial Fleets",
-            ].map((seg, idx) => (
-              <motion.span
-                key={seg}
-                initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="oem-chip-item px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80 font-medium text-[11px] hover:border-[#00D084]/40 hover:text-white transition-colors"
-              >
-                {seg}
-              </motion.span>
-            ))}
-          </div>
-        </div>
       </motion.section>
 
       {/* S4: The After-Sales Gap Comparison */}
