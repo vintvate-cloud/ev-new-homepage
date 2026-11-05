@@ -32,6 +32,8 @@ import { toast } from "sonner";
 type ServicesSearch = {
   service?: string;
   id?: string;
+  package?: string;
+  pkg?: string;
 };
 
 export const Route = createFileRoute("/services")({
@@ -39,6 +41,8 @@ export const Route = createFileRoute("/services")({
     return {
       service: (search.service as string) || undefined,
       id: (search.id as string) || undefined,
+      package: (search.package as string) || undefined,
+      pkg: (search.pkg as string) || undefined,
     };
   },
   head: () => ({
@@ -344,7 +348,8 @@ function ServicesPage() {
     }, 320);
   };
 
-  const { service: serviceParam, id: idParam } = Route.useSearch();
+  const { service: serviceParam, id: idParam, package: packageParam, pkg: pkgParam } = Route.useSearch();
+  const [highlightedPkgId, setHighlightedPkgId] = useState<string | null>(null);
 
   // Auto-open service detail card if URL has service query parameter (e.g. ?service=BAT-001)
   useEffect(() => {
@@ -367,6 +372,46 @@ function ServicesPage() {
       }
     }
   }, [serviceParam, idParam]);
+
+  // Auto-scroll and highlight target package card if navigated via package query/hash (e.g. ?package=PKG-001 or #package-PKG-001)
+  useEffect(() => {
+    const targetPkgId =
+      packageParam ||
+      pkgParam ||
+      (typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("package") ||
+          new URLSearchParams(window.location.search).get("pkg") ||
+          (window.location.hash.startsWith("#package-")
+            ? window.location.hash.replace("#package-", "")
+            : null)
+        : null);
+
+    if (targetPkgId) {
+      const match = PACKAGES.find(
+        (p) =>
+          p.id.toLowerCase() === targetPkgId.toLowerCase() ||
+          p.title.toLowerCase().includes(targetPkgId.toLowerCase())
+      );
+      if (match) {
+        setHighlightedPkgId(match.id);
+        const scrollTimer = setTimeout(() => {
+          const el = document.getElementById(`package-${match.id}`);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }, 350);
+
+        const clearTimer = setTimeout(() => {
+          setHighlightedPkgId(null);
+        }, 4500);
+
+        return () => {
+          clearTimeout(scrollTimer);
+          clearTimeout(clearTimer);
+        };
+      }
+    }
+  }, [packageParam, pkgParam]);
 
   // Lenis Smooth Scroll & scrollbar removal inside ONLY the right section of the details modal card
   const rightSectionRef = useRef<HTMLDivElement>(null);
@@ -580,7 +625,7 @@ function ServicesPage() {
           <div ref={contentUpRef}>
 
       {/* 3. VALUE PACKAGES CARDS SECTION (Positioned cleanly below full-screen hero with Section Header) */}
-      <div className="packages-grid-trigger mt-16 md:mt-24 relative z-20 max-w-[1380px] mx-auto px-6 mb-20">
+      <div id="packages" className="packages-grid-trigger mt-16 md:mt-24 relative z-20 max-w-[1380px] mx-auto px-6 mb-20">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#00D084] tracking-tight uppercase drop-shadow-md">
             More services. Better savings.
@@ -596,10 +641,12 @@ function ServicesPage() {
             const tagCode = `SAVINGS • 0${index + 1}`;
 
             const VectorIcon = pkg.icon || ShieldCheck;
+            const isHighlighted = highlightedPkgId === pkg.id;
 
             return (
               <div
                 key={pkg.id}
+                id={`package-${pkg.id}`}
                 onClick={() =>
                   handleOpenDetails({
                     id: pkg.id,
@@ -612,10 +659,10 @@ function ServicesPage() {
                     specs: pkg.features,
                   })
                 }
-                className={`pkg-card-reveal dark-card-locked relative h-[470px] rounded-[30px] overflow-hidden p-6 sm:p-7 shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col justify-between border-none ${
-                  isLight
-                    ? "shadow-lg hover:shadow-2xl hover:scale-[1.02]"
-                    : "shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:scale-[1.02]"
+                className={`pkg-card-reveal dark-card-locked keep-dark-card relative h-[470px] rounded-[30px] overflow-hidden p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7)] transition-all duration-500 cursor-pointer group flex flex-col justify-between border-none hover:scale-[1.02] ${
+                  isHighlighted
+                    ? "ring-4 ring-[#00D084] shadow-[0_0_50px_rgba(0,208,132,0.8)] scale-[1.03] z-30"
+                    : ""
                 }`}
               >
                 {/* Full Card Cover Image - High Clarity & Visibility */}
@@ -628,29 +675,60 @@ function ServicesPage() {
                 {/* Lightweight Bottom Vignette Overlay so top 75% of image is crystal clear */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-black/5 pointer-events-none" />
 
-                {/* Top Vector Icon Box Badge */}
-                <div className="relative z-10 w-12 h-12 rounded-2xl bg-black/60 backdrop-blur-xl border border-[#00D084]/40 flex items-center justify-center shadow-[0_0_20px_rgba(0,208,132,0.3)] shrink-0 mb-auto">
+                {/* Top Vector Icon Box Badge - Consistent Dark Styling in All Themes */}
+                <div
+                  className="pkg-icon-badge relative z-10 w-12 h-12 rounded-2xl backdrop-blur-xl border border-[#00D084]/40 flex items-center justify-center text-[#00D084] shadow-[0_0_20px_rgba(0,208,132,0.3)] shrink-0 mb-auto"
+                  style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", borderColor: "rgba(0, 208, 132, 0.4)", color: "#00D084" }}
+                >
                   <VectorIcon className="w-6 h-6 text-[#00D084]" strokeWidth={2.2} />
                 </div>
 
-                {/* Bottom Overlay Content with Scrim for 100% Text Visibility */}
-                <div className="mt-auto relative z-10 p-4 sm:p-5 rounded-2xl bg-black/50 backdrop-blur-md border border-white/10 shadow-2xl">
+                {/* Bottom Overlay Content with Scrim - 100% Solid Dark Glass in All Themes */}
+                <div
+                  className="pkg-overlay-box mt-auto relative z-10 p-4 sm:p-5 rounded-2xl backdrop-blur-md border border-white/10 text-white shadow-2xl"
+                  style={{
+                    backgroundColor: "rgba(0, 0, 0, 0.78)",
+                    borderColor: "rgba(255, 255, 255, 0.15)",
+                    color: "#ffffff"
+                  }}
+                >
 
                   {/* Title & Tag */}
-                  <h3 className="text-xl sm:text-2xl font-black text-white leading-snug mb-1.5 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] group-hover:text-[#00D084] transition-colors">
+                  <h3
+                    className="text-xl sm:text-2xl font-black text-white leading-snug mb-1.5 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] group-hover:text-[#00D084] transition-colors"
+                    style={{ color: "#ffffff" }}
+                  >
                     {pkg.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-white/95 font-medium leading-relaxed line-clamp-2 mb-3 drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)]">
+                  <p
+                    className="text-xs sm:text-sm text-white/95 font-medium leading-relaxed line-clamp-2 mb-3 drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)]"
+                    style={{ color: "rgba(255, 255, 255, 0.95)" }}
+                  >
                     {pkg.desc}
                   </p>
 
                   {/* Price Row */}
-                  <div className="flex items-baseline gap-2.5 mb-4 font-mono">
-                    <span className="text-2xl sm:text-3xl font-black text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">{pkg.price}</span>
-                    <span className="text-xs sm:text-sm text-white/70 font-bold line-through drop-shadow-md">{pkg.oldPrice}</span>
-                    <span className="ml-auto text-[10px] font-extrabold uppercase tracking-widest text-[#00D084] bg-[#00D084]/20 border border-[#00D084]/40 px-2 py-0.5 rounded-full">
+                  <div className="flex items-baseline justify-between gap-2 mb-4 font-mono">
+                    <div className="flex items-baseline gap-2 shrink-0">
+                      <span
+                        className="pkg-price text-2xl sm:text-3xl font-black text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]"
+                        style={{ color: "#ffffff" }}
+                      >
+                        {pkg.price}
+                      </span>
+                      <span
+                        className="pkg-old-price text-xs sm:text-sm font-bold line-through text-white/60 drop-shadow-md shrink-0"
+                        style={{ color: "rgba(255, 255, 255, 0.6)" }}
+                      >
+                        {pkg.oldPrice}
+                      </span>
+                    </div>
+                    <span
+                      className="pkg-save-badge whitespace-nowrap shrink-0 text-xs sm:text-[13px] font-black uppercase tracking-wider text-[#00D084] text-right"
+                      style={{ color: "#00D084", background: "transparent", backgroundColor: "transparent", border: "none", whiteSpace: "nowrap" }}
+                    >
                       {pkg.save}
                     </span>
                   </div>
@@ -671,7 +749,8 @@ function ServicesPage() {
                           specs: pkg.features,
                         });
                       }}
-                      className="py-2.5 rounded-full border border-white/40 bg-black/40 text-white hover:bg-white/20 backdrop-blur-md text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer text-center shadow-md"
+                      className="pkg-details-btn py-2.5 rounded-full border border-white/40 bg-black/40 text-white hover:bg-white/20 backdrop-blur-md text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer text-center shadow-md"
+                      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", borderColor: "rgba(255, 255, 255, 0.4)", color: "#ffffff" }}
                     >
                       DETAILS
                     </button>
@@ -680,7 +759,8 @@ function ServicesPage() {
                         e.stopPropagation();
                         handleBookPackage(pkg);
                       }}
-                      className="py-2.5 rounded-full bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-[11px] font-black uppercase tracking-wider transition-all shadow-lg cursor-pointer text-center"
+                      className="pkg-book-btn py-2.5 rounded-full bg-[#00D084] hover:bg-[#00e08f] text-[#020403] text-[11px] font-black uppercase tracking-wider transition-all shadow-lg cursor-pointer text-center"
+                      style={{ backgroundColor: "#00D084", color: "#020403" }}
                     >
                       BOOK NOW
                     </button>

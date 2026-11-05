@@ -25,6 +25,7 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const { siteTheme, setSiteTheme, toggleTheme } = useTheme();
+  const isLightMode = siteTheme === "light";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,9 +63,9 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
               }`}
             >
               <img
-                src="/logo-myevservice.jpg"
+                src={isLightMode ? "/logo.jpeg" : "/logo-myevservice.jpg"}
                 alt="My EV Service Logo"
-                className="w-full h-full object-contain rounded-xl shadow-md"
+                className="w-full h-full object-contain rounded-xl shadow-md border border-[var(--nav-logo-border)]"
               />
             </div>
           </Link>
@@ -219,7 +220,7 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
               <Link to="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-black border border-white/20 p-0.5 flex items-center justify-center">
                   <img
-                    src="/logo-myevservice.jpg"
+                    src={isLightMode ? "/logo.jpeg" : "/logo-myevservice.jpg"}
                     alt="My EV Service Logo"
                     className="w-full h-full object-cover rounded-md"
                   />

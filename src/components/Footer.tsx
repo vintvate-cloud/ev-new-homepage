@@ -18,9 +18,12 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Reveal, StaggerContainer, StaggerItem } from "./ui/scroll-reveal";
+import { useTheme } from "../context/ThemeContext";
 
 export function Footer() {
   const [email, setEmail] = useState("");
+  const { siteTheme } = useTheme();
+  const isLightMode = siteTheme === "light";
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,14 +84,24 @@ export function Footer() {
           {/* Col 1: Brand Info & Address Details */}
           <StaggerItem className="md:col-span-2 lg:col-span-4 space-y-5">
             <Link to="/" className="inline-flex items-center gap-3.5 group">
-              <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl border border-white/20 bg-[#020503] shadow-lg flex items-center justify-center p-1.5 shrink-0 overflow-hidden group-hover:border-[#00D084]/60 transition-colors">
+              <div
+                className={`h-12 w-12 sm:h-14 sm:w-14 rounded-2xl border shadow-lg flex items-center justify-center p-1.5 shrink-0 overflow-hidden transition-all duration-300 group-hover:border-[#00D084]/60 ${
+                  isLightMode
+                    ? "border-black/10 bg-white shadow-black/5"
+                    : "border-white/20 bg-[#020503] shadow-black/40"
+                }`}
+              >
                 <img
-                  src="/logo.jpeg"
+                  src={isLightMode ? "/logo.jpeg" : "/logo-myevservice.jpg"}
                   alt="My EV Service Logo"
                   className="h-full w-full object-contain rounded-xl transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <span className="text-lg sm:text-xl font-black tracking-[0.15em] text-white uppercase group-hover:text-[#00D084] transition-colors">
+              <span
+                className={`text-lg sm:text-xl font-black tracking-[0.15em] uppercase transition-colors group-hover:text-[#00D084] ${
+                  isLightMode ? "text-slate-900" : "text-white"
+                }`}
+              >
                 MY EV SERVICE
               </span>
             </Link>

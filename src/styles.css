@@ -635,15 +635,15 @@ html.theme-light [class*="bg-[#0f1411]"]:not(.fixed):not([class*="inset-0"]):not
 html.theme-light [class*="bg-[#101412]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#111613]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
 html.theme-light [class*="bg-[#121914]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *),
-html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
-html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
-html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
-html.theme-light [class*="bg-slate-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card),
-html.theme-light [class*="bg-slate-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card),
-html.theme-light [class*="bg-zinc-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card),
-html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
-html.theme-light [class*="bg-[#080c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card),
-html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card) {
+html.theme-light [class*="bg-[#000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
+html.theme-light [class*="bg-[#000000]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
+html.theme-light [class*="bg-black"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
+html.theme-light [class*="bg-slate-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
+html.theme-light [class*="bg-slate-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
+html.theme-light [class*="bg-zinc-950"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
+html.theme-light [class*="bg-zinc-900"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
+html.theme-light [class*="bg-[#080c09]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box),
+html.theme-light [class*="bg-[#0d1410]"]:not(.fixed):not([class*="inset-0"]):not(.page-hero):not(.page-hero *):not(.dark-card-locked *):not(.expert-service-card *):not(.glow-card *):not(.package-card *):not(.package-card):not(.pkg-card-reveal *):not(.pkg-card-reveal):not(.pkg-overlay-box) {
   background-color: #ffffff !important;
   color: #09090b !important;
 }
@@ -1822,6 +1822,84 @@ html.theme-light .warehouse-arc-rail .arc-label {
 /* ==========================================================================
    Genuine Spare Parts & Dark Cards — 100% Identical Across Theme Changes
    ========================================================================== */
+
+/* Package Cards in Services Page (100% Identical Dark Look in both Light and Dark themes) */
+.pkg-card-reveal,
+html.theme-light .pkg-card-reveal,
+html.theme-light div.pkg-card-reveal {
+  border: none !important;
+}
+
+.pkg-card-reveal .pkg-overlay-box,
+html.theme-light .pkg-card-reveal .pkg-overlay-box,
+html.theme-light div.pkg-card-reveal div.pkg-overlay-box,
+html.theme-light div.pkg-overlay-box {
+  background: rgba(0, 0, 0, 0.8) !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7) !important;
+}
+
+.pkg-card-reveal .pkg-icon-badge,
+html.theme-light .pkg-card-reveal .pkg-icon-badge,
+html.theme-light div.pkg-icon-badge {
+  background: rgba(0, 0, 0, 0.7) !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border: 1px solid rgba(0, 208, 132, 0.4) !important;
+  color: #00D084 !important;
+  box-shadow: 0 0 20px rgba(0, 208, 132, 0.3) !important;
+}
+
+html.theme-light .pkg-card-reveal h3,
+.pkg-card-reveal h3,
+html.theme-light .pkg-overlay-box h3 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95) !important;
+}
+
+html.theme-light .pkg-card-reveal p,
+.pkg-card-reveal p,
+html.theme-light .pkg-overlay-box p {
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.95) !important;
+}
+
+html.theme-light .pkg-card-reveal span,
+.pkg-card-reveal span,
+html.theme-light .pkg-overlay-box span {
+  color: #ffffff !important;
+}
+
+html.theme-light .pkg-card-reveal span.line-through,
+.pkg-card-reveal span.line-through,
+html.theme-light .pkg-overlay-box span.line-through {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html.theme-light .pkg-save-badge,
+.pkg-save-badge {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #00D084 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+html.theme-light .pkg-details-btn,
+.pkg-details-btn {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+}
+
+html.theme-light .pkg-book-btn,
+.pkg-book-btn {
+  background-color: #00D084 !important;
+  color: #020403 !important;
+}
 
 /* CAD Telemetry HUD Card */
 .cad-hud-card,

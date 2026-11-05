@@ -2112,90 +2112,52 @@ function GenuineSpareParts() {
         {/* Dashboard layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
-          {/* Left panel: Live CAD Telemetry HUD */}
+          {/* Left panel: Selected Spare Part Feature Card */}
           <Reveal className="lg:col-span-5 flex flex-col" yOffset={30}>
             <div className="cad-hud-card keep-dark-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-full shadow-2xl">
 
-              {/* Active Part Background Image in Left Panel - Properly Visible */}
-              <div className="absolute inset-0 opacity-75 md:opacity-85 pointer-events-none overflow-hidden z-0">
+              {/* Active Part Background Image in Left Panel - Clean & Vibrant (No Grid Lines) */}
+              <div className="absolute inset-0 opacity-85 md:opacity-95 pointer-events-none overflow-hidden z-0">
                 <img src={activePart.bgImg} alt={activePart.title} className="w-full h-full object-cover object-center filter saturate-125 brightness-110 contrast-105 transition-all duration-700" />
                 <div className="hud-card-overlay absolute inset-0 pointer-events-none" />
               </div>
 
-              {/* Grid graphic background */}
-              <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
-                style={{
-                  backgroundImage: "linear-gradient(to right, #00D084 1px, transparent 1px), linear-gradient(to bottom, #00D084 1px, transparent 1px)",
-                  backgroundSize: "20px 20px"
-                }}
-              />
-
               <div ref={hudRef} className="relative z-10 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                    <span className="hud-title-label text-[10px] uppercase tracking-widest text-white/50 font-mono font-bold">
-                      CAD Specification HUD
-                    </span>
-                    <span className="hud-oem-badge text-[9px] font-mono font-bold rounded px-2.5 py-0.5">
-                      OEM_CERTIFIED
+                <div className="space-y-4">
+                  {/* Category Pill with Icon */}
+                  <div className="flex items-center gap-2">
+                    <div className="w-9 h-9 rounded-xl bg-[#00D084]/20 border border-[#00D084]/40 flex items-center justify-center text-[#00D084] shadow-md backdrop-blur-md">
+                      {activePart.icon}
+                    </div>
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/30 px-3 py-1 rounded-full backdrop-blur-md">
+                      {activePart.category}
                     </span>
                   </div>
 
-                  <div className="mt-6">
-                    <span className="hud-system-label text-[9px] uppercase tracking-wider text-[#00D084] font-mono font-bold">
-                      System Classification
-                    </span>
-                    <h4 className="hud-system-type keep-white text-white font-bold text-lg mt-1 font-mono tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                      {activePart.hud.type}
-                    </h4>
-                  </div>
+                  {/* NAME */}
+                  <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+                    {activePart.title}
+                  </h3>
 
-                  {/* Specs List */}
-                  <div className="mt-8 space-y-4">
-                    <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
-                      <span className="hud-spec-label text-white/70 font-mono">VOLTAGE CLASS</span>
-                      <span className="hud-spec-value keep-white text-white font-mono font-bold drop-shadow-md">{activePart.hud.voltage}</span>
-                    </div>
-                    <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
-                      <span className="hud-spec-label text-white/70 font-mono">EFFICIENCY / DENSITY</span>
-                      <span className="hud-spec-value keep-white text-white font-mono font-bold drop-shadow-md">{activePart.hud.density}</span>
-                    </div>
-                    <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
-                      <span className="hud-spec-label text-white/70 font-mono">BMS CONFIGURATION</span>
-                      <span className="hud-spec-value keep-white text-white font-mono font-bold drop-shadow-md">{activePart.hud.config}</span>
-                    </div>
-                    <div className="flex justify-between border-b border-white/10 pb-2 text-xs">
-                      <span className="hud-spec-label text-white/70 font-mono">THERMAL COEFFICIENT</span>
-                      <span className="hud-spec-thermal text-[#00D084] font-mono font-bold drop-shadow-md">{activePart.hud.thermal}</span>
-                    </div>
-                  </div>
-
-                  {/* Assurance points */}
-                  <ul className="mt-8 space-y-3">
-                    <li className="flex items-center gap-2.5 text-xs text-white font-medium drop-shadow-md keep-white">
-                      <Check className="h-4 w-4 text-[#00D084]" />
-                      <span className="keep-white text-white">100% Genuine OEM Standards</span>
-                    </li>
-                    <li className="flex items-center gap-2.5 text-xs text-white font-medium drop-shadow-md keep-white">
-                      <Check className="h-4 w-4 text-[#00D084]" />
-                      <span className="keep-white text-white">12-Month Replacement Warranty</span>
-                    </li>
-                  </ul>
+                  {/* DETAIL */}
+                  <p className="text-sm sm:text-base text-white/90 leading-relaxed font-normal max-w-md drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    {activePart.desc}
+                  </p>
                 </div>
 
-                {/* Order action */}
-                <div className="mt-12 pt-6 border-t border-white/10 flex items-center justify-between gap-6">
+                {/* PRICE & ORDER ACTION */}
+                <div className="mt-8 pt-6 flex items-center justify-between gap-6">
                   <div className="flex flex-col">
-                    <span className="hud-price-label text-[10px] text-white/70 font-mono uppercase font-bold">Catalogue Price</span>
-                    <span className="hud-price-value keep-white text-xl font-bold text-white font-mono mt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">{activePart.price}</span>
+                    <span className="hud-price-label text-[10px] text-white/70 font-mono uppercase font-bold tracking-wider">Price</span>
+                    <span className="hud-price-value keep-white text-2xl sm:text-3xl font-extrabold text-[#00D084] font-mono mt-0.5 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">{activePart.price}</span>
                   </div>
                   <button
                     onClick={() => navigate({ to: "/store", search: { category: activePart.category, product: activePart.productId } })}
-                    className="hud-order-btn rounded-full text-xs font-bold flex items-center gap-1.5 px-5 py-3.5 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
+                    className="hud-order-btn rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-2 px-6 py-3.5 transition-all hover:scale-[1.03] cursor-pointer shadow-lg hover:shadow-[0_0_20px_rgba(0,208,132,0.4)]"
                     style={{ background: "#00D084", color: "#020403" }}
                   >
                     <ShoppingCart className="h-4 w-4" />
-                    Order Component
+                    <span>Order Component</span>
                   </button>
                 </div>
               </div>
@@ -4316,15 +4278,15 @@ function ValuePackages() {
               </p>
               {/* Header CTAs */}
               <div className="flex flex-wrap gap-4 shrink-0">
-                <a
-                  href="#services"
+                <Link
+                  to="/services"
                   className="group inline-flex items-center gap-2 rounded-full bg-[#00D084] px-6 py-3 text-sm font-bold text-[#020403] transition-all hover:scale-105 hover:bg-[#00e894] shadow-md"
                 >
                   Explore All Services <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="#contact"
-                  className="group inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-bold transition-all hover:scale-105"
+                </Link>
+                <Link
+                  to="/contact"
+                  className="group inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-bold transition-all hover:scale-105 cursor-pointer shadow-sm hover:shadow-md"
                   style={{
                     borderColor: isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)",
                     backgroundColor: isLight ? "#f8fafc" : "transparent",
@@ -4332,7 +4294,7 @@ function ValuePackages() {
                   }}
                 >
                   Talk to Us
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -4696,8 +4658,9 @@ function ValuePackages() {
                           Valid for 365 days
                         </span>
                         <Link
-                          to="/packages/$packageId"
-                          params={{ packageId: activePkg.id }}
+                          to="/services"
+                          search={{ package: activePkg.id }}
+                          hash={`package-${activePkg.id}`}
                           className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition-all duration-300 shadow-md hover:scale-105"
                           style={{
                             backgroundColor: activePkg.themeColor,
