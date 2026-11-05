@@ -1409,7 +1409,7 @@ export function FleetSolutionsPage() {
               exit={{ y: "100vh", opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 180 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl bg-gradient-to-b from-[#07120a] to-[#040805] border border-[#00D084]/40 rounded-3xl p-6 sm:p-8 shadow-[0_0_50px_rgba(0,208,132,0.15)] font-sans md:overflow-visible overflow-y-auto max-h-[95vh] z-10"
+              className="fleet-plan-details-modal relative w-full max-w-5xl bg-gradient-to-b from-[#07120a] to-[#040805] border border-[#00D084]/40 rounded-3xl p-6 sm:p-8 shadow-[0_0_50px_rgba(0,208,132,0.15)] font-sans md:overflow-visible overflow-y-auto max-h-[95vh] z-10"
             >
               {/* Close Button */}
               <button

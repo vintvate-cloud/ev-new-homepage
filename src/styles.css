@@ -2877,3 +2877,42 @@ html.theme-light .store-cards-overlay {
   border-color: #e2e8f0 !important;
 }
 
+/* =========================================================================
+   FLEET & FRANCHISE PLAN DETAILS MODAL (LIGHT THEME WHITE CARD)
+   ========================================================================= */
+html.theme-light .fleet-plan-details-modal,
+html.theme-light [class*="from-[#07120a]"][class*="to-[#040805]"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #09090b !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 208, 132, 0.15) !important;
+}
+
+html.theme-light .fleet-plan-details-modal button.absolute {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+  color: #09090b !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+html.theme-light .fleet-plan-details-modal button.absolute:hover {
+  background-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+html.theme-light .fleet-plan-details-modal button:not([class*="bg-[#00D084]"]):not(.absolute) {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #09090b !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+html.theme-light .fleet-plan-details-modal button:not([class*="bg-[#00D084]"]):not(.absolute):hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.theme-light .fleet-plan-details-modal [class*="bg-white/[0.02]"] {
+  background-color: #f8fafc !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #09090b !important;
+}
+
+
