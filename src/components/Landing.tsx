@@ -202,7 +202,7 @@ function HeroGetStartedForm() {
   };
 
   return (
-    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none">
+    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-none md:max-h-[calc(100vh-160px)] md:overflow-y-auto scrollbar-none">
       {/* Background ambient lighting */}
       <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#00D084]/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -464,7 +464,7 @@ function HeroFleetEnquiryForm() {
   }
 
   return (
-    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none">
+    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-none md:max-h-[calc(100vh-160px)] md:overflow-y-auto scrollbar-none">
       {/* Background ambient lighting */}
       <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#00D084]/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -609,7 +609,7 @@ function HeroOemEnquiryForm() {
   }
 
   return (
-    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none">
+    <div className="w-full bg-[#070908]/95 border border-white/10 hover:border-[#00D084]/40 rounded-[24px] p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-white font-sans relative overflow-hidden transition-all duration-500 max-h-none md:max-h-[calc(100vh-160px)] md:overflow-y-auto scrollbar-none">
       {/* Background ambient lighting */}
       <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#00D084]/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -989,6 +989,23 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [typewriterIndices, setTypewriterIndices] = useState<Record<number, number>>({ 0: 0, 1: 0, 2: 0 });
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (diff > 50) {
+      setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    } else if (diff < -50) {
+      setActiveSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+    }
+    setTouchStartX(null);
+  };
 
   const handleTypewriterIndexChange = (slideIndex: number, itemIdx: number) => {
     setTypewriterIndices((prev) => ({ ...prev, [slideIndex]: itemIdx }));
@@ -1016,18 +1033,287 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
     setActiveSlide(index);
   };
 
+  const currentSlide = HERO_SLIDES[activeSlide] || HERO_SLIDES[0];
+  const currentTypewriterItems = getSlideTypewriterItems(activeSlide);
+  const currentItemIdx = typewriterIndices[activeSlide] ?? 0;
+  const currentActiveTypewriterItem = currentTypewriterItems[currentItemIdx] || currentTypewriterItems[0];
+
   return (
     <section
       ref={containerRef}
       id="top"
-      className="relative w-full overflow-hidden transition-colors duration-300"
-      style={{ height: "100svh", minHeight: 700, background: "var(--background)" }}
+      className="relative w-full overflow-hidden transition-colors duration-300 md:h-[100svh] md:min-h-[700px]"
+      style={{ background: "var(--background)" }}
     >
+      {/* ---------------- MOBILE HERO VIEW (Dedicated, clean, 100% responsive, zero overlaps) ---------------- */}
+      <div
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="md:hidden relative w-full pt-28 pb-12 px-4 flex flex-col items-center text-center font-sans overflow-x-hidden min-h-screen"
+      >
+        {/* Ambient background glow matching brand colors */}
+        <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-[#00D084]/15 rounded-full blur-[100px] pointer-events-none" />
+
+        {/* 1. Top Heading & Dynamic Typewriter */}
+        <div className="relative z-10 w-full mb-3">
+          <div className="inline-flex flex-col items-center justify-center gap-1">
+            <span className="text-[10px] xs:text-[11px] font-mono font-bold tracking-widest text-white/90 uppercase">
+              {currentSlide.titlePrefix}
+            </span>
+            <h1 className="text-base xs:text-lg font-black uppercase text-[#00D084] tracking-tight m-0 p-0 flex items-center justify-center">
+              <HeroTypewriter
+                key={`mobile-typewriter-${activeSlide}`}
+                items={currentTypewriterItems}
+                onIndexChange={(idx) => handleTypewriterIndexChange(activeSlide, idx)}
+              />
+            </h1>
+          </div>
+        </div>
+
+        {/* 2. Visual Showcase: Sleek EV Bike + Stat / Warranty Badge */}
+        <div className="relative z-10 w-full max-w-[360px] flex flex-col items-center my-1">
+          {/* Floating Warranty / Stat Badge (Directly from Image 2 top-right) */}
+          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#070e0a]/90 border border-white/10 backdrop-blur-md shadow-xl mb-2">
+            <div className="flex -space-x-2">
+              {currentSlide.riders.map((imgUrl, i) => (
+                <img key={i} className="inline-block h-6 w-6 rounded-full ring-1.5 ring-[#00D084]/60 object-cover" src={imgUrl} alt={`Partner ${i + 1}`} />
+              ))}
+            </div>
+            <div className="flex items-center gap-1.5 text-left font-sans">
+              <span className="text-xs font-black text-white">{currentActiveTypewriterItem.statValue}</span>
+              <span className="text-[10px] text-white/70 font-medium">{currentActiveTypewriterItem.statLabel}</span>
+            </div>
+          </div>
+
+          {/* EV Vehicle Studio Image with floating animation & shadow */}
+          <div className="relative w-full h-[180px] xs:h-[210px] flex items-center justify-center">
+            <div className="absolute inset-0 bg-radial from-[#00D084]/25 via-[#00D084]/5 to-transparent pointer-events-none rounded-full blur-2xl" />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={`mobile-hero-img-${activeSlide}-${currentActiveTypewriterItem.word}`}
+                initial={{ opacity: 0, scale: 0.92, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.92, y: -10 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                src={currentActiveTypewriterItem.img}
+                alt={currentActiveTypewriterItem.word}
+                className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.95)] animate-float relative z-[1]"
+              />
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* 3. The Interactive Form Card ("WHAT DO YOU WANT TO START?") */}
+        <div className="relative z-10 w-full max-w-[400px] my-3 text-left">
+          <AnimatePresence mode="wait">
+            {activeSlide === 0 && (
+              <motion.div
+                key="mobile-form-consumer"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+              >
+                <HeroGetStartedForm />
+              </motion.div>
+            )}
+            {activeSlide === 1 && (
+              <motion.div
+                key="mobile-form-fleet"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+              >
+                <HeroFleetEnquiryForm />
+              </motion.div>
+            )}
+            {activeSlide === 2 && (
+              <motion.div
+                key="mobile-form-oem"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+              >
+                <HeroOemEnquiryForm />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* 4. Quick Action Buttons (2 Rows of Clean Touch Pills) */}
+        <div className="relative z-10 w-full max-w-[400px] my-2">
+          <AnimatePresence mode="wait">
+            {activeSlide === 0 && (
+              <motion.div
+                key="mobile-qa-0"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col gap-2.5 w-full font-sans"
+              >
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <button
+                    onClick={() => onOpenBooking ? onOpenBooking() : (window.location.href = "/services")}
+                    className="w-full bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-black text-xs py-3 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,208,132,0.3)] transition-all cursor-pointer"
+                  >
+                    <Zap className="h-3.5 w-3.5 fill-[#020403] text-[#020403] shrink-0" />
+                    <span className="truncate">Book EV Service</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-[#020403] shrink-0" />
+                  </button>
+
+                  <Link
+                    to="/service-centres"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-[#00D084]/40 font-bold text-xs py-3 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <MapPin className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Find Nearest Centre</span>
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <a
+                    href="tel:+919582390001"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-red-500/40 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <PhoneCall className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Request RSA</span>
+                  </a>
+
+                  <Link
+                    to="/franchise"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-[#00D084]/40 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <Store className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Join Franchise</span>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+
+            {activeSlide === 1 && (
+              <motion.div
+                key="mobile-qa-1"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col gap-2.5 w-full font-sans"
+              >
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <Link
+                    to="/fleet"
+                    className="w-full bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-black text-xs py-3 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,208,132,0.3)] transition-all cursor-pointer"
+                  >
+                    <Truck className="h-3.5 w-3.5 fill-[#020403] text-[#020403] shrink-0" />
+                    <span className="truncate">Fleet Solutions</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-[#020403] shrink-0" />
+                  </Link>
+
+                  <a
+                    href="tel:+919582390001"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-[#00D084]/40 font-bold text-xs py-3 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <PhoneCall className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Commercial Desk</span>
+                  </a>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <Link
+                    to="/service-centres"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-[#00D084]/40 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <MapPin className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Regional Hubs</span>
+                  </Link>
+
+                  <Link
+                    to="/franchise"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-[#00D084]/40 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <Store className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Depot Partner</span>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+
+            {activeSlide === 2 && (
+              <motion.div
+                key="mobile-qa-2"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col gap-2.5 w-full font-sans"
+              >
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <Link
+                    to="/oem"
+                    className="w-full bg-[#00D084] hover:bg-[#00e894] text-[#020403] font-black text-xs py-3 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,208,132,0.3)] transition-all cursor-pointer"
+                  >
+                    <Cpu className="h-3.5 w-3.5 text-[#020403] shrink-0" />
+                    <span className="truncate">OEM Network</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-[#020403] shrink-0" />
+                  </Link>
+
+                  <a
+                    href="tel:+919582390001"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-[#00D084]/40 font-bold text-xs py-3 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <PhoneCall className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Partnership Desk</span>
+                  </a>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <Link
+                    to="/service-centres"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-[#00D084]/40 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <MapPin className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Multi-City Coverage</span>
+                  </Link>
+
+                  <Link
+                    to="/franchise"
+                    className="w-full bg-[#050806]/90 hover:bg-white/10 text-white border border-white/15 hover:border-[#00D084]/40 font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <Store className="h-3.5 w-3.5 text-[#00D084] shrink-0" />
+                    <span className="truncate">Authorised Franchise</span>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* 5. Navigation Dot Indicators */}
+        <div className="relative z-10 flex items-center justify-center gap-3 pt-3 pb-2">
+          {HERO_SLIDES.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => setActiveSlide(index)}
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                activeSlide === index
+                  ? "bg-[#00D084] w-7 shadow-[0_0_8px_#00D084]"
+                  : "bg-white/20 hover:bg-white/40 w-2.5"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* ---------------- DESKTOP HERO VIEW (Preserved exactly as desktop reference) ---------------- */}
       {/* Scrollable Slides Container */}
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none"
+        className="hidden md:flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-none"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {HERO_SLIDES.map((slide, index) => {
@@ -1039,11 +1325,11 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
           return (
             <div
               key={slide.id}
-              className="w-screen h-full flex-shrink-0 snap-start relative overflow-hidden flex flex-col justify-between md:block"
+              className="w-screen h-full flex-shrink-0 snap-start relative overflow-hidden block"
             >
               {/* Background Blob Shape */}
               <div className="absolute inset-0 z-[1] pointer-events-none">
-                <svg viewBox="0 0 1000 600" preserveAspectRatio="none" className="w-full h-full opacity-80 md:opacity-100">
+                <svg viewBox="0 0 1000 600" preserveAspectRatio="none" className="w-full h-full opacity-100">
                   <defs>
                     <linearGradient id={`grad-${slide.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" stopColor={slide.gradStart} />
@@ -1069,7 +1355,7 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
 
                 {/* Ghost text inside the shape - dynamically changes with typewriter */}
                 <div
-                  className="absolute pointer-events-none font-black uppercase leading-[0.9] select-none hidden md:block transition-all duration-700"
+                  className="absolute pointer-events-none font-black uppercase leading-[0.9] select-none block transition-all duration-700"
                   style={{
                     fontSize: "clamp(2rem, 5.5vw, 6.2rem)",
                     color: "rgba(255, 255, 255, 0.12)",
@@ -1114,46 +1400,8 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
                 </h1>
               </div>
 
-              {/* MOBILE HERO VISUAL IMAGE SHOWCASE (Visible on phone/mobile screens) */}
-              <div className="md:hidden relative w-full flex flex-col items-center justify-center my-3 px-4 z-20">
-                <AnimatePresence mode="wait">
-                  {isCurrent && (
-                    <motion.div
-                      key={`mobile-typewriter-img-${slide.id}-${activeTypewriterItem.word}`}
-                      initial={{ opacity: 0, y: 15, scale: 0.94 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -15, scale: 0.94 }}
-                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                      className="relative w-full max-w-[340px] xs:max-w-[360px] h-[190px] xs:h-[220px] flex items-center justify-center p-2 rounded-2xl bg-gradient-to-b from-[#0a120e]/80 via-[#040806]/90 to-black/95 border border-[#00D084]/30 shadow-[0_15px_35px_rgba(0,208,132,0.2)] overflow-hidden"
-                    >
-                      {/* Background studio radial lighting */}
-                      <div className="absolute inset-0 bg-radial from-[#00D084]/15 via-transparent to-transparent pointer-events-none" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent pointer-events-none z-[1]" />
-                      
-                      <img
-                        src={activeTypewriterItem.img}
-                        alt={activeTypewriterItem.word}
-                        className="w-full h-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)] animate-float relative z-[1]"
-                      />
-                      
-                      <div className="absolute bottom-2.5 left-2.5 right-2.5 z-[2] flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10">
-                        <div className="flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse" />
-                          <span className="text-[10px] font-mono font-bold text-[#00D084] uppercase tracking-wider truncate max-w-[170px]">
-                            {activeTypewriterItem.word}
-                          </span>
-                        </div>
-                        <span className="text-[9px] font-mono text-white/80 font-bold bg-[#00D084]/20 px-2 py-0.5 rounded-md border border-[#00D084]/30">
-                          {activeTypewriterItem.statValue}
-                        </span>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* DESKTOP LAYOUT CONTENT (Visible only on desktop) */}
-              <div className="hidden md:block">
+              {/* DESKTOP LAYOUT CONTENT */}
+              <div>
                 {/* DYNAMIC FULL-FIDELITY STUDIO VISUAL IMAGE CHANGING WITH TYPEWRITER TEXT */}
                 <AnimatePresence mode="wait">
                   {isCurrent && (
@@ -1196,9 +1444,9 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
         })}
       </div>
 
-      {/* FIXED & STATIONARY GET STARTED / FLEET / OEM FORM */}
+      {/* FIXED & STATIONARY GET STARTED / FLEET / OEM FORM (Desktop Only) */}
       <div
-        className="absolute z-30 pointer-events-auto left-5 right-5 md:left-[6.5%] top-[170px] md:top-[210px] w-auto md:w-[32%] max-w-[400px]"
+        className="hidden md:block absolute z-30 pointer-events-auto left-[6.5%] top-[210px] w-[32%] max-w-[400px]"
       >
         <AnimatePresence mode="wait">
           {activeSlide === 0 && (
@@ -1237,8 +1485,8 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
         </AnimatePresence>
       </div>
 
-      {/* QUICK ACTION BUTTONS */}
-      <div className="absolute z-30 bottom-24 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 flex flex-col items-center gap-3 pointer-events-auto font-sans">
+      {/* QUICK ACTION BUTTONS (Desktop Only) */}
+      <div className="hidden md:flex absolute z-30 bottom-24 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 flex-col items-center gap-3 pointer-events-auto font-sans">
         <AnimatePresence mode="wait">
           {activeSlide === 0 && (
             <motion.div
@@ -1386,8 +1634,8 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
         </AnimatePresence>
       </div>
 
-      {/* Navigation Dot Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 bg-black/40 border border-white/5 backdrop-blur-md px-4 py-2 rounded-full">
+      {/* Navigation Dot Indicators (Desktop Only) */}
+      <div className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-30 items-center gap-3 bg-black/40 border border-white/5 backdrop-blur-md px-4 py-2 rounded-full">
         {HERO_SLIDES.map((_, index) => (
           <button
             key={index}
