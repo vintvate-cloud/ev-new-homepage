@@ -477,6 +477,17 @@ function FindServicesPage() {
     };
   }, [inlineBookingOpen, inlineStep]);
 
+  // Lock body scroll on mobile when inline drawer is open so parent page does not scroll
+  useEffect(() => {
+    if (inlineBookingOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [inlineBookingOpen]);
+
   // Refs for GSAP
   const heroTextRef = useRef<HTMLDivElement>(null);
   const heroBgRef = useRef<HTMLDivElement>(null);
@@ -546,57 +557,61 @@ function FindServicesPage() {
   // ─── GSAP ScrollTrigger ───────────────────────────────────────────────────
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
 
-      // 2. Hero parallax: background scales and fades as content overlay rises
-      if (heroBgRef.current && contentOverlayRef.current) {
-        gsap.to(heroBgRef.current, {
-          scale: 1.15,
-          opacity: 0.25,
-          ease: "none",
-          force3D: true,
-          scrollTrigger: {
-            trigger: contentOverlayRef.current,
-            start: "top 100%",
-            end: "top 20%",
-            scrub: 0.5,
-          },
-        });
-      }
-
-      // 3. Hero text fades out as user scrolls
-      if (heroTextRef.current && contentOverlayRef.current) {
-        gsap.to(heroTextRef.current, {
-          opacity: 0,
-          scale: 0.94,
-          y: -40,
-          ease: "power1.out",
-          force3D: true,
-          scrollTrigger: {
-            trigger: contentOverlayRef.current,
-            start: "top 92%",
-            end: "top 32%",
-            scrub: 0.5,
-          },
-        });
-      }
-
-      // 4. Content overlay rises up
-      if (contentUpRef.current) {
-        gsap.fromTo(
-          contentUpRef.current,
-          { y: 60, opacity: 0 },
-          {
-            y: 0, opacity: 1, ease: "power2.out",
+      // Desktop-only hero parallax & rising overlay (mobile uses smooth natural page flow)
+      mm.add("(min-width: 1024px)", () => {
+        // 2. Hero parallax: background scales and fades as content overlay rises
+        if (heroBgRef.current && contentOverlayRef.current) {
+          gsap.to(heroBgRef.current, {
+            scale: 1.15,
+            opacity: 0.25,
+            ease: "none",
             force3D: true,
             scrollTrigger: {
-              trigger: contentUpRef.current,
-              start: "top 92%",
-              end: "top 48%",
+              trigger: contentOverlayRef.current,
+              start: "top 100%",
+              end: "top 20%",
               scrub: 0.5,
             },
-          }
-        );
-      }
+          });
+        }
+
+        // 3. Hero text fades out as user scrolls
+        if (heroTextRef.current && contentOverlayRef.current) {
+          gsap.to(heroTextRef.current, {
+            opacity: 0,
+            scale: 0.94,
+            y: -40,
+            ease: "power1.out",
+            force3D: true,
+            scrollTrigger: {
+              trigger: contentOverlayRef.current,
+              start: "top 92%",
+              end: "top 32%",
+              scrub: 0.5,
+            },
+          });
+        }
+
+        // 4. Content overlay rises up
+        if (contentUpRef.current) {
+          gsap.fromTo(
+            contentUpRef.current,
+            { y: 60, opacity: 0 },
+            {
+              y: 0, opacity: 1, ease: "power2.out",
+              force3D: true,
+              scrollTrigger: {
+                trigger: contentUpRef.current,
+                start: "top 92%",
+                end: "top 48%",
+                scrub: 0.5,
+              },
+            }
+          );
+        }
+      });
 
       // 6. Cities section staggered entrance
       gsap.fromTo(
@@ -750,11 +765,11 @@ function FindServicesPage() {
       <div className="relative min-h-screen">
 
         {/* ===================================================================
-            1. FIXED STUCK HERO
+            1. HERO SECTION (NATURAL FLOW ON MOBILE, FIXED IN BACKGROUND ON DESKTOP)
            =================================================================== */}
-        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero relative lg:fixed lg:top-20 lg:left-0 lg:right-0 lg:h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center pt-24 sm:pt-28 lg:pt-0">
           {/* BG Image + parallax scrub via heroBgRef */}
-          <div ref={heroBgRef} className="absolute inset-0">
+          <div ref={heroBgRef} className="absolute inset-0 pointer-events-none">
             <img
               src="/find-services-hero.jpg"
               alt="Find EV Services Hero"
@@ -767,33 +782,33 @@ function FindServicesPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
 
-          {/* Hero Content */}
+          {/* Hero Content - NON-SCROLLABLE on mobile */}
           <div
             ref={heroTextRef}
-            className="absolute inset-0 flex flex-col justify-center items-center px-6 md:px-12 max-w-7xl mx-auto z-10 pointer-events-auto overflow-y-auto py-6"
+            className="relative lg:absolute lg:inset-0 flex flex-col justify-start lg:justify-center items-center px-4 sm:px-6 md:px-12 max-w-7xl mx-auto z-10 pointer-events-auto pb-10 sm:pb-14 lg:py-6"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-10 items-center w-full">
 
               {/* Left column */}
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                className="lg:col-span-7 space-y-5 text-left"
+                className="lg:col-span-7 space-y-3 sm:space-y-5 text-left"
               >
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-[11px] font-mono font-bold text-[#00D084]"
+                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#00D084]/15 border border-[#00D084]/40 text-[10px] sm:text-[11px] font-mono font-bold text-[#00D084]"
                 >
                   <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" /> INDIA'S #1 EV SERVICE NETWORK
                 </motion.div>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.05]">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight">
                   Find Service Centers <br />
                   <span className="text-[#00D084] font-black">Near You</span>
                 </h1>
-                <p className="text-base sm:text-lg text-white/90 font-bold leading-relaxed max-w-2xl">
+                <p className="text-xs sm:text-base md:text-lg text-white/90 font-medium leading-relaxed max-w-2xl">
                   Your one-stop solution for all EV repair, maintenance and services — quick, reliable and hassle-free.
                 </p>
                 {/* Floating stat chips */}
@@ -801,13 +816,13 @@ function FindServicesPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex flex-wrap gap-2.5 pt-1"
+                  className="flex flex-wrap gap-2 sm:gap-2.5 pt-0.5"
                 >
                   {["40+ Cities", "600+ Hubs", "25K+ Happy Riders", "90-Day Warranty"].map((chip, i) => (
                     <motion.span
                       key={i}
                       whileHover={{ scale: 1.06, y: -2 }}
-                      className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[11px] font-mono font-bold text-white/90"
+                      className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-mono font-bold text-white/90"
                     >
                       {chip}
                     </motion.span>
@@ -822,7 +837,7 @@ function FindServicesPage() {
                 transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                 className="lg:col-span-5 w-full"
               >
-                <div className="bg-[#030c07]/95 border border-white/20 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-2xl relative overflow-hidden space-y-5 text-left">
+                <div className="bg-[#030c07]/95 border border-white/20 rounded-[26px] sm:rounded-[32px] p-4 sm:p-6 lg:p-7 backdrop-blur-3xl shadow-2xl relative overflow-hidden space-y-4 sm:space-y-5 text-left">
 
                   <AnimatePresence>
                     {inlineBookingOpen && (
@@ -831,7 +846,7 @@ function FindServicesPage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 15 }}
                         style={{ backgroundColor: "#040e08" }}
-                        className="absolute inset-0 z-40 p-6 sm:p-7 flex flex-col justify-between rounded-[32px] bg-[#040e08] shadow-2xl overflow-hidden"
+                        className="fixed inset-0 z-[100] flex flex-col justify-between p-4 pt-12 pb-6 sm:p-6 lg:p-7 bg-[#040e08] lg:absolute lg:inset-0 lg:rounded-[32px] shadow-2xl overflow-hidden overscroll-contain"
                       >
                         {/* CITY STEP */}
                         {inlineStep === "city" && (
@@ -845,9 +860,9 @@ function FindServicesPage() {
                               <button
                                 type="button"
                                 onClick={() => setInlineBookingOpen(false)}
-                                className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition-all cursor-pointer shrink-0 shadow-md"
                               >
-                                <X className="w-3.5 h-3.5" />
+                                <X className="w-4 h-4" />
                               </button>
                             </div>
 
@@ -878,7 +893,7 @@ function FindServicesPage() {
                             </div>
 
                             {/* Cities Grid with Beautiful SVGs */}
-                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 overscroll-contain touch-pan-y scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                               <div ref={inlineScrollContentRef} className="grid grid-cols-2 gap-2.5">
                                 {filteredCityCards.map((c) => {
                                   const isSelected = searchCity.toLowerCase() === c.name.toLowerCase();
@@ -935,9 +950,9 @@ function FindServicesPage() {
                               <button
                                 type="button"
                                 onClick={() => setInlineBookingOpen(false)}
-                                className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition-all cursor-pointer shrink-0 shadow-md"
                               >
-                                <X className="w-3.5 h-3.5" />
+                                <X className="w-4 h-4" />
                               </button>
                             </div>
 
@@ -988,7 +1003,7 @@ function FindServicesPage() {
                             </div>
 
                             {/* Manufacturers 3-Column Grid */}
-                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 overscroll-contain touch-pan-y scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                               <div ref={inlineScrollContentRef} className="grid grid-cols-3 gap-2.5">
                                 {filteredInlineBrands.map((b) => (
                                   <button
@@ -1031,21 +1046,21 @@ function FindServicesPage() {
                               <button
                                 type="button"
                                 onClick={() => setInlineBookingOpen(false)}
-                                className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition-all cursor-pointer shrink-0 shadow-md"
                               >
-                                <X className="w-3.5 h-3.5" />
+                                <X className="w-4 h-4" />
                               </button>
                             </div>
 
                             {/* Section Title */}
                             <div className="mb-4 shrink-0 text-left">
-                              <span className="text-[9px] uppercase font-mono font-bold text-[#00D084] block mb-0.5">{inlineSelectedBrand}</span>
+                              <span className="text-[10px] uppercase font-mono font-bold text-[#00D084] block mb-0.5">{inlineSelectedBrand}</span>
                               <h4 className="text-lg sm:text-xl font-black text-white tracking-tight leading-none">Select Model</h4>
                             </div>
 
-                            {/* Models Grid */}
-                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                              <div ref={inlineScrollContentRef} className="grid grid-cols-2 gap-2.5">
+                            {/* Models Grid: full width on mobile for crystal clear text */}
+                            <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 overscroll-contain touch-pan-y scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                              <div ref={inlineScrollContentRef} className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                                 {inlineAvailableModels.map((m) => {
                                   const info = getModelDisplayInfo(inlineSelectedBrand, m);
                                   return (
@@ -1058,24 +1073,31 @@ function FindServicesPage() {
                                         setSelectedService("General Service");
                                         setInlineBookingOpen(false);
                                       }}
-                                      className="p-3 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all text-left flex items-center gap-2.5 cursor-pointer group justify-between"
+                                      className="p-3 sm:p-3.5 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all text-left flex items-center gap-3 cursor-pointer group justify-between"
                                     >
-                                      <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                        <div className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center bg-black/40 overflow-hidden shrink-0 p-1 group-hover:scale-105 transition-transform">
+                                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                                        <div className="w-12 h-12 rounded-2xl border border-white/15 flex items-center justify-center bg-black/60 overflow-hidden shrink-0 p-1 group-hover:scale-105 transition-transform">
                                           {info.imageUrl ? (
-                                            <img src={info.imageUrl} alt={m} className="w-full h-full object-contain rounded-full" />
+                                            <img src={info.imageUrl} alt={m} className="w-full h-full object-contain" />
                                           ) : (
-                                            <div className="w-full h-full flex items-center justify-center font-extrabold text-[#00D084] text-[10px]">EV</div>
+                                            <div className="w-full h-full flex items-center justify-center font-extrabold text-[#00D084] text-xs">EV</div>
                                           )}
                                         </div>
                                         <div className="min-w-0 flex-1">
-                                          <p className="text-xs sm:text-sm font-black text-white truncate group-hover:text-[#00D084] transition-colors">{m}</p>
-                                          <p className="text-[9px] text-white/50 leading-tight mt-0.5 break-words">
-                                            {inlineSelectedBrand} Electric {info.battery ? `• ${info.battery}` : ""}
-                                          </p>
+                                          <p className="text-sm font-black text-white group-hover:text-[#00D084] transition-colors leading-tight truncate">{m}</p>
+                                          <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                                            <span className="text-[11px] text-white/70 font-medium">{inlineSelectedBrand} Electric</span>
+                                            {info.battery && (
+                                              <span className="px-1.5 py-0.5 rounded-md bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] font-mono text-[10px] font-bold">
+                                                ⚡ {info.battery}
+                                              </span>
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
-                                      <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-[#00D084] transition-all shrink-0 ml-1.5" />
+                                      <div className="w-7 h-7 rounded-full bg-white/5 group-hover:bg-[#00D084]/20 border border-white/10 group-hover:border-[#00D084]/40 flex items-center justify-center shrink-0 transition-colors ml-2">
+                                        <ArrowRight className="w-3.5 h-3.5 text-white/50 group-hover:text-[#00D084] transition-all" />
+                                      </div>
                                     </button>
                                   );
                                 })}
@@ -1186,11 +1208,11 @@ function FindServicesPage() {
         </div>
 
         {/* ===================================================================
-            2. CONTENT OVERLAY (rises over fixed hero)
+            2. CONTENT OVERLAY (rises over fixed hero on desktop)
            =================================================================== */}
         <div
           ref={contentOverlayRef}
-          className="relative z-10 bg-[#070908] min-h-screen mt-[calc(100vh-80px)] rounded-t-[44px] border-t border-white/10 shadow-2xl"
+          className="relative z-10 bg-[#070908] min-h-screen mt-0 lg:mt-[calc(100vh-80px)] rounded-t-[32px] sm:rounded-t-[44px] border-t border-white/10 shadow-2xl"
         >
           {/* ── Sticky Sub-Nav Bar ── */}
           <div

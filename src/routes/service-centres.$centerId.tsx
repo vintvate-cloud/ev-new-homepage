@@ -222,6 +222,17 @@ export function ServiceCentresPage() {
   const [isDetectingLoc, setIsDetectingLoc] = useState(false);
   const [cities, setCities] = useState<EVCity[]>(() => getOnboardedCities());
 
+  // Lock body scroll on mobile when inline drawer is open so parent page does not scroll
+  useEffect(() => {
+    if (inlineBookingOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [inlineBookingOpen]);
+
   const filteredCityCards = useMemo(() => {
     if (!citySearchQuery.trim()) return cities;
     const q = citySearchQuery.toLowerCase();
@@ -380,45 +391,49 @@ export function ServiceCentresPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  // GSAP ScrollTrigger Sliding Window Overlay & Hero Fade Effect (Matching Franchise Page)
+  // GSAP ScrollTrigger Sliding Window Overlay & Hero Fade Effect (Desktop only, mobile has natural page flow)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const ctx = gsap.context(() => {
-      // 1. Hero text & widget slow fade-out as content overlay rises up over fixed hero
-      if (heroTextRef.current && contentOverlayRef.current) {
-        gsap.to(heroTextRef.current, {
-          opacity: 0,
-          scale: 0.9,
-          y: -60,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: contentOverlayRef.current,
-            start: "top 95%",
-            end: "top 25%",
-            scrub: 0.6,
-          },
-        });
-      }
+      const mm = gsap.matchMedia();
 
-      // 2. Rising content cards entrance scrubbed onto hero
-      if (cardsUpRef.current) {
-        gsap.fromTo(
-          cardsUpRef.current,
-          { y: 90, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            ease: "power2.out",
+      mm.add("(min-width: 1024px)", () => {
+        // 1. Hero text & widget slow fade-out as content overlay rises up over fixed hero
+        if (heroTextRef.current && contentOverlayRef.current) {
+          gsap.to(heroTextRef.current, {
+            opacity: 0,
+            scale: 0.9,
+            y: -60,
+            ease: "power1.out",
             scrollTrigger: {
-              trigger: cardsUpRef.current,
-              start: "top 90%",
-              end: "top 45%",
+              trigger: contentOverlayRef.current,
+              start: "top 95%",
+              end: "top 25%",
               scrub: 0.6,
             },
-          }
-        );
-      }
+          });
+        }
+
+        // 2. Rising content cards entrance scrubbed onto hero
+        if (cardsUpRef.current) {
+          gsap.fromTo(
+            cardsUpRef.current,
+            { y: 90, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: cardsUpRef.current,
+                start: "top 90%",
+                end: "top 45%",
+                scrub: 0.6,
+              },
+            }
+          );
+        }
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -667,60 +682,61 @@ export function ServiceCentresPage() {
       <Nav />
 
       {/* =========================================================================
-          1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+          1. HERO SECTION (NATURAL PAGE FLOW ON MOBILE, FIXED IN BACKGROUND ON DESKTOP)
          ========================================================================= */}
-      <div className="page-hero fixed top-0 left-0 right-0 h-screen w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center pt-20">
-        {/* Background Hero Poster Image - Realistic, bright, zero heavy black flare */}
-        <img
-          src="/ev-service-centre-real-hero.png"
-          alt="EV PRO Service Centre"
-          className="w-full h-full object-cover object-center opacity-100 pointer-events-none"
-        />
+      <div className="page-hero relative lg:fixed lg:top-0 lg:left-0 lg:right-0 lg:h-screen w-full overflow-hidden bg-[#020403] z-0 flex items-center justify-center pt-28 sm:pt-32 lg:pt-20">
+        {/* Background Hero Poster Image */}
+        <div className="absolute inset-0 pointer-events-none">
+          <img
+            src="/ev-service-centre-real-hero.png"
+            alt="EV PRO Service Centre"
+            className="w-full h-full object-cover object-center opacity-100"
+          />
+          {/* Subtle blur & darkening layer for optimal text readability */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        </div>
 
-        {/* Subtle blur & darkening layer for optimal text readability */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
-
-        {/* Hero Content Container (Fades out & scales via GSAP on scroll) */}
+        {/* Hero Content Container (Non-scrollable, responsive flow on mobile) */}
         <div
           ref={heroTextRef}
-          className="absolute inset-0 flex items-center justify-center px-6 md:px-12 max-w-7xl mx-auto w-full z-10 transition-all pointer-events-auto overflow-y-auto py-12"
+          className="relative lg:absolute lg:inset-0 flex flex-col justify-start lg:justify-center items-center px-4 sm:px-6 md:px-12 max-w-7xl mx-auto w-full z-10 transition-all pointer-events-auto pb-10 sm:pb-14 lg:py-12"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full my-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center w-full lg:my-auto">
             {/* Left Column: Centre Overview & Ratings */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00D084]/20 border border-[#00D084]/40 text-xs font-serif font-extrabold text-[#00D084] shadow-lg backdrop-blur-md">
-                <Building2 className="w-4 h-4 text-[#00D084]" />
+            <div className="lg:col-span-7 space-y-3.5 sm:space-y-6 text-left">
+              <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#00D084]/20 border border-[#00D084]/40 text-[10.5px] sm:text-xs font-serif font-extrabold text-[#00D084] shadow-lg backdrop-blur-md">
+                <Building2 className="w-3.5 h-3.5 text-[#00D084]" />
                 <span>Franchise Service Centre</span>
               </div>
 
-              <div className="space-y-2">
-                <h1 className="text-4xl sm:text-6xl font-serif font-black tracking-tight text-white leading-none">
+              <div className="space-y-1.5 sm:space-y-2">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-white leading-tight">
                   EV PRO Service Centre
                 </h1>
-                <p className="text-lg sm:text-xl font-serif font-extrabold text-[#00D084]">
+                <p className="text-base sm:text-xl font-serif font-extrabold text-[#00D084]">
                   Centre ID: {centerId}
                 </p>
-                <p className="text-md sm:text-lg font-serif text-white/80">
+                <p className="text-sm sm:text-lg font-serif text-white/80">
                   Your Trusted EV Care Partner
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 text-xs font-serif text-white/90 bg-black/60 backdrop-blur-md p-3 rounded-2xl border border-white/10 w-fit shadow-xl">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] sm:text-xs font-serif text-white/90 bg-black/60 backdrop-blur-md p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-white/10 w-fit shadow-xl">
                 <div className="flex items-center gap-1.5 font-bold text-white">
-                  <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  <span className="text-sm">4.7</span>
+                  <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
+                  <span className="text-xs sm:text-sm">4.7</span>
                   <span className="text-white/60">(128 Reviews)</span>
                 </div>
                 <span className="text-white/30">•</span>
                 <div className="flex items-center gap-2 font-bold text-[#00D084]">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#00D084] animate-ping" />
+                  <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#00D084] animate-ping" />
                   <span>Open - Closes at 8:00 PM</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-1 sm:pt-2">
                 {[
                   { title: "Certified Technicians", icon: UserCheck },
                   { title: "OEM Grade Equipment", icon: ShieldCheck },
@@ -731,9 +747,9 @@ export function ServiceCentresPage() {
                   return (
                     <div
                       key={idx}
-                      className="flex items-center gap-2.5 p-3 rounded-2xl bg-[#050907]/90 border border-white/10 text-xs font-serif font-bold text-white/90 shadow-md backdrop-blur-sm transition-all"
+                      className="flex items-center gap-2 sm:gap-2.5 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#050907]/90 border border-white/10 text-[10.5px] sm:text-xs font-serif font-bold text-white/90 shadow-md backdrop-blur-sm transition-all"
                     >
-                      <IconComp className="w-4 h-4 text-[#00D084] shrink-0" />
+                      <IconComp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00D084] shrink-0" />
                       <span className="leading-tight">{badge.title}</span>
                     </div>
                   );
@@ -742,7 +758,7 @@ export function ServiceCentresPage() {
             </div>
 
             {/* Right Column: Find Your Service Centre Interactive Form (Matching find-services.tsx) */}
-            <div className="lg:col-span-5 bg-[#030c07]/95 border border-white/20 rounded-[32px] p-6 sm:p-7 backdrop-blur-3xl shadow-2xl relative overflow-hidden space-y-5 text-left font-sans">
+            <div className="lg:col-span-5 bg-[#030c07]/95 border border-white/20 rounded-[26px] sm:rounded-[32px] p-4 sm:p-6 lg:p-7 backdrop-blur-3xl shadow-2xl relative overflow-hidden space-y-4 sm:space-y-5 text-left font-sans">
 
               {/* Interactive Step Drawer Overlay */}
               <AnimatePresence>
@@ -752,7 +768,7 @@ export function ServiceCentresPage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 15 }}
                     style={{ backgroundColor: "#040e08" }}
-                    className="absolute inset-0 z-40 p-6 sm:p-7 flex flex-col justify-between rounded-[32px] bg-[#040e08] shadow-2xl overflow-hidden"
+                    className="fixed inset-0 z-[100] flex flex-col justify-between p-4 pt-12 pb-6 sm:p-6 lg:p-7 bg-[#040e08] lg:absolute lg:inset-0 lg:rounded-[32px] shadow-2xl overflow-hidden overscroll-contain"
                   >
                     {/* CITY STEP */}
                     {inlineStep === "city" && (
@@ -765,9 +781,9 @@ export function ServiceCentresPage() {
                           <button
                             type="button"
                             onClick={() => setInlineBookingOpen(false)}
-                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition-all cursor-pointer shrink-0 shadow-md"
                           >
-                            <X className="w-3.5 h-3.5" />
+                            <X className="w-4 h-4" />
                           </button>
                         </div>
 
@@ -796,7 +812,7 @@ export function ServiceCentresPage() {
                           </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                        <div className="flex-1 overflow-y-auto pr-0.5 min-h-0 overscroll-contain touch-pan-y scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                           <div className="grid grid-cols-2 gap-2.5">
                             {filteredCityCards.map((c) => {
                               const isSelected = selectedCity.toLowerCase() === c.name.toLowerCase();
@@ -845,9 +861,9 @@ export function ServiceCentresPage() {
                           <button
                             type="button"
                             onClick={() => setInlineBookingOpen(false)}
-                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition-all cursor-pointer shrink-0 shadow-md"
                           >
-                            <X className="w-3.5 h-3.5" />
+                            <X className="w-4 h-4" />
                           </button>
                         </div>
 
@@ -895,7 +911,7 @@ export function ServiceCentresPage() {
                           />
                         </div>
 
-                        <div className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                        <div className="flex-1 overflow-y-auto pr-0.5 min-h-0 overscroll-contain touch-pan-y scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                           <div className="grid grid-cols-3 gap-2.5">
                             {filteredInlineBrands.map((b) => (
                               <button
@@ -938,19 +954,20 @@ export function ServiceCentresPage() {
                           <button
                             type="button"
                             onClick={() => setInlineBookingOpen(false)}
-                            className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
+                            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition-all cursor-pointer shrink-0 shadow-md"
                           >
-                            <X className="w-3.5 h-3.5" />
+                            <X className="w-4 h-4" />
                           </button>
                         </div>
 
                         <div className="mb-4 shrink-0 text-left">
-                          <span className="text-[9px] uppercase font-mono font-bold text-[#00D084] block mb-0.5">{inlineSelectedBrand}</span>
+                          <span className="text-[10px] uppercase font-mono font-bold text-[#00D084] block mb-0.5">{inlineSelectedBrand}</span>
                           <h4 className="text-lg sm:text-xl font-black text-white tracking-tight leading-none">Select Model</h4>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto pr-0.5 min-h-0 scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                          <div className="grid grid-cols-2 gap-2.5">
+                        {/* Models Grid: full width on mobile for crystal clear text */}
+                        <div ref={inlineScrollWrapperRef} className="flex-1 overflow-y-auto pr-0.5 min-h-0 overscroll-contain touch-pan-y scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             {inlineAvailableModels.map((m) => {
                               const info = getModelDisplayInfo(inlineSelectedBrand, m);
                               return (
@@ -962,24 +979,31 @@ export function ServiceCentresPage() {
                                     setSelectedModel(m);
                                     setInlineBookingOpen(false);
                                   }}
-                                  className="p-3 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all text-left flex items-center gap-2.5 cursor-pointer group justify-between"
+                                  className="p-3 sm:p-3.5 rounded-2xl border border-white/10 hover:border-[#00D084]/50 bg-[#090f0c] hover:bg-white/5 transition-all text-left flex items-center gap-3 cursor-pointer group justify-between"
                                 >
-                                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                    <div className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center bg-black/40 overflow-hidden shrink-0 p-1 group-hover:scale-105 transition-transform">
+                                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                                    <div className="w-12 h-12 rounded-2xl border border-white/15 flex items-center justify-center bg-black/60 overflow-hidden shrink-0 p-1 group-hover:scale-105 transition-transform">
                                       {info.imageUrl ? (
-                                        <img src={info.imageUrl} alt={m} className="w-full h-full object-contain rounded-full" />
+                                        <img src={info.imageUrl} alt={m} className="w-full h-full object-contain" />
                                       ) : (
-                                        <div className="w-full h-full flex items-center justify-center font-extrabold text-[#00D084] text-[10px]">EV</div>
+                                        <div className="w-full h-full flex items-center justify-center font-extrabold text-[#00D084] text-xs">EV</div>
                                       )}
                                     </div>
                                     <div className="min-w-0 flex-1">
-                                      <p className="text-xs sm:text-sm font-black text-white truncate group-hover:text-[#00D084] transition-colors">{m}</p>
-                                      <p className="text-[9px] text-white/50 leading-tight mt-0.5 break-words">
-                                        {inlineSelectedBrand} Electric {info.battery ? `• ${info.battery}` : ""}
-                                      </p>
+                                      <p className="text-sm font-black text-white group-hover:text-[#00D084] transition-colors leading-tight truncate">{m}</p>
+                                      <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                                        <span className="text-[11px] text-white/70 font-medium">{inlineSelectedBrand} Electric</span>
+                                        {info.battery && (
+                                          <span className="px-1.5 py-0.5 rounded-md bg-[#00D084]/15 border border-[#00D084]/30 text-[#00D084] font-mono text-[10px] font-bold">
+                                            ⚡ {info.battery}
+                                          </span>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
-                                  <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-[#00D084] transition-all shrink-0 ml-1.5" />
+                                  <div className="w-7 h-7 rounded-full bg-white/5 group-hover:bg-[#00D084]/20 border border-white/10 group-hover:border-[#00D084]/40 flex items-center justify-center shrink-0 transition-colors ml-2">
+                                    <ArrowRight className="w-3.5 h-3.5 text-white/50 group-hover:text-[#00D084] transition-all" />
+                                  </div>
                                 </button>
                               );
                             })}
@@ -1128,11 +1152,11 @@ export function ServiceCentresPage() {
       </div>
 
       {/* =========================================================================
-          2. SLIDING WINDOW OVERLAY LAYER (SLIDES UP DIRECTLY OVER THE FIXED HERO)
+          2. SLIDING WINDOW OVERLAY LAYER (SLIDES UP DIRECTLY OVER THE FIXED HERO ON DESKTOP)
          ========================================================================= */}
       <div
         ref={contentOverlayRef}
-        className="relative z-10 bg-[#020403] min-h-screen mt-[100vh] pt-6 rounded-t-[44px] border-t-2 border-white/15 shadow-[0_-20px_60px_rgba(0,0,0,0.95)]"
+        className="relative z-10 bg-[#020403] min-h-screen mt-0 lg:mt-[100vh] pt-6 rounded-t-[32px] sm:rounded-t-[44px] border-t-2 border-white/15 shadow-[0_-20px_60px_rgba(0,0,0,0.95)]"
       >
         {/* Top Handle Pill Bar */}
         <div className="w-16 h-1.5 bg-white/25 rounded-full mx-auto mb-6" />

@@ -2319,14 +2319,14 @@ function HowItWorksHorizontal() {
   ];
 
   return (
-    <section ref={triggerRef} className="relative w-full bg-black overflow-hidden lg:h-screen flex items-center select-none border-b border-white/5">
+    <section ref={triggerRef} className="relative w-full bg-black overflow-hidden lg:h-screen flex flex-col lg:flex-row items-center select-none border-b border-white/5 py-12 lg:py-0">
       {/* 1. Stationary Title (Centered on desktop, z-index 10) */}
-      <div className="how-it-works-title-layer w-full lg:absolute lg:inset-0 flex flex-col items-center justify-center px-6 lg:z-10 text-center lg:pointer-events-none mb-12 lg:mb-0">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/30 bg-[#0d1410] px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#00D084] w-fit mb-6">
+      <div className="how-it-works-title-layer w-full lg:absolute lg:inset-0 flex flex-col items-center justify-center px-4 sm:px-6 lg:z-10 text-center lg:pointer-events-none mb-8 sm:mb-10 lg:mb-0">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/30 bg-[#0d1410] px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#00D084] w-fit mb-4">
           <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-ping" />
           Simple 4-Step Process
         </div>
-        <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-3 sm:mb-6 leading-tight">
           How It <span className="text-[#00D084]">Works</span>
         </h2>
         <p className="text-muted-foreground text-sm md:text-base font-light leading-relaxed max-w-md mx-auto">
@@ -2377,29 +2377,26 @@ function HowItWorksHorizontal() {
         </div>
       </div>
 
-      {/* Mobile / Tablet Horizontal Swipe Track (< 1024px) */}
-      <div className="lg:hidden w-full px-4 py-12 z-20">
-        <div className="flex items-center justify-between px-2 mb-4">
+      {/* Mobile / Tablet Serial Steps (< 1024px: How It Works on top, 1, 2, 3, 4 stacked underneath) */}
+      <div className="lg:hidden w-full px-4 sm:px-6 z-20 max-w-xl mx-auto">
+        <div className="flex items-center justify-between px-1 mb-4">
           <span className="text-[11px] font-mono font-bold text-[#00D084] uppercase tracking-widest flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#00D084] animate-ping" />
-            SWIPE TO EXPLORE 4-STEP PROCESS
+            4-STEP SERVICE PROCESS
           </span>
           <span className="text-[11px] font-mono text-white/50 font-bold bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-            1 - 4 STEPS
+            STEPS 01 – 04
           </span>
         </div>
 
-        <div
-          className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
+        <div className="flex flex-col gap-3.5">
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className="w-[84vw] sm:w-[320px] shrink-0 snap-center bg-gradient-to-b from-[#0a120e] via-[#050907] to-black border border-[#00D084]/30 rounded-[28px] p-6 flex flex-col justify-between min-h-[250px] relative shadow-[0_15px_35px_rgba(0,0,0,0.6)]"
+              className="w-full bg-gradient-to-b from-[#0a120e] via-[#050907] to-black border border-[#00D084]/30 rounded-[22px] sm:rounded-[26px] p-5 sm:p-6 flex flex-col justify-between relative shadow-[0_12px_30px_rgba(0,0,0,0.5)]"
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] text-base font-bold font-mono shadow-[0_0_15px_rgba(0,208,132,0.2)]">
+              <div className="flex items-center justify-between mb-3">
+                <div className="w-11 h-11 rounded-2xl bg-[#00D084]/15 border border-[#00D084]/30 flex items-center justify-center text-[#00D084] text-base font-bold font-mono shadow-[0_0_15px_rgba(0,208,132,0.2)]">
                   {step.num}
                 </div>
                 <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-widest font-bold bg-[#00D084]/10 px-2.5 py-1 rounded-full border border-[#00D084]/20">
@@ -2408,10 +2405,10 @@ function HowItWorksHorizontal() {
               </div>
 
               <div>
-                <h3 className="text-white font-extrabold text-xl tracking-tight mb-2">
+                <h3 className="text-white font-extrabold text-lg sm:text-xl tracking-tight mb-1.5">
                   {step.title}
                 </h3>
-                <p className="text-muted-foreground text-xs leading-relaxed font-light">
+                <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed font-light">
                   {step.desc}
                 </p>
               </div>
@@ -3142,7 +3139,7 @@ function CinematicEcosystem() {
   ];
 
   return (
-    <section ref={containerRef} className="relative py-28 px-6 lg:px-12 bg-[#020403] overflow-hidden selection:bg-[#00D084] selection:text-[#020403]">
+    <section ref={containerRef} className="relative py-16 sm:py-24 lg:py-28 px-3 sm:px-6 lg:px-12 bg-[#020403] overflow-hidden selection:bg-[#00D084] selection:text-[#020403]">
       {/* Background glow effects */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-[#00D084]/10 via-[#00D084]/5 to-transparent blur-[160px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#00D084]/5 blur-[140px] rounded-full pointer-events-none" />
@@ -3153,7 +3150,7 @@ function CinematicEcosystem() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center max-w-4xl mx-auto mb-16"
+          className="text-center max-w-4xl mx-auto mb-8 sm:mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 mb-6">
             <Sparkles className="w-4 h-4 text-[#00D084]" />
@@ -3161,10 +3158,10 @@ function CinematicEcosystem() {
               NEXT-GEN EV ARCHITECTURE
             </span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold font-serif text-white tracking-tight leading-[1.1]">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold font-serif text-white tracking-tight leading-[1.1]">
             Connected Intelligence Platform for <span className="text-[#00D084]">Modern EV Mobility</span>
           </h2>
-          <p className="text-lg md:text-xl text-white/60 mt-6 font-light leading-relaxed max-w-3xl mx-auto">
+          <p className="text-sm sm:text-lg md:text-xl text-white/60 mt-4 sm:mt-6 font-light leading-relaxed max-w-3xl mx-auto">
             Beyond standard repairs: Our proprietary technology stack unifies real-time battery diagnostics, direct OEM logistics, and automated workshop operations into a single intelligent grid.
           </p>
         </motion.div>
@@ -3174,7 +3171,7 @@ function CinematicEcosystem() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12"
         >
           {capabilities.map((item, idx) => {
             const Icon = item.icon;
@@ -3183,7 +3180,7 @@ function CinematicEcosystem() {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(idx)}
-                className={`relative px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2.5 cursor-pointer ${isActive
+                className={`relative px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer ${isActive
                   ? "text-[#020403] font-bold shadow-[0_0_25px_rgba(0,208,132,0.4)]"
                   : "text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10"
                   }`}
@@ -3212,59 +3209,63 @@ function CinematicEcosystem() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -25, scale: 0.98 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-[32px] bg-[#070c09]/80 border border-white/10 p-8 lg:p-12 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.7)] relative overflow-hidden"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch rounded-[24px] sm:rounded-[32px] bg-[#070c09]/80 border border-white/10 p-4 sm:p-6 md:p-8 lg:p-12 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.7)] relative overflow-hidden"
           >
             {/* Ambient Background glow */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D084]/10 blur-[100px] rounded-full pointer-events-none" />
 
             {/* Left Content Area */}
-            <div className="lg:col-span-7 flex flex-col justify-between space-y-8 relative z-10">
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-6 sm:space-y-8 relative z-10">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/10 border border-[#00D084]/30 mb-3 sm:mb-4">
                   <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
-                  <span className="text-[11px] font-mono font-bold tracking-wider text-[#00D084] uppercase">
+                  <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider text-[#00D084] uppercase">
                     {capabilities[activeTab].badge}
                   </span>
                 </div>
-                <h3 className="text-3xl md:text-4xl font-serif text-white font-bold tracking-tight mb-4">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif text-white font-bold tracking-tight mb-3 sm:mb-4">
                   {capabilities[activeTab].title}
                 </h3>
-                <p className="text-white/70 text-base md:text-lg leading-relaxed font-light mb-8">
+                <p className="text-white/70 text-sm sm:text-base md:text-lg leading-relaxed font-light mb-6 sm:mb-8">
                   {capabilities[activeTab].desc}
                 </p>
 
                 {/* Key Features Bullet List */}
-                <div className="space-y-3.5">
+                <div className="space-y-2.5 sm:space-y-3.5">
                   {capabilities[activeTab].features.map((feat, fIdx) => (
                     <motion.div
                       key={fIdx}
                       initial={{ opacity: 0, x: -15 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 * fIdx + 0.2 }}
-                      className="flex items-start gap-3"
+                      className="flex items-start gap-2.5 sm:gap-3"
                     >
                       <div className="w-5 h-5 rounded-full bg-[#00D084]/20 border border-[#00D084]/50 flex items-center justify-center shrink-0 mt-0.5">
                         <Check className="w-3 h-3 text-[#00D084]" />
                       </div>
-                      <span className="text-sm md:text-base text-white/90 font-medium">{feat}</span>
+                      <span className="text-xs sm:text-sm md:text-base text-white/90 font-medium leading-snug">{feat}</span>
                     </motion.div>
                   ))}
                 </div>
               </div>
 
               {/* Metrics Grid */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 pt-4 sm:pt-6 border-t border-white/10">
                 {capabilities[activeTab].metrics.map((m, mIdx) => (
-                  <div key={mIdx} className="bg-white/[0.03] border border-white/5 rounded-2xl p-4 flex flex-col">
-                    <span className="text-2xl md:text-3xl font-bold font-mono text-[#00D084]">{m.value}</span>
-                    <span className="text-xs text-white/50 font-sans mt-1">{m.label}</span>
+                  <div key={mIdx} className="min-w-0 bg-white/[0.03] border border-white/5 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 md:p-4 flex flex-col justify-center">
+                    <span className="text-base sm:text-xl md:text-3xl font-bold font-mono text-[#00D084] tracking-tight truncate">
+                      {m.value}
+                    </span>
+                    <span className="text-[10px] sm:text-xs text-white/50 font-sans mt-0.5 sm:mt-1 leading-tight line-clamp-2">
+                      {m.label}
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Right Interactive Animated Display Panel */}
-            <div className="lg:col-span-5 relative z-10 min-h-[320px] rounded-2xl bg-black/60 border border-white/10 p-6 flex flex-col justify-between overflow-hidden">
+            <div className="lg:col-span-5 relative z-10 min-h-[260px] sm:min-h-[320px] rounded-2xl bg-black/60 border border-white/10 p-4 sm:p-6 flex flex-col justify-between overflow-hidden">
               <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80" />
@@ -5898,37 +5899,37 @@ function ResourcesJourney() {
                 alt={res.title}
                 className="w-full h-full object-cover object-center opacity-90 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/40 pointer-events-none" />
+              <div className="resource-bg-overlay-top absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+              <div className="resource-bg-overlay-right absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/40 pointer-events-none" />
             </div>
 
-            <div className={`resource-content relative z-10 w-full max-w-[1400px] flex flex-col md:flex-row gap-12 lg:gap-24 items-center ${i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+            <div className={`resource-content relative z-10 w-full max-w-[1400px] flex flex-col md:flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-24 items-center ${i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
 
               {/* Text Content */}
-              <div className="md:w-1/2 flex flex-col">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/20 bg-[#00D084]/5 px-4 py-1.5 mb-8 w-max">
-                  <span className="text-[11px] uppercase tracking-widest text-[#00D084] font-medium">
+              <div className="resource-text-content md:w-1/2 flex flex-col w-full">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#00D084]/40 bg-black/40 dark:bg-[#00D084]/15 backdrop-blur-md px-3.5 py-1 mb-3 sm:mb-4 md:mb-6 w-max shadow-sm">
+                  <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#00D084] font-bold font-mono">
                     {res.eyebrow}
                   </span>
                 </div>
-                <h2 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-[1.1] tracking-tight text-balance">
+                <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif text-slate-950 dark:text-white font-bold mb-2 sm:mb-3 md:mb-6 leading-[1.15] tracking-tight text-balance">
                   {res.title}
                 </h2>
-                <p className="text-[#a1a1aa] text-lg md:text-xl leading-relaxed max-w-md">
+                <p className="text-slate-800 dark:text-zinc-300 text-xs sm:text-sm md:text-lg leading-relaxed max-w-md font-medium">
                   {res.desc}
                 </p>
               </div>
 
               {/* Card Content */}
               <div className="md:w-1/2 w-full">
-                <div className="resource-journey-card group relative overflow-hidden rounded-[32px] border border-white/15 p-8 md:p-12 transition-all shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+                <div className="resource-journey-card group relative overflow-hidden rounded-[24px] sm:rounded-[32px] border border-white/15 p-5 sm:p-8 md:p-12 transition-all shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#00D084]/5 via-white/[0.04] to-transparent pointer-events-none" />
 
                   <div className="relative z-10 flex flex-col h-full min-h-[280px]">
-                    <h3 className="text-2xl md:text-3xl font-semibold text-white mb-4 leading-snug">
+                    <h3 className="text-2xl md:text-3xl font-semibold text-slate-950 dark:text-white mb-4 leading-snug">
                       {res.cardTitle}
                     </h3>
-                    <p className="text-[#a1a1aa] text-base leading-relaxed mb-10">
+                    <p className="text-slate-700 dark:text-[#a1a1aa] text-base leading-relaxed mb-10">
                       {res.cardDesc}
                     </p>
 
