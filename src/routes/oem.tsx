@@ -111,49 +111,54 @@ export function OEMSolutionsPage() {
         { opacity: 1, scale: 1, duration: 0.9, delay: 0.4, ease: "power3.out" }
       );
 
-      gsap.to(".services-bg-img", {
-        scale: 1.15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: contentOverlayRef.current,
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-        },
-      });
+      const mm = gsap.matchMedia();
 
-      if (heroTextRef.current && contentOverlayRef.current) {
-        gsap.to(heroTextRef.current, {
-          opacity: 0,
-          scale: 0.9,
-          y: -50,
-          ease: "power1.out",
+      // Desktop only: hero parallax & rising card overlay (mobile uses smooth natural page flow)
+      mm.add("(min-width: 1024px)", () => {
+        gsap.to(".services-bg-img", {
+          scale: 1.15,
+          ease: "none",
           scrollTrigger: {
             trigger: contentOverlayRef.current,
-            start: "top 95%",
-            end: "top 35%",
-            scrub: 0.6,
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
           },
         });
-      }
 
-      if (contentUpRef.current) {
-        gsap.fromTo(
-          contentUpRef.current,
-          { y: 100, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            ease: "power2.out",
+        if (heroTextRef.current && contentOverlayRef.current) {
+          gsap.to(heroTextRef.current, {
+            opacity: 0,
+            scale: 0.9,
+            y: -50,
+            ease: "power1.out",
             scrollTrigger: {
-              trigger: contentUpRef.current,
+              trigger: contentOverlayRef.current,
               start: "top 95%",
-              end: "top 45%",
+              end: "top 35%",
               scrub: 0.6,
             },
-          }
-        );
-      }
+          });
+        }
+
+        if (contentUpRef.current) {
+          gsap.fromTo(
+            contentUpRef.current,
+            { y: 100, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: contentUpRef.current,
+                start: "top 95%",
+                end: "top 45%",
+                scrub: 0.6,
+              },
+            }
+          );
+        }
+      });
 
       // Scroll animations are powered smoothly via Framer Motion whileInView across all sections
     });
@@ -253,9 +258,9 @@ export function OEMSolutionsPage() {
       <div className="relative min-h-screen">
 
         {/* =========================================================================
-            1. FIXED STUCK HERO SECTION (STAYS FIXED IN BACKGROUND Z-0)
+            1. HERO SECTION (NATURAL PAGE FLOW ON MOBILE, FIXED IN BACKGROUND ON DESKTOP)
            ========================================================================= */}
-        <div className="page-hero fixed top-20 left-0 right-0 h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center">
+        <div className="page-hero relative lg:fixed lg:top-20 lg:left-0 lg:right-0 lg:h-[calc(100vh-80px)] w-full overflow-hidden bg-black z-0 flex items-center justify-center pt-28 sm:pt-32 lg:pt-0 pb-12 sm:pb-16 lg:pb-0">
           {/* Background image with parallax zoom */}
           <div
             className="services-bg-img absolute inset-0 bg-cover bg-center opacity-85 pointer-events-none scale-105 transition-all duration-700"
@@ -268,10 +273,10 @@ export function OEMSolutionsPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
 
-          {/* Hero Content Container (Text & Form) */}
+          {/* Hero Content Container (Non-scrollable, responsive flow on mobile) */}
           <div
             ref={heroTextRef}
-            className="absolute inset-0 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center px-6 md:px-12 pt-4 sm:pt-6 lg:pt-0 z-10 pointer-events-auto transition-all overflow-y-auto lg:overflow-visible"
+            className="relative lg:absolute lg:inset-0 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center px-4 sm:px-6 md:px-12 z-10 pointer-events-auto transition-all"
           >
             {/* Left Column: Title & Text */}
             <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-left">
@@ -307,7 +312,7 @@ export function OEMSolutionsPage() {
             {/* Right Column: Premium Glass Form Card */}
             <div
               id="enquiry"
-              className="hero-form lg:col-span-5 bg-[#030604]/95 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 relative border border-white/20 shadow-2xl overflow-hidden text-left min-h-[490px] flex flex-col justify-between"
+              className="hero-form lg:col-span-5 bg-[#030604]/95 backdrop-blur-2xl rounded-3xl p-4 sm:p-6 relative border border-white/20 shadow-2xl overflow-hidden text-left min-h-0 lg:min-h-[490px] flex flex-col justify-between w-full max-w-md mx-auto lg:max-w-none"
             >
               <AnimatePresence mode="wait">
                 {formStep === "main" ? (
@@ -319,16 +324,16 @@ export function OEMSolutionsPage() {
                     transition={{ duration: 0.22, ease: "easeOut" }}
                     className="relative z-10 w-full"
                   >
-                    <div className="mb-3 text-left">
-                      <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-md">
+                    <div className="mb-2 sm:mb-3 text-left">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight drop-shadow-md">
                         Plan Your After-Sales Network
                       </h3>
-                      <p className="text-xs text-white/70 font-medium mt-1">
+                      <p className="text-[11px] sm:text-xs text-white/70 font-medium mt-0.5 sm:mt-1">
                         Our OEM team replies within one working day.
                       </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-2.5 text-left">
+                    <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-2.5 text-left">
                       {/* Company / Brand Name */}
                       <div>
                         <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
@@ -340,14 +345,14 @@ export function OEMSolutionsPage() {
                           placeholder="e.g. EV Manufacturer, Dealer Group"
                           value={form.company}
                           onChange={(e) => setForm({ ...form, company: e.target.value })}
-                          className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                          className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3 py-1.5 sm:py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
                         />
                       </div>
 
-                      {/* Your Name & Designation */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {/* Your Name & Mobile */}
+                      <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
                         <div>
-                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1 truncate">
                             YOUR NAME *
                           </label>
                           <input
@@ -356,39 +361,11 @@ export function OEMSolutionsPage() {
                             placeholder="Full name"
                             value={form.name}
                             onChange={(e) => setForm({ ...form, name: e.target.value })}
-                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3 py-1.5 sm:py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
-                            DESIGNATION
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="e.g. VP After-Sales, Head Service"
-                            value={form.designation}
-                            onChange={(e) => setForm({ ...form, designation: e.target.value })}
-                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Work Email & Mobile */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div>
-                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
-                            WORK EMAIL
-                          </label>
-                          <input
-                            type="email"
-                            placeholder="name@oem.com"
-                            value={form.email}
-                            onChange={(e) => setForm({ ...form, email: e.target.value })}
-                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1 truncate">
                             MOBILE *
                           </label>
                           <input
@@ -397,7 +374,35 @@ export function OEMSolutionsPage() {
                             placeholder="+91 95823 90001"
                             value={form.mobile}
                             onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3 py-1.5 sm:py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Designation & Work Email */}
+                      <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
+                        <div>
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1 truncate">
+                            DESIGNATION
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. VP Service"
+                            value={form.designation}
+                            onChange={(e) => setForm({ ...form, designation: e.target.value })}
+                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3 py-1.5 sm:py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1 truncate">
+                            WORK EMAIL
+                          </label>
+                          <input
+                            type="email"
+                            placeholder="name@oem.com"
+                            value={form.email}
+                            onChange={(e) => setForm({ ...form, email: e.target.value })}
+                            className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3 py-1.5 sm:py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
                           />
                         </div>
                       </div>
@@ -407,11 +412,11 @@ export function OEMSolutionsPage() {
                         <label className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-white/80 block mb-1">
                           VEHICLE CATEGORY
                         </label>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                           {[
-                            { id: "Electric 2W", label: "Electric 2W" },
-                            { id: "Electric 3W (L3/L5)", label: "Electric 3W (L3/L5)" },
-                            { id: "Both", label: "Both" },
+                            { id: "Electric 2W", shortLabel: "2-Wheeler", label: "Electric 2W" },
+                            { id: "Electric 3W (L3/L5)", shortLabel: "3-Wheeler", label: "3W (L3/L5)", fullLabel: "Electric 3W (L3/L5)" },
+                            { id: "Both", shortLabel: "Both", label: "Both (2W+3W)" },
                           ].map((pill) => {
                             const isSelected = form.vehicleCategory === pill.id;
                             return (
@@ -419,13 +424,14 @@ export function OEMSolutionsPage() {
                                 key={pill.id}
                                 type="button"
                                 onClick={() => setForm({ ...form, vehicleCategory: pill.id })}
-                                className={`py-2 px-2.5 rounded-full text-xs font-bold transition-all text-center cursor-pointer border ${
+                                className={`py-1.5 sm:py-2 px-1 sm:px-2 rounded-full text-[11px] sm:text-xs font-bold transition-all text-center cursor-pointer border truncate min-w-0 ${
                                   isSelected
                                     ? "bg-[#00D084] text-[#020403] border-[#00D084] font-black shadow-[0_0_15px_rgba(0,208,132,0.35)]"
                                     : "bg-[#0d1410] text-white/80 border-white/15 hover:border-white/35 hover:bg-[#131d17]"
                                 }`}
                               >
-                                {pill.label}
+                                <span className="sm:hidden">{pill.shortLabel || pill.label}</span>
+                                <span className="hidden sm:inline">{pill.fullLabel || pill.label}</span>
                               </button>
                             );
                           })}
@@ -448,11 +454,11 @@ export function OEMSolutionsPage() {
                         <button
                           type="button"
                           onClick={() => setFormStep("scopes")}
-                          className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 border border-white/15 hover:border-[#00D084]/60 rounded-xl px-3.5 py-2.5 text-xs text-left transition-all cursor-pointer flex items-center justify-between group"
+                          className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 border border-white/15 hover:border-[#00D084]/60 rounded-xl px-3 py-2 sm:py-2.5 text-xs text-left transition-all cursor-pointer flex items-center justify-between group"
                         >
                           <div className="flex items-center gap-1.5 overflow-hidden pr-2">
                             {form.partnershipType.length === 0 ? (
-                              <span className="text-white/40">
+                              <span className="text-white/40 text-xs">
                                 Click to choose partnership scopes...
                               </span>
                             ) : (
@@ -485,7 +491,7 @@ export function OEMSolutionsPage() {
                           placeholder="e.g. Pune, Mumbai, Bangalore, Delhi NCR"
                           value={form.targetCities}
                           onChange={(e) => setForm({ ...form, targetCities: e.target.value })}
-                          className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
+                          className="w-full bg-[#0a0f0d]/90 hover:bg-black/90 focus:bg-black rounded-xl px-3 py-1.5 sm:py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00D084] transition-all placeholder:text-white/40 border border-white/15"
                         />
                       </div>
 
@@ -496,7 +502,7 @@ export function OEMSolutionsPage() {
                             type="checkbox"
                             checked={form.consent}
                             onChange={(e) => setForm({ ...form, consent: e.target.checked })}
-                            className="mt-0.5 accent-[#00D084] rounded"
+                            className="mt-0.5 accent-[#00D084] rounded shrink-0"
                           />
                           <span>
                             I agree to the processing of enterprise details under the DPDP Act for evaluating service network partnerships.
@@ -507,7 +513,7 @@ export function OEMSolutionsPage() {
                       {/* Submit Button */}
                       <button
                         type="submit"
-                        className="w-full py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-1 shadow-[0_0_25px_rgba(0,208,132,0.4)]"
+                        className="w-full py-3 sm:py-3.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider sm:tracking-widest hover:bg-[#00e08f] hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-1 shadow-[0_0_25px_rgba(0,208,132,0.4)]"
                       >
                         <span>REQUEST PARTNERSHIP CALL</span>
                       </button>
@@ -599,11 +605,11 @@ export function OEMSolutionsPage() {
         </div>
 
         {/* =========================================================================
-            2. CARDS OVERLAY CONTAINER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO)
+            2. CARDS OVERLAY CONTAINER (SLIDES UP DIRECTLY ON TOP OF THE FIXED HERO ON DESKTOP)
            ========================================================================= */}
         <div
           ref={contentOverlayRef}
-          className="relative z-10 min-h-screen mt-[calc(100vh-80px)] pt-6 rounded-t-[40px] border-t border-white/10 shadow-2xl bg-[#020403]"
+          className="relative z-10 min-h-screen mt-0 lg:mt-[calc(100vh-80px)] pt-6 rounded-t-[32px] sm:rounded-t-[40px] border-t border-white/10 shadow-2xl bg-[#020403]"
         >
           <div ref={contentUpRef}>
             {/* S0: Breadcrumb */}
