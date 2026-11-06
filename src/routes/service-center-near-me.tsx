@@ -1507,7 +1507,7 @@ function FindServicesPage() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={() => { setActiveServiceCategory(cat); setCarouselIdx(0); }}
-                        className={`px-4 py-1.5 rounded-full text-[11px] font-mono font-bold transition-all cursor-pointer border ${activeServiceCategory === cat ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-[0_0_20px_rgba(0,208,132,0.4)]" : "bg-white/5 text-white/70 border-white/15 hover:border-[#00D084]/50 hover:text-white"}`}
+                        className={`px-4 py-2 rounded-full text-xs font-sans font-bold tracking-wide transition-all cursor-pointer border ${activeServiceCategory === cat ? "bg-[#00D084] text-[#020403] border-[#00D084] shadow-[0_0_20px_rgba(0,208,132,0.4)]" : "bg-white/5 text-white/80 border-white/15 hover:border-[#00D084]/50 hover:text-white"}`}
                       >
                         {cat}
                       </motion.button>
@@ -1515,28 +1515,73 @@ function FindServicesPage() {
                   </motion.div>
                 </motion.div>
 
-                {/* Nav arrows + action buttons */}
-                <div className="flex flex-wrap items-center justify-center gap-3">
-                  <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                {/* Nav arrows + action buttons (Responsive & balanced) */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
+                  {/* Left sliding arrow (Desktop) */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => setCarouselIdx(p => (p - 1 + POPULAR_SERVICES.length) % POPULAR_SERVICES.length)}
-                    className="w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:border-[#00D084] hover:text-[#00D084] transition-all cursor-pointer">
+                    aria-label="Previous service"
+                    className="hidden sm:flex w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white items-center justify-center hover:bg-white/20 hover:border-[#00D084] hover:text-[#00D084] transition-all cursor-pointer shadow-md shrink-0"
+                  >
                     <ArrowRight className="w-4 h-4 rotate-180" />
                   </motion.button>
-                  <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-                    onClick={() => { const s = POPULAR_SERVICES[carouselIdx % POPULAR_SERVICES.length]; setBookingService({ title: s.title, price: s.price }); setBookingModalOpen(true); }}
-                    className="px-6 py-2.5 rounded-full bg-white text-black font-extrabold text-xs sm:text-sm tracking-wide hover:bg-[#00D084] transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.25)] hover:shadow-[0_0_25px_rgba(0,208,132,0.5)] cursor-pointer">
-                    Book Service Now
-                  </motion.button>
-                  <motion.button whileHover={{ scale: 1.04 }}
-                    onClick={() => (window.location.href = "/services")}
-                    className="px-6 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-bold text-xs sm:text-sm tracking-wide hover:bg-white/20 transition-all duration-300 backdrop-blur-md cursor-pointer">
-                    Explore Packages
-                  </motion.button>
-                  <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+
+                  {/* Main CTA buttons (Balanced side-by-side on all screens) */}
+                  <div className="flex items-center justify-center gap-2.5 w-full sm:w-auto max-w-sm sm:max-w-none px-2">
+                    <motion.button
+                      whileHover={{ scale: 1.04 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => { const s = POPULAR_SERVICES[carouselIdx % POPULAR_SERVICES.length]; setBookingService({ title: s.title, price: s.price }); setBookingModalOpen(true); }}
+                      className="flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full bg-[#00D084] text-[#020403] font-black text-xs sm:text-sm tracking-wide hover:bg-[#00e08f] transition-all duration-300 shadow-[0_0_20px_rgba(0,208,132,0.35)] cursor-pointer whitespace-nowrap text-center"
+                    >
+                      Book Service Now
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.04 }}
+                      onClick={() => (window.location.href = "/services")}
+                      className="flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-bold text-xs sm:text-sm tracking-wide hover:bg-white/20 transition-all duration-300 backdrop-blur-md cursor-pointer whitespace-nowrap text-center"
+                    >
+                      Explore Packages
+                    </motion.button>
+                  </div>
+
+                  {/* Right sliding arrow (Desktop) */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => setCarouselIdx(p => (p + 1) % POPULAR_SERVICES.length)}
-                    className="w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:border-[#00D084] hover:text-[#00D084] transition-all cursor-pointer">
+                    aria-label="Next service"
+                    className="hidden sm:flex w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white items-center justify-center hover:bg-white/20 hover:border-[#00D084] hover:text-[#00D084] transition-all cursor-pointer shadow-md shrink-0"
+                  >
                     <ArrowRight className="w-4 h-4" />
                   </motion.button>
+
+                  {/* Mobile sliding arrows: centered side-by-side below action buttons */}
+                  <div className="flex sm:hidden items-center justify-center gap-3 pt-1">
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setCarouselIdx(p => (p - 1 + POPULAR_SERVICES.length) % POPULAR_SERVICES.length)}
+                      aria-label="Previous service"
+                      className="w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:border-[#00D084] hover:text-[#00D084] transition-all cursor-pointer shadow-md"
+                    >
+                      <ArrowRight className="w-4 h-4 rotate-180" />
+                    </motion.button>
+                    <span className="text-[11px] font-mono font-bold text-white/50 px-2">
+                      {((carouselIdx % POPULAR_SERVICES.length) + 1).toString().padStart(2, "0")} / {POPULAR_SERVICES.length.toString().padStart(2, "0")}
+                    </span>
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setCarouselIdx(p => (p + 1) % POPULAR_SERVICES.length)}
+                      aria-label="Next service"
+                      className="w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:border-[#00D084] hover:text-[#00D084] transition-all cursor-pointer shadow-md"
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.button>
+                  </div>
                 </div>
 
                 {/* 3D Wave Cards */}
