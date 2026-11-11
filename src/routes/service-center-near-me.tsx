@@ -846,7 +846,7 @@ function FindServicesPage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 15 }}
                         style={{ backgroundColor: "#040e08" }}
-                        className="fixed inset-0 z-[100] flex flex-col justify-between p-4 pt-12 pb-6 sm:p-6 lg:p-7 bg-[#040e08] lg:absolute lg:inset-0 lg:rounded-[32px] shadow-2xl overflow-hidden overscroll-contain"
+                        className="fixed inset-0 z-[100] flex flex-col justify-between p-4 pt-12 pb-6 sm:p-6 lg:p-7 bg-[#040e08] lg:absolute lg:inset-0 lg:rounded-[32px] shadow-2xl overflow-hidden overscroll-contain keep-white dark-card-locked"
                       >
                         {/* CITY STEP */}
                         {inlineStep === "city" && (
@@ -2128,7 +2128,7 @@ function FindServicesPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.2 }}
-              className="relative z-10 w-full max-w-2xl max-h-[85vh] bg-[#07130b] border border-[#00D084]/40 rounded-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] flex flex-col overflow-hidden text-white font-sans"
+              className="relative z-10 w-full max-w-2xl max-h-[85vh] bg-[#07130b] border border-[#00D084]/40 rounded-3xl shadow-[0_0_60px_rgba(0,208,132,0.25)] flex flex-col overflow-hidden text-white font-sans keep-white dark-card-locked"
             >
               {/* Header */}
               <div className="p-5 md:p-6 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-[#0a1e12] to-[#040e08]">

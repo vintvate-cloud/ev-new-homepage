@@ -64,10 +64,16 @@ export function FleetRoiCalculator() {
                 onChange={(e) => setFleetSize(Number(e.target.value))}
                 className="w-full accent-[#00D084] cursor-pointer h-2 bg-white/10 rounded-lg"
               />
-              <div className="flex justify-between text-[10px] font-mono text-white/50 mt-1" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
-                <span className="keep-white" style={{ color: "rgba(255, 255, 255, 0.65)" }}>10 Vehicles (Essential)</span>
-                <span className="keep-white" style={{ color: "rgba(255, 255, 255, 0.65)" }}>100 (Pro)</span>
-                <span className="keep-white" style={{ color: "rgba(255, 255, 255, 0.65)" }}>250+ (Enterprise)</span>
+              <div className="flex justify-between text-[10px] font-mono text-white/50 mt-1.5 gap-1" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
+                <span className="keep-white whitespace-nowrap" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
+                  <span className="sm:hidden">10 (Ess.)</span>
+                  <span className="hidden sm:inline">10 Vehicles (Essential)</span>
+                </span>
+                <span className="keep-white whitespace-nowrap" style={{ color: "rgba(255, 255, 255, 0.65)" }}>100 (Pro)</span>
+                <span className="keep-white whitespace-nowrap" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
+                  <span className="sm:hidden">250+ (Ent.)</span>
+                  <span className="hidden sm:inline">250+ (Enterprise)</span>
+                </span>
               </div>
             </div>
 

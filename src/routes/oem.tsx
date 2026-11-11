@@ -1274,7 +1274,7 @@ export function OEMSolutionsPage() {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.55, delay: 0.2 }}
             whileHover={{ y: -5 }}
-            className="rounded-3xl bg-gradient-to-b from-[#0D5C2E]/40 via-[#07130b] to-[#040805] border-2 border-[#00D084] p-6 sm:p-8 flex flex-col justify-between shadow-[0_0_40px_rgba(0,208,132,0.15)] relative"
+            className="rounded-3xl bg-gradient-to-b from-[#0D5C2E]/40 via-[#07130b] to-[#040805] border-2 border-[#00D084] p-6 sm:p-8 flex flex-col justify-between shadow-[0_0_40px_rgba(0,208,132,0.15)] relative keep-white dark-card-locked"
           >
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#00D084] text-black font-black text-[10px] uppercase tracking-widest shadow-lg">
               ★ RECOMMENDED FOR SCALE

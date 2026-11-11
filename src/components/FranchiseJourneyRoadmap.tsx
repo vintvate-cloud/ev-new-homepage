@@ -31,7 +31,7 @@ export function FranchiseJourneyRoadmap() {
     const ctx = gsap.context(() => {
       const pinTrigger = ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: "top top+=70",
+        start: "top top+=75",
         end: "+=1600",
         pin: true,
         pinSpacing: true,
@@ -78,7 +78,7 @@ export function FranchiseJourneyRoadmap() {
       ref={sectionRef}
       className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 font-serif relative z-20"
     >
-      <div className="w-full bg-[#020403] rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
+      <div className="w-full bg-[#020403] rounded-3xl p-4 sm:p-10 relative overflow-hidden shadow-2xl">
         {/* Ambient Radial Background Glows */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00D084]/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
@@ -87,20 +87,20 @@ export function FranchiseJourneyRoadmap() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f293710_1px,transparent_1px),linear-gradient(to_bottom,#1f293710_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
         {/* Section Header */}
-        <div className="relative z-10 mb-8 border-b border-white/10 pb-6">
+        <div className="relative z-10 mb-6 sm:mb-8 border-b border-white/10 pb-4 sm:pb-6">
           <div>
-            <span className="text-xs font-serif font-bold uppercase tracking-[0.25em] text-[#00D084] flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-[#00D084]" /> GSAP ScrollTrigger Pinned Journey
+            <span className="text-[10px] sm:text-xs font-serif font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#00D084] flex items-center gap-2">
+              <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00D084]" /> GSAP ScrollTrigger Pinned Journey
             </span>
-            <h3 className="text-2xl sm:text-4xl font-serif font-extrabold text-white mt-1">
+            <h3 className="text-xl sm:text-4xl font-serif font-extrabold text-white mt-1 leading-snug">
               Your <span className="text-[#00D084]">90-Day</span> Onboarding Highway
             </h3>
           </div>
         </div>
 
         {/* HIGHWAY TRACK WITH GSAP PINNED EV VEHICLE */}
-        <div className="relative z-10 mb-10 pt-6 pb-4">
-          <div className="relative h-16 bg-[#020503] border border-white/15 rounded-3xl overflow-hidden flex items-center px-4 shadow-2xl">
+        <div className="relative z-10 mb-8 sm:mb-10 pt-4 sm:pt-6 pb-4">
+          <div className="relative h-14 sm:h-16 bg-[#020503] border border-white/15 rounded-3xl overflow-hidden flex items-center px-4 shadow-2xl">
 
 
             {/* Active Energized Trail Line behind EV Vehicle */}
@@ -118,10 +118,10 @@ export function FranchiseJourneyRoadmap() {
               style={{ left: "12%" }}
             >
               {/* Headlight Forward Beam Light Glow */}
-              <div className="absolute left-10 w-28 h-16 bg-gradient-to-r from-[#00D084]/40 to-transparent blur-md rounded-r-full pointer-events-none" />
+              <div className="absolute left-8 sm:left-10 w-20 sm:w-28 h-14 sm:h-16 bg-gradient-to-r from-[#00D084]/40 to-transparent blur-md rounded-r-full pointer-events-none" />
 
               {/* EV Vehicle Logo Indicator */}
-              <div className="relative w-16 h-16 rounded-xl bg-black border-2 border-[#00D084] flex items-center justify-center overflow-hidden shrink-0">
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-black border-2 border-[#00D084] flex items-center justify-center overflow-hidden shrink-0">
                 <img
                   src="/logo.jpeg"
                   alt="EV Logo"
@@ -132,22 +132,22 @@ export function FranchiseJourneyRoadmap() {
           </div>
 
           {/* Milestone Node Buttons Below Highway */}
-          <div className="grid grid-cols-4 gap-2 mt-4 text-center">
+          <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mt-4 text-center">
             {ONBOARDING_STEPS_90_DAYS.map((step, idx) => {
               const isActive = activeStepIdx === idx;
               return (
                 <button
                   key={idx}
                   onClick={() => setActiveStepIdx(idx)}
-                  className={`p-3 rounded-2xl transition-all cursor-pointer border font-serif text-left sm:text-center ${isActive
-                      ? "bg-[#050c08] border-[#00D084] scale-105 shadow-[0_0_15px_rgba(0,208,132,0.25)]"
+                  className={`px-1 sm:px-3 py-2 sm:py-3 rounded-xl sm:rounded-2xl transition-all cursor-pointer border font-serif text-center ${isActive
+                      ? "bg-[#050c08] border-[#00D084] scale-[1.02] sm:scale-105 shadow-[0_0_15px_rgba(0,208,132,0.25)]"
                       : "bg-[#020503] border-white/10 hover:border-white/20 opacity-70 hover:opacity-100"
                     }`}
                 >
-                  <div className="text-[10px] font-serif font-extrabold text-[#00D084] uppercase tracking-wider">
+                  <div className="text-[8.5px] xs:text-[9px] sm:text-[10px] font-serif font-extrabold text-[#00D084] uppercase tracking-tight sm:tracking-wider leading-tight">
                     {step.day}
                   </div>
-                  <div className="text-xs font-serif font-bold text-white truncate mt-0.5">
+                  <div className="text-[10px] sm:text-xs font-serif font-bold text-white whitespace-nowrap mt-0.5 leading-tight">
                     Phase 0{idx + 1}
                   </div>
                   <div className="text-[10px] font-serif text-white/50 truncate hidden sm:block">

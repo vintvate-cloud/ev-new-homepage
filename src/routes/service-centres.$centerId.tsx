@@ -768,7 +768,7 @@ export function ServiceCentresPage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 15 }}
                     style={{ backgroundColor: "#040e08" }}
-                    className="fixed inset-0 z-[100] flex flex-col justify-between p-4 pt-12 pb-6 sm:p-6 lg:p-7 bg-[#040e08] lg:absolute lg:inset-0 lg:rounded-[32px] shadow-2xl overflow-hidden overscroll-contain"
+                    className="fixed inset-0 z-[100] flex flex-col justify-between p-4 pt-12 pb-6 sm:p-6 lg:p-7 bg-[#040e08] lg:absolute lg:inset-0 lg:rounded-[32px] shadow-2xl overflow-hidden overscroll-contain keep-white dark-card-locked"
                   >
                     {/* CITY STEP */}
                     {inlineStep === "city" && (
@@ -1961,7 +1961,7 @@ export function ServiceCentresPage() {
           </section>
 
           {/* BRIGHT FULL-WIDTH CINEMATIC CALL TO ACTION BANNER */}
-          <section className="py-24 px-6 bg-[#040705] font-serif border-t border-white/10 relative overflow-hidden min-h-[480px] flex items-center justify-center">
+          <section className="py-16 sm:py-24 px-4 sm:px-6 bg-[#040705] font-serif border-t border-white/10 relative overflow-hidden min-h-[480px] flex items-center justify-center keep-white dark-card-locked">
             {/* Bright Full-Width Background Photo */}
             <img
               src="/ev-master-workshop-hero.png"
@@ -1972,8 +1972,8 @@ export function ServiceCentresPage() {
             {/* Subtle Vignette Gradient for Legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/50 pointer-events-none" />
 
-            {/* Floating Banner Content (No Frosted Glass Box) */}
-            <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
+            {/* Floating Banner Content (Frosted glass container on mobile for zero text-graphic collision) */}
+            <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)] p-6 sm:p-10 rounded-3xl bg-black/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-white/15 sm:border-transparent keep-white dark-card-locked">
               <span className="text-xs font-mono tracking-[0.3em] text-[#00D084] uppercase font-bold block">
                 EV PRO FLAGSHIP SERVICE
               </span>

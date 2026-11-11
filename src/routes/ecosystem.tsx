@@ -229,139 +229,139 @@ export function EcosystemPage() {
               <EcosystemHubVisualizer />
             </section>
 
-      {/* S2: What is the Ecosystem? India's First EV Service Super Market (SSM) */}
-      <EcosystemSupermarketSection onOpenBooking={() => setBookingModalOpen(true)} />
-      {/* S5: 5 Key Components with Real Cinematic Imagery */}
-      <section className="ecosystem-reveal py-20 px-6 bg-[#030704] border-t border-white/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-3">
-              Core Physical & Digital Infrastructure
-            </div>
-            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-              5 Pillars Powering the Ecosystem
-            </h2>
-            <p className="text-xs sm:text-sm text-white/60 font-light mt-2 max-w-xl mx-auto">
-              Every pillar is digitally connected to Autobot OS, guaranteeing consistent engineering standards nationwide.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
-            {[
-              {
-                title: "EV Service Centres Network",
-                desc: "Certified Garages, Centres and Master Hubs equipped with HV lifts, scanners, and safety gear.",
-                icon: Building2,
-                image: "/ev-master-workshop-hero.png",
-                stat: "240+ Bays",
-                tag: "1000V SAFETY",
-              },
-              {
-                title: "EV Charging Infrastructure",
-                desc: "Fast DC charging co-located at hubs for quick top-ups, walk-ins, and delivery fleets.",
-                icon: BatteryCharging,
-                image: "/ai-gallery/ev_charging_hub.png",
-                stat: "180+ Guns",
-                tag: "60-120kW DC",
-              },
-              {
-                title: "EV Spare Parts Supply Chain",
-                desc: "Centralized sourcing warehouse with RFID inventory tracking and express 2-hour bay delivery.",
-                icon: Store,
-                image: "/franchise-banner-building.png",
-                stat: "12,500+ SKUs",
-                tag: "RFID TRACKED",
-              },
-              {
-                title: "Battery Lifecycle Services",
-                desc: "SoH diagnostics, cell balancing, module rebuilds, and certified second-life repurposing.",
-                icon: Activity,
-                image: "/gallery/battery-lab.png",
-                stat: "14,820+ Packs",
-                tag: "CAN-BUS AI",
-              },
-              {
-                title: "Fleet Mobility Command",
-                desc: "Predictive maintenance AMCs, overnight charging routines, and dedicated priority bays for fleets.",
-                icon: Truck,
-                image: "/ai-gallery/ev_workshop_bay.png",
-                stat: "8,200+ EVs",
-                tag: "98.5% UPTIME",
-              },
-            ].map((col) => {
-              const Icon = col.icon;
-              return (
-                <div 
-                  key={col.title} 
-                  className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-[#00D084]/50 transition-all duration-500 shadow-xl flex flex-col justify-between min-h-[380px] p-6 text-left"
-                >
-                  {/* Real Background Image with Dark Cinematic Gradient */}
-                  <div className="absolute inset-0 pointer-events-none z-0">
-                    <img 
-                      src={col.image} 
-                      alt={col.title} 
-                      className="w-full h-full object-cover filter brightness-[0.4] group-hover:brightness-[0.5] group-hover:scale-110 transition-all duration-700 ease-out" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/80 to-transparent" />
+            {/* S2: What is the Ecosystem? India's First EV Service Super Market (SSM) */}
+            <EcosystemSupermarketSection onOpenBooking={() => setBookingModalOpen(true)} />
+            {/* S5: 5 Key Components with Real Cinematic Imagery */}
+            <section className="ecosystem-reveal py-20 px-6 bg-[#030704] border-t border-white/10">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D084]/15 border border-[#00D084]/30 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-3">
+                    Core Physical & Digital Infrastructure
                   </div>
-                  
-                  {/* Top Bar with Icon and Tag */}
-                  <div className="relative z-10 flex items-center justify-between mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-black/60 backdrop-blur-md border border-white/15 flex items-center justify-center text-[#00D084] group-hover:bg-[#00D084] group-hover:text-black transition-all shadow-md">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="text-[9px] font-mono font-bold text-white/70 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 group-hover:border-[#00D084]/40 group-hover:text-[#00D084] transition-all">
-                      {col.tag}
-                    </span>
-                  </div>
-
-                  {/* Text Content */}
-                  <div className="relative z-10 mt-auto">
-                    <h3 className="text-base font-bold text-white mb-2 leading-snug group-hover:text-[#00D084] transition-colors">
-                      {col.title}
-                    </h3>
-                    <p className="text-xs text-white/70 leading-relaxed font-light mb-4">
-                      {col.desc}
-                    </p>
-                    <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-                      <span className="text-white/40 uppercase">Scale:</span>
-                      <strong className="text-[#00D084] font-bold">{col.stat}</strong>
-                    </div>
-                  </div>
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+                    5 Pillars Powering the Ecosystem
+                  </h2>
+                  <p className="text-xs sm:text-sm text-white/60 font-light mt-2 max-w-xl mx-auto">
+                    Every pillar is digitally connected to Autobot OS, guaranteeing consistent engineering standards nationwide.
+                  </p>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-      {/* S7: Who Can Join - Reference-style interactive carousel */}
-      <EcosystemPartnersCarousel />
 
-      {/* S9: Closing CTA */}
-      <section className="py-16 px-6 bg-[#0D5C2E] text-white">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
-            Join India's EV Service Ecosystem
-          </h2>
-          <p className="text-sm sm:text-base text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
-            Service centres, charging, parts and fleets on one connected platform. Accelerate your EV business today.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link
-              to="/franchise"
-              className="px-8 py-4 rounded-full bg-white text-[#020403] font-black text-xs uppercase tracking-widest hover:bg-white/90 shadow-2xl transition-all"
-            >
-              Become an Ecosystem Partner
-            </Link>
-            <button
-              onClick={() => setBookingModalOpen(true)}
-              className="px-8 py-4 rounded-full border border-white/30 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all cursor-pointer"
-            >
-              Book EV Service
-            </button>
-          </div>
-        </div>
-      </section>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+                  {[
+                    {
+                      title: "EV Service Centres Network",
+                      desc: "Certified Garages, Centres and Master Hubs equipped with HV lifts, scanners, and safety gear.",
+                      icon: Building2,
+                      image: "/ev-master-workshop-hero.png",
+                      stat: "240+ Bays",
+                      tag: "1000V SAFETY",
+                    },
+                    {
+                      title: "EV Charging Infrastructure",
+                      desc: "Fast DC charging co-located at hubs for quick top-ups, walk-ins, and delivery fleets.",
+                      icon: BatteryCharging,
+                      image: "/ai-gallery/ev_charging_hub.png",
+                      stat: "180+ Guns",
+                      tag: "60-120kW DC",
+                    },
+                    {
+                      title: "EV Spare Parts Supply Chain",
+                      desc: "Centralized sourcing warehouse with RFID inventory tracking and express 2-hour bay delivery.",
+                      icon: Store,
+                      image: "/franchise-banner-building.png",
+                      stat: "12,500+ SKUs",
+                      tag: "RFID TRACKED",
+                    },
+                    {
+                      title: "Battery Lifecycle Services",
+                      desc: "SoH diagnostics, cell balancing, module rebuilds, and certified second-life repurposing.",
+                      icon: Activity,
+                      image: "/gallery/battery-lab.png",
+                      stat: "14,820+ Packs",
+                      tag: "CAN-BUS AI",
+                    },
+                    {
+                      title: "Fleet Mobility Command",
+                      desc: "Predictive maintenance AMCs, overnight charging routines, and dedicated priority bays for fleets.",
+                      icon: Truck,
+                      image: "/ai-gallery/ev_workshop_bay.png",
+                      stat: "8,200+ EVs",
+                      tag: "98.5% UPTIME",
+                    },
+                  ].map((col) => {
+                    const Icon = col.icon;
+                    return (
+                      <div
+                        key={col.title}
+                        className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-[#00D084]/50 transition-all duration-500 shadow-xl flex flex-col justify-between min-h-[380px] p-6 text-left"
+                      >
+                        {/* Real Background Image with Dark Cinematic Gradient */}
+                        <div className="absolute inset-0 pointer-events-none z-0">
+                          <img
+                            src={col.image}
+                            alt={col.title}
+                            className="w-full h-full object-cover filter brightness-[0.4] group-hover:brightness-[0.5] group-hover:scale-110 transition-all duration-700 ease-out"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#020503] via-[#020503]/80 to-transparent" />
+                        </div>
+
+                        {/* Top Bar with Icon and Tag */}
+                        <div className="relative z-10 flex items-center justify-between mb-4">
+                          <div className="w-11 h-11 rounded-xl bg-black/60 backdrop-blur-md border border-white/15 flex items-center justify-center text-[#00D084] group-hover:bg-[#00D084] group-hover:text-black transition-all shadow-md">
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          <span className="text-[9px] font-mono font-bold text-white/70 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 group-hover:border-[#00D084]/40 group-hover:text-[#00D084] transition-all">
+                            {col.tag}
+                          </span>
+                        </div>
+
+                        {/* Text Content */}
+                        <div className="relative z-10 mt-auto">
+                          <h3 className="text-base font-bold text-white mb-2 leading-snug group-hover:text-[#00D084] transition-colors">
+                            {col.title}
+                          </h3>
+                          <p className="text-xs text-white/70 leading-relaxed font-light mb-4">
+                            {col.desc}
+                          </p>
+                          <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                            <span className="text-white/40 uppercase">Scale:</span>
+                            <strong className="text-[#00D084] font-bold">{col.stat}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+            {/* S7: Who Can Join - Reference-style interactive carousel */}
+            <EcosystemPartnersCarousel />
+
+            {/* S9: Closing CTA */}
+            <section className="py-16 px-6 bg-[#0D5C2E] text-white keep-white dark-card-locked">
+              <div className="max-w-4xl mx-auto text-center space-y-6">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+                  Join India's EV Service Ecosystem
+                </h2>
+                <p className="text-sm sm:text-base text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
+                  Service centres, charging, parts and fleets on one connected platform. Accelerate your EV business today.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+                  <Link
+                    to="/franchise"
+                    className="px-8 py-4 rounded-full bg-white text-[#020403] font-black text-xs uppercase tracking-widest hover:bg-white/90 shadow-2xl transition-all"
+                  >
+                    Become an Ecosystem Partner
+                  </Link>
+                  <button
+                    onClick={() => setBookingModalOpen(true)}
+                    className="px-8 py-4 rounded-full border border-white/30 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all cursor-pointer"
+                  >
+                    Book EV Service
+                  </button>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>

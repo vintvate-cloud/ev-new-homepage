@@ -6135,10 +6135,10 @@ function ResourcesJourney() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative h-screen bg-[#030604] overflow-hidden flex items-center">
+    <section ref={containerRef} className="relative min-h-[100dvh] h-screen bg-[#030604] overflow-hidden flex items-center py-4 md:py-0">
       <div ref={trackRef} className="flex w-[200vw] h-full will-change-transform">
         {RESOURCES.map((res, i) => (
-          <div key={res.id} className="w-[100vw] h-full relative flex items-center justify-center p-6 md:p-12 lg:p-24">
+          <div key={res.id} className="w-[100vw] h-full relative flex items-center justify-center p-4 sm:p-6 md:p-12 lg:p-24">
 
             {/* Background Image with Parallax & Soft Contrast Overlays */}
             <div className="absolute inset-0 z-0">
@@ -6151,7 +6151,7 @@ function ResourcesJourney() {
               <div className="resource-bg-overlay-right absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/40 pointer-events-none" />
             </div>
 
-            <div className={`resource-content relative z-10 w-full max-w-[1400px] flex flex-col md:flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-24 items-center ${i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+            <div className={`resource-content relative z-10 w-full max-w-[1400px] flex flex-col md:flex-row gap-3 sm:gap-8 md:gap-12 lg:gap-24 items-center ${i === 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
 
               {/* Text Content */}
               <div className="resource-text-content md:w-1/2 flex flex-col w-full">

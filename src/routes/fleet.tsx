@@ -932,7 +932,7 @@ export function FleetSolutionsPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 rounded-3xl overflow-hidden bg-[#07110b] border border-white/15 relative min-h-[460px] flex flex-col justify-between p-6 sm:p-8 shadow-2xl"
+            className="lg:col-span-5 rounded-3xl overflow-hidden bg-[#07110b] border border-white/15 relative min-h-[460px] flex flex-col justify-between p-6 sm:p-8 shadow-2xl keep-white dark-card-locked"
           >
             <img
               src="/hero/doorstep_repairs.png"
@@ -1366,7 +1366,7 @@ export function FleetSolutionsPage() {
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
         viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="fleet-cta-banner py-16 px-6 bg-[#0D5C2E] text-white"
+        className="fleet-cta-banner py-16 px-6 bg-[#0D5C2E] text-white keep-white dark-card-locked"
       >
         <div className="max-w-5xl mx-auto text-center space-y-6">
           <span className="text-[11px] font-mono uppercase tracking-widest text-white/80 font-bold block">

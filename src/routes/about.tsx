@@ -473,7 +473,7 @@ function AboutPage() {
               </div>
 
               {/* Right Column: 2x2 Big Stat Cards Grid */}
-              <div className="lg:col-span-7 grid grid-cols-2 gap-8 bg-[#070b09] border border-white/10 rounded-3xl p-8 sm:p-10 shadow-xl">
+              <div className="lg:col-span-7 grid grid-cols-2 gap-3 sm:gap-6 lg:gap-8 bg-[#070b09] border border-white/10 rounded-3xl p-4 sm:p-8 lg:p-10 shadow-xl keep-white dark-card-locked">
                 {[
                   { value: "15,000+", label: "Learners & Techs Trained" },
                   { value: "10+", label: "Years EV Ecosystem Experience" },
@@ -484,12 +484,12 @@ function AboutPage() {
                     key={i}
                     whileHover={{ scale: 1.04, y: -4 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="p-4 rounded-2xl border border-transparent hover:border-[#00D084]/30 hover:bg-white/[0.02] transition-all"
+                    className="p-2 sm:p-4 rounded-2xl border border-transparent hover:border-[#00D084]/30 hover:bg-white/[0.02] transition-all min-w-0"
                   >
-                    <h3 className="text-4xl sm:text-5xl font-black font-mono text-white tracking-tight mb-2 hover:text-[#00D084] transition-colors">
+                    <h3 className="text-2xl sm:text-4xl lg:text-5xl font-black font-mono text-white tracking-tight mb-2 hover:text-[#00D084] transition-colors truncate sm:overflow-visible">
                       {stat.value}
                     </h3>
-                    <p className="text-xs font-medium text-white/60 uppercase tracking-wider">
+                    <p className="text-[11px] sm:text-xs font-medium text-white/60 uppercase tracking-wider leading-snug">
                       {stat.label}
                     </p>
                   </motion.div>
@@ -744,7 +744,7 @@ function AboutPage() {
               PANORAMIC BANNER CTA (LANDSCAPE BANNER)
              ========================================================================= */}
           <section ref={ctaBannerRef} className="max-w-7xl mx-auto pt-6">
-            <div className="relative rounded-[36px] overflow-hidden min-h-[320px] flex items-center justify-center text-center p-8 sm:p-14 border border-white/20 shadow-2xl group">
+            <div className="relative rounded-[36px] overflow-hidden min-h-[320px] flex items-center justify-center text-center p-8 sm:p-14 border border-white/20 shadow-2xl group keep-white dark-card-locked">
               
               {/* Background High-Tech Cosmic Image with Parallax Scale */}
               <img

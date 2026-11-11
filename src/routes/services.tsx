@@ -342,6 +342,24 @@ function ServicesPage() {
 
   const handleCloseDetails = () => {
     setIsClosingDetails(true);
+    if (
+      typeof window !== "undefined" &&
+      (window.location.search.includes("service=") ||
+        window.location.search.includes("id="))
+    ) {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("service");
+        url.searchParams.delete("id");
+        window.history.replaceState(
+          {},
+          "",
+          url.pathname + (url.search ? url.search : "")
+        );
+      } catch (err) {
+        // ignore
+      }
+    }
     setTimeout(() => {
       setDetailsModalOpen(false);
       setIsClosingDetails(false);
@@ -418,30 +436,45 @@ function ServicesPage() {
   const innerContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!detailsModalOpen || !rightSectionRef.current || !innerContentRef.current) return;
+    if (!detailsModalOpen) return;
 
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const modalLenis = new Lenis({
-      wrapper: rightSectionRef.current,
-      content: innerContentRef.current,
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      syncTouch: true,
-    });
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleCloseDetails();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
 
-    let rafId: number;
-    function update(time: number) {
-      modalLenis.raf(time);
+    // Only run Lenis smooth scroll on desktop screens (>= 1024px)
+    // On mobile touch devices, native touch momentum scrolling must be preserved to prevent scroll freezes and touch cancellation.
+    let modalLenis: Lenis | null = null;
+    let rafId: number | null = null;
+
+    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
+    if (isDesktop && rightSectionRef.current && innerContentRef.current) {
+      modalLenis = new Lenis({
+        wrapper: rightSectionRef.current,
+        content: innerContentRef.current,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        syncTouch: false,
+      });
+
+      const update = (time: number) => {
+        modalLenis?.raf(time);
+        rafId = requestAnimationFrame(update);
+      };
       rafId = requestAnimationFrame(update);
     }
-    rafId = requestAnimationFrame(update);
 
     return () => {
-      cancelAnimationFrame(rafId);
-      modalLenis.destroy();
+      window.removeEventListener("keydown", handleKeyDown);
+      if (rafId) cancelAnimationFrame(rafId);
+      if (modalLenis) modalLenis.destroy();
       document.body.style.overflow = originalOverflow;
     };
   }, [detailsModalOpen]);
@@ -830,20 +863,20 @@ function ServicesPage() {
 
         {/* Search Bar & Switcher */}
         <div
-          className={`flex flex-col md:flex-row items-center justify-between gap-4 rounded-2xl p-4 md:px-6 mb-12 border ${
+          className={`flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3.5 sm:gap-4 rounded-2xl p-4 md:px-6 mb-12 border ${
             isLight
               ? "bg-[#e5eee7] border-[#d2e0d5]"
               : "bg-[#090f0c] border-white/10"
           }`}
         >
-          <div className="relative w-full md:w-96">
+          <div className="relative w-full lg:w-96">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#00D084]" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search services by name, specs or category..."
-              className={`w-full rounded-xl pl-11 pr-4 py-2.5 text-xs focus:outline-none focus:border-[#00D084] border ${
+              className={`w-full rounded-xl pl-11 pr-8 py-2.5 text-xs focus:outline-none focus:border-[#00D084] border ${
                 isLight
                   ? "bg-white border-[#c5d6ca] text-[#1a2320] placeholder-[#607267]"
                   : "bg-[#030604] border-white/15 text-white placeholder-white/40"
@@ -851,28 +884,27 @@ function ServicesPage() {
             />
             {searchQuery && (
               <button
+                type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white cursor-pointer"
+                aria-label="Clear search"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
 
-          <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-            <div className="text-xs font-mono font-bold text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/20 rounded-lg px-3.5 py-1.5">
-              {filteredServices.length} Services Available
-            </div>
-
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto justify-between lg:justify-end">
             {/* Vehicle Type Switcher */}
             <div
-              className={`flex items-center rounded-xl p-1 border ${
+              className={`grid grid-cols-2 sm:flex items-center rounded-xl p-1 border w-full sm:w-auto ${
                 isLight ? "bg-white border-[#c5d6ca]" : "bg-[#030604] border-white/15"
               }`}
             >
               <button
+                type="button"
                 onClick={() => setVehicleType("2W")}
-                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all text-center cursor-pointer ${
                   vehicleType === "2W"
                     ? "bg-[#00D084] text-[#020403] shadow-xs"
                     : isLight
@@ -880,11 +912,12 @@ function ServicesPage() {
                     : "text-white/70 hover:text-white"
                 }`}
               >
-                2W (Scooter/Bike)
+                2W <span className="font-normal opacity-85">(Scooter/Bike)</span>
               </button>
               <button
+                type="button"
                 onClick={() => setVehicleType("3W")}
-                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all text-center cursor-pointer ${
                   vehicleType === "3W"
                     ? "bg-[#00D084] text-[#020403] shadow-xs"
                     : isLight
@@ -892,8 +925,13 @@ function ServicesPage() {
                     : "text-white/70 hover:text-white"
                 }`}
               >
-                3W (Auto/Cargo)
+                3W <span className="font-normal opacity-85">(Auto/Cargo)</span>
               </button>
+            </div>
+
+            {/* Counter badge */}
+            <div className="text-xs font-mono font-bold text-[#00D084] bg-[#00D084]/10 border border-[#00D084]/20 rounded-lg px-3.5 py-2 text-center whitespace-nowrap shrink-0">
+              {filteredServices.length} Services Available
             </div>
           </div>
         </div>
@@ -1336,13 +1374,15 @@ function ServicesPage() {
       {detailsModalOpen && detailsService && (
         <div
           onClick={handleCloseDetails}
-          className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-black/80 backdrop-blur-md transition-opacity duration-300 font-sans ${
+          className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-black/80 backdrop-blur-md transition-opacity duration-300 font-sans cursor-pointer ${
             isClosingDetails ? "opacity-0" : "opacity-100"
           }`}
+          role="dialog"
+          aria-modal="true"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={`w-full max-w-7xl rounded-t-[32px] sm:rounded-[32px] p-6 sm:p-10 shadow-2xl relative border transition-all h-[85vh] max-h-[780px] flex flex-col overflow-hidden ${
+            className={`w-full max-w-7xl rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-10 shadow-2xl relative border transition-all h-[90vh] sm:h-[85vh] max-h-[780px] flex flex-col overflow-hidden cursor-default ${
               isClosingDetails ? "animate-drop-down" : "animate-drop-up"
             } ${
               isLight
@@ -1350,22 +1390,33 @@ function ServicesPage() {
                 : "bg-[#060b08] text-white border-white/15"
             }`}
           >
+            {/* Mobile Sheet Pull Bar */}
+            <div
+              onClick={handleCloseDetails}
+              className="sm:hidden w-full flex items-center justify-center pt-0 pb-3 -mt-1 cursor-pointer touch-none"
+              aria-label="Close details modal"
+            >
+              <div className="w-12 h-1.5 rounded-full bg-black/20 dark:bg-white/30 hover:bg-black/40 dark:hover:bg-white/50 transition-colors" />
+            </div>
+
             {/* Top Close Circle Button */}
             <button
+              type="button"
               onClick={handleCloseDetails}
-              className={`absolute top-6 right-6 w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer z-10 ${
+              className={`absolute top-4 sm:top-6 right-4 sm:right-6 w-10 h-10 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all cursor-pointer z-50 shadow-md ${
                 isLight
-                  ? "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                  : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                  ? "bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300"
+                  : "bg-white/15 text-white hover:bg-white/25 hover:text-white border border-white/20"
               }`}
+              aria-label="Close details"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Top Hero Section Header (Matching ServiceDetail.tsx) */}
-            <div className="mb-5 pb-5 border-b border-black/10 dark:border-white/10 shrink-0 pr-12">
+            <div className="mb-4 sm:mb-5 pb-4 sm:pb-5 border-b border-black/10 dark:border-white/10 shrink-0 pr-12">
               {/* Badges */}
-              <div className="flex flex-wrap items-center gap-2 mb-2.5">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className="px-2.5 py-0.5 rounded-full bg-[#00D084]/20 text-[#00D084] border border-[#00D084]/40 text-[11px] font-bold">
                   Service
                 </span>
@@ -1380,9 +1431,9 @@ function ServicesPage() {
               </div>
 
               {/* Title & Description */}
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 sm:gap-4">
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+                  <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight text-foreground leading-tight">
                     {detailsService.title}
                   </h2>
                   <p className="text-xs sm:text-sm opacity-70 mt-1 max-w-2xl leading-relaxed">
@@ -1390,7 +1441,7 @@ function ServicesPage() {
                   </p>
 
                   {/* Chips & Pricing */}
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <div className="mt-2.5 flex flex-wrap items-center gap-2">
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-xs font-semibold">
                       2W
                     </span>
@@ -1410,17 +1461,18 @@ function ServicesPage() {
                 {/* Primary Action Buttons */}
                 <div className="flex items-center gap-2 shrink-0 pt-1">
                   <button
+                    type="button"
                     onClick={() => {
                       setDetailsModalOpen(false);
                       handleBookService(detailsService);
                     }}
-                    className="px-5 py-2.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-md cursor-pointer whitespace-nowrap"
+                    className="px-4 sm:px-5 py-2.5 rounded-full bg-[#00D084] text-[#020403] text-xs font-black uppercase tracking-wider hover:bg-[#00e08f] transition-all shadow-md cursor-pointer whitespace-nowrap"
                   >
                     Book this service
                   </button>
                   <Link
                     to="/contact"
-                    className={`px-4 py-2.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap inline-flex items-center justify-center ${
+                    className={`px-3.5 sm:px-4 py-2.5 rounded-full border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap inline-flex items-center justify-center ${
                       isLight
                         ? "border-[#c5d6ca] text-[#1a2320] hover:bg-black/5"
                         : "border-white/20 text-white hover:bg-white/10"
@@ -1433,7 +1485,7 @@ function ServicesPage() {
             </div>
 
             {/* 2-Column Grid Body */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start flex-1 overflow-y-auto lg:overflow-hidden min-h-0">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start flex-1 overflow-y-auto lg:overflow-hidden min-h-0 overscroll-contain pr-1">
               {/* Left Column: Image Card & Key Quick Metrics (Fixed / Stationary Side) */}
               <div className="lg:col-span-5 space-y-3.5 shrink-0 w-full">
                 <div className="relative h-44 sm:h-48 lg:h-52 w-full rounded-[22px] overflow-hidden shadow-lg border border-black/10">
@@ -1486,8 +1538,7 @@ function ServicesPage() {
               <div
                 ref={rightSectionRef}
                 data-lenis-prevent
-                className="lg:col-span-7 h-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                className="lg:col-span-7 lg:h-full lg:overflow-y-auto pr-0 lg:pr-2 lg:[&::-webkit-scrollbar]:hidden lg:[scrollbar-width:none] lg:[-ms-overflow-style:none]"
               >
                 <div ref={innerContentRef} className="space-y-6 pb-6 text-xs sm:text-sm font-normal leading-relaxed">
                   {/* What's Included (Pro Checklist) — Exact Match to ServiceDetail.tsx */}
@@ -1568,6 +1619,21 @@ function ServicesPage() {
                         </p>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Bottom Close Button for Mobile convenience */}
+                  <div className="sm:hidden pt-4 pb-2">
+                    <button
+                      type="button"
+                      onClick={handleCloseDetails}
+                      className={`w-full py-3 rounded-2xl text-xs font-bold uppercase tracking-wider border transition-colors cursor-pointer ${
+                        isLight
+                          ? "bg-black/5 border-black/10 text-[#1a2820] hover:bg-black/10"
+                          : "bg-white/5 border-white/10 text-white hover:bg-white/10"
+                      }`}
+                    >
+                      Close Details
+                    </button>
                   </div>
                 </div>
               </div>
