@@ -1002,7 +1002,7 @@ export function FleetSolutionsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.12 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="py-20 px-6 bg-[#040805] border-t border-white/10"
+            className="py-24 px-6 sm:px-10 lg:px-16 bg-[#030604] border-t border-white/[0.06]"
           >
             <div className="max-w-7xl mx-auto space-y-16">
               <motion.div
@@ -1013,18 +1013,19 @@ export function FleetSolutionsPage() {
                 className="autobot-header-reveal text-center max-w-3xl mx-auto"
               >
                 <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00D084] uppercase tracking-wider mb-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D084]" />
                   Technology // Autobot OS
                 </div>
-                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
                   One AI-powered operating system runs every fleet job
                 </h2>
-                <p className="text-sm text-white/60 mt-3 font-light">
+                <p className="text-sm text-white/60 mt-3 font-light leading-relaxed">
                   Autobot OS automates the work that usually breaks fleet maintenance: scheduling, dispatch, job cards, parts and billing. AI flags problems early. Certified technicians verify every repair.
                 </p>
               </motion.div>
 
-              {/* 6-Step Automation Flow */}
-              <div className="autobot-steps-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+              {/* 6-Step Automation Flow (Minimal, Flat Obsidian, Hairline Border, Zero Harsh Lines) */}
+              <div className="autobot-steps-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-3.5">
                 {[
                   { num: "01", title: "Detect", desc: "AI reads battery & fault data, flags risk." },
                   { num: "02", title: "Schedule", desc: "Slots booked around shift downtime." },
@@ -1035,68 +1036,90 @@ export function FleetSolutionsPage() {
                 ].map((step, idx) => (
                   <motion.div
                     key={step.num}
-                    initial={{ opacity: 0, y: 25, scale: 0.94 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false, amount: 0.2 }}
-                    transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                    whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                    className="autobot-step-pill p-4 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/40 transition-colors shadow-md"
+                    transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                    className="autobot-step-pill p-4.5 rounded-xl bg-[#050806] border border-white/[0.06] hover:border-white/[0.18] transition-all duration-300 group flex flex-col justify-between min-h-[140px]"
                   >
-                    <span className="text-[10px] font-mono text-[#00D084] font-bold block mb-1">{step.num}</span>
-                    <span className="text-sm font-bold text-white block mb-1">{step.title}</span>
-                    <span className="text-[11px] text-white/60 block leading-tight">{step.desc}</span>
+                    <div>
+                      <span className="text-[11px] font-mono text-[#00D084] font-semibold tracking-wider block mb-2">{step.num}</span>
+                      <span className="text-sm font-semibold text-white block mb-1.5 tracking-tight group-hover:text-white">{step.title}</span>
+                    </div>
+                    <p className="text-[11px] text-white/55 leading-relaxed font-normal">{step.desc}</p>
                   </motion.div>
                 ))}
               </div>
 
-              {/* 6 Modules Grid */}
-              <div className="autobot-mods-grid grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+              {/* 6 Modules Grid (Minimal Premium Cards, Pure Obsidian, Ultra-Fine Border, Elegant Micro-Icon) */}
+              <div className="autobot-mods-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
                 {[
                   {
                     tag: "AI Diagnostics",
                     title: "Fault prediction",
                     desc: "Battery and motor anomalies ranked by risk, per vehicle.",
+                    icon: Cpu,
                   },
                   {
                     tag: "Auto-scheduling",
                     title: "Zero missed services",
                     desc: "Service due-dates tracked by km and calendar, booked automatically.",
+                    icon: Clock,
                   },
                   {
                     tag: "Dispatch",
                     title: "Live technician routing",
                     desc: "Jobs assigned by location, skill and parts availability.",
+                    icon: Send,
                   },
                   {
                     tag: "Inventory",
                     title: "QR-tracked parts",
                     desc: "Every part scanned from warehouse to vehicle. Zero leakage.",
+                    icon: Layers,
                   },
                   {
                     tag: "SLA Monitor",
                     title: "Escalation built in",
                     desc: "Open jobs tracked against your SLA, with automatic escalation.",
+                    icon: Activity,
                   },
                   {
                     tag: "API & Webhooks",
                     title: "Plugs into your stack",
                     desc: "Connects with telematics, ERP and rider apps. Exports for finance.",
+                    icon: Zap,
                   },
-                ].map((mod, idx) => (
-                  <motion.div
-                    key={mod.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.15 }}
-                    transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                    className="autobot-mod-card p-6 rounded-2xl bg-[#080d0a] border border-white/10 hover:border-[#00D084]/30 transition-all shadow-md"
-                  >
-                    <span className="text-[10px] font-mono text-[#00D084] uppercase tracking-wider font-bold block mb-2">{mod.tag}</span>
-                    <h3 className="text-base font-bold text-white mb-2">{mod.title}</h3>
-                    <p className="text-xs text-white/60 leading-relaxed">{mod.desc}</p>
-                  </motion.div>
-                ))}
+                ].map((mod, idx) => {
+                  const ModIcon = mod.icon;
+                  return (
+                    <motion.div
+                      key={mod.title}
+                      initial={{ opacity: 0, y: 25 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: false, amount: 0.15 }}
+                      transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                      className="autobot-mod-card p-7 rounded-2xl bg-[#050806] border border-white/[0.06] hover:border-white/[0.18] transition-all duration-300 group flex flex-col justify-between min-h-[180px]"
+                    >
+                      <div className="flex items-center justify-between mb-5">
+                        <span className="text-[11px] font-mono text-[#00D084] uppercase tracking-wider font-semibold">
+                          {mod.tag}
+                        </span>
+                        <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-white/30 group-hover:text-[#00D084] group-hover:border-white/[0.12] transition-colors">
+                          <ModIcon className="w-4 h-4" />
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-base sm:text-lg font-semibold text-white tracking-tight mb-2">
+                          {mod.title}
+                        </h3>
+                        <p className="text-xs sm:text-[13px] text-white/55 leading-relaxed font-light">
+                          {mod.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </motion.section>
